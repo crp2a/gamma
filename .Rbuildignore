@@ -1,0 +1,6 @@
+^data-raw$
+^CODE_OF_CONDUCT\.md$
+^README\.Rmd$
+^LICENSE\.md$
+^gamma\.Rproj$
+^\.Rproj\.user$

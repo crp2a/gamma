@@ -1,0 +1,23 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+# Use R language
+language: r
+
+#Define multiple R-versions
+r:
+  - oldrel
+  - release
+  - devel
+cache: packages
+sudo: false
+dist: trusty
+
+warnings_are_errors: true
+
+# Set dependencies from CRAN
+# Work around temporary travis + R 3.5 bug
+r_packages:
+  - covr
+  - devtools
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'

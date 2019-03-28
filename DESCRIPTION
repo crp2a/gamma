@@ -1,0 +1,33 @@
+Package: gamma
+Title: Processing of In-Situ Gamma Dose Rate Measurement for Luminescence Dating
+Version: 0.0.0.9000
+Date: 2019-03-28
+Authors@R: 
+    c(person(given = "Nicolas",
+             family = "Frerebeau",
+             role = c("aut", "cre"),
+             email = "nicolas.frerebeau@u-bordeaux-montaigne.fr",
+             comment = c(ORCID = "https://orcid.org/0000-0001-5759-4944")),
+      person(given = "Brice",
+             family = "Lebrun",
+             role = c("aut", "cre"),
+             email = "lebrun@cerege.fr",
+             comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")))
+Maintainer: Nicolas Frerebeau
+    <nicolas.frerebeau@u-bordeaux-montaigne.fr>
+Description: What the package does (one paragraph).
+License: GPL-3
+URL: http://github.com/nfrerebeau/gamma
+BugReports: http://github.com/nfrerebeau/gamma/issues
+Depends: 
+    R (>= 3.5)
+Suggests: 
+    testthat
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    rxylib,
+    magrittr,
+    stats,
+    ggplot2,
+    dplyr
