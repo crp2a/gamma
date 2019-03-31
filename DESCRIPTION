@@ -1,5 +1,5 @@
 Package: gamma
-Title: Processing of In-Situ Gamma Dose Rate Measurement for Luminescence Dating
+Title: Process In-Situ Gamma Dose Rate Measurement for Luminescence Dating
 Version: 0.0.0.9000
 Date: 2019-03-28
 Authors@R: 
@@ -10,9 +10,19 @@ Authors@R:
              comment = c(ORCID = "https://orcid.org/0000-0001-5759-4944")),
       person(given = "Brice",
              family = "Lebrun",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "lebrun@cerege.fr",
-             comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")))
+             comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")),
+      person(given = "Guillaume",
+             family = "Guerrin",
+             role = c("aut"),
+             email = "guillaume.guerrin@u-bordeaux-montaigne.fr",
+             comment = c(ORCID = "")),
+      person(given = "Lahaye",
+             family = "Christelle",
+             role = c("aut"),
+             email = "christelle.lahaye@u-bordeaux-montaigne.fr",
+             comment = c(ORCID = "")))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Description: What the package does (one paragraph).
@@ -20,9 +30,10 @@ License: GPL-3
 URL: http://github.com/nfrerebeau/gamma
 BugReports: http://github.com/nfrerebeau/gamma/issues
 Depends: 
-    R (>= 3.5)
+    R (>= 3.1)
 Suggests: 
-    testthat
+    testthat,
+    covr
 Encoding: UTF-8
 LazyData: true
 Imports: 
@@ -31,3 +42,12 @@ Imports:
     stats,
     ggplot2,
     dplyr
+RoxygenNote: 6.1.1
+Collate: 
+    'gamma.R'
+    'AllClasses.R'
+    'AllGenerics.R'
+    'calibrate.R'
+    'plot.R'
+    'read.R'
+    'utilities.R'
