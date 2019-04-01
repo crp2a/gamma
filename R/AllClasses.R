@@ -1,0 +1,259 @@
+# CLASSES DEFINITION AND INITIALIZATION
+#' @include gamma.R
+NULL
+
+# DEFINITION ===================================================================
+#' An S4 class to represent a gamma sectrum
+#'
+#' @slot reference A \code{\link{character}} string the measurement reference.
+#' @slot date A \code{\link{character}} string giving the measurement date.
+#' @slot instrument A \code{\link{character}} string the instrument name.
+#' @slot file_format A \code{\link{character}} string.
+#' @slot live_time A \code{\link{numeric}} value.
+#' @slot real_time A \code{\link{numeric}} value.
+#' @slot chanel A \code{\link{numeric}} vector.
+#' @slot energy A \code{\link{numeric}} vector.
+#' @slot counts A \code{\link{numeric}} vector.
+#' @param x An object of class \code{GammaSpectrum}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Coerce:
+#' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+#' \describe{
+#'  \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
+#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
+#'  \code{\link[=data.frame]{data frame}}.}
+#' }
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
+#' @example inst/examples/ex-GammaSpectrum.R
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname GammaSpectrum
+#' @aliases GammaSpectrum-class
+setClass(
+  Class = "GammaSpectrum",
+  slots = c(
+    reference = "character",
+    date = "character",
+    instrument = "character",
+    file_format = "character",
+    chanel = "numeric",
+    energy = "numeric",
+    counts = "numeric",
+    live_time = "numeric",
+    real_time = "numeric"
+  )
+)
+
+#' An S4 class to represent a collection of gamma sectra
+#'
+#' @param x An object of class \code{GammaSpectrum}.
+#' @param i,j Indices specifying elements to extract or replace (see below).
+#'  Indices are \code{\link{numeric}} or \code{\link{character}} vectors or
+#'  empty (\code{\link{missing}}) or \code{\link{NULL}}.
+#'  Numeric values are coerced to integer as by \code{\link{as.integer}}
+#'  (and hence truncated towards zero). Character vectors will be matched to
+#'  the names of the object.
+#' @section Access:
+#' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
+#' \describe{
+#'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
+#'  \item{\code{names(x)}, \code{names(x) <- value}}{Get or set the names of the
+#'   elements according to \code{value}.}
+#' }
+#' @section Coerce:
+#' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
+#' \describe{
+#'  \item{\code{as(x, "list")}}{Coerces \code{x} to a \code{\link{list}}.}
+#' }
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
+#' \describe{
+#'  \item{\code{x[i]}}{Extracts the elements selected by subscript \code{i}.
+#'   \code{i} can be \code{missing} or \code{NULL}, \code{numeric} or
+#'   \code{character} vector or a \code{factor}.
+#'   Returns a new \code{GammaSpectra} object.}
+#'  \item{\code{x[i, j]}}{Like the above but allows to select a slot thru
+#'   \code{j} (see examples). \code{j} is a \code{character} vector of
+#'   length one. Returns a \code{list}.}
+#'  \item{\code{x[[i]]}}{Extracts the elements selected by subscript \code{i}.
+#'   \code{i} can be a \code{numeric} or \code{character} vector
+#'   of length one. Returns the corresponding \linkS4class{GammaSpectrum} object.}
+#' }
+#' @example inst/examples/ex-GammaSpectra.R
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname GammaSpectra
+#' @aliases GammaSpectra-class
+setClass(
+  Class = "GammaSpectra",
+  contains = "list"
+)
+
+#' An S4 class to represent a calibration curve
+#'
+#' @param x An object of class \code{CalibrationCurve}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @inheritSection GammaSpectrum-class Subset
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname CalibrationCurve
+#' @aliases CalibrationCurve-class
+setClass(
+  Class = "CalibrationCurve",
+  slots = c(
+    model = "lm",
+    data = "data.frame"
+  )
+)
+
+#' An S4 class to represent a gamma dose rate
+#'
+#' @param x An object of class \code{DoseRate}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @inheritSection GammaSpectrum-class Subset
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname DoseRate
+#' @aliases DoseRate-class
+setClass(
+  Class = "DoseRate",
+  slots = c(
+    reference = "character",
+    dose_value = "numeric",
+    dose_error = "numeric",
+    signal_value = "numeric",
+    signal_error = "numeric"
+  )
+)
+
+# INITIALIZATION ===============================================================
+## GammaSpectrum ---------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "GammaSpectrum",
+  definition = function(.Object, reference, date, instrument, file_format,
+                        chanel, energy, counts, live_time, real_time) {
+    if (!missing(reference)) .Object@reference <- reference
+    if (!missing(date)) .Object@date <- date
+    if (!missing(instrument)) .Object@instrument <- instrument
+    if (!missing(file_format)) .Object@file_format <- file_format
+    if (!missing(chanel)) .Object@chanel <- chanel
+    if (!missing(energy)) .Object@energy <- energy
+    if (!missing(counts)) .Object@counts <- counts
+    if (!missing(live_time)) .Object@live_time <- live_time
+    if (!missing(real_time)) .Object@real_time <- real_time
+
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
+    }
+    return(.Object)
+  }
+)
+## GammaSpectra ----------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "GammaSpectra",
+  definition = function(.Object, ...) {
+    .Object <- methods::callNextMethod(.Object, ...)
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
+    }
+    return(.Object)
+  }
+)
+## DoseRate --------------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "DoseRate",
+  definition = function(.Object, reference, dose_value, dose_error,
+                        signal_value, signal_error) {
+    if (!missing(reference)) .Object@reference <- reference
+    if (!missing(dose_value)) .Object@dose_value <- dose_value
+    if (!missing(dose_error)) .Object@dose_error <- dose_error
+    if (!missing(signal_value)) .Object@signal_value <- signal_value
+    if (!missing(signal_error)) .Object@signal_error <- signal_error
+
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
+    }
+    return(.Object)
+  }
+)
+
+# VALIDATION ===================================================================
+## GammaSpectrum ---------------------------------------------------------------
+setValidity(
+  Class = "GammaSpectrum",
+  method = function(object) {
+    reference <- object@reference
+    date <- object@date
+    instrument <- object@instrument
+    file_format <- object@file_format
+    chanel <- object@chanel
+    energy <- object@energy
+    counts <- object@counts
+    live_time <- object@live_time
+    real_time <- object@real_time
+    message <- c()
+
+    if (length(reference) > 1)
+      message <- c(message, "'reference' must be a single character string.")
+    if (length(date) > 1)
+      message <- c(message, "'date' must be a single character string.")
+    if (length(instrument) > 1)
+      message <- c(message, "'instrument' must be a single character string.")
+    if (length(file_format) > 1)
+      message <- c(message, "'file_format' must be a single character string.")
+    if (length(live_time) > 1)
+      message <- c(message, "'live_time' must be a single numeric value.")
+    if (length(real_time) > 1)
+      message <- c(message, "'real_time' must be a single numeric value.")
+
+    x <- lengths(list(chanel, energy, counts))
+    if (!isEqual(x))
+      message <- c(message, "'chanel', 'energy' and 'counts' must have the same length.")
+
+    if (length(message) != 0) {
+      stop(paste(message, collapse = "\n"))
+    } else {
+      return(TRUE)
+    }
+  }
+)
+## GammaSpectra ----------------------------------------------------------------
+setValidity(
+  Class = "GammaSpectra",
+  method = function(object) {
+    data <- object@.Data
+    message <- c()
+
+    # slot: .Data
+    if (length(data) != 0) {
+      class <- unlist(lapply(X = data, FUN = is, class2 = "GammaSpectrum"))
+      if (sum(!class) != 0) {
+        message <- c(message, "All elements must be of class 'GammaSpectrum'.")
+      }
+    }
+
+    if (length(message) != 0) {
+      stop(paste(message, collapse = "\n"))
+    } else {
+      return(TRUE)
+    }
+  }
+)
