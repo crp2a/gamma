@@ -1,7 +1,6 @@
 Package: gamma
 Title: Process In-Situ Gamma Dose Rate Measurement for Luminescence Dating
 Version: 0.0.0.9000
-Date: 2019-03-28
 Authors@R: 
     c(person(given = "Nicolas",
              family = "Frerebeau",
@@ -37,17 +36,22 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    rxylib,
-    magrittr,
-    stats,
+    broom,
+    dplyr,
     ggplot2,
-    dplyr
+    magrittr,
+    methods,
+    rxylib,
+    stats
 RoxygenNote: 6.1.1
 Collate: 
     'gamma.R'
     'AllClasses.R'
     'AllGenerics.R'
     'calibrate.R'
+    'coerce.R'
+    'extract.R'
     'plot.R'
     'read.R'
+    'show.R'
     'utilities.R'
