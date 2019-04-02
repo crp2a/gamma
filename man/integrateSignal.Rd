@@ -11,10 +11,10 @@
 integrateSignal(object, ...)
 
 \S4method{integrateSignal}{GammaSpectra}(object, peaks = c(238, 1461,
-  2614.5), noise = list(value = 1190, error = 1), m = 3, ...)
+  2614.5), noise = NULL, m = 3, ...)
 
 \S4method{integrateSignal}{GammaSpectrum}(object, peaks = c(238, 1461,
-  2614.5), noise = list(value = 1190, error = 1), m = 3, ...)
+  2614.5), noise = NULL, m = 3, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
