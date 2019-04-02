@@ -8,7 +8,7 @@ gamma <img width=120px src="man/figures/logo.png" align="right" />
 Overview
 --------
 
-The goal of gamma is to ...
+`gamma` is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to automatically correct the energy shifts of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. In its current version, this package only supports Canberra CNF files.
 
 Installation
 ------------
@@ -25,9 +25,6 @@ Or install the development version from GitHub with:
 # install.packages("devtools")
 devtools::install_github("nfrerebeau/gamma")
 ```
-
-Usage
------
 
 Contributing
 ------------
