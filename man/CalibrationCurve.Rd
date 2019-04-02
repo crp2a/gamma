@@ -20,7 +20,7 @@ An S4 class to represent a calibration curve
 }
 \section{Subset}{
 
-In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 \describe{
  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
  subscript \code{i}. \code{i} is a \code{character} vector

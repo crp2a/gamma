@@ -7,7 +7,7 @@
 \alias{plot,GammaSpectrum,missing-method}
 \alias{plot,GammaSpectra,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
-\alias{plot,CalibrationCurve,GammaSpectra-method}
+\alias{plot,CalibrationCurve,DoseRate-method}
 \title{Plot}
 \usage{
 \S4method{plot}{GammaSpectrum,missing}(x, y, ...)
@@ -17,7 +17,7 @@
 
 \S4method{plot}{CalibrationCurve,missing}(x, y, ...)
 
-\S4method{plot}{CalibrationCurve,GammaSpectra}(x, y, ...)
+\S4method{plot}{CalibrationCurve,DoseRate}(x, y, ...)
 }
 \arguments{
 \item{x, y}{Objects to be plotted.}
@@ -38,7 +38,7 @@ TODO
 }
 \examples{
 # Import CNF files
-dir <- system.file("extdata/calib/", package = "gamma")
+dir <- system.file("extdata/cerege/", package = "gamma")
 spectra <- read(dir)
 
 # Plot the spectrum named 'BRIQUE'

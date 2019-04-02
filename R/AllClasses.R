@@ -103,7 +103,13 @@ setClass(
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
 #'  names of the slots.
-#' @inheritSection GammaSpectrum-class Subset
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname CalibrationCurve
@@ -122,7 +128,20 @@ setClass(
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
 #'  names of the slots.
-#' @inheritSection GammaSpectrum-class Subset
+#' @section Coerce:
+#' In the code snippets below, \code{x} is a \code{DoseRate} object.
+#' \describe{
+#'  \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
+#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
+#'  \code{\link[=data.frame]{data frame}}.}
+#' }
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{DoseRate} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname DoseRate
@@ -168,6 +187,21 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(.Object, ...) {
     .Object <- methods::callNextMethod(.Object, ...)
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
+    }
+    return(.Object)
+  }
+)
+## CalibrationCurve ------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "CalibrationCurve",
+  definition = function(.Object, model, data) {
+    if (!missing(model)) .Object@model <- model
+    if (!missing(data)) .Object@data <- data
+
     methods::validObject(.Object)
     if (getOption("verbose")) {
       message(paste(class(.Object), "instance initialized.", sep = " "))
@@ -249,6 +283,48 @@ setValidity(
         message <- c(message, "All elements must be of class 'GammaSpectrum'.")
       }
     }
+
+    if (length(message) != 0) {
+      stop(paste(message, collapse = "\n"))
+    } else {
+      return(TRUE)
+    }
+  }
+)
+## DoseRate ---------------------------------------------------------------
+setValidity(
+  Class = "DoseRate",
+  method = function(object) {
+    reference <- object@reference
+    dose_value <- object@dose_value
+    dose_error <- object@dose_error
+    signal_value <- object@signal_value
+    signal_error <- object@signal_error
+    message <- c()
+
+    if (length(reference) != 0)
+      if (anyNA(reference))
+        message <- c(message, "'reference' missing values were detected.")
+
+    if (length(dose_value) != 0)
+      if (anyNA(dose_value) | any(is.infinite(dose_value)))
+        message <- c(message, "'dose_value' infinite or missing values were detected.")
+
+    if (length(dose_error) != 0)
+      if (anyNA(dose_error) | any(is.infinite(dose_error)))
+        message <- c(message, "'dose_error' infinite or missing values were detected.")
+
+    if (length(signal_value) != 0)
+      if (anyNA(signal_value) | any(is.infinite(signal_value)))
+        message <- c(message, "'signal_value' infinite or missing values were detected.")
+
+    if (length(signal_error) != 0)
+      if (anyNA(signal_error) | any(is.infinite(signal_error)))
+        message <- c(message, "'signal_error' infinite or missing values were detected.")
+
+    x <- lengths(list(reference, dose_value, dose_error, signal_value, signal_error))
+    if (!isEqual(x))
+      message <- c(message, "All slots must have the same length.")
 
     if (length(message) != 0) {
       stop(paste(message, collapse = "\n"))

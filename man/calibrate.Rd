@@ -17,7 +17,7 @@ calibrate(object, ...)
 
 \item{...}{Currently not used.}
 
-\item{dose}{TODO.}
+\item{dose}{A \code{\link{list}} of length-two numeric vector.}
 
 \item{peaks}{A \code{\link{numeric}} vector.}
 
@@ -30,8 +30,8 @@ Builds a calibration curve.
 }
 \examples{
 # Import CNF files for calibration
-dir <- system.file("extdata/calib/", package = "gamma")
-calib_spc <- read(dir)
+dir <- system.file("extdata/cerege/", package = "gamma")
+calib_spc <- read(dir)[-5]
 
 # Build calibration curve
 calib_curve <- calibrate(
@@ -42,13 +42,18 @@ calib_curve <- calibrate(
 )
 
 # Plot curve
-plot(calib_curve)
+plot(calib_curve) +
+  ggplot2::labs(x = "Dose rate [µGy/y]", y = "Integrated signal") +
+  ggplot2::theme_bw()
 
 # Import CNF file
 dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
-adjust(gamma_spc, calib_curve)
+dose_rate <- adjust(gamma_spc, calib_curve)
+as(dose_rate, "data.frame")
+
+#plot(calib_curve, dose_rate)
 }
 \author{
 N. Frerebeau

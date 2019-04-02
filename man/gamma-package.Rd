@@ -5,11 +5,17 @@
 \alias{gamma-package}
 \alias{_PACKAGE}
 \alias{gamma}
-\title{gamma: Process In-Situ Gamma Dose Rate Measurement for Luminescence Dating}
+\title{gamma: Process In-Situ Gamma-Ray Spectrometry Measurements for
+    Luminescence Dating}
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
-What the package does (one paragraph).
+'gamma' is intended to process in-situ
+    gamma-ray spectrometry measurements for luminescence dating. This
+    package allows to automatically correct the energy shifts of the
+    spectrum. It provides methods for estimating the gamma dose rate by
+    the use of a calibration curve. In its current version, this package
+    only supports Canberra CNF files.
 }
 \details{
 \tabular{ll}{

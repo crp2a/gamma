@@ -1,5 +1,5 @@
 # Import CNF files
-dir <- system.file("extdata/calib/", package = "gamma")
+dir <- system.file("extdata/cerege/", package = "gamma")
 spectra <- read(dir)
 
 # Plot the spectrum named 'BRIQUE'

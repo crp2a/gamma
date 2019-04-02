@@ -18,9 +18,19 @@ names of the slots.}
 \description{
 An S4 class to represent a gamma dose rate
 }
+\section{Coerce}{
+
+In the code snippets below, \code{x} is a \code{DoseRate} object.
+\describe{
+ \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
+ \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
+ \code{\link[=data.frame]{data frame}}.}
+}
+}
+
 \section{Subset}{
 
-In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+In the code snippets below, \code{x} is a \code{DoseRate} object.
 \describe{
  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
  subscript \code{i}. \code{i} is a \code{character} vector
