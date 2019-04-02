@@ -28,3 +28,28 @@ setMethod(
     cat("A collection of", n, "gamma", spc, sep = " ")
   }
 )
+
+# CalibrationCurve =============================================================
+setMethod(
+  f = "show",
+  signature = "CalibrationCurve",
+  definition = function(object) {
+    sum_up <- summary(object@model)
+    cat("Calibration curve:", "\n",
+        "  Slope: ", round(stats::coef(object@model), 2), "\n",
+        "  Slope error: ", round(sum_up$coef[, "Std. Error"], 2), "\n",
+        "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5),
+        sep = " ")
+  }
+)
+
+# DoseRate =====================================================================
+setMethod(
+  f = "show",
+  signature = "DoseRate",
+  definition = function(object) {
+    n <- length(object@dose_value)
+    est <- ifelse(n > 1, "estimates", "estimate")
+    cat("A set of", n, "gamma dose rate", est, sep = " ")
+  }
+)
