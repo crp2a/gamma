@@ -3,7 +3,7 @@
 gamma <img width=120px src="man/figures/logo.png" align="right" />
 ==================================================================
 
-[![GitHub Release](https://img.shields.io/github/release/nfrerebeau/gamma.svg)](https://github.com/nfrerebeau/gamma/releases) [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Build Status](https://travis-ci.org/nfrerebeau/gamma.svg?branch=master)](https://travis-ci.org/nfrerebeau/gamma) [![codecov](https://codecov.io/gh/nfrerebeau/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/nfrerebeau/gamma) [![GitHub Release](https://img.shields.io/github/release/nfrerebeau/gamma.svg)](https://github.com/nfrerebeau/gamma/releases) [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Overview
 --------
