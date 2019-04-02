@@ -37,8 +37,7 @@ setMethod(
     final <- apply(X = signals, MARGIN = 1, FUN = calcDoseRate,
                    slope = slope_value, error = slope_error) %>%
       magrittr::set_names(names(object)) %>%
-      dplyr::bind_rows(.id = "reference") %>%
-      as.data.frame()
+      dplyr::bind_rows(.id = "reference")
 
     methods::new("DoseRate",
                  reference = signals$reference,
@@ -73,7 +72,9 @@ setMethod(
       as.data.frame() %>%
       dplyr::mutate(reference = rownames(.)) %>%
       dplyr::rename(dose = "V1", dose_error = "V2") %>%
-      dplyr::inner_join(signals, by = "reference")
+      dplyr::inner_join(signals, by = "reference") %>%
+      dplyr::select(.data$reference, .data$dose, .data$dose_error,
+                    .data$signal, .data$signal_error)
 
     fit <- stats::lm(signal ~ 0 + dose, data = data)
 
