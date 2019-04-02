@@ -8,13 +8,11 @@ NULL
 setMethod(
   f = "adjust",
   signature = signature(object = "GammaSpectra", curve = "CalibrationCurve"),
-  definition = function(object, curve,
-                        peaks = c(238, 1461, 2614.5),
-                        noise = list(value = 1190, error = 1),
-                        m = 3, ...) {
+  definition = function(object, curve, noise = NULL, ...) {
 
-    signals <- integrateSignal(object, peaks = peaks, noise = noise, m = m) %>%
-      dplyr::bind_rows(.id = "reference")
+    signals <- integrateSignal(object, noise = noise, ...) %>%
+      dplyr::bind_rows(.id = "reference") %>%
+      dplyr::rename(signal = "value", signal_error = "error")
 
     # Get linear regression results
     fit <- curve@model
@@ -54,13 +52,11 @@ setMethod(
 setMethod(
   f = "calibrate",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, dose,
-                        peaks = c(238, 1461, 2614.5),
-                        noise = list(value = 1190, error = 1),
-                        m = 3, ...) {
+  definition = function(object, dose, noise = NULL, ...) {
 
-    signals <- integrateSignal(object, peaks = peaks, noise = noise, m = m) %>%
-      dplyr::bind_rows(.id = "reference")
+    signals <- integrateSignal(object, noise = noise, ...) %>%
+      dplyr::bind_rows(.id = "reference") %>%
+      dplyr::rename(signal = "value", signal_error = "error")
 
     # Check names
     if (sum(signals$reference %in% names(dose)) != nrow(signals))
@@ -82,14 +78,14 @@ setMethod(
   }
 )
 
+#' @export
 #' @rdname integrateSignal
 #' @aliases integrateSignal,GammaSpectra-method
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, peaks = c(238, 1461, 2614.5),
-                        noise = list(value = 1190, error = 1),
-                        m = 3, ...) {
+                        noise = NULL, m = 3, ...) {
     spectra <- as.list(object)
     signals <- lapply(X = spectra, FUN = integrateSignal,
                       peaks = peaks, noise = noise, m = m)
@@ -97,14 +93,14 @@ setMethod(
   }
 )
 
+#' @export
 #' @rdname integrateSignal
 #' @aliases integrateSignal,GammaSpectrum-method
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, peaks = c(238, 1461, 2614.5),
-                        noise = list(value = 1190, error = 1),
-                        m = 3, ...) {
+                        noise = NULL, m = 3, ...) {
     # Validation
     m <- as.integer(m)
 
@@ -159,11 +155,23 @@ setMethod(
     # Signal normalisé au temps
     active_time <- object@live_time
     norm_signal <- int_signal / active_time
-    # Signal normalisé net (bruit de fond soustrait)
-    net_signal <- norm_signal - noise$value
-    err_signal <- sqrt((sqrt(2 * int_signal) / active_time)^2 + noise$error^2)
+    norm_error <- 0 # FIXME
 
-    # return(list(nls = nls_fit, poly = poly_fit, peaks = energy))
-    return(list(signal = net_signal, signal_error = err_signal))
+    if (!is.null(noise)) {
+      # Validation
+      if (length(noise) != 2)
+        stop("YYY")
+      if (!all.equal(lengths(noise), c(value = 1, error = 1)))
+        stop("ZZZ")
+
+      # Signal normalisé net (bruit de fond soustrait)
+      net_signal <- norm_signal - noise$value
+      net_error <- sqrt((sqrt(2 * int_signal) / active_time)^2 + noise$error^2)
+
+      return(list(value = net_signal, error = net_error))
+    } else {
+      # return(list(nls = nls_fit, poly = poly_fit, peaks = energy))
+      return(list(value = norm_signal, error = norm_error))
+    }
   }
 )
