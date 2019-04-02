@@ -11,21 +11,16 @@
 adjust(object, curve, ...)
 
 \S4method{adjust}{GammaSpectra,CalibrationCurve}(object, curve,
-  peaks = c(238, 1461, 2614.5), noise = list(value = 1190, error = 1),
-  m = 3, ...)
+  noise = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
 
 \item{curve}{An object of class \linkS4class{CalibrationCurve}.}
 
-\item{...}{Currently not used.}
-
-\item{peaks}{A \code{\link{numeric}} vector.}
+\item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
 
 \item{noise}{A \code{\link{list}} of numeric values.}
-
-\item{m}{An \code{\link{integer}}.}
 }
 \description{
 Estimates gamma dose rate.

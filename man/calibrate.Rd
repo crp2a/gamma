@@ -9,21 +9,16 @@
 \usage{
 calibrate(object, ...)
 
-\S4method{calibrate}{GammaSpectra}(object, dose, peaks = c(238, 1461,
-  2614.5), noise = list(value = 1190, error = 1), m = 3, ...)
+\S4method{calibrate}{GammaSpectra}(object, dose, noise = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
 
-\item{...}{Currently not used.}
+\item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
 
 \item{dose}{A \code{\link{list}} of length-two numeric vector.}
 
-\item{peaks}{A \code{\link{numeric}} vector.}
-
 \item{noise}{A \code{\link{list}} of numeric values.}
-
-\item{m}{An \code{\link{integer}}.}
 }
 \description{
 Builds a calibration curve.

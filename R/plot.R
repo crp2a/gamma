@@ -22,6 +22,12 @@ setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectra", y = "missing"),
   definition = function(x, select = 1, facet = FALSE, ...) {
+    # Validation
+    if (is.null(select))
+      select <- 1:length(x)
+    if (is.numeric(select))
+      select <- as.integer(select)
+
     # Subset data
     spc <- methods::as(x[select], "list")
     if (length(spc) == 1)

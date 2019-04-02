@@ -7,10 +7,8 @@ NULL
 #' Estimates gamma dose rate.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param curve An object of class \linkS4class{CalibrationCurve}.
-#' @param peaks A \code{\link{numeric}} vector.
 #' @param noise A \code{\link{list}} of numeric values.
-#' @param m An \code{\link{integer}}.
-#' @param ... Currently not used.
+#' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -26,10 +24,8 @@ setGeneric(
 #' Builds a calibration curve.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param dose A \code{\link{list}} of length-two numeric vector.
-#' @param peaks A \code{\link{numeric}} vector.
 #' @param noise A \code{\link{list}} of numeric values.
-#' @param m An \code{\link{integer}}.
-#' @param ... Currently not used.
+#' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
