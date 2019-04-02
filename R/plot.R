@@ -33,7 +33,8 @@ setMethod(
 
     if (facet) {
       colour <- NULL
-      facet <- ggplot2::facet_wrap(.~reference, nrow = length(spc_ls), scales = "free_y")
+      facet <- ggplot2::facet_wrap(.~reference, nrow = length(spc_ls),
+                                   scales = "free_y")
     } else {
       colour <- "reference"
       facet <- NULL
@@ -68,11 +69,23 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,CalibrationCurve,GammaSpectra-method
+#' @aliases plot,CalibrationCurve,DoseRate-method
 setMethod(
   f = "plot",
-  signature = signature(x = "CalibrationCurve", y = "GammaSpectra"),
+  signature = signature(x = "CalibrationCurve", y = "DoseRate"),
   definition = function(x, y, ...) {
-    a <- ""
+    # Get data
+    calib <- x@data
+    pred <- methods::as(y, "data.frame")
+    data <- dplyr::bind_rows("calibration" = calib, "predicted" = pred,
+                             .id = "spectrum")
+
+    ggplot2::ggplot(data = data,
+                    mapping = ggplot2::aes_string(x = "dose", y = "signal",
+                                                  colour = "spectrum")) +
+      ggplot2::stat_smooth(data = subset(data, data$spectrum == "calibration"),
+                           method = "lm", col = "black",
+                           formula = y ~ 0 + x, se = FALSE) +
+      ggplot2::geom_point()
   }
 )
