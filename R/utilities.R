@@ -1,36 +1,5 @@
 # HELPERS
 
-#' Find peaks
-#'
-#' Finds local maxima/minima in sequential data.
-#' @param x A \code{\link{numeric}} vector.
-#' @param m A \code{\link{numeric}} vector.
-#' @return A \code{\link{numeric}} vector.
-#' @note
-#'  Adapted from Stasia Grinberg's \href{algorithm}{https://github.com/stas-g/findPeaks}.
-#' @keywords internal
-#' @noRd
-findPeaks <- function (x, m = 3){
-  shape <- diff(sign(diff(x, na.pad = FALSE)))
-
-  pks <- sapply(
-    X = which(shape < 0),
-    FUN = function(i) {
-      z <- i - m + 1
-      z <- ifelse(z > 0, z, 1)
-      w <- i + m + 1
-      w <- ifelse(w < length(x), w, length(x))
-      if (all(x[c(z:i, (i + 2):w)] <= x[i + 1])) {
-        return(i + 1)
-      } else {
-        return(numeric(0))
-      }
-    }
-  )
-  pks <- unlist(pks)
-  pks
-}
-
 #' Equality within a vector
 #'
 #' Checks for equality among all elements of a vector.
