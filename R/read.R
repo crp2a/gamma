@@ -21,9 +21,13 @@ setMethod(
     }
 
     spc <- lapply(X = file, FUN = readCanberraCNF, ...)
-    spc_ref <- sapply(X = spc, FUN = "[[", i = "reference")
-    names(spc) <- spc_ref
-    methods::new("GammaSpectra", spc)
+    if (length(spc) > 1) {
+      spc_ref <- sapply(X = spc, FUN = "[[", i = "reference")
+      names(spc) <- spc_ref
+      methods::new("GammaSpectra", spc)
+    } else {
+      spc[[1]]
+    }
   }
 )
 

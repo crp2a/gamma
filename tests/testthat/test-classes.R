@@ -7,7 +7,7 @@ test_that("Initialize a GammaSpectrum instance", {
 
   options("verbose" = FALSE)
   file <- system.file("extdata/test1.cnf", package = "gamma")
-  spectrum <- read(file)[[1]]
+  spectrum <- read(file)
 
   expect_is(spectrum[["reference"]], "character")
   expect_is(spectrum[["date"]], "character")

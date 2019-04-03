@@ -63,10 +63,11 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \examples{
 # Import a Canberra CNF file
 file <- system.file("extdata/test1.cnf", package = "gamma")
-(spectrum <- read(file)[[1]])
+(spectrum <- read(file))
 
 # Coerce
-as(spectrum, "data.frame")
+df <- as(spectrum, "data.frame")
+head(df)
 
 # Subset
 spectrum[["reference"]]
