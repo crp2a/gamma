@@ -2,23 +2,6 @@
 #' @include AllClasses.R
 NULL
 
-#' Gamma dose rate
-#'
-#' Estimates gamma dose rate.
-#' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param curve An object of class \linkS4class{CalibrationCurve}.
-#' @param noise A \code{\link{list}} of numeric values.
-#' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
-#' @example inst/examples/ex-calibrate.R
-#' @author N. Frerebeau
-#' @docType methods
-#' @rdname adjust
-#' @aliases adjust-method
-setGeneric(
-  name = "adjust",
-  def = function(object, curve, ...) standardGeneric("adjust")
-)
-
 #' Calibration
 #'
 #' Builds a calibration curve.
@@ -34,6 +17,92 @@ setGeneric(
 setGeneric(
   name = "calibrate",
   def = function(object, ...) standardGeneric("calibrate")
+)
+
+#' Baseline estimation and removal
+#'
+#' @param object A \code{\link{numeric}} vector.
+#' @param method TODO.
+#' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
+#'  on \code{x} before employing SNIP algorithm?
+#' @param ... Extra parameters passed to other methods.
+#' @return
+#'  \code{estimateBaseline} returns a four columns data frame or a list
+#'  of data frame.
+#'
+#'  \code{removeBaseline} returns a \linkS4class{GammaSpectrum} or a
+#'  \linkS4class{GammaSpectra} object (same as \code{object}).
+#' @references
+#'  Morhác, M., Kliman, J., Matoucek, V., Veselský, M. and Turzo, I. (1997).
+#'  Background elimination methods for multidimensional gamma-ray spectra.
+#'  \emph{NIM}, A401 (1), 113-132.
+#'  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
+#'
+#'  Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. and Cousens, D. R.
+#'  (1988). SNIP, a statistics-sensitive background treatment for the
+#'  quantitative analysis of PIXE spectra in geoscience applications.
+#'  \emph{NIM}, B34 (3), 396-402.
+#'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
+#' @example inst/examples/ex-baseline.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @name baseline
+#' @rdname baseline
+NULL
+
+#' @rdname baseline
+#' @aliases estimateBaseline-method
+setGeneric(
+  name = "estimateBaseline",
+  def = function(object, ...) standardGeneric("estimateBaseline")
+)
+
+#' @rdname baseline
+#' @aliases removeBaseline-method
+setGeneric(
+  name = "removeBaseline",
+  def = function(object, ...) standardGeneric("removeBaseline")
+)
+
+#' Gamma dose rate
+#'
+#' Estimates gamma dose rate.
+#' @param object An object of class \linkS4class{GammaSpectra}.
+#' @param curve An object of class \linkS4class{CalibrationCurve}.
+#' @param noise A \code{\link{list}} of numeric values.
+#' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
+#' @example inst/examples/ex-calibrate.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname estimateDoseRate
+#' @aliases estimateDoseRate-method
+setGeneric(
+  name = "estimateDoseRate",
+  def = function(object, curve, ...) standardGeneric("estimateDoseRate")
+)
+
+#' Find peaks
+#'
+#' Finds local maxima in sequential data.
+#' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param span A \code{\link{numeric}} giving the half window size. If
+#'  \code{NULL}, 5\% of the number of chanels is used as the half window size.
+#' @param ... Currently not used.
+#' @details
+#'  A local maximum have to be the highest one in the given window to be
+#'  recognized as peak.
+#' @return
+#'  A three columns data frame or a list of data frame.
+#' @note
+#'  Adapted from Stasia Grinberg's \href{https://github.com/stas-g/findPeaks}{algorithm}.
+#' @example inst/examples/ex-baseline.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname findPeaks
+#' @aliases findPeaks-method
+setGeneric(
+  name = "findPeaks",
+  def = function(object, ...) standardGeneric("findPeaks")
 )
 
 #' Signal integration
