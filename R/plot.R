@@ -63,10 +63,11 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "missing"),
   definition = function(x, ...) {
     # Get data
-    data <- x@model$model
+    data <- x@data
 
     ggplot2::ggplot(data = data,
-                    mapping = ggplot2::aes_string(x = "dose", y = "signal")) +
+                    mapping = ggplot2::aes_string(x = "dose", y = "signal",
+                                                  label = "reference")) +
       ggplot2::geom_point() +
       ggplot2::stat_smooth(method = "lm", col = "red",
                            formula = y ~ 0 + x, se = FALSE)
