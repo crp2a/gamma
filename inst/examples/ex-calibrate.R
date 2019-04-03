@@ -3,11 +3,19 @@ dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir)[-5]
 
 # Build calibration curve
+known_dose <- list(
+  BRIQUE = c(1984.64, 34.08),
+  C347 = c(1421.38, 25.25),
+  C341 = c(849.01, 21.32),
+  PEP = c(2535.53, 112.17),
+  GOU = c(1573.41, 17.43)
+)
+
 calib_curve <- calibrate(
   calib_spc,
-  dose = list(BRIQUE = c(1984.64, 34.08), C347 = c(1421.38, 25.25),
-              C341 = c(849.01, 21.32), PEP = c(2535.53, 112.17),
-              GOU = c(1573.41, 17.43))
+  dose = known_dose,
+  noise = list(value = 1190, error = 1),
+  span = 20
 )
 
 # Plot curve
@@ -19,7 +27,6 @@ plot(calib_curve) +
 dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
-dose_rate <- adjust(gamma_spc, calib_curve)
+dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
+                              noise = list(value = 1190, error = 1))
 as(dose_rate, "data.frame")
-
-#plot(calib_curve, dose_rate)
