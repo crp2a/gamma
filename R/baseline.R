@@ -40,15 +40,21 @@ setMethod(
     )
 
     # Inverse LLS operator
-    z <- if (LLS) inverseLLS(y) else y
+    counts_baseline <- if (LLS) inverseLLS(y) else y
 
-    baseline <- data.frame(
+    methods::new(
+      "BaseLine",
+      reference = object@reference,
+      date = object@date,
+      instrument = object@instrument,
+      file_format = object@file_format,
       chanel = x_cut$chanel,
       energy = x_cut$energy,
-      counts = x_cut$counts,
-      baseline = z
+      counts = counts_baseline,
+      rate = counts_baseline / object@live_time,
+      live_time = object@live_time,
+      real_time = object@real_time
     )
-    return(baseline)
   }
 )
 

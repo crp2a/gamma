@@ -45,7 +45,7 @@ NULL
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
-#' @seealso \linkS4class{GammaSpectra}.
+#' @seealso \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
 #' @docType class
@@ -65,6 +65,19 @@ setClass(
     live_time = "numeric",
     real_time = "numeric"
   )
+)
+
+#' An S4 class to represent a spectrum baseline
+#'
+#' @seealso \linkS4class{GammaSpectrum}.
+# @example inst/examples/ex-GammaSpectrum.R
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname BaseLine
+#' @aliases BaseLine-class
+setClass(
+  Class = "BaseLine",
+  contains = "GammaSpectrum"
 )
 
 #' An S4 class to represent a collection of gamma sectra
