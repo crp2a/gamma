@@ -120,11 +120,11 @@ setMethod(
     # Get data
     calib <- methods::as(x, "data.frame")
     measure <- methods::as(y, "data.frame")
-print(calib)
-print(measure)
+
     # Bind data frame for 'ggplot2'
-    data <- dplyr::bind_rows("calibration" = calib, "measured" = measure,
-                             .id = "spectrum")
+    data <- dplyr::bind_rows(calib, measure) %>%
+      dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
+                                 rep("measured", nrow(measure))))
 
     ggplot2::ggplot(data = data,
                     mapping = ggplot2::aes_string(x = "dose", y = "signal",

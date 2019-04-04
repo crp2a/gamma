@@ -27,6 +27,9 @@ plot(calib_curve) +
 dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
+# Estimate gamma dose rate
 dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
                               noise = list(value = 1190, error = 1))
-as(dose_rate, "data.frame")
+
+# Plot estimated values on the calibration curve
+plot(calib_curve, dose_rate)
