@@ -10,10 +10,10 @@ setMethod(
   signature = signature(object = "GammaSpectra"),
   definition = function(object, range = c(200, 2800),
                         peaks = c(238, 1461, 2614.5),
-                        noise = NULL, span = NULL, ...) {
+                        noise = NULL, ...) {
     spectra <- as.list(object)
     signals <- lapply(X = spectra, FUN = integrateSignal,
-                      range = range, peaks = peaks, noise = noise, span = span)
+                      range = range, peaks = peaks, noise = noise, ...)
     return(signals)
   }
 )
@@ -26,7 +26,7 @@ setMethod(
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, range = c(200, 2800),
                         peaks = c(238, 1461, 2614.5),
-                        noise = NULL, span = NULL, ...) {
+                        noise = NULL, ...) {
     # Validation
     if (!is.numeric(range) | length(range) != 2)
       stop("'range' must be a length two numeric value (energy range in keV).")
@@ -40,7 +40,7 @@ setMethod(
 
     # Adjust spectrum for energy shift
     ## Detect peaks
-    peaks_index <- findPeaks(spc_clean, span = span)
+    peaks_index <- findPeaks(spc_clean, ...)
     ## Find peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
     peaks_energy <- sapply(
       X = peaks,

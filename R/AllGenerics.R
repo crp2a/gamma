@@ -122,7 +122,7 @@ setGeneric(
 #' @param noise A \code{\link{list}} of numeric values.
 #' @param span An \code{\link{integer}} giving the half window size for peak
 #'  searching (see \code{\link{findPeaks}}).
-#' @param ... Currently not used.
+#' @param ... Extra parameters passed to \code{\link{findPeaks}}.
 #' @details
 #'  TODO
 #' @author N. Frerebeau

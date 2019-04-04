@@ -11,15 +11,15 @@
 integrateSignal(object, ...)
 
 \S4method{integrateSignal}{GammaSpectra}(object, range = c(200, 2800),
-  peaks = c(238, 1461, 2614.5), noise = NULL, span = NULL, ...)
+  peaks = c(238, 1461, 2614.5), noise = NULL, ...)
 
 \S4method{integrateSignal}{GammaSpectrum}(object, range = c(200, 2800),
-  peaks = c(238, 1461, 2614.5), noise = NULL, span = NULL, ...)
+  peaks = c(238, 1461, 2614.5), noise = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
 
-\item{...}{Currently not used.}
+\item{...}{Extra parameters passed to \code{\link{findPeaks}}.}
 
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
 range to integrate within.}
