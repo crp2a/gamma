@@ -11,7 +11,7 @@ setMethod(
         "  Reference: ", object@reference, "\n",
         "  Instrument: ", object@instrument, "\n",
         "  Date: ", object@date, "\n",
-        "  Number of chanels: ", max(object@chanel), "\n",
+        "  Number of chanels: ", length(object@chanel), "\n",
         "  Energy range (keV): ", paste(range(round(object@energy, 2)),
                                         collapse = "-"),
         sep = "")
