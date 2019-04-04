@@ -8,11 +8,12 @@ NULL
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, peaks = c(238, 1461, 2614.5),
+  definition = function(object, range = c(200, 2800),
+                        peaks = c(238, 1461, 2614.5),
                         noise = NULL, span = NULL, ...) {
     spectra <- as.list(object)
     signals <- lapply(X = spectra, FUN = integrateSignal,
-                      peaks = peaks, noise = noise, span = span)
+                      range = range, peaks = peaks, noise = noise, span = span)
     return(signals)
   }
 )
@@ -23,63 +24,59 @@ setMethod(
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, peaks = c(238, 1461, 2614.5),
+  definition = function(object, range = c(200, 2800),
+                        peaks = c(238, 1461, 2614.5),
                         noise = NULL, span = NULL, ...) {
     # Validation
-    # TODO
+    if (!is.numeric(range) | length(range) != 2)
+      stop("'range' must be a length two numeric value (energy range in keV).")
+    if (!is.numeric(peaks) | length(peaks) != 3)
+      stop("'peaks' must be a length three numeric value (expected peaks energy in keV).")
 
     # Get spectrum data
     spc_data <- methods::as(object, "data.frame")
     # Remove baseline
     spc_clean <- removeBaseline(object)
-    # Detect peaks
+
+    # Adjust spectrum for energy shift
+    ## Detect peaks
     peaks_index <- findPeaks(spc_clean, span = span)
-    # Find peaks at 238 keV, 1461 keV and 2614.5 keV
-    peaks_select <- sapply(
+    ## Find peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
+    peaks_energy <- sapply(
       X = peaks,
       FUN = function(expected, real) which.min(abs(real - expected)),
       real = peaks_index$energy
     )
-
-    # Get corresponding chanels
-    peaks_chanel <- peaks_index$chanel[peaks_select]
-    # Fit second order polynomial
-    poly_fit <- stats::lm(peaks ~ poly(peaks_chanel, degree = 2, raw = TRUE))
-    poly_coef <- stats::coef(poly_fit) %>%
-      magrittr::set_names(c("c", "b", "a"))
-
-    # TODO: pas super
-    findPolyRoot <- function(a, b, c, delta) {
-      (- b + sqrt(b^2 - 4 * (c - delta) * a)) / (2 * a)
-    }
-    # 200 keV, 2800 keV
-    bound_chanel <- sapply(
-      X = c(200, 2800),
-      FUN = function(x, coef) {
-        round(do.call(findPolyRoot, c(as.list(coef), list(delta = x))))
-      },
-      coef = poly_coef
-    )
+    ## Get corresponding chanels
+    fit_data <- data.frame(energy = peaks,
+                           chanel = peaks_index$chanel[peaks_energy])
+    ## Fit second order polynomial
+    fit_poly <- stats::lm(chanel ~ stats::poly(energy, degree = 2, raw = TRUE),
+                          data = fit_data)
+    ## Get chanels corresponding to 200 keV, 2800 keV
+    bound_chanel <- round(stats::predict(fit_poly, data.frame(energy = range)))
     seq_chanel <- which(spc_data$chanel >= bound_chanel[1] &
                           spc_data$chanel <= bound_chanel[2])
 
-    # Signal integré
+    # Integrate signal between boundaries
     int_signal <- crossprod(spc_data$energy[seq_chanel],
                             spc_data$counts[seq_chanel])
     int_signal %<>% as.numeric()
-    # Signal normalisé au temps
+
+    # Normalize integrated signal to time
     active_time <- object@live_time
     norm_signal <- int_signal / active_time
     norm_error <- 1 # FIXME
 
+    # If noise value is known, substract it form normalized signal
     if (!is.null(noise)) {
       # Validation
       if (length(noise) != 2)
-        stop("YYY")
+        stop("'noise' must be a list of two elements ('value' and 'error')")
       if (!all.equal(lengths(noise), c(value = 1, error = 1)))
-        stop("ZZZ")
+        stop("'noise' must be a list of two elements ('value' and 'error')")
 
-      # Signal normalisé net (bruit de fond soustrait)
+      # Net signal (substracted background noise)
       net_signal <- norm_signal - noise$value
       net_error <- sqrt((sqrt(2 * int_signal) / active_time)^2 + noise$error^2)
 
