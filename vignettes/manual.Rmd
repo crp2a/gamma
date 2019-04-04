@@ -36,28 +36,34 @@ spc <- read(cnf_test)
 spc
 
 # Plot spectra
-plot(spc, select = NULL) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+plot(spc, xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
 ### Estimate and remove background
 Algorithme SNIP [@ryan1988; @morhac1997]
 
-```{r baseline, fig.width=7, fig.height=5, fig.align="center"}
+```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate baseline
-baseline <- estimateBaseline(spc, method = c("SNIP"))
+baseline <- estimateBaseline(spc, method = c("SNIP"), m = 100)
 
 # Plot spectrum + baseline
-plot(spc) +
-  ggplot2::geom_line(colour = "red", data = baseline,
-                     mapping = ggplot2::aes(x = energy, y = baseline))
+plot(spc, baseline) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+```
 
-# Remove baseline
-spc_clean <- removeBaseline(spc)
+```{r baseline-remove, fig.width=7, fig.height=5, fig.align="center"}
+# Substract previously estimated baseline
+spc_clean1 <- spc - baseline
+# Or, you can just remove baseline from spectrum
+spc_clean2 <- removeBaseline(spc)
+
+identical(spc_clean1, spc_clean2)
 
 # Plot spectra
-plot(spc_clean, select = NULL) +
+plot(spc_clean1) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
 ```
@@ -89,9 +95,9 @@ Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de can
 
 ```{r peaks, fig.width=7, fig.height=5, fig.align="center"}
 # Detect peaks
-peak_index <- findPeaks(spc_clean, span = NULL)
+peak_index <- findPeaks(spc_clean1, span = NULL)
 
-plot(spc_clean, select = 1:3, facet = TRUE) +
+plot(spc_clean1, select = 1:3, facet = TRUE) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::geom_vline(xintercept = peak_index$energy, colour = "red") +
   ggplot2::theme_bw()

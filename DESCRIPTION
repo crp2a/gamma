@@ -67,4 +67,5 @@ Collate:
     'plot.R'
     'read.R'
     'show.R'
+    'temp.R'
     'utilities.R'
