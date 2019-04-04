@@ -5,6 +5,7 @@
 \alias{plot}
 \alias{plot-method}
 \alias{plot,GammaSpectrum,missing-method}
+\alias{plot,GammaSpectrum,BaseLine-method}
 \alias{plot,GammaSpectra,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
 \alias{plot,CalibrationCurve,DoseRate-method}
@@ -12,6 +13,9 @@
 \usage{
 \S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("energy", "chanel"),
   yaxis = c("counts", "rate"), ...)
+
+\S4method{plot}{GammaSpectrum,BaseLine}(x, y, xaxis = c("energy",
+  "chanel"), yaxis = c("counts", "rate"), ...)
 
 \S4method{plot}{GammaSpectra,missing}(x, xaxis = c("energy", "chanel"),
   yaxis = c("counts", "rate"), select = 1, facet = FALSE, ...)

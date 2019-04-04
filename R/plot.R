@@ -23,6 +23,32 @@ setMethod(
 
 #' @export
 #' @rdname plot
+#' @aliases plot,GammaSpectrum,BaseLine-method
+setMethod(
+  f = "plot",
+  signature = signature(x = "GammaSpectrum", y = "BaseLine"),
+  definition = function(x, y, xaxis = c("energy", "chanel"),
+                        yaxis = c("counts", "rate"), ...) {
+    # Validation
+    xaxis <- match.arg(xaxis, several.ok = FALSE)
+    yaxis <- match.arg(yaxis, several.ok = FALSE)
+
+    spc <- methods::as(x, "data.frame")
+    bl <- methods::as(y, "data.frame")
+
+    # Bind data frame for ggplot2
+    # Reverse order of factor to display the baseline in front of the spectrum
+    data <- dplyr::bind_rows("spectrum" = spc, "baseline" = bl, .id = "curve") %>%
+      dplyr::mutate(curve = factor(.data$curve, levels = c("spectrum", "baseline")))
+
+    ggplot2::ggplot(data, ggplot2::aes_string(x = xaxis, y = yaxis,
+                                              group = "curve", colour = "curve")) +
+      ggplot2::geom_line()
+  }
+)
+
+#' @export
+#' @rdname plot
 #' @aliases plot,GammaSpectra,missing-method
 setMethod(
   f = "plot",
