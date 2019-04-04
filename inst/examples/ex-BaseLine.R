@@ -1,7 +1,6 @@
 # Import a CNF file
 spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
-spc_dir <- system.file("extdata/cerege", package = "gamma")
-spc <- read(spc_dir)[[5]]
+spc <- read(spc_dir)
 
 # Estimate baseline
 baseline <- estimateBaseline(spc)
@@ -14,7 +13,7 @@ plot(spc, baseline) +
 spc_clean <- removeBaseline(spc)
 
 # Detect peaks
-peak_index <- findPeaks(spc_clean, span = NULL)
+peak_index <- findPeaks(spc_clean, span = 20)
 
 plot(spc_clean, select = 1:3, facet = TRUE) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +

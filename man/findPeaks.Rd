@@ -12,7 +12,8 @@ findPeaks(object, ...)
 
 \S4method{findPeaks}{GammaSpectra}(object, span = NULL, ...)
 
-\S4method{findPeaks}{GammaSpectrum}(object, span = NULL, ...)
+\S4method{findPeaks}{GammaSpectrum}(object, method = c("MAD"), SNR = 2,
+  span = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
@@ -21,6 +22,10 @@ findPeaks(object, ...)
 
 \item{span}{An \code{\link{integer}} giving the half window size. If
 \code{NULL}, 5\% of the number of chanels is used as the half window size.}
+
+\item{method}{A \code{\link{character}} string.}
+
+\item{SNR}{An \code{\link{integer}}.}
 }
 \value{
 A three columns data frame or a list of data frame.
@@ -29,8 +34,8 @@ A three columns data frame or a list of data frame.
 Finds local maxima in sequential data.
 }
 \details{
-A local maximum have to be the highest one in the given window to be
- recognized as peak.
+A local maximum has to be the highest one in the given window and has to be
+ higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 }
 \note{
 Adapted from Stasia Grinberg's \href{https://github.com/stas-g/findPeaks}{algorithm}.
@@ -38,8 +43,7 @@ Adapted from Stasia Grinberg's \href{https://github.com/stas-g/findPeaks}{algori
 \examples{
 # Import a CNF file
 spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
-spc_dir <- system.file("extdata/cerege", package = "gamma")
-spc <- read(spc_dir)[[5]]
+spc <- read(spc_dir)
 
 # Estimate baseline
 baseline <- estimateBaseline(spc)
@@ -52,7 +56,7 @@ plot(spc, baseline) +
 spc_clean <- removeBaseline(spc)
 
 # Detect peaks
-peak_index <- findPeaks(spc_clean, span = NULL)
+peak_index <- findPeaks(spc_clean, span = 20)
 
 plot(spc_clean, select = 1:3, facet = TRUE) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +

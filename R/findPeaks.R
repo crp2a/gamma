@@ -21,15 +21,18 @@ setMethod(
 setMethod(
   f = "findPeaks",
   signature = signature(object = "GammaSpectrum"),
-  definition = function (object, span = NULL, ...){
+  definition = function (object, method = c("MAD"), SNR = 2, span = NULL, ...){
+    # Validation
+    method <- match.arg(method, several.ok = FALSE)
+    SNR <- as.integer(SNR)
+
     # Get count data
     data <- methods::as(object, "data.frame")
     counts <- data$counts
-
     span <- if (is.null(span)) round(length(counts) * 0.05) else span
-    shape <- diff(sign(diff(counts, na.pad = FALSE)))
 
-    index <- sapply(
+    shape <- diff(sign(diff(counts, na.pad = FALSE)))
+    index_shape <- sapply(
       X = which(shape < 0),
       FUN = function(i, data, span) {
         n <- length(data)
@@ -46,8 +49,30 @@ setMethod(
       data = counts,
       span = span
     )
-    peaks <- data[unlist(index), ]
+
+    noise <- switch (
+      method,
+      MAD = MAD(counts, ...)
+    )
+    index_noise <- index_shape %>%
+      unlist() %>%
+      subset(., counts[.] >= noise * SNR)
+
+    peaks <- data[index_noise, ]
     rownames(peaks) <- NULL
     return(peaks)
   }
 )
+
+#' Median absolute deviation
+#'
+#' @param x A \code{\link{numeric}} vector.
+#' @param k A \code{\link{numeric}} value.
+#' @param na.rm A \code{\link{logical}} scalar.
+#' @return A \code{\link{numeric}} value.
+#' @author N. Frerebeau
+#' @keywords internal
+#' @noRd
+MAD <- function(x, k = 1.4826, na.rm = FALSE) {
+  k * stats::median(abs(x - stats::median(x, na.rm = na.rm)), na.rm = na.rm)
+}
