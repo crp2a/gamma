@@ -8,10 +8,10 @@ NULL
 setMethod(
   f = "estimateBaseline",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, method = c("SNIP"), LLS = FALSE, ...) {
+  definition = function(object, method = c("SNIP"), ...) {
 
     baseline <- lapply(X = object, FUN = estimateBaseline,
-                       method = method, LLS = LLS, ...)
+                       method = method, ...)
     names(baseline) <- names(object)
     return(baseline)
   }
@@ -23,7 +23,7 @@ setMethod(
 setMethod(
   f = "estimateBaseline",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, method = c("SNIP"), LLS = FALSE, ...) {
+  definition = function(object, method = c("SNIP"), ...) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
     # Get count data
@@ -31,16 +31,11 @@ setMethod(
     # Cut data, starting at maximum count value
     x_cut <- subset(x, x$chanel > which.max(x$counts))
     x_counts <- x_cut$counts
-    # LLS operator
-    counts <- if (LLS) LLS(x_counts) else x_counts
 
     y <- switch (
       method,
-      SNIP = SNIP(counts, ...)
+      SNIP = SNIP(x_counts, ...)
     )
-
-    # Inverse LLS operator
-    counts_baseline <- if (LLS) inverseLLS(y) else y
 
     methods::new(
       "BaseLine",
@@ -50,8 +45,8 @@ setMethod(
       file_format = object@file_format,
       chanel = x_cut$chanel,
       energy = x_cut$energy,
-      counts = counts_baseline,
-      rate = counts_baseline / object@live_time,
+      counts = y,
+      rate = y / object@live_time,
       live_time = object@live_time,
       real_time = object@real_time
     )
@@ -89,6 +84,8 @@ setMethod(
 #' SNIP algorithm
 #'
 #' @param x A \code{\link{numeric}} vector.
+#' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
+#'  on \code{x} before employing SNIP algorithm?
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
 #'  clipping window be used?
 #' @param m An \code{\link{integer}} value giving the numerber of iterations.
@@ -113,11 +110,14 @@ setMethod(
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @keywords internal
 #' @noRd
-SNIP <- function(x, decreasing = FALSE, m = 100) {
+SNIP <- function(x, LLS = FALSE, decreasing = FALSE, m = 100) {
   # Validation
   if (!is.vector(x) | !is.numeric(x))
     stop("A numeric vector is expected.")
   m <- as.integer(m)
+
+  # LLS operator
+  x <- if (LLS) LLS(x) else x
 
   N <- length(x)
   y <- vector(mode = "numeric", length = N)
@@ -133,6 +133,9 @@ SNIP <- function(x, decreasing = FALSE, m = 100) {
     }
     x <- y
   }
+
+  # Inverse LLS operator
+  x <- if (LLS) inverseLLS(x) else x
 
   return(x)
 }

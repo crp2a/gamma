@@ -18,10 +18,10 @@ estimateBaseline(object, ...)
 removeBaseline(object, ...)
 
 \S4method{estimateBaseline}{GammaSpectra}(object, method = c("SNIP"),
-  LLS = FALSE, ...)
+  ...)
 
 \S4method{estimateBaseline}{GammaSpectrum}(object, method = c("SNIP"),
-  LLS = FALSE, ...)
+  ...)
 
 \S4method{removeBaseline}{GammaSpectra}(object, ...)
 
@@ -33,9 +33,6 @@ removeBaseline(object, ...)
 \item{...}{Extra parameters passed to other methods.}
 
 \item{method}{TODO.}
-
-\item{LLS}{A \code{\link{logical}} scalar: should the LLS operator be applied
-on \code{x} before employing SNIP algorithm?}
 }
 \value{
 \code{estimateBaseline} returns a four columns data frame or a list
@@ -51,8 +48,7 @@ Baseline estimation and removal
 \examples{
 # Import a CNF file
 spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
-spc_dir <- system.file("extdata/cerege", package = "gamma")
-spc <- read(spc_dir)[[5]]
+spc <- read(spc_dir)
 
 # Estimate baseline
 baseline <- estimateBaseline(spc)
@@ -65,7 +61,7 @@ plot(spc, baseline) +
 spc_clean <- removeBaseline(spc)
 
 # Detect peaks
-peak_index <- findPeaks(spc_clean, span = NULL)
+peak_index <- findPeaks(spc_clean, span = 20)
 
 plot(spc_clean, select = 1:3, facet = TRUE) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +

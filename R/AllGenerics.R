@@ -24,8 +24,6 @@ setGeneric(
 #'
 #' @param object A \code{\link{numeric}} vector.
 #' @param method TODO.
-#' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
-#'  on \code{x} before employing SNIP algorithm?
 #' @param ... Extra parameters passed to other methods.
 #' @return
 #'  \code{estimateBaseline} returns a four columns data frame or a list
@@ -93,12 +91,14 @@ setGeneric(
 #'
 #' Finds local maxima in sequential data.
 #' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param method A \code{\link{character}} string.
+#' @param SNR An \code{\link{integer}}.
 #' @param span An \code{\link{integer}} giving the half window size. If
 #'  \code{NULL}, 5\% of the number of chanels is used as the half window size.
 #' @param ... Currently not used.
 #' @details
-#'  A local maximum have to be the highest one in the given window to be
-#'  recognized as peak.
+#'  A local maximum has to be the highest one in the given window and has to be
+#'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 #' @return
 #'  A three columns data frame or a list of data frame.
 #' @note
