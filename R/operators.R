@@ -2,8 +2,31 @@
 #' @include AllGenerics.R
 NULL
 
+#' Operators
+#'
+#' Performs operation on spectra.
+#' @param e1,e2 Objects (typically \linkS4class{GammaSpectrum} objects).
+#' @return A \linkS4class{GammaSpectrum} object.
+#' @author N. Frerebeau
+#' @docType methods
+#' @name operators
+#' @rdname operators
+#' @aliases operators-method
+NULL
+
 #' @export
-#' @rdname BaseLine
+#' @rdname operators
+#' @aliases -,GammaSpectrum,GammaSpectrum-method
+setMethod(
+  f = "-",
+  signature(e1 = "GammaSpectrum", e2 = "GammaSpectrum"),
+  definition = function (e1, e2) {
+    stop("TODO")
+  }
+)
+
+#' @export
+#' @rdname operators
 #' @aliases -,GammaSpectrum,BaseLine-method
 setMethod(
   f = "-",
