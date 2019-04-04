@@ -90,7 +90,7 @@ spectrum[["reference"]]
 spectrum[["instrument"]]
 }
 \seealso{
-\linkS4class{GammaSpectra}.
+\linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 }
 \author{
 N. Frerebeau

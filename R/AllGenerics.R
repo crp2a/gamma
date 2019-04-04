@@ -51,21 +51,21 @@ setGeneric(
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section B:
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
-#' @example inst/examples/ex-baseline.R
+#' @example inst/examples/ex-BaseLine.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @name baseline
-#' @rdname baseline
+#' @name processBaseline
+#' @rdname processBaseline
 NULL
 
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases estimateBaseline-method
 setGeneric(
   name = "estimateBaseline",
   def = function(object, ...) standardGeneric("estimateBaseline")
 )
 
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases removeBaseline-method
 setGeneric(
   name = "removeBaseline",
@@ -103,7 +103,7 @@ setGeneric(
 #'  A three columns data frame or a list of data frame.
 #' @note
 #'  Adapted from Stasia Grinberg's \href{https://github.com/stas-g/findPeaks}{algorithm}.
-#' @example inst/examples/ex-baseline.R
+#' @example inst/examples/ex-BaseLine.R
 #' @author N. Frerebeau
 #' @docType methods
 #' @rdname findPeaks

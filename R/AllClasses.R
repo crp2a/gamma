@@ -69,8 +69,9 @@ setClass(
 
 #' An S4 class to represent a spectrum baseline
 #'
+#' @param e1,e2 XXX.
 #' @seealso \linkS4class{GammaSpectrum}.
-# @example inst/examples/ex-GammaSpectrum.R
+#' @example inst/examples/ex-BaseLine.R
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname BaseLine

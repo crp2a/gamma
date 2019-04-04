@@ -3,7 +3,7 @@
 NULL
 
 #' @export
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases estimateBaseline,GammaSpectra-method
 setMethod(
   f = "estimateBaseline",
@@ -18,7 +18,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases estimateBaseline,GammaSpectrum-method
 setMethod(
   f = "estimateBaseline",
@@ -59,7 +59,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases removeBaseline,GammaSpectra-method
 setMethod(
   f = "removeBaseline",
@@ -74,7 +74,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname baseline
+#' @rdname processBaseline
 #' @aliases removeBaseline,GammaSpectrum-method
 setMethod(
   f = "removeBaseline",

@@ -2,6 +2,9 @@
 #' @include AllGenerics.R
 NULL
 
+#' @export
+#' @rdname BaseLine
+#' @aliases -,GammaSpectrum,BaseLine-method
 setMethod(
   f = "-",
   signature(e1 = "GammaSpectrum", e2 = "BaseLine"),
