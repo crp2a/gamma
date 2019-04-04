@@ -21,12 +21,9 @@ imported.}
 An object of class \linkS4class{GammaSpectra}.
 }
 \description{
-Reads a gamma dose rate file.
+Reads a gamma ray spectrum file.
 }
 \details{
-TODO
-}
-\note{
 \emph{Only works with Canberra CNF.}
 }
 \examples{

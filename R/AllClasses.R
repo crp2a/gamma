@@ -5,6 +5,7 @@ NULL
 # DEFINITION ===================================================================
 #' An S4 class to represent a gamma sectrum
 #'
+#' Represents a single spectrum of a gamma ray spectrometry measurement.
 #' @slot reference A \code{\link{character}} string the measurement reference.
 #' @slot date A \code{\link{character}} string giving the measurement date.
 #' @slot instrument A \code{\link{character}} string the instrument name.
@@ -14,10 +15,22 @@ NULL
 #' @slot chanel A \code{\link{numeric}} vector.
 #' @slot energy A \code{\link{numeric}} vector.
 #' @slot counts A \code{\link{numeric}} vector.
+#' @slot rate A \code{\link{numeric}} vector.
 #' @param x An object of class \code{GammaSpectrum}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
 #'  names of the slots.
+#' @section Methods:
+#' \describe{
+#'  \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
+#'  object. See \code{\link{estimateBaseline}} for details.}
+#'  \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of a
+#'  \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
+#'  \item{findPeaks}{Look for local maxima to extract peaks out of a
+#'  \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
+#'  \item{removeBaseline}{estimate and remove the baseline of a
+#'  \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+#' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
@@ -32,6 +45,7 @@ NULL
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
+#' @seealso \linkS4class{GammaSpectra}.
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
 #' @docType class
@@ -47,6 +61,7 @@ setClass(
     chanel = "numeric",
     energy = "numeric",
     counts = "numeric",
+    rate = "numeric",
     live_time = "numeric",
     real_time = "numeric"
   )
@@ -54,6 +69,7 @@ setClass(
 
 #' An S4 class to represent a collection of gamma sectra
 #'
+#' Represents a collection of spectra of gamma ray spectrometry measurements.
 #' @param x An object of class \code{GammaSpectrum}.
 #' @param i,j Indices specifying elements to extract or replace (see below).
 #'  Indices are \code{\link{numeric}} or \code{\link{character}} vectors or
@@ -61,6 +77,23 @@ setClass(
 #'  Numeric values are coerced to integer as by \code{\link{as.integer}}
 #'  (and hence truncated towards zero). Character vectors will be matched to
 #'  the names of the object.
+#' @details
+#'  This class extends the base \code{\link{list}} and can only contains
+#'  \linkS4class{GammaSpectrum} objects.
+#' @section Methods:
+#' \describe{
+#'  \item{estimateBaseline}{Estimate the baseline of each gamma spectrum in a
+#'  \code{GammaSpectra} object. See \code{\link{estimateBaseline}} for details.}
+#'  \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of each gamma
+#'  spectrum in a \code{GammaSpectra} object. See \code{\link{estimateDoseRate}}
+#'  for details.}
+#'  \item{findPeaks}{Look for local maxima to extract peaks out of each gamma
+#'  spectrum in a \code{GammaSpectra} object. See \code{\link{findPeaks}} for
+#'  details.}
+#'  \item{removeBaseline}{Estimate and remove the baseline of each gamma
+#'  spectrum in a \code{GammaSpectra} object. See \code{\link{removeBaseline}}
+#'  for details.}
+#' }
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
@@ -87,6 +120,7 @@ setClass(
 #'   \code{i} can be a \code{numeric} or \code{character} vector
 #'   of length one. Returns the corresponding \linkS4class{GammaSpectrum} object.}
 #' }
+#' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-GammaSpectra.R
 #' @author N. Frerebeau
 #' @docType class
@@ -163,7 +197,7 @@ setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
   definition = function(.Object, reference, date, instrument, file_format,
-                        chanel, energy, counts, live_time, real_time) {
+                        chanel, energy, counts, rate, live_time, real_time) {
     if (!missing(reference)) .Object@reference <- reference
     if (!missing(date)) .Object@date <- date
     if (!missing(instrument)) .Object@instrument <- instrument
@@ -171,6 +205,7 @@ setMethod(
     if (!missing(chanel)) .Object@chanel <- chanel
     if (!missing(energy)) .Object@energy <- energy
     if (!missing(counts)) .Object@counts <- counts
+    if (!missing(rate)) .Object@rate <- rate
     if (!missing(live_time)) .Object@live_time <- live_time
     if (!missing(real_time)) .Object@real_time <- real_time
 
@@ -241,6 +276,7 @@ setValidity(
     chanel <- object@chanel
     energy <- object@energy
     counts <- object@counts
+    rate <- object@rate
     live_time <- object@live_time
     real_time <- object@real_time
     message <- c()

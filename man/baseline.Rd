@@ -41,8 +41,9 @@ on \code{x} before employing SNIP algorithm?}
 \code{estimateBaseline} returns a four columns data frame or a list
  of data frame.
 
- \code{removeBaseline} returns a \linkS4class{GammaSpectrum} or a
- \linkS4class{GammaSpectra} object (same as \code{object}).
+ \code{removeBaseline} returns a modified \linkS4class{GammaSpectrum} or
+ \linkS4class{GammaSpectra} object (same as \code{object}, with background
+ removed).
 }
 \description{
 Baseline estimation and removal

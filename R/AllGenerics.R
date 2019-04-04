@@ -4,11 +4,12 @@ NULL
 
 #' Calibration
 #'
-#' Builds a calibration curve.
+#' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param dose A \code{\link{list}} of length-two numeric vector.
 #' @param noise A \code{\link{list}} of numeric values.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
+#' @seealso \link{estimateDoseRate}
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -30,8 +31,9 @@ setGeneric(
 #'  \code{estimateBaseline} returns a four columns data frame or a list
 #'  of data frame.
 #'
-#'  \code{removeBaseline} returns a \linkS4class{GammaSpectrum} or a
-#'  \linkS4class{GammaSpectra} object (same as \code{object}).
+#'  \code{removeBaseline} returns a modified \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra} object (same as \code{object}, with background
+#'  removed).
 #' @references
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
@@ -72,7 +74,7 @@ setGeneric(
 
 #' Gamma dose rate
 #'
-#' Estimates gamma dose rate.
+#' Estimates in-situ gamma dose rate.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param curve An object of class \linkS4class{CalibrationCurve}.
 #' @param noise A \code{\link{list}} of numeric values.
@@ -91,7 +93,7 @@ setGeneric(
 #'
 #' Finds local maxima in sequential data.
 #' @param object An object of class \linkS4class{GammaSpectrum}.
-#' @param span A \code{\link{numeric}} giving the half window size. If
+#' @param span An \code{\link{integer}} giving the half window size. If
 #'  \code{NULL}, 5\% of the number of chanels is used as the half window size.
 #' @param ... Currently not used.
 #' @details
@@ -114,11 +116,15 @@ setGeneric(
 #' Signal integration
 #'
 #' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param range A length two \code{\link{numeric}} vector giving the energy
+#'  range to integrate within.
 #' @param peaks A \code{\link{numeric}} vector.
 #' @param noise A \code{\link{list}} of numeric values.
-#' @param m An \code{\link{integer}}.
+#' @param span An \code{\link{integer}} giving the half window size for peak
+#'  searching (see \code{\link{findPeaks}}).
 #' @param ... Currently not used.
-# @example inst/examples/ex-calibrate.R
+#' @details
+#'  TODO
 #' @author N. Frerebeau
 #' @docType methods
 #' @rdname integrateSignal
@@ -132,10 +138,12 @@ setGeneric(
 #' Plot
 #'
 #' @param x,y Objects to be plotted.
+#' @param xaxis,yaxis A \code{\link{character}} string specifying the data to
+#'  be plotted along each axis.
 #' @param select A \code{\link{numeric}} or \code{\link{character}} vector
 #'  giving the selection of the spectrum that are drawn.
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels
-#'  defined by case/sample be drawn?
+#'  defined by spectrum be drawn?
 #' @param ... Currently not used.
 #' @details
 #'  TODO
@@ -150,16 +158,14 @@ if (!isGeneric("plot"))
 
 #' Data input
 #'
-#' Reads a gamma dose rate file.
+#' Reads a gamma ray spectrum file.
 #' @param file A \code{\link{character}} string giving the path of files to be
 #'  imported.
 #' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
 #' @details
-#'  TODO
+#'  \emph{Only works with Canberra CNF.}
 #' @return
 #'  An object of class \linkS4class{GammaSpectra}.
-#' @note
-#'  \emph{Only works with Canberra CNF.}
 #' @seealso \link[rxylib]{read_xyData}
 #' @example inst/examples/ex-read.R
 #' @author N. Frerebeau

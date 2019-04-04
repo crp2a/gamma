@@ -16,7 +16,7 @@ to extract or replace (see below). Character sring will be matched to the
 names of the slots.}
 }
 \description{
-An S4 class to represent a gamma sectrum
+Represents a single spectrum of a gamma ray spectrometry measurement.
 }
 \section{Slots}{
 
@@ -38,7 +38,23 @@ An S4 class to represent a gamma sectrum
 \item{\code{energy}}{A \code{\link{numeric}} vector.}
 
 \item{\code{counts}}{A \code{\link{numeric}} vector.}
+
+\item{\code{rate}}{A \code{\link{numeric}} vector.}
 }}
+
+\section{Methods}{
+
+\describe{
+ \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
+ object. See \code{\link{estimateBaseline}} for details.}
+ \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of a
+ \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
+ \item{findPeaks}{Look for local maxima to extract peaks out of a
+ \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
+ \item{removeBaseline}{estimate and remove the baseline of a
+ \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+}
+}
 
 \section{Coerce}{
 
@@ -72,6 +88,9 @@ head(df)
 # Subset
 spectrum[["reference"]]
 spectrum[["instrument"]]
+}
+\seealso{
+\linkS4class{GammaSpectra}.
 }
 \author{
 N. Frerebeau

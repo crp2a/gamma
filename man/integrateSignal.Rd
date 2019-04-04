@@ -10,25 +10,32 @@
 \usage{
 integrateSignal(object, ...)
 
-\S4method{integrateSignal}{GammaSpectra}(object, peaks = c(238, 1461,
-  2614.5), noise = NULL, span = NULL, ...)
+\S4method{integrateSignal}{GammaSpectra}(object, range = c(200, 2800),
+  peaks = c(238, 1461, 2614.5), noise = NULL, span = NULL, ...)
 
-\S4method{integrateSignal}{GammaSpectrum}(object, peaks = c(238, 1461,
-  2614.5), noise = NULL, span = NULL, ...)
+\S4method{integrateSignal}{GammaSpectrum}(object, range = c(200, 2800),
+  peaks = c(238, 1461, 2614.5), noise = NULL, span = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
 
 \item{...}{Currently not used.}
 
+\item{range}{A length two \code{\link{numeric}} vector giving the energy
+range to integrate within.}
+
 \item{peaks}{A \code{\link{numeric}} vector.}
 
 \item{noise}{A \code{\link{list}} of numeric values.}
 
-\item{m}{An \code{\link{integer}}.}
+\item{span}{An \code{\link{integer}} giving the half window size for peak
+searching (see \code{\link{findPeaks}}).}
 }
 \description{
 Signal integration
+}
+\details{
+TODO
 }
 \author{
 N. Frerebeau

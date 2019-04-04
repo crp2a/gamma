@@ -10,10 +10,11 @@
 \alias{plot,CalibrationCurve,DoseRate-method}
 \title{Plot}
 \usage{
-\S4method{plot}{GammaSpectrum,missing}(x, y, ...)
+\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("energy", "chanel"),
+  yaxis = c("counts", "rate"), ...)
 
-\S4method{plot}{GammaSpectra,missing}(x, select = 1, facet = FALSE,
-  ...)
+\S4method{plot}{GammaSpectra,missing}(x, xaxis = c("energy", "chanel"),
+  yaxis = c("counts", "rate"), select = 1, facet = FALSE, ...)
 
 \S4method{plot}{CalibrationCurve,missing}(x, y, ...)
 
@@ -22,13 +23,16 @@
 \arguments{
 \item{x, y}{Objects to be plotted.}
 
+\item{xaxis, yaxis}{A \code{\link{character}} string specifying the data to
+be plotted along each axis.}
+
 \item{...}{Currently not used.}
 
 \item{select}{A \code{\link{numeric}} or \code{\link{character}} vector
 giving the selection of the spectrum that are drawn.}
 
 \item{facet}{A \code{\link{logical}} scalar: should a matrix of panels
-defined by case/sample be drawn?}
+defined by spectrum be drawn?}
 }
 \description{
 Plot

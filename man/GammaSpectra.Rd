@@ -22,8 +22,29 @@ Numeric values are coerced to integer as by \code{\link{as.integer}}
 the names of the object.}
 }
 \description{
-An S4 class to represent a collection of gamma sectra
+Represents a collection of spectra of gamma ray spectrometry measurements.
 }
+\details{
+This class extends the base \code{\link{list}} and can only contains
+ \linkS4class{GammaSpectrum} objects.
+}
+\section{Methods}{
+
+\describe{
+ \item{estimateBaseline}{Estimate the baseline of each gamma spectrum in a
+ \code{GammaSpectra} object. See \code{\link{estimateBaseline}} for details.}
+ \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of each gamma
+ spectrum in a \code{GammaSpectra} object. See \code{\link{estimateDoseRate}}
+ for details.}
+ \item{findPeaks}{Look for local maxima to extract peaks out of each gamma
+ spectrum in a \code{GammaSpectra} object. See \code{\link{findPeaks}} for
+ details.}
+ \item{removeBaseline}{Estimate and remove the baseline of each gamma
+ spectrum in a \code{GammaSpectra} object. See \code{\link{removeBaseline}}
+ for details.}
+}
+}
+
 \section{Access}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
@@ -83,6 +104,9 @@ spectra[c("BRIQUE", "C347")] # The spectra named 'BRIQUE' and 'C347'
 spectra[1:3, "energy"] # The slot 'energy' of the first three spectra
 spectra[[1]]
 spectra[["BRIQUE"]]
+}
+\seealso{
+\linkS4class{GammaSpectrum}.
 }
 \author{
 N. Frerebeau

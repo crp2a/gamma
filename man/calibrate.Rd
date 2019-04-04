@@ -21,7 +21,7 @@ calibrate(object, ...)
 \item{noise}{A \code{\link{list}} of numeric values.}
 }
 \description{
-Builds a calibration curve.
+Builds a calibration curve for gamma dose rate estimation.
 }
 \examples{
 # Import CNF files for calibration
@@ -56,6 +56,9 @@ gamma_spc <- read(dir)
 dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
                               noise = list(value = 1190, error = 1))
 as(dose_rate, "data.frame")
+}
+\seealso{
+\link{estimateDoseRate}
 }
 \author{
 N. Frerebeau

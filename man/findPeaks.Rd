@@ -19,7 +19,7 @@ findPeaks(object, ...)
 
 \item{...}{Currently not used.}
 
-\item{span}{A \code{\link{numeric}} giving the half window size. If
+\item{span}{An \code{\link{integer}} giving the half window size. If
 \code{NULL}, 5\% of the number of chanels is used as the half window size.}
 }
 \value{
