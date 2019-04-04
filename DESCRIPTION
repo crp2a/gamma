@@ -56,6 +56,7 @@ Collate:
     'gamma.R'
     'AllClasses.R'
     'AllGenerics.R'
+    'operators.R'
     'baseline.R'
     'calibrate.R'
     'coerce.R'

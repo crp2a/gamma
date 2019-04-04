@@ -1,5 +1,5 @@
 # ESTIMATE AND REMOVE BASELINE
-#' @include AllGenerics.R
+#' @include AllGenerics.R operators.R
 NULL
 
 #' @export
@@ -82,19 +82,7 @@ setMethod(
   definition = function(object, ...) {
 
     baseline <- estimateBaseline(object, ...)
-
-    methods::new(
-      "GammaSpectrum",
-      reference = object@reference,
-      date = object@date,
-      instrument = object@instrument,
-      file_format = object@file_format,
-      chanel = baseline$chanel,
-      energy = baseline$energy,
-      counts = baseline$counts - baseline$baseline,
-      live_time = object@live_time,
-      real_time = object@real_time
-    )
+    object - baseline
   }
 )
 
