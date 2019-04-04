@@ -59,6 +59,7 @@ Collate:
     'baseline.R'
     'calibrate.R'
     'coerce.R'
+    'estimateDoseRate.R'
     'extract.R'
     'findPeaks.R'
     'integrate.R'
