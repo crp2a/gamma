@@ -50,6 +50,8 @@ readCanberraCNF <- function(file, ...) {
 
   # Get metadata
   spc_meta <- spc_xy$dataset[[1]]$metadata_block
+  live_time <- as.numeric(spc_meta[5, 2])
+  real_time <- as.numeric(spc_meta[6, 2])
   # Get data
   spc_data <- spc_xy$dataset[[1]]$data_block %>%
     as.data.frame() %>%
@@ -68,7 +70,8 @@ readCanberraCNF <- function(file, ...) {
     chanel = spc_data$chanel,
     energy = spc_data$energy,
     counts = spc_data$counts,
-    live_time = as.numeric(spc_meta[5, 2]),
-    real_time = as.numeric(spc_meta[6, 2])
+    rate = spc_data$counts / live_time,
+    live_time = live_time,
+    real_time = real_time
   )
 }

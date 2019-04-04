@@ -8,9 +8,15 @@ NULL
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "missing"),
-  definition = function(x, ...) {
+  definition = function(x, xaxis = c("energy", "chanel"),
+                        yaxis = c("counts", "rate"), ...) {
+    # Validation
+    xaxis <- match.arg(xaxis, several.ok = FALSE)
+    yaxis <- match.arg(yaxis, several.ok = FALSE)
+
     spc <- methods::as(x, "data.frame")
-    ggplot2::ggplot(spc, ggplot2::aes_string(x = "energy", y = "counts")) +
+
+    ggplot2::ggplot(spc, ggplot2::aes_string(x = xaxis, y = yaxis)) +
       ggplot2::geom_line()
   }
 )
@@ -21,8 +27,12 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectra", y = "missing"),
-  definition = function(x, select = 1, facet = FALSE, ...) {
+  definition = function(x, xaxis = c("energy", "chanel"),
+                        yaxis = c("counts", "rate"),
+                        select = 1, facet = FALSE, ...) {
     # Validation
+    xaxis <- match.arg(xaxis, several.ok = FALSE)
+    yaxis <- match.arg(yaxis, several.ok = FALSE)
     if (is.null(select))
       select <- 1:length(x)
     if (is.numeric(select))
@@ -47,7 +57,7 @@ setMethod(
     }
     ggplot2::ggplot(data = spc_df,
                     mapping = ggplot2::aes_string(
-                      x = "energy", y = "counts",
+                      x = xaxis, y = yaxis,
                       group = "reference", colour = colour)
                     ) +
       ggplot2::geom_line() +

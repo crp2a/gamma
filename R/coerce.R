@@ -7,8 +7,8 @@ setAs(
   from = "GammaSpectrum",
   to = "matrix",
   def = function(from) {
-    mtx <- cbind(from@chanel, from@energy, from@counts)
-    colnames(mtx) <- c("chanel", "energy", "counts")
+    df <- methods::as(from, "data.frame")
+    mtx <- as.matrix(df)
     return(mtx)
   }
 )
@@ -27,8 +27,12 @@ setAs(
   from = "GammaSpectrum",
   to = "data.frame",
   def = function(from) {
-    mtx <- methods::as(from, "matrix")
-    df <- as.data.frame(mtx)
+    df <- data.frame(
+      chanel = from@chanel,
+      energy = from@energy,
+      counts = from@counts,
+      rate = from@rate
+    )
     return(df)
   }
 )
@@ -38,8 +42,10 @@ setAs(
   def = function(from) {
     df <- data.frame(
       reference = from@reference,
-      dose = from@dose_value, dose_error = from@dose_error,
-      signal = from@signal_value, signal_error = from@signal_error
+      dose = from@dose_value,
+      dose_error = from@dose_error,
+      signal = from@signal_value,
+      signal_error = from@signal_error
     )
     return(df)
   }
