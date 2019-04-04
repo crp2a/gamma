@@ -99,7 +99,7 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "missing"),
   definition = function(x, ...) {
     # Get data
-    data <- x@data
+    data <- methods::as(x, "data.frame")
 
     ggplot2::ggplot(data = data,
                     mapping = ggplot2::aes_string(x = "dose", y = "signal",
@@ -118,9 +118,12 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "DoseRate"),
   definition = function(x, y, ...) {
     # Get data
-    calib <- x@data
-    pred <- methods::as(y, "data.frame")
-    data <- dplyr::bind_rows("calibration" = calib, "predicted" = pred,
+    calib <- methods::as(x, "data.frame")
+    measure <- methods::as(y, "data.frame")
+print(calib)
+print(measure)
+    # Bind data frame for 'ggplot2'
+    data <- dplyr::bind_rows("calibration" = calib, "measured" = measure,
                              .id = "spectrum")
 
     ggplot2::ggplot(data = data,

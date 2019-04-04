@@ -37,6 +37,14 @@ setAs(
   }
 )
 setAs(
+  from = "CalibrationCurve",
+  to = "data.frame",
+  def = function(from) {
+    df <- as.data.frame(from@data)
+    return(df)
+  }
+)
+setAs(
   from = "DoseRate",
   to = "data.frame",
   def = function(from) {
