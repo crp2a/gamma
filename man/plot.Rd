@@ -7,6 +7,8 @@
 \alias{plot,GammaSpectrum,missing-method}
 \alias{plot,GammaSpectrum,BaseLine-method}
 \alias{plot,GammaSpectra,missing-method}
+\alias{plot,PeakPosition,missing-method}
+\alias{plot,PeakModel,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
 \alias{plot,CalibrationCurve,DoseRate-method}
 \title{Plot}
@@ -19,6 +21,11 @@
 
 \S4method{plot}{GammaSpectra,missing}(x, xaxis = c("energy", "chanel"),
   yaxis = c("counts", "rate"), select = 1, facet = FALSE, ...)
+
+\S4method{plot}{PeakPosition,missing}(x, xaxis = c("energy", "chanel"),
+  yaxis = c("counts", "rate"), ...)
+
+\S4method{plot}{PeakModel,missing}(x, y, ...)
 
 \S4method{plot}{CalibrationCurve,missing}(x, y, ...)
 
