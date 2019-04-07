@@ -29,7 +29,6 @@ readCSV <- function(file, ...) {
     chanel = seq_along(csv),
     energy = cnf@energy,
     counts = counts,
-    rate = counts / csv[1],
     live_time = csv[1],
     real_time = csv[2]
   )

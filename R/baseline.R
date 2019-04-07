@@ -46,7 +46,6 @@ setMethod(
       chanel = x_cut$chanel,
       energy = x_cut$energy,
       counts = y,
-      rate = y / object@live_time,
       live_time = object@live_time,
       real_time = object@real_time
     )
@@ -109,7 +108,6 @@ setMethod(
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @keywords internal
-#' @noRd
 SNIP <- function(x, LLS = FALSE, decreasing = FALSE, m = 100) {
   # Validation
   if (!is.vector(x) | !is.numeric(x))
@@ -156,10 +154,15 @@ SNIP <- function(x, LLS = FALSE, decreasing = FALSE, m = 100) {
 #'  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
 #'  DOI: \href{https://doi.org/10.1366/000370208783412762}{10.1366/000370208783412762}
 #' @keywords internal
-#' @noRd
+#' @name LLS
+#' @rdname LLS
+NULL
+
+#' @rdname LLS
 LLS <- function(x) {
   log(log(sqrt(x + 1) + 1) + 1)
 }
+#' @rdname LLS
 inverseLLS <- function(x) {
   (exp(exp(x) - 1) - 1)^2 - 1
 }

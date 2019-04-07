@@ -70,7 +70,6 @@ readCanberraCNF <- function(file, ...) {
     chanel = spc_data$chanel,
     energy = spc_data$energy,
     counts = spc_data$counts,
-    rate = spc_data$counts / live_time,
     live_time = live_time,
     real_time = real_time
   )
