@@ -87,7 +87,7 @@ setGeneric(
   def = function(object, curve, ...) standardGeneric("estimateDoseRate")
 )
 
-#' Find peaks
+#' Peaks
 #'
 #' Finds local maxima in sequential data.
 #' @param object An object of class \linkS4class{GammaSpectrum}.
@@ -100,17 +100,28 @@ setGeneric(
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 #' @return
-#'  A three columns data frame or a list of data frame.
-#' @note
-#'  Adapted from Stasia Grinberg's \href{https://github.com/stas-g/findPeaks}{algorithm}.
+#'  \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.
+#'
+#'  \code{fitPeaks} returns an object of class \linkS4class{PeakModel}.
 #' @example inst/examples/ex-BaseLine.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname findPeaks
+#' @name peaks
+#' @rdname peaks
+NULL
+
+#' @rdname peaks
 #' @aliases findPeaks-method
 setGeneric(
   name = "findPeaks",
   def = function(object, ...) standardGeneric("findPeaks")
+)
+
+#' @rdname peaks
+#' @aliases fitPeaks-method
+setGeneric(
+  name = "fitPeaks",
+  def = function(object, ...) standardGeneric("fitPeaks")
 )
 
 #' Signal integration

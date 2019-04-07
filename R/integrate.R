@@ -40,7 +40,7 @@ setMethod(
 
     # Adjust spectrum for energy shift
     ## Detect peaks
-    peaks_index <- findPeaks(spc_clean, ...)
+    peaks_index <- findPeaks(spc_clean, ...)@peaks
     ## Find peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
     peaks_energy <- sapply(
       X = peaks,

@@ -38,6 +38,7 @@ Imports:
     broom,
     dplyr,
     ggplot2,
+    grDevices,
     magrittr,
     methods,
     rxylib,
@@ -62,8 +63,8 @@ Collate:
     'coerce.R'
     'estimateDoseRate.R'
     'extract.R'
-    'findPeaks.R'
     'integrate.R'
+    'peaks.R'
     'plot.R'
     'read.R'
     'show.R'

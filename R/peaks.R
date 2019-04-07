@@ -1,0 +1,189 @@
+# FIND PEAKS
+#' @include AllGenerics.R
+NULL
+
+#' @export
+#' @rdname peaks
+#' @aliases findPeaks,GammaSpectra-method
+setMethod(
+  f = "findPeaks",
+  signature = signature(object = "GammaSpectra"),
+  definition = function(object, span = NULL, ...) {
+    peaks <- lapply(X = object, FUN = findPeaks, span = span, ...)
+    names(peaks) <- names(object)
+    return(peaks)
+  }
+)
+
+#' @export
+#' @rdname peaks
+#' @aliases findPeaks,GammaSpectrum-method
+setMethod(
+  f = "findPeaks",
+  signature = signature(object = "GammaSpectrum"),
+  definition = function(object, method = c("MAD"), SNR = 2, span = NULL, ...) {
+    # Validation
+    method <- match.arg(method, several.ok = FALSE)
+    SNR <- as.integer(SNR)
+
+    # Get count data
+    data <- methods::as(object, "data.frame")
+    counts <- data$counts
+    span <- if (is.null(span)) round(length(counts) * 0.05) else span
+
+    shape <- diff(sign(diff(counts, na.pad = FALSE)))
+    index_shape <- sapply(
+      X = which(shape < 0),
+      FUN = function(i, data, span) {
+        n <- length(data)
+        z <- i - span + 1
+        z <- ifelse(z > 0, z, 1)
+        w <- i + span + 1
+        w <- ifelse(w < n, w, n)
+        if (all(data[c(z:i, (i + 2):w)] <= data[i + 1])) {
+          return(i + 1)
+        } else {
+          return(numeric(0))
+        }
+      },
+      data = counts,
+      span = span
+    )
+
+    noise <- switch (
+      method,
+      MAD = MAD(counts, ...)
+    )
+    threshold <- noise * SNR
+    index_noise <- index_shape %>%
+      unlist() %>%
+      subset(., counts[.] >= threshold)
+
+    methods::new(
+      "PeakPosition",
+      method = method,
+      noise = threshold,
+      window = span,
+      peaks = data[index_noise, ],
+      spectrum = object
+    )
+  }
+)
+
+#' @export
+#' @rdname peaks
+#' @aliases fitPeaks,GammaSpectrum-method
+setMethod(
+  f = "fitPeaks",
+  signature = signature(object = "PeakPosition"),
+  definition = function(object, ...) {
+    # Get spectrum data
+    spc <- methods::as(object@spectrum, "data.frame")
+    pks <- object@peaks
+
+    # Get starting values for each peak
+    ## Mean
+    mu <- pks$energy
+    names(mu) <- paste("mu", 1:length(mu), sep = "")
+    ## Standart deviation
+    fwhm <- sapply(X = pks$energy,
+                   FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
+                   x = spc$energy, y = spc$counts)
+    sigma <- fwhm / (2 * sqrt(2 * log(2)))
+    names(sigma) <- paste("sigma", 1:length(sigma), sep = "")
+    ## Height
+    height <- pks$counts
+    names(height) <- paste("C", 1:length(height), sep = "")
+
+    parameters <- as.list(c(mu, sigma, height))
+
+    # Build formula
+    n <- 1:nrow(pks)
+    term_labels <- sprintf("C%d * exp(-0.5 * ((energy - mu%d) / sigma%d)^2)",
+                           n, n, n)
+    fit_formula <- stats::reformulate(termlabels = term_labels,
+                                      response = "counts")
+
+    # Fit model
+    fit <- stats::nls(formula = fit_formula,
+                      data = spc[, c("energy", "counts")],
+                      start = parameters,
+                      algorithm = "port")
+
+    # Find peaks in spectrum data
+    fit_mu <- stats::coef(fit)[n]
+    pks_index <- sapply(
+      X = fit_mu,
+      FUN = function(expected, real) which.min(abs(real - expected)),
+      real = spc$energy
+    )
+    pks <- spc[pks_index, ]
+
+    methods::new(
+      "PeakModel",
+      model = fit,
+      peaks = pks,
+      spectrum = object@spectrum
+    )
+  }
+)
+
+#' MAD
+#'
+#' Calculates the median absolute deviation.
+#' @param x A \code{\link{numeric}} vector.
+#' @param k A \code{\link{numeric}} value.
+#' @param na.rm A \code{\link{logical}} scalar.
+#' @return A \code{numeric} value.
+#' @author N. Frerebeau
+#' @keywords internal
+MAD <- function(x, k = 1.4826, na.rm = FALSE) {
+  k * stats::median(abs(x - stats::median(x, na.rm = na.rm)), na.rm = na.rm)
+}
+
+#' FWHM
+#'
+#' Estimates the half-width at half-maximum for a given peak.
+#' @param x,y A \code{\link{numeric}} vector giving the \eqn{x} and \eqn{y}
+#'  coordinates of a set of points. Alternatively, a single argument \eqn{x}
+#'  can be provided.
+#' @param center A \code{\link{numeric}} value giving the peak position in
+#'  \code{x} units.
+#' @return A \code{numeric} value.
+#' @details
+#'  It tries to get the smallest possible estimate.
+#' @author N. Frerebeau
+#' @keywords internal
+FWHM <- function(x, y, center) {
+  if (missing(y)) {
+    z <- x
+    if (is.list(z) & c("x", "y") %in% names(z)) {
+      x <- z[["x"]]
+      y <- z[["y"]]
+    }
+    if (is.matrix(z) | is.data.frame(z)) {
+      x <- z[, 1]
+      y <- z[, 2]
+    }
+  } else {
+    if (length(x) != length(y))
+      stop("'x' and 'y' lengths differ.")
+  }
+
+  i <- which(x == center)
+  peak_height <- y[i]
+  scale_for_roots <- y - peak_height / 2
+  root_indices <- which(diff(sign(scale_for_roots)) != 0)
+
+  tmp <- c(root_indices, i) %>% sort()
+  k <- which(tmp == i)
+
+  root_left <- root_indices[k - 1]
+  root_right <- root_indices[k]
+
+  HWHM_left <- x[i] - x[root_left]
+  HWHM_right <- x[root_right] - x[i]
+
+  FWHM <- 2 * min(c(HWHM_left, HWHM_right))
+  return(FWHM)
+}

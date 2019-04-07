@@ -93,6 +93,45 @@ setMethod(
 
 #' @export
 #' @rdname plot
+#' @aliases plot,PeakPosition,missing-method
+setMethod(
+  f = "plot",
+  signature = signature(x = "PeakPosition", y = "missing"),
+  definition = function(x, xaxis = c("energy", "chanel"),
+                        yaxis = c("counts", "rate"), ...) {
+    # Validation
+    xaxis <- match.arg(xaxis, several.ok = FALSE)
+    yaxis <- match.arg(yaxis, several.ok = FALSE)
+    # Get data
+    spc <- x@spectrum
+    peaks <- x@peaks
+
+    plot(spc, xaxis = xaxis, yaxis = yaxis) +
+      ggplot2::geom_vline(xintercept = peaks[, xaxis], linetype = 3,
+                          colour = "red")
+  }
+)
+
+#' @export
+#' @rdname plot
+#' @aliases plot,PeakModel,missing-method
+setMethod(
+  f = "plot",
+  signature = signature(x = "PeakModel", y = "missing"),
+  definition = function(x, ...) {
+    # Get data
+    spc <- x@spectrum
+    spc_df <- methods::as(spc, "data.frame")
+    fit <- stats::predict(x@model, spc_df$energy)
+
+    plot(spc, xaxis = "energy", yaxis = "counts") +
+      ggplot2::geom_area(mapping = ggplot2::aes_string(y = "fit"),
+                         fill = "blue", colour = "blue", alpha = 0.5)
+  }
+)
+
+#' @export
+#' @rdname plot
 #' @aliases plot,CalibrationCurve,missing-method
 setMethod(
   f = "plot",
