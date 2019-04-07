@@ -2,6 +2,9 @@
 #' @include gamma.R
 NULL
 
+#
+setOldClass(Classes = "nls")
+
 # DEFINITION ===================================================================
 #' An S4 class to represent a gamma sectrum
 #'
@@ -77,6 +80,9 @@ setClass(
 #' @aliases BaseLine-class
 setClass(
   Class = "BaseLine",
+  # slots = c(
+  #   method = "character"
+  # ),
   contains = "GammaSpectrum"
 )
 
@@ -142,6 +148,38 @@ setClass(
 setClass(
   Class = "GammaSpectra",
   contains = "list"
+)
+
+#' An S4 class to represent a set peaks
+#'
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname PeakPosition
+#' @aliases PeakPosition-class
+setClass(
+  Class = "PeakPosition",
+  slots = list(
+    method = "character",
+    noise = "numeric",
+    window = "numeric",
+    peaks = "data.frame",
+    spectrum = "GammaSpectrum"
+  )
+)
+
+#' An S4 class to represent a set peaks
+#'
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname PeakModel
+#' @aliases PeakModel-class
+setClass(
+  Class = "PeakModel",
+  slots = c(
+    model = "nls",
+    peaks = "data.frame",
+    spectrum = "GammaSpectrum"
+  )
 )
 
 #' An S4 class to represent a calibration curve
@@ -210,18 +248,33 @@ setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
   definition = function(.Object, reference, date, instrument, file_format,
-                        chanel, energy, counts, rate, live_time, real_time) {
+                        chanel, energy, counts, live_time, real_time) {
     if (!missing(reference)) .Object@reference <- reference
     if (!missing(date)) .Object@date <- date
     if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(file_format)) .Object@file_format <- file_format
     if (!missing(chanel)) .Object@chanel <- chanel
     if (!missing(energy)) .Object@energy <- energy
-    if (!missing(counts)) .Object@counts <- counts
-    if (!missing(rate)) .Object@rate <- rate
+    if (!missing(counts)) {
+      .Object@counts <- counts
+      .Object@rate <- counts / live_time
+    }
     if (!missing(live_time)) .Object@live_time <- live_time
     if (!missing(real_time)) .Object@real_time <- real_time
 
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
+    }
+    return(.Object)
+  }
+)
+## BaseLine --------------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "BaseLine",
+  definition = function(.Object, ...) {
+    .Object <- methods::callNextMethod(.Object, ...)
     methods::validObject(.Object)
     if (getOption("verbose")) {
       message(paste(class(.Object), "instance initialized.", sep = " "))

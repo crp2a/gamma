@@ -18,6 +18,7 @@ test_that("Initialize a GammaSpectrum instance", {
   expect_is(spectrum[["chanel"]], "integer")
   expect_is(spectrum[["energy"]], "numeric")
   expect_is(spectrum[["counts"]], "numeric")
+  expect_is(spectrum[["rate"]], "numeric")
 
   expect_is(as(spectrum, "matrix"), "matrix")
   expect_is(as(spectrum, "data.frame"), "data.frame")
