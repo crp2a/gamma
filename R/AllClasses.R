@@ -58,7 +58,7 @@ setClass(
   Class = "GammaSpectrum",
   slots = c(
     reference = "character",
-    date = "character",
+    date = "Date",
     instrument = "character",
     file_format = "character",
     chanel = "numeric",

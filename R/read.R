@@ -50,21 +50,23 @@ readCanberraCNF <- function(file, ...) {
 
   # Get metadata
   spc_meta <- spc_xy$dataset[[1]]$metadata_block
+  date <- as.Date(spc_meta[1, 2], format = c("%a, %Y-%m-%d %H:%M:%S"))
   live_time <- as.numeric(spc_meta[5, 2])
   real_time <- as.numeric(spc_meta[6, 2])
+
   # Get data
   spc_data <- spc_xy$dataset[[1]]$data_block %>%
     as.data.frame() %>%
     dplyr::mutate(chanel = dplyr::row_number()) %>%
     magrittr::set_colnames(c("energy", "counts", "chanel"))
-  # Get instrument name
-  # Remove the last word
+
+  # Get instrument name (remove the last word)
   instrument_name <- gsub("\\s*\\w*$", "", names(spc_xy$dataset))
 
   methods::new(
     "GammaSpectrum",
     reference = tools::file_path_sans_ext(basename(file)),
-    date = spc_meta[1, 2],
+    date = date,
     instrument = instrument_name,
     file_format = format,
     chanel = spc_data$chanel,

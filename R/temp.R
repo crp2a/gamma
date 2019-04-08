@@ -23,7 +23,7 @@ readCSV <- function(file, ...) {
   methods::new(
     "GammaSpectrum",
     reference = "unknown",
-    date = "unknown",
+    date = Sys.Date(),
     instrument = "unknown",
     file_format = "unknown",
     chanel = seq_along(csv),

@@ -40,7 +40,7 @@ setMethod(
     methods::new(
       "BaseLine",
       reference = object@reference,
-      date = object@date,
+      date = as.Date(object@date),
       instrument = object@instrument,
       file_format = object@file_format,
       chanel = x_cut$chanel,
