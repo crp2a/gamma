@@ -272,7 +272,7 @@ setMethod(
   definition = function(.Object, reference, date, instrument, file_format,
                         chanel, energy, counts, live_time, real_time) {
     if (!missing(reference)) .Object@reference <- reference
-    if (!missing(date)) .Object@date <- date
+    if (!missing(date)) .Object@date <- date else .Object@date <- Sys.Date()
     if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(file_format)) .Object@file_format <- file_format
     if (!missing(chanel)) .Object@chanel <- chanel

@@ -10,7 +10,7 @@ setMethod(
     cat("Gamma spectrum:", "\n",
         "  Reference: ", object@reference, "\n",
         "  Instrument: ", object@instrument, "\n",
-        "  Date: ", object@date, "\n",
+        "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
         "  Number of chanels: ", length(object@chanel), "\n",
         "  Energy range (keV): ", paste(range(round(object@energy, 2)),
                                         collapse = "-"),
