@@ -55,7 +55,7 @@ setMethod(
   signature = signature(x = "GammaSpectra", y = "missing"),
   definition = function(x, xaxis = c("energy", "chanel"),
                         yaxis = c("counts", "rate"),
-                        select = 1, facet = FALSE, ...) {
+                        select = NULL, facet = FALSE, ...) {
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
