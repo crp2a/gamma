@@ -10,7 +10,7 @@ test_that("Initialize a GammaSpectrum instance", {
   spectrum <- read(file)
 
   expect_is(spectrum[["reference"]], "character")
-  expect_is(spectrum[["date"]], "character")
+  expect_is(spectrum[["date"]], "Date")
   expect_is(spectrum[["instrument"]], "character")
   expect_is(spectrum[["file_format"]], "character")
   expect_is(spectrum[["live_time"]], "numeric")

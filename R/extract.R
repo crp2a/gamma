@@ -65,6 +65,34 @@ setMethod(
   }
 )
 
+# Peaks ========================================================================
+#' @export
+#' @rdname PeakPosition
+#' @aliases [[,PeakPosition-method
+setMethod(
+  f = "[[",
+  signature = "PeakPosition",
+  definition = function(x, i) {
+    i <- match.arg(i, choices = methods::slotNames("PeakPosition"),
+                   several.ok = FALSE)
+    data <- methods::slot(x, i)
+    return(data)
+  }
+)
+#' @export
+#' @rdname PeakModel
+#' @aliases [[,PeakModel-method
+setMethod(
+  f = "[[",
+  signature = "PeakModel",
+  definition = function(x, i) {
+    i <- match.arg(i, choices = methods::slotNames("PeakModel"),
+                   several.ok = FALSE)
+    data <- methods::slot(x, i)
+    return(data)
+  }
+)
+
 # CalibrationCurve =============================================================
 #' @export
 #' @rdname CalibrationCurve

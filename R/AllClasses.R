@@ -152,6 +152,17 @@ setClass(
 
 #' An S4 class to represent a set peaks
 #'
+#' @param x An object of class \code{PeakPosition}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{PeakPosition} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname PeakPosition
@@ -169,6 +180,17 @@ setClass(
 
 #' An S4 class to represent a set peaks
 #'
+#' @param x An object of class \code{PeakModel}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{PeakModel} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname PeakModel
