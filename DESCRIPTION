@@ -35,10 +35,8 @@ BugReports: http://github.com/nfrerebeau/gamma/issues
 Depends: 
     R (>= 3.3.0)
 Imports: 
-    broom,
     dplyr,
     ggplot2,
-    grDevices,
     magrittr,
     methods,
     rxylib,
@@ -46,7 +44,6 @@ Imports:
     tools
 Suggests: 
     covr,
-    cowplot,
     knitr,
     rmarkdown,
     testthat
