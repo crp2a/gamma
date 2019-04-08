@@ -19,7 +19,7 @@ integrateSignal(object, ...)
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
 
-\item{...}{Extra parameters passed to \code{\link{findPeaks}}.}
+\item{...}{Extra parameters passed to \code{\link{fitPeaks}}.}
 
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
 range to integrate within.}
@@ -27,9 +27,6 @@ range to integrate within.}
 \item{peaks}{A \code{\link{numeric}} vector.}
 
 \item{noise}{A \code{\link{list}} of numeric values.}
-
-\item{span}{An \code{\link{integer}} giving the half window size for peak
-searching (see \code{\link{findPeaks}}).}
 }
 \description{
 Signal integration

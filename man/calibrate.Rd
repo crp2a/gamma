@@ -24,6 +24,9 @@ calibrate(object, ...)
 \item{laboratory}{A \code{\link{character}} string giving the laboratory
 name.}
 }
+\value{
+An object of class \linkS4class{CalibrationCurve}.
+}
 \description{
 Builds a calibration curve for gamma dose rate estimation.
 }

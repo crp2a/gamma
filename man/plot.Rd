@@ -20,7 +20,7 @@
   "chanel"), yaxis = c("counts", "rate"), ...)
 
 \S4method{plot}{GammaSpectra,missing}(x, xaxis = c("energy", "chanel"),
-  yaxis = c("counts", "rate"), select = 1, facet = FALSE, ...)
+  yaxis = c("counts", "rate"), select = NULL, facet = FALSE, ...)
 
 \S4method{plot}{PeakPosition,missing}(x, xaxis = c("energy", "chanel"),
   yaxis = c("counts", "rate"), ...)

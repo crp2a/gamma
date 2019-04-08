@@ -40,38 +40,60 @@ spc_calib <- spc_cerege[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
 spc_noise <- spc_cerege[["PB"]]
 
 # Plot spectra
-plot(spc_calib, select = NULL) +
+plot(spc_calib) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
 ```
 
 ## Check automatic peak detection
-```{r baseline, fig.width=7, fig.height=5, fig.align="center"}
+```{r peak}
 # Remove base line
 spc_clean <- removeBaseline(spc_calib)
+
+# Fit peaks
+spc_fit <- lapply(X = spc_clean, FUN = fitPeaks, peaks = c(238, 1461, 2614.5))
 ```
 
-```{r peaks, fig.width=7, fig.height=10, fig.align="center"}
-# Fit peaks
-spc_fit <- lapply(
-  X = spc_clean,
-  FUN = function(x) {
-    fit <- fitPeaks(x, peaks = c(238, 1461, 2614.5))
-    
-    gg <- plot(fit) +
-      ggplot2::labs(title = x[["reference"]], x = "Energy [keV]", y = "Counts") +
-      ggplot2::theme_bw()
-    
-    return(gg)
-  }
-)
+```{r peak-fit, fig.width=7, fig.height=5, fig.align="center", results="asis"}
+# Visual inspection
+expected_peaks <- c(238, 1461, 2614.5)
 
-cowplot::plot_grid(plotlist = spc_fit, ncol = 1, labels = "AUTO")
+for (i in 1:length(spc_fit)) {
+  print(
+    plot(spc_fit[[i]]) +
+      ggplot2::labs(title = spc_fit[[i]][["spectrum"]][["reference"]], 
+                    x = "Energy [keV]", y = "Counts") +
+      ggplot2::theme_bw()
+  )
+  
+  pks_sumup <- spc_fit[[i]][["peaks"]] %>%
+      dplyr::mutate(shift = (energy - expected_peaks) * 100 / expected_peaks)
+  print(
+    knitr::kable(
+      pks_sumup,
+      digits = 3,
+      col.names = c("Chanel", "Energy [keV]", "Count", 
+                    "Count rate [1/s]", "Energy shift [%]"),
+      caption = spc_fit[[i]][["spectrum"]][["reference"]]
+    )
+  )
+  cat('\n')
+}
+```
+
+## Check energy shift
+```{r adjust, fig.width=7, fig.height=5, fig.align="center"}
+spc_adjust <- adjust(spc_calib, peaks = c(238, 1461, 2614.5))
+
+plot(spc_adjust) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+  ggplot2::theme_bw()
 ```
 
 ## Background noise measurement
 Pas fonctionnel du tout.
-
 ```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
 # Plot spectrum
 plot(spc_noise) +
@@ -79,9 +101,27 @@ plot(spc_noise) +
   ggplot2::theme_bw()
 ```
 
-## Build Calibration curve
-Attention : la fenetre de recherche de pics est fixée à 20 ci-après. La valeur automatique entraine une mauvaise indexation sur un des spectres.
+```{r peak-noise, eval=FALSE, include=FALSE, fig.width=7, fig.height=5, fig.align="center"}
+# Remove base line
+noise_clean <- removeBaseline(spc_noise)
+plot(noise_clean)
 
+# Peak detection
+noise_peak <- findPeaks(noise_clean, SNR = 1, span = 50)
+plot(noise_peak)
+
+knitr::kable(
+  noise_peak[["peaks"]]
+)
+
+noise_fit <- fitPeaks(noise_clean, peaks = c(254.1352, 1488.6541, 2669.7403))
+```
+
+```{r integrate-noise, eval=FALSE, include=FALSE}
+noise <- integrateSignal(spc_noise)
+```
+
+## Build Calibration curve
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
 # Build calibration curve
 known_dose <- list(
@@ -102,7 +142,6 @@ CEREGE
 # Plot Calibration curve
 plot(CEREGE) +
   ggplot2::labs(x = "Dose rate [µGy/y]", y = "Signal") +
-  # ggplot2::geom_label(nudge_x = 50, nudge_y = -750) +
   ggplot2::theme_bw()
 ```
 

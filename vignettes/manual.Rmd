@@ -50,7 +50,7 @@ baseline <- estimateBaseline(spc, method = c("SNIP"))
 
 # Plot spectrum + baseline
 plot(spc, baseline) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -64,7 +64,7 @@ identical(spc_clean1, spc_clean2)
 
 # Plot spectra
 plot(spc_clean1) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -80,7 +80,7 @@ Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de can
 peak_index <- findPeaks(spc_clean1, SNR = 2, span = 20)
 
 plot(peak_index) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -98,21 +98,35 @@ Dans tous les cas, mieux vaut vérifier visuellement les résultats après.
 peak_fit1 <- fitPeaks(peak_index)
 
 plot(peak_fit1) +
-  ggplot2::labs(title = "Model from automatic peak detection", x = "Energy [keV]", y = "Counts") +
+  ggplot2::labs(title = "Model from automatic peak detection", x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 
 # Fit peaks at a given energy (keV)
 peak_fit2 <- fitPeaks(spc_clean1, peaks = c(238, 1461, 2614.5))
 
 plot(peak_fit2) +
-  ggplot2::labs(title = "Model from fixed peak positions", x = "Energy [keV]", y = "Counts") +
+  ggplot2::labs(title = "Model from fixed peak positions", x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
 ```{r peak-table, echo=FALSE}
 knitr::kable(
-  peak_fit2[["peaks"]]
+  peak_fit2[["peaks"]],
+  digits = 3,
+  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]")
 )
+```
+
+### Adjust for energy shift
+```{r adjust}
+spc_adjust <- adjust(spc, peaks = c(238, 1461, 2614.5))
+
+spc_shift <- new("GammaSpectra", list(raw = spc, shifted = spc_adjust))
+
+plot(spc_shift) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+  ggplot2::theme_bw()
 ```
 
 ## Gamma dose rate estimation
