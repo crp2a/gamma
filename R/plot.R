@@ -140,9 +140,19 @@ setMethod(
     # Get data
     data <- methods::as(x, "data.frame")
 
+    # Set error bar width and height
+    error_height <- sum(range(data$signal) * c(-1, 1)) / 100
+    error_width <- sum(range(data$dose) * c(-1, 1)) / 100
+
     ggplot2::ggplot(data = data,
                     mapping = ggplot2::aes_string(x = "dose", y = "signal",
                                                   label = "reference")) +
+      ggplot2::geom_errorbarh(ggplot2::aes_string(xmin = "dose - dose_error",
+                                                  xmax = "dose + dose_error"),
+                              height = error_height) +
+      ggplot2::geom_errorbar(ggplot2::aes_string(ymin = "signal - signal_error",
+                                                 ymax = "signal + signal_error"),
+                             width = error_width) +
       ggplot2::geom_point() +
       ggplot2::stat_smooth(method = "lm", col = "red",
                            formula = y ~ 0 + x, se = FALSE)
