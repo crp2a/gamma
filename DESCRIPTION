@@ -42,9 +42,11 @@ Imports:
     magrittr,
     methods,
     rxylib,
-    stats
+    stats,
+    tools
 Suggests: 
     covr,
+    cowplot,
     knitr,
     rmarkdown,
     testthat
