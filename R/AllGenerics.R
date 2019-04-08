@@ -8,6 +8,8 @@ NULL
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param dose A \code{\link{list}} of length-two numeric vector.
 #' @param noise A \code{\link{list}} of numeric values.
+#' @param laboratory A \code{\link{character}} string giving the laboratory
+#'  name.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @seealso \link{estimateDoseRate}
 #' @example inst/examples/ex-calibrate.R

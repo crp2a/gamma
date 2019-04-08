@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "calibrate",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, dose, noise, ...) {
+  definition = function(object, dose, noise, laboratory = "LAB", ...) {
 
     signals <- integrateSignal(object, noise = noise, ...) %>%
       dplyr::bind_rows(.id = "reference") %>%
@@ -30,6 +30,13 @@ setMethod(
 
     fit <- stats::lm(signal ~ 0 + dose, data = data)
 
-    methods::new("CalibrationCurve", model = fit, data = data)
+    methods::new(
+      "CalibrationCurve",
+      instrument = NA_character_,
+      laboratory = laboratory,
+      model = fit,
+      noise = NA_real_,
+      data = data
+    )
   }
 )

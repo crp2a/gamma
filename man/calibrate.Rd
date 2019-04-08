@@ -9,7 +9,8 @@
 \usage{
 calibrate(object, ...)
 
-\S4method{calibrate}{GammaSpectra}(object, dose, noise, ...)
+\S4method{calibrate}{GammaSpectra}(object, dose, noise,
+  laboratory = "LAB", ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
@@ -19,6 +20,9 @@ calibrate(object, ...)
 \item{dose}{A \code{\link{list}} of length-two numeric vector.}
 
 \item{noise}{A \code{\link{list}} of numeric values.}
+
+\item{laboratory}{A \code{\link{character}} string giving the laboratory
+name.}
 }
 \description{
 Builds a calibration curve for gamma dose rate estimation.
