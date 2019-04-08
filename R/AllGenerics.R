@@ -2,6 +2,23 @@
 #' @include AllClasses.R
 NULL
 
+#' Energy shift
+#'
+#' Adjusts spectrum.
+#' @param object An object of class \linkS4class{GammaSpectra}.
+#' @param peaks A \code{\link{numeric}} vector.
+#' @param ... Currently not used.
+# @example inst/examples/ex-adjust.R
+#' @return An object of class \linkS4class{GammaSpectra}.
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname adjust
+#' @aliases adjust-method
+setGeneric(
+  name = "adjust",
+  def = function(object, ...) standardGeneric("adjust")
+)
+
 #' Calibration
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
@@ -11,6 +28,7 @@ NULL
 #' @param laboratory A \code{\link{character}} string giving the laboratory
 #'  name.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
+#' @return An object of class \linkS4class{CalibrationCurve}.
 #' @seealso \link{estimateDoseRate}
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
@@ -131,13 +149,11 @@ setGeneric(
 #' Signal integration
 #'
 #' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param peaks A \code{\link{numeric}} vector.
 #' @param range A length two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within.
-#' @param peaks A \code{\link{numeric}} vector.
 #' @param noise A \code{\link{list}} of numeric values.
-#' @param span An \code{\link{integer}} giving the half window size for peak
-#'  searching (see \code{\link{findPeaks}}).
-#' @param ... Extra parameters passed to \code{\link{findPeaks}}.
+#' @param ... Extra parameters passed to \code{\link{fitPeaks}}.
 #' @details
 #'  TODO
 #' @author N. Frerebeau
