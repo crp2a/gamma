@@ -18,6 +18,22 @@ names of the slots.}
 \description{
 An S4 class to represent a calibration curve
 }
+\section{Slots}{
+
+\describe{
+\item{\code{instrument}}{A \code{\link{character}} string.}
+
+\item{\code{laboratory}}{A \code{\link{character}} string.}
+
+\item{\code{date}}{A \code{\link[=Date]{date}}.}
+
+\item{\code{model}}{A \code{\link[stats:lm]{linear model}}.}
+
+\item{\code{noise}}{A \code{\link{numeric}} vector.}
+
+\item{\code{data}}{A \code{\link[=data.frame]{data frame}}.}
+}}
+
 \section{Subset}{
 
 In the code snippets below, \code{x} is a \code{CalibrationCurve} object.

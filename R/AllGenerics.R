@@ -26,7 +26,7 @@ setGeneric(
 #'
 #' @param object A \code{\link{numeric}} vector.
 #' @param method TODO.
-#' @param ... Extra parameters passed to other methods.
+#' @param ... Extra parameters passed to internal functions.
 #' @return
 #'  \code{estimateBaseline} returns a four columns data frame or a list
 #'  of data frame.

@@ -1,0 +1,111 @@
+---
+title: "CEREGE Calibration Curve"
+author: "N. Frerebeau, B. Lebrun"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_caption: yes
+    toc: true
+header-includes:
+   - \usepackage{amsmath}
+   - \usepackage{amssymb}
+bibliography: bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{cerege}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(gamma)
+library(magrittr)
+```
+
+## Import files
+```{r import, fig.width=7, fig.height=5, fig.align="center"}
+# Import CNF files for calibration
+cnf_cerege <- system.file("extdata/cerege/", package = "gamma")
+spc_cerege <- read(cnf_cerege)
+spc_cerege
+
+# Select 'BRIQUE', 'C341', 'C347', 'GOU' and 'PEB' spectra to build the curve
+spc_calib <- spc_cerege[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
+# Select 'PB' spectra for background measurement
+spc_noise <- spc_cerege[["PB"]]
+
+# Plot spectra
+plot(spc_calib, select = NULL) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+```
+
+## Check automatic peak detection
+```{r baseline, fig.width=7, fig.height=5, fig.align="center"}
+# Remove base line
+spc_clean <- removeBaseline(spc_calib)
+```
+
+```{r peaks, fig.width=7, fig.height=10, fig.align="center"}
+# Fit peaks
+spc_fit <- lapply(
+  X = spc_clean,
+  FUN = function(x) {
+    fit <- fitPeaks(x, peaks = c(238, 1461, 2614.5))
+    
+    gg <- plot(fit) +
+      ggplot2::labs(title = x[["reference"]], x = "Energy [keV]", y = "Counts") +
+      ggplot2::theme_bw()
+    
+    return(gg)
+  }
+)
+
+cowplot::plot_grid(plotlist = spc_fit, ncol = 1, labels = "AUTO")
+```
+
+## Background noise measurement
+Pas fonctionnel du tout.
+
+```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
+# Plot spectrum
+plot(spc_noise) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+```
+
+## Build Calibration curve
+Attention : la fenetre de recherche de pics est fixée à 20 ci-après. La valeur automatique entraine une mauvaise indexation sur un des spectres.
+
+```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
+# Build calibration curve
+known_dose <- list(
+  BRIQUE = c(1984.64, 34.08),
+  C347 = c(1421.38, 25.25),
+  C341 = c(849.01, 21.32),
+  PEP = c(2535.53, 112.17),
+  GOU = c(1573.41, 17.43)
+)
+
+CEREGE <- calibrate(
+  spc_calib,
+  dose = known_dose,
+  noise = list(value = 1190, error = 1)
+)
+CEREGE
+
+# Plot Calibration curve
+plot(CEREGE) +
+  ggplot2::labs(x = "Dose rate [µGy/y]", y = "Signal") +
+  # ggplot2::geom_label(nudge_x = 50, nudge_y = -750) +
+  ggplot2::theme_bw()
+```
+
+```{r save, eval=FALSE, echo=FALSE, include=FALSE}
+usethis::use_data(CEREGE, overwrite = FALSE)
+```

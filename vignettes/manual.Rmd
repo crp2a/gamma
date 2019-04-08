@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "N. Frerebeau, B. Lebrun"
+title: "Manual"
+author: "N. Frerebeau"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -29,7 +29,7 @@ library(magrittr)
 
 ## Spectrum inspection
 ### Import a CNF file
-```{r import, fig.width=7, fig.height=5, fig.align="center"}
+```{r import, fig.width=7, fig.height=5, fig.alipeaks_pgn="center"}
 # Import CNF files for calibration
 cnf_test <- system.file("extdata/test1.cnf", package = "gamma")
 spc <- read(cnf_test)
@@ -42,7 +42,7 @@ plot(spc, xaxis = "energy", yaxis = "rate") +
 ```
 
 ### Estimate and remove background
-Algorithme SNIP [@ryan1988; @morhac1997]
+Algorithme SNIP [@ryan1988; @morhac1997; @morhac2008]
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate baseline
@@ -68,23 +68,56 @@ plot(spc_clean1) +
   ggplot2::theme_bw()
 ```
 
-### Detect peaks
+### Automatic peak detection
+On peut tenter de détecter automatiquement les pics présents dans le spectre.
+Un pic est identifié comme tel s'il y a changement de signe de la courbe dans une fenêtre donnée et si la valeur est supérieure a *n* fois le rapport signal sur bruit.
+
 Le vrai problème reside dans le choix de la fenêtre pour la recherche de pics.
 Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de canaux.
 
-```{r peaks, fig.width=7, fig.height=5, fig.align="center"}
+```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
 # Detect peaks
-peak_index <- findPeaks(spc_clean1, span = 20)
+peak_index <- findPeaks(spc_clean1, SNR = 2, span = 20)
 
-plot(spc_clean1, select = 1:3, facet = TRUE) +
+plot(peak_index) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::geom_vline(xintercept = peak_index$energy, colour = "red") +
-  # ggplot2::geom_hline(yintercept = MAD(spc_clean1@counts)*2, colour = "blue") +
   ggplot2::theme_bw()
 ```
 
+### Peak fitting
+Comme le spectre est bruité, il peut y avoir un léger décalage entre la position du pic identifié automatiquement et la valeur attendue. Pour améliorer ça, on ajuste des gaussiennes aux positions souhaitées et on en récupère les paramètres. La position du pic retenue est alors la valeur du spectre la plus proche de la moyenne de la gaussienne correspondante.
+
+On peut ajuster des gaussiennes directement à partir des résultats de l'étape précédente (détection automatique) ou spécifier les positions de départ.
+
+Si les pics sont trop rapprochés ou le signal trop bruité, la première solution peut ne pas aboutir (problème de convergence lors de l'ajustement des gaussiennes). Dans la mesure où on est interessé par seulement trois pics (238, 1461, 2614.5 keV), la seconde approche produit de meilleurs résultats (et réduit le temps de calcul).
+
+Dans tous les cas, mieux vaut vérifier visuellement les résultats après.
+
+```{r peak-fitting, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
+# Fit peaks found by automatic detection
+peak_fit1 <- fitPeaks(peak_index)
+
+plot(peak_fit1) +
+  ggplot2::labs(title = "Model from automatic peak detection", x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+
+# Fit peaks at a given energy (keV)
+peak_fit2 <- fitPeaks(spc_clean1, peaks = c(238, 1461, 2614.5))
+
+plot(peak_fit2) +
+  ggplot2::labs(title = "Model from fixed peak positions", x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+```
+
+```{r peak-table, echo=FALSE}
+knitr::kable(
+  peak_fit2[["peaks"]]
+)
+```
+
 ## Gamma dose rate estimation
-### Import files
+### Build calibration curve
+#### Import files
 ```{r import-calib, fig.width=7, fig.height=5, fig.align="center"}
 # Import CNF files for calibration
 cnf_cerege <- system.file("extdata/cerege/", package = "gamma")
@@ -95,31 +128,50 @@ spc_cerege
 plot(spc_cerege, select = NULL) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
+
+# Select 'BRIQUE', 'C341', 'C347', 'GOU' and 'PEB' spectra to build the curve
+spc_calib <- spc_cerege[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
+# Select 'PB' spectra for background measurement
+spc_noise <- spc_cerege[["PB"]]
 ```
 
-### Background noise measurement
-Cette étape n'est pas optimale. Par la suite on utilise la valeur de bruit de fond estimée à la main (1190 +/- 1).
+#### Background noise measurement
+Pas fonctionnel du tout.
+
+Par la suite on utilise la valeur de bruit de fond estimée à la main (1190 +/- 1).
 ```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
-# Select 'PB' spectra for background measurement
-spc_PB <- spc_cerege[["PB"]]
+# Plot spectrum
+plot(spc_noise) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+```
+
+```{r integrate-noise, eval=FALSE, fig.width=7, fig.height=5, fig.align="center"}
+# Estimate baseline
+noise_baseline <- estimateBaseline(spc_noise, method = "SNIP", LLS = TRUE, m = 20)
 
 # Plot spectrum
-plot(spc_PB) +
+plot(spc_noise, noise_baseline) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
 
+noise_clean <- spc_noise - noise_baseline
+plot(noise_clean)
+
+noise_peaks <- findPeaks(noise_clean, span = 20)
+plot(noise_peaks)
+
+noise_fit <- fitPeaks(noise_peaks)
+plot(noise_fit)
+
 # Integrate background noise between 200 keV and 2800 keV
-noise <- integrateSignal(spc_PB, peaks = c(238, 1461, 2614.5), span = 50)
+noise <- integrateSignal(spc_noise, peaks = c(238, 1461, 2614.5))
 noise
 ```
 
-### Build Calibration curve
-Attention : la fenetre de recherche de pics est fixée à 20 ci-après. La valeur automatique entraine une mauvaise indexation sur un des spectres.
+#### Build curve
 
 ```{r calibration-curve, fig.width=5, fig.height=5, fig.align="center"}
-# Select 'BRIQUE', 'C341', 'C347', 'GOU' and 'PEB' spectra to build the curve
-spc_calib <- spc_cerege[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
-
 # Build calibration curve
 known_dose <- list(
   BRIQUE = c(1984.64, 34.08),
@@ -132,31 +184,19 @@ known_dose <- list(
 calib_curve <- calibrate(
   spc_calib,
   dose = known_dose,
-  noise = list(value = 1190, error = 1),
-  SNR = 1,
-  span = 20
+  noise = list(value = 1190, error = 1)
 )
 calib_curve
 
 # Plot Calibration curve
 plot(calib_curve) +
   ggplot2::labs(x = "Dose rate [µGy/y]", y = "Signal") +
-  # ggplot2::geom_label(nudge_x = 50, nudge_y = -750) +
   ggplot2::theme_bw()
 ```
 
-### Gamma dose rate estimation
+### Dose rate estimation
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
-# Import CNF file for dose rate estimation
-spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
-spc_test <- read(spc_dir)
-
-# Plot spectrum
-plot(spc_test) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
-
-dose_rate <- estimateDoseRate(spc_test, calib_curve, 
+dose_rate <- estimateDoseRate(spc, calib_curve, 
                               noise = list(value = 1190, error = 1),
                               span = 20)
 as(dose_rate, "data.frame")

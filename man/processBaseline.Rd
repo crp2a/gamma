@@ -30,7 +30,7 @@ removeBaseline(object, ...)
 \arguments{
 \item{object}{A \code{\link{numeric}} vector.}
 
-\item{...}{Extra parameters passed to other methods.}
+\item{...}{Extra parameters passed to internal functions.}
 
 \item{method}{TODO.}
 }

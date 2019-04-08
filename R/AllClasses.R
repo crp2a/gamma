@@ -206,6 +206,12 @@ setClass(
 
 #' An S4 class to represent a calibration curve
 #'
+#' @slot instrument A \code{\link{character}} string.
+#' @slot laboratory A \code{\link{character}} string.
+#' @slot date A \code{\link[=Date]{date}}.
+#' @slot model A \code{\link[stats:lm]{linear model}}.
+#' @slot noise A \code{\link{numeric}} vector.
+#' @slot data A \code{\link[=data.frame]{data frame}}.
 #' @param x An object of class \code{CalibrationCurve}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -224,7 +230,11 @@ setClass(
 setClass(
   Class = "CalibrationCurve",
   slots = c(
+    instrument = "character",
+    laboratory = "character",
+    date = "Date",
     model = "lm",
+    noise = "numeric",
     data = "data.frame"
   )
 )
@@ -321,9 +331,13 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",
-  definition = function(.Object, model, data) {
+  definition = function(.Object, instrument, laboratory, model, noise, data) {
+    if (!missing(instrument)) .Object@model <- model
+    if (!missing(laboratory)) .Object@laboratory <- laboratory
     if (!missing(model)) .Object@model <- model
+    if (!missing(noise)) .Object@noise <- noise
     if (!missing(data)) .Object@data <- data
+    .Object@date <- Sys.Date()
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
