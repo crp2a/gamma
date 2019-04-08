@@ -93,11 +93,13 @@ setGeneric(
 #'
 #' Finds local maxima in sequential data.
 #' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param peaks XXX.
 #' @param method A \code{\link{character}} string.
 #' @param SNR An \code{\link{integer}}.
-#' @param span An \code{\link{integer}} giving the half window size. If
-#'  \code{NULL}, 5\% of the number of chanels is used as the half window size.
-#' @param ... Currently not used.
+#' @param span An \code{\link{integer}} giving the half window size (in number
+#'  of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
+#'  half window size.
+#' @param ... Extra parameters passed to internal functions.
 #' @details
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
@@ -123,7 +125,7 @@ setGeneric(
 #' @aliases fitPeaks-method
 setGeneric(
   name = "fitPeaks",
-  def = function(object, ...) standardGeneric("fitPeaks")
+  def = function(object, peaks, ...) standardGeneric("fitPeaks")
 )
 
 #' Signal integration

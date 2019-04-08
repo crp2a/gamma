@@ -1,5 +1,24 @@
 # HELPERS
 
+#' Find nearest value
+#'
+#' Finds the closest element to a number in a vector.
+#' @param x A \code{\link{numeric}} vector to search within.
+#' @param value A \code{\link{numeric}} vector giving the value to look for.
+#' @return A \code{\link{numeric}} vector of indices.
+#' @keywords internal
+#' @noRd
+findClosest <- function(x, value) {
+  # Validation
+  if (!is.numeric(x) | !is.numeric(value))
+    stop("Numeric vectors are expected.")
+
+  index <- sapply(X = value,
+                  FUN = function(i, x) which.min(abs(x - i)),
+                  x = x)
+  return(index)
+}
+
 #' Equality within a vector
 #'
 #' Checks for equality among all elements of a vector.

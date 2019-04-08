@@ -4,19 +4,6 @@ NULL
 
 #' @export
 #' @rdname peaks
-#' @aliases findPeaks,GammaSpectra-method
-setMethod(
-  f = "findPeaks",
-  signature = signature(object = "GammaSpectra"),
-  definition = function(object, span = NULL, ...) {
-    peaks <- lapply(X = object, FUN = findPeaks, span = span, ...)
-    names(peaks) <- names(object)
-    return(peaks)
-  }
-)
-
-#' @export
-#' @rdname peaks
 #' @aliases findPeaks,GammaSpectrum-method
 setMethod(
   f = "findPeaks",
@@ -59,12 +46,15 @@ setMethod(
       unlist() %>%
       subset(., counts[.] >= threshold)
 
+    pks <- data[index_noise, ]
+    rownames(pks) <- NULL
+
     methods::new(
       "PeakPosition",
       method = method,
       noise = threshold,
       window = span,
-      peaks = data[index_noise, ],
+      peaks = pks,
       spectrum = object
     )
   }
@@ -75,30 +65,67 @@ setMethod(
 #' @aliases fitPeaks,GammaSpectrum-method
 setMethod(
   f = "fitPeaks",
-  signature = signature(object = "PeakPosition"),
-  definition = function(object, ...) {
+  signature = signature(object = "GammaSpectrum", peaks = "numeric"),
+  definition = function(object, peaks, ...) {
     # Get spectrum data
-    spc <- methods::as(object@spectrum, "data.frame")
+    spc <- methods::as(object, "data.frame")
+
+    # Find peaks in spectrum data
+    pks_index <- findClosest(spc$energy, peaks)
+    pks <- spc[pks_index, ]
+    rownames(pks) <- NULL
+
+    fitNLS(object, pks)
+  }
+)
+
+#' @export
+#' @rdname peaks
+#' @aliases fitPeaks,PeakPosition,missing-method
+setMethod(
+  f = "fitPeaks",
+  signature = signature(object = "PeakPosition", peaks = "missing"),
+  definition = function(object, ...) {
+    # Get data
+    spc <- object@spectrum
     pks <- object@peaks
+
+    fitNLS(spc, pks)
+  }
+)
+
+#' NLS
+#'
+#' Determine the nonlinear least-squares estimates of the peaks parameters.
+#' @param x A \linkS4class{GammaSpectrum} object.
+#' @param peaks A \code{\link[=data.frame]{data frame}}.
+#' @param ... Currently not used.
+#' @return A \linkS4class{PeakModel} object.
+#' @author N. Frerebeau
+#' @keywords internal
+#' @noRd
+fitNLS <- function(object, peaks, ...) {
+    # Get data
+    spc <- methods::as(object, "data.frame")
 
     # Get starting values for each peak
     ## Mean
-    mu <- pks$energy
+    mu <- peaks$energy
     names(mu) <- paste("mu", 1:length(mu), sep = "")
     ## Standart deviation
-    fwhm <- sapply(X = pks$energy,
+    fwhm <- sapply(X = peaks$energy,
                    FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
                    x = spc$energy, y = spc$counts)
     sigma <- fwhm / (2 * sqrt(2 * log(2)))
     names(sigma) <- paste("sigma", 1:length(sigma), sep = "")
     ## Height
-    height <- pks$counts
+    height <- peaks$counts
     names(height) <- paste("C", 1:length(height), sep = "")
 
     parameters <- as.list(c(mu, sigma, height))
 
     # Build formula
-    n <- 1:nrow(pks)
+    n <- 1:nrow(peaks)
     term_labels <- sprintf("C%d * exp(-0.5 * ((energy - mu%d) / sigma%d)^2)",
                            n, n, n)
     fit_formula <- stats::reformulate(termlabels = term_labels,
@@ -112,21 +139,17 @@ setMethod(
 
     # Find peaks in spectrum data
     fit_mu <- stats::coef(fit)[n]
-    pks_index <- sapply(
-      X = fit_mu,
-      FUN = function(expected, real) which.min(abs(real - expected)),
-      real = spc$energy
-    )
+    pks_index <- findClosest(spc$energy, fit_mu)
     pks <- spc[pks_index, ]
+    rownames(pks) <- NULL
 
     methods::new(
       "PeakModel",
       model = fit,
       peaks = pks,
-      spectrum = object@spectrum
+      spectrum = object
     )
   }
-)
 
 #' MAD
 #'

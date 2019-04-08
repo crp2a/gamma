@@ -7,34 +7,37 @@
 \alias{findPeaks-method}
 \alias{fitPeaks}
 \alias{fitPeaks-method}
-\alias{findPeaks,GammaSpectra-method}
 \alias{findPeaks,GammaSpectrum-method}
-\alias{fitPeaks,PeakPosition-method}
+\alias{fitPeaks,GammaSpectrum,numeric-method}
 \alias{fitPeaks,GammaSpectrum-method}
+\alias{fitPeaks,PeakPosition,missing-method}
 \title{Peaks}
 \usage{
 findPeaks(object, ...)
 
-fitPeaks(object, ...)
-
-\S4method{findPeaks}{GammaSpectra}(object, span = NULL, ...)
+fitPeaks(object, peaks, ...)
 
 \S4method{findPeaks}{GammaSpectrum}(object, method = c("MAD"), SNR = 2,
   span = NULL, ...)
 
-\S4method{fitPeaks}{PeakPosition}(object, ...)
+\S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks, ...)
+
+\S4method{fitPeaks}{PeakPosition,missing}(object, peaks, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
 
-\item{...}{Currently not used.}
+\item{...}{Extra parameters passed to internal functions.}
 
-\item{span}{An \code{\link{integer}} giving the half window size. If
-\code{NULL}, 5\% of the number of chanels is used as the half window size.}
+\item{peaks}{XXX.}
 
 \item{method}{A \code{\link{character}} string.}
 
 \item{SNR}{An \code{\link{integer}}.}
+
+\item{span}{An \code{\link{integer}} giving the half window size (in number
+of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
+half window size.}
 }
 \value{
 \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.

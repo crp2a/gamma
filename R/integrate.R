@@ -39,17 +39,11 @@ setMethod(
     spc_clean <- removeBaseline(object)
 
     # Adjust spectrum for energy shift
-    ## Detect peaks
-    peaks_index <- findPeaks(spc_clean, ...)@peaks
-    ## Find peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
-    peaks_energy <- sapply(
-      X = peaks,
-      FUN = function(expected, real) which.min(abs(real - expected)),
-      real = peaks_index$energy
-    )
+    ## Fit peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
+    peaks_index <- fitPeaks(spc_clean, peaks = peaks)
     ## Get corresponding chanels
-    fit_data <- data.frame(energy = peaks,
-                           chanel = peaks_index$chanel[peaks_energy])
+    fit_data <- data.frame(energy = peaks_index@peaks$energy,
+                           chanel = peaks_index@peaks$chanel)
     ## Fit second order polynomial
     fit_poly <- stats::lm(chanel ~ stats::poly(energy, degree = 2, raw = TRUE),
                           data = fit_data)
