@@ -117,9 +117,9 @@ knitr::kable(
 )
 ```
 
-### Adjust for energy shift
-```{r adjust}
-spc_adjust <- adjust(spc, peaks = c(238, 1461, 2614.5))
+### Calibrate energy scale
+```{r calibrate}
+spc_adjust <- calibrateEnergy(spc, lines = c(238, 1461, 2614.5))
 
 spc_shift <- new("GammaSpectra", list(raw = spc, shifted = spc_adjust))
 
@@ -186,6 +186,9 @@ noise
 #### Build curve
 
 ```{r calibration-curve, fig.width=5, fig.height=5, fig.align="center"}
+# Calibrate energy scale
+calib_scale <- calibrateEnergy(spc_calib, lines = c(238, 1461, 2614.5))
+
 # Build calibration curve
 known_dose <- list(
   BRIQUE = c(1984.64, 34.08),
@@ -195,8 +198,8 @@ known_dose <- list(
   GOU = c(1573.41, 17.43)
 )
 
-calib_curve <- calibrate(
-  spc_calib,
+calib_curve <- calibrateDose(
+  calib_scale,
   dose = known_dose,
   noise = list(value = 1190, error = 1)
 )
@@ -204,13 +207,17 @@ calib_curve
 
 # Plot Calibration curve
 plot(calib_curve) +
-  ggplot2::labs(x = "Dose rate [µGy/y]", y = "Signal") +
+  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]") +
   ggplot2::theme_bw()
 ```
 
 ### Dose rate estimation
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
-dose_rate <- estimateDoseRate(spc, calib_curve, 
+# Calibrate energy scale
+spc_scale <- calibrateEnergy(spc, lines = c(238, 1461, 2614.5))
+
+# Estimate dose rate
+dose_rate <- estimateDoseRate(calib_scale, calib_curve, 
                               noise = list(value = 1190, error = 1),
                               span = 20)
 as(dose_rate, "data.frame")

@@ -35,6 +35,9 @@ Estimates in-situ gamma dose rate.
 dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir)[-5]
 
+# Calibrate energy scale
+calib_scale <- calibrateEnergy(calib_spc, lines = c(238, 1461, 2614.5))
+
 # Build calibration curve
 known_dose <- list(
   BRIQUE = c(1984.64, 34.08),
@@ -44,11 +47,10 @@ known_dose <- list(
   GOU = c(1573.41, 17.43)
 )
 
-calib_curve <- calibrate(
+calib_curve <- calibrateDose(
   calib_spc,
   dose = known_dose,
-  noise = list(value = 1190, error = 1),
-  span = 20
+  noise = list(value = 1190, error = 1)
 )
 
 # Plot curve
@@ -63,9 +65,6 @@ gamma_spc <- read(dir)
 # Estimate gamma dose rate
 dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
                               noise = list(value = 1190, error = 1))
-
-# Plot estimated values on the calibration curve
-plot(calib_curve, dose_rate)
 }
 \author{
 N. Frerebeau

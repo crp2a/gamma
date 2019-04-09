@@ -84,7 +84,7 @@ for (i in 1:length(spc_fit)) {
 
 ## Check energy shift
 ```{r adjust, fig.width=7, fig.height=5, fig.align="center"}
-spc_adjust <- adjust(spc_calib, peaks = c(238, 1461, 2614.5))
+spc_adjust <- calibrateEnergy(spc_calib, peaks = c(238, 1461, 2614.5))
 
 plot(spc_adjust) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
@@ -123,6 +123,9 @@ noise <- integrateSignal(spc_noise)
 
 ## Build Calibration curve
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
+# Calibrate energy scale
+calib_scale <- calibrateEnergy(spc_calib)
+
 # Build calibration curve
 known_dose <- list(
   BRIQUE = c(1984.64, 34.08),
@@ -132,8 +135,8 @@ known_dose <- list(
   GOU = c(1573.41, 17.43)
 )
 
-CEREGE <- calibrate(
-  spc_calib,
+CEREGE <- calibrateDose(
+  calib_scale,
   dose = known_dose,
   noise = list(value = 1190, error = 1)
 )
