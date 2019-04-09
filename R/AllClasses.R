@@ -5,6 +5,9 @@ NULL
 #
 setOldClass(Classes = "nls")
 
+# Class Unions =================================================================
+setClassUnion("LmOrNull", c("lm", "NULL"))
+
 # DEFINITION ===================================================================
 #' An S4 class to represent a gamma sectrum
 #'
@@ -67,7 +70,8 @@ setClass(
     counts = "numeric",
     rate = "numeric",
     live_time = "numeric",
-    real_time = "numeric"
+    real_time = "numeric",
+    calibration = "LmOrNull"
   )
 )
 
@@ -281,7 +285,8 @@ setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
   definition = function(.Object, hash, reference, date, instrument, file_format,
-                        chanel, energy, counts, live_time, real_time) {
+                        chanel, energy, counts, live_time, real_time,
+                        calibration) {
     if (!missing(hash)) .Object@hash <- hash
     if (!missing(reference)) .Object@reference <- reference
     if (!missing(date)) .Object@date <- date else .Object@date <- Sys.Date()
@@ -295,6 +300,7 @@ setMethod(
     }
     if (!missing(live_time)) .Object@live_time <- live_time
     if (!missing(real_time)) .Object@real_time <- real_time
+    if (!missing(calibration)) .Object@calibration <- calibration
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
@@ -384,6 +390,7 @@ setValidity(
     rate <- object@rate
     live_time <- object@live_time
     real_time <- object@real_time
+    calibration <- object@calibration
     message <- c()
 
     if (length(reference) > 1)
