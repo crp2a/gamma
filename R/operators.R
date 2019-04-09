@@ -5,7 +5,7 @@ NULL
 #' Operators
 #'
 #' Performs operation on spectra.
-#' @param e1,e2 Objects (typically \linkS4class{GammaSpectrum} objects).
+#' @param e1,e2 A \linkS4class{GammaSpectrum} object.
 #' @return A \linkS4class{GammaSpectrum} object.
 #' @author N. Frerebeau
 #' @docType methods
@@ -20,17 +20,6 @@ NULL
 setMethod(
   f = "-",
   signature(e1 = "GammaSpectrum", e2 = "GammaSpectrum"),
-  definition = function (e1, e2) {
-    stop("TODO")
-  }
-)
-
-#' @export
-#' @rdname operators
-#' @aliases -,GammaSpectrum,BaseLine-method
-setMethod(
-  f = "-",
-  signature(e1 = "GammaSpectrum", e2 = "BaseLine"),
   definition = function (e1, e2) {
     if (e1@reference != e2@reference |
         e1@date != e2@date |
