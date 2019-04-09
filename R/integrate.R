@@ -9,12 +9,12 @@ setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, range = c(200, 2800),
-                        peaks = c(238, 1461, 2614.5),
+                        lines = c(238, 1461, 2614.5),
                         noise = NULL, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     signals <- lapply(X = spectra, FUN = integrateSignal,
-                      range = range, peaks = peaks, noise = noise, ...)
+                      range = range, lines = lines, noise = noise, ...)
     return(signals)
   }
 )
@@ -26,14 +26,14 @@ setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, range = c(200, 2800),
-                        peaks = c(238, 1461, 2614.5),
+                        lines = c(238, 1461, 2614.5),
                         noise = NULL, ...) {
     # Validation
     if (!is.numeric(range) | length(range) != 2)
       stop("'range' must be a length two numeric vector (integration range in keV).")
 
     # Adjust spectrum
-    spc_shift <- adjust(object, peaks = peaks)
+    spc_shift <- adjust(object, lines = lines)
     # Get data
     spc_data <- methods::as(spc_shift, "data.frame")
 

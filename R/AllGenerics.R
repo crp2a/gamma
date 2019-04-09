@@ -6,7 +6,7 @@ NULL
 #'
 #' Adjusts spectrum.
 #' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param peaks A \code{\link{numeric}} vector.
+#' @param lines A \code{\link{numeric}} vector.
 #' @param ... Currently not used.
 # @example inst/examples/ex-adjust.R
 #' @return An object of class \linkS4class{GammaSpectra}.
@@ -149,7 +149,7 @@ setGeneric(
 #' Signal integration
 #'
 #' @param object An object of class \linkS4class{GammaSpectrum}.
-#' @param peaks A \code{\link{numeric}} vector.
+#' @param lines A \code{\link{numeric}} vector.
 #' @param range A length two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within.
 #' @param noise A \code{\link{list}} of numeric values.
