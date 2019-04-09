@@ -10,6 +10,7 @@ setMethod(
   signature = signature(object = "GammaSpectrum", curve = "CalibrationCurve"),
   definition = function(object, curve, noise, ...) {
 
+    # Coerce to GammaSpectra
     # TODO: pas propre, reprendre tout ça
     ls <- list(object)
     names(ls) <- object@reference
@@ -28,35 +29,37 @@ setMethod(
 
     signals <- integrateSignal(object, noise = noise, ...) %>%
       dplyr::bind_rows(.id = "reference") %>%
-      dplyr::rename(signal = "value", signal_error = "error")
+      dplyr::rename(signal = "value", signal_error = "error") %>%
+      dplyr::mutate(signal = as.numeric(.data$signal),
+                    signal_error = as.numeric(.data$signal_error))
 
     # Get linear regression results
     fit <- curve@model
-    slope_value <- stats::coef(fit)
+    slope <- stats::coef(fit)
     slope_error <- summary(curve@model)$coef[, "Std. Error"]
 
-    # @param x a data.frame
-    # @param slope
-    # @param error
-    # @return A list
-    calcDoseRate <- function(x, slope, error, calibration = 3) {
-      signal_value <- as.numeric(x["signal"])
-      signal_error <- as.numeric(x["signal_error"])
-      dose_rate <- signal_value / slope
-      dose_error <- sqrt((100 * signal_error / signal_value)^2 +
-                           error^2 + calibration^2) * dose_rate / 100
-      return(list(dose = dose_rate, error = dose_error))
-    }
+    # calcDoseRate <- function(x, slope, error, calibration = 3) {
+    #   signal_value <- as.numeric(x["signal"])
+    #   signal_error <- as.numeric(x["signal_error"])
+    #   dose_rate <- signal_value / slope
+    #   dose_error <- sqrt((100 * signal_error / signal_value)^2 +
+    #                        error^2 + calibration^2) * dose_rate / 100
+    #   return(list(dose = dose_rate, error = dose_error))
+    # }
+    #
+    # final <- apply(X = signals, MARGIN = 1, FUN = calcDoseRate,
+    #                slope = slope_value, error = slope_error) %>%
+    #   magrittr::set_names(names(object)) %>%
+    #   dplyr::bind_rows(.id = "reference")
 
-    final <- apply(X = signals, MARGIN = 1, FUN = calcDoseRate,
-                   slope = slope_value, error = slope_error) %>%
-      magrittr::set_names(names(object)) %>%
-      dplyr::bind_rows(.id = "reference")
+    dose <- stats::predict.lm(fit, signals[, "signal", drop = FALSE])
+    dose_error <- dose * sqrt((slope_error / slope)^2 +
+                                (signals$signal_error / signals$signal)^2 + 0.03^2)
 
     methods::new("DoseRate",
                  reference = signals$reference,
-                 dose_value = final$dose,
-                 dose_error = final$error,
+                 dose_value = dose,
+                 dose_error = dose_error,
                  signal_value = signals$signal,
                  signal_error = signals$signal_error)
   }

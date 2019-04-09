@@ -25,7 +25,9 @@ setMethod(
   definition = function(object) {
     n <- length(object)
     spc <- ifelse(n > 1, "spectra", "spectrum")
-    cat("A collection of", n, "gamma", spc, sep = " ")
+    ref <- names(object)
+    cat("A collection of", n, "gamma", spc, ": ", paste(ref, collapse = ", "),
+        sep = "")
   }
 )
 
@@ -36,8 +38,8 @@ setMethod(
   definition = function(object) {
     sum_up <- summary(object@model)
     cat("Calibration curve:", "\n",
-        "  Slope: ", round(stats::coef(object@model), 2), "\n",
-        "  Slope error: ", round(sum_up$coef[, "Std. Error"], 2), "\n",
+        "  Residual standard error: ", round(sum_up$sigma, 2), "\n",
+        "  Multiple R-squared: ", round(sum_up$r.squared, 5), "\n",
         "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5),
         sep = " ")
   }
