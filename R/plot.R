@@ -32,6 +32,8 @@ setMethod(
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
+    if (x@hash != y@hash)
+      stop("Baseline do not correspond to spectrum.")
 
     spc <- methods::as(x, "data.frame")
     bl <- methods::as(y, "data.frame")

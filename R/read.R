@@ -63,8 +63,12 @@ readCanberraCNF <- function(file, ...) {
   # Get instrument name (remove the last word)
   instrument_name <- gsub("\\s*\\w*$", "", names(spc_xy$dataset))
 
+  # Compute 32-bytes MD5 hash
+  hash <- as.character(tools::md5sum(file))
+
   methods::new(
     "GammaSpectrum",
+    hash = hash,
     reference = tools::file_path_sans_ext(basename(file)),
     date = date,
     instrument = instrument_name,

@@ -26,26 +26,28 @@ setMethod(
   definition = function(object, method = c("SNIP"), ...) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
+
     # Get count data
     x <- methods::as(object, "data.frame")
     # Cut data, starting at maximum count value
     x_cut <- subset(x, x$chanel > which.max(x$counts))
     x_counts <- x_cut$counts
 
-    y <- switch (
+    baseline <- switch (
       method,
       SNIP = SNIP(x_counts, ...)
     )
 
     methods::new(
       "BaseLine",
+      hash = object@hash,
       reference = object@reference,
       date = as.Date(object@date),
       instrument = object@instrument,
       file_format = object@file_format,
       chanel = x_cut$chanel,
       energy = x_cut$energy,
-      counts = y,
+      counts = baseline,
       live_time = object@live_time,
       real_time = object@real_time
     )

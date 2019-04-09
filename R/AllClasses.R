@@ -57,6 +57,7 @@ setOldClass(Classes = "nls")
 setClass(
   Class = "GammaSpectrum",
   slots = c(
+    hash = "character",
     reference = "character",
     date = "Date",
     instrument = "character",
@@ -279,8 +280,9 @@ setClass(
 setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
-  definition = function(.Object, reference, date, instrument, file_format,
+  definition = function(.Object, hash, reference, date, instrument, file_format,
                         chanel, energy, counts, live_time, real_time) {
+    if (!missing(hash)) .Object@hash <- hash
     if (!missing(reference)) .Object@reference <- reference
     if (!missing(date)) .Object@date <- date else .Object@date <- Sys.Date()
     if (!missing(instrument)) .Object@instrument <- instrument
@@ -371,6 +373,7 @@ setMethod(
 setValidity(
   Class = "GammaSpectrum",
   method = function(object) {
+    hash <- object@hash
     reference <- object@reference
     date <- object@date
     instrument <- object@instrument
