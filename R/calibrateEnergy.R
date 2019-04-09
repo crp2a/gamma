@@ -1,32 +1,32 @@
-# ADJUST SPECTRUM (ENERGY SHIFT)
+# CALIBRATE SPECTRUM (ENERGY)
 #' @include AllGenerics.R
 NULL
 
 #' @export
-#' @rdname adjust
-#' @aliases adjust,GammaSpectra-method
+#' @rdname calibrateEnergy
+#' @aliases calibrateEnergy,GammaSpectra-method
 setMethod(
-  f = "adjust",
+  f = "calibrateEnergy",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, lines = c(238, 1461, 2614.5), ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    shifted <- lapply(X = spectra, FUN = adjust, lines = lines, ...)
+    shifted <- lapply(X = spectra, FUN = calibrateEnergy, lines = lines, ...)
     names(shifted) <- sapply(X = shifted, FUN = "[[", i = "reference")
     methods::new("GammaSpectra", shifted)
   }
 )
 
 #' @export
-#' @rdname adjust
-#' @aliases adjust,GammaSpectrum-method
+#' @rdname calibrateEnergy
+#' @aliases calibrateEnergy,GammaSpectrum-method
 setMethod(
-  f = "adjust",
+  f = "calibrateEnergy",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, lines = c(238, 1461, 2614.5), ...) {
     # Validation
     if (!is.numeric(lines))
-      stop("'lines' must be a numeric vector (expected peak positions in keV).")
+      stop("'lines' must be a numeric vector (known peak positions in keV).")
 
     # Get spectrum data
     spc_data <- methods::as(object, "data.frame")
@@ -49,14 +49,15 @@ setMethod(
     methods::new(
       "GammaSpectrum",
       hash = object@hash,
-      reference = paste(object@reference, "(shifted)", sep = " "),
+      reference = object@reference,
       instrument = object@instrument,
       file_format = object@file_format,
       chanel = spc_data$chanel,
       energy = fit_spc,
       counts = spc_data$counts,
       live_time = object@live_time,
-      real_time = object@real_time
+      real_time = object@real_time,
+      calibration = fit_poly
     )
   }
 )

@@ -3,14 +3,14 @@
 NULL
 
 #' @export
-#' @rdname calibrate
-#' @aliases calibrate,GammaSpectra-method
+#' @rdname calibrateDose
+#' @aliases calibrateDose,GammaSpectra-method
 setMethod(
-  f = "calibrate",
-  signature = signature(object = "GammaSpectra"),
-  definition = function(object, dose, noise, laboratory = "LAB", ...) {
+  f = "calibrateDose",
+  signature = signature(object = "GammaSpectra", dose = "list"),
+  definition = function(object, dose, laboratory = "LAB", ...) {
 
-    signals <- integrateSignal(object, noise = noise, ...) %>%
+    signals <- integrateSignal(object, ...) %>%
       dplyr::bind_rows(.id = "reference") %>%
       dplyr::rename(signal = "value", signal_error = "error")
 
@@ -28,7 +28,9 @@ setMethod(
       dplyr::select(.data$reference, .data$dose, .data$dose_error,
                     .data$signal, .data$signal_error)
 
-    fit <- stats::lm(signal ~ 0 + dose, data = data)
+    # TODO: check weights!
+    # fit <- stats::lm(dose ~ 0 + signal, data = data, weights = 1 / dose_error^2)
+    fit <- stats::lm(dose ~ 0 + signal, data = data)
 
     methods::new(
       "CalibrationCurve",

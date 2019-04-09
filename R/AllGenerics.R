@@ -2,42 +2,46 @@
 #' @include AllClasses.R
 NULL
 
-#' Energy shift
+#' Spectrum calibration
 #'
-#' Adjusts spectrum.
-#' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param lines A \code{\link{numeric}} vector.
+#' Calibrate the energy scale of a gamma spectrum.
+#' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param lines A \code{\link{numeric}} vector giving the peak positions
+#'  (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
+#'  and Cs (2614.5 keV).
+#'  Change it only if you know what you are doing.
 #' @param ... Currently not used.
-# @example inst/examples/ex-adjust.R
+#' @details
+#'  TODO
 #' @return An object of class \linkS4class{GammaSpectra}.
+# @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname adjust
-#' @aliases adjust-method
+#' @rdname calibrateEnergy
+#' @aliases calibrateEnergy-method
 setGeneric(
-  name = "adjust",
-  def = function(object, ...) standardGeneric("adjust")
+  name = "calibrateEnergy",
+  def = function(object, ...) standardGeneric("calibrateEnergy")
 )
 
 #' Calibration
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param dose A \code{\link{list}} of length-two numeric vector.
-#' @param noise A \code{\link{list}} of numeric values.
+#' @param dose A \code{\link{list}} of length-two numeric vectors.
 #' @param laboratory A \code{\link{character}} string giving the laboratory
 #'  name.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @return An object of class \linkS4class{CalibrationCurve}.
 #' @seealso \link{estimateDoseRate}
-#' @example inst/examples/ex-calibrate.R
+#' @example inst/examples/ex-calibrateDose.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname calibrate
-#' @aliases calibrate-method
+#' @rdname calibrateDose
+#' @aliases calibrateDose-method
 setGeneric(
-  name = "calibrate",
-  def = function(object, ...) standardGeneric("calibrate")
+  name = "calibrateDose",
+  def = function(object, dose, ...) standardGeneric("calibrateDose")
 )
 
 #' Baseline estimation and removal
@@ -97,7 +101,7 @@ setGeneric(
 #' @param curve An object of class \linkS4class{CalibrationCurve}.
 #' @param noise A \code{\link{list}} of numeric values.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
-#' @example inst/examples/ex-calibrate.R
+#' @example inst/examples/ex-calibrateDose.R
 #' @author N. Frerebeau
 #' @docType methods
 #' @rdname estimateDoseRate
