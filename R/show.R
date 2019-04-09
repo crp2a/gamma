@@ -13,7 +13,7 @@ setMethod(
         "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
         "  Number of chanels: ", length(object@chanel), "\n",
         "  Energy range (keV): ", paste(range(round(object@energy, 2)),
-                                        collapse = "-"),
+                                        collapse = "-"), "\n",
         sep = "")
   }
 )
@@ -26,7 +26,8 @@ setMethod(
     n <- length(object)
     spc <- ifelse(n > 1, "spectra", "spectrum")
     ref <- names(object)
-    cat("A collection of", n, "gamma", spc, ": ", paste(ref, collapse = ", "),
+    cat("A collection of", n, "gamma", spc, ": ",
+        paste(ref, collapse = ", "), "\n",
         sep = "")
   }
 )
@@ -40,7 +41,7 @@ setMethod(
     cat("Calibration curve:", "\n",
         "  Residual standard error: ", round(sum_up$sigma, 2), "\n",
         "  Multiple R-squared: ", round(sum_up$r.squared, 5), "\n",
-        "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5),
+        "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5), "\n",
         sep = " ")
   }
 )
@@ -52,6 +53,6 @@ setMethod(
   definition = function(object) {
     n <- length(object@dose_value)
     est <- ifelse(n > 1, "estimates", "estimate")
-    cat("A set of", n, "gamma dose rate", est, sep = " ")
+    cat("A set of", n, "gamma dose rate", est, "\n", sep = " ")
   }
 )
