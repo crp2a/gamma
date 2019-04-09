@@ -30,17 +30,17 @@ library(magrittr)
 ## Import files
 ```{r import, fig.width=7, fig.height=5, fig.align="center"}
 # Import CNF files for calibration
-cnf_cerege <- system.file("extdata/cerege/", package = "gamma")
-spc_cerege <- read(cnf_cerege)
-spc_cerege
+cerege_cnf <- system.file("extdata/cerege/", package = "gamma")
+cerege_spc <- read(cerege_cnf)
+cerege_spc
 
 # Select 'BRIQUE', 'C341', 'C347', 'GOU' and 'PEB' spectra to build the curve
-spc_calib <- spc_cerege[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
+cerege_calib <- cerege_spc[c("BRIQUE", "C341", "C347", "GOU", "PEP")]
 # Select 'PB' spectra for background measurement
-spc_noise <- spc_cerege[["PB"]]
+cerege_noise <- cerege_spc[["PB"]]
 
 # Plot spectra
-plot(spc_calib) +
+plot(cerege_calib) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
@@ -49,44 +49,46 @@ plot(spc_calib) +
 ## Check automatic peak detection
 ```{r peak}
 # Remove base line
-spc_clean <- removeBaseline(spc_calib)
+cerege_clean <- removeBaseline(cerege_calib)
 
 # Fit peaks
-spc_fit <- lapply(X = spc_clean, FUN = fitPeaks, peaks = c(238, 1461, 2614.5))
+cerege_fit <- lapply(X = cerege_clean, FUN = fitPeaks, peaks = c(238, 1461, 2614.5))
 ```
 
 ```{r peak-fit, fig.width=7, fig.height=5, fig.align="center", results="asis"}
 # Visual inspection
 expected_peaks <- c(238, 1461, 2614.5)
 
-for (i in 1:length(spc_fit)) {
+for (i in 1:length(cerege_fit)) {
   print(
-    plot(spc_fit[[i]]) +
-      ggplot2::labs(title = spc_fit[[i]][["spectrum"]][["reference"]], 
+    plot(cerege_fit[[i]]) +
+      ggplot2::labs(title = cerege_fit[[i]][["spectrum"]][["reference"]], 
                     x = "Energy [keV]", y = "Counts") +
       ggplot2::theme_bw()
   )
   
-  pks_sumup <- spc_fit[[i]][["peaks"]] %>%
-      dplyr::mutate(shift = (energy - expected_peaks) * 100 / expected_peaks)
+  cerege_pks <- cerege_fit[[i]][["peaks"]] %>%
+      dplyr::mutate(shift = (energy - expected_peaks) * 100 / 
+                      abs(expected_peaks))
+  
   print(
     knitr::kable(
-      pks_sumup,
+      cerege_pks,
       digits = 3,
       col.names = c("Chanel", "Energy [keV]", "Count", 
-                    "Count rate [1/s]", "Energy shift [%]"),
-      caption = spc_fit[[i]][["spectrum"]][["reference"]]
+                    "Count rate [1/s]", "Energy error [%]"),
+      caption = cerege_fit[[i]][["spectrum"]][["reference"]]
     )
   )
   cat('\n')
 }
 ```
 
-## Check energy shift
+## Check energy calibration
 ```{r adjust, fig.width=7, fig.height=5, fig.align="center"}
-spc_adjust <- calibrateEnergy(spc_calib, peaks = c(238, 1461, 2614.5))
+cerege_scale <- calibrateEnergy(cerege_calib, peaks = c(238, 1461, 2614.5))
 
-plot(spc_adjust) +
+plot(cerege_scale) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
@@ -96,14 +98,14 @@ plot(spc_adjust) +
 Pas fonctionnel du tout.
 ```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
 # Plot spectrum
-plot(spc_noise) +
+plot(cerege_noise) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
 ```
 
 ```{r peak-noise, eval=FALSE, include=FALSE, fig.width=7, fig.height=5, fig.align="center"}
 # Remove base line
-noise_clean <- removeBaseline(spc_noise)
+cerege_noise_clean <- removeBaseline(cerege_noise)
 plot(noise_clean)
 
 # Peak detection
@@ -118,16 +120,13 @@ noise_fit <- fitPeaks(noise_clean, peaks = c(254.1352, 1488.6541, 2669.7403))
 ```
 
 ```{r integrate-noise, eval=FALSE, include=FALSE}
-noise <- integrateSignal(spc_noise)
+noise <- integrateSignal(cerege_noise)
 ```
 
 ## Build Calibration curve
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
-# Calibrate energy scale
-calib_scale <- calibrateEnergy(spc_calib)
-
 # Build calibration curve
-known_dose <- list(
+cerege_dose <- list(
   BRIQUE = c(1984.64, 34.08),
   C347 = c(1421.38, 25.25),
   C341 = c(849.01, 21.32),
@@ -136,15 +135,15 @@ known_dose <- list(
 )
 
 CEREGE <- calibrateDose(
-  calib_scale,
-  dose = known_dose,
+  cerege_scale,
+  dose = cerege_dose,
   noise = list(value = 1190, error = 1)
 )
 CEREGE
 
 # Plot Calibration curve
 plot(CEREGE) +
-  ggplot2::labs(x = "Dose rate [µGy/y]", y = "Signal") +
+  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]") +
   ggplot2::theme_bw()
 ```
 
