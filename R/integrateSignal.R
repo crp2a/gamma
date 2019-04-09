@@ -8,13 +8,11 @@ NULL
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, range = c(200, 2800),
-                        lines = c(238, 1461, 2614.5),
-                        noise = NULL, ...) {
+  definition = function(object, range = c(200, 2800), noise = NULL, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     signals <- lapply(X = spectra, FUN = integrateSignal,
-                      range = range, lines = lines, noise = noise, ...)
+                      range = range, noise = noise, ...)
     return(signals)
   }
 )
@@ -25,17 +23,13 @@ setMethod(
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, range = c(200, 2800),
-                        lines = c(238, 1461, 2614.5),
-                        noise = NULL, ...) {
+  definition = function(object, range = c(200, 2800), noise = NULL, ...) {
     # Validation
     if (!is.numeric(range) | length(range) != 2)
       stop("'range' must be a length two numeric vector (integration range in keV).")
 
-    # Adjust spectrum
-    spc_shift <- adjust(object, lines = lines)
     # Get data
-    spc_data <- methods::as(spc_shift, "data.frame")
+    spc_data <- methods::as(object, "data.frame")
 
     # Integrate signal between boundaries
     int_index <- which(spc_data$energy >= range[1] &
@@ -47,7 +41,7 @@ setMethod(
     # Normalize integrated signal to time
     active_time <- object@live_time
     norm_signal <- int_signal / active_time
-    norm_error <- 1 # FIXME
+    norm_error <- sqrt(2 * int_signal) / active_time
 
     # If noise value is known, substract it form normalized signal
     if (!is.null(noise)) {
@@ -59,7 +53,7 @@ setMethod(
 
       # Net signal (substracted background noise)
       net_signal <- norm_signal - noise$value
-      net_error <- sqrt((sqrt(2 * int_signal) / active_time)^2 + noise$error^2)
+      net_error <- sqrt(norm_error^2 + noise$error^2)
 
       return(list(value = net_signal, error = net_error))
     } else {

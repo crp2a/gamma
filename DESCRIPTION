@@ -63,7 +63,7 @@ Collate:
     'coerce.R'
     'estimateDoseRate.R'
     'extract.R'
-    'integrate.R'
+    'integrateSignal.R'
     'peaks.R'
     'plot.R'
     'read.R'
