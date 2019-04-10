@@ -204,6 +204,7 @@ setClass(
   Class = "PeakModel",
   slots = c(
     model = "nls",
+    scale = "character",
     peaks = "data.frame",
     spectrum = "GammaSpectrum"
   )

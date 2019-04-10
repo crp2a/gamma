@@ -8,10 +8,11 @@ NULL
 setMethod(
   f = "calibrateEnergy",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, lines = c(238, 1461, 2614.5), ...) {
+  definition = function(object, lines, force = FALSE, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    shifted <- lapply(X = spectra, FUN = calibrateEnergy, lines = lines, ...)
+    shifted <- lapply(X = spectra, FUN = calibrateEnergy,
+                      lines = lines, force = force, ...)
     names(shifted) <- sapply(X = shifted, FUN = "[[", i = "reference")
     methods::new("GammaSpectra", shifted)
   }
@@ -19,26 +20,29 @@ setMethod(
 
 #' @export
 #' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectrum-method
+#' @aliases calibrateEnergy,GammaSpectrum,list-method
 setMethod(
   f = "calibrateEnergy",
-  signature = signature(object = "GammaSpectrum"),
-  definition = function(object, lines = c(238, 1461, 2614.5), ...) {
-    # Validation
-    if (!is.numeric(lines))
-      stop("'lines' must be a numeric vector (known peak positions in keV).")
+  signature = signature(object = "GammaSpectrum", lines = "list"),
+  definition = function(object, lines, force = FALSE, ...) {
+    # Get calibration lines
+    lines_chanel <- sapply(X = lines, FUN = "[", i = 1)
+    lines_energy <- sapply(X = lines, FUN = "[", i = 2)
 
     # Get spectrum data
     spc_data <- methods::as(object, "data.frame")
     # Remove baseline
-    spc_clean <- removeBaseline(object)
+    spc_clean <- removeBaseline(object, ...)
 
     # Adjust spectrum for energy shift
-    ## Fit peaks corresponding to 238 keV, 1461 keV and 2614.5 keV
-    peaks_index <- fitPeaks(spc_clean, peaks = lines)
+    ## Fit peaks
+    if (!force) {
+      peaks <- fitPeaks(spc_clean, peaks = lines_chanel, scale = "chanel")
+      lines_chanel <- peaks@peaks$chanel
+    }
     ## Get corresponding chanels
-    fit_data <- data.frame(energy = lines,
-                           chanel = peaks_index@peaks$chanel)
+    fit_data <- data.frame(energy = lines_energy,
+                           chanel = lines_chanel)
     ## Fit second order polynomial
     fit_poly <- stats::lm(energy ~ stats::poly(chanel, degree = 2, raw = TRUE),
                           data = fit_data)

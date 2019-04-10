@@ -129,10 +129,11 @@ setMethod(
   definition = function(x, ...) {
     # Get data
     spc <- x@spectrum
+    scale <- x@scale
     spc_df <- methods::as(spc, "data.frame")
-    fit <- stats::predict(x@model, spc_df$energy)
+    fit <- stats::predict(x@model, spc_df[, scale])
 
-    plot(spc, xaxis = "energy", yaxis = "counts") +
+    plot(spc, xaxis = scale, yaxis = "counts") +
       ggplot2::geom_area(mapping = ggplot2::aes_string(y = "fit"),
                          fill = "blue", colour = "blue", alpha = 0.5)
   }

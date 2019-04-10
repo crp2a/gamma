@@ -10,10 +10,11 @@ NULL
 #'  (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
 #'  and Cs (2614.5 keV).
 #'  Change it only if you know what you are doing.
-#' @param ... Currently not used.
+#' @param force A \code{\link{logical}} scalar: XXX.
+#' @param ... Extra parameters passed to \code{\link{removeBaseline}}.
 #' @details
 #'  TODO
-#' @return An object of class \linkS4class{GammaSpectra}.
+#' @return An object of class \linkS4class{GammaSpectrum}.
 # @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -21,7 +22,7 @@ NULL
 #' @aliases calibrateEnergy-method
 setGeneric(
   name = "calibrateEnergy",
-  def = function(object, ...) standardGeneric("calibrateEnergy")
+  def = function(object, lines, ...) standardGeneric("calibrateEnergy")
 )
 
 #' Calibration
@@ -116,6 +117,7 @@ setGeneric(
 #' Finds local maxima in sequential data.
 #' @param object An object of class \linkS4class{GammaSpectrum}.
 #' @param peaks XXX.
+#' @param scale XXX.
 #' @param method A \code{\link{character}} string.
 #' @param SNR An \code{\link{integer}}.
 #' @param span An \code{\link{integer}} giving the half window size (in number
