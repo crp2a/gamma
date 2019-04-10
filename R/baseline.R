@@ -60,9 +60,9 @@ setMethod(
 setMethod(
   f = "removeBaseline",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, ...) {
+  definition = function(object, method = c("SNIP"), ...) {
 
-    baseline <- lapply(X = object, FUN = removeBaseline, ...)
+    baseline <- lapply(X = object, FUN = removeBaseline, method = method, ...)
     names(baseline) <- names(object)
 
     methods::new("GammaSpectra", baseline)
@@ -75,9 +75,9 @@ setMethod(
 setMethod(
   f = "removeBaseline",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, ...) {
+  definition = function(object, method = c("SNIP"), ...) {
 
-    baseline <- estimateBaseline(object, ...)
+    baseline <- estimateBaseline(object, method = method, ...)
     object - baseline
   }
 )
