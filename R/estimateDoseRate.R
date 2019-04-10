@@ -8,14 +8,14 @@ NULL
 setMethod(
   f = "estimateDoseRate",
   signature = signature(object = "GammaSpectrum", curve = "CalibrationCurve"),
-  definition = function(object, curve, noise, ...) {
+  definition = function(object, curve, ...) {
 
     # Coerce to GammaSpectra
     # TODO: pas propre, reprendre tout ça
     ls <- list(object)
     names(ls) <- object@reference
     spc <- methods::new("GammaSpectra", ls)
-    estimateDoseRate(spc, curve = curve, noise = noise, ...)
+    estimateDoseRate(spc, curve = curve, ...)
   }
 )
 
@@ -25,7 +25,10 @@ setMethod(
 setMethod(
   f = "estimateDoseRate",
   signature = signature(object = "GammaSpectra", curve = "CalibrationCurve"),
-  definition = function(object, curve, noise, ...) {
+  definition = function(object, curve, ...) {
+
+    # Get noise value
+    noise <- as.list(curve@noise)
 
     signals <- integrateSignal(object, noise = noise, ...) %>%
       dplyr::bind_rows(.id = "reference") %>%

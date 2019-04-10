@@ -10,7 +10,7 @@
 \usage{
 calibrateDose(object, dose, ...)
 
-\S4method{calibrateDose}{GammaSpectra,list}(object, dose,
+\S4method{calibrateDose}{GammaSpectra,list}(object, dose, noise,
   laboratory = "LAB", ...)
 }
 \arguments{
@@ -19,6 +19,8 @@ calibrateDose(object, dose, ...)
 \item{dose}{A \code{\link{list}} of length-two numeric vectors.}
 
 \item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
+
+\item{noise}{A \code{\link{list}} of two numeric values.}
 
 \item{laboratory}{A \code{\link{character}} string giving the laboratory
 name.}
@@ -68,8 +70,7 @@ dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
 # Estimate gamma dose rate
-dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
-                              noise = list(value = 1190, error = 1))
+dose_rate <- estimateDoseRate(gamma_spc, calib_curve)
 }
 \seealso{
 \link{estimateDoseRate}

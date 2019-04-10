@@ -30,6 +30,7 @@ setGeneric(
 #' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param dose A \code{\link{list}} of length-two numeric vectors.
+#' @param noise A \code{\link{list}} of two numeric values.
 #' @param laboratory A \code{\link{character}} string giving the laboratory
 #'  name.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
@@ -100,7 +101,6 @@ setGeneric(
 #' Estimates in-situ gamma dose rate.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param curve An object of class \linkS4class{CalibrationCurve}.
-#' @param noise A \code{\link{list}} of numeric values.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @example inst/examples/ex-calibrateDose.R
 #' @author N. Frerebeau

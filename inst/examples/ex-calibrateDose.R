@@ -36,5 +36,4 @@ dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
 # Estimate gamma dose rate
-dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
-                              noise = list(value = 1190, error = 1))
+dose_rate <- estimateDoseRate(gamma_spc, calib_curve)

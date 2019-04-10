@@ -13,10 +13,10 @@
 estimateDoseRate(object, curve, ...)
 
 \S4method{estimateDoseRate}{GammaSpectrum,CalibrationCurve}(object, curve,
-  noise, ...)
+  ...)
 
 \S4method{estimateDoseRate}{GammaSpectra,CalibrationCurve}(object, curve,
-  noise, ...)
+  ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
@@ -24,8 +24,6 @@ estimateDoseRate(object, curve, ...)
 \item{curve}{An object of class \linkS4class{CalibrationCurve}.}
 
 \item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
-
-\item{noise}{A \code{\link{list}} of numeric values.}
 }
 \description{
 Estimates in-situ gamma dose rate.
@@ -69,8 +67,7 @@ dir <- system.file("extdata/", package = "gamma")
 gamma_spc <- read(dir)
 
 # Estimate gamma dose rate
-dose_rate <- estimateDoseRate(gamma_spc, calib_curve,
-                              noise = list(value = 1190, error = 1))
+dose_rate <- estimateDoseRate(gamma_spc, calib_curve)
 }
 \author{
 N. Frerebeau

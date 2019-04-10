@@ -251,8 +251,7 @@ plot(cnf_shift) +
   ggplot2::theme_bw()
 
 # Estimate dose rate
-dose_rate <- estimateDoseRate(cnf_scale, calib_curve, 
-                              noise = list(value = 1190, error = 1))
+dose_rate <- estimateDoseRate(cnf_scale, calib_curve)
 as(dose_rate, "data.frame")
 ```
 

@@ -8,9 +8,9 @@ NULL
 setMethod(
   f = "calibrateDose",
   signature = signature(object = "GammaSpectra", dose = "list"),
-  definition = function(object, dose, laboratory = "LAB", ...) {
+  definition = function(object, dose, noise, laboratory = "LAB", ...) {
 
-    signals <- integrateSignal(object, ...) %>%
+    signals <- integrateSignal(object, noise = noise, ...) %>%
       dplyr::bind_rows(.id = "reference") %>%
       dplyr::rename(signal = "value", signal_error = "error")
 
@@ -37,7 +37,7 @@ setMethod(
       instrument = NA_character_,
       laboratory = laboratory,
       model = fit,
-      noise = NA_real_,
+      noise = unlist(noise),
       data = data
     )
   }
