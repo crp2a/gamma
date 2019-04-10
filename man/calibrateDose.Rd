@@ -35,7 +35,13 @@ dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir)[-5]
 
 # Calibrate energy scale
-calib_scale <- calibrateEnergy(calib_spc, lines = c(238, 1461, 2614.5))
+calib_lines <- list(
+  Pb = c(86, 238),
+  K = c(493, 1461),
+  Cs = c(876, 2614.5)
+)
+
+calib_scale <- calibrateEnergy(calib_spc, lines = calib_lines)
 
 # Build calibration curve
 known_dose <- list(

@@ -85,8 +85,14 @@ for (i in 1:length(cerege_fit)) {
 ```
 
 ## Check energy calibration
-```{r adjust, fig.width=7, fig.height=5, fig.align="center"}
-cerege_scale <- calibrateEnergy(cerege_calib, peaks = c(238, 1461, 2614.5))
+```{r calibrate, fig.width=7, fig.height=5, fig.align="center"}
+calib_lines <- list(
+  Pb = c(86, 238),
+  K = c(493, 1461),
+  Cs = c(876, 2614.5)
+)
+
+cerege_scale <- calibrateEnergy(cerege_calib, lines = calib_lines)
 
 plot(cerege_scale) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
@@ -95,32 +101,28 @@ plot(cerege_scale) +
 ```
 
 ## Background noise measurement
-Pas fonctionnel du tout.
+Le spectre pour la mesure de bruit est particulièrement bruité, la recherche automatique de pics ne peut pas aboutir.
+On va donc forcer les canaux a utiliser pour la calibration en énergie.
+
 ```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
-# Plot spectrum
-plot(cerege_noise) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+calib_noise <- list(
+  Pb = c(86, 238),
+  K = c(492, 1461),
+  Cs = c(866, 2614.5)
+)
+
+cerege_noise_scale <- calibrateEnergy(cerege_noise, lines = calib_noise, force = TRUE)
+
+plot(cerege_noise_scale) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
-```{r peak-noise, eval=FALSE, include=FALSE, fig.width=7, fig.height=5, fig.align="center"}
-# Remove base line
-cerege_noise_clean <- removeBaseline(cerege_noise)
-plot(noise_clean)
-
-# Peak detection
-noise_peak <- findPeaks(noise_clean, SNR = 1, span = 50)
-plot(noise_peak)
-
-knitr::kable(
-  noise_peak[["peaks"]]
-)
-
-noise_fit <- fitPeaks(noise_clean, peaks = c(254.1352, 1488.6541, 2669.7403))
-```
-
-```{r integrate-noise, eval=FALSE, include=FALSE}
-noise <- integrateSignal(cerege_noise)
+Une fois la calibration en énergie faite, on peut intégrer le spectre.
+```{r integrate-noise}
+noise <- integrateSignal(cerege_noise_scale)
+noise
 ```
 
 ## Build Calibration curve
@@ -137,7 +139,7 @@ cerege_dose <- list(
 CEREGE <- calibrateDose(
   cerege_scale,
   dose = cerege_dose,
-  noise = list(value = 1190, error = 1)
+  noise = noise
 )
 CEREGE
 

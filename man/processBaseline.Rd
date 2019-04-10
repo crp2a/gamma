@@ -23,9 +23,9 @@ removeBaseline(object, ...)
 \S4method{estimateBaseline}{GammaSpectrum}(object, method = c("SNIP"),
   ...)
 
-\S4method{removeBaseline}{GammaSpectra}(object, ...)
+\S4method{removeBaseline}{GammaSpectra}(object, method = c("SNIP"), ...)
 
-\S4method{removeBaseline}{GammaSpectrum}(object, ...)
+\S4method{removeBaseline}{GammaSpectrum}(object, method = c("SNIP"), ...)
 }
 \arguments{
 \item{object}{A \code{\link{numeric}} vector.}
@@ -47,7 +47,7 @@ Baseline estimation and removal
 }
 \examples{
 # Import a CNF file
-spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
+spc_dir <- system.file("extdata/test.cnf", package = "gamma")
 spc <- read(spc_dir)
 
 # Estimate baseline

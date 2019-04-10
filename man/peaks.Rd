@@ -20,9 +20,11 @@ fitPeaks(object, peaks, ...)
 \S4method{findPeaks}{GammaSpectrum}(object, method = c("MAD"), SNR = 2,
   span = NULL, ...)
 
-\S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks, ...)
+\S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks,
+  scale = c("energy", "chanel"), ...)
 
-\S4method{fitPeaks}{PeakPosition,missing}(object, peaks, ...)
+\S4method{fitPeaks}{PeakPosition,missing}(object, scale = c("energy",
+  "chanel"), ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
@@ -38,6 +40,8 @@ fitPeaks(object, peaks, ...)
 \item{span}{An \code{\link{integer}} giving the half window size (in number
 of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 half window size.}
+
+\item{scale}{XXX.}
 }
 \value{
 \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.
@@ -53,7 +57,7 @@ A local maximum has to be the highest one in the given window and has to be
 }
 \examples{
 # Import a CNF file
-spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
+spc_dir <- system.file("extdata/test.cnf", package = "gamma")
 spc <- read(spc_dir)
 
 # Estimate baseline

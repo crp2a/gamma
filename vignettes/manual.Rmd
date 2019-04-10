@@ -30,14 +30,24 @@ library(magrittr)
 ## Spectrum inspection
 ### Import a CNF file
 ```{r import, fig.width=7, fig.height=5, fig.alipeaks_pgn="center"}
-# Import CNF files for calibration
-cnf_test <- system.file("extdata/test1.cnf", package = "gamma")
-spc <- read(cnf_test)
+# Import a CNF file
+cnf_test <- system.file("extdata/test.cnf", package = "gamma")
+spc_cnf <- read(cnf_test)
+spc_cnf
+
+# Import a TKA file
+tka_test <- system.file("extdata/test.tka", package = "gamma")
+spc_tka <- read(tka_test)
+spc_tka
+
+# Import all file
+files_test <- system.file("extdata", package = "gamma")
+spc <- read(files_test)
 spc
 
 # Plot spectra
-plot(spc, xaxis = "energy", yaxis = "rate") +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
+plot(spc, xaxis = "chanel", yaxis = "rate", facet = TRUE) +
+  ggplot2::labs(x = "Chanel", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
@@ -46,19 +56,19 @@ Algorithme SNIP [@ryan1988; @morhac1997; @morhac2008]
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate baseline
-baseline <- estimateBaseline(spc, method = c("SNIP"))
+baseline <- estimateBaseline(spc_cnf, method = "SNIP")
 
 # Plot spectrum + baseline
-plot(spc, baseline) +
+plot(spc_cnf, baseline) +
   ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
 ```{r baseline-remove, fig.width=7, fig.height=5, fig.align="center"}
 # Substract previously estimated baseline
-spc_clean1 <- spc - baseline
+spc_clean1 <- spc_cnf - baseline
 # Or, you can just remove baseline from spectrum
-spc_clean2 <- removeBaseline(spc)
+spc_clean2 <- removeBaseline(spc_cnf, method = "SNIP")
 
 identical(spc_clean1, spc_clean2)
 
@@ -79,8 +89,8 @@ Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de can
 # Detect peaks
 peak_index <- findPeaks(spc_clean1, SNR = 2, span = 20)
 
-plot(peak_index) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+plot(peak_index, xaxis = "chanel") +
+  ggplot2::labs(x = "Chanel", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -95,17 +105,25 @@ Dans tous les cas, mieux vaut vérifier visuellement les résultats après.
 
 ```{r peak-fitting, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
 # Fit peaks found by automatic detection
-peak_fit1 <- fitPeaks(peak_index)
+peak_fit1 <- fitPeaks(peak_index, scale = "chanel")
 
 plot(peak_fit1) +
-  ggplot2::labs(title = "Model from automatic peak detection", x = "Energy [keV]", y = "Count") +
+  ggplot2::labs(title = "Automatic peak detection", 
+                x = "Chanel", y = "Count") +
   ggplot2::theme_bw()
 
 # Fit peaks at a given energy (keV)
-peak_fit2 <- fitPeaks(spc_clean1, peaks = c(238, 1461, 2614.5))
+peak_fit2 <- fitPeaks(spc_clean1, peaks = c(238, 1461, 2614.5), scale = "energy")
 
 plot(peak_fit2) +
-  ggplot2::labs(title = "Model from fixed peak positions", x = "Energy [keV]", y = "Count") +
+  ggplot2::labs(title = "Fixed peak positions (keV)", x = "Energy [keV]", y = "Count") +
+  ggplot2::theme_bw()
+
+# Fit peaks at a given chanel
+peak_fit3 <- fitPeaks(spc_clean1, peaks = c(86, 493, 876), scale = "chanel")
+
+plot(peak_fit3) +
+  ggplot2::labs(title = "Fixed peak positions (chanel)", x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -113,17 +131,29 @@ plot(peak_fit2) +
 knitr::kable(
   peak_fit2[["peaks"]],
   digits = 3,
-  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]")
+  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]"),
+  caption = "Peak positions (fixed energy)."
+)
+
+knitr::kable(
+  peak_fit3[["peaks"]],
+  digits = 3,
+  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]"),
+  caption = "Peak positions (fixed chanels)."
 )
 ```
 
 ### Calibrate energy scale
 ```{r calibrate}
-spc_adjust <- calibrateEnergy(spc, lines = c(238, 1461, 2614.5))
+calib_lines <- list(
+  Pb = c(86, 238),
+  K = c(493, 1461),
+  Cs = c(876, 2614.5)
+)
 
-spc_shift <- new("GammaSpectra", list(raw = spc, shifted = spc_adjust))
+tka_scale <- calibrateEnergy(spc_tka, lines = calib_lines)
 
-plot(spc_shift) +
+plot(tka_scale) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
@@ -150,36 +180,27 @@ spc_noise <- spc_cerege[["PB"]]
 ```
 
 #### Background noise measurement
-Pas fonctionnel du tout.
+Le spectre pour la mesure de bruit est particulièrement bruité, la recherche automatique de pics ne peut pas aboutir.
+On va donc forcer les canaux a utiliser pour la calibration en énergie.
 
-Par la suite on utilise la valeur de bruit de fond estimée à la main (1190 +/- 1).
 ```{r background-noise, fig.width=7, fig.height=5, fig.align="center"}
-# Plot spectrum
-plot(spc_noise) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+calib_noise <- list(
+  Pb = c(86, 238),
+  K = c(492, 1461),
+  Cs = c(866, 2614.5)
+)
+
+noise_scale <- calibrateEnergy(spc_noise, lines = calib_noise, force = TRUE)
+
+plot(noise_scale) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
-```{r integrate-noise, eval=FALSE, fig.width=7, fig.height=5, fig.align="center"}
-# Estimate baseline
-noise_baseline <- estimateBaseline(spc_noise, method = "SNIP", LLS = TRUE, m = 20)
-
-# Plot spectrum
-plot(spc_noise, noise_baseline) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
-
-noise_clean <- spc_noise - noise_baseline
-plot(noise_clean)
-
-noise_peaks <- findPeaks(noise_clean, span = 20)
-plot(noise_peaks)
-
-noise_fit <- fitPeaks(noise_peaks)
-plot(noise_fit)
-
-# Integrate background noise between 200 keV and 2800 keV
-noise <- integrateSignal(spc_noise, peaks = c(238, 1461, 2614.5))
+Une fois la calibration en énergie faite, on peut intégrer le spectre.
+```{r integrate-noise}
+noise <- integrateSignal(noise_scale)
 noise
 ```
 
@@ -187,7 +208,13 @@ noise
 
 ```{r calibration-curve, fig.width=5, fig.height=5, fig.align="center"}
 # Calibrate energy scale
-calib_scale <- calibrateEnergy(spc_calib, lines = c(238, 1461, 2614.5))
+calib_lines <- list(
+  Pb = c(86, 238),
+  K = c(493, 1461),
+  Cs = c(876, 2614.5)
+)
+
+calib_scale <- calibrateEnergy(spc_calib, lines = calib_lines)
 
 # Build calibration curve
 known_dose <- list(
@@ -201,7 +228,7 @@ known_dose <- list(
 calib_curve <- calibrateDose(
   calib_scale,
   dose = known_dose,
-  noise = list(value = 1190, error = 1)
+  noise = noise
 )
 calib_curve
 
@@ -214,12 +241,18 @@ plot(calib_curve) +
 ### Dose rate estimation
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
 # Calibrate energy scale
-spc_scale <- calibrateEnergy(spc, lines = c(238, 1461, 2614.5))
+cnf_scale <- calibrateEnergy(spc_cnf, lines = calib_lines)
+
+cnf_shift <- new("GammaSpectra", list(raw = spc_cnf, calibrated = cnf_scale))
+
+plot(cnf_shift) +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+  ggplot2::theme_bw()
 
 # Estimate dose rate
-dose_rate <- estimateDoseRate(calib_scale, calib_curve, 
-                              noise = list(value = 1190, error = 1),
-                              span = 20)
+dose_rate <- estimateDoseRate(cnf_scale, calib_curve, 
+                              noise = list(value = 1190, error = 1))
 as(dose_rate, "data.frame")
 ```
 

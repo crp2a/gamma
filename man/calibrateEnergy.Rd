@@ -4,30 +4,33 @@
 \name{calibrateEnergy}
 \alias{calibrateEnergy}
 \alias{calibrateEnergy-method}
+\alias{calibrateEnergy,GammaSpectra,ANY-method}
 \alias{calibrateEnergy,GammaSpectra-method}
-\alias{calibrateEnergy,GammaSpectrum-method}
+\alias{calibrateEnergy,GammaSpectrum,list-method}
 \title{Spectrum calibration}
 \usage{
-calibrateEnergy(object, ...)
+calibrateEnergy(object, lines, ...)
 
-\S4method{calibrateEnergy}{GammaSpectra}(object, lines = c(238, 1461,
-  2614.5), ...)
+\S4method{calibrateEnergy}{GammaSpectra,ANY}(object, lines,
+  force = FALSE, ...)
 
-\S4method{calibrateEnergy}{GammaSpectrum}(object, lines = c(238, 1461,
-  2614.5), ...)
+\S4method{calibrateEnergy}{GammaSpectrum,list}(object, lines,
+  force = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
-
-\item{...}{Currently not used.}
 
 \item{lines}{A \code{\link{numeric}} vector giving the peak positions
 (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
 and Cs (2614.5 keV).
 Change it only if you know what you are doing.}
+
+\item{...}{Extra parameters passed to \code{\link{removeBaseline}}.}
+
+\item{force}{A \code{\link{logical}} scalar: XXX.}
 }
 \value{
-An object of class \linkS4class{GammaSpectra}.
+An object of class \linkS4class{GammaSpectrum}.
 }
 \description{
 Calibrate the energy scale of a gamma spectrum.
