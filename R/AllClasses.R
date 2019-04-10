@@ -406,9 +406,9 @@ setValidity(
     if (length(real_time) > 1)
       message <- c(message, "'real_time' must be a single numeric value.")
 
-    x <- lengths(list(chanel, energy, counts))
+    x <- lengths(list(chanel, counts))
     if (!isEqual(x))
-      message <- c(message, "'chanel', 'energy' and 'counts' must have the same length.")
+      message <- c(message, "'chanel' and 'counts' must have the same length.")
 
     if (length(message) != 0) {
       stop(paste(message, collapse = "\n"))

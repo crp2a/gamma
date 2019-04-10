@@ -1,5 +1,5 @@
 # Import a CNF file
-spc_dir <- system.file("extdata/test1.cnf", package = "gamma")
+spc_dir <- system.file("extdata/test.cnf", package = "gamma")
 spc <- read(spc_dir)
 
 # Estimate baseline

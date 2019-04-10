@@ -7,13 +7,18 @@ setMethod(
   f = "show",
   signature = "GammaSpectrum",
   definition = function(object) {
+    if (length(object@energy) == 0) {
+      E <- "not calibrated"
+    } else {
+      E <- paste(range(round(object@energy, 2)), collapse = "-")
+    }
+
     cat("Gamma spectrum:", "\n",
         "  Reference: ", object@reference, "\n",
         "  Instrument: ", object@instrument, "\n",
         "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
         "  Number of chanels: ", length(object@chanel), "\n",
-        "  Energy range (keV): ", paste(range(round(object@energy, 2)),
-                                        collapse = "-"), "\n",
+        "  Energy range (keV): ", E, "\n",
         sep = "")
   }
 )
@@ -26,7 +31,7 @@ setMethod(
     n <- length(object)
     spc <- ifelse(n > 1, "spectra", "spectrum")
     ref <- names(object)
-    cat("A collection of", n, "gamma", spc, ": ",
+    cat("A collection of ", n, " gamma ", spc, ": ",
         paste(ref, collapse = ", "), "\n",
         sep = "")
   }

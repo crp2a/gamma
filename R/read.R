@@ -9,23 +9,37 @@ setMethod(
   f = "read",
   signature = signature(file = "character"),
   definition = function(file, ...) {
+    # Allowed extensions
+    ext <- c("cnf", "tka")
 
     # If input is a directory and not a single file
     if (!utils::file_test("-f", file)) {
       # Look for cnf files
-      cnf_files <- tools::list_files_with_exts(file, exts = "cnf")
+      cnf_files <- tools::list_files_with_exts(file, exts = ext)
       if (length(cnf_files) == 0)
         stop("No spectrum files were fund.")
 
       file <- cnf_files
     }
 
-    spc <- lapply(X = file, FUN = readCanberraCNF, ...)
+    spc <- lapply(X = file, FUN = function(x, ...) {
+      extension <- tools::file_ext(x)
+      switch(
+        extension,
+        cnf = readCanberraCNF(x, ...),
+        tka = readCanberraTKA(x, ...)
+      )
+    }, ...)
+
     if (length(spc) > 1) {
+      # Get spectrum references
       spc_ref <- sapply(X = spc, FUN = "[[", i = "reference")
-      names(spc) <- spc_ref
+      names(spc) <- make.unique(spc_ref)
+
+      # Return a GammaSpectra object
       methods::new("GammaSpectra", spc)
     } else {
+      # Return a GammaSpectrum
       spc[[1]]
     }
   }
@@ -76,6 +90,46 @@ readCanberraCNF <- function(file, ...) {
     chanel = spc_data$chanel,
     energy = spc_data$energy,
     counts = spc_data$counts,
+    live_time = live_time,
+    real_time = real_time
+  )
+}
+
+#' Read Canberra TKA file
+#'
+#' @param file A \code{\link{character}} string giving the path and file to be
+#'  imported.
+#' @param ... Currently not used.
+#' @return
+#'  An object of class \linkS4class{GammaSpectrum}.
+#' @keywords internal
+#' @noRd
+readCanberraTKA <- function(file, ...) {
+  # Read file
+  spc_xy <- utils::read.table(file = file)
+  # Get and check file format
+  format <- "Canberra TKA"
+
+  # Get metadata
+  live_time <- as.numeric(spc_xy[1, 1])
+  real_time <- as.numeric(spc_xy[2, 1])
+  instrument_name <- "unknown"
+
+  # Get data
+  counts <- as.numeric(spc_xy[, 1])
+  counts[1:2] <- 0
+
+  # Compute 32-bytes MD5 hash
+  hash <- as.character(tools::md5sum(file))
+
+  methods::new(
+    "GammaSpectrum",
+    hash = hash,
+    reference = tools::file_path_sans_ext(basename(file)),
+    instrument = instrument_name,
+    file_format = format,
+    chanel = seq_along(counts),
+    counts = counts,
     live_time = live_time,
     real_time = real_time
   )

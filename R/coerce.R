@@ -29,7 +29,7 @@ setAs(
   def = function(from) {
     df <- data.frame(
       chanel = from@chanel,
-      energy = from@energy,
+      energy = if(length(from@energy) != 0) from@energy else NA_real_,
       counts = from@counts,
       rate = from@rate
     )

@@ -15,6 +15,8 @@ setMethod(
     yaxis <- match.arg(yaxis, several.ok = FALSE)
 
     spc <- methods::as(x, "data.frame")
+    if (all(is.na(spc$energy)))
+      xaxis <- "chanel"
 
     ggplot2::ggplot(spc, ggplot2::aes_string(x = xaxis, y = yaxis)) +
       ggplot2::geom_line()
@@ -37,6 +39,8 @@ setMethod(
 
     spc <- methods::as(x, "data.frame")
     bl <- methods::as(y, "data.frame")
+    if (all(is.na(spc$energy)) | all(is.na(bl$energy)))
+      xaxis <- "chanel"
 
     # Bind data frame for ggplot2
     # Reverse order of factor to display the baseline in front of the spectrum
@@ -74,6 +78,8 @@ setMethod(
     # Build long data frame
     spc_ls <- lapply(X = spc, FUN = "as", Class = "data.frame")
     spc_df <- dplyr::bind_rows(spc_ls, .id = "reference")
+    if (any(is.na(spc_df$energy)))
+      xaxis <- "chanel"
 
     if (facet) {
       colour <- NULL
