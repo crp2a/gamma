@@ -38,20 +38,6 @@ setMethod(
     slope <- stats::coef(fit)
     slope_error <- summary(curve@model)$coef[, "Std. Error"]
 
-    # calcDoseRate <- function(x, slope, error, calibration = 3) {
-    #   signal_value <- as.numeric(x["signal"])
-    #   signal_error <- as.numeric(x["signal_error"])
-    #   dose_rate <- signal_value / slope
-    #   dose_error <- sqrt((100 * signal_error / signal_value)^2 +
-    #                        error^2 + calibration^2) * dose_rate / 100
-    #   return(list(dose = dose_rate, error = dose_error))
-    # }
-    #
-    # final <- apply(X = signals, MARGIN = 1, FUN = calcDoseRate,
-    #                slope = slope_value, error = slope_error) %>%
-    #   magrittr::set_names(names(object)) %>%
-    #   dplyr::bind_rows(.id = "reference")
-
     dose <- stats::predict.lm(fit, signals[, "signal", drop = FALSE])
     dose_error <- dose * sqrt((slope_error / slope)^2 +
                                 (signals$signal_error / signals$signal)^2 + 0.03^2)
