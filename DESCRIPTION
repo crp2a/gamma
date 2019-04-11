@@ -14,9 +14,10 @@ Authors@R:
              email = "lebrun@cerege.fr",
              comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")),
       person(given = "Guillaume",
-             family = "Guerrin",
+             family = "Guérin",
              role = "ctb",
-             email = "guillaume.guerrin@u-bordeaux-montaigne.fr"),
+             email = "guillaume.guerin@u-bordeaux-montaigne.fr",
+             comment = c(ORCID = "https://orcid.org/0000-0001-6298-5579")),
       person(given = "Lahaye",
              family = "Christelle",
              role = "ctb",
@@ -33,13 +34,13 @@ License: GPL-3
 URL: http://github.com/nfrerebeau/gamma
 BugReports: http://github.com/nfrerebeau/gamma/issues
 Depends: 
-    R (>= 3.3.0)
+    R (>= 3.3)
 Imports: 
-    dplyr,
-    ggplot2,
-    magrittr,
+    dplyr (>= 0.8.0.1),
+    ggplot2 (>= 3.1.0),
+    magrittr (>= 1.5),
     methods,
-    rxylib,
+    rxylib (>= 0.2.1),
     stats,
     tools
 Suggests: 
