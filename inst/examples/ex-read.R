@@ -2,10 +2,11 @@
 cnf_file <- system.file("extdata/test.cnf", package = "gamma")
 (cnf_spectrum <- read(cnf_file))
 
-# Import all CNF files in a given directory
-cnf_dir <- system.file("extdata/cerege/", package = "gamma")
-(cnf_spectra <- read(cnf_dir))
-
 # Import a TKA file
 tka_file <- system.file("extdata/test.tka", package = "gamma")
 (tka_spectrum <- read(tka_file))
+
+# Import all files in a given directory
+# Skip the 35 first chanels
+spc_dir <- system.file("extdata/cerege/", package = "gamma")
+(spc_spectra <- read(spc_dir, skip = 1:35))

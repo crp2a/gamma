@@ -1,6 +1,6 @@
 # Import CNF files for calibration
 dir <- system.file("extdata/cerege/", package = "gamma")
-calib_spc <- read(dir)[-5]
+calib_spc <- read(dir, skip = 1:35)[-5]
 
 # Calibrate energy scale
 calib_lines <- list(
@@ -23,7 +23,7 @@ known_dose <- list(
 calib_curve <- calibrateDose(
   calib_spc,
   dose = known_dose,
-  noise = list(value = 1190, error = 1)
+  noise = c(value = 1190, error = 1)
 )
 
 # Plot curve
@@ -33,7 +33,7 @@ plot(calib_curve) +
 
 # Import CNF file
 dir <- system.file("extdata/", package = "gamma")
-gamma_spc <- read(dir)
+gamma_spc <- read(dir, skip = 1:35)
 
 # Estimate gamma dose rate
 dose_rate <- estimateDoseRate(gamma_spc, calib_curve)

@@ -1,6 +1,6 @@
 # Import a Canberra CNF file
-file <- system.file("extdata/test.cnf", package = "gamma")
-(spectrum <- read(file))
+spc_file <- system.file("extdata/test.cnf", package = "gamma")
+(spectrum <- read(spc_file))
 
 # Coerce
 df <- as(spectrum, "data.frame")
