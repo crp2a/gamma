@@ -4,13 +4,12 @@
 \name{calibrateDose}
 \alias{calibrateDose}
 \alias{calibrateDose-method}
-\alias{calibrateDose,GammaSpectra,list-method}
-\alias{calibrateDose,GammaSpectra-method}
+\alias{calibrateDose,GammaSpectra,list,numeric-method}
 \title{Calibration}
 \usage{
-calibrateDose(object, dose, ...)
+calibrateDose(object, dose, noise, ...)
 
-\S4method{calibrateDose}{GammaSpectra,list}(object, dose, noise,
+\S4method{calibrateDose}{GammaSpectra,list,numeric}(object, dose, noise,
   laboratory = "LAB", ...)
 }
 \arguments{
@@ -18,9 +17,9 @@ calibrateDose(object, dose, ...)
 
 \item{dose}{A \code{\link{list}} of length-two numeric vectors.}
 
-\item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
-
 \item{noise}{A \code{\link{list}} of two numeric values.}
+
+\item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
 
 \item{laboratory}{A \code{\link{character}} string giving the laboratory
 name.}
@@ -34,7 +33,7 @@ Builds a calibration curve for gamma dose rate estimation.
 \examples{
 # Import CNF files for calibration
 dir <- system.file("extdata/cerege/", package = "gamma")
-calib_spc <- read(dir)[-5]
+calib_spc <- read(dir, skip = 1:35)[-5]
 
 # Calibrate energy scale
 calib_lines <- list(
@@ -57,7 +56,7 @@ known_dose <- list(
 calib_curve <- calibrateDose(
   calib_spc,
   dose = known_dose,
-  noise = list(value = 1190, error = 1)
+  noise = c(value = 1190, error = 1)
 )
 
 # Plot curve
@@ -67,7 +66,7 @@ plot(calib_curve) +
 
 # Import CNF file
 dir <- system.file("extdata/", package = "gamma")
-gamma_spc <- read(dir)
+gamma_spc <- read(dir, skip = 1:35)
 
 # Estimate gamma dose rate
 dose_rate <- estimateDoseRate(gamma_spc, calib_curve)

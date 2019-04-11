@@ -5,9 +5,12 @@
 \alias{operators}
 \alias{operators-method}
 \alias{-,GammaSpectrum,GammaSpectrum-method}
+\alias{+,GammaSpectrum,GammaSpectrum-method}
 \title{Operators}
 \usage{
 \S4method{-}{GammaSpectrum,GammaSpectrum}(e1, e2)
+
+\S4method{+}{GammaSpectrum,GammaSpectrum}(e1, e2)
 }
 \arguments{
 \item{e1, e2}{A \linkS4class{GammaSpectrum} object.}

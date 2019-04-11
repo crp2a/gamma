@@ -30,8 +30,9 @@ library(magrittr)
 ## Import files
 ```{r import, fig.width=7, fig.height=5, fig.align="center"}
 # Import CNF files for calibration
+# Skip the 35 first chanels
 cerege_cnf <- system.file("extdata/cerege/", package = "gamma")
-cerege_spc <- read(cerege_cnf)
+cerege_spc <- read(cerege_cnf, skip = 1:35)
 cerege_spc
 
 # Select 'BRIQUE', 'C341', 'C347', 'GOU' and 'PEB' spectra to build the curve

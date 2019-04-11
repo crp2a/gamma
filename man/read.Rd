@@ -9,13 +9,15 @@
 \usage{
 read(file, ...)
 
-\S4method{read}{character}(file, ...)
+\S4method{read}{character}(file, skip = NULL, ...)
 }
 \arguments{
 \item{file}{A \code{\link{character}} string giving the path of files to be
 imported.}
 
 \item{...}{Extra parameters passed to \code{\link[rxylib]{read_xyData}}.}
+
+\item{skip}{A \code{\link{numeric}} vector.}
 }
 \value{
 An object of class \linkS4class{GammaSpectra}.
@@ -31,13 +33,14 @@ Reads a gamma ray spectrum file.
 cnf_file <- system.file("extdata/test.cnf", package = "gamma")
 (cnf_spectrum <- read(cnf_file))
 
-# Import all CNF files in a given directory
-cnf_dir <- system.file("extdata/cerege/", package = "gamma")
-(cnf_spectra <- read(cnf_dir))
-
 # Import a TKA file
 tka_file <- system.file("extdata/test.tka", package = "gamma")
 (tka_spectrum <- read(tka_file))
+
+# Import all files in a given directory
+# Skip the 35 first chanels
+spc_dir <- system.file("extdata/cerege/", package = "gamma")
+(spc_spectra <- read(spc_dir, skip = 1:35))
 }
 \seealso{
 \link[rxylib]{read_xyData}
