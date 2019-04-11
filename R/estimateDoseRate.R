@@ -28,10 +28,12 @@ setMethod(
   definition = function(object, curve, ...) {
 
     # Get noise value
-    noise <- as.list(curve@noise)
-
+    noise <- curve@noise
+    # Integrate signal
     signals <- integrateSignal(object, noise = noise, ...) %>%
-      dplyr::bind_rows(.id = "reference") %>%
+      do.call(rbind, .) %>%
+      as.data.frame() %>%
+      dplyr::mutate(reference = rownames(.)) %>%
       dplyr::rename(signal = "value", signal_error = "error") %>%
       dplyr::mutate(signal = as.numeric(.data$signal),
                     signal_error = as.numeric(.data$signal_error))

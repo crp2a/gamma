@@ -47,18 +47,17 @@ setMethod(
     if (!is.null(noise)) {
       # Validation
       if (length(noise) != 2)
-        stop("'noise' must be a list of two elements ('value' and 'error')")
-      if (!all.equal(lengths(noise), c(value = 1, error = 1)))
-        stop("'noise' must be a list of two elements ('value' and 'error')")
+        stop("'noise' must be a length-two numeric vector.")
 
+      names(noise) <- NULL
       # Net signal (substracted background noise)
-      net_signal <- norm_signal - noise$value
-      net_error <- sqrt(norm_error^2 + noise$error^2)
+      net_signal <- norm_signal - noise[1]
+      net_error <- sqrt(norm_error^2 + noise[2]^2)
 
-      return(list(value = net_signal, error = net_error))
+      return(c(value = net_signal, error = net_error))
     } else {
       # return(list(nls = nls_fit, poly = poly_fit, peaks = energy))
-      return(list(value = norm_signal, error = norm_error))
+      return(c(value = norm_signal, error = norm_error))
     }
   }
 )
