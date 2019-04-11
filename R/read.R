@@ -8,26 +8,24 @@ NULL
 setMethod(
   f = "read",
   signature = signature(file = "character"),
-  definition = function(file, ...) {
-    # Allowed extensions
-    ext <- c("cnf", "tka")
-
+  definition = function(file, skip = NULL, ...) {
     # If input is a directory and not a single file
+    # Then, look for all files with allowed extensions
+    ext <- c("cnf", "tka")
     if (!utils::file_test("-f", file)) {
-      # Look for cnf files
       cnf_files <- tools::list_files_with_exts(file, exts = ext)
       if (length(cnf_files) == 0)
         stop("No spectrum files were fund.")
-
       file <- cnf_files
     }
 
+    # Read files
     spc <- lapply(X = file, FUN = function(x, ...) {
       extension <- tools::file_ext(x)
       switch(
         extension,
-        cnf = readCanberraCNF(x, ...),
-        tka = readCanberraTKA(x, ...)
+        cnf = readCanberraCNF(x, skip, ...),
+        tka = readCanberraTKA(x, skip, ...)
       )
     }, ...)
 
@@ -35,7 +33,6 @@ setMethod(
       # Get spectrum references
       spc_ref <- sapply(X = spc, FUN = "[[", i = "reference")
       names(spc) <- make.unique(spc_ref)
-
       # Return a GammaSpectra object
       methods::new("GammaSpectra", spc)
     } else {
@@ -54,7 +51,7 @@ setMethod(
 #'  An object of class \linkS4class{GammaSpectrum}.
 #' @keywords internal
 #' @noRd
-readCanberraCNF <- function(file, ...) {
+readCanberraCNF <- function(file, skip = NULL, ...) {
   # Read file
   spc_xy <- rxylib::read_xyData(file = file, ..., verbose = getOption("verbose"))
   # Get and check file format
@@ -73,6 +70,14 @@ readCanberraCNF <- function(file, ...) {
     as.data.frame() %>%
     dplyr::mutate(chanel = dplyr::row_number()) %>%
     magrittr::set_colnames(c("energy", "counts", "chanel"))
+
+  # Skip chanels
+  if (!is.null(skip)) {
+    if (is.numeric(skip)) {
+      skip_chanel <- which(spc_data$chanel %in% skip)
+      spc_data <- spc_data[-skip_chanel, ]
+    }
+  }
 
   # Get instrument name (remove the last word)
   instrument_name <- gsub("\\s*\\w*$", "", names(spc_xy$dataset))
@@ -104,7 +109,7 @@ readCanberraCNF <- function(file, ...) {
 #'  An object of class \linkS4class{GammaSpectrum}.
 #' @keywords internal
 #' @noRd
-readCanberraTKA <- function(file, ...) {
+readCanberraTKA <- function(file, skip = NULL, ...) {
   # Read file
   spc_xy <- utils::read.table(file = file)
   # Get and check file format
@@ -116,8 +121,17 @@ readCanberraTKA <- function(file, ...) {
   instrument_name <- "unknown"
 
   # Get data
-  counts <- as.numeric(spc_xy[, 1])
-  counts[1:2] <- 0
+  count <- as.numeric(spc_xy[, 1])
+  count[1:2] <- 0
+  chanel <- seq_along(count)
+
+  # Skip chanels
+  if (!is.null(skip)) {
+    if (is.numeric(skip)) {
+      count <- count[-skip]
+      chanel <- chanel[-skip]
+    }
+  }
 
   # Compute 32-bytes MD5 hash
   hash <- as.character(tools::md5sum(file))
@@ -128,8 +142,8 @@ readCanberraTKA <- function(file, ...) {
     reference = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
     file_format = format,
-    chanel = seq_along(counts),
-    counts = counts,
+    chanel = chanel,
+    counts = count,
     live_time = live_time,
     real_time = real_time
   )

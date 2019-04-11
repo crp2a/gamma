@@ -29,9 +29,7 @@ setMethod(
 
     # Get count data
     x <- methods::as(object, "data.frame")
-    # Cut data, starting at maximum count value
-    x_cut <- subset(x, x$chanel > which.max(x$counts))
-    x_counts <- x_cut$counts
+    x_counts <- x$counts
 
     baseline <- switch (
       method,
@@ -45,8 +43,8 @@ setMethod(
       date = as.Date(object@date),
       instrument = object@instrument,
       file_format = object@file_format,
-      chanel = x_cut$chanel,
-      energy = x_cut$energy,
+      chanel = x$chanel,
+      energy = x$energy,
       counts = baseline,
       live_time = object@live_time,
       real_time = object@real_time

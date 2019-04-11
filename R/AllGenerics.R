@@ -43,7 +43,7 @@ setGeneric(
 #' @aliases calibrateDose-method
 setGeneric(
   name = "calibrateDose",
-  def = function(object, dose, ...) standardGeneric("calibrateDose")
+  def = function(object, dose, noise, ...) standardGeneric("calibrateDose")
 )
 
 #' Baseline estimation and removal
@@ -198,6 +198,7 @@ if (!isGeneric("plot"))
 #' Reads a gamma ray spectrum file.
 #' @param file A \code{\link{character}} string giving the path of files to be
 #'  imported.
+#' @param skip A \code{\link{numeric}} vector.
 #' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
 #' @details
 #'  \emph{Only works with Canberra CNF.}
