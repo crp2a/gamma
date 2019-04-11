@@ -25,10 +25,10 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,GammaSpectrum,BaseLine-method
+#' @aliases plot,GammaSpectrum,GammaSpectrum-method
 setMethod(
   f = "plot",
-  signature = signature(x = "GammaSpectrum", y = "BaseLine"),
+  signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),
   definition = function(x, y, xaxis = c("energy", "chanel"),
                         yaxis = c("counts", "rate"), ...) {
     # Validation
@@ -37,18 +37,18 @@ setMethod(
     if (x@hash != y@hash)
       stop("Baseline do not correspond to spectrum.")
 
-    spc <- methods::as(x, "data.frame")
-    bl <- methods::as(y, "data.frame")
-    if (all(is.na(spc$energy)) | all(is.na(bl$energy)))
+    # Get spectrum data
+    spc1 <- methods::as(x, "data.frame")
+    spc2 <- methods::as(y, "data.frame")
+    if (all(is.na(spc1$energy)) | all(is.na(spc2$energy)))
       xaxis <- "chanel"
 
     # Bind data frame for ggplot2
-    # Reverse order of factor to display the baseline in front of the spectrum
-    data <- dplyr::bind_rows("spectrum" = spc, "baseline" = bl, .id = "curve") %>%
-      dplyr::mutate(curve = factor(.data$curve, levels = c("spectrum", "baseline")))
+    data <- dplyr::bind_rows("x" = spc1, "y" = spc2, .id = "spectrum")
 
     ggplot2::ggplot(data, ggplot2::aes_string(x = xaxis, y = yaxis,
-                                              group = "curve", colour = "curve")) +
+                                              group = "spectrum",
+                                              colour = "spectrum")) +
       ggplot2::geom_line()
   }
 )
