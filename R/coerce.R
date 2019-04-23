@@ -68,3 +68,12 @@ setAs(
     return(ls)
   }
 )
+
+# To GammaSpectra ==============================================================
+setAs(
+  from = "GammaSpectrum",
+  to = "GammaSpectra",
+  def = function(from) {
+    methods::new("GammaSpectra", list(from))
+  }
+)
