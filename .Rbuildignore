@@ -8,3 +8,6 @@
 ^LICENSE\.md$
 ^gamma\.Rproj$
 ^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

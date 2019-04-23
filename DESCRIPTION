@@ -23,7 +23,7 @@ Authors@R:
              role = "aut",
              email = "christelle.lahaye@u-bordeaux-montaigne.fr"),
       person("Université Bordeaux Montaigne",
-             role = "cph"))
+             role = c("cph", "fnd")))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Description: 'gamma' is intended to process in-situ
@@ -33,8 +33,8 @@ Description: 'gamma' is intended to process in-situ
     the use of a calibration curve. In its current version, this package
     only supports Canberra CNF files.
 License: GPL-3
-URL: http://github.com/nfrerebeau/gamma
-BugReports: http://github.com/nfrerebeau/gamma/issues
+URL: http://gamma.archaeo.science, http://github.com/crp2a/gamma
+BugReports: http://github.com/crp2a/gamma/issues
 Depends: 
     R (>= 3.3)
 Imports: 

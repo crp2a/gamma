@@ -4,10 +4,10 @@
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
 [![Build
-Status](https://travis-ci.org/nfrerebeau/gamma.svg?branch=master)](https://travis-ci.org/nfrerebeau/gamma)
-[![codecov](https://codecov.io/gh/nfrerebeau/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/nfrerebeau/gamma)
+Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
+[![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 [![GitHub
-Release](https://img.shields.io/github/release/nfrerebeau/gamma.svg)](https://github.com/nfrerebeau/gamma/releases)
+Release](https://img.shields.io/github/release/crp2a/gamma.svg)](https://github.com/crp2a/gamma/releases)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
 [![CRAN
@@ -25,14 +25,7 @@ and TKA files.
 
 ## Installation
 
-You can install the released version of `gamma` from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("gamma")
-```
-
-Or install the development version from GitHub with:
+Install the development version from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -42,7 +35,7 @@ devtools::install_github("nfrerebeau/gamma")
 ## Usage
 
 ``` r
-# View manual vignette
+# See the package manual
 utils::vignette("manual", package = "gamma")
 ```
 

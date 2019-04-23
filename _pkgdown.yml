@@ -1,0 +1,8 @@
+destination: docs
+url: http://gamma.archaeo.science
+authors:
+  Université Bordeaux Montaigne:
+    href: https://www.u-bordeaux-montaigne.fr
+    html: <img src="logo_ubm.jpg" height="48" />
+development:
+  mode: auto
