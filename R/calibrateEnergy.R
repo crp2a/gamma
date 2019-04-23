@@ -4,42 +4,34 @@ NULL
 
 #' @export
 #' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectra-method
+#' @aliases calibrateEnergy,GammaSpectra,data.frame-method
 setMethod(
   f = "calibrateEnergy",
-  signature = signature(object = "GammaSpectra"),
-  definition = function(object, lines, force = FALSE, ...) {
+  signature = signature(object = "GammaSpectra", lines = "data.frame"),
+  definition = function(object, lines, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    shifted <- lapply(X = spectra, FUN = calibrateEnergy,
-                      lines = lines, force = force, ...)
-    names(shifted) <- sapply(X = shifted, FUN = "[[", i = "reference")
-    methods::new("GammaSpectra", shifted)
+    energy <- lapply(X = spectra, FUN = calibrateEnergy, lines = lines, ...)
+    names(energy) <- names(object)
+
+    methods::new("GammaSpectra", energy)
   }
 )
 
 #' @export
 #' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectrum,list-method
+#' @aliases calibrateEnergy,GammaSpectrum,data.frame-method
 setMethod(
   f = "calibrateEnergy",
-  signature = signature(object = "GammaSpectrum", lines = "list"),
-  definition = function(object, lines, force = FALSE, ...) {
+  signature = signature(object = "GammaSpectrum", lines = "data.frame"),
+  definition = function(object, lines, ...) {
     # Get calibration lines
-    lines_chanel <- sapply(X = lines, FUN = "[", i = 1)
-    lines_energy <- sapply(X = lines, FUN = "[", i = 2)
-
+    lines_chanel <- lines$chanel
+    lines_energy <- lines$energy
     # Get spectrum data
     spc_data <- methods::as(object, "data.frame")
-    # Remove baseline
-    spc_clean <- removeBaseline(object, ...)
 
     # Adjust spectrum for energy shift
-    ## Fit peaks
-    if (!force) {
-      peaks <- fitPeaks(spc_clean, peaks = lines_chanel, scale = "chanel")
-      lines_chanel <- peaks@peaks$chanel
-    }
     ## Get corresponding chanels
     fit_data <- data.frame(energy = lines_energy,
                            chanel = lines_chanel)
@@ -63,5 +55,21 @@ setMethod(
       real_time = object@real_time,
       calibration = fit_poly
     )
+  }
+)
+
+#' @export
+#' @rdname calibrateEnergy
+#' @aliases calibrateEnergy,PeakModel,numeric-method
+setMethod(
+  f = "calibrateEnergy",
+  signature = signature(object = "PeakModel", lines = "numeric"),
+  definition = function(object, lines, ...) {
+    # Get data
+    peaks <- object@peaks
+    spectrum <- object@spectrum
+
+    fit_data <- data.frame(energy = lines, chanel = peaks$chanel)
+    calibrateEnergy(spectrum, fit_data)
   }
 )
