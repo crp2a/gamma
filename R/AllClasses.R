@@ -2,9 +2,6 @@
 #' @include gamma.R
 NULL
 
-#
-setOldClass(Classes = "nls")
-
 # Class Unions =================================================================
 setClassUnion("LmOrNull", c("lm", "NULL"))
 
@@ -179,7 +176,8 @@ setClass(
     noise = "numeric",
     window = "numeric",
     peaks = "data.frame",
-    spectrum = "GammaSpectrum"
+    spectrum = "GammaSpectrum",
+    baseline = "BaseLine"
   )
 )
 
@@ -203,10 +201,11 @@ setClass(
 setClass(
   Class = "PeakModel",
   slots = c(
-    model = "nls",
+    model = "list",
     scale = "character",
     peaks = "data.frame",
-    spectrum = "GammaSpectrum"
+    spectrum = "GammaSpectrum",
+    baseline = "BaseLine"
   )
 )
 

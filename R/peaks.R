@@ -2,6 +2,7 @@
 #' @include AllGenerics.R
 NULL
 
+# AUTOMATIC PEAK DETECTION =====================================================
 #' @export
 #' @rdname peaks
 #' @aliases findPeaks,GammaSpectrum-method
@@ -12,10 +13,13 @@ setMethod(
     # Validation
     method <- match.arg(method, several.ok = FALSE)
     SNR <- as.integer(SNR)
+    # Remove baseline
+    baseline <- estimateBaseline(object, ...)
+    spc_clean <- object - baseline
 
     # Get count data
-    data <- methods::as(object, "data.frame")
-    counts <- data$counts
+    spc <- methods::as(spc_clean, "data.frame")
+    counts <- spc$counts
     span <- if (is.null(span)) round(length(counts) * 0.05) else span
 
     shape <- diff(sign(diff(counts, na.pad = FALSE)))
@@ -46,7 +50,7 @@ setMethod(
       unlist() %>%
       subset(., counts[.] >= threshold)
 
-    pks <- data[index_noise, ]
+    pks <- spc[index_noise, ]
     rownames(pks) <- NULL
 
     methods::new(
@@ -55,29 +59,56 @@ setMethod(
       noise = threshold,
       window = span,
       peaks = pks,
-      spectrum = object
+      spectrum = object,
+      baseline = baseline
     )
   }
 )
 
+# PEAK FITTING =================================================================
 #' @export
 #' @rdname peaks
 #' @aliases fitPeaks,GammaSpectrum-method
 setMethod(
   f = "fitPeaks",
   signature = signature(object = "GammaSpectrum", peaks = "numeric"),
-  definition = function(object, peaks, scale = c("energy", "chanel"), ...) {
+  definition = function(object, peaks, scale = c("energy", "chanel"),
+                        bounds = NULL, ...) {
     # Validation
     scale <- match.arg(scale, several.ok = FALSE)
+    # Remove baseline
+    baseline <- estimateBaseline(object, ...)
+    spc_clean <- object - baseline
     # Get spectrum data
-    spc <- methods::as(object, "data.frame")
+    spc <- methods::as(spc_clean, "data.frame")
 
     # Find peaks in spectrum data
     pks_index <- findClosest(spc[, scale], peaks)
+    pks <- spc %>% dplyr::slice(pks_index)
+    rownames(pks) <- NULL
+
+    fit <- apply(
+      X = pks,
+      MARGIN = 1,
+      FUN = function(peaks, spectrum, scale, bounds)
+        fitNLS(spectrum, peaks, scale, bounds),
+      spectrum = spc, scale = scale, bounds = bounds
+    )
+
+    # Find peaks in spectrum data
+    fit_mu <- sapply(X = fit, FUN = function(x) stats::coef(x)["mu"])
+    pks_index <- findClosest(spc[, scale], fit_mu)
     pks <- spc[pks_index, ]
     rownames(pks) <- NULL
 
-    fitNLS(object, pks, scale)
+    methods::new(
+      "PeakModel",
+      model = fit,
+      scale = scale,
+      peaks = pks,
+      spectrum = object,
+      baseline = baseline
+    )
   }
 )
 
@@ -87,76 +118,131 @@ setMethod(
 setMethod(
   f = "fitPeaks",
   signature = signature(object = "PeakPosition", peaks = "missing"),
-  definition = function(object, scale = c("energy", "chanel"), ...) {
+  definition = function(object, scale = c("energy", "chanel"),
+                        bounds = NULL, ...) {
     # Validation
     scale <- match.arg(scale, several.ok = FALSE)
     # Get data
     spc <- object@spectrum
-    pks <- object@peaks
+    pks <- object@peaks[, scale]
 
-    fitNLS(spc, pks, scale)
+    fitPeaks(spc, pks, scale, bounds, ...)
   }
 )
 
 #' NLS
 #'
 #' Determine the nonlinear least-squares estimates of the peaks parameters.
-#' @param x A \linkS4class{GammaSpectrum} object.
-#' @param peaks A \code{\link[=data.frame]{data frame}}.
+#' @param x A \code{\link[=data.frame]{data frame}}.
+#' @param peaks A length-two \code{\link{numeric vector}}.
 #' @param ... Currently not used.
 #' @return A \linkS4class{PeakModel} object.
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-fitNLS <- function(object, peaks, scale = c("energy", "chanel"), ...) {
+fitNLS <- function(x, peaks, scale = c("energy", "chanel"),
+                   bounds = NULL, ...) {
   # Validation
   scale <- match.arg(scale, several.ok = FALSE)
-  # Get data
-  spc <- methods::as(object, "data.frame")
 
   # Get starting values for each peak
   ## Mean
-  mu <- peaks[, scale]
-  names(mu) <- paste("mu", 1:length(mu), sep = "")
+  mu <- peaks[scale]
   ## Standart deviation
-  fwhm <- sapply(X = mu,
-                 FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
-                 x = spc[, scale], y = spc$counts)
+  fwhm <- sapply(
+    X = mu,
+    FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
+    x = x[, scale], y = x$counts
+  )
   sigma <- fwhm / (2 * sqrt(2 * log(2)))
-  names(sigma) <- paste("sigma", 1:length(sigma), sep = "")
   ## Height
-  height <- peaks$counts
-  names(height) <- paste("C", 1:length(height), sep = "")
+  height <- peaks["counts"]
 
-  parameters <- as.list(c(mu, sigma, height))
+  parameters <- c(mu, sigma, height)
+  names(parameters) <- c("mu", "sigma", "C")
+
+  # Lower and upper paramters bounds
+  lower_bounds <- upper_bounds <- NULL
+  if (is.numeric(bounds)) {
+    n_bounds <- length(bounds)
+    n_param <- length(parameters)
+    if (n_bounds != 1 & n_bounds != n_param)
+      stop(sprintf("%s must be of length one or %d not %d",
+                   sQuote("bounds"), n_param, n_bounds))
+    lower_bounds <- parameters * (1 - bounds)
+    upper_bounds <- parameters * (1 + bounds)
+  }
 
   # Build formula
-  n <- 1:nrow(peaks)
-  term_labels <- sprintf("C%d * exp(-0.5 * ((%s - mu%d) / sigma%d)^2)",
-                         n, scale, n, n)
+  term_labels <- sprintf("C * exp(-0.5 * ((%s - mu) / sigma)^2)", scale)
   fit_formula <- stats::reformulate(termlabels = term_labels,
                                     response = "counts")
 
   # Fit model
+  fit_control <- stats::nls.control(maxiter = 50,
+                                    tol = 1e-05,
+                                    minFactor = 1/1024,
+                                    printEval = FALSE,
+                                    warnOnly = FALSE)
   fit <- stats::nls(formula = fit_formula,
-                    data = spc[, c(scale, "counts")],
-                    start = parameters,
-                    algorithm = "port")
-
-  # Find peaks in spectrum data
-  fit_mu <- stats::coef(fit)[n]
-  pks_index <- findClosest(spc[, scale], fit_mu)
-  pks <- spc[pks_index, ]
-  rownames(pks) <- NULL
-
-  methods::new(
-    "PeakModel",
-    model = fit,
-    scale = scale,
-    peaks = pks,
-    spectrum = object
-  )
+                    data = x[, c(scale, "counts")],
+                    start = as.list(parameters),
+                    control = fit_control,
+                    algorithm = "port",
+                    lower = lower_bounds,
+                    upper = upper_bounds)
+  return(fit)
 }
+
+# fitNLS_old <- function(object, peaks, scale = c("energy", "chanel"), ...) {
+#   # Validation
+#   scale <- match.arg(scale, several.ok = FALSE)
+#   # Get data
+#   spc <- methods::as(object, "data.frame")
+#
+#   # Get starting values for each peak
+#   ## Mean
+#   mu <- peaks[, scale]
+#   names(mu) <- paste("mu", 1:length(mu), sep = "")
+#   ## Standart deviation
+#   fwhm <- sapply(X = mu,
+#                  FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
+#                  x = spc[, scale], y = spc$counts)
+#   sigma <- fwhm / (2 * sqrt(2 * log(2)))
+#   names(sigma) <- paste("sigma", 1:length(sigma), sep = "")
+#   ## Height
+#   height <- peaks$counts
+#   names(height) <- paste("C", 1:length(height), sep = "")
+#
+#   parameters <- as.list(c(mu, sigma, height))
+#
+#   # Build formula
+#   n <- 1:nrow(peaks)
+#   term_labels <- sprintf("C%d * exp(-0.5 * ((%s - mu%d) / sigma%d)^2)",
+#                          n, scale, n, n)
+#   fit_formula <- stats::reformulate(termlabels = term_labels,
+#                                     response = "counts")
+#
+#   # Fit model
+#   fit <- stats::nls(formula = fit_formula,
+#                     data = spc[, c(scale, "counts")],
+#                     start = parameters,
+#                     algorithm = "port")
+#
+#   # Find peaks in spectrum data
+#   fit_mu <- stats::coef(fit)[n]
+#   pks_index <- findClosest(spc[, scale], fit_mu)
+#   pks <- spc[pks_index, ]
+#   rownames(pks) <- NULL
+#
+#   methods::new(
+#     "PeakModel",
+#     model = fit,
+#     scale = scale,
+#     peaks = pks,
+#     spectrum = object
+#   )
+# }
 
 #' MAD
 #'
