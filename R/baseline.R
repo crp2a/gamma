@@ -10,10 +10,15 @@ setMethod(
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP"), ...) {
 
-    baseline <- lapply(X = object, FUN = estimateBaseline,
-                       method = method, ...)
+    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
+    baseline <- lapply(
+      X = spectra,
+      FUN = function(x, method, ...) estimateBaseline(x, method, ...),
+      method = method, ...
+    )
     names(baseline) <- names(object)
-    return(baseline)
+
+    methods::new("GammaSpectra", baseline)
   }
 )
 
@@ -60,7 +65,12 @@ setMethod(
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP"), ...) {
 
-    baseline <- lapply(X = object, FUN = removeBaseline, method = method, ...)
+    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
+    baseline <- lapply(
+      X = spectra,
+      FUN = function(x, method, ...) removeBaseline(x, method, ...),
+      method = method, ...
+    )
     names(baseline) <- names(object)
 
     methods::new("GammaSpectra", baseline)
@@ -87,7 +97,7 @@ setMethod(
 #'  on \code{x} before employing SNIP algorithm?
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
 #'  clipping window be used?
-#' @param m An \code{\link{integer}} value giving the numerber of iterations.
+#' @param k An \code{\link{integer}} value giving the numerber of iterations.
 #' @return A \code{numeric} vector.
 #' @author N. Frerebeau
 #' @references
@@ -108,18 +118,18 @@ setMethod(
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @keywords internal
-SNIP <- function(x, LLS = FALSE, decreasing = FALSE, m = 100) {
+SNIP <- function(x, LLS = FALSE, decreasing = FALSE, k = 100) {
   # Validation
   if (!is.vector(x) | !is.numeric(x))
     stop("A numeric vector is expected.")
-  m <- as.integer(m)
+  k <- as.integer(k)
 
   # LLS operator
   x <- if (LLS) LLS(x) else x
 
   N <- length(x)
   y <- vector(mode = "numeric", length = N)
-  clip <- if (decreasing) m:1 else 1:m
+  clip <- if (decreasing) k:1 else 1:k
 
   for (p in clip) {
     i <- p
