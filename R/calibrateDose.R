@@ -9,15 +9,23 @@ setMethod(
   f = "calibrateDose",
   signature = signature(object = "GammaSpectra",
                         dose = "list", noise = "numeric"),
-  definition = function(object, dose, noise, laboratory = "LAB", ...) {
+  definition = function(object, dose, noise, range,
+                        intercept = FALSE, weights = FALSE,
+                        details = NULL, ...) {
     # Validation
     if (length(object) != length(dose))
       stop("XXX")
     if (sum(names(dose) %in% names(object)) != length(dose))
       stop("YYY")
+    if (is.vector(details)) {
+      k <- which(names(details) %in% c("laboratory", "instrument"))
+      info <- as.list(details[k])
+    } else {
+      info <- list(laboratory = NA_character_, instrument = NA_character_)
+    }
 
     # Signal integration
-    signals <- integrateSignal(object, noise = noise, ...) %>%
+    signals <- integrateSignal(object, range = range, noise = noise) %>%
       do.call(rbind, .) %>%
       as.data.frame() %>%
       dplyr::mutate(reference = rownames(.)) %>%
@@ -35,15 +43,22 @@ setMethod(
                     .data$signal, .data$signal_error)
 
     # TODO: check weights!
-    # fit <- stats::lm(dose ~ 0 + signal, data = fit_data, weights = 1 / dose_error^2)
-    fit <- stats::lm(dose ~ 0 + signal, data = fit_data)
+    fit_weights <- if (weights) 1 / fit_data$dose_error^2 else NULL
+    if (intercept) {
+      fit_formula <- stats::as.formula("dose ~ signal")
+    } else {
+      fit_formula <- stats::as.formula("dose ~ 0 + signal")
+    }
+    fit <- stats::lm(formula = fit_formula, data = fit_data,
+                     weights = fit_weights)
 
     methods::new(
       "CalibrationCurve",
-      instrument = NA_character_,
-      laboratory = laboratory,
+      instrument = info$instrument,
+      laboratory = info$laboratory,
       model = fit,
       noise = noise,
+      integration = range,
       data = fit_data
     )
   }

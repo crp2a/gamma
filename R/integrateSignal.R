@@ -23,7 +23,7 @@ setMethod(
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, range = c(200, 2800), noise = NULL, ...) {
+  definition = function(object, range = c(200, 2800), noise = NULL, NiEi = TRUE, ...) {
     # Validation
     if (!is.numeric(range) | length(range) != 2)
       stop("'range' must be a length two numeric vector (integration range in keV).")
@@ -34,9 +34,12 @@ setMethod(
     # Integrate signal between boundaries
     int_index <- which(spc_data$energy >= range[1] &
                          spc_data$energy <= range[2])
-    int_signal <- crossprod(spc_data$energy[int_index],
-                            spc_data$counts[int_index])
-    int_signal %<>% as.numeric()
+    if (NiEi) {
+      int_signal <- as.numeric(crossprod(spc_data$energy[int_index],
+                                         spc_data$counts[int_index]))
+    } else {
+      int_signal <- sum(spc_data$counts[int_index])
+    }
 
     # Normalize integrated signal to time
     active_time <- object@live_time

@@ -25,12 +25,13 @@ setMethod(
 setMethod(
   f = "estimateDoseRate",
   signature = signature(object = "GammaSpectra", curve = "CalibrationCurve"),
-  definition = function(object, curve, ...) {
+  definition = function(object, curve, epsilon = 0.03, ...) {
 
-    # Get noise value
+    # Get noise value and integration range
     noise <- curve@noise
+    int_range <- curve@integration
     # Integrate signal
-    signals <- integrateSignal(object, noise = noise, ...) %>%
+    signals <- integrateSignal(object, range = int_range, noise = noise) %>%
       do.call(rbind, .) %>%
       as.data.frame() %>%
       dplyr::mutate(reference = rownames(.)) %>%
@@ -40,12 +41,15 @@ setMethod(
 
     # Get linear regression results
     fit <- curve@model
-    slope <- stats::coef(fit)
-    slope_error <- summary(curve@model)$coef[, "Std. Error"]
+    fit_coef <- summary(curve@model)$coef
+    slope <- fit_coef["signal", "Estimate"]
+    slope_error <- fit_coef["signal", "Std. Error"]
 
     dose <- stats::predict.lm(fit, signals[, "signal", drop = FALSE])
+
     dose_error <- dose * sqrt((slope_error / slope)^2 +
-                                (signals$signal_error / signals$signal)^2 + 0.03^2)
+                                (signals$signal_error / signals$signal)^2 +
+                                epsilon^2)
 
     methods::new("DoseRate",
                  reference = signals$reference,
