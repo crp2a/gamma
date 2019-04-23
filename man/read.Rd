@@ -9,7 +9,8 @@
 \usage{
 read(file, ...)
 
-\S4method{read}{character}(file, skip = NULL, ...)
+\S4method{read}{character}(file, extensions = c("cnf", "tka"),
+  skip = NULL, ...)
 }
 \arguments{
 \item{file}{A \code{\link{character}} string giving the path of files to be
@@ -39,7 +40,7 @@ tka_file <- system.file("extdata/test.tka", package = "gamma")
 
 # Import all files in a given directory
 # Skip the 35 first chanels
-spc_dir <- system.file("extdata/cerege/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/", package = "gamma")
 (spc_spectra <- read(spc_dir, skip = 1:35))
 }
 \seealso{

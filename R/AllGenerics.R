@@ -10,7 +10,6 @@ NULL
 #'  (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
 #'  and Cs (2614.5 keV).
 #'  Change it only if you know what you are doing.
-#' @param force A \code{\link{logical}} scalar: XXX.
 #' @param ... Extra parameters passed to \code{\link{removeBaseline}}.
 #' @details
 #'  TODO
@@ -31,9 +30,11 @@ setGeneric(
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param dose A \code{\link{list}} of length-two numeric vectors.
 #' @param noise A \code{\link{list}} of two numeric values.
-#' @param laboratory A \code{\link{character}} string giving the laboratory
-#'  name.
-#' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
+#' @param range A length-two \code{\link{numeric}} vector.
+#' @param intercept A \code{\link{logical}} scalar.
+#' @param weights A \code{\link{logical}} scalar.
+#' @param details A list of \code{\link{character}} vector.
+#' @param ... Currently not used.
 #' @return An object of class \linkS4class{CalibrationCurve}.
 #' @seealso \link{estimateDoseRate}
 #' @example inst/examples/ex-calibrateDose.R
@@ -101,6 +102,7 @@ setGeneric(
 #' Estimates in-situ gamma dose rate.
 #' @param object An object of class \linkS4class{GammaSpectra}.
 #' @param curve An object of class \linkS4class{CalibrationCurve}.
+#' @param epsilon A \code{\link{numeric}} value.
 #' @param ... Extra parameters passed to \code{\link{integrateSignal}}.
 #' @example inst/examples/ex-calibrateDose.R
 #' @author N. Frerebeau
@@ -119,6 +121,7 @@ setGeneric(
 #' @param peaks XXX.
 #' @param scale XXX.
 #' @param method A \code{\link{character}} string.
+#' @param bounds A \code{\link{numeric}} vector.
 #' @param SNR An \code{\link{integer}}.
 #' @param span An \code{\link{integer}} giving the half window size (in number
 #'  of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
@@ -155,10 +158,10 @@ setGeneric(
 #' Signal integration
 #'
 #' @param object An object of class \linkS4class{GammaSpectrum}.
-#' @param lines A \code{\link{numeric}} vector.
+#' @param NiEi A \code{\link{logical}} scalar.
 #' @param range A length two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within.
-#' @param noise A \code{\link{list}} of numeric values.
+#' @param noise A length-two \code{\link{numeric}} vector.
 #' @param ... Extra parameters passed to \code{\link{fitPeaks}}.
 #' @details
 #'  TODO

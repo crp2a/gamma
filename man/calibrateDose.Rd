@@ -10,7 +10,7 @@
 calibrateDose(object, dose, noise, ...)
 
 \S4method{calibrateDose}{GammaSpectra,list,numeric}(object, dose, noise,
-  laboratory = "LAB", ...)
+  range, intercept = FALSE, weights = FALSE, details = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
@@ -19,10 +19,15 @@ calibrateDose(object, dose, noise, ...)
 
 \item{noise}{A \code{\link{list}} of two numeric values.}
 
-\item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
+\item{...}{Currently not used.}
 
-\item{laboratory}{A \code{\link{character}} string giving the laboratory
-name.}
+\item{range}{A length-two \code{\link{numeric}} vector.}
+
+\item{intercept}{A \code{\link{logical}} scalar.}
+
+\item{weights}{A \code{\link{logical}} scalar.}
+
+\item{details}{A list of \code{\link{character}} vector.}
 }
 \value{
 An object of class \linkS4class{CalibrationCurve}.
@@ -36,10 +41,10 @@ dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir, skip = 1:35)[-5]
 
 # Calibrate energy scale
-calib_lines <- list(
-  Pb = c(86, 238),
-  K = c(493, 1461),
-  Cs = c(876, 2614.5)
+calib_lines <- data.frame(
+  chanel = c(76, 459, 816),
+  energy = c(238, 1461, 2614.5),
+  row.names = c("Pb", "K", "Cs")
 )
 
 calib_scale <- calibrateEnergy(calib_spc, lines = calib_lines)
@@ -56,7 +61,8 @@ known_dose <- list(
 calib_curve <- calibrateDose(
   calib_spc,
   dose = known_dose,
-  noise = c(value = 1190, error = 1)
+  noise = c(value = 1190, error = 1),
+  range = c(200, 2800)
 )
 
 # Plot curve

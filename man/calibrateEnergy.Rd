@@ -4,18 +4,18 @@
 \name{calibrateEnergy}
 \alias{calibrateEnergy}
 \alias{calibrateEnergy-method}
-\alias{calibrateEnergy,GammaSpectra,ANY-method}
-\alias{calibrateEnergy,GammaSpectra-method}
-\alias{calibrateEnergy,GammaSpectrum,list-method}
+\alias{calibrateEnergy,GammaSpectra,data.frame-method}
+\alias{calibrateEnergy,GammaSpectrum,data.frame-method}
+\alias{calibrateEnergy,PeakModel,numeric-method}
 \title{Spectrum calibration}
 \usage{
 calibrateEnergy(object, lines, ...)
 
-\S4method{calibrateEnergy}{GammaSpectra,ANY}(object, lines,
-  force = FALSE, ...)
+\S4method{calibrateEnergy}{GammaSpectra,data.frame}(object, lines, ...)
 
-\S4method{calibrateEnergy}{GammaSpectrum,list}(object, lines,
-  force = FALSE, ...)
+\S4method{calibrateEnergy}{GammaSpectrum,data.frame}(object, lines, ...)
+
+\S4method{calibrateEnergy}{PeakModel,numeric}(object, lines, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
@@ -26,8 +26,6 @@ and Cs (2614.5 keV).
 Change it only if you know what you are doing.}
 
 \item{...}{Extra parameters passed to \code{\link{removeBaseline}}.}
-
-\item{force}{A \code{\link{logical}} scalar: XXX.}
 }
 \value{
 An object of class \linkS4class{GammaSpectrum}.

@@ -6,6 +6,7 @@
 \alias{plot-method}
 \alias{plot,GammaSpectrum,missing-method}
 \alias{plot,GammaSpectrum,GammaSpectrum-method}
+\alias{plot,GammaSpectrum,BaseLine-method}
 \alias{plot,GammaSpectra,missing-method}
 \alias{plot,PeakPosition,missing-method}
 \alias{plot,PeakModel,missing-method}

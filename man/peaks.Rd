@@ -21,10 +21,10 @@ fitPeaks(object, peaks, ...)
   span = NULL, ...)
 
 \S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks,
-  scale = c("energy", "chanel"), ...)
+  scale = c("energy", "chanel"), bounds = NULL, ...)
 
 \S4method{fitPeaks}{PeakPosition,missing}(object, scale = c("energy",
-  "chanel"), ...)
+  "chanel"), bounds = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
@@ -42,6 +42,8 @@ of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 half window size.}
 
 \item{scale}{XXX.}
+
+\item{bounds}{A \code{\link{numeric}} vector.}
 }
 \value{
 \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.
@@ -58,22 +60,31 @@ A local maximum has to be the highest one in the given window and has to be
 \examples{
 # Import a CNF file
 spc_dir <- system.file("extdata/test.cnf", package = "gamma")
-spc <- read(spc_dir)
+spc <- read(spc_dir, skip = 1:35)
 
 # Estimate baseline
 baseline <- estimateBaseline(spc)
 
-# Plot spectrum + baseline
 plot(spc, baseline) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts")
 
 # Remove baseline
 spc_clean <- removeBaseline(spc)
 
+plot(spc_clean) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts")
+
 # Detect peaks
-peak_index <- findPeaks(spc_clean, span = 20)
+peak_index <- findPeaks(spc, span = 20)
 
 plot(peak_index) +
+  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
+  ggplot2::theme_bw()
+
+# Fit peaks
+peak_fit <- fitPeaks(spc, peaks = c(238, 1461, 2614.5), scale = "energy")
+
+plot(peak_fit) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts") +
   ggplot2::theme_bw()
 }

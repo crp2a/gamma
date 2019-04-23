@@ -16,7 +16,7 @@ estimateDoseRate(object, curve, ...)
   ...)
 
 \S4method{estimateDoseRate}{GammaSpectra,CalibrationCurve}(object, curve,
-  ...)
+  epsilon = 0.03, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
@@ -24,6 +24,8 @@ estimateDoseRate(object, curve, ...)
 \item{curve}{An object of class \linkS4class{CalibrationCurve}.}
 
 \item{...}{Extra parameters passed to \code{\link{integrateSignal}}.}
+
+\item{epsilon}{A \code{\link{numeric}} value.}
 }
 \description{
 Estimates in-situ gamma dose rate.
@@ -34,10 +36,10 @@ dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir, skip = 1:35)[-5]
 
 # Calibrate energy scale
-calib_lines <- list(
-  Pb = c(86, 238),
-  K = c(493, 1461),
-  Cs = c(876, 2614.5)
+calib_lines <- data.frame(
+  chanel = c(76, 459, 816),
+  energy = c(238, 1461, 2614.5),
+  row.names = c("Pb", "K", "Cs")
 )
 
 calib_scale <- calibrateEnergy(calib_spc, lines = calib_lines)
@@ -54,7 +56,8 @@ known_dose <- list(
 calib_curve <- calibrateDose(
   calib_spc,
   dose = known_dose,
-  noise = c(value = 1190, error = 1)
+  noise = c(value = 1190, error = 1),
+  range = c(200, 2800)
 )
 
 # Plot curve

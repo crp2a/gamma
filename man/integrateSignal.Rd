@@ -14,7 +14,7 @@ integrateSignal(object, ...)
   noise = NULL, ...)
 
 \S4method{integrateSignal}{GammaSpectrum}(object, range = c(200, 2800),
-  noise = NULL, ...)
+  noise = NULL, NiEi = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
@@ -24,9 +24,9 @@ integrateSignal(object, ...)
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
 range to integrate within.}
 
-\item{noise}{A \code{\link{list}} of numeric values.}
+\item{noise}{A length-two \code{\link{numeric}} vector.}
 
-\item{lines}{A \code{\link{numeric}} vector.}
+\item{NiEi}{A \code{\link{logical}} scalar.}
 }
 \description{
 Signal integration
