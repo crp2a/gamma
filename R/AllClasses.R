@@ -329,6 +329,12 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(.Object, ...) {
     .Object <- methods::callNextMethod(.Object, ...)
+    # Get spectrum references
+    spc_list <- stats::setNames(
+      object = .Object@.Data,
+      nm = make.unique(sapply(X = .Object@.Data, FUN = "[[", i = "reference"))
+    )
+    .Object@.Data <- spc_list
     methods::validObject(.Object)
     if (getOption("verbose")) {
       message(paste(class(.Object), "instance initialized.", sep = " "))
