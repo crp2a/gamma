@@ -15,13 +15,15 @@ Authors@R:
              comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")),
       person(given = "Guillaume",
              family = "Guérin",
-             role = "ctb",
+             role = "aut",
              email = "guillaume.guerin@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "https://orcid.org/0000-0001-6298-5579")),
       person(given = "Lahaye",
              family = "Christelle",
-             role = "ctb",
-             email = "christelle.lahaye@u-bordeaux-montaigne.fr"))
+             role = "aut",
+             email = "christelle.lahaye@u-bordeaux-montaigne.fr"),
+      person("Université Bordeaux Montaigne",
+             role = "cph"))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Description: 'gamma' is intended to process in-situ
@@ -42,9 +44,11 @@ Imports:
     methods,
     rxylib (>= 0.2.1),
     stats,
+    tidyr (>= 0.8.3),
     tools
 Suggests: 
     covr,
+    cowplot,
     knitr,
     rmarkdown,
     testthat
