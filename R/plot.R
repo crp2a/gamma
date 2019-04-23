@@ -25,7 +25,7 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,GammaSpectrum,GammaSpectrum-method
+#' @aliases plot,GammaSpectrum,BaseLine-method
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),
@@ -34,8 +34,6 @@ setMethod(
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
-    if (x@hash != y@hash)
-      stop("Baseline do not correspond to spectrum.")
 
     # Get spectrum data
     spc1 <- methods::as(x, "data.frame")

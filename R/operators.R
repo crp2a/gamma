@@ -21,8 +21,8 @@ setMethod(
   f = "-",
   signature(e1 = "GammaSpectrum", e2 = "GammaSpectrum"),
   definition = function (e1, e2) {
-    if (e1@hash != e2@hash)
-      stop("Spectrum and baseline do not match.")
+    # Validation
+    # TODO
 
     methods::new(
       "GammaSpectrum",
@@ -46,8 +46,8 @@ setMethod(
   f = "+",
   signature(e1 = "GammaSpectrum", e2 = "GammaSpectrum"),
   definition = function (e1, e2) {
-    if (e1@hash != e2@hash)
-      stop("Spectrum and baseline do not match.")
+    # Validation
+    # TODO
 
     methods::new(
       "GammaSpectrum",
