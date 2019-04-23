@@ -201,6 +201,7 @@ if (!isGeneric("plot"))
 #' Reads a gamma ray spectrum file.
 #' @param file A \code{\link{character}} string giving the path of files to be
 #'  imported.
+#' @param extensions A \code{\link{character}} vector.
 #' @param skip A \code{\link{numeric}} vector.
 #' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
 #' @details

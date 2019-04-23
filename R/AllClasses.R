@@ -330,10 +330,11 @@ setMethod(
   definition = function(.Object, ...) {
     .Object <- methods::callNextMethod(.Object, ...)
     # Get spectrum references
-    spc_list <- stats::setNames(
-      object = .Object@.Data,
-      nm = make.unique(sapply(X = .Object@.Data, FUN = "[[", i = "reference"))
-    )
+    spc_list <- .Object@.Data
+    spc_ref <- sapply(X = spc_list, FUN = "[[", i = "reference") %>%
+      as.character() %>%
+      make.unique()
+    names(spc_list) <- spc_ref
     .Object@.Data <- spc_list
     methods::validObject(.Object)
     if (getOption("verbose")) {

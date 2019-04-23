@@ -18,6 +18,8 @@ imported.}
 
 \item{...}{Extra parameters passed to \code{\link[rxylib]{read_xyData}}.}
 
+\item{extensions}{A \code{\link{character}} vector.}
+
 \item{skip}{A \code{\link{numeric}} vector.}
 }
 \value{
