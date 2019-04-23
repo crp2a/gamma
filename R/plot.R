@@ -109,10 +109,12 @@ setMethod(
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
     # Get data
+    bl <- x@baseline
     spc <- x@spectrum
     peaks <- x@peaks
 
-    plot(spc, xaxis = xaxis, yaxis = yaxis) +
+    spc_clean <- spc - bl
+    plot(spc_clean, xaxis = xaxis, yaxis = yaxis) +
       ggplot2::geom_vline(xintercept = peaks[, xaxis], linetype = 3,
                           colour = "red")
   }
@@ -126,14 +128,33 @@ setMethod(
   signature = signature(x = "PeakModel", y = "missing"),
   definition = function(x, ...) {
     # Get data
+    bl <- x@baseline
     spc <- x@spectrum
     scale <- x@scale
-    spc_df <- methods::as(spc, "data.frame")
-    fit <- stats::predict(x@model, spc_df[, scale])
 
-    plot(spc, xaxis = scale, yaxis = "counts") +
-      ggplot2::geom_area(mapping = ggplot2::aes_string(y = "fit"),
-                         fill = "blue", colour = "blue", alpha = 0.5)
+    spc_clean <- spc - bl
+    spc_df <- methods::as(spc_clean, "data.frame")
+    fit <- lapply(
+      X = x@model,
+      FUN = function(x, data) stats::predict(x, data),
+      data = spc_df[, scale]
+    )
+
+    # Build long table for ggplot2
+    spc_long <- do.call(cbind, fit) %>%
+      as.data.frame() %>%
+      stats::setNames(paste("peak", 1:ncol(.), sep = " ")) %>%
+      dplyr::bind_cols(spc_df) %>%
+      tidyr::gather(key = "peak", value = "fit",
+                    -.data$chanel, -.data$energy, -.data$counts, -.data$rate)
+
+    plot(spc_clean, xaxis = scale, yaxis = "counts") +
+      ggplot2::geom_area(
+        data = spc_long,
+        mapping = ggplot2::aes_string(x = scale, y = "fit",
+                                      fill = "peak", colour = "peak"),
+        alpha = 0.5
+      )
   }
 )
 
@@ -146,23 +167,44 @@ setMethod(
   definition = function(x, ...) {
     # Get data
     data <- methods::as(x, "data.frame")
+    signal <- range(data$signal)
 
     # Set error bar width and height
-    error_width <- sum(range(data$signal) * c(-1, 1)) / 100
+    error_width <- sum(signal * c(-1, 1)) / 100
     error_height <- sum(range(data$dose) * c(-1, 1)) / 100
 
-    ggplot2::ggplot(data = data,
-                    mapping = ggplot2::aes_string(x = "signal", y = "dose",
-                                                  label = "reference")) +
-      ggplot2::geom_errorbar(ggplot2::aes_string(ymin = "dose - dose_error",
-                                                 ymax = "dose + dose_error"),
-                             width = error_width) +
-      ggplot2::geom_errorbarh(ggplot2::aes_string(xmin = "signal - signal_error",
-                                                  xmax = "signal + signal_error"),
-                              height = error_height) +
-      ggplot2::geom_point() +
-      ggplot2::stat_smooth(method = "lm", col = "red",
-                           formula = y ~ 0 + x, se = FALSE)
+    # Curve
+    curve <- data.frame(signal = signal) %>%
+      stats::predict.lm(x@model, .) %>%
+      c(signal, .) %>%
+      magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
+      as.matrix() %>%
+      t() %>%
+      as.data.frame()
+
+    ggplot2::ggplot(
+      data = data,
+      mapping = ggplot2::aes_string(
+        x = "signal", y = "dose",
+        label = "reference")) +
+      ggplot2::geom_errorbar(
+        mapping = ggplot2::aes_string(
+          ymin = "dose - dose_error",
+          ymax = "dose + dose_error"),
+        width = error_width) +
+      ggplot2::geom_errorbarh(
+        mapping = ggplot2::aes_string(
+          xmin = "signal - signal_error",
+          xmax = "signal + signal_error"),
+        height = error_height) +
+      ggplot2::geom_segment(
+        data = curve,
+        mapping = ggplot2::aes_string(x = "x", xend = "xmin",
+                                      y = "y", yend = "ymin"),
+        colour = "red",
+        inherit.aes = FALSE
+      ) +
+      ggplot2::geom_point()
   }
 )
 
