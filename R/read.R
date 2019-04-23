@@ -8,12 +8,14 @@ NULL
 setMethod(
   f = "read",
   signature = signature(file = "character"),
-  definition = function(file, skip = NULL, ...) {
+  definition = function(file, extensions = c("cnf", "tka"), skip = NULL, ...) {
+    # Validation
+    extensions <- match.arg(extensions, several.ok = TRUE)
+
     # If input is a directory and not a single file
     # Then, look for all files with allowed extensions
-    ext <- c("cnf", "tka")
     if (!utils::file_test("-f", file)) {
-      cnf_files <- tools::list_files_with_exts(file, exts = ext)
+      cnf_files <- tools::list_files_with_exts(file, exts = extensions)
       if (length(cnf_files) == 0)
         stop("No spectrum files were fund.")
       file <- cnf_files
@@ -30,9 +32,6 @@ setMethod(
     }, ...)
 
     if (length(spc) > 1) {
-      # Get spectrum references
-      spc_ref <- sapply(X = spc, FUN = "[[", i = "reference")
-      names(spc) <- make.unique(spc_ref)
       # Return a GammaSpectra object
       methods::new("GammaSpectra", spc)
     } else {
@@ -73,10 +72,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
 
   # Skip chanels
   if (!is.null(skip)) {
-    if (is.numeric(skip)) {
-      skip_chanel <- which(spc_data$chanel %in% skip)
-      spc_data <- spc_data[-skip_chanel, ]
-    }
+    spc_data <- skipChanels(spc_data, skip = skip)
   }
 
   # Get instrument name (remove the last word)
@@ -121,16 +117,14 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
   instrument_name <- "unknown"
 
   # Get data
-  count <- as.numeric(spc_xy[, 1])
-  count[1:2] <- 0
-  chanel <- seq_along(count)
+  spc_data <- data.frame(count = as.numeric(spc_xy[, 1])) %>%
+    magrittr::inset(1:2, 1, c(0, 0)) %>%
+    dplyr::mutate(chanel = dplyr::row_number()) %>%
+    magrittr::set_colnames(c("counts", "chanel"))
 
   # Skip chanels
   if (!is.null(skip)) {
-    if (is.numeric(skip)) {
-      count <- count[-skip]
-      chanel <- chanel[-skip]
-    }
+    spc_data <- skipChanels(spc_data, skip = skip)
   }
 
   # Compute 32-bytes MD5 hash
@@ -142,9 +136,29 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
     reference = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
     file_format = format,
-    chanel = chanel,
-    counts = count,
+    chanel = spc_data$chanel,
+    counts = spc_data$count,
     live_time = live_time,
     real_time = real_time
   )
+}
+
+#' Skip chanels
+#'
+#' @param x A \code{\link[=data.frame]{data frame}}.
+#' @param skip A \code{\link{logical}} scalar or a \code{\link{numeric}} vector.
+#' @return A \code{\link[=data.frame]{data frame}}.
+#' @author N. Frerebeau
+#' @keywords internal
+#' @noRd
+skipChanels <- function(x, skip) {
+  if (is.logical(skip)) {
+    skip_chanel <- seq_len(which.max(x$counts))
+    x <- x[-skip_chanel, ]
+  }
+  if (is.numeric(skip)) {
+    skip_chanel <- which(x$chanel %in% skip)
+    x <- x[-skip_chanel, ]
+  }
+  return(x)
 }
