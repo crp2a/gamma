@@ -40,7 +40,7 @@ setMethod(
       "BaseLine",
       hash = object@hash,
       reference = object@reference,
-      date = as.Date(object@date),
+      date = as.POSIXct(object@date),
       instrument = object@instrument,
       file_format = object@file_format,
       chanel = x$chanel,

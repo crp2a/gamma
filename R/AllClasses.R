@@ -62,7 +62,7 @@ setClass(
   slots = c(
     hash = "character",
     reference = "character",
-    date = "Date",
+    date = "POSIXct",
     instrument = "character",
     file_format = "character",
     chanel = "numeric",
@@ -238,9 +238,10 @@ setClass(
   slots = c(
     instrument = "character",
     laboratory = "character",
-    date = "Date",
+    date = "POSIXct",
     model = "lm",
     noise = "numeric",
+    integration = "numeric",
     data = "data.frame"
   )
 )
@@ -290,7 +291,7 @@ setMethod(
                         calibration) {
     if (!missing(hash)) .Object@hash <- hash
     if (!missing(reference)) .Object@reference <- reference
-    if (!missing(date)) .Object@date <- date else .Object@date <- Sys.Date()
+    if (!missing(date)) .Object@date <- date else .Object@date <- Sys.time()
     if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(file_format)) .Object@file_format <- file_format
     if (!missing(chanel)) .Object@chanel <- chanel
@@ -340,13 +341,15 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",
-  definition = function(.Object, instrument, laboratory, model, noise, data) {
+  definition = function(.Object, instrument, laboratory, model, noise,
+                        integration, data) {
     if (!missing(instrument)) .Object@model <- model
     if (!missing(laboratory)) .Object@laboratory <- laboratory
     if (!missing(model)) .Object@model <- model
     if (!missing(noise)) .Object@noise <- noise
+    if (!missing(integration)) .Object@integration <- integration
     if (!missing(data)) .Object@data <- data
-    .Object@date <- Sys.Date()
+    .Object@date <- Sys.time()
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
