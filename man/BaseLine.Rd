@@ -7,6 +7,9 @@
 \description{
 An S4 class to represent a spectrum baseline
 }
+\note{
+This class extends the \linkS4class{GammaSpectrum} class.
+}
 \examples{
 # Import a CNF file
 spc_dir <- system.file("extdata/test.cnf", package = "gamma")

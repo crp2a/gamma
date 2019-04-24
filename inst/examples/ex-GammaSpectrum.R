@@ -5,7 +5,14 @@ spc_file <- system.file("extdata/test.cnf", package = "gamma")
 # Coerce
 df <- as(spectrum, "data.frame")
 head(df)
+tail(df)
 
 # Subset
+spectrum[["hash"]]
 spectrum[["reference"]]
+spectrum[["date"]]
 spectrum[["instrument"]]
+spectrum[["file_format"]]
+spectrum[["live_time"]]
+spectrum[["real_time"]]
+spectrum[["calibration"]]

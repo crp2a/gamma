@@ -21,17 +21,25 @@ An S4 class to represent a calibration curve
 \section{Slots}{
 
 \describe{
-\item{\code{instrument}}{A \code{\link{character}} string.}
+\item{\code{laboratory}}{A \code{\link{character}} string giving the laboratory name.}
 
-\item{\code{laboratory}}{A \code{\link{character}} string.}
+\item{\code{instrument}}{A \code{\link{character}} string giving the instrument name
+or ID.}
 
-\item{\code{date}}{A \code{\link[=Date]{date}}.}
+\item{\code{date}}{A \code{\link{POSIXct}} element giving the date and time of the
+curve fitting.}
 
-\item{\code{model}}{A \code{\link[stats:lm]{linear model}}.}
+\item{\code{model}}{A \code{\link[stats:lm]{linear model}} specifying the calibration
+curve.}
 
-\item{\code{noise}}{A \code{\link{numeric}} vector.}
+\item{\code{noise}}{A length-two \code{\link{numeric}} vector giving the noise value
+and error (see \code{\link{integrateSignal}}).}
 
-\item{\code{data}}{A \code{\link[=data.frame]{data frame}}.}
+\item{\code{integration}}{A length-two \code{\link{numeric}} vector giving the energy
+range to integrate within (see \code{\link{integrateSignal}}).}
+
+\item{\code{data}}{A five columns \code{\link[=data.frame]{data frame}} giving the
+data and errors used to fit the curve.}
 }}
 
 \section{Subset}{
@@ -39,8 +47,7 @@ An S4 class to represent a calibration curve
 In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 \describe{
  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
- subscript \code{i}. \code{i} is a \code{character} vector
- of length one.}
+ subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 }
 }
 

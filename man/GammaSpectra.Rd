@@ -12,7 +12,7 @@
 \S4method{[[}{GammaSpectra}(x, i)
 }
 \arguments{
-\item{x}{An object of class \code{GammaSpectrum}.}
+\item{x}{An object of class \code{GammaSpectra}.}
 
 \item{i, j}{Indices specifying elements to extract or replace (see below).
 Indices are \code{\link{numeric}} or \code{\link{character}} vectors or
@@ -50,8 +50,7 @@ This class extends the base \code{\link{list}} and can only contains
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
- \item{\code{names(x)}, \code{names(x) <- value}}{Get or set the names of the
-  elements according to \code{value}.}
+ \item{\code{names(x)}}{Get the names of the elements.}
 }
 }
 

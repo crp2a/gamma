@@ -18,6 +18,25 @@ names of the slots.}
 \description{
 An S4 class to represent a gamma dose rate
 }
+\section{Slots}{
+
+\describe{
+\item{\code{reference}}{A \code{\link{character}} vector giving the spectrum
+references.}
+
+\item{\code{dose_value}}{A \code{\link{numeric}} vector giving the dose rate
+estimation.}
+
+\item{\code{dose_error}}{A \code{\link{numeric}} vector giving the dose rate
+estimation error.}
+
+\item{\code{signal_value}}{A \code{\link{numeric}} vector giving the integrated
+signal value.}
+
+\item{\code{signal_error}}{A \code{\link{numeric}} vector giving the integrated
+signal error.}
+}}
+
 \section{Coerce}{
 
 In the code snippets below, \code{x} is a \code{DoseRate} object.

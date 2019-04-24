@@ -4,7 +4,7 @@
 \name{PeakPosition-class}
 \alias{PeakPosition-class}
 \alias{[[,PeakPosition-method}
-\title{An S4 class to represent a set peaks}
+\title{An S4 class to represent a set of peaks}
 \usage{
 \S4method{[[}{PeakPosition}(x, i)
 }
@@ -16,8 +16,28 @@ to extract or replace (see below). Character sring will be matched to the
 names of the slots.}
 }
 \description{
-An S4 class to represent a set peaks
+An S4 class to represent a set of peaks
 }
+\section{Slots}{
+
+\describe{
+\item{\code{method}}{A \code{\link{character}} string specifying the method used for
+peak detection.}
+
+\item{\code{noise}}{A length one \code{\link{numeric}} vector giving the noise
+threshold.}
+
+\item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
+size.}
+
+\item{\code{peaks}}{A four columns \code{\link[=data.frame]{data frame}} giving the
+peak positions.}
+
+\item{\code{spectrum}}{A \linkS4class{GammaSpectrum} object.}
+
+\item{\code{baseline}}{A \linkS4class{BaseLine} object.}
+}}
+
 \section{Subset}{
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.

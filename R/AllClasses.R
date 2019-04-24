@@ -9,16 +9,28 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' An S4 class to represent a gamma sectrum
 #'
 #' Represents a single spectrum of a gamma ray spectrometry measurement.
+#' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
+#'  the imported file.
 #' @slot reference A \code{\link{character}} string the measurement reference.
-#' @slot date A \code{\link{character}} string giving the measurement date.
-#' @slot instrument A \code{\link{character}} string the instrument name.
-#' @slot file_format A \code{\link{character}} string.
+#' @slot date A \code{\link{POSIXct}} element giving the measurement date and
+#'  time.
+#' @slot instrument A \code{\link{character}} string giving the instrument name.
+#' @slot file_format A \code{\link{character}} string giving the format of the
+#'  imported file.
 #' @slot live_time A \code{\link{numeric}} value.
 #' @slot real_time A \code{\link{numeric}} value.
-#' @slot chanel A \code{\link{numeric}} vector.
-#' @slot energy A \code{\link{numeric}} vector.
-#' @slot counts A \code{\link{numeric}} vector.
-#' @slot rate A \code{\link{numeric}} vector.
+#' @slot chanel A \code{\link{integer}} vector giving the channel number.
+#'  Numeric values are coerced to integer as by \code{\link{as.integer}}
+#'  (and hence truncated towards zero).
+#' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
+#'  (in keV).
+#' @slot counts A \code{\link{integer}} vector giving the counts number for
+#'  each channel. Numeric values are coerced to integer as by
+#'  \code{\link{as.integer}} (and hence truncated towards zero).
+#' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
+#'  each channel.
+#' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
+#'  scale calibration (see \code{\link{calibrateEnergy}}).
 #' @param x An object of class \code{GammaSpectrum}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -26,13 +38,21 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @section Methods:
 #' \describe{
 #'  \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
-#'  object. See \code{\link{estimateBaseline}} for details.}
+#'   object. See \code{\link{estimateBaseline}} for details.}
 #'  \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of a
-#'  \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
+#'   \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
 #'  \item{findPeaks}{Look for local maxima to extract peaks out of a
-#'  \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
-#'  \item{removeBaseline}{estimate and remove the baseline of a
-#'  \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+#'   \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
+#'  \item{fitPeaks}{Adjust a Gaussian at given positions to estimate peak
+#'   paramaters out of a \code{GammaSpectrum} object.
+#'   See \code{\link{fitPeaks}} for details.}
+#'  \item{removeBaseline}{Estimate and remove the baseline of a
+#'   \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+#' }
+#' @section Access:
+#' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+#' \describe{
+#'  \item{\code{length(x)}}{Get the number of chanel in \code{x}.}
 #' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
@@ -62,36 +82,21 @@ setClass(
     date = "POSIXct",
     instrument = "character",
     file_format = "character",
-    chanel = "numeric",
+    chanel = "integer",
     energy = "numeric",
-    counts = "numeric",
+    counts = "integer",
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
     calibration = "LmOrNull"
   )
 )
-
-#' An S4 class to represent a spectrum baseline
-#'
-#' @seealso \linkS4class{GammaSpectrum}.
-#' @example inst/examples/ex-BaseLine.R
-#' @author N. Frerebeau
-#' @docType class
-#' @rdname BaseLine
-#' @aliases BaseLine-class
-setClass(
-  Class = "BaseLine",
-  # slots = c(
-  #   method = "character"
-  # ),
-  contains = "GammaSpectrum"
-)
+setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
 #' An S4 class to represent a collection of gamma sectra
 #'
 #' Represents a collection of spectra of gamma ray spectrometry measurements.
-#' @param x An object of class \code{GammaSpectrum}.
+#' @param x An object of class \code{GammaSpectra}.
 #' @param i,j Indices specifying elements to extract or replace (see below).
 #'  Indices are \code{\link{numeric}} or \code{\link{character}} vectors or
 #'  empty (\code{\link{missing}}) or \code{\link{NULL}}.
@@ -119,8 +124,7 @@ setClass(
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
 #'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
-#'  \item{\code{names(x)}, \code{names(x) <- value}}{Get or set the names of the
-#'   elements according to \code{value}.}
+#'  \item{\code{names(x)}}{Get the names of the elements.}
 #' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
@@ -152,71 +156,39 @@ setClass(
   contains = "list"
 )
 
-#' An S4 class to represent a set peaks
+#' An S4 class to represent a spectrum baseline
 #'
-#' @param x An object of class \code{PeakPosition}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
-#' @section Subset:
-#' In the code snippets below, \code{x} is a \code{PeakPosition} object.
-#' \describe{
-#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
-#' }
+#' @note This class extends the \linkS4class{GammaSpectrum} class.
+#' @seealso \linkS4class{GammaSpectrum}.
+#' @example inst/examples/ex-BaseLine.R
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname PeakPosition
-#' @aliases PeakPosition-class
+#' @rdname BaseLine
+#' @aliases BaseLine-class
 setClass(
-  Class = "PeakPosition",
-  slots = list(
-    method = "character",
-    noise = "numeric",
-    window = "numeric",
-    peaks = "data.frame",
-    spectrum = "GammaSpectrum",
-    baseline = "BaseLine"
-  )
-)
-
-#' An S4 class to represent a set peaks
-#'
-#' @param x An object of class \code{PeakModel}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
-#' @section Subset:
-#' In the code snippets below, \code{x} is a \code{PeakModel} object.
-#' \describe{
-#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
-#' }
-#' @author N. Frerebeau
-#' @docType class
-#' @rdname PeakModel
-#' @aliases PeakModel-class
-setClass(
-  Class = "PeakModel",
-  slots = c(
-    model = "list",
-    scale = "character",
-    peaks = "data.frame",
-    spectrum = "GammaSpectrum",
-    baseline = "BaseLine"
-  )
+  Class = "BaseLine",
+  # TODO
+  # slots = c(
+  #   method = "character"
+  # ),
+  contains = "GammaSpectrum"
 )
 
 #' An S4 class to represent a calibration curve
 #'
-#' @slot instrument A \code{\link{character}} string.
-#' @slot laboratory A \code{\link{character}} string.
-#' @slot date A \code{\link[=Date]{date}}.
-#' @slot model A \code{\link[stats:lm]{linear model}}.
-#' @slot noise A \code{\link{numeric}} vector.
-#' @slot data A \code{\link[=data.frame]{data frame}}.
+#' @slot laboratory A \code{\link{character}} string giving the laboratory name.
+#' @slot instrument A \code{\link{character}} string giving the instrument name
+#'  or ID.
+#' @slot date A \code{\link{POSIXct}} element giving the date and time of the
+#'  curve fitting.
+#' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
+#'  curve.
+#' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
+#'  and error (see \code{\link{integrateSignal}}).
+#' @slot integration A length-two \code{\link{numeric}} vector giving the energy
+#'  range to integrate within (see \code{\link{integrateSignal}}).
+#' @slot data A five columns \code{\link[=data.frame]{data frame}} giving the
+#'  data and errors used to fit the curve.
 #' @param x An object of class \code{CalibrationCurve}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -225,8 +197,7 @@ setClass(
 #' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 #' \describe{
 #'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
+#'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 #' }
 #' @author N. Frerebeau
 #' @docType class
@@ -235,10 +206,10 @@ setClass(
 setClass(
   Class = "CalibrationCurve",
   slots = c(
-    instrument = "character",
     laboratory = "character",
+    instrument = "character",
     date = "POSIXct",
-    model = "lm",
+    model = "LmOrNull",
     noise = "numeric",
     integration = "numeric",
     data = "data.frame"
@@ -247,6 +218,16 @@ setClass(
 
 #' An S4 class to represent a gamma dose rate
 #'
+#' @slot reference A \code{\link{character}} vector giving the spectrum
+#'  references.
+#' @slot dose_value A \code{\link{numeric}} vector giving the dose rate
+#'  estimation.
+#' @slot dose_error A \code{\link{numeric}} vector giving the dose rate
+#'  estimation error.
+#' @slot signal_value A \code{\link{numeric}} vector giving the integrated
+#'  signal value.
+#' @slot signal_error A \code{\link{numeric}} vector giving the integrated
+#'  signal error.
 #' @param x An object of class \code{DoseRate}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -280,6 +261,80 @@ setClass(
   )
 )
 
+#' An S4 class to represent a set peaks
+#'
+#' @slot model A list of \code{\link[stats:nls]{nonlinear models}} giving the
+#'  estimated parameters for each peak.
+#' @slot scale A \code{\link{character}} string.
+#' @slot peaks A four columns \code{\link[=data.frame]{data frame}} giving the
+#'  peak positions.
+#' @slot spectrum A \linkS4class{GammaSpectrum} object.
+#' @slot baseline A \linkS4class{BaseLine} object.
+#' @param x An object of class \code{PeakModel}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{PeakModel} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname PeakModel
+#' @aliases PeakModel-class
+setClass(
+  Class = "PeakModel",
+  slots = c(
+    model = "list",
+    scale = "character",
+    peaks = "data.frame",
+    spectrum = "GammaSpectrum",
+    baseline = "BaseLine"
+  )
+)
+
+#' An S4 class to represent a set of peaks
+#'
+#' @slot method A \code{\link{character}} string specifying the method used for
+#'  peak detection.
+#' @slot noise A length one \code{\link{numeric}} vector giving the noise
+#'  threshold.
+#' @slot window A length one \code{\link{numeric}} vector giving the half-window
+#'  size.
+#' @slot peaks A four columns \code{\link[=data.frame]{data frame}} giving the
+#'  peak positions.
+#' @slot spectrum A \linkS4class{GammaSpectrum} object.
+#' @slot baseline A \linkS4class{BaseLine} object.
+#' @param x An object of class \code{PeakPosition}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{PeakPosition} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector
+#'  of length one.}
+#' }
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname PeakPosition
+#' @aliases PeakPosition-class
+setClass(
+  Class = "PeakPosition",
+  slots = list(
+    method = "character",
+    noise = "numeric",
+    window = "numeric",
+    peaks = "data.frame",
+    spectrum = "GammaSpectrum",
+    baseline = "BaseLine"
+  )
+)
+
 # INITIALIZATION ===============================================================
 ## GammaSpectrum ---------------------------------------------------------------
 setMethod(
@@ -293,12 +348,11 @@ setMethod(
     if (!missing(date)) .Object@date <- date else .Object@date <- Sys.time()
     if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(file_format)) .Object@file_format <- file_format
-    if (!missing(chanel)) .Object@chanel <- chanel
+    if (!missing(chanel)) .Object@chanel <- as.integer(chanel)
     if (!missing(energy)) .Object@energy <- energy
-    if (!missing(counts)) {
-      .Object@counts <- counts
+    if (!missing(counts)) .Object@counts <- as.integer(counts)
+    if (!missing(counts) & !missing(live_time))
       .Object@rate <- counts / live_time
-    }
     if (!missing(live_time)) .Object@live_time <- live_time
     if (!missing(real_time)) .Object@real_time <- real_time
     if (!missing(calibration)) .Object@calibration <- calibration
@@ -349,7 +403,7 @@ setMethod(
   signature = "CalibrationCurve",
   definition = function(.Object, instrument, laboratory, model, noise,
                         integration, data) {
-    if (!missing(instrument)) .Object@model <- model
+    if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(laboratory)) .Object@laboratory <- laboratory
     if (!missing(model)) .Object@model <- model
     if (!missing(noise)) .Object@noise <- noise
@@ -383,111 +437,41 @@ setMethod(
     return(.Object)
   }
 )
+## PeakModel -------------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "PeakModel",
+  definition = function(.Object, model, scale, peaks, spectrum, baseline) {
+    if (!missing(model)) .Object@model <- model
+    if (!missing(scale)) .Object@scale <- scale
+    if (!missing(peaks)) .Object@peaks <- peaks
+    if (!missing(spectrum)) .Object@spectrum <- spectrum
+    if (!missing(baseline)) .Object@baseline <- baseline
 
-# VALIDATION ===================================================================
-## GammaSpectrum ---------------------------------------------------------------
-setValidity(
-  Class = "GammaSpectrum",
-  method = function(object) {
-    hash <- object@hash
-    reference <- object@reference
-    date <- object@date
-    instrument <- object@instrument
-    file_format <- object@file_format
-    chanel <- object@chanel
-    energy <- object@energy
-    counts <- object@counts
-    rate <- object@rate
-    live_time <- object@live_time
-    real_time <- object@real_time
-    calibration <- object@calibration
-    message <- c()
-
-    if (length(reference) > 1)
-      message <- c(message, "'reference' must be a single character string.")
-    if (length(date) > 1)
-      message <- c(message, "'date' must be a single character string.")
-    if (length(instrument) > 1)
-      message <- c(message, "'instrument' must be a single character string.")
-    if (length(file_format) > 1)
-      message <- c(message, "'file_format' must be a single character string.")
-    if (length(live_time) > 1)
-      message <- c(message, "'live_time' must be a single numeric value.")
-    if (length(real_time) > 1)
-      message <- c(message, "'real_time' must be a single numeric value.")
-
-    x <- lengths(list(chanel, counts))
-    if (!isEqual(x))
-      message <- c(message, "'chanel' and 'counts' must have the same length.")
-
-    if (length(message) != 0) {
-      stop(paste(message, collapse = "\n"))
-    } else {
-      return(TRUE)
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
     }
+    return(.Object)
   }
 )
-## GammaSpectra ----------------------------------------------------------------
-setValidity(
-  Class = "GammaSpectra",
-  method = function(object) {
-    data <- object@.Data
-    message <- c()
+## PeakPosition ----------------------------------------------------------------
+setMethod(
+  f = "initialize",
+  signature = "PeakPosition",
+  definition = function(.Object, method, noise, window, peaks, spectrum,
+                        baseline) {
+    if (!missing(method)) .Object@method <- method
+    if (!missing(noise)) .Object@noise <- noise
+    if (!missing(window)) .Object@window <- window
+    if (!missing(peaks)) .Object@peaks <- peaks
+    if (!missing(spectrum)) .Object@spectrum <- spectrum
+    if (!missing(baseline)) .Object@baseline <- baseline
 
-    # slot: .Data
-    if (length(data) != 0) {
-      class <- unlist(lapply(X = data, FUN = is, class2 = "GammaSpectrum"))
-      if (sum(!class) != 0) {
-        message <- c(message, "All elements must be of class 'GammaSpectrum'.")
-      }
+    methods::validObject(.Object)
+    if (getOption("verbose")) {
+      message(paste(class(.Object), "instance initialized.", sep = " "))
     }
-
-    if (length(message) != 0) {
-      stop(paste(message, collapse = "\n"))
-    } else {
-      return(TRUE)
-    }
-  }
-)
-## DoseRate ---------------------------------------------------------------
-setValidity(
-  Class = "DoseRate",
-  method = function(object) {
-    reference <- object@reference
-    dose_value <- object@dose_value
-    dose_error <- object@dose_error
-    signal_value <- object@signal_value
-    signal_error <- object@signal_error
-    message <- c()
-
-    if (length(reference) != 0)
-      if (anyNA(reference))
-        message <- c(message, "'reference' missing values were detected.")
-
-    if (length(dose_value) != 0)
-      if (anyNA(dose_value) | any(is.infinite(dose_value)))
-        message <- c(message, "'dose_value' infinite or missing values were detected.")
-
-    if (length(dose_error) != 0)
-      if (anyNA(dose_error) | any(is.infinite(dose_error)))
-        message <- c(message, "'dose_error' infinite or missing values were detected.")
-
-    if (length(signal_value) != 0)
-      if (anyNA(signal_value) | any(is.infinite(signal_value)))
-        message <- c(message, "'signal_value' infinite or missing values were detected.")
-
-    if (length(signal_error) != 0)
-      if (anyNA(signal_error) | any(is.infinite(signal_error)))
-        message <- c(message, "'signal_error' infinite or missing values were detected.")
-
-    x <- lengths(list(reference, dose_value, dose_error, signal_value, signal_error))
-    if (!isEqual(x))
-      message <- c(message, "All slots must have the same length.")
-
-    if (length(message) != 0) {
-      stop(paste(message, collapse = "\n"))
-    } else {
-      return(TRUE)
-    }
+    return(.Object)
   }
 )

@@ -4,9 +4,12 @@
 \name{GammaSpectrum-class}
 \alias{GammaSpectrum-class}
 \alias{[[,GammaSpectrum-method}
+\alias{length,GammaSpectrum-method}
 \title{An S4 class to represent a gamma sectrum}
 \usage{
 \S4method{[[}{GammaSpectrum}(x, i)
+
+\S4method{length}{GammaSpectrum}(x)
 }
 \arguments{
 \item{x}{An object of class \code{GammaSpectrum}.}
@@ -21,38 +24,63 @@ Represents a single spectrum of a gamma ray spectrometry measurement.
 \section{Slots}{
 
 \describe{
+\item{\code{hash}}{A \code{\link{character}} string giving the 32-byte MD5 hash of
+the imported file.}
+
 \item{\code{reference}}{A \code{\link{character}} string the measurement reference.}
 
-\item{\code{date}}{A \code{\link{character}} string giving the measurement date.}
+\item{\code{date}}{A \code{\link{POSIXct}} element giving the measurement date and
+time.}
 
-\item{\code{instrument}}{A \code{\link{character}} string the instrument name.}
+\item{\code{instrument}}{A \code{\link{character}} string giving the instrument name.}
 
-\item{\code{file_format}}{A \code{\link{character}} string.}
+\item{\code{file_format}}{A \code{\link{character}} string giving the format of the
+imported file.}
 
 \item{\code{live_time}}{A \code{\link{numeric}} value.}
 
 \item{\code{real_time}}{A \code{\link{numeric}} value.}
 
-\item{\code{chanel}}{A \code{\link{numeric}} vector.}
+\item{\code{chanel}}{A \code{\link{integer}} vector giving the channel number.
+Numeric values are coerced to integer as by \code{\link{as.integer}}
+(and hence truncated towards zero).}
 
-\item{\code{energy}}{A \code{\link{numeric}} vector.}
+\item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
+(in keV).}
 
-\item{\code{counts}}{A \code{\link{numeric}} vector.}
+\item{\code{counts}}{A \code{\link{integer}} vector giving the counts number for
+each channel. Numeric values are coerced to integer as by
+\code{\link{as.integer}} (and hence truncated towards zero).}
 
-\item{\code{rate}}{A \code{\link{numeric}} vector.}
+\item{\code{rate}}{A \code{\link{numeric}} vector the count rate (in 1/s) for
+each channel.}
+
+\item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
+scale calibration (see \code{\link{calibrateEnergy}}).}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
- object. See \code{\link{estimateBaseline}} for details.}
+  object. See \code{\link{estimateBaseline}} for details.}
  \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of a
- \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
+  \code{GammaSpectrum} object. See \code{\link{estimateDoseRate}} for details.}
  \item{findPeaks}{Look for local maxima to extract peaks out of a
- \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
- \item{removeBaseline}{estimate and remove the baseline of a
- \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+  \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
+ \item{fitPeaks}{Adjust a Gaussian at given positions to estimate peak
+  paramaters out of a \code{GammaSpectrum} object.
+  See \code{\link{fitPeaks}} for details.}
+ \item{removeBaseline}{Estimate and remove the baseline of a
+  \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
+}
+}
+
+\section{Access}{
+
+In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
+\describe{
+ \item{\code{length(x)}}{Get the number of chanel in \code{x}.}
 }
 }
 
@@ -84,10 +112,17 @@ spc_file <- system.file("extdata/test.cnf", package = "gamma")
 # Coerce
 df <- as(spectrum, "data.frame")
 head(df)
+tail(df)
 
 # Subset
+spectrum[["hash"]]
 spectrum[["reference"]]
+spectrum[["date"]]
 spectrum[["instrument"]]
+spectrum[["file_format"]]
+spectrum[["live_time"]]
+spectrum[["real_time"]]
+spectrum[["calibration"]]
 }
 \seealso{
 \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
