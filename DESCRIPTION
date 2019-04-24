@@ -1,5 +1,5 @@
 Package: gamma
-Title: Process In-Situ Gamma-Ray Spectrometry Measurements for
+Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating
 Version: 0.0.0.9001
 Authors@R: 
@@ -21,17 +21,18 @@ Authors@R:
       person(given = "Christelle",
              family = "Lahaye",
              role = "aut",
-             email = "christelle.lahaye@u-bordeaux-montaigne.fr"),
+             email = "christelle.lahaye@u-bordeaux-montaigne.fr",
+             comment = c(ORCID = "https://orcid.org/0000-0003-2215-9015")),
       person("Université Bordeaux Montaigne",
              role = c("cph", "fnd")))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Description: 'gamma' is intended to process in-situ
     gamma-ray spectrometry measurements for luminescence dating. This
-    package allows to automatically correct the energy shifts of the
-    spectrum. It provides methods for estimating the gamma dose rate by
-    the use of a calibration curve. In its current version, this package
-    only supports Canberra CNF files.
+    package allows to import, inspect and (automatically) correct the energy 
+    shifts of the spectrum. It provides methods for estimating the gamma 
+    dose rate by the use of a calibration curve. The package only supports 
+    Canberra CNF and TKA files.
 License: GPL-3
 URL: http://gamma.archaeo.science, http://github.com/crp2a/gamma
 BugReports: http://github.com/crp2a/gamma/issues
@@ -74,3 +75,4 @@ Collate:
     'read.R'
     'show.R'
     'utilities.R'
+    'validate.R'
