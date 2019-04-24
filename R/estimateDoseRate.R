@@ -8,14 +8,11 @@ NULL
 setMethod(
   f = "estimateDoseRate",
   signature = signature(object = "GammaSpectrum", curve = "CalibrationCurve"),
-  definition = function(object, curve, ...) {
+  definition = function(object, curve, epsilon = 0.03, ...) {
 
     # Coerce to GammaSpectra
-    # TODO: pas propre, reprendre tout ça
-    ls <- list(object)
-    names(ls) <- object@reference
-    spc <- methods::new("GammaSpectra", ls)
-    estimateDoseRate(spc, curve = curve, ...)
+    spc <- methods::as(object, "GammaSpectra")
+    estimateDoseRate(spc, curve = curve, epsilon = epsilon, ...)
   }
 )
 

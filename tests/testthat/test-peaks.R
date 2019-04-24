@@ -12,7 +12,7 @@ spc <- new("GammaSpectrum",
 
 test_that("Find and fit peaks", {
   peaks <- findPeaks(spc, SNR = 3, span = 50)
-  expect_silent(peaks)
+  expect_output(show(peaks), "peaks were detected")
 
   expect_equal(nrow(peaks@peaks), 3)
   expect_equal(peaks@peaks$chanel, c(86, 493, 876))
@@ -31,7 +31,7 @@ test_that("Find and fit peaks", {
 test_that("Fit peaks", {
   fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel",
                   bounds = c(0.1, 0.1, 0.1))
-  expect_silent(fit)
+  expect_output(show(fit), "peaks were estimated")
 
   expect_equal(nrow(fit@peaks), 3)
   expect_equal(fit@peaks$chanel, c(86, 493, 876))

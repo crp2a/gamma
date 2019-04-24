@@ -6,7 +6,7 @@ NULL
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param dose A \code{\link{list}} of length-two numeric vectors.
+#' @param doses A \code{\link{list}} of length-two numeric vectors.
 #' @param noise A \code{\link{list}} of two numeric values.
 #' @param range A length-two \code{\link{numeric}} vector.
 #' @param intercept A \code{\link{logical}} scalar.
@@ -22,7 +22,7 @@ NULL
 #' @aliases calibrateDose-method
 setGeneric(
   name = "calibrateDose",
-  def = function(object, dose, noise, ...) standardGeneric("calibrateDose")
+  def = function(object, doses, noise, ...) standardGeneric("calibrateDose")
 )
 
 #' Spectrum calibration

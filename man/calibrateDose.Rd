@@ -7,15 +7,16 @@
 \alias{calibrateDose,GammaSpectra,list,numeric-method}
 \title{Calibration}
 \usage{
-calibrateDose(object, dose, noise, ...)
+calibrateDose(object, doses, noise, ...)
 
-\S4method{calibrateDose}{GammaSpectra,list,numeric}(object, dose, noise,
-  range, intercept = FALSE, weights = FALSE, details = NULL, ...)
+\S4method{calibrateDose}{GammaSpectra,list,numeric}(object, doses, noise,
+  range = c(200, 2800), intercept = TRUE, weights = FALSE,
+  details = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
 
-\item{dose}{A \code{\link{list}} of length-two numeric vectors.}
+\item{doses}{A \code{\link{list}} of length-two numeric vectors.}
 
 \item{noise}{A \code{\link{list}} of two numeric values.}
 

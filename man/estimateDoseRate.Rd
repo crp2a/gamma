@@ -13,7 +13,7 @@
 estimateDoseRate(object, curve, ...)
 
 \S4method{estimateDoseRate}{GammaSpectrum,CalibrationCurve}(object, curve,
-  ...)
+  epsilon = 0.03, ...)
 
 \S4method{estimateDoseRate}{GammaSpectra,CalibrationCurve}(object, curve,
   epsilon = 0.03, ...)

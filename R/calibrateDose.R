@@ -8,20 +8,33 @@ NULL
 setMethod(
   f = "calibrateDose",
   signature = signature(object = "GammaSpectra",
-                        dose = "list", noise = "numeric"),
-  definition = function(object, dose, noise, range,
-                        intercept = FALSE, weights = FALSE,
+                        doses = "list", noise = "numeric"),
+  definition = function(object, doses, noise, range = c(200, 2800),
+                        intercept = TRUE, weights = FALSE,
                         details = NULL, ...) {
     # Validation
-    if (length(object) != length(dose))
-      stop("XXX")
-    if (sum(names(dose) %in% names(object)) != length(dose))
-      stop("YYY")
+    n_object <- length(object)
+    n_doses <- length(doses)
+    n_noise <- length(noise)
+    if (n_object != n_doses)
+      stop(sprintf("%s (%d) and %s (%d) must have the same length.",
+                   sQuote("object"), n_object, sQuote("doses"), n_doses))
+    if (sum(names(doses) %in% names(object)) != length(doses))
+      stop(sprintf("Elements of %s and %s must have the same names.",
+                   sQuote("object"), sQuote("doses")))
+    i_doses <- lengths(doses) == rep(2, n_doses)
+    if (!all(i_doses))
+      stop(sprintf("%s must be a list of length-two numeric vectors, you should check %s.",
+                   sQuote("doses"), paste(sQuote(names(doses)[!i_doses]), collapse = ", ")))
+    if (n_noise != 2)
+      stop(sprintf("%s must be a numeric vector of length two, not %d.",
+                   sQuote("noise"), n_noise))
+
+    # TODO: pas propre
+    info <- list(laboratory = NA_character_, instrument = NA_character_)
     if (is.vector(details)) {
       k <- which(names(details) %in% c("laboratory", "instrument"))
       info <- as.list(details[k])
-    } else {
-      info <- list(laboratory = NA_character_, instrument = NA_character_)
     }
 
     # Signal integration
@@ -32,7 +45,7 @@ setMethod(
       dplyr::rename(signal = "value", signal_error = "error")
 
     # Fit linear regression
-    doses <- dose %>%
+    doses <- doses %>%
       do.call(rbind, .) %>%
       as.data.frame() %>%
       dplyr::mutate(reference = rownames(.)) %>%

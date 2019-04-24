@@ -6,17 +6,17 @@ test_that("Import a gamma spectrum", {
 
   tka_file <- system.file("extdata/test.tka", package = "gamma")
   tka_spectrum <- read(tka_file)
-  expect_silent(tka_spectrum)
+  expect_output(show(tka_spectrum), "Gamma spectrum")
 
   cnf_file <- system.file("extdata/test.cnf", package = "gamma")
   cnf_spectrum <- read(cnf_file)
-  expect_silent(cnf_spectrum)
+  expect_output(show(cnf_spectrum), "Gamma spectrum")
 })
 test_that("Import a set of gamma spectra", {
   spc_dir <- system.file("extdata/crp2a/", package = "gamma")
   spectra <- read(spc_dir)
 
-  expect_silent(spectra)
+  expect_output(show(spectra), "A collection")
   expect_equal(length(spectra), 8)
   expect_equal(length(names(spectra)), 8)
   expect_is(names(spectra), "character")

@@ -113,7 +113,7 @@ setMethod(
           "  Height (count): \t", paste(param$C, collapse = "\t"), "\n",
           sep = "")
     } else {
-      cat("No peaks paramters were estimated.\n", sep = " ")
+      cat("No peaks parameters were estimated.\n", sep = " ")
     }
   }
 )

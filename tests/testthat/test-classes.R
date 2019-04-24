@@ -7,7 +7,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
 
   options("verbose" = FALSE)
   spectrum <- new("GammaSpectrum")
-  expect_silent(spectrum)
+  expect_output(show(spectrum), "An empty gamma spectrum")
 
   expect_is(spectrum[["hash"]], "character")
   expect_is(spectrum[["reference"]], "character")
@@ -36,7 +36,7 @@ test_that("Initialize an empty GammaSpectra instance", {
 
   options("verbose" = FALSE)
   spectra <- new("GammaSpectra")
-  expect_silent(spectra)
+  expect_output(show(spectra), "An empty set of gamma spectra")
   expect_equal(length(spectra), 0)
   expect_equal(length(names(spectra)), 0)
   expect_is(names(spectra), "character")
@@ -48,7 +48,7 @@ test_that("Initialize an empty BaseLine instance", {
 
   options("verbose" = FALSE)
   baseline <- new("BaseLine")
-  expect_silent(baseline)
+  expect_output(show(baseline), "An empty gamma spectrum")
 
   expect_is(baseline[["hash"]], "character")
   expect_is(baseline[["reference"]], "character")
@@ -73,7 +73,8 @@ test_that("Initialize an empty CalibrationCurve instance", {
 
   options("verbose" = FALSE)
   calib <- new("CalibrationCurve")
-  expect_silent(calib)
+  expect_output(show(calib), "no model")
+
   expect_is(calib[["instrument"]], "character")
   expect_is(calib[["laboratory"]], "character")
   expect_is(calib[["date"]], "POSIXct")
@@ -104,7 +105,8 @@ test_that("Initialize an empty DoseRate instance", {
 
   options("verbose" = FALSE)
   dose <- new("DoseRate")
-  expect_silent(dose)
+  expect_output(show(dose), "gamma dose rate estimate")
+
   expect_is(dose[["reference"]], "character")
   expect_is(dose[["dose_value"]], "numeric")
   expect_is(dose[["dose_error"]], "numeric")
@@ -149,6 +151,8 @@ test_that("Initialize an empty PeakModel instance", {
 
   options("verbose" = FALSE)
   peak <- new("PeakModel")
+  expect_output(show(peak), "No peaks parameters")
+
   expect_is(peak[["model"]], "list")
   expect_is(peak[["scale"]], "character")
   expect_is(peak[["peaks"]], "data.frame")
@@ -170,6 +174,8 @@ test_that("Initialize an empty PeakPosition instance", {
 
   options("verbose" = FALSE)
   peak <- new("PeakPosition")
+  expect_output(show(peak), "No peaks were detected")
+
   expect_is(peak[["method"]], "character")
   expect_is(peak[["noise"]], "numeric")
   expect_is(peak[["window"]], "numeric")
