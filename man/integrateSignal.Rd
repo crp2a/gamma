@@ -11,7 +11,7 @@
 integrateSignal(object, ...)
 
 \S4method{integrateSignal}{GammaSpectra}(object, range = c(200, 2800),
-  noise = NULL, ...)
+  noise = NULL, NiEi = TRUE, ..., simplify = FALSE)
 
 \S4method{integrateSignal}{GammaSpectrum}(object, range = c(200, 2800),
   noise = NULL, NiEi = TRUE, ...)
@@ -19,14 +19,21 @@ integrateSignal(object, ...)
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum}.}
 
-\item{...}{Extra parameters passed to \code{\link{fitPeaks}}.}
+\item{...}{Currently not used.}
 
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
-range to integrate within.}
+range to integrate within (in keV).}
 
 \item{noise}{A length-two \code{\link{numeric}} vector.}
 
 \item{NiEi}{A \code{\link{logical}} scalar.}
+
+\item{simplify}{A \code{\link{logical}} scalar: should the result be
+simplified to a matrix? The default value, \code{FALSE}, returns a list.}
+}
+\value{
+If \code{simplify} is \code{FALSE}, then returns a list length-two
+ numeric vectors (default), else returns a matrix.
 }
 \description{
 Signal integration

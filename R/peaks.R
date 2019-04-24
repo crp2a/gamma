@@ -81,6 +81,8 @@ setMethod(
     spc_clean <- object - baseline
     # Get spectrum data
     spc <- methods::as(spc_clean, "data.frame")
+    if (all(is.na(spc$energy)))
+      scale <- "chanel"
 
     # Find peaks in spectrum data
     pks_index <- findClosest(spc[, scale], peaks)
@@ -167,8 +169,10 @@ fitNLS <- function(x, peaks, scale = c("energy", "chanel"),
     n_bounds <- length(bounds)
     n_param <- length(parameters)
     if (n_bounds != 1 & n_bounds != n_param)
-      stop(sprintf("%s must be of length one or %d not %d",
+      stop(sprintf("%s must be of length one or %d, not %d",
                    sQuote("bounds"), n_param, n_bounds))
+    if (any(bounds > 1))
+      stop(sprintf("%s between 0 and 1", sQuote("bounds")))
     lower_bounds <- parameters * (1 - bounds)
     upper_bounds <- parameters * (1 + bounds)
   }

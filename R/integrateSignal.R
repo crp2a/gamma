@@ -8,11 +8,13 @@ NULL
 setMethod(
   f = "integrateSignal",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, range = c(200, 2800), noise = NULL, ...) {
+  definition = function(object, range = c(200, 2800), noise = NULL, NiEi = TRUE,
+                        ..., simplify = FALSE) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrateSignal,
-                      range = range, noise = noise, ...)
+    signals <- sapply(X = spectra, FUN = integrateSignal,
+                      range = range, noise = noise, NiEi = NiEi,
+                      simplify = simplify)
     return(signals)
   }
 )
@@ -26,7 +28,8 @@ setMethod(
   definition = function(object, range = c(200, 2800), noise = NULL, NiEi = TRUE, ...) {
     # Validation
     if (!is.numeric(range) | length(range) != 2)
-      stop("'range' must be a length two numeric vector (integration range in keV).")
+      stop(sprintf("%s must be a numeric vector of length two, not %d",
+                   sQuote("range"), length(range)))
 
     # Get data
     spc_data <- methods::as(object, "data.frame")
@@ -49,8 +52,9 @@ setMethod(
     # If noise value is known, substract it form normalized signal
     if (!is.null(noise)) {
       # Validation
-      if (length(noise) != 2)
-        stop("'noise' must be a length-two numeric vector.")
+      if (!is.numeric(noise) | length(noise) != 2)
+        stop(sprintf("%s must be a numeric vector of length two, not %d",
+                     sQuote("noise"), length(noise)))
 
       names(noise) <- NULL
       # Net signal (substracted background noise)

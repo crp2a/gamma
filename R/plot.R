@@ -25,7 +25,7 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,GammaSpectrum,BaseLine-method
+#' @aliases plot,GammaSpectrum,GammaSpectrum-method
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),

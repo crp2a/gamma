@@ -99,7 +99,7 @@ setMethod(
   signature = "PeakModel",
   definition = function(object) {
     if (length(object@peaks) != 0) {
-      param <- lapply(X = object@model, FUN = coef) %>%
+      param <- lapply(X = object@model, FUN = stats::coef) %>%
         do.call(cbind, .) %>%
         t() %>%
         as.data.frame() %>%

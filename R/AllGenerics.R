@@ -160,11 +160,16 @@ setGeneric(
 #' @param object An object of class \linkS4class{GammaSpectrum}.
 #' @param NiEi A \code{\link{logical}} scalar.
 #' @param range A length two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within.
+#'  range to integrate within (in keV).
 #' @param noise A length-two \code{\link{numeric}} vector.
-#' @param ... Extra parameters passed to \code{\link{fitPeaks}}.
+#' @param ... Currently not used.
+#' @param simplify A \code{\link{logical}} scalar: should the result be
+#'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
 #' @details
 #'  TODO
+#' @return
+#'  If \code{simplify} is \code{FALSE}, then returns a list length-two
+#'  numeric vectors (default), else returns a matrix.
 #' @author N. Frerebeau
 #' @docType methods
 #' @rdname integrateSignal

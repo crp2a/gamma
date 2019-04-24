@@ -23,6 +23,7 @@ test_that("Estimate baseline from GammaSpectrum", {
   expect_equal(baseline[["calibration"]], spectrum[["calibration"]])
 
   expect_is(plot(baseline), "ggplot")
+  expect_is(plot(spectrum, baseline), "ggplot")
 })
 test_that("Estimate baseline from GammaSpectra", {
   baseline <- estimateBaseline(spectra)

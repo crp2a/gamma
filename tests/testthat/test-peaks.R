@@ -29,11 +29,17 @@ test_that("Find and fit peaks", {
 })
 
 test_that("Fit peaks", {
-  fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel")
+  fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel",
+                  bounds = c(0.1, 0.1, 0.1))
   expect_silent(fit)
 
   expect_equal(nrow(fit@peaks), 3)
   expect_equal(fit@peaks$chanel, c(86, 493, 876))
   expect_is(plot(fit), "ggplot")
   expect_is(as(fit, "data.frame"), "data.frame")
+
+  expect_error(fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel",
+                        bounds = c(0.1, 0.1, 0.1, 0.1)))
+  expect_error(fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel",
+               bounds = 2))
 })

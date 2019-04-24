@@ -41,10 +41,10 @@ dir <- system.file("extdata/cerege/", package = "gamma")
 calib_spc <- read(dir, skip = 1:35)[-5]
 
 # Calibrate energy scale
-calib_lines <- data.frame(
-  chanel = c(76, 459, 816),
-  energy = c(238, 1461, 2614.5),
-  row.names = c("Pb", "K", "Cs")
+calib_lines <- list(
+  Pb = c(chanel = 76, energy = 238),
+  K = c(chanel = 459, energy = 1461),
+  Cs = c(chanel = 816, energy = 2614.5)
 )
 
 calib_scale <- calibrateEnergy(calib_spc, lines = calib_lines)

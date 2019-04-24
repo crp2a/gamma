@@ -4,10 +4,10 @@ NULL
 
 #' @export
 #' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectra,data.frame-method
+#' @aliases calibrateEnergy,GammaSpectra,list-method
 setMethod(
   f = "calibrateEnergy",
-  signature = signature(object = "GammaSpectra", lines = "data.frame"),
+  signature = signature(object = "GammaSpectra", lines = "list"),
   definition = function(object, lines, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
@@ -20,21 +20,29 @@ setMethod(
 
 #' @export
 #' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectrum,data.frame-method
+#' @aliases calibrateEnergy,GammaSpectrum,list-method
 setMethod(
   f = "calibrateEnergy",
-  signature = signature(object = "GammaSpectrum", lines = "data.frame"),
+  signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
-    # Get calibration lines
-    lines_chanel <- lines$chanel
-    lines_energy <- lines$energy
+    # Validation
+    if (length(lines) < 2)
+      stop(sprintf("You have to provide at least two lines for calibration (not %d).",
+                   length(lines)))
+
+    lines_names <- sapply(X = lines, FUN = function(x) {
+      !is.null(names(x)) & all(names(x) %in% c("chanel", "energy"))
+    })
+    if (!all(lines_names))
+      stop(sprintf("%s must be a list of length-two numeric vectors with names %s and %s.",
+                   sQuote("lines"), sQuote("chanel"), sQuote("energy")))
+
     # Get spectrum data
     spc_data <- methods::as(object, "data.frame")
 
     # Adjust spectrum for energy shift
     ## Get corresponding chanels
-    fit_data <- data.frame(energy = lines_energy,
-                           chanel = lines_chanel)
+    fit_data <- as.data.frame(do.call(rbind, lines))
     ## Fit second order polynomial
     fit_poly <- stats::lm(energy ~ stats::poly(chanel, degree = 2, raw = TRUE),
                           data = fit_data)
@@ -69,7 +77,8 @@ setMethod(
     peaks <- object@peaks
     spectrum <- object@spectrum
 
-    fit_data <- data.frame(energy = lines, chanel = peaks$chanel)
+    fit_data <- data.frame(energy = lines, chanel = peaks$chanel) %>%
+      split(., f = 1:nrow(.))
     calibrateEnergy(spectrum, fit_data)
   }
 )
