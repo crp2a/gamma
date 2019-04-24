@@ -27,6 +27,11 @@ test_that("Build calibration curve", {
   expect_equal(dim(calib[["data"]]), c(7, 5))
   expect_is(plot(calib), "ggplot")
 
+  dose_rate <- estimateDoseRate(spectra, calib)
+  expect_is(as(dose_rate, "data.frame"), "data.frame")
+  expect_equal(dim(as(dose_rate, "data.frame")), c(7, 5))
+  expect_is(plot(calib, dose_rate), "ggplot")
+
   expect_error(calibrateDose(spectra, dose, noise = c(25312)),
                "must be a numeric vector of length two")
   expect_error(calibrateDose(spectra, dose[-1], noise = c(25312, 1.66)),
