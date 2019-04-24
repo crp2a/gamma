@@ -7,19 +7,23 @@ setMethod(
   f = "show",
   signature = "GammaSpectrum",
   definition = function(object) {
-    if (length(object@energy) == 0) {
-      E <- "not calibrated"
-    } else {
-      E <- paste(range(round(object@energy, 2)), collapse = "-")
-    }
+    if (length(object) != 0) {
+      E <- if (length(object@energy) != 0) {
+        paste(range(round(object@energy, 2)), collapse = "-")
+      } else {
+        "not calibrated"
+      }
 
-    cat("Gamma spectrum:", "\n",
-        "  Reference: ", object@reference, "\n",
-        "  Instrument: ", object@instrument, "\n",
-        "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
-        "  Number of chanels: ", length(object@chanel), "\n",
-        "  Energy range (keV): ", E, "\n",
-        sep = "")
+      cat("Gamma spectrum:", "\n",
+          "  Reference: ", object@reference, "\n",
+          "  Instrument: ", object@instrument, "\n",
+          "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
+          "  Number of chanels: ", length(object@chanel), "\n",
+          "  Energy range (keV): ", E, "\n",
+          sep = "")
+    } else {
+      cat("An empty gamma spectrum\n", sep = "")
+    }
   }
 )
 
@@ -29,11 +33,15 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(object) {
     n <- length(object)
-    spc <- ifelse(n > 1, "spectra", "spectrum")
-    ref <- names(object)
-    cat("A collection of ", n, " gamma ", spc, ": ",
-        paste(ref, collapse = ", "), "\n",
-        sep = "")
+    if (n != 0) {
+      spc <- ifelse(n > 1, "spectra", "spectrum")
+      ref <- names(object)
+      cat("A collection of ", n, " gamma ", spc, ": ",
+          paste(ref, collapse = ", "), "\n",
+          sep = "")
+    } else {
+      cat("An empty set of gamma spectra\n", sep = "")
+    }
   }
 )
 
@@ -42,12 +50,17 @@ setMethod(
   f = "show",
   signature = "CalibrationCurve",
   definition = function(object) {
-    sum_up <- summary(object@model)
-    cat("Calibration curve:", "\n",
-        "  Residual standard error: ", round(sum_up$sigma, 2), "\n",
-        "  Multiple R-squared: ", round(sum_up$r.squared, 5), "\n",
-        "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5), "\n",
-        sep = " ")
+    if (length(object@model) != 0) {
+      sum_up <- summary(object@model)
+      cat("Calibration curve:", "\n",
+          "  Residual standard error: ", round(sum_up$sigma, 2), "\n",
+          "  Multiple R-squared: ", round(sum_up$r.squared, 5), "\n",
+          "  Adjusted R-squared: ", round(sum_up$adj.r.squared, 5), "\n",
+          sep = " ")
+    } else {
+      cat("Calibration curve: no model", "\n",
+          sep = " ")
+    }
   }
 )
 
