@@ -32,49 +32,34 @@ removeBaseline(object, ...)
 
 \item{...}{Extra parameters passed to internal functions.}
 
-\item{method}{TODO.}
+\item{method}{A \code{\link{character}} string specifying the method to be
+used for baseline estimation.}
 }
 \value{
-\code{estimateBaseline} returns a four columns data frame or a list
- of data frame.
-
- \code{removeBaseline} returns a modified \linkS4class{GammaSpectrum} or
- \linkS4class{GammaSpectra} object (same as \code{object}, with background
- removed).
+\code{estimateBaseline} and \code{removeBaseline} return a
+ \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
+ \code{object}).
 }
 \description{
 Baseline estimation and removal
 }
 \examples{
 # Import a CNF file
-spc_dir <- system.file("extdata/test.cnf", package = "gamma")
-spc <- read(spc_dir, skip = 1:35)
+spc_file <- system.file("extdata/test.cnf", package = "gamma")
+spectrum <- read(spc_file, skip = TRUE)
 
 # Estimate baseline
-baseline <- estimateBaseline(spc)
+baseline <- estimateBaseline(spectrum)
 
-plot(spc, baseline) +
+plot(spectrum, baseline) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts")
 
 # Remove baseline
-spc_clean <- removeBaseline(spc)
+spc_clean1 <- removeBaseline(spectrum)
+spc_clean2 <- spectrum - baseline
 
-plot(spc_clean) +
+plot(spc_clean1) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts")
-
-# Detect peaks
-peak_index <- findPeaks(spc, span = 20)
-
-plot(peak_index) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
-
-# Fit peaks
-peak_fit <- fitPeaks(spc, peaks = c(238, 1461, 2614.5), scale = "energy")
-
-plot(peak_fit) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
 }
 \references{
 Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).

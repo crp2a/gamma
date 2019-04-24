@@ -77,6 +77,13 @@ setMethod(
     peaks <- object@peaks
     spectrum <- object@spectrum
 
+    # Validation
+    n_lines <- length(lines)
+    n_chanels <- length(peaks$chanel)
+    if (n_lines != n_chanels)
+      stop(sprintf("%s must be of length %d, not %d",
+                   sQuote("lines"), n_chanels, n_lines))
+
     fit_data <- data.frame(energy = lines, chanel = peaks$chanel) %>%
       split(., f = 1:nrow(.))
     calibrateEnergy(spectrum, fit_data)

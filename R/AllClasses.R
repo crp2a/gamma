@@ -155,7 +155,7 @@ setClass(
 #'
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
 #' @seealso \linkS4class{GammaSpectrum}.
-#' @example inst/examples/ex-BaseLine.R
+#' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
 #' @docType class
 #' @rdname BaseLine

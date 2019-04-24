@@ -157,6 +157,7 @@ skipChanels <- function(x, skip) {
     x <- x[-skip_chanel, ]
   }
   if (is.numeric(skip)) {
+    skip <- as.integer(skip)
     skip_chanel <- which(x$chanel %in% skip)
     x <- x[-skip_chanel, ]
   }

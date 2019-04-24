@@ -12,7 +12,7 @@ setMethod(
   definition = function(object, method = c("MAD"), SNR = 2, span = NULL, ...) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
-    SNR <- as.integer(SNR)
+    SNR <- as.integer(SNR)[1]
     # Remove baseline
     baseline <- estimateBaseline(object, ...)
     spc_clean <- object - baseline
@@ -20,7 +20,11 @@ setMethod(
     # Get count data
     spc <- methods::as(spc_clean, "data.frame")
     counts <- spc$counts
-    span <- if (is.null(span)) round(length(counts) * 0.05) else span
+    span <- if (is.null(span)) {
+      round(length(counts) * 0.05)
+    } else {
+      as.integer(span)[1]
+    }
 
     shape <- diff(sign(diff(counts, na.pad = FALSE)))
     index_shape <- sapply(
@@ -68,11 +72,11 @@ setMethod(
 # PEAK FITTING =================================================================
 #' @export
 #' @rdname peaks
-#' @aliases fitPeaks,GammaSpectrum-method
+#' @aliases fitPeaks,GammaSpectrum,numeric-method
 setMethod(
   f = "fitPeaks",
   signature = signature(object = "GammaSpectrum", peaks = "numeric"),
-  definition = function(object, peaks, scale = c("energy", "chanel"),
+  definition = function(object, peaks, scale = c("chanel", "energy"),
                         bounds = NULL, ...) {
     # Validation
     scale <- match.arg(scale, several.ok = FALSE)

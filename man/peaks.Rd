@@ -9,7 +9,6 @@
 \alias{fitPeaks-method}
 \alias{findPeaks,GammaSpectrum-method}
 \alias{fitPeaks,GammaSpectrum,numeric-method}
-\alias{fitPeaks,GammaSpectrum-method}
 \alias{fitPeaks,PeakPosition,missing-method}
 \title{Peaks}
 \usage{
@@ -21,29 +20,38 @@ fitPeaks(object, peaks, ...)
   span = NULL, ...)
 
 \S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks,
-  scale = c("energy", "chanel"), bounds = NULL, ...)
+  scale = c("chanel", "energy"), bounds = NULL, ...)
 
 \S4method{fitPeaks}{PeakPosition,missing}(object, scale = c("energy",
   "chanel"), bounds = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum}.}
+\item{object}{An object of class \linkS4class{GammaSpectrum} or
+\linkS4class{PeakPosition}.}
 
-\item{...}{Extra parameters passed to internal functions.}
+\item{...}{Extra parameters passed to \code{\link{estimateBaseline}}.}
 
-\item{peaks}{XXX.}
+\item{peaks}{A \code{\link{numeric}} vector giving the starting peak postions
+for the nonlinear model fitting (see below).}
 
-\item{method}{A \code{\link{character}} string.}
+\item{method}{A \code{\link{character}} string specifying the methode to be
+used for background noise estimation (see below).}
 
-\item{SNR}{An \code{\link{integer}}.}
+\item{SNR}{An \code{\link{integer}} giving the signal-to-noise-ratio for
+peak detection (see below).}
 
 \item{span}{An \code{\link{integer}} giving the half window size (in number
 of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 half window size.}
 
-\item{scale}{XXX.}
+\item{scale}{A \code{\link{character}} string specifying the scale of
+\code{peaks}. It must be one of "\code{chanel}" (the default) or
+"\code{energy}".}
 
-\item{bounds}{A \code{\link{numeric}} vector.}
+\item{bounds}{A \code{\link{numeric}} vector giving the
+parameters bounds (in percent), replicated to be of length three (see
+below). If \code{NULL} (the default), all parameters are assumed to be
+unconstrained.}
 }
 \value{
 \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.
@@ -53,40 +61,36 @@ half window size.}
 \description{
 Finds local maxima in sequential data.
 }
-\details{
-A local maximum has to be the highest one in the given window and has to be
+\section{Peak detection}{
+
+ A local maximum has to be the highest one in the given window and has to be
  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 }
+
+\section{Peak fitting}{
+
+ TODO
+}
+
 \examples{
-# Import a CNF file
-spc_dir <- system.file("extdata/test.cnf", package = "gamma")
-spc <- read(spc_dir, skip = 1:35)
+# Import a Canberra CNF file
+spc_file <- system.file("extdata/test.cnf", package = "gamma")
+spectrum <- read(spc_file, skip = TRUE)
 
-# Estimate baseline
-baseline <- estimateBaseline(spc)
-
-plot(spc, baseline) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts")
-
-# Remove baseline
-spc_clean <- removeBaseline(spc)
-
-plot(spc_clean) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts")
-
-# Detect peaks
-peak_index <- findPeaks(spc, span = 20)
-
-plot(peak_index) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
+# Find peaks
+(peaks <- findPeaks(spectrum))
+plot(peaks)
 
 # Fit peaks
-peak_fit <- fitPeaks(spc, peaks = c(238, 1461, 2614.5), scale = "energy")
-
-plot(peak_fit) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts") +
-  ggplot2::theme_bw()
+## Using previously detected peaks
+(fit1 <- fitPeaks(peaks))
+plot(fit1)
+## Specifying starting positions
+(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876), scale = "chanel"))
+plot(fit2)
+}
+\seealso{
+\link{estimateBaseline}
 }
 \author{
 N. Frerebeau

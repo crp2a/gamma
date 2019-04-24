@@ -18,14 +18,16 @@ calibrateEnergy(object, lines, ...)
 \S4method{calibrateEnergy}{PeakModel,numeric}(object, lines, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum}.}
+\item{object}{An object of class \linkS4class{GammaSpectrum},
+\linkS4class{GammaSpectra} or \linkS4class{PeakModel}.}
 
-\item{lines}{A \code{\link{numeric}} vector giving the peak positions
-(in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
-and Cs (2614.5 keV).
-Change it only if you know what you are doing.}
+\item{lines}{A list of or a \code{\link{numeric}} vector.
+If a \code{list} is provided, each element must be a named length-two
+numeric vector giving the observed peak position (chanel) and the
+corresponding expected energy value (in keV). If \code{lines} is a
+numeric \code{vector}, each element must be an expected energy value.}
 
-\item{...}{Extra parameters passed to \code{\link{removeBaseline}}.}
+\item{...}{Currently not used.}
 }
 \value{
 An object of class \linkS4class{GammaSpectrum}.
@@ -35,6 +37,36 @@ Calibrate the energy scale of a gamma spectrum.
 }
 \details{
 TODO
+}
+\examples{
+# Import a CNF file for calibration
+tka_file <- system.file("extdata/test.tka", package = "gamma")
+(tka_spc <- read(tka_file, skip = TRUE))
+
+## 1. Use observed peak positions
+### Set peak positions (chanel) and expected energy values
+calib_lines <- list(
+  Pb = c(chanel = 86, energy = 238),
+  K = c(chanel = 496, energy = 1461),
+  Cs = c(chanel = 876, energy = 2614.5)
+)
+### Correct the energy scale
+(spc1 <- calibrateEnergy(tka_spc, lines = calib_lines))
+### Inspect results
+plot(spc1, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]")
+
+## 2. Use estimated peak parameters
+peaks <- fitPeaks(tka_spc, peaks = c(84, 496, 876), scale = "chanel")
+### Inspect results
+plot(peaks)
+### Correct the energy scale
+(spc2 <- calibrateEnergy(peaks, lines = c(238, 1461, 2614.5)))
+### Inspect results
+plot(spc2, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]")
 }
 \author{
 N. Frerebeau

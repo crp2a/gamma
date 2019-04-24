@@ -17,16 +17,19 @@ integrateSignal(object, ...)
   noise = NULL, NiEi = TRUE, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum}.}
+\item{object}{An object of class \linkS4class{GammaSpectrum} or
+\linkS4class{GammaSpectra}.}
 
 \item{...}{Currently not used.}
 
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
-\item{noise}{A length-two \code{\link{numeric}} vector.}
+\item{noise}{A length-two \code{\link{numeric}} vector giving the noise
+value and error, respectively (see details).}
 
-\item{NiEi}{A \code{\link{logical}} scalar.}
+\item{NiEi}{A \code{\link{logical}} scalar.
+Change this only if you know what you are doing.}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be
 simplified to a matrix? The default value, \code{FALSE}, returns a list.}
@@ -40,6 +43,8 @@ Signal integration
 }
 \details{
 TODO
+
+ It assumes that each spectrum is calibrated in energy.
 }
 \author{
 N. Frerebeau

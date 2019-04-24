@@ -16,19 +16,28 @@ calibrateDose(object, doses, noise, ...)
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
 
-\item{doses}{A \code{\link{list}} of length-two numeric vectors.}
+\item{doses}{A \code{\link{list}} of length-two numeric vectors giving the
+dose rate values and errors, respectively, for each element of
+\code{object}. Elements of the list will be matched by names to the
+references of the spectra.}
 
-\item{noise}{A \code{\link{list}} of two numeric values.}
+\item{noise}{A \code{\link{list}} of two numeric values giving the noise
+value and error.}
 
 \item{...}{Currently not used.}
 
-\item{range}{A length-two \code{\link{numeric}} vector.}
+\item{range}{A length-two \code{\link{numeric}} vector giving the energy
+range to integrate within (in keV).}
 
-\item{intercept}{A \code{\link{logical}} scalar.}
+\item{intercept}{A \code{\link{logical}} scalar: should the intercept of the
+curve be estimated?}
 
-\item{weights}{A \code{\link{logical}} scalar.}
+\item{weights}{A \code{\link{logical}} scalar: should weights be used in the
+fitting process. If \code{TRUE}, the inverse of the squared dose errors are
+used.}
 
-\item{details}{A list of \code{\link{character}} vector.}
+\item{details}{A list of \code{\link{character}} vector specifying additional
+informations about the instrument for which the curve is built.}
 }
 \value{
 An object of class \linkS4class{CalibrationCurve}.
@@ -38,48 +47,46 @@ Builds a calibration curve for gamma dose rate estimation.
 }
 \examples{
 # Import CNF files for calibration
-dir <- system.file("extdata/cerege/", package = "gamma")
-calib_spc <- read(dir, skip = 1:35)[-5]
+spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+spc <- read(spc_dir, skip = TRUE)
+## Select 'BRIQUE', 'C341', 'C347', 'GOU', 'LMP', 'MAZ' and 'PEP' to build the curve
+spc_calib <- spc[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
 
-# Calibrate energy scale
-calib_lines <- list(
-  Pb = c(chanel = 76, energy = 238),
-  K = c(chanel = 459, energy = 1461),
-  Cs = c(chanel = 816, energy = 2614.5)
+# Set dose rate values and errors for each spectrum
+known_doses <- list(
+  BRIQUE = c(1986, 36),
+  C341 = c(850, 21),
+  C347 = c(1424, 24),
+  GOU = c(1575, 17),
+  LMP = c(642, 18),
+  MAZ = c(1141, 12),
+  PEP = c(2538, 112)
 )
 
-calib_scale <- calibrateEnergy(calib_spc, lines = calib_lines)
-
-# Build calibration curve
-known_dose <- list(
-  BRIQUE = c(1984.64, 34.08),
-  C347 = c(1421.38, 25.25),
-  C341 = c(849.01, 21.32),
-  PEP = c(2535.53, 112.17),
-  GOU = c(1573.41, 17.43)
-)
-
+# Build the calibration curve
 calib_curve <- calibrateDose(
-  calib_spc,
-  dose = known_dose,
+  spc_calib,
+  doses = known_doses,
   noise = c(value = 1190, error = 1),
   range = c(200, 2800)
 )
 
-# Plot curve
+# Check the linear model
+summary(calib_curve[["model"]])
+
+# Plot the curve
 plot(calib_curve) +
-  ggplot2::labs(x = "Dose rate [µGy/y]", y = "Integrated signal") +
-  ggplot2::theme_bw()
+  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 
-# Import CNF file
-dir <- system.file("extdata/", package = "gamma")
-gamma_spc <- read(dir, skip = 1:35)
+# Estimate gamma dose rates
+(dose_rate <- estimateDoseRate(spc_calib, calib_curve))
 
-# Estimate gamma dose rate
-dose_rate <- estimateDoseRate(gamma_spc, calib_curve)
+# Plot the estimated values
+plot(calib_curve, dose_rate) +
+  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 }
 \seealso{
-\link{estimateDoseRate}
+\link{estimateDoseRate}, \link{integrateSignal}
 }
 \author{
 N. Frerebeau

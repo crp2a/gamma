@@ -72,4 +72,7 @@ test_that("Calibrate GammaSpectra", {
   expect_length(calib[["counts"]], 1024)
   expect_length(calib[["rate"]], 0)
   expect_is(calib[["calibration"]], "lm")
+
+  expect_error(calibrateEnergy(fit, lines = c(76, 459)),
+               "must be of length")
 })

@@ -18,9 +18,12 @@ imported.}
 
 \item{...}{Extra parameters passed to \code{\link[rxylib]{read_xyData}}.}
 
-\item{extensions}{A \code{\link{character}} vector.}
+\item{extensions}{A \code{\link{character}} vector specifying the possible
+file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
 
-\item{skip}{A \code{\link{numeric}} vector.}
+\item{skip}{A \code{\link{numeric}} vector giving the chanels of the data
+file to skip. If \code{TRUE}, it will try to automatically process the
+spectrum: all channels before the first maximum will be skipped.}
 }
 \value{
 An object of class \linkS4class{GammaSpectra}.
@@ -28,8 +31,8 @@ An object of class \linkS4class{GammaSpectra}.
 \description{
 Reads a gamma ray spectrum file.
 }
-\details{
-\emph{Only works with Canberra CNF.}
+\note{
+\emph{Only supports Canberra CNF and TKA files.}
 }
 \examples{
 # Import a Canberra CNF file

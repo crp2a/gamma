@@ -58,21 +58,3 @@ isPositive <- function(x, strict = FALSE, na.rm = TRUE) {
     !any(x < 0, na.rm = na.rm)
   }
 }
-
-#' Integer numbers
-#'
-#' Checks if an object only contains integer numbers.
-#' @param x A \code{\link{numeric}} object to be checked.
-#' @param tolerance A length-one \link{\code{numeric}} vector giving the
-#'  tolerance to check within.
-#' @return A \code{\link{logical}} depending on whether \code{x} contains integer
-#'  numbers.
-#' @seealso \code{\link[base]{is.integer}}
-#' @keywords internal
-#' @noRd
-isWholeNumber <- function(x, tolerance = .Machine$double.eps^0.5) {
-  # Validation
-  if (!is.numeric(x))
-    stop("A numeric vector is expected.")
-  abs(x - round(x)) <= tolerance
-}
