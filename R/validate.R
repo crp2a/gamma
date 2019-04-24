@@ -357,7 +357,7 @@ setValidity(
       if (!all(isPositive(noise, strict = FALSE))) {
         message <- c(
           message,
-          sprintf("%s must be a strictly positive number.", sQuote("noise"))
+          sprintf("%s must be a positive number.", sQuote("noise"))
         )
       }
     }
@@ -366,7 +366,7 @@ setValidity(
       if (!all(isPositive(window, strict = FALSE))) {
         message <- c(
           message,
-          sprintf("%s must be a strictly positive number.", sQuote("window"))
+          sprintf("%s must be a positive number.", sQuote("window"))
         )
       }
     }
@@ -380,7 +380,7 @@ setValidity(
         )
       }
     }
-    if (length(spectrum) != 0 & length(baseline) != 0) {
+    if (length(spectrum@hash) != 0 & length(baseline@hash) != 0) {
       if (spectrum@hash != baseline@hash) {
         message <- c(
           message,

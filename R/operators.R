@@ -26,6 +26,7 @@ setMethod(
 
     methods::new(
       "GammaSpectrum",
+      hash = e1@hash,
       reference = e1@reference,
       date = e1@date,
       instrument = e1@instrument,

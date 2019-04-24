@@ -112,6 +112,8 @@ setMethod(
     bl <- x@baseline
     spc <- x@spectrum
     peaks <- x@peaks
+    if (all(is.na(peaks$energy)))
+      xaxis <- "chanel"
 
     spc_clean <- spc - bl
     plot(spc_clean, xaxis = xaxis, yaxis = yaxis) +

@@ -1,15 +1,13 @@
 context("Classes")
 
-test_that("Initialize a GammaSpectrum instance", {
+test_that("Initialize an empty GammaSpectrum instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("GammaSpectrum"), "GammaSpectrum")
   expect_message(new("GammaSpectrum"), "instance initialized")
 
   options("verbose" = FALSE)
-  file <- system.file("extdata/test.cnf", package = "gamma")
-  spectrum <- read(file)
+  spectrum <- new("GammaSpectrum")
   expect_silent(spectrum)
-  expect_silent(new("GammaSpectrum"))
 
   expect_is(spectrum[["hash"]], "character")
   expect_is(spectrum[["reference"]], "character")
@@ -28,65 +26,47 @@ test_that("Initialize a GammaSpectrum instance", {
   expect_is(as(spectrum, "data.frame"), "data.frame")
   expect_is(as(spectrum, "GammaSpectra"), "GammaSpectra")
 
-  expect_equal(length(spectrum), 1024)
+  expect_equal(length(spectrum), 0)
 })
-test_that("Initialize a GammaSpectra instance", {
+test_that("Initialize an empty GammaSpectra instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("GammaSpectra"), "GammaSpectra")
   expect_s4_class(new("GammaSpectra"), "list")
   expect_message(new("GammaSpectra"), "instance initialized")
 
   options("verbose" = FALSE)
-  dir <- system.file("extdata/cerege/", package = "gamma")
-  spectra <- read(dir)
+  spectra <- new("GammaSpectra")
   expect_silent(spectra)
-  expect_silent(new("GammaSpectra"))
-  expect_equal(length(spectra), 6)
-  expect_equal(length(names(spectra)), 6)
+  expect_equal(length(spectra), 0)
+  expect_equal(length(names(spectra)), 0)
   expect_is(names(spectra), "character")
-  expect_is(as(spectra, "list"), "list")
-
-  expect_equal(length(spectra[]), 6) # All spectra
-  expect_equal(length(spectra[NULL]), 6) # All spectra
-  expect_equal(length(spectra[1]), 1) # The first spectrum
-  expect_equal(length(spectra[-6]), 5) # Delete the sixth spectrum
-  expect_equal(length(spectra[1:3]), 3) # The first three spectra
-  expect_equal(length(spectra[c(1, 3)]), 2) # The first and third spectra
-  expect_equal(length(spectra["BRIQUE"]), 1) # The spectrum named 'BRIQUE'
-  expect_equal(length(spectra[c("BRIQUE", "C347")]), 2) # The spectra named 'BRIQUE' and 'C347'
-
-  expect_is(spectra[1:3, "energy"], "list") # The slot 'energy' of the first three spectra
-
-  expect_s4_class(spectra[[1]], "GammaSpectrum")
-  expect_s4_class(spectra[["BRIQUE"]], "GammaSpectrum")
 })
-test_that("Initialize a BaseLine instance", {
+test_that("Initialize an empty BaseLine instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("BaseLine"), "BaseLine")
   expect_message(new("BaseLine"), "instance initialized")
 
   options("verbose" = FALSE)
-  file <- system.file("extdata/test.cnf", package = "gamma")
-  spectrum <- read(file)
-  baseline <- estimateBaseline(spectrum)
+  baseline <- new("BaseLine")
+  expect_silent(baseline)
 
-  expect_equal(baseline[["hash"]], spectrum[["hash"]])
-  expect_equal(baseline[["reference"]], spectrum[["reference"]])
+  expect_is(baseline[["hash"]], "character")
+  expect_is(baseline[["reference"]], "character")
   expect_is(baseline[["date"]], "POSIXct")
-  expect_equal(baseline[["instrument"]], spectrum[["instrument"]])
-  expect_equal(baseline[["file_format"]], spectrum[["file_format"]])
-  expect_equal(baseline[["live_time"]], spectrum[["live_time"]])
-  expect_equal(baseline[["real_time"]], spectrum[["real_time"]])
+  expect_is(baseline[["instrument"]], "character")
+  expect_is(baseline[["file_format"]], "character")
+  expect_is(baseline[["live_time"]], "numeric")
+  expect_is(baseline[["real_time"]], "numeric")
   expect_is(baseline[["chanel"]], "integer")
   expect_is(baseline[["energy"]], "numeric")
   expect_is(baseline[["counts"]], "integer")
   expect_is(baseline[["rate"]], "numeric")
-  expect_equal(baseline[["calibration"]], spectrum[["calibration"]])
+  expect_is(baseline[["calibration"]], "NULL")
 
-  expect_is(as(spectrum, "matrix"), "matrix")
-  expect_is(as(spectrum, "data.frame"), "data.frame")
+  expect_is(as(baseline, "matrix"), "matrix")
+  expect_is(as(baseline, "data.frame"), "data.frame")
 })
-test_that("Initialize a CalibrationCurve instance", {
+test_that("Initialize an empty CalibrationCurve instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("CalibrationCurve"), "CalibrationCurve")
   expect_message(new("CalibrationCurve"), "instance initialized")
@@ -117,7 +97,7 @@ test_that("Initialize a CalibrationCurve instance", {
   expect_error(new("CalibrationCurve", data = df[, 1:3]),
                "must be a 5 columns data frame")
 })
-test_that("Initialize a DoseRate instance", {
+test_that("Initialize an empty DoseRate instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("DoseRate"), "DoseRate")
   expect_message(new("DoseRate"))
@@ -162,7 +142,7 @@ test_that("Initialize a DoseRate instance", {
   expect_error(new("DoseRate", signal_error = Inf),
                "Missing or infinite values were detected")
 })
-test_that("Initialize a PeakModel instance", {
+test_that("Initialize an empty PeakModel instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("PeakModel"), "PeakModel")
   expect_message(new("PeakModel"), "instance initialized")
@@ -183,7 +163,7 @@ test_that("Initialize a PeakModel instance", {
   expect_error(new("PeakModel", peaks = df[, 1:3]),
                "must be a 4 columns data frame")
 })
-test_that("Initialize a PeakPosition instance", {
+test_that("Initialize an empty PeakPosition instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("PeakPosition"), "PeakPosition")
   expect_message(new("PeakPosition"), "instance initialized")
@@ -202,11 +182,11 @@ test_that("Initialize a PeakPosition instance", {
   expect_error(new("PeakPosition", noise = 1:26),
                "must be a numeric vector of length 1 not 26")
   expect_error(new("PeakPosition", noise = -1),
-               "must be a strictly positive number")
+               "must be a positive number")
   expect_error(new("PeakPosition", window = 1:26),
                "must be a numeric vector of length 1 not 26")
   expect_error(new("PeakPosition", window = -1),
-               "must be a strictly positive number")
+               "must be a positive number")
   df <- data.frame(chanel = 1:26, energy = 1:26, dose = 1:26, rate = 1:26)
   expect_error(new("PeakPosition", peaks = df[, 1:3]),
                "must be a 4 columns data frame")

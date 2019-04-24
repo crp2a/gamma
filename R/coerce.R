@@ -19,10 +19,10 @@ setAs(
   to = "data.frame",
   def = function(from) {
     df <- data.frame(
-      chanel = from@chanel,
-      energy = if(length(from@energy) != 0) from@energy else NA_real_,
-      counts = from@counts,
-      rate = from@rate
+      chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
+      energy = if (length(from@energy) != 0) from@energy else NA_real_,
+      counts = if (length(from@counts) != 0) from@counts else NA_real_,
+      rate = if (length(from@rate) != 0) from@rate else NA_real_
     )
     return(df)
   }
@@ -46,6 +46,22 @@ setAs(
       signal = from@signal_value,
       signal_error = from@signal_error
     )
+    return(df)
+  }
+)
+setAs(
+  from = "PeakModel",
+  to = "data.frame",
+  def = function(from) {
+    df <- as.data.frame(from@peaks)
+    return(df)
+  }
+)
+setAs(
+  from = "PeakPosition",
+  to = "data.frame",
+  def = function(from) {
+    df <- as.data.frame(from@peaks)
     return(df)
   }
 )
