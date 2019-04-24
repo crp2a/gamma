@@ -2,28 +2,6 @@
 #' @include AllClasses.R
 NULL
 
-#' Spectrum calibration
-#'
-#' Calibrate the energy scale of a gamma spectrum.
-#' @param object An object of class \linkS4class{GammaSpectrum}.
-#' @param lines A \code{\link{numeric}} vector giving the peak positions
-#'  (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
-#'  and Cs (2614.5 keV).
-#'  Change it only if you know what you are doing.
-#' @param ... Extra parameters passed to \code{\link{removeBaseline}}.
-#' @details
-#'  TODO
-#' @return An object of class \linkS4class{GammaSpectrum}.
-# @example inst/examples/ex-calibrate.R
-#' @author N. Frerebeau
-#' @docType methods
-#' @rdname calibrateEnergy
-#' @aliases calibrateEnergy-method
-setGeneric(
-  name = "calibrateEnergy",
-  def = function(object, lines, ...) standardGeneric("calibrateEnergy")
-)
-
 #' Calibration
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
@@ -45,6 +23,28 @@ setGeneric(
 setGeneric(
   name = "calibrateDose",
   def = function(object, dose, noise, ...) standardGeneric("calibrateDose")
+)
+
+#' Spectrum calibration
+#'
+#' Calibrate the energy scale of a gamma spectrum.
+#' @param object An object of class \linkS4class{GammaSpectrum}.
+#' @param lines A \code{\link{numeric}} vector giving the peak positions
+#'  (in keV) of known sources. The default are 214Pb (238 keV), 40K (1461 keV)
+#'  and Cs (2614.5 keV).
+#'  Change it only if you know what you are doing.
+#' @param ... Extra parameters passed to \code{\link{removeBaseline}}.
+#' @details
+#'  TODO
+#' @return An object of class \linkS4class{GammaSpectrum}.
+# @example inst/examples/ex-calibrate.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname calibrateEnergy
+#' @aliases calibrateEnergy-method
+setGeneric(
+  name = "calibrateEnergy",
+  def = function(object, lines, ...) standardGeneric("calibrateEnergy")
 )
 
 #' Baseline estimation and removal

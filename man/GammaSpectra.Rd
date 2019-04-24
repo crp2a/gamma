@@ -54,14 +54,6 @@ In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 }
 }
 
-\section{Coerce}{
-
-In the code snippets below, \code{x} is a \code{GammaSpectra} object.
-\describe{
- \item{\code{as(x, "list")}}{Coerces \code{x} to a \code{\link{list}}.}
-}
-}
-
 \section{Subset}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.

@@ -8,6 +8,8 @@ test_that("Initialize a GammaSpectrum instance", {
   options("verbose" = FALSE)
   file <- system.file("extdata/test.cnf", package = "gamma")
   spectrum <- read(file)
+  expect_silent(spectrum)
+  expect_silent(new("GammaSpectrum"))
 
   expect_is(spectrum[["hash"]], "character")
   expect_is(spectrum[["reference"]], "character")
@@ -24,6 +26,7 @@ test_that("Initialize a GammaSpectrum instance", {
 
   expect_is(as(spectrum, "matrix"), "matrix")
   expect_is(as(spectrum, "data.frame"), "data.frame")
+  expect_is(as(spectrum, "GammaSpectra"), "GammaSpectra")
 
   expect_equal(length(spectrum), 1024)
 })
@@ -36,9 +39,12 @@ test_that("Initialize a GammaSpectra instance", {
   options("verbose" = FALSE)
   dir <- system.file("extdata/cerege/", package = "gamma")
   spectra <- read(dir)
+  expect_silent(spectra)
+  expect_silent(new("GammaSpectra"))
   expect_equal(length(spectra), 6)
   expect_equal(length(names(spectra)), 6)
   expect_is(names(spectra), "character")
+  expect_is(as(spectra, "list"), "list")
 
   expect_equal(length(spectra[]), 6) # All spectra
   expect_equal(length(spectra[NULL]), 6) # All spectra
@@ -87,6 +93,7 @@ test_that("Initialize a CalibrationCurve instance", {
 
   options("verbose" = FALSE)
   calib <- new("CalibrationCurve")
+  expect_silent(calib)
   expect_is(calib[["instrument"]], "character")
   expect_is(calib[["laboratory"]], "character")
   expect_is(calib[["date"]], "POSIXct")
@@ -94,6 +101,8 @@ test_that("Initialize a CalibrationCurve instance", {
   expect_is(calib[["noise"]], "numeric")
   expect_is(calib[["integration"]], "numeric")
   expect_is(calib[["data"]], "data.frame")
+
+  expect_is(as(calib, "data.frame"), "data.frame")
 
   expect_error(new("CalibrationCurve", instrument = LETTERS),
                "must be a character vector of length 1 not 26")
@@ -112,6 +121,17 @@ test_that("Initialize a DoseRate instance", {
   options("verbose" = TRUE)
   expect_s4_class(new("DoseRate"), "DoseRate")
   expect_message(new("DoseRate"))
+
+  options("verbose" = FALSE)
+  dose <- new("DoseRate")
+  expect_silent(dose)
+  expect_is(dose[["reference"]], "character")
+  expect_is(dose[["dose_value"]], "numeric")
+  expect_is(dose[["dose_error"]], "numeric")
+  expect_is(dose[["signal_value"]], "numeric")
+  expect_is(dose[["signal_error"]], "numeric")
+
+  expect_is(as(dose, "data.frame"), "data.frame")
 
   expect_error(new("DoseRate", reference = LETTERS),
                "slots must have the same length")

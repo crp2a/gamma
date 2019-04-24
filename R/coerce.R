@@ -12,15 +12,6 @@ setAs(
     return(mtx)
   }
 )
-setAs(
-  from = "DoseRate",
-  to = "matrix",
-  def = function(from) {
-    df <- methods::as(from, "data.frame")
-    mtx <- as.matrix(df)
-    return(mtx)
-  }
-)
 
 # To data.frame ================================================================
 setAs(
@@ -70,13 +61,6 @@ setAs(
 )
 
 # To GammaSpectra ==============================================================
-setAs(
-  from = "list",
-  to = "GammaSpectra",
-  def = function(from) {
-    methods::new("GammaSpectra", from)
-  }
-)
 setAs(
   from = "GammaSpectrum",
   to = "GammaSpectra",
