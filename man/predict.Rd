@@ -26,7 +26,7 @@ Predict in-situ gamma dose rate.
 }
 \examples{
 # Import CNF files for calibration
-spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 spc <- read(spc_dir, skip = TRUE)
 ## Select 'BRIQUE', 'C341', 'C347', 'GOU', 'LMP', 'MAZ' and 'PEP' to build the curve
 spc_calib <- spc[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]

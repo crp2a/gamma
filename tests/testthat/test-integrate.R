@@ -25,7 +25,7 @@ test_that("Integrate GammaSpectrum", {
 })
 
 test_that("Integrate GammaSpectra", {
-  spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir)
 
   int_mtx <- integrateSignal(spectra, simplify = TRUE)

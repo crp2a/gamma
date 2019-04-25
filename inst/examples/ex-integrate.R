@@ -1,5 +1,5 @@
 # Import a CNF file
-spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 spectra <- read(spc_dir)
 
 # Integrate signal (raw)

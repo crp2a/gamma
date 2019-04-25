@@ -51,7 +51,7 @@ known_doses <- methods::as(known_doses, "DoseRate")
 ```{r import}
 # Import CNF files for calibration
 # Skip the 30 first chanels
-calib_dir <- system.file("extdata/crp2a/references", package = "gamma")
+calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (calib_spc <- read(calib_dir, skip = TRUE))
 
 # Import CNF files for background noise measurement
@@ -114,7 +114,7 @@ calib_peaks <- lapply(
 
 ```{r calib-peaks-fit, echo=FALSE, fig.width=7, fig.height=5, fig.align="center", results="asis"}
 # Visual inspection
-for (i in 1:length(calib_peaks)) {
+plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
   # Set labels and theme
   plot_info <- list(
     ggplot2::labs(x = "Energy [keV]", y = "Counts"),
@@ -123,41 +123,26 @@ for (i in 1:length(calib_peaks)) {
   plot_nolegend <- ggplot2::theme(legend.position = "none")
   # Zoomed plots
   plot_zoom <- cowplot::plot_grid(
-    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+    plot(x) + plot_info + plot_nolegend +
       ggplot2::coord_cartesian(xlim = c(220, 260), 
-                               ylim = c(0, coef(calib_peaks[[i]]@model[[1]])[3])),
-    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+                               ylim = c(0, coef(x@model[[1]])[3])),
+    plot(x) + plot_info + plot_nolegend +
       ggplot2::coord_cartesian(xlim = c(1400, 1550), 
-                               ylim = c(0, coef(calib_peaks[[i]]@model[[2]])[3])),
-    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+                               ylim = c(0, coef(x@model[[2]])[3])),
+    plot(x) + plot_info + plot_nolegend +
       ggplot2::coord_cartesian(xlim = c(2500, 2700), 
-                               ylim = c(0, coef(calib_peaks[[i]]@model[[3]])[3])),
+                               ylim = c(0, coef(x@model[[3]])[3])),
     ncol = 3
   )
   # Multiple plots
   plot_spc <- cowplot::plot_grid(
-    plot(calib_peaks[[i]]) + plot_info +
-      ggplot2::labs(title = calib_peaks[[i]][["spectrum"]][["reference"]]), 
+    plot(x) + plot_info +
+      ggplot2::labs(title = x[["spectrum"]][["reference"]]), 
     plot_zoom,
     nrow = 2
   )
   print(plot_spc)
-  # Table of peak position
-  crp2a_pks <- calib_peaks[[i]][["peaks"]] %>%
-      dplyr::mutate(shift = (energy - expected_peaks) * 100 / 
-                      abs(expected_peaks))
-  print(
-    knitr::kable(
-      crp2a_pks,
-      digits = 3,
-      col.names = c("Chanel", "Energy [keV]", "Count", 
-                    "Count rate [1/s]", "Energy error [%]"),
-      caption = paste(calib_peaks[[i]][["spectrum"]][["reference"]],
-                      "Estimated peak positions", sep = " - ")
-    )
-  )
-  cat('\n')
-}
+})
 ```
 
 ```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}

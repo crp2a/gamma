@@ -8,7 +8,7 @@ test_that("Plot GammaSpectrum", {
 })
 
 test_that("Plot GammaSpectra", {
-  spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir)
 
   for (i in c(TRUE, FALSE)) {

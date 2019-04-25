@@ -1,5 +1,5 @@
 # Import all CNF files in a given directory
-spc_dir <- system.file("extdata/cerege/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (spectra <- read(spc_dir))
 
 # Access

@@ -3,7 +3,7 @@ context("Baseline")
 spc_file <- system.file("extdata/test.cnf", package = "gamma")
 spectrum <- read(spc_file)
 
-spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 spectra <- read(spc_dir)
 
 test_that("Estimate baseline from GammaSpectrum", {

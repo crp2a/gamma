@@ -8,5 +8,5 @@ tka_file <- system.file("extdata/test.tka", package = "gamma")
 
 # Import all files in a given directory
 # Skip the 35 first chanels
-spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (spc_spectra <- read(spc_dir, skip = 1:35))

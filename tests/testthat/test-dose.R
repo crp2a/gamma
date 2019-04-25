@@ -1,7 +1,7 @@
 context("Dose rate")
 
 test_that("Build calibration curve", {
-  spc_dir <- system.file("extdata/crp2a/", package = "gamma")
+  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir, skip = TRUE)
   spectra <- spectra[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
 
