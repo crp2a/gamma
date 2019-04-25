@@ -31,7 +31,7 @@ plot(calib_curve) +
   ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 
 # Estimate gamma dose rates
-(dose_rate <- estimateDoseRate(spc_calib, calib_curve))
+(dose_rate <- predict(calib_curve, spc_calib))
 
 # Plot the estimated values
 plot(calib_curve, dose_rate) +

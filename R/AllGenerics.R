@@ -23,7 +23,7 @@ NULL
 #'  informations about the instrument for which the curve is built.
 #' @param ... Currently not used.
 #' @return An object of class \linkS4class{CalibrationCurve}.
-#' @seealso \link{estimateDoseRate}, \link{integrateSignal}
+#' @seealso \link{predict}, \link{integrateSignal}
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -108,20 +108,25 @@ setGeneric(
 
 #' Gamma dose rate
 #'
-#' Estimates in-situ gamma dose rate.
-#' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param curve An object of class \linkS4class{CalibrationCurve}.
+#' Predict in-situ gamma dose rate.
+#' @param object An object of class \linkS4class{CalibrationCurve}.
+#' @param spectra An optional object of class \linkS4class{GammaSpectra} in
+#'  which to look for variables with which to predict. If omitted, the fitted
+#'  values are used.
 #' @param epsilon A \code{\link{numeric}} value.
 #' @param ... Currently not used.
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname estimateDoseRate
-#' @aliases estimateDoseRate-method
-setGeneric(
-  name = "estimateDoseRate",
-  def = function(object, curve, ...) standardGeneric("estimateDoseRate")
-)
+#' @name predict
+#' @rdname predict
+#' @aliases predict-method
+if (!isGeneric("predict")) {
+  setGeneric(
+    name = "predict",
+    def = function(object, ...) standardGeneric("predict")
+  )
+}
 
 #' Peaks
 #'
@@ -224,8 +229,12 @@ setGeneric(
 #' @name plot
 #' @rdname plot
 #' @aliases plot-method
-if (!isGeneric("plot"))
-  setGeneric(name = "plot", def = function(x, y, ...) standardGeneric("plot"))
+if (!isGeneric("plot")) {
+  setGeneric(
+    name = "plot",
+    def = function(x, y, ...) standardGeneric("plot")
+  )
+}
 
 #' Data input
 #'

@@ -33,8 +33,8 @@ This class extends the base \code{\link{list}} and can only contains
 \describe{
  \item{estimateBaseline}{Estimate the baseline of each gamma spectrum in a
  \code{GammaSpectra} object. See \code{\link{estimateBaseline}} for details.}
- \item{estimateDoseRate}{Estimate the in-situ gamma dose rate of each gamma
- spectrum in a \code{GammaSpectra} object. See \code{\link{estimateDoseRate}}
+ \item{predict}{Estimate the in-situ gamma dose rate of each gamma
+ spectrum in a \code{GammaSpectra} object. See \code{\link{predict}}
  for details.}
  \item{findPeaks}{Look for local maxima to extract peaks out of each gamma
  spectrum in a \code{GammaSpectra} object. See \code{\link{findPeaks}} for
