@@ -244,7 +244,7 @@ setMethod(
       data = data,
       mapping = ggplot2::aes_string(
         x = "signal_value", y = "dose_value",
-        colour = "spectrum")) +
+        colour = "spectrum", label = "reference")) +
       ggplot2::geom_segment(
         data = curve,
         mapping = ggplot2::aes_string(

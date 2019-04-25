@@ -1,10 +1,7 @@
 ---
 title: "CRP2A Calibration Curve For Gamma Dose Rate Estimate"
 subtitle: "Canberra Inspector 1000"
-author:
-- "N. Frerebeau"
-- "G. Guérin"
-- "C. Lahaye"
+author: "CRP2A luminescence team"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -15,7 +12,7 @@ header-includes:
    - \usepackage{amssymb}
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{crp2a}
+  %\VignetteIndexEntry{CRP2A #1}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -28,204 +25,239 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(gamma)
-library(ggplot2)
 library(magrittr)
+```
+
+## Set parameters
+```{r parameters}
+# Expected peak positions (energy scale)
+expected_peaks <- c(238, 1461, 2614.5)
+
+# Integration range (in keV)
+integration_range <- c(165, 2800)
+
+# Known values for dose rate estimation
+## List known values and errors
+known_doses <- list(
+  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
+  dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
+  dose_error = c(36, 21, 24, 17, 18, 12, 112)
+)
+## Coerce to a 'DoseRate' object
+known_doses <- methods::as(known_doses, "DoseRate")
 ```
 
 ## Import files
 ```{r import}
 # Import CNF files for calibration
 # Skip the 30 first chanels
-crp2a_cnf <- system.file("extdata/crp2a/", package = "gamma")
-crp2a_spc <- read(crp2a_cnf, skip = TRUE)
-crp2a_spc
+calib_dir <- system.file("extdata/crp2a/references", package = "gamma")
+(calib_spc <- read(calib_dir, skip = TRUE))
 
-# Select 'BRIQUE', 'C341', 'C347', 'GOU', 'LMP', 'MAZ' and 'PEP' to build the curve
-crp2a_calib <- crp2a_spc[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
-# Select 'BDF' spectra for background noise measurement
-crp2a_noise <- crp2a_spc[["BDF"]]
+# Import CNF files for background noise measurement
+# Skip the 30 first chanels
+noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
+(noise_spc <- read(noise_dir, skip = TRUE))
 ```
 
+## Inspect spectra
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
-# Plot spectra
-plot(crp2a_calib, yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
+# Plot calibration spectra
+plot(calib_spc, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
+  ggplot2::labs(title = "Calibration spectra",
+                x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 
-plot(crp2a_noise, yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
+# Plot background noise spectrum
+plot(noise_spc, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
+  ggplot2::labs(title = "Background noise spectrum",
+                x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
-## Check baseline
+## Check baseline estimation
 ```{r baseline-calib, fig.width=7, fig.height=9, fig.align="center"}
 # Remove base line
-calib_clean <- removeBaseline(crp2a_calib)
+calib_clean <- removeBaseline(calib_spc)
 
-plot(calib_clean, yaxis = "rate", facet = TRUE) +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+plot(calib_clean, xaxis = "energy", yaxis = "rate", facet = TRUE) +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
 ```{r baseline-noise, fig.width=7, fig.height=5, fig.align="center"}
 # Remove base line
-noise_clean <- removeBaseline(crp2a_noise, LLS = TRUE, k = 10)
+noise_clean <- removeBaseline(noise_spc, LLS = TRUE, k = 10)
 
-plot(noise_clean, yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+plot(noise_clean, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
-## Peak detection
-```{r peak}
+## Energy scale calibration
+### Reference spectra
+```{r calib-peaks}
+# Peak parameters estimation
 # Fit peaks at 238, 1461, 2614.5 keV (starting positions)
-calib_peaks <- lapply(X = crp2a_calib, FUN = fitPeaks, 
-                      peaks = c(238, 1461, 2614.5), scale = "energy",
-                      bound = c(0.5, 0.5, 0.5))
+calib_peaks <- lapply(
+  X = calib_spc, 
+  FUN = fitPeaks, 
+  peaks = expected_peaks, 
+  scale = "energy",
+  bound = c(0.5, 0.5, 0.5)
+)
 ```
 
-```{r peak-fit, echo=FALSE, fig.width=7, fig.height=5, fig.align="center", results="asis"}
+```{r calib-peaks-fit, echo=FALSE, fig.width=7, fig.height=5, fig.align="center", results="asis"}
 # Visual inspection
-expected_peaks <- c(238, 1461, 2614.5)
-
 for (i in 1:length(calib_peaks)) {
-  print(
-    plot(calib_peaks[[i]]) +
-      ggplot2::labs(title = calib_peaks[[i]][["spectrum"]][["reference"]], 
-                    x = "Energy [keV]", y = "Counts") +
-      ggplot2::theme_bw()
+  # Set labels and theme
+  plot_info <- list(
+    ggplot2::labs(x = "Energy [keV]", y = "Counts"),
+    ggplot2::theme_bw()
   )
-  
+  plot_nolegend <- ggplot2::theme(legend.position = "none")
+  # Zoomed plots
+  plot_zoom <- cowplot::plot_grid(
+    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+      ggplot2::coord_cartesian(xlim = c(220, 260), 
+                               ylim = c(0, coef(calib_peaks[[i]]@model[[1]])[3])),
+    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+      ggplot2::coord_cartesian(xlim = c(1400, 1550), 
+                               ylim = c(0, coef(calib_peaks[[i]]@model[[2]])[3])),
+    plot(calib_peaks[[i]]) + plot_info + plot_nolegend +
+      ggplot2::coord_cartesian(xlim = c(2500, 2700), 
+                               ylim = c(0, coef(calib_peaks[[i]]@model[[3]])[3])),
+    ncol = 3
+  )
+  # Multiple plots
+  plot_spc <- cowplot::plot_grid(
+    plot(calib_peaks[[i]]) + plot_info +
+      ggplot2::labs(title = calib_peaks[[i]][["spectrum"]][["reference"]]), 
+    plot_zoom,
+    nrow = 2
+  )
+  print(plot_spc)
+  # Table of peak position
   crp2a_pks <- calib_peaks[[i]][["peaks"]] %>%
       dplyr::mutate(shift = (energy - expected_peaks) * 100 / 
                       abs(expected_peaks))
-  
   print(
     knitr::kable(
       crp2a_pks,
       digits = 3,
       col.names = c("Chanel", "Energy [keV]", "Count", 
                     "Count rate [1/s]", "Energy error [%]"),
-      caption = calib_peaks[[i]][["spectrum"]][["reference"]]
+      caption = paste(calib_peaks[[i]][["spectrum"]][["reference"]],
+                      "Estimated peak positions", sep = " - ")
     )
   )
   cat('\n')
 }
 ```
 
-```{r peak-noise, fig.width=7, fig.height=5, fig.align="center"}
-# Fit peaks
-noise_peaks <- fitPeaks(crp2a_noise, peaks = c(1461, 2614.5), scale = "energy",
-                        LLS = TRUE, k = 10)
-plot(noise_peaks)
-```
+```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
+# Energy scale calibration
+calib_scaled <- lapply(X = calib_peaks, FUN = calibrate,  lines = expected_peaks)
+calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
 
-## Energy calibration
-```{r calibrate-spc, fig.width=7, fig.height=5, fig.align="center"}
-calib_scale <- lapply(X = calib_peaks, FUN = calibrateEnergy, 
-                      lines = c(238, 1461, 2614.5))
-calib_scale <- methods::as(calib_scale, "GammaSpectra")
-
-plot(calib_scale, yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
-Le spectre pour la mesure de bruit est particulièrement bruité, la recherche automatique de pics ne peut pas aboutir. On va donc forcer les canaux a utiliser pour la calibration en énergie.
+### Background noise spectrum
 ```{r calibrate-noise, fig.width=7, fig.height=5, fig.align="center"}
 noise_lines <- list(
   Pb = c(chanel = 76, energy = 238),
   K = c(chanel = 459, energy = 1461),
   Cs = c(chanel = 816, energy = 2614.5)
 )
-kk <- as.data.frame(do.call(rbind, noise_lines))
-rownames(kk) <- NULL
 
-noise_scale <- calibrateEnergy(crp2a_noise, lines = noise_lines)
+noise_scaled <- calibrate(noise_spc, lines = noise_lines)
 
-plot(crp2a_noise, noise_scale) +
+plot(noise_spc, noise_scaled) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
   ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
 ## Signal integration
-```{r integrate-noise}
-noise <- integrateSignal(crp2a_noise, range = c(165, 2800), noise = NULL, 
-                         NiEi = TRUE)
-noise
-```
+```{r integrate}
+# Integrate background noise
+# Compare with previous value of 25279.63 +/- 1.66
+noise <- integrateSignal(
+  noise_scaled,
+  range = integration_range,
+  noise = NULL,
+  NiEi = TRUE
+)
+knitr::kable(
+  rbind(noise),
+  digits = 3,
+  caption = "Background spectrum integration"
+)
 
-```{r integrate-spc}
-signal <- integrateSignal(calib_scale, range = c(165, 2800), noise = noise, 
-                          NiEi = TRUE)
-do.call(rbind, signal)
+# Integrate reference spectra
+signal <- integrateSignal(
+  calib_scaled, 
+  range = integration_range, 
+  noise = noise,
+  NiEi = TRUE,
+  simplify = TRUE
+)
+knitr::kable(
+  t(signal),
+  digits = 3,
+  caption = "Reference spectra integration"
+)
 ```
 
 ## Build Calibration curve
 ### Linear regression
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
 # Build calibration curve
-crp2a_dose <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  LMP = c(642, 18),
-  MAZ = c(1141, 12),
-  PEP = c(2538, 112)
-)
-
-CRP2A <- calibrateDose(
-  crp2a_calib,
-  dose = crp2a_dose,
+CRP2A1 <- fit(
+  calib_scaled,
+  doses = known_doses,
   noise = noise,
-  range = c(165, 2800),
+  range = integration_range,
   intercept = TRUE,
-  details = list(laboratory = "IRAMAT-CRP2A",
+  details = list(laboratory = "IRAMAT-CRP2A1",
                  instrument = "InSpector 1000")
 )
 
 # Plot Calibration curve
-plot(CRP2A) +
+plot(CRP2A1) +
   ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]") +
   ggplot2::theme_bw()
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
-usethis::use_data(CRP2A, overwrite = FALSE)
+usethis::use_data(CRP2A1, overwrite = FALSE)
 ```
 
-### Model checking
+### Check model
 ```{r lm-summary, echo=FALSE}
-summary(CRP2A@model)
+summary(CRP2A1@model)
 ```
 
 ```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
 calib_residuals <- data.frame(
-  fitted = CRP2A[["model"]]$fitted.values,
-  residuals = CRP2A[["model"]]$residuals,
-  standardized = stats::rstandard(CRP2A[["model"]])
+  reference = CRP2A1[["data"]]@reference,
+  fitted = CRP2A1[["model"]]$fitted.values,
+  residuals = CRP2A1[["model"]]$residuals,
+  standardized = stats::rstandard(CRP2A1[["model"]]),
+  cook = stats::cooks.distance(CRP2A1[["model"]])
 )
 
-# Normal QQ plot of standardized residuals
-qq_plot <- ggplot2::ggplot(calib_residuals, 
-                           ggplot2::aes(sample = standardized)) + 
-  ggplot2::geom_abline(slope = 1, intercept = 0) +
-  ggplot2::geom_qq_line(colour = "red") +
-  ggplot2::geom_qq() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Normal QQ plot",
-                x = "Theoretical quantiles",
-                y = "Standardize residuals")
-
 # Residuals vs fitted values
-res_plot <- ggplot2::ggplot(calib_residuals, 
+plot_res <- ggplot2::ggplot(calib_residuals, 
                             ggplot2::aes(x = fitted, y = residuals)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
@@ -235,30 +267,90 @@ res_plot <- ggplot2::ggplot(calib_residuals,
   ggplot2::labs(title = "Residuals vs fitted values",
                 x = "Fitted values", y = "Residuals")
 
+# Std. residuals vs fitted values
+plot_stdres <- ggplot2::ggplot(calib_residuals, 
+                               ggplot2::aes(x = fitted, y = standardized)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = standardized)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Std residuals vs fitted values",
+                x = "Fitted values", y = "Standardized residuals")
+
+# Normal QQ plot of standardized residuals
+plot_qq <- ggplot2::ggplot(calib_residuals, 
+                           ggplot2::aes(sample = standardized)) + 
+  ggplot2::geom_abline(slope = 1, intercept = 0) +
+  ggplot2::geom_qq_line(colour = "red") +
+  ggplot2::geom_qq() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Normal QQ plot",
+                x = "Theoretical quantiles",
+                y = "Standardize residuals")
+
+# Cook's distance
+plot_cook <- ggplot2::ggplot(calib_residuals, 
+                             ggplot2::aes(x = reference, y = cook)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = reference, xend = reference,
+                                     y = 0, yend = cook)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Cook's distance",
+                x = "Observation", y = "D")
+
 # Relative error on dose rate estimation
-dose_rate <- estimateDoseRate(calib_scale, CRP2A, range = c(165, 2800))
+dose_predict <- predict(CRP2A1) %>%
+  methods::as(., "data.frame") %>%
+  dplyr::select(-signal_value, -signal_error) %>%
+  dplyr::rename(pred_value = dose_value, pred_error = dose_error)
 
-dose_calc <- as(dose_rate, "data.frame") %>%
-  dplyr::select(-signal, -signal_error) %>%
-  dplyr::rename(dose_calc = dose, error_calc = dose_error)
+dose_known <- methods::as(known_doses, "data.frame") %>%
+  dplyr::select(-signal_value, -signal_error) %>%
+  dplyr::rename(exp_value = "dose_value", exp_error = "dose_error")
 
-dose_err <- do.call(rbind, crp2a_dose) %>%
-  as.data.frame() %>%
-  magrittr::set_colnames(c("dose_exp", "error_exp")) %>%
-  dplyr::mutate(reference = rownames(.)) %>%
-  dplyr::full_join(dose_calc, ., by = "reference") %>%
-  dplyr::mutate(rel_error = (dose_calc - dose_exp) / dose_exp)
+dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
+  dplyr::mutate(rel_error = ((pred_value - exp_value) / exp_value) * 100)
 
-err_plot <- ggplot2::ggplot(dose_err, ggplot2::aes(x = reference, y = rel_error * 100)) +
-  ggplot2::geom_bar(stat = "identity") +
-  ggplot2::labs(title = "Relative error",
+plot_errors <- ggplot2::ggplot(dose_errors, 
+                               ggplot2::aes(x = reference, y = rel_error)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(title = "Relative error on fitted values",
                 x = "Reference", y = "Relative error [%]") +
   ggplot2::theme_bw()
 
 cowplot::plot_grid(
-  qq_plot, res_plot, err_plot,
+  plot_res, plot_stdres, plot_cook, plot_qq,
   ncol = 2, labels = "AUTO"
 )
+```
+
+## Compare with previous values
+### Signal integration
+```{r integrate-diff, fig.width=3.5, fig.height=3.5, fig.align="center"}
+# Signal values from the VBA macro in use in the laboratory
+old_signal <- data.frame(
+  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
+  old_value = c(64071.59, 27974.89, 46580.21, 52645.12, 
+                21227.36, 38008.82, 80121.52),
+  old_error = c(4.59, 10.45, 14.30, 12.43, 
+                10.12, 11.45, 20.39),
+  stringsAsFactors = FALSE
+)
+signal_diff <- t(signal) %>%
+  as.data.frame() %>%
+  dplyr::mutate(reference = rownames(.)) %>%
+  dplyr::inner_join(old_signal, ., by = "reference") %>%
+  dplyr::mutate(rel_error = ((value - old_value) / old_value) * 100)
+
+ggplot2::ggplot(signal_diff, ggplot2::aes(x = reference, y = rel_error)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(title = "Spectrum integration values",
+                x = "Reference", y = "Relative difference [%]") +
+  ggplot2::theme_bw()
 ```
 
 ## R session
