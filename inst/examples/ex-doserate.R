@@ -6,17 +6,15 @@ spc_calib <- spc[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
 
 # Set dose rate values and errors for each spectrum
 known_doses <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  LMP = c(642, 18),
-  MAZ = c(1141, 12),
-  PEP = c(2538, 112)
+  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
+  dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
+  dose_error = c(36, 21, 24, 17, 18, 12, 112)
 )
+## Coerce to a 'DoseRate' object
+known_doses <- methods::as(known_doses, "DoseRate")
 
 # Build the calibration curve
-calib_curve <- calibrateDose(
+calib_curve <- fit(
   spc_calib,
   doses = known_doses,
   noise = c(value = 1190, error = 1),

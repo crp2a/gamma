@@ -169,48 +169,6 @@ setClass(
   contains = "GammaSpectrum"
 )
 
-#' An S4 class to represent a calibration curve
-#'
-#' @slot laboratory A \code{\link{character}} string giving the laboratory name.
-#' @slot instrument A \code{\link{character}} string giving the instrument name
-#'  or ID.
-#' @slot date A \code{\link{POSIXct}} element giving the date and time of the
-#'  curve fitting.
-#' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
-#'  curve.
-#' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
-#'  and error (see \code{\link{integrateSignal}}).
-#' @slot integration A length-two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (see \code{\link{integrateSignal}}).
-#' @slot data A five columns \code{\link[=data.frame]{data frame}} giving the
-#'  data and errors used to fit the curve.
-#' @param x An object of class \code{CalibrationCurve}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
-#' @section Subset:
-#' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
-#' \describe{
-#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
-#' }
-#' @author N. Frerebeau
-#' @docType class
-#' @rdname CalibrationCurve
-#' @aliases CalibrationCurve-class
-setClass(
-  Class = "CalibrationCurve",
-  slots = c(
-    laboratory = "character",
-    instrument = "character",
-    date = "POSIXct",
-    model = "LmOrNull",
-    noise = "numeric",
-    integration = "numeric",
-    data = "data.frame"
-  )
-)
-
 #' An S4 class to represent a gamma dose rate
 #'
 #' @slot reference A \code{\link{character}} vector giving the spectrum
@@ -253,6 +211,47 @@ setClass(
     dose_error = "numeric",
     signal_value = "numeric",
     signal_error = "numeric"
+  )
+)
+
+#' An S4 class to represent a calibration curve
+#'
+#' @slot laboratory A \code{\link{character}} string giving the laboratory name.
+#' @slot instrument A \code{\link{character}} string giving the instrument name
+#'  or ID.
+#' @slot date A \code{\link{POSIXct}} element giving the date and time of the
+#'  curve fitting.
+#' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
+#'  curve.
+#' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
+#'  and error (see \code{\link{integrateSignal}}).
+#' @slot integration A length-two \code{\link{numeric}} vector giving the energy
+#'  range to integrate within (see \code{\link{integrateSignal}}).
+#' @slot data A \linkS4class{DoseRate} object.
+#' @param x An object of class \code{CalibrationCurve}.
+#' @param i A length-one \code{\link{character}} vector specifying the element
+#'  to extract or replace (see below). Character sring will be matched to the
+#'  names of the slots.
+#' @section Subset:
+#' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
+#' \describe{
+#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
+#'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
+#' }
+#' @author N. Frerebeau
+#' @docType class
+#' @rdname CalibrationCurve
+#' @aliases CalibrationCurve-class
+setClass(
+  Class = "CalibrationCurve",
+  slots = c(
+    laboratory = "character",
+    instrument = "character",
+    date = "POSIXct",
+    model = "LmOrNull",
+    noise = "numeric",
+    integration = "numeric",
+    data = "DoseRate"
   )
 )
 

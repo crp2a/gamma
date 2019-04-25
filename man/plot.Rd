@@ -35,7 +35,9 @@
 \item{x, y}{Objects to be plotted.}
 
 \item{xaxis, yaxis}{A \code{\link{character}} string specifying the data to
-be plotted along each axis.}
+be plotted along each axis. It must be one of "\code{energy}" or
+"\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
+(\code{y} axis). Any unambiguous substring can be given.}
 
 \item{...}{Currently not used.}
 

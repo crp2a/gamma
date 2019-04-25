@@ -27,11 +27,11 @@ NULL
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname calibrateDose
-#' @aliases calibrateDose-method
+#' @rdname fit
+#' @aliases fit-method
 setGeneric(
-  name = "calibrateDose",
-  def = function(object, doses, noise, ...) standardGeneric("calibrateDose")
+  name = "fit",
+  def = function(object, doses, noise, ...) standardGeneric("fit")
 )
 
 #' Spectrum calibration

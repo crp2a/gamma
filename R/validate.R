@@ -198,16 +198,6 @@ setValidity(
     if (length(integration) != 0) {
       message <- c(message, checkVector(integration, 2, "numeric"))
     }
-    if (length(data) != 0) {
-      col_names <- c("reference", "dose", "dose_error", "signal", "signal_error")
-      if (!all(col_names %in% colnames(data))) {
-        message <- c(
-          message,
-          sprintf("%s must be a 5 columns data frame, with column names: %s",
-                  sQuote("data"), paste(sQuote(col_names), collapse = ", "))
-        )
-      }
-    }
 
     if (length(message) != 0) {
       stop(paste(message, collapse = "\n"))
@@ -228,6 +218,11 @@ setValidity(
     signal_error <- object@signal_error
     message <- c()
 
+    n_reference <- length(reference)
+    n_dose_value <- length(dose_value)
+    n_dose_error <- length(dose_error)
+    n_signal_value <- length(signal_value)
+    n_signal_error <- length(signal_error)
     if (length(reference) != 0) {
       if (anyNA(reference)) {
         message <- c(
@@ -236,7 +231,14 @@ setValidity(
         )
       }
     }
-    if (length(dose_value) != 0) {
+    if (n_dose_value != 0) {
+      if (!isEqual(n_reference, n_dose_value)) {
+        message <- c(
+          message,
+          sprintf("%s must be of length %d, not %d.",
+                  sQuote("dose_value"), n_reference, n_dose_value)
+        )
+      }
       if (!all(is.finite(dose_value))) {
         message <- c(
           message,
@@ -245,7 +247,14 @@ setValidity(
         )
       }
     }
-    if (length(dose_error) != 0) {
+    if (n_dose_error != 0) {
+      if (!isEqual(n_reference, n_dose_error)) {
+        message <- c(
+          message,
+          sprintf("%s must be of length %d, not %d.",
+                  sQuote("dose_value"), n_reference, n_dose_error)
+        )
+      }
       if (!all(is.finite(dose_error))) {
         message <- c(
           message,
@@ -254,7 +263,14 @@ setValidity(
         )
       }
     }
-    if (length(signal_value) != 0) {
+    if (n_signal_value != 0) {
+      if (!isEqual(n_reference, n_signal_value)) {
+        message <- c(
+          message,
+          sprintf("%s must be of length %d, not %d.",
+                  sQuote("dose_value"), n_reference, n_signal_value)
+        )
+      }
       if (!all(is.finite(signal_value))) {
         message <- c(
           message,
@@ -263,7 +279,14 @@ setValidity(
         )
       }
     }
-    if (length(signal_error) != 0) {
+    if (n_signal_error != 0) {
+      if (!isEqual(n_reference, n_signal_error)) {
+        message <- c(
+          message,
+          sprintf("%s must be of length %d, not %d.",
+                  sQuote("dose_value"), n_reference, n_signal_error)
+        )
+      }
       if (!all(is.finite(signal_error))) {
         message <- c(
           message,
@@ -272,10 +295,6 @@ setValidity(
         )
       }
     }
-
-    x <- lengths(list(reference, dose_value, dose_error, signal_value, signal_error))
-    if (!isEqual(x))
-      message <- c(message, "All slots must have the same length.")
 
     if (length(message) != 0) {
       stop(paste(message, collapse = "\n"))

@@ -168,15 +168,15 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "missing"),
   definition = function(x, ...) {
     # Get data
-    data <- methods::as(x, "data.frame")
-    signal <- range(data$signal)
+    data <- methods::as(x@data, "data.frame")
+    signal <- range(data$signal_value)
 
     # Set error bar width and height
     error_width <- sum(signal * c(-1, 1)) / 100
-    error_height <- sum(range(data$dose) * c(-1, 1)) / 100
+    error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
 
     # Curve
-    curve <- data.frame(signal = signal) %>%
+    curve <- data.frame(signal_value = signal) %>%
       stats::predict.lm(x@model, .) %>%
       c(signal, .) %>%
       magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
@@ -187,7 +187,7 @@ setMethod(
     ggplot2::ggplot(
       data = data,
       mapping = ggplot2::aes_string(
-        x = "signal", y = "dose",
+        x = "signal_value", y = "dose_value",
         label = "reference")) +
       ggplot2::geom_segment(
         data = curve,
@@ -199,13 +199,13 @@ setMethod(
       ) +
       ggplot2::geom_errorbar(
         mapping = ggplot2::aes_string(
-          ymin = "dose - dose_error",
-          ymax = "dose + dose_error"),
+          ymin = "dose_value - dose_error",
+          ymax = "dose_value + dose_error"),
         width = error_width) +
       ggplot2::geom_errorbarh(
         mapping = ggplot2::aes_string(
-          xmin = "signal - signal_error",
-          xmax = "signal + signal_error"),
+          xmin = "signal_value - signal_error",
+          xmax = "signal_value + signal_error"),
         height = error_height) +
       ggplot2::geom_point()
   }
@@ -219,23 +219,20 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "DoseRate"),
   definition = function(x, y, ...) {
     # Get data
-    calib <- methods::as(x, "data.frame")
+    calib <- methods::as(x@data, "data.frame")
     measure <- methods::as(y, "data.frame")
 
     # Bind data frame for 'ggplot2'
-    # FIXME: find the source of dplyr::bind_rows warning
-    suppressWarnings(
-      data <- dplyr::bind_rows(calib, measure) %>%
-        dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
-                                   rep("estimated", nrow(measure))))
-    )
+    data <- dplyr::bind_rows(calib, measure) %>%
+      dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
+                                 rep("estimated", nrow(measure))))
     # Set error bar width and height
-    error_width <- sum(range(data$signal) * c(-1, 1)) / 100
-    error_height <- sum(range(data$dose) * c(-1, 1)) / 100
+    error_width <- sum(range(data$signal_value) * c(-1, 1)) / 100
+    error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
 
     # Curve
-    calib_signal <- range(calib$signal)
-    curve <- data.frame(signal = calib_signal) %>%
+    calib_signal <- range(calib$signal_value)
+    curve <- data.frame(signal_value = calib_signal) %>%
       stats::predict.lm(x@model, .) %>%
       c(calib_signal, .) %>%
       magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
@@ -246,7 +243,7 @@ setMethod(
     ggplot2::ggplot(
       data = data,
       mapping = ggplot2::aes_string(
-        x = "signal", y = "dose",
+        x = "signal_value", y = "dose_value",
         colour = "spectrum")) +
       ggplot2::geom_segment(
         data = curve,
@@ -257,13 +254,13 @@ setMethod(
         inherit.aes = FALSE) +
       ggplot2::geom_errorbar(
         mapping = ggplot2::aes_string(
-          ymin = "dose - dose_error",
-          ymax = "dose + dose_error"),
+          ymin = "dose_value - dose_error",
+          ymax = "dose_value + dose_error"),
         width = error_width) +
       ggplot2::geom_errorbarh(
         mapping = ggplot2::aes_string(
-          xmin = "signal - signal_error",
-          xmax = "signal + signal_error"),
+          xmin = "signal_value - signal_error",
+          xmax = "signal_value + signal_error"),
         height = error_height) +
       ggplot2::geom_point()
   }
