@@ -51,11 +51,11 @@ setGeneric(
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname calibrateEnergy
-#' @aliases calibrateEnergy-method
+#' @rdname calibrate
+#' @aliases calibrate-method
 setGeneric(
-  name = "calibrateEnergy",
-  def = function(object, lines, ...) standardGeneric("calibrateEnergy")
+  name = "calibrate",
+  def = function(object, lines, ...) standardGeneric("calibrate")
 )
 
 #' Baseline estimation and removal
@@ -210,7 +210,9 @@ setGeneric(
 #'
 #' @param x,y Objects to be plotted.
 #' @param xaxis,yaxis A \code{\link{character}} string specifying the data to
-#'  be plotted along each axis.
+#'  be plotted along each axis. It must be one of "\code{energy}" or
+#'  "\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
+#'  (\code{y} axis). Any unambiguous substring can be given.
 #' @param select A \code{\link{numeric}} or \code{\link{character}} vector
 #'  giving the selection of the spectrum that are drawn.
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels

@@ -56,7 +56,7 @@ each channel. Numeric values are coerced to integer as by
 each channel.}
 
 \item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
-scale calibration (see \code{\link{calibrateEnergy}}).}
+scale calibration (see \code{\link{calibrate}}).}
 }}
 
 \section{Methods}{

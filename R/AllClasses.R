@@ -30,7 +30,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
 #'  each channel.
 #' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
-#'  scale calibration (see \code{\link{calibrateEnergy}}).
+#'  scale calibration (see \code{\link{calibrate}}).
 #' @param x An object of class \code{GammaSpectrum}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the

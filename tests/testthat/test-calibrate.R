@@ -10,7 +10,7 @@ test_that("Calibrate GammaSpectrum", {
     Cs = c(chanel = 816, energy = 2614.5)
   )
 
-  calib <- calibrateEnergy(spectrum, lines = lines)
+  calib <- calibrate(spectrum, lines = lines)
   expect_s4_class(calib, "GammaSpectrum")
 
   expect_equal(calib[["hash"]], spectrum[["hash"]])
@@ -27,14 +27,14 @@ test_that("Calibrate GammaSpectrum", {
   expect_equal(calib[["rate"]], spectrum[["rate"]])
   expect_is(calib[["calibration"]], "lm")
 
-  expect_error(calibrateEnergy(spectrum, lines = lines[1]),
+  expect_error(calibrate(spectrum, lines = lines[1]),
                "provide at least two lines")
   lines <- list(
     Pb = c(76, 238),
     K = c(chanel = 459, energy = 1461),
     Cs = c(chanel = 816, energy = 2614.5)
   )
-  expect_error(calibrateEnergy(spectrum, lines = lines),
+  expect_error(calibrate(spectrum, lines = lines),
                "a list of length-two numeric vectors with names")
 })
 
@@ -48,7 +48,7 @@ test_that("Calibrate GammaSpectra", {
     Cs = c(chanel = 816, energy = 2614.5)
   )
 
-  calib <- calibrateEnergy(spectra, lines = lines)
+  calib <- calibrate(spectra, lines = lines)
   expect_s4_class(calib, "GammaSpectra")
 })
 
@@ -65,7 +65,7 @@ test_that("Calibrate GammaSpectra", {
   # Fit peaks
   fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel")
 
-  calib <- calibrateEnergy(fit, lines = c(76, 459, 816))
+  calib <- calibrate(fit, lines = c(76, 459, 816))
   expect_s4_class(calib, "GammaSpectrum")
   expect_length(calib[["chanel"]], 1024)
   expect_length(calib[["energy"]], 1024)
@@ -73,6 +73,6 @@ test_that("Calibrate GammaSpectra", {
   expect_length(calib[["rate"]], 0)
   expect_is(calib[["calibration"]], "lm")
 
-  expect_error(calibrateEnergy(fit, lines = c(76, 459)),
+  expect_error(calibrate(fit, lines = c(76, 459)),
                "must be of length")
 })

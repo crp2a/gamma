@@ -3,15 +3,15 @@
 NULL
 
 #' @export
-#' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectra,list-method
+#' @rdname calibrate
+#' @aliases calibrate,GammaSpectra,list-method
 setMethod(
-  f = "calibrateEnergy",
+  f = "calibrate",
   signature = signature(object = "GammaSpectra", lines = "list"),
   definition = function(object, lines, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    energy <- lapply(X = spectra, FUN = calibrateEnergy, lines = lines, ...)
+    energy <- lapply(X = spectra, FUN = calibrate, lines = lines, ...)
     names(energy) <- names(object)
 
     methods::new("GammaSpectra", energy)
@@ -19,10 +19,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,GammaSpectrum,list-method
+#' @rdname calibrate
+#' @aliases calibrate,GammaSpectrum,list-method
 setMethod(
-  f = "calibrateEnergy",
+  f = "calibrate",
   signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
     # Validation
@@ -67,10 +67,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname calibrateEnergy
-#' @aliases calibrateEnergy,PeakModel,numeric-method
+#' @rdname calibrate
+#' @aliases calibrate,PeakModel,numeric-method
 setMethod(
-  f = "calibrateEnergy",
+  f = "calibrate",
   signature = signature(object = "PeakModel", lines = "numeric"),
   definition = function(object, lines, ...) {
     # Get data
@@ -86,6 +86,6 @@ setMethod(
 
     fit_data <- data.frame(energy = lines, chanel = peaks$chanel) %>%
       split(., f = 1:nrow(.))
-    calibrateEnergy(spectrum, fit_data)
+    calibrate(spectrum, fit_data)
   }
 )
