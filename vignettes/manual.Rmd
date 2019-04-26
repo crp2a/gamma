@@ -61,21 +61,17 @@ files_test <- system.file("extdata/", package = "gamma")
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
 # Plot spectra
 plot(spc, xaxis = "chanel", yaxis = "rate", facet = TRUE) +
-  ggplot2::labs(x = "Chanel", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
 ```{r import-skip, fig.width=7, fig.height=5, fig.align="center"}
 # Import a file and skip the first chanels
-spc_tka <- read(tka_test, skip = 1:35)
-spc_tka
+(spc_tka <- read(tka_test, skip = 1:35))
 
-spc_cnf <- read(cnf_test, skip = TRUE)
-spc_cnf
+(spc_cnf <- read(cnf_test, skip = TRUE))
 
 # Plot spectra
-plot(spc_cnf, xaxis = "chanel", yaxis = "rate") +
-  ggplot2::labs(x = "Chanel", y = "Count rate [1/s]") +
+plot(spc_cnf) +
   ggplot2::theme_bw()
 ```
 
@@ -88,8 +84,7 @@ Algorithme SNIP [@ryan1988; @morhac1997; @morhac2008]
 baseline <- estimateBaseline(spc_cnf, method = "SNIP")
 
 # Plot spectrum + baseline
-plot(spc_cnf, baseline) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+plot(spc_cnf, baseline, xaxis = "energy", yaxis = "count") +
   ggplot2::theme_bw()
 ```
 
@@ -103,7 +98,6 @@ identical(spc_clean1, spc_clean2)
 
 # Plot spectra
 plot(spc_clean1) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -116,7 +110,7 @@ Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de can
 
 ```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
 # Detect peaks
-peak_index <- findPeaks(spc_clean1)
+peak_index <- findPeaks(spc_cnf)
 
 # Get peak positions
 knitr::kable(
@@ -127,8 +121,7 @@ knitr::kable(
 )
 
 # Plot spectrum
-plot(peak_index, xaxis = "chanel") +
-  ggplot2::labs(x = "Chanel", y = "Count") +
+plot(peak_index) +
   ggplot2::theme_bw()
 ```
 
@@ -143,39 +136,27 @@ Dans tous les cas, mieux vaut vérifier visuellement les résultats après.
 
 ```{r peak-fit-auto, fig.width=7, fig.height=5, fig.align="center"}
 # Fit peaks found by automatic detection
-peak_fit_auto <- fitPeaks(peak_index, scale = "chanel")
+peak_fit_auto <- fitPeaks(peak_index)
 
 plot(peak_fit_auto) +
-  ggplot2::labs(title = "Peak parameters estimate", 
-                x = "Chanel", y = "Count") +
+  ggplot2::labs(title = "Peak parameters estimate") +
   ggplot2::theme_bw()
 ```
 
 ```{r peak-fit-manual, fig.width=7, fig.height=5, fig.align="center"}
-# Fit peaks at a given energy (keV)
-peak_fit_energy <- fitPeaks(spc_clean1, peaks = c(238, 1461, 2614.5), 
-                            scale = "energy")
-
-plot(peak_fit_energy) +
-  ggplot2::labs(title = "Fixed peak positions (keV)",
-                x = "Energy [keV]", y = "Count") +
-  ggplot2::theme_bw()
-
 # Fit peaks at a given chanel
-peak_fit_chanel <- fitPeaks(spc_clean1, peaks = c(86, 496, 876),
-                            scale = "chanel")
+peak_fit_chanel <- fitPeaks(spc_clean1, peaks = c(86, 496, 876))
 
 ## Plot results
 plot(peak_fit_chanel) +
-  ggplot2::labs(title = "Fixed peak positions (chanel)",
-                x = "Energy [keV]", y = "Count") +
+  ggplot2::labs(title = "Fixed peak positions (chanel)") +
   ggplot2::theme_bw()
 
 ## Get peak positions
 knitr::kable(
-  peak_fit_chanel[["peaks"]],
+  peak_fit_chanel[["coefficients"]],
   digits = 3,
-  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]"),
+  col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
   caption = "Peak positions"
 )
 ```
@@ -192,7 +173,6 @@ tka_scale <- calibrate(spc_tka, lines = calib_lines)
 
 plot(tka_scale) +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
   ggplot2::theme_bw()
 ```
 
@@ -200,10 +180,10 @@ plot(tka_scale) +
 ### Signal integration
 ```{r integrate}
 (tka_int1 <- integrateSignal(tka_scale, range = c(200, 2800),
-                            noise = NULL))
+                             noise = NULL))
 
 (tka_int2 <- integrateSignal(tka_scale, range = c(200, 2800), 
-                            noise = c(1114.769, 0.5378)))
+                             noise = c(1114.769, 0.5378)))
 ```
 
 ### Dose Rate

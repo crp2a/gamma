@@ -15,26 +15,28 @@ test_that("Find and fit peaks", {
   expect_output(show(peaks), "peaks were detected")
 
   expect_equal(nrow(peaks@peaks), 3)
-  expect_equal(peaks@peaks$chanel, c(86, 493, 876))
+  expect_equal(peaks@peaks[, "chanel"], c(86, 493, 876),
+               check.attributes = FALSE)
   expect_is(plot(peaks), "ggplot")
   expect_is(as(peaks, "data.frame"), "data.frame")
 
   fit <- fitPeaks(peaks)
   expect_silent(fit)
 
-  expect_equal(nrow(fit@peaks), 3)
-  expect_equal(fit@peaks$chanel, c(86, 493, 876))
+  expect_equal(nrow(fit@coefficients), 3)
+  expect_equal(fit@coefficients[, "mean"], c(86, 493, 876),
+               tolerance = 0.00001, check.attributes = FALSE)
   expect_is(plot(fit), "ggplot")
   expect_is(as(fit, "data.frame"), "data.frame")
 })
 
 test_that("Fit peaks", {
-  fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel",
-                  bounds = c(0.1, 0.1, 0.1))
+  fit <- fitPeaks(spc, peaks = c(86, 493, 876), bounds = c(0.1, 0.1, 0.1))
   expect_output(show(fit), "peaks were estimated")
 
-  expect_equal(nrow(fit@peaks), 3)
-  expect_equal(fit@peaks$chanel, c(86, 493, 876))
+  expect_equal(nrow(fit@coefficients), 3)
+  expect_equal(fit@coefficients[, "mean"], c(86, 493, 876),
+               tolerance = 0.00001, check.attributes = FALSE)
   expect_is(plot(fit), "ggplot")
   expect_is(as(fit, "data.frame"), "data.frame")
 

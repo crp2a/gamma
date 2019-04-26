@@ -58,7 +58,7 @@ plot(spc1, xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]")
 
 ## 2. Use estimated peak parameters
-peaks <- fitPeaks(tka_spc, peaks = c(84, 496, 876), scale = "chanel")
+peaks <- fitPeaks(tka_spc, peaks = c(84, 496, 876))
 ### Inspect results
 plot(peaks)
 ### Correct the energy scale

@@ -22,12 +22,9 @@ An S4 class to represent a set peaks
 
 \describe{
 \item{\code{model}}{A list of \code{\link[stats:nls]{nonlinear models}} giving the
-estimated parameters for each peak.}
+fitted model for each peak.}
 
-\item{\code{scale}}{A \code{\link{character}} string.}
-
-\item{\code{peaks}}{A four columns \code{\link[=data.frame]{data frame}} giving the
-peak positions.}
+\item{\code{coefficients}}{A \code{\link{numeric}} matrix giving the peak parameters.}
 
 \item{\code{spectrum}}{A \linkS4class{GammaSpectrum} object.}
 

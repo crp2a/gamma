@@ -46,7 +46,7 @@ Useful links:
 
 \tabular{ll}{
  Nicolas Frerebeau \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
- Guillaume Guerrin \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
+ Guillaume Guérin \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
  Christelle Lahaye \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
  Brice Lebrun \tab \emph{CEREGE, Aix-Marseille Université, France}
 }

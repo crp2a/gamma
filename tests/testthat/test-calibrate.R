@@ -63,7 +63,7 @@ test_that("Calibrate GammaSpectra", {
              chanel = 1:1024,
              counts = cts * 10^5 + sample(1:10, 1024, TRUE))
   # Fit peaks
-  fit <- fitPeaks(spc, peaks = c(86, 493, 876), scale = "chanel")
+  fit <- fitPeaks(spc, peaks = c(86, 493, 876))
 
   calib <- calibrate(fit, lines = c(76, 459, 816))
   expect_s4_class(calib, "GammaSpectrum")

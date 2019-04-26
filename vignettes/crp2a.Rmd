@@ -1,7 +1,7 @@
 ---
-title: "CRP2A Calibration Curve For Gamma Dose Rate Estimate"
-subtitle: "Canberra Inspector 1000"
-author: "CRP2A luminescence team"
+title: "CRP2A Calibration Curve #1"
+subtitle: "Canberra Inspector 1000 - LaBr"
+author: "CRP2A Luminescence Team"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -65,36 +65,12 @@ noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
   ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::labs(title = "Calibration spectra",
-                x = "Energy [keV]", y = "Count rate [1/s]") +
+  ggplot2::labs(title = "Calibration spectra") +
   ggplot2::theme_bw()
 
 # Plot background noise spectrum
-plot(noise_spc, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::labs(title = "Background noise spectrum",
-                x = "Energy [keV]", y = "Count rate [1/s]") +
-  ggplot2::theme_bw()
-```
-
-## Check baseline estimation
-```{r baseline-calib, fig.width=7, fig.height=9, fig.align="center"}
-# Remove base line
-calib_clean <- removeBaseline(calib_spc)
-
-plot(calib_clean, xaxis = "energy", yaxis = "rate", facet = TRUE) +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
-  ggplot2::theme_bw()
-```
-
-```{r baseline-noise, fig.width=7, fig.height=5, fig.align="center"}
-# Remove base line
-noise_clean <- removeBaseline(noise_spc, LLS = TRUE, k = 10)
-
-plot(noise_clean, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
+plot(noise_spc) +
+  ggplot2::labs(title = "Background noise spectrum") +
   ggplot2::theme_bw()
 ```
 
@@ -102,13 +78,13 @@ plot(noise_clean, xaxis = "energy", yaxis = "rate") +
 ### Reference spectra
 ```{r calib-peaks}
 # Peak parameters estimation
-# Fit peaks at 238, 1461, 2614.5 keV (starting positions)
+# Fit peaks at chanel 75, 463, 825 (starting positions)
+# (expected energy: 238, 1461, 2614.5 keV)
 calib_peaks <- lapply(
   X = calib_spc, 
   FUN = fitPeaks, 
-  peaks = expected_peaks, 
-  scale = "energy",
-  bound = c(0.5, 0.5, 0.5)
+  peaks = c(75, 463, 825),
+  bounds = c(0.5)
 )
 ```
 
@@ -116,32 +92,39 @@ calib_peaks <- lapply(
 # Visual inspection
 plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
   # Set labels and theme
-  plot_info <- list(
-    ggplot2::labs(x = "Energy [keV]", y = "Counts"),
-    ggplot2::theme_bw()
-  )
-  plot_nolegend <- ggplot2::theme(legend.position = "none")
+  plot_theme <- list(ggplot2::theme_bw(),
+                     ggplot2::theme(legend.position = "none"))
   # Zoomed plots
   plot_zoom <- cowplot::plot_grid(
-    plot(x) + plot_info + plot_nolegend +
-      ggplot2::coord_cartesian(xlim = c(220, 260), 
+    plot(x) + plot_theme +
+      ggplot2::coord_cartesian(xlim = c(65, 85), 
                                ylim = c(0, coef(x@model[[1]])[3])),
-    plot(x) + plot_info + plot_nolegend +
-      ggplot2::coord_cartesian(xlim = c(1400, 1550), 
+    plot(x) + plot_theme +
+      ggplot2::coord_cartesian(xlim = c(425, 500), 
                                ylim = c(0, coef(x@model[[2]])[3])),
-    plot(x) + plot_info + plot_nolegend +
-      ggplot2::coord_cartesian(xlim = c(2500, 2700), 
-                               ylim = c(0, coef(x@model[[3]])[3])),
+    plot(x) + plot_theme +
+      ggplot2::coord_cartesian(xlim = c(785, 865), 
+                               ylim = c(0, coef(x@model[[3]])[3] + 5)),
     ncol = 3
   )
   # Multiple plots
   plot_spc <- cowplot::plot_grid(
-    plot(x) + plot_info +
+    plot(x) + ggplot2::theme_bw() +
       ggplot2::labs(title = x[["spectrum"]][["reference"]]), 
     plot_zoom,
     nrow = 2
   )
   print(plot_spc)
+  # Table of peak position
+  table_peaks <- knitr::kable(
+    x[["coefficients"]],
+    digits = 3,
+    col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
+    caption = paste(x[["spectrum"]][["reference"]],
+                    "Estimated peak parameters", sep = " - ")
+  )
+  print(table_peaks)
+  cat("\n")
 })
 ```
 
@@ -152,23 +135,20 @@ calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
 
 plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
   ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 ```
 
 ### Background noise spectrum
 ```{r calibrate-noise, fig.width=7, fig.height=5, fig.align="center"}
 noise_lines <- list(
-  Pb = c(chanel = 76, energy = 238),
-  K = c(chanel = 459, energy = 1461),
-  Cs = c(chanel = 816, energy = 2614.5)
+  La138 = c(chanel = 251, energy = 789),
+  K40 = c(chanel = 460, energy = 1461),
+  Cs = c(chanel = 813, energy = 2614.5)
 )
-
 noise_scaled <- calibrate(noise_spc, lines = noise_lines)
 
-plot(noise_spc, noise_scaled) +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+plot(noise_spc, noise_scaled, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = c(789, 1461, 2614.5), linetype = 3) +
   ggplot2::theme_bw()
 ```
 
@@ -207,38 +187,39 @@ knitr::kable(
 ### Linear regression
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
 # Build calibration curve
-CRP2A1 <- fit(
+(BDX1 <- fit(
   calib_scaled,
   doses = known_doses,
   noise = noise,
   range = integration_range,
   intercept = TRUE,
-  details = list(laboratory = "IRAMAT-CRP2A1",
-                 instrument = "InSpector 1000")
-)
+  details = list(laboratory = "IRAMAT-CRP2A (UMR 5060)",
+                 instrument = "InSpector 1000",
+                 detector = "LaBr",
+                 authors = "CRP2A Luminescence Team")
+))
 
 # Plot Calibration curve
-plot(CRP2A1) +
-  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]") +
+plot(BDX1) +
   ggplot2::theme_bw()
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
-usethis::use_data(CRP2A1, overwrite = FALSE)
+usethis::use_data(BDX1, overwrite = FALSE)
 ```
 
 ### Check model
 ```{r lm-summary, echo=FALSE}
-summary(CRP2A1@model)
+summary(BDX1@model)
 ```
 
 ```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
 calib_residuals <- data.frame(
-  reference = CRP2A1[["data"]]@reference,
-  fitted = CRP2A1[["model"]]$fitted.values,
-  residuals = CRP2A1[["model"]]$residuals,
-  standardized = stats::rstandard(CRP2A1[["model"]]),
-  cook = stats::cooks.distance(CRP2A1[["model"]])
+  reference = BDX1[["data"]]@reference,
+  fitted = BDX1[["model"]]$fitted.values,
+  residuals = BDX1[["model"]]$residuals,
+  standardized = stats::rstandard(BDX1[["model"]]),
+  cook = stats::cooks.distance(BDX1[["model"]])
 )
 
 # Residuals vs fitted values
@@ -288,7 +269,7 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
                 x = "Observation", y = "D")
 
 # Relative error on dose rate estimation
-dose_predict <- predict(CRP2A1) %>%
+dose_predict <- predict(BDX1, epsilon = 0.03) %>%
   methods::as(., "data.frame") %>%
   dplyr::select(-signal_value, -signal_error) %>%
   dplyr::rename(pred_value = dose_value, pred_error = dose_error)

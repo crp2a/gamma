@@ -19,8 +19,8 @@ fitPeaks(object, peaks, ...)
 \S4method{findPeaks}{GammaSpectrum}(object, method = c("MAD"), SNR = 2,
   span = NULL, ...)
 
-\S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks,
-  scale = c("chanel", "energy"), bounds = NULL, ...)
+\S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks, bounds = NULL,
+  ...)
 
 \S4method{fitPeaks}{PeakPosition,missing}(object, bounds = NULL, ...)
 }
@@ -42,10 +42,6 @@ peak detection (see below).}
 \item{span}{An \code{\link{integer}} giving the half window size (in number
 of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 half window size.}
-
-\item{scale}{A \code{\link{character}} string specifying the scale of
-\code{peaks}. It must be one of "\code{chanel}" (the default) or
-"\code{energy}".}
 
 \item{bounds}{A \code{\link{numeric}} vector giving the
 parameters bounds (in percent), replicated to be of length three (see
@@ -85,7 +81,7 @@ plot(peaks)
 (fit1 <- fitPeaks(peaks))
 plot(fit1)
 ## Specifying starting positions
-(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876), scale = "chanel"))
+(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
 plot(fit2)
 }
 \seealso{

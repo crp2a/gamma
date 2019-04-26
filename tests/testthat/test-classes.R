@@ -166,18 +166,17 @@ test_that("Initialize an empty PeakModel instance", {
   expect_output(show(peak), "No peaks parameters")
 
   expect_is(peak[["model"]], "list")
-  expect_is(peak[["scale"]], "character")
-  expect_is(peak[["peaks"]], "data.frame")
+  expect_is(peak[["coefficients"]], "matrix")
   expect_is(peak[["spectrum"]], "GammaSpectrum")
   expect_is(peak[["baseline"]], "BaseLine")
 
   expect_error(new("PeakModel", model = list(1:3)),
                "must be of class")
-  expect_error(new("PeakModel", scale = LETTERS),
-               "must be a character vector of length 1 not 26")
-  df <- data.frame(chanel = 1:26, energy = 1:26, dose = 1:26, rate = 1:26)
-  expect_error(new("PeakModel", peaks = df[, 1:3]),
-               "must be a 4 columns data frame")
+  expect_error(new("PeakModel", coefficients = as.matrix(LETTERS)),
+               "must be a numeric matrix")
+  df <- data.frame(mean = 1:26, sd = 1:26, height = 1:26)
+  expect_error(new("PeakModel", coefficients = as.matrix(df[, 1:2])),
+               "must be a 3 columns matrix")
 })
 test_that("Initialize an empty PeakPosition instance", {
   options("verbose" = TRUE)
