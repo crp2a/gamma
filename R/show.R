@@ -59,6 +59,10 @@ setMethod(
           "  - Authors:", object@details$authors, "\n",
           "  - Date:", as.character(object@details$date), "\n",
           "  Model summary:\n",
+          "  - Slope:", round(sum_up$coef[2,1], 3), "+/-",
+          round(sum_up$coef[2,2], 3), "\n",
+          "  - Intercept:", round(sum_up$coef[1,1], 3), "+/-",
+          round(sum_up$coef[1,2], 3), "\n",
           "  - Residual standard error:", round(sum_up$sigma, 2), "\n",
           "  - Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
           "  - Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
@@ -104,20 +108,11 @@ setMethod(
   f = "show",
   signature = "PeakModel",
   definition = function(object) {
-    if (length(object@peaks) != 0) {
-      param <- lapply(X = object@model, FUN = stats::coef) %>%
-        do.call(cbind, .) %>%
-        t() %>%
-        as.data.frame() %>%
-        signif(digits = 6)
-
-      n <- nrow(object@peaks)
+    if (length(object@coefficients) != 0) {
+      n <- nrow(object@coefficients)
       pks <- ifelse(n > 1, " peaks were ", " peak was ")
-      cat(n, pks, "estimated:", "\n",
-          "  Mean (chanel):\t", paste(param$mu, collapse = "\t"), "\n",
-          "  Std. dev. (chanel):\t", paste(param$sigma, collapse = "\t"), "\n",
-          "  Height (count): \t", paste(param$C, collapse = "\t"), "\n",
-          sep = "")
+      cat(n, pks, "estimated:\n", sep = "")
+      print(object@coefficients)
     } else {
       cat("No peaks parameters were estimated.\n", sep = " ")
     }

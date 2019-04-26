@@ -74,17 +74,21 @@ setMethod(
   signature = signature(object = "PeakModel", lines = "numeric"),
   definition = function(object, lines, ...) {
     # Get data
-    peaks <- object@peaks
+    peaks <- object@coefficients
     spectrum <- object@spectrum
+
+    # TODO: check that!
+    k <- findClosest(spectrum@chanel, peaks[, "mean"])
+    chanels <- spectrum@chanel[k]
 
     # Validation
     n_lines <- length(lines)
-    n_chanels <- length(peaks$chanel)
+    n_chanels <- length(chanels)
     if (n_lines != n_chanels)
       stop(sprintf("%s must be of length %d, not %d",
                    sQuote("lines"), n_chanels, n_lines))
 
-    fit_data <- data.frame(energy = lines, chanel = peaks$chanel) %>%
+    fit_data <- data.frame(energy = lines, chanel = chanels) %>%
       split(., f = 1:nrow(.))
     calibrate(spectrum, fit_data)
   }

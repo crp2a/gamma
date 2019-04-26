@@ -123,14 +123,13 @@ setMethod(
     # Get data
     bl <- x@baseline
     spc <- x@spectrum
-    scale <- x@scale
 
     spc_clean <- spc - bl
     spc_df <- methods::as(spc_clean, "data.frame")
     fit <- lapply(
       X = x@model,
       FUN = function(x, data) stats::predict(x, data),
-      data = spc_df[, scale]
+      data = spc_df[, "chanel"]
     )
 
     # Build long table for ggplot2

@@ -11,5 +11,5 @@ plot(peaks)
 (fit1 <- fitPeaks(peaks))
 plot(fit1)
 ## Specifying starting positions
-(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876), scale = "chanel"))
+(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
 plot(fit2)

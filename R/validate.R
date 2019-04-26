@@ -325,8 +325,7 @@ setValidity(
   Class = "PeakModel",
   method = function(object) {
     model <- object@model
-    scale <- object@scale
-    peaks <- object@peaks
+    coefficients <- object@coefficients
     spectrum <- object@spectrum
     baseline <- object@baseline
     message <- c()
@@ -341,20 +340,22 @@ setValidity(
         )
       }
     }
-    if (length(scale) != 0) {
-      message <- c(message, checkVector(scale, 1, "character"))
-    }
-    if (length(peaks) != 0) {
-      col_names <- c("chanel", "energy", "counts", "rate")
-      if (!all(col_names %in% colnames(peaks))) {
+    if (length(coefficients) != 0) {
+      if (!is.numeric(coefficients)) {
         message <- c(
           message,
-          sprintf("%s must be a 4 columns data frame, with column names: %s",
-                  sQuote("peaks"), paste(sQuote(col_names), collapse = ", "))
+          sprintf("%s must be a numeric matrix.", sQuote("coefficients"))
+        )
+      }
+      col_names <- c("mean", "sd", "height")
+      if (!all(col_names %in% colnames(coefficients))) {
+        message <- c(
+          message,
+          sprintf("%s must be a 3 columns matrix, with column names: %s.",
+                  sQuote("coefficients"), paste(sQuote(col_names), collapse = ", "))
         )
       }
     }
-
     if (length(spectrum@hash) != 0 & length(baseline@hash) != 0) {
       if (spectrum@hash != baseline@hash)
         message <- c(

@@ -252,10 +252,8 @@ setClass(
 #' An S4 class to represent a set peaks
 #'
 #' @slot model A list of \code{\link[stats:nls]{nonlinear models}} giving the
-#'  estimated parameters for each peak.
-#' @slot scale A \code{\link{character}} string.
-#' @slot peaks A four columns \code{\link[=data.frame]{data frame}} giving the
-#'  peak positions.
+#'  fitted model for each peak.
+#' @slot coefficients A \code{\link{numeric}} matrix giving the peak parameters.
 #' @slot spectrum A \linkS4class{GammaSpectrum} object.
 #' @slot baseline A \linkS4class{BaseLine} object.
 #' @param x An object of class \code{PeakModel}.
@@ -277,8 +275,7 @@ setClass(
   Class = "PeakModel",
   slots = c(
     model = "list",
-    scale = "character",
-    peaks = "data.frame",
+    coefficients = "matrix",
     spectrum = "GammaSpectrum",
     baseline = "BaseLine"
   )
@@ -436,10 +433,9 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "PeakModel",
-  definition = function(.Object, model, scale, peaks, spectrum, baseline) {
+  definition = function(.Object, model, coefficients, spectrum, baseline) {
     if (!missing(model)) .Object@model <- model
-    if (!missing(scale)) .Object@scale <- scale
-    if (!missing(peaks)) .Object@peaks <- peaks
+    if (!missing(coefficients)) .Object@coefficients <- coefficients
     if (!missing(spectrum)) .Object@spectrum <- spectrum
     if (!missing(baseline)) .Object@baseline <- baseline
 

@@ -76,42 +76,33 @@ setMethod(
 setMethod(
   f = "fitPeaks",
   signature = signature(object = "GammaSpectrum", peaks = "numeric"),
-  definition = function(object, peaks, scale = c("chanel", "energy"),
-                        bounds = NULL, ...) {
-    # Validation
-    scale <- match.arg(scale, several.ok = FALSE)
+  definition = function(object, peaks, bounds = NULL, ...) {
     # Remove baseline
     baseline <- estimateBaseline(object, ...)
     spc_clean <- object - baseline
     # Get spectrum data
     spc <- methods::as(spc_clean, "data.frame")
-    if (all(is.na(spc$energy)))
-      scale <- "chanel"
 
     # Find peaks in spectrum data
-    pks_index <- findClosest(spc[, scale], peaks)
-    pks <- spc %>% dplyr::slice(pks_index)
-    rownames(pks) <- NULL
+    pks <- spc[which(spc$chanel %in% peaks), ]
+    rownames(pks) <- paste("peak #", 1:nrow(pks), sep = "")
 
     fit <- apply(
       X = pks,
       MARGIN = 1,
-      FUN = function(peaks, spectrum, scale, bounds)
-        fitNLS(spectrum, peaks, scale, bounds),
-      spectrum = spc, scale = scale, bounds = bounds
+      FUN = function(peaks, spectrum, bounds) {
+        fitNLS(x = spectrum, peaks = peaks, scale = "chanel", bounds = bounds)
+      },
+      spectrum = spc, bounds = bounds
     )
 
     # Find peaks in spectrum data
-    fit_mu <- sapply(X = fit, FUN = function(x) stats::coef(x)["mu"])
-    pks_index <- findClosest(spc[, scale], fit_mu)
-    pks <- spc[pks_index, ]
-    rownames(pks) <- NULL
+    param <- t(sapply(X = fit, FUN = stats::coef))
 
     methods::new(
       "PeakModel",
       model = fit,
-      scale = scale,
-      peaks = pks,
+      coefficients = param,
       spectrum = object,
       baseline = baseline
     )
@@ -129,7 +120,7 @@ setMethod(
     spc <- object@spectrum
     pks <- object@peaks[, "chanel"]
 
-    fitPeaks(spc, peaks = pks, scale = "chanel", bounds = bounds)
+    fitPeaks(spc, peaks = pks, bounds = bounds)
   }
 )
 
@@ -137,32 +128,36 @@ setMethod(
 #'
 #' Determine the nonlinear least-squares estimates of the peaks parameters.
 #' @param x A \code{\link[=data.frame]{data frame}}.
-#' @param peaks A length-two \code{\link{numeric vector}}.
+#' @param peaks A length-two \code{\link{numeric}} vector.
+#' @param scale A \code{\link{character}} string specifying the scale of
+#'  \code{peaks}. It must be one of "\code{chanel}" (the default) or
+#'  "\code{energy}". Any unambiguous substring can be given.
+#' @param bounds A \code{\link{numeric}} vector.
 #' @param ... Currently not used.
 #' @return A \linkS4class{PeakModel} object.
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-fitNLS <- function(x, peaks, scale = c("energy", "chanel"),
+fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
                    bounds = NULL, ...) {
   # Validation
   scale <- match.arg(scale, several.ok = FALSE)
 
   # Get starting values for each peak
   ## Mean
-  mu <- peaks[scale]
+  mean <- peaks[scale]
   ## Standart deviation
   fwhm <- sapply(
-    X = mu,
+    X = mean,
     FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
     x = x[, scale], y = x$counts
   )
-  sigma <- fwhm / (2 * sqrt(2 * log(2)))
+  sd <- fwhm / (2 * sqrt(2 * log(2)))
   ## Height
   height <- peaks["counts"]
 
-  parameters <- c(mu, sigma, height)
-  names(parameters) <- c("mu", "sigma", "C")
+  parameters <- c(mean, sd, height)
+  names(parameters) <- c("mean", "sd", "height")
 
   # Lower and upper paramters bounds
   lower_bounds <- upper_bounds <- NULL
@@ -179,7 +174,7 @@ fitNLS <- function(x, peaks, scale = c("energy", "chanel"),
   }
 
   # Build formula
-  term_labels <- sprintf("C * exp(-0.5 * ((%s - mu) / sigma)^2)", scale)
+  term_labels <- sprintf("height * exp(-0.5 * ((%s - mean) / sd)^2)", scale)
   fit_formula <- stats::reformulate(termlabels = term_labels,
                                     response = "counts")
 
@@ -198,56 +193,6 @@ fitNLS <- function(x, peaks, scale = c("energy", "chanel"),
                     upper = upper_bounds)
   return(fit)
 }
-
-# fitNLS_old <- function(object, peaks, scale = c("energy", "chanel"), ...) {
-#   # Validation
-#   scale <- match.arg(scale, several.ok = FALSE)
-#   # Get data
-#   spc <- methods::as(object, "data.frame")
-#
-#   # Get starting values for each peak
-#   ## Mean
-#   mu <- peaks[, scale]
-#   names(mu) <- paste("mu", 1:length(mu), sep = "")
-#   ## Standart deviation
-#   fwhm <- sapply(X = mu,
-#                  FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
-#                  x = spc[, scale], y = spc$counts)
-#   sigma <- fwhm / (2 * sqrt(2 * log(2)))
-#   names(sigma) <- paste("sigma", 1:length(sigma), sep = "")
-#   ## Height
-#   height <- peaks$counts
-#   names(height) <- paste("C", 1:length(height), sep = "")
-#
-#   parameters <- as.list(c(mu, sigma, height))
-#
-#   # Build formula
-#   n <- 1:nrow(peaks)
-#   term_labels <- sprintf("C%d * exp(-0.5 * ((%s - mu%d) / sigma%d)^2)",
-#                          n, scale, n, n)
-#   fit_formula <- stats::reformulate(termlabels = term_labels,
-#                                     response = "counts")
-#
-#   # Fit model
-#   fit <- stats::nls(formula = fit_formula,
-#                     data = spc[, c(scale, "counts")],
-#                     start = parameters,
-#                     algorithm = "port")
-#
-#   # Find peaks in spectrum data
-#   fit_mu <- stats::coef(fit)[n]
-#   pks_index <- findClosest(spc[, scale], fit_mu)
-#   pks <- spc[pks_index, ]
-#   rownames(pks) <- NULL
-#
-#   methods::new(
-#     "PeakModel",
-#     model = fit,
-#     scale = scale,
-#     peaks = pks,
-#     spectrum = object
-#   )
-# }
 
 #' MAD
 #'

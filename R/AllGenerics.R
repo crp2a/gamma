@@ -135,9 +135,6 @@ if (!isGeneric("predict")) {
 #'  \linkS4class{PeakPosition}.
 #' @param peaks A \code{\link{numeric}} vector giving the starting peak postions
 #'  for the nonlinear model fitting (see below).
-#' @param scale A \code{\link{character}} string specifying the scale of
-#'  \code{peaks}. It must be one of "\code{chanel}" (the default) or
-#'  "\code{energy}".
 #' @param bounds A \code{\link{numeric}} vector giving the
 #'  parameters bounds (in percent), replicated to be of length three (see
 #'  below). If \code{NULL} (the default), all parameters are assumed to be

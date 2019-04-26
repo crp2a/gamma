@@ -54,7 +54,7 @@ setAs(
   from = "PeakModel",
   to = "data.frame",
   def = function(from) {
-    df <- as.data.frame(from@peaks)
+    df <- as.data.frame(from@coefficients)
     return(df)
   }
 )
