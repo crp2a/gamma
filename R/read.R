@@ -10,28 +10,47 @@ setMethod(
   signature = signature(file = "character"),
   definition = function(file, extensions = c("cnf", "tka"), skip = NULL, ...) {
     # Validation
-    extensions <- match.arg(extensions, several.ok = TRUE)
+    extensions <- match.arg(extensions, several.ok = TRUE) %>% c(., toupper(.))
 
     # If input is a directory and not a single file
     # Then, look for all files with allowed extensions
-    if (!utils::file_test("-f", file)) {
-      cnf_files <- tools::list_files_with_exts(file, exts = extensions)
-      if (length(cnf_files) == 0)
+    if(!utils::file_test("-f", file)) {
+      file_list <- tools::list_files_with_exts(file, exts = extensions)
+      if(length(file_list) == 0)
         stop("No spectrum files were fund.")
-      file <- cnf_files
+      files <- as.list(file_list)
+    }
+
+    if(!is.null(skip)) {
+      all_numeric <- all(sapply(skip, function(x) is.numeric(x) | is.null(x)))
+      all_logical <- all(sapply(skip, function(x) is.logical(x) | is.null(x)))
+      if(!all_numeric & !all_logical) {
+        stop(sprintf("%s must be a list of numeric vectors or logical scalars.",
+                     sQuote("skip")))
+      }
+    } else {
+      skip <- FALSE
+    }
+    if(is.numeric(skip)) skip <- list(skip)
+    if(is.logical(skip)) skip <- as.list(skip)
+    n_files <- length(files)
+    n_skip <- length(skip)
+    if (n_skip != 1 & n_skip != n_files) {
+      stop(sprintf("%s must be of length 1 or %d, not %d.",
+                   sQuote("skip"), n_files, n_skip))
     }
 
     # Read files
-    spc <- lapply(X = file, FUN = function(x, ...) {
-      extension <- tools::file_ext(x)
+    spc <- mapply(FUN = function(x, y, ...) {
+      extension <- tolower(tools::file_ext(x))
       switch(
         extension,
-        cnf = readCanberraCNF(x, skip, ...),
-        tka = readCanberraTKA(x, skip, ...)
+        cnf = readCanberraCNF(file = x, skip = y, ...),
+        tka = readCanberraTKA(file = x, skip = y, ...)
       )
-    }, ...)
+    }, x = files, y = skip, MoreArgs = list(...))
 
-    if (length(spc) > 1) {
+    if(length(spc) > 1) {
       # Return a GammaSpectra object
       methods::new("GammaSpectra", spc)
     } else {
@@ -55,7 +74,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
   spc_xy <- rxylib::read_xyData(file = file, ..., verbose = getOption("verbose"))
   # Get and check file format
   format <- attr(spc_xy, "format_name")
-  if (format != "Canberra CNF")
+  if(format != "Canberra CNF")
     stop("Only Canberra CNF files are supported.")
 
   # Get metadata
@@ -71,7 +90,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
     magrittr::set_colnames(c("energy", "counts", "chanel"))
 
   # Skip chanels
-  if (!is.null(skip)) {
+  if(!is.null(skip)) {
     spc_data <- skipChanels(spc_data, skip = skip)
   }
 
@@ -123,7 +142,7 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
     magrittr::set_colnames(c("counts", "chanel"))
 
   # Skip chanels
-  if (!is.null(skip)) {
+  if(!is.null(skip)) {
     spc_data <- skipChanels(spc_data, skip = skip)
   }
 
@@ -152,14 +171,20 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
 #' @keywords internal
 #' @noRd
 skipChanels <- function(x, skip) {
-  if (is.logical(skip)) {
-    skip_chanel <- seq_len(which.max(x$counts))
-    x <- x[-skip_chanel, ]
+  # Validation
+  if(!is.data.frame(x))
+    stop("A data.frame is expected.")
+
+  if(is.logical(skip)) {
+    if(skip) {
+      skip_chanel <- seq_len(which.max(x$counts))
+      x <- x[-skip_chanel, ]
+    }
   }
-  if (is.numeric(skip)) {
+  if(is.numeric(skip)) {
     skip <- as.integer(skip)
-    skip_chanel <- which(x$chanel %in% skip)
-    x <- x[-skip_chanel, ]
+    skip_chanel <- x$chanel %in% skip
+    x <- x[!skip_chanel, ]
   }
   return(x)
 }
