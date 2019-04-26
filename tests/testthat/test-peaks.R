@@ -19,7 +19,7 @@ test_that("Find and fit peaks", {
   expect_is(plot(peaks), "ggplot")
   expect_is(as(peaks, "data.frame"), "data.frame")
 
-  fit <- fitPeaks(peaks, scale = "chanel")
+  fit <- fitPeaks(peaks)
   expect_silent(fit)
 
   expect_equal(nrow(fit@peaks), 3)

@@ -75,17 +75,18 @@ test_that("Initialize an empty CalibrationCurve instance", {
   calib <- new("CalibrationCurve")
   expect_output(show(calib), "no model")
 
-  expect_is(calib[["instrument"]], "character")
-  expect_is(calib[["laboratory"]], "character")
-  expect_is(calib[["date"]], "POSIXct")
+  expect_is(calib[["details"]], "list")
+  expect_is(calib[["details"]]$date, "POSIXct")
   expect_is(calib[["model"]], "NULL")
   expect_is(calib[["noise"]], "numeric")
   expect_is(calib[["integration"]], "numeric")
   expect_is(calib[["data"]], "DoseRate")
 
-  expect_error(new("CalibrationCurve", instrument = LETTERS),
+  expect_error(new("CalibrationCurve", details = list(instrument = LETTERS)),
                "must be a character vector of length 1 not 26")
-  expect_error(new("CalibrationCurve", laboratory = LETTERS),
+  expect_error(new("CalibrationCurve", details = list(laboratory = LETTERS)),
+               "must be a character vector of length 1 not 26")
+  expect_error(new("CalibrationCurve", details = list(authors = LETTERS)),
                "must be a character vector of length 1 not 26")
   expect_error(new("CalibrationCurve", noise = 1:3),
                "must be a numeric vector of length 2 not 3")
