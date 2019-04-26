@@ -21,9 +21,13 @@ imported.}
 \item{extensions}{A \code{\link{character}} vector specifying the possible
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
 
-\item{skip}{A \code{\link{numeric}} vector giving the chanels of the data
-file to skip. If \code{TRUE}, it will try to automatically process the
-spectrum: all channels before the first maximum will be skipped.}
+\item{skip}{A list of \code{\link{numeric}} vectors or of
+\code{\link{logical}} scalars (re-cycled to the number of files to be
+imported).
+If \code{numeric}, the corresponding chanels of the data file will be
+skipped. If \code{TRUE}, it will try to automatically process the
+spectrum: all channels before the first maximum will be skipped. If
+\code{NULL} (the default), all data are imported.}
 }
 \value{
 An object of class \linkS4class{GammaSpectra}.

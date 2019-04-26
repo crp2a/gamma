@@ -22,8 +22,7 @@ fitPeaks(object, peaks, ...)
 \S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks,
   scale = c("chanel", "energy"), bounds = NULL, ...)
 
-\S4method{fitPeaks}{PeakPosition,missing}(object, scale = c("energy",
-  "chanel"), bounds = NULL, ...)
+\S4method{fitPeaks}{PeakPosition,missing}(object, bounds = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum} or

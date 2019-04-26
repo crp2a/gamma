@@ -21,13 +21,7 @@ An S4 class to represent a calibration curve
 \section{Slots}{
 
 \describe{
-\item{\code{laboratory}}{A \code{\link{character}} string giving the laboratory name.}
-
-\item{\code{instrument}}{A \code{\link{character}} string giving the instrument name
-or ID.}
-
-\item{\code{date}}{A \code{\link{POSIXct}} element giving the date and time of the
-curve fitting.}
+\item{\code{details}}{A \code{\link{list}} of metadata.}
 
 \item{\code{model}}{A \code{\link[stats:lm]{linear model}} specifying the calibration
 curve.}

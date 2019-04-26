@@ -4,7 +4,7 @@
 \name{DoseRate-class}
 \alias{DoseRate-class}
 \alias{[[,DoseRate-method}
-\title{An S4 class to represent a gamma dose rate}
+\title{An S4 class to represent a gamma dose rate (in µGy/y)}
 \usage{
 \S4method{[[}{DoseRate}(x, i)
 }
@@ -16,7 +16,7 @@ to extract or replace (see below). Character sring will be matched to the
 names of the slots.}
 }
 \description{
-An S4 class to represent a gamma dose rate
+An S4 class to represent a gamma dose rate (in µGy/y)
 }
 \section{Slots}{
 

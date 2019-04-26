@@ -13,17 +13,15 @@
 \alias{plot,CalibrationCurve,DoseRate-method}
 \title{Plot}
 \usage{
-\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("energy", "chanel"),
-  yaxis = c("counts", "rate"), ...)
+\S4method{plot}{GammaSpectrum,missing}(x, y, ...)
 
-\S4method{plot}{GammaSpectrum,GammaSpectrum}(x, y, xaxis = c("energy",
-  "chanel"), yaxis = c("counts", "rate"), ...)
+\S4method{plot}{GammaSpectrum,GammaSpectrum}(x, y, xaxis = c("chanel",
+  "energy"), yaxis = c("counts", "rate"), ...)
 
-\S4method{plot}{GammaSpectra,missing}(x, xaxis = c("energy", "chanel"),
+\S4method{plot}{GammaSpectra,missing}(x, xaxis = c("chanel", "energy"),
   yaxis = c("counts", "rate"), select = NULL, facet = FALSE, ...)
 
-\S4method{plot}{PeakPosition,missing}(x, xaxis = c("energy", "chanel"),
-  yaxis = c("counts", "rate"), ...)
+\S4method{plot}{PeakPosition,missing}(x, y, ...)
 
 \S4method{plot}{PeakModel,missing}(x, y, ...)
 
@@ -34,12 +32,12 @@
 \arguments{
 \item{x, y}{Objects to be plotted.}
 
+\item{...}{Currently not used.}
+
 \item{xaxis, yaxis}{A \code{\link{character}} string specifying the data to
 be plotted along each axis. It must be one of "\code{energy}" or
 "\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
 (\code{y} axis). Any unambiguous substring can be given.}
-
-\item{...}{Currently not used.}
 
 \item{select}{A \code{\link{numeric}} or \code{\link{character}} vector
 giving the selection of the spectrum that are drawn.}
