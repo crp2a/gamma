@@ -1,3 +1,3 @@
-# gamma 0.0.0.9000
+# gamma 0.1
 
 * Frist release
