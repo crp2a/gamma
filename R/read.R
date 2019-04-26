@@ -18,7 +18,7 @@ setMethod(
       file_list <- tools::list_files_with_exts(file, exts = extensions)
       if(length(file_list) == 0)
         stop("No spectrum files were fund.")
-      files <- as.list(file_list)
+      file <- as.list(file_list)
     }
 
     if(!is.null(skip)) {
@@ -33,7 +33,7 @@ setMethod(
     }
     if(is.numeric(skip)) skip <- list(skip)
     if(is.logical(skip)) skip <- as.list(skip)
-    n_files <- length(files)
+    n_files <- length(file)
     n_skip <- length(skip)
     if (n_skip != 1 & n_skip != n_files) {
       stop(sprintf("%s must be of length 1 or %d, not %d.",
@@ -48,7 +48,7 @@ setMethod(
         cnf = readCanberraCNF(file = x, skip = y, ...),
         tka = readCanberraTKA(file = x, skip = y, ...)
       )
-    }, x = files, y = skip, MoreArgs = list(...))
+    }, x = file, y = skip, MoreArgs = list(...))
 
     if(length(spc) > 1) {
       # Return a GammaSpectra object
