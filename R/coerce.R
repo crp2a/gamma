@@ -28,6 +28,15 @@ setAs(
   }
 )
 setAs(
+  from = "GammaSpectra",
+  to = "data.frame",
+  def = function(from) {
+    df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
+    df_long <- dplyr::bind_rows(df_list, .id = "reference")
+    return(df_long)
+  }
+)
+setAs(
   from = "DoseRate",
   to = "data.frame",
   def = function(from) {
