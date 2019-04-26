@@ -17,7 +17,7 @@ setMethod(
       cat("Gamma spectrum:", "\n",
           "  Reference: ", object@reference, "\n",
           "  Instrument: ", object@instrument, "\n",
-          "  Date: ", as.character(object@date, format = c("%Y-%m-%d")), "\n",
+          "  Date: ", as.character(object@date), "\n",
           "  Number of chanels: ", length(object@chanel), "\n",
           "  Energy range (keV): ", E, "\n",
           sep = "")
@@ -52,10 +52,16 @@ setMethod(
   definition = function(object) {
     if (length(object@model) != 0) {
       sum_up <- summary(object@model)
-      cat("Calibration curve:", "\n",
-          "  Residual standard error:", round(sum_up$sigma, 2), "\n",
-          "  Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
-          "  Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
+      cat("Calibration curve:\n",
+          "  Details:\n",
+          "  - Laboratory:", object@details$laboratory, "\n",
+          "  - Instrument:", object@details$instrument, "\n",
+          "  - Authors:", object@details$authors, "\n",
+          "  - Date:", as.character(object@details$date), "\n",
+          "  Model summary:\n",
+          "  - Residual standard error:", round(sum_up$sigma, 2), "\n",
+          "  - Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
+          "  - Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
           sep = " ")
     } else {
       cat("Calibration curve: no model.\n",

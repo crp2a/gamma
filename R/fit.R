@@ -18,12 +18,8 @@ setMethod(
       stop(sprintf("%s must be a numeric vector of length two, not %d.",
                    sQuote("noise"), n_noise))
 
-    # TODO: pas propre
-    info <- list(laboratory = NA_character_, instrument = NA_character_)
-    if (is.vector(details)) {
-      k <- which(names(details) %in% c("laboratory", "instrument"))
-      info <- as.list(details[k])
-    }
+    # Metadata
+    info <- if (is.list(details)) details else list()
 
     # Signal integration
     signals <- integrateSignal(object, range = range, noise = noise) %>%
@@ -50,8 +46,7 @@ setMethod(
 
     methods::new(
       "CalibrationCurve",
-      instrument = info$instrument,
-      laboratory = info$laboratory,
+      details = info,
       model = fit,
       noise = noise,
       integration = range,

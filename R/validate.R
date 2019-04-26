@@ -177,20 +177,32 @@ setValidity(
 setValidity(
   Class = "CalibrationCurve",
   method = function(object) {
-    instrument <- object@instrument
-    laboratory <- object@laboratory
-    date <- object@date
+    details <- object@details
     model <- object@model
     noise <- object@noise
     integration <- object@integration
     data <- object@data
     message <- c()
 
-    if (length(instrument) != 0) {
-      message <- c(message, checkVector(instrument, 1, "character"))
-    }
-    if (length(laboratory) != 0) {
-      message <- c(message, checkVector(laboratory, 1, "character"))
+    if (length(details) != 0) {
+      instrument <- details$instrument
+      laboratory <- details$laboratory
+      authors <- details$authors
+      date <- details$date
+      if (length(instrument) != 0) {
+        message <- c(message, checkVector(instrument, 1, "character"))
+      }
+      if (length(laboratory) != 0) {
+        message <- c(message, checkVector(laboratory, 1, "character"))
+      }
+      if (length(authors) != 0) {
+        message <- c(message, checkVector(authors, 1, "character"))
+      }
+      if (length(date) != 0) {
+        if (!methods::is(date, "POSIXct"))
+          message <- c(message, sprintf("%s must be a %s object.",
+                                        sQuote("date"), sQuote("POSIXct")))
+      }
     }
     if (length(noise) != 0) {
       message <- c(message, checkVector(noise, 2, "numeric"))

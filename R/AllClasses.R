@@ -169,7 +169,7 @@ setClass(
   contains = "GammaSpectrum"
 )
 
-#' An S4 class to represent a gamma dose rate
+#' An S4 class to represent a gamma dose rate (in µGy/y)
 #'
 #' @slot reference A \code{\link{character}} vector giving the spectrum
 #'  references.
@@ -216,11 +216,7 @@ setClass(
 
 #' An S4 class to represent a calibration curve
 #'
-#' @slot laboratory A \code{\link{character}} string giving the laboratory name.
-#' @slot instrument A \code{\link{character}} string giving the instrument name
-#'  or ID.
-#' @slot date A \code{\link{POSIXct}} element giving the date and time of the
-#'  curve fitting.
+#' @slot details A \code{\link{list}} of metadata.
 #' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
 #'  curve.
 #' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
@@ -245,9 +241,7 @@ setClass(
 setClass(
   Class = "CalibrationCurve",
   slots = c(
-    laboratory = "character",
-    instrument = "character",
-    date = "POSIXct",
+    details = "list",
     model = "LmOrNull",
     noise = "numeric",
     integration = "numeric",
@@ -395,15 +389,22 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",
-  definition = function(.Object, instrument, laboratory, model, noise,
+  definition = function(.Object, details, model, noise,
                         integration, data) {
-    if (!missing(instrument)) .Object@instrument <- instrument
-    if (!missing(laboratory)) .Object@laboratory <- laboratory
+    info <- list()
+    if (!missing(details)) {
+      if (is.list(details)) {
+        info_fields <- c("laboratory", "instrument", "authors")
+        k <- which(names(details) %in% info_fields)
+        info <- details[k]
+      }
+    }
+    info[["date"]] <- Sys.time()
+    .Object@details <- info
     if (!missing(model)) .Object@model <- model
     if (!missing(noise)) .Object@noise <- noise
     if (!missing(integration)) .Object@integration <- integration
     if (!missing(data)) .Object@data <- data
-    .Object@date <- Sys.time()
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
