@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>An S4 class to represent a set peaks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
     <div class="hidden name"><code>PeakModel.Rd</code></div>
     </div>
 
@@ -152,6 +155,17 @@ names of the slots.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
+
+    
+    <dl class='dl-horizontal'>
+<dt><code>model</code></dt><dd><p>A list of <code><a href='https://www.rdocumentation.org/packages/stats/topics/nls'>nonlinear models</a></code> giving the
+fitted model for each peak.</p></dd>
+    <dt><code>coefficients</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> matrix giving the peak parameters.</p></dd>
+    <dt><code>spectrum</code></dt><dd><p>A <a href='GammaSpectrum.html'>GammaSpectrum</a> object.</p></dd>
+    <dt><code>baseline</code></dt><dd><p>A <a href='BaseLine.html'>BaseLine</a> object.</p></dd>
+</dl>
+    
     <h2 class="hasAnchor" id="subset"><a class="anchor" href="#subset"></a>Subset</h2>
 
     
@@ -168,6 +182,8 @@ names of the slots.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#slots">Slots</a></li>
+
       <li><a href="#subset">Subset</a></li>
           </ul>
 
@@ -178,7 +194,7 @@ names of the slots.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

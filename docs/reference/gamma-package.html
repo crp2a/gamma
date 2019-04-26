@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>gamma: Process In-Situ Gamma-Ray Spectrometry Measurements for
+<title>gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating — gamma-package • gamma</title>
 
 <!-- favicons -->
@@ -38,16 +38,16 @@
 
 
 
-<meta property="og:title" content="gamma: Process In-Situ Gamma-Ray Spectrometry Measurements for
+<meta property="og:title" content="gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating — gamma-package" />
 
 <meta property="og:description" content="
 'gamma' is intended to process in-situ
     gamma-ray spectrometry measurements for luminescence dating. This
-    package allows to automatically correct the energy shifts of the
-    spectrum. It provides methods for estimating the gamma dose rate by
-    the use of a calibration curve. In its current version, this package
-    only supports Canberra CNF files." />
+    package allows to import, inspect and (automatically) correct the energy 
+    shifts of the spectrum. It provides methods for estimating the gamma 
+    dose rate by the use of a calibration curve. The package only supports 
+    Canberra CNF and TKA files." />
 
 <meta property="og:image" content="http://gamma.archaeo.science/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -103,7 +106,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -114,7 +117,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -131,9 +134,9 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>gamma: Process In-Situ Gamma-Ray Spectrometry Measurements for
+    <h1>gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/gamma.R'><code>R/gamma.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/gamma.R'><code>R/gamma.R</code></a></small>
     <div class="hidden name"><code>gamma-package.Rd</code></div>
     </div>
 
@@ -142,10 +145,10 @@
     <p><img src='figures/logo.png' align='right' /></p>
 <p>'gamma' is intended to process in-situ
     gamma-ray spectrometry measurements for luminescence dating. This
-    package allows to automatically correct the energy shifts of the
-    spectrum. It provides methods for estimating the gamma dose rate by
-    the use of a calibration curve. In its current version, this package
-    only supports Canberra CNF files.</p>
+    package allows to import, inspect and (automatically) correct the energy 
+    shifts of the spectrum. It provides methods for estimating the gamma 
+    dose rate by the use of a calibration curve. The package only supports 
+    Canberra CNF and TKA files.</p>
     
     </div>
 
@@ -160,9 +163,9 @@
 <tr><td></td><td>Package</td></tr>
 <tr><td></td><td></td></tr>
 <tr><td><strong>Version:</strong></td><td></td></tr>
-<tr><td>0.0.0.9000</td><td></td></tr>
+<tr><td>0.1</td><td></td></tr>
 <tr><td></td><td><strong>Date:</strong></td></tr>
-<tr><td></td><td>2019-03-28</td></tr>
+<tr><td></td><td>2019-04-26</td></tr>
 <tr><td></td><td></td></tr>
 <tr><td><strong>License:</strong></td><td></td></tr>
 <tr><td>GPL-3</td><td></td></tr>
@@ -180,8 +183,9 @@ de la Recherche (France) throught the program <em>Investissements d'avenir</em>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='http://github.com/nfrerebeau/gamma'>http://github.com/nfrerebeau/gamma</a></p></li>
-<li><p>Report bugs at <a href='http://github.com/nfrerebeau/gamma/issues'>http://github.com/nfrerebeau/gamma/issues</a></p></li>
+<li><p><a href='http://gamma.archaeo.science'>http://gamma.archaeo.science</a></p></li>
+<li><p><a href='http://github.com/crp2a/gamma'>http://github.com/crp2a/gamma</a></p></li>
+<li><p>Report bugs at <a href='http://github.com/crp2a/gamma/issues'>http://github.com/crp2a/gamma/issues</a></p></li>
 </ul></div>
     
 
@@ -203,7 +207,7 @@ de la Recherche (France) throught the program <em>Investissements d'avenir</em>
 <tr><td></td><td>Nicolas Frerebeau</td></tr>
 <tr><td></td><td><em>IRAMAT-CRP2A, Université Bordeaux Montaigne, France</em></td></tr>
 <tr><td></td><td></td></tr>
-<tr><td>Guillaume Guerrin</td><td></td></tr>
+<tr><td>Guillaume Guérin</td><td></td></tr>
 <tr><td><em>IRAMAT-CRP2A, Université Bordeaux Montaigne, France</em></td><td></td></tr>
 <tr><td></td><td>Christelle Lahaye</td></tr>
 <tr><td></td><td><em>IRAMAT-CRP2A, Université Bordeaux Montaigne, France</em></td></tr>
@@ -226,7 +230,7 @@ France</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

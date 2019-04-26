@@ -70,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -83,6 +83,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -93,7 +96,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -104,7 +107,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -142,6 +145,12 @@
       <tr>
         
         <td>
+          <p><code><a href="BDX1.html">BDX1</a></code> </p>
+        </td>
+        <td><p>CRP2A Calibration Curve #1</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="BaseLine.html">BaseLine-class</a></code> </p>
         </td>
         <td><p>An S4 class to represent a spectrum baseline</p></td>
@@ -156,7 +165,7 @@
         <td>
           <p><code><a href="DoseRate.html">`[[`(<i>&lt;DoseRate&gt;</i>)</a></code> </p>
         </td>
-        <td><p>An S4 class to represent a gamma dose rate</p></td>
+        <td><p>An S4 class to represent a gamma dose rate (in µGy/y)</p></td>
       </tr><tr>
         
         <td>
@@ -166,7 +175,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="GammaSpectrum.html">`[[`(<i>&lt;GammaSpectrum&gt;</i>)</a></code> </p>
+          <p><code><a href="GammaSpectrum.html">`[[`(<i>&lt;GammaSpectrum&gt;</i>)</a></code> <code><a href="GammaSpectrum.html">length(<i>&lt;GammaSpectrum&gt;</i>)</a></code> </p>
         </td>
         <td><p>An S4 class to represent a gamma sectrum</p></td>
       </tr><tr>
@@ -180,25 +189,19 @@
         <td>
           <p><code><a href="PeakPosition.html">`[[`(<i>&lt;PeakPosition&gt;</i>)</a></code> </p>
         </td>
-        <td><p>An S4 class to represent a set peaks</p></td>
+        <td><p>An S4 class to represent a set of peaks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="calibrateDose.html">calibrateDose()</a></code> </p>
-        </td>
-        <td><p>Calibration</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calibrateEnergy.html">calibrateEnergy()</a></code> </p>
+          <p><code><a href="calibrate.html">calibrate()</a></code> </p>
         </td>
         <td><p>Spectrum calibration</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="estimateDoseRate.html">estimateDoseRate()</a></code> </p>
+          <p><code><a href="fit.html">fit()</a></code> </p>
         </td>
-        <td><p>Gamma dose rate</p></td>
+        <td><p>Calibration</p></td>
       </tr><tr>
         
         <td>
@@ -217,6 +220,12 @@
           <p><code><a href="plot.html">plot(<i>&lt;GammaSpectrum&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;GammaSpectrum&gt;</i>,<i>&lt;GammaSpectrum&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;GammaSpectra&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;PeakPosition&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;PeakModel&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;CalibrationCurve&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;CalibrationCurve&gt;</i>,<i>&lt;DoseRate&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="predict.html">predict(<i>&lt;CalibrationCurve&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Gamma dose rate</p></td>
       </tr><tr>
         
         <td>
@@ -244,7 +253,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

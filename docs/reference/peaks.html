@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Peaks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/peaks.R'><code>R/peaks.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/peaks.R'><code>R/peaks.R</code></a></small>
     <div class="hidden name"><code>peaks.Rd</code></div>
     </div>
 
@@ -143,35 +146,38 @@
   <span class='kw'>span</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for GammaSpectrum,numeric</span>
-<span class='fu'>fitPeaks</span>(<span class='no'>object</span>, <span class='no'>peaks</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>, <span class='st'>"chanel"</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>fitPeaks</span>(<span class='no'>object</span>, <span class='no'>peaks</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S4 method for PeakPosition,missing</span>
-<span class='fu'>fitPeaks</span>(<span class='no'>object</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>,
-  <span class='st'>"chanel"</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>fitPeaks</span>(<span class='no'>object</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class <a href='GammaSpectrum.html'>GammaSpectrum</a>.</p></td>
+      <td><p>An object of class <a href='GammaSpectrum.html'>GammaSpectrum</a> or
+<a href='PeakPosition.html'>PeakPosition</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra parameters passed to internal functions.</p></td>
+      <td><p>Extra parameters passed to <code><a href='processBaseline.html'>estimateBaseline</a></code>.</p></td>
     </tr>
     <tr>
       <th>peaks</th>
-      <td><p>XXX.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the starting peak postions
+for the nonlinear model fitting (see below).</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string specifying the methode to be
+used for background noise estimation (see below).</p></td>
     </tr>
     <tr>
       <th>SNR</th>
-      <td><p>An <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a></code>.</p></td>
+      <td><p>An <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a></code> giving the signal-to-noise-ratio for
+peak detection (see below).</p></td>
     </tr>
     <tr>
       <th>span</th>
@@ -180,12 +186,11 @@ of chanels). If <code>NULL</code>, 5% of the number of chanels is used as the
 half window size.</p></td>
     </tr>
     <tr>
-      <th>scale</th>
-      <td><p>XXX.</p></td>
-    </tr>
-    <tr>
       <th>bounds</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the
+parameters bounds (in percent), replicated to be of length three (see
+below). If <code>NULL</code> (the default), all parameters are assumed to be
+unconstrained.</p></td>
     </tr>
     </table>
     
@@ -194,39 +199,45 @@ half window size.</p></td>
     <p><code>findPeaks</code> returns an object of class <a href='PeakPosition.html'>PeakPosition</a>.</p>
 <p><code>fitPeaks</code> returns an object of class <a href='PeakModel.html'>PeakModel</a>.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="peak-detection"><a class="anchor" href="#peak-detection"></a>Peak detection</h2>
 
+    
     <p>A local maximum has to be the highest one in the given window and has to be
  higher than \(SNR \times noise\) to be recognized as peak.</p>
     
+    <h2 class="hasAnchor" id="peak-fitting"><a class="anchor" href="#peak-fitting"></a>Peak fitting</h2>
+
+    
+    <p>TODO</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='processBaseline.html'>estimateBaseline</a></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Import a CNF file</span>
-<span class='no'>spc_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/test.cnf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
-<span class='no'>spc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read.html'>read</a></span>(<span class='no'>spc_dir</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>35</span>)
+    <pre class="examples"><div class='input'><span class='co'># Import a Canberra CNF file</span>
+<span class='no'>spc_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/test.cnf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
+<span class='no'>spectrum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read.html'>read</a></span>(<span class='no'>spc_file</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='co'># Estimate baseline</span>
-<span class='no'>baseline</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='processBaseline.html'>estimateBaseline</a></span>(<span class='no'>spc</span>)
-
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>spc</span>, <span class='no'>baseline</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>)</div><div class='img'><img src='peaks-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Remove baseline</span>
-<span class='no'>spc_clean</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='processBaseline.html'>removeBaseline</a></span>(<span class='no'>spc</span>)
-
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>spc_clean</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>)</div><div class='img'><img src='peaks-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Detect peaks</span>
-<span class='no'>peak_index</span> <span class='kw'>&lt;-</span> <span class='fu'>findPeaks</span>(<span class='no'>spc</span>, <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>20</span>)
-
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>peak_index</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='peaks-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Find peaks</span>
+(<span class='no'>peaks</span> <span class='kw'>&lt;-</span> <span class='fu'>findPeaks</span>(<span class='no'>spectrum</span>))</div><div class='output co'>#&gt; 5 peaks were detected:
+#&gt;   Position (chanel):	86	210	316	496	876
+#&gt;   Height (count): 	2376	840	297	910	110</div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>peaks</span>)</div><div class='img'><img src='peaks-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Fit peaks</span>
-<span class='no'>peak_fit</span> <span class='kw'>&lt;-</span> <span class='fu'>fitPeaks</span>(<span class='no'>spc</span>, <span class='kw'>peaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>238</span>, <span class='fl'>1461</span>, <span class='fl'>2614.5</span>), <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"energy"</span>)
-
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>peak_fit</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='peaks-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'>## Using previously detected peaks</span>
+(<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'>fitPeaks</span>(<span class='no'>peaks</span>))</div><div class='output co'>#&gt; 5 peaks were estimated:
+#&gt;              mean        sd     height
+#&gt; peak #1  85.80644  2.685600 2447.41272
+#&gt; peak #2 208.04992  7.068457  816.19416
+#&gt; peak #3 320.70330 15.149748  253.64254
+#&gt; peak #4 494.86226  9.744063  877.72082
+#&gt; peak #5 877.18589 14.328315   98.54375</div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>fit1</span>)</div><div class='img'><img src='peaks-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## Specifying starting positions</span>
+(<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'>fitPeaks</span>(<span class='no'>spectrum</span>, <span class='kw'>peaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>86</span>, <span class='fl'>496</span>, <span class='fl'>876</span>)))</div><div class='output co'>#&gt; 3 peaks were estimated:
+#&gt;              mean        sd     height
+#&gt; peak #1  85.80644  2.685600 2447.41272
+#&gt; peak #2 494.86226  9.744063  877.72082
+#&gt; peak #3 877.18589 14.328315   98.54375</div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>fit2</span>)</div><div class='img'><img src='peaks-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -235,7 +246,11 @@ half window size.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#peak-detection">Peak detection</a></li>
+
+      <li><a href="#peak-fitting">Peak fitting</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -247,7 +262,7 @@ half window size.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

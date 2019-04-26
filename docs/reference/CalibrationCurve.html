@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>An S4 class to represent a calibration curve</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
     <div class="hidden name"><code>CalibrationCurve.Rd</code></div>
     </div>
 
@@ -156,12 +159,14 @@ names of the slots.</p></td>
 
     
     <dl class='dl-horizontal'>
-<dt><code>instrument</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string.</p></dd>
-    <dt><code>laboratory</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string.</p></dd>
-    <dt><code>date</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/Dates'>date</a></code>.</p></dd>
-    <dt><code>model</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>linear model</a></code>.</p></dd>
-    <dt><code>noise</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector.</p></dd>
-    <dt><code>data</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data frame</a></code>.</p></dd>
+<dt><code>details</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></code> of metadata.</p></dd>
+    <dt><code>model</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>linear model</a></code> specifying the calibration
+curve.</p></dd>
+    <dt><code>noise</code></dt><dd><p>A length-two <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the noise value
+and error (see <code><a href='integrateSignal.html'>integrateSignal</a></code>).</p></dd>
+    <dt><code>integration</code></dt><dd><p>A length-two <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the energy
+range to integrate within (see <code><a href='integrateSignal.html'>integrateSignal</a></code>).</p></dd>
+    <dt><code>data</code></dt><dd><p>A <a href='DoseRate.html'>DoseRate</a> object.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="subset"><a class="anchor" href="#subset"></a>Subset</h2>
@@ -169,8 +174,7 @@ names of the slots.</p></td>
     
     <p>In the code snippets below, <code>x</code> is a <code>CalibrationCurve</code> object.</p><dl class='dl-horizontal'>
  <dt><code>x[[i]]</code></dt><dd><p>Extracts informations from a slot selected by
- subscript <code>i</code>. <code>i</code> is a <code>character</code> vector
- of length one.</p></dd>
+ subscript <code>i</code>. <code>i</code> is a <code>character</code> vector of length one.</p></dd>
 </dl>
     
 
@@ -192,7 +196,7 @@ names of the slots.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

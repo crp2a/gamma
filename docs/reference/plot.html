@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot.Rd</code></div>
     </div>
 
@@ -135,20 +138,18 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for GammaSpectrum,missing</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>, <span class='st'>"chanel"</span>),
-  <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"rate"</span>), <span class='no'>...</span>)
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for GammaSpectrum,GammaSpectrum</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>,
-  <span class='st'>"chanel"</span>), <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"rate"</span>), <span class='no'>...</span>)
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"chanel"</span>,
+  <span class='st'>"energy"</span>), <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"rate"</span>), <span class='no'>...</span>)
 
 <span class='co'># S4 method for GammaSpectra,missing</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>, <span class='st'>"chanel"</span>),
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"chanel"</span>, <span class='st'>"energy"</span>),
   <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"rate"</span>), <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for PeakPosition,missing</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"energy"</span>, <span class='st'>"chanel"</span>),
-  <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"rate"</span>), <span class='no'>...</span>)
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for PeakModel,missing</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
@@ -167,13 +168,15 @@
       <td><p>Objects to be plotted.</p></td>
     </tr>
     <tr>
-      <th>xaxis, yaxis</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string specifying the data to
-be plotted along each axis.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>xaxis, yaxis</th>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> string specifying the data to
+be plotted along each axis. It must be one of "<code>energy</code>" or
+"<code>chanel</code>" (<code>x</code> axis) and "<code>counts</code>" or "<code>rate</code>"
+(<code>y</code> axis). Any unambiguous substring can be given.</p></td>
     </tr>
     <tr>
       <th>select</th>
@@ -187,32 +190,32 @@ defined by spectrum be drawn?</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>TODO</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Import CNF files</span>
-<span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/cerege/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
-<span class='no'>spectra</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read.html'>read</a></span>(<span class='no'>dir</span>)
+<span class='no'>spc_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/crp2a/calibration"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
+<span class='no'>spectra</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read.html'>read</a></span>(<span class='no'>spc_dir</span>)
 
-<span class='co'># Plot the spectrum named 'BRIQUE'</span>
-<span class='fu'>plot</span>(<span class='no'>spectra</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='st'>"BRIQUE"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>) +
+<span class='co'># Plot all spectra</span>
+<span class='fu'>plot</span>(<span class='no'>spectra</span>, <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='st'>"rate"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
+  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Count rate [1/s]"</span>) +
   <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Plot the spectrum named 'BRIQUE'</span>
+<span class='fu'>plot</span>(<span class='no'>spectra</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='st'>"energy"</span>, <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='st'>"count"</span>,
+     <span class='kw'>select</span> <span class='kw'>=</span> <span class='st'>"BRIQUE"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
+  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Count"</span>) +
+  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plot the first three spectra</span>
-<span class='fu'>plot</span>(<span class='no'>spectra</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Energy [keV]"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Counts"</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='plot-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>spectra</span>, <span class='kw'>xaxis</span> <span class='kw'>=</span> <span class='st'>"chanel"</span>, <span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='st'>"rate"</span>,
+     <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
+  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Chanel"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Count rate [1/s]"</span>) +
+  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='plot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -223,7 +226,7 @@ defined by spectrum be drawn?</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -4,6 +4,9 @@
     <loc>http://gamma.archaeo.science/index.html</loc>
   </url>
   <url>
+    <loc>http://gamma.archaeo.science/reference/BDX1.html</loc>
+  </url>
+  <url>
     <loc>http://gamma.archaeo.science/reference/BaseLine.html</loc>
   </url>
   <url>
@@ -37,13 +40,10 @@
     <loc>http://gamma.archaeo.science/reference/SNIP.html</loc>
   </url>
   <url>
-    <loc>http://gamma.archaeo.science/reference/calibrateDose.html</loc>
+    <loc>http://gamma.archaeo.science/reference/calibrate.html</loc>
   </url>
   <url>
-    <loc>http://gamma.archaeo.science/reference/calibrateEnergy.html</loc>
-  </url>
-  <url>
-    <loc>http://gamma.archaeo.science/reference/estimateDoseRate.html</loc>
+    <loc>http://gamma.archaeo.science/reference/fit.html</loc>
   </url>
   <url>
     <loc>http://gamma.archaeo.science/reference/gamma-package.html</loc>
@@ -61,12 +61,18 @@
     <loc>http://gamma.archaeo.science/reference/plot.html</loc>
   </url>
   <url>
+    <loc>http://gamma.archaeo.science/reference/predict.html</loc>
+  </url>
+  <url>
     <loc>http://gamma.archaeo.science/reference/processBaseline.html</loc>
   </url>
   <url>
     <loc>http://gamma.archaeo.science/reference/read.html</loc>
   </url>
   <url>
-    <loc>http://gamma.archaeo.science/articles/crp2a.html</loc>
+    <loc>http://gamma.archaeo.science/articles/crp2a_1.html</loc>
+  </url>
+  <url>
+    <loc>http://gamma.archaeo.science/articles/gamma.html</loc>
   </url>
 </urlset>

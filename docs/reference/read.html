@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Data input</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/read.R'><code>R/read.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/read.R'><code>R/read.R</code></a></small>
     <div class="hidden name"><code>read.Rd</code></div>
     </div>
 
@@ -154,11 +157,18 @@ imported.</p></td>
     </tr>
     <tr>
       <th>extensions</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> vector.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></code> vector specifying the possible
+file extensions. It must be one or more of "<code>cnf</code>", "<code>tka</code>".</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector.</p></td>
+      <td><p>A list of <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vectors or of
+<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a></code> scalars (re-cycled to the number of files to be
+imported).
+If <code>numeric</code>, the corresponding chanels of the data file will be
+skipped. If <code>TRUE</code>, it will try to automatically process the
+spectrum: all channels before the first maximum will be skipped. If
+<code>NULL</code> (the default), all data are imported.</p></td>
     </tr>
     </table>
     
@@ -166,9 +176,9 @@ imported.</p></td>
 
     <p>An object of class <a href='GammaSpectra.html'>GammaSpectra</a>.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><em>Only works with Canberra CNF.</em></p>
+    <p><em>Only supports Canberra CNF and TKA files.</em></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -181,7 +191,7 @@ imported.</p></td>
 (<span class='no'>cnf_spectrum</span> <span class='kw'>&lt;-</span> <span class='fu'>read</span>(<span class='no'>cnf_file</span>))</div><div class='output co'>#&gt; Gamma spectrum:
 #&gt;   Reference: test
 #&gt;   Instrument: InSpector 1000
-#&gt;   Date: 2019-02-07
+#&gt;   Date: 2019-02-07 11:48:18
 #&gt;   Number of chanels: 1024
 #&gt;   Energy range (keV): -7-3124.91</div><div class='input'>
 <span class='co'># Import a TKA file</span>
@@ -189,13 +199,13 @@ imported.</p></td>
 (<span class='no'>tka_spectrum</span> <span class='kw'>&lt;-</span> <span class='fu'>read</span>(<span class='no'>tka_file</span>))</div><div class='output co'>#&gt; Gamma spectrum:
 #&gt;   Reference: test
 #&gt;   Instrument: unknown
-#&gt;   Date: 2019-04-23
+#&gt;   Date: 2019-04-26 18:46:37
 #&gt;   Number of chanels: 1024
 #&gt;   Energy range (keV): not calibrated</div><div class='input'>
 <span class='co'># Import all files in a given directory</span>
 <span class='co'># Skip the 35 first chanels</span>
-<span class='no'>spc_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/crp2a/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
-(<span class='no'>spc_spectra</span> <span class='kw'>&lt;-</span> <span class='fu'>read</span>(<span class='no'>spc_dir</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>35</span>))</div><div class='output co'>#&gt; A collection of 8 gamma spectra: BDF, BRIQUE, C341, C347, GOU, LMP, MAZ, PEP</div></pre>
+<span class='no'>spc_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/crp2a/calibration"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gamma"</span>)
+(<span class='no'>spc_spectra</span> <span class='kw'>&lt;-</span> <span class='fu'>read</span>(<span class='no'>spc_dir</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>35</span>))</div><div class='output co'>#&gt; A collection of 7 gamma spectra: BRIQUE, C341, C347, GOU, LMP, MAZ, PEP</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -204,7 +214,7 @@ imported.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -218,7 +228,7 @@ imported.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">

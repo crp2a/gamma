@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gamma</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/gamma.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,7 +98,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/crp2a.html">CRP2A Calibration Curve For Gamma Dose Rate Estimate</a>
+      <a href="../articles/crp2a_1.html">CRP2A Calibration Curve #1</a>
     </li>
   </ul>
 </li>
@@ -106,7 +109,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nfrerebeau/gamma">
+  <a href="https://github.com/crp2a/gamma">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Signal integration</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nfrerebeau/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/nfrerebeau/gamma/blob/master/R/integrateSignal.R'><code>R/integrateSignal.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/integrateSignal.R'><code>R/integrateSignal.R</code></a></small>
     <div class="hidden name"><code>integrateSignal.Rd</code></div>
     </div>
 
@@ -138,7 +141,7 @@
 
 <span class='co'># S4 method for GammaSpectra</span>
 <span class='fu'>integrateSignal</span>(<span class='no'>object</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>200</span>, <span class='fl'>2800</span>),
-  <span class='kw'>noise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>noise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>NiEi</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for GammaSpectrum</span>
 <span class='fu'>integrateSignal</span>(<span class='no'>object</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>200</span>, <span class='fl'>2800</span>),
@@ -149,30 +152,44 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class <a href='GammaSpectrum.html'>GammaSpectrum</a>.</p></td>
+      <td><p>An object of class <a href='GammaSpectrum.html'>GammaSpectrum</a> or
+<a href='GammaSpectra.html'>GammaSpectra</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra parameters passed to <code><a href='peaks.html'>fitPeaks</a></code>.</p></td>
+      <td><p>Currently not used.</p></td>
     </tr>
     <tr>
       <th>range</th>
       <td><p>A length two <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the energy
-range to integrate within.</p></td>
+range to integrate within (in keV).</p></td>
     </tr>
     <tr>
       <th>noise</th>
-      <td><p>A length-two <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector.</p></td>
+      <td><p>A length-two <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a></code> vector giving the noise
+value and error, respectively (see details).</p></td>
     </tr>
     <tr>
       <th>NiEi</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a></code> scalar.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a></code> scalar.
+Change this only if you know what you are doing.</p></td>
+    </tr>
+    <tr>
+      <th>simplify</th>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a></code> scalar: should the result be
+simplified to a matrix? The default value, <code>FALSE</code>, returns a list.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>If <code>simplify</code> is <code>FALSE</code>, then returns a list length-two
+ numeric vectors (default), else returns a matrix.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>TODO</p>
+<p>It assumes that each spectrum is calibrated in energy.</p>
     
 
   </div>
@@ -181,6 +198,8 @@ range to integrate within.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
           </ul>
 
@@ -191,7 +210,7 @@ range to integrate within.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Lahaye Christelle, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="24" /></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guillaume Guérin, Christelle Lahaye, <a href='https://www.u-bordeaux-montaigne.fr'><img src="logo_ubm.jpg" height="48" /></a>, <a href='https://lascarbx.labex.u-bordeaux.fr'><img src="logo_lascarbx.jpg" height="64" /></a>.</p>
 </div>
 
 <div class="pkgdown">
