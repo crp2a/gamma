@@ -13,10 +13,10 @@ setMethod(
     # Validation
     method <- match.arg(method, several.ok = FALSE)
     SNR <- as.integer(SNR)[1]
+
     # Remove baseline
     baseline <- estimateBaseline(object, ...)
     spc_clean <- object - baseline
-
     # Get count data
     spc <- methods::as(spc_clean, "data.frame")
     counts <- spc$counts
@@ -124,15 +124,12 @@ setMethod(
 setMethod(
   f = "fitPeaks",
   signature = signature(object = "PeakPosition", peaks = "missing"),
-  definition = function(object, scale = c("energy", "chanel"),
-                        bounds = NULL, ...) {
-    # Validation
-    scale <- match.arg(scale, several.ok = FALSE)
+  definition = function(object, bounds = NULL, ...) {
     # Get data
     spc <- object@spectrum
-    pks <- object@peaks[, scale]
+    pks <- object@peaks[, "chanel"]
 
-    fitPeaks(spc, pks, scale, bounds, ...)
+    fitPeaks(spc, peaks = pks, scale = "chanel", bounds = bounds)
   }
 )
 
