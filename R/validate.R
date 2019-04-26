@@ -188,12 +188,16 @@ setValidity(
       instrument <- details$instrument
       laboratory <- details$laboratory
       authors <- details$authors
+      detector <- details$detector
       date <- details$date
       if (length(instrument) != 0) {
         message <- c(message, checkVector(instrument, 1, "character"))
       }
       if (length(laboratory) != 0) {
         message <- c(message, checkVector(laboratory, 1, "character"))
+      }
+      if (length(detector) != 0) {
+        message <- c(message, checkVector(detector, 1, "character"))
       }
       if (length(authors) != 0) {
         message <- c(message, checkVector(authors, 1, "character"))

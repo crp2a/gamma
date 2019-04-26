@@ -394,7 +394,7 @@ setMethod(
     info <- list()
     if (!missing(details)) {
       if (is.list(details)) {
-        info_fields <- c("laboratory", "instrument", "authors")
+        info_fields <- c("laboratory", "instrument", "detector", "authors")
         k <- which(names(details) %in% info_fields)
         info <- details[k]
       }

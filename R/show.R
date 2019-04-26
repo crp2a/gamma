@@ -13,7 +13,6 @@ setMethod(
       } else {
         "not calibrated"
       }
-
       cat("Gamma spectrum:", "\n",
           "  Reference: ", object@reference, "\n",
           "  Instrument: ", object@instrument, "\n",
@@ -56,6 +55,7 @@ setMethod(
           "  Details:\n",
           "  - Laboratory:", object@details$laboratory, "\n",
           "  - Instrument:", object@details$instrument, "\n",
+          "  - Detector:", object@details$detector, "\n",
           "  - Authors:", object@details$authors, "\n",
           "  - Date:", as.character(object@details$date), "\n",
           "  Model summary:\n",
