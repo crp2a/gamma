@@ -12,14 +12,14 @@ header-includes:
    - \usepackage{amssymb}
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{CRP2A #1}
+  %\VignetteIndexEntry{CRP2A#1}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -242,7 +242,7 @@ plot_stdres <- ggplot2::ggplot(calib_residuals,
                                      y = 0, yend = standardized)) + 
   ggplot2::geom_point() +
   ggplot2::theme_bw() +
-  ggplot2::labs(title = "Std residuals vs fitted values",
+  ggplot2::labs(title = "Std. residuals vs fitted values",
                 x = "Fitted values", y = "Standardized residuals")
 
 # Normal QQ plot of standardized residuals
@@ -295,28 +295,84 @@ cowplot::plot_grid(
 ```
 
 ## Compare with previous values
-### Signal integration
-```{r integrate-diff, fig.width=3.5, fig.height=3.5, fig.align="center"}
-# Signal values from the VBA macro in use in the laboratory
-old_signal <- data.frame(
-  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
-  old_value = c(64071.59, 27974.89, 46580.21, 52645.12, 
-                21227.36, 38008.82, 80121.52),
-  old_error = c(4.59, 10.45, 14.30, 12.43, 
-                10.12, 11.45, 20.39),
-  stringsAsFactors = FALSE
-)
-signal_diff <- t(signal) %>%
-  as.data.frame() %>%
-  dplyr::mutate(reference = rownames(.)) %>%
-  dplyr::inner_join(old_signal, ., by = "reference") %>%
-  dplyr::mutate(rel_error = ((value - old_value) / old_value) * 100)
+```{r test-import}
+# Import CNF files for calibration
+# Skip the 30 first chanels
+test_dir <- system.file("extdata/crp2a/test", package = "gamma")
+(test_spc <- read(test_dir, skip = TRUE))
+```
 
-ggplot2::ggplot(signal_diff, ggplot2::aes(x = reference, y = rel_error)) +
-  ggplot2::geom_col() +
-  ggplot2::labs(title = "Spectrum integration values",
-                x = "Reference", y = "Relative difference [%]") +
+```{r test-calibrate}
+# Peak parameters estimation
+# Fit peaks at chanel 75, 463, 825 (starting positions)
+# (expected energy: 238, 1461, 2614.5 keV)
+test_peaks <- lapply(
+  X = test_spc, 
+  FUN = fitPeaks, 
+  peaks = c(75, 463, 825),
+  bounds = c(0.5)
+)
+
+# Energy scale calibration
+test_scaled <- lapply(X = test_peaks, FUN = calibrate,  lines = expected_peaks)
+test_scaled <- methods::as(test_scaled, "GammaSpectra")
+
+plot(test_scaled, xaxis = "energy", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
   ggplot2::theme_bw()
+```
+
+```{r test-dose, fig.width=7, fig.height=5, fig.align="center"}
+# Estimate the gamma dose rate
+test_dose <- predict(BDX1, test_scaled)
+
+# Plot results
+plot(BDX1, test_dose) +
+  ggplot2::theme_bw()
+```
+
+```{r test-dose-table, echo=FALSE}
+knitr::kable(
+  as(test_dose, "data.frame"),
+  digits = 3,
+  col.names = c("Reference", "Dose", "Dose error", "Signal", "Signal error"),
+  caption = "Gamma dose rate estimates"
+)
+```
+
+```{r integrate-diff, echo=FALSE, fig.width=7, fig.height=3.5, fig.align="center"}
+# Results from the VBA macro in use in the laboratory
+test_diff <- test_dose %>%
+  methods::as(., "data.frame") %>%
+  dplyr::mutate(
+    signal_old = c(13491.21, 9482.82, 9398.50, 7695.64, 48385.39, 15836.60,
+                   14668.34, 14446.89, 12078.79, 10786.86),
+    dose_old = c(405, 279, 276, 223, 1500, 478, 442, 435, 360, 320)) %>%
+  dplyr::mutate(signal_diff = ((signal_value - signal_old) / signal_old) * 100,
+                dose_diff = ((dose_value - dose_old) / dose_old) * 100)
+
+plot_signal <- ggplot2::ggplot(
+  data = test_diff,
+  mapping = ggplot2::aes(x = reference, y = signal_diff)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(title = "Spectrum integration",
+                x = "Reference", y = "Relative difference [%]") +
+  ggplot2::theme_bw() +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
+
+plot_dose <- ggplot2::ggplot(
+  data = test_diff,
+  mapping = ggplot2::aes(x = reference, y = dose_diff)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(title = "Gamma dose rate",
+                x = "Reference", y = "Relative difference [%]") +
+  ggplot2::theme_bw() +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
+
+cowplot::plot_grid(
+  plot_signal, plot_dose,
+  ncol = 2, labels = "AUTO"
+)
 ```
 
 ## R session

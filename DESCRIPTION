@@ -1,7 +1,7 @@
 Package: gamma
 Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating
-Version: 0.0.0.9001
+Version: 0.1
 Authors@R: 
     c(person(given = "Nicolas",
              family = "Frerebeau",
@@ -24,7 +24,9 @@ Authors@R:
              email = "christelle.lahaye@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "https://orcid.org/0000-0003-2215-9015")),
       person("Université Bordeaux Montaigne",
-             role = c("cph", "fnd")))
+             role = c("cph", "fnd")),
+      person("LabEx Sciences archéologiques de Bordeaux",
+             role = c("fnd")))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Description: 'gamma' is intended to process in-situ

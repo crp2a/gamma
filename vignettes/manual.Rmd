@@ -22,7 +22,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -42,76 +42,85 @@ Typical workflow:
 3. Calibrate the energy scale with `calibrate()`
 4. Estimate the gamma dose rate with `predict()`
 
+The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own. Check out the following vignettes for an overview of the fitting process.
+
+```{r calib-dose, eval=FALSE}
+# IRAMAT-CRP2A LaBr (#1)
+utils::vignette("CRP2A#1", package = "gamma")
+
+# CEREGE LaBr (#1)
+utils::vignette("CEREGE#1", package = "gamma")
+```
+
 ## Import file
 ```{r import, fig.width=7, fig.height=5, fig.align="center"}
+# Automatically skip the first chanels
 # Import a CNF file
 cnf_test <- system.file("extdata/test.cnf", package = "gamma")
-(spc_cnf <- read(cnf_test))
+(spc_cnf <- read(cnf_test, skip = TRUE))
 
 # Import a TKA file
 tka_test <- system.file("extdata/test.tka", package = "gamma")
-(spc_tka <- read(tka_test))
+(spc_tka <- read(tka_test, skip = TRUE))
 
 # Import all files in a given directory
 files_test <- system.file("extdata/", package = "gamma")
-(spc <- read(files_test))
+(spc <- read(files_test, skip = TRUE))
 ```
 
 ## Inspect spectrum
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
-# Plot spectra
-plot(spc, xaxis = "chanel", yaxis = "rate", facet = TRUE) +
+# Plot TKA spectrum
+plot(spc_tka) +
   ggplot2::theme_bw()
-```
-
-```{r import-skip, fig.width=7, fig.height=5, fig.align="center"}
-# Import a file and skip the first chanels
-(spc_tka <- read(tka_test, skip = 1:35))
-
-(spc_cnf <- read(cnf_test, skip = TRUE))
 
 # Plot spectra
-plot(spc_cnf) +
+plot(spc, facet = TRUE) +
   ggplot2::theme_bw()
 ```
 
 ## Calibrate the energy scale
 ### Estimate and remove baseline
-Algorithme SNIP [@ryan1988; @morhac1997; @morhac2008]
+SNIP algorithm [@ryan1988; @morhac1997; @morhac2008]
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
-# Estimate baseline
-baseline <- estimateBaseline(spc_cnf, method = "SNIP")
+# Estimate baseline of a single file
+baseline <- estimateBaseline(spc_tka)
 
 # Plot spectrum + baseline
-plot(spc_cnf, baseline, xaxis = "energy", yaxis = "count") +
+plot(spc_tka, baseline) +
   ggplot2::theme_bw()
 ```
 
 ```{r baseline-remove, fig.width=7, fig.height=5, fig.align="center"}
-# Substract previously estimated baseline
-spc_clean1 <- spc_cnf - baseline
-# Or, you can just remove baseline from spectrum
-spc_clean2 <- removeBaseline(spc_cnf, method = "SNIP")
+# Substract the previously estimated baseline
+spc_clean1 <- spc_tka - baseline
+# Or, remove the baseline in one go
+spc_clean2 <- removeBaseline(spc_tka)
 
 identical(spc_clean1, spc_clean2)
 
-# Plot spectra
+# Plot spectrum
 plot(spc_clean1) +
   ggplot2::theme_bw()
 ```
 
+```{r baseline-remove-multi, eval=FALSE}
+# Remove the baseline of multiple spectra in one go
+spc_clean <- removeBaseline(spc)
+```
+
 ### Automatic peak detection
-On peut tenter de détecter automatiquement les pics présents dans le spectre.
-Un pic est identifié comme tel s'il y a changement de signe de la courbe dans une fenêtre donnée et si la valeur est supérieure a `SNR` fois le rapport signal sur bruit.
-
-Le vrai problème reside dans le choix de la fenêtre (en nombre de canaux) pour la recherche de pics.
-Si `span = NULL` la demi-fenêtre de recherche est fixée à 5% du nombre de canaux.
-
 ```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
-# Detect peaks
-peak_index <- findPeaks(spc_cnf)
+# Detect peaks in a single file
+peak_index <- findPeaks(spc_tka)
 
+# Plot spectrum
+plot(peak_index) +
+  ggplot2::theme_bw()
+```
+
+```{r peak-detection-table, include=FALSE}
 # Get peak positions
 knitr::kable(
   peak_index[["peaks"]],
@@ -119,39 +128,39 @@ knitr::kable(
   col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]"),
   caption = "Automatic peak detection"
 )
-
-# Plot spectrum
-plot(peak_index) +
-  ggplot2::theme_bw()
 ```
 
 ### Peak parameters estimation
-Comme le spectre est bruité, il peut y avoir un léger décalage entre la position du pic identifié automatiquement et la valeur attendue. Pour améliorer ça, on ajuste des gaussiennes aux positions souhaitées et on en récupère les paramètres. La position du pic retenue est alors la valeur du spectre la plus proche de la moyenne de la gaussienne correspondante.
-
-On peut ajuster des gaussiennes directement à partir des résultats de l'étape précédente (détection automatique) ou spécifier les positions de départ.
-
-Si les pics sont trop rapprochés ou le signal trop bruité, la première solution peut ne pas aboutir (problème de convergence lors de l'ajustement des gaussiennes). Dans la mesure où on est interessé par seulement trois pics (238, 1461, 2614.5 keV), la seconde approche produit de meilleurs résultats (et réduit le temps de calcul).
-
-Dans tous les cas, mieux vaut vérifier visuellement les résultats après.
-
 ```{r peak-fit-auto, fig.width=7, fig.height=5, fig.align="center"}
 # Fit peaks found by automatic detection
 peak_fit_auto <- fitPeaks(peak_index)
 
 plot(peak_fit_auto) +
-  ggplot2::labs(title = "Peak parameters estimate") +
+  ggplot2::labs(title = "Fitted peaks from automatic detection") +
   ggplot2::theme_bw()
+```
+
+```{r peak-fit-auto-table, include=FALSE}
+# Get peak parameters
+knitr::kable(
+  peak_fit_auto[["coefficients"]],
+  digits = 3,
+  col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
+  caption = "Peak parameters estimate"
+)
 ```
 
 ```{r peak-fit-manual, fig.width=7, fig.height=5, fig.align="center"}
 # Fit peaks at a given chanel
-peak_fit_chanel <- fitPeaks(spc_clean1, peaks = c(86, 496, 876))
+peak_fit_chanel <- fitPeaks(spc_tka, peaks = c(86, 496, 876))
 
 ## Plot results
 plot(peak_fit_chanel) +
-  ggplot2::labs(title = "Fixed peak positions (chanel)") +
+  ggplot2::labs(title = "Fitted peaks from fixed starting positions") +
   ggplot2::theme_bw()
+```
 
+```{r peak-fit-manual-table, include=FALSE}
 ## Get peak positions
 knitr::kable(
   peak_fit_chanel[["coefficients"]],
@@ -162,44 +171,48 @@ knitr::kable(
 ```
 
 ### Energy scale calibration
-```{r calibrate}
+```{r calibrate-fixed, fig.width=7, fig.height=5, fig.align="center"}
 calib_lines <- list(
   Pb = c(chanel = 86, energy = 238),
-  K = c(chanel = 493, energy = 1461),
+  K40 = c(chanel = 496, energy = 1461),
   Cs = c(chanel = 876, energy = 2614.5)
 )
 
-tka_scale <- calibrate(spc_tka, lines = calib_lines)
+tka_scaled1 <- calibrate(spc_tka, lines = calib_lines)
 
-plot(tka_scale) +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
+plot(tka_scaled1) +
+  ggplot2::labs(title = "Calibrated spectrum (using fixed lines)") +
+  ggplot2::theme_bw()
+```
+
+```{r calibrate-peaks, fig.width=7, fig.height=5, fig.align="center"}
+tka_scaled2 <- calibrate(peak_fit_chanel, lines = c(238, 1461, 2614.5))
+
+plot(tka_scaled2) +
+  ggplot2::labs(title = "Calibrated spectrum (using peak models)") +
   ggplot2::theme_bw()
 ```
 
 ## Gamma dose rate estimation
-### Signal integration
-```{r integrate}
-(tka_int1 <- integrateSignal(tka_scale, range = c(200, 2800),
-                             noise = NULL))
+```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
+# Load the calibration curve
+data(BDX1)
 
-(tka_int2 <- integrateSignal(tka_scale, range = c(200, 2800), 
-                             noise = c(1114.769, 0.5378)))
+# Estimate the gamma dose rate
+dose_rate <- predict(BDX1, tka_scaled2)
+
+# Estimate the gamma dose rate
+plot(BDX1, dose_rate) +
+  ggplot2::theme_bw()
 ```
 
-### Dose Rate
-```{r dose-rate, eval=FALSE, fig.width=7, fig.height=5, fig.align="center"}
-# Calibrate energy scale
-cnf_scale <- calibrate(spc_cnf, lines = calib_lines)
-
-# Visual inspection
-plot(spc_cnf, cnf_scale) +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
-  ggplot2::theme_bw()
-
-# Estimate dose rate
-dose_rate <- predict(cnf_scale, calib_curve)
-as(dose_rate, "data.frame")
+```{r dose-rate-table, echo=FALSE}
+knitr::kable(
+  as(dose_rate, "data.frame"),
+  digits = 3,
+  col.names = c("Reference", "Dose", "Dose error", "Signal", "Signal error"),
+  caption = "Gamma dose rate estimates"
+)
 ```
 
 ## References

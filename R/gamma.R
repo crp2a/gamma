@@ -2,8 +2,8 @@
 #' \tabular{ll}{
 #'  \strong{Package:} \tab gamma \cr
 #'  \strong{Type:} \tab Package \cr
-#'  \strong{Version:} \tab 0.0.0.9000 \cr
-#'  \strong{Date:} \tab 2019-03-28 \cr
+#'  \strong{Version:} \tab 0.1 \cr
+#'  \strong{Date:} \tab 2019-04-26 \cr
 #'  \strong{License:} \tab GPL-3 \cr
 #'  \strong{DOI:} \tab \href{https://doi.org/xxx}{xxx}
 #' }

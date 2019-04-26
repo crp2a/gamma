@@ -22,7 +22,8 @@ setAs(
       chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
       energy = if (length(from@energy) != 0) from@energy else NA_real_,
       counts = if (length(from@counts) != 0) from@counts else NA_real_,
-      rate = if (length(from@rate) != 0) from@rate else NA_real_
+      rate = if (length(from@rate) != 0) from@rate else NA_real_,
+      stringsAsFactors = FALSE
     )
     return(df)
   }
@@ -45,7 +46,8 @@ setAs(
       dose_value = if (length(from@dose_value) != 0) from@dose_value else NA_real_,
       dose_error = if (length(from@dose_error) != 0) from@dose_error else NA_real_,
       signal_value = if (length(from@signal_value) != 0) from@signal_value else NA_real_,
-      signal_error = if (length(from@signal_error) != 0) from@signal_error else NA_real_
+      signal_error = if (length(from@signal_error) != 0) from@signal_error else NA_real_,
+      stringsAsFactors = FALSE
     )
     return(df)
   }
@@ -54,7 +56,8 @@ setAs(
   from = "PeakModel",
   to = "data.frame",
   def = function(from) {
-    df <- as.data.frame(from@coefficients)
+    df <- as.data.frame(from@coefficients,
+                        stringsAsFactors = FALSE)
     return(df)
   }
 )
@@ -62,7 +65,8 @@ setAs(
   from = "PeakPosition",
   to = "data.frame",
   def = function(from) {
-    df <- as.data.frame(from@peaks)
+    df <- as.data.frame(from@peaks,
+                        stringsAsFactors = FALSE)
     return(df)
   }
 )
