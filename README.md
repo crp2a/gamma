@@ -46,9 +46,9 @@ utils::vignette("gamma", package = "gamma")
 
 ## Set the expected chanel/energy peaks for the energy scale calibration.
 calib_lines <- list(
-  Pb = c(chanel = 86, energy = 238),
-  K40 = c(chanel = 496, energy = 1461),
-  Cs = c(chanel = 876, energy = 2614.5)
+  c(chanel = 86, energy = 238),
+  c(chanel = 496, energy = 1461),
+  c(chanel = 876, energy = 2614.5)
 )
 
 ## Load the calibration curve for the dose rate estimation.
@@ -63,8 +63,12 @@ spectrum <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
-  gamma::predict(BDX1, .) %>%
+  gamma::predict(BDX1, .) %T>%
+  print() %>%
   gamma::plot(BDX1, .)
+#> 1 gamma dose rate estimate 
+#>   reference dose_value dose_error signal_value signal_error
+#> 1  test_CNF   3971.732   129.7594     126139.5     9.603408
 ```
 
 <img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />

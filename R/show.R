@@ -39,7 +39,7 @@ setMethod(
   definition = function(object) {
     n <- length(object)
     if (n != 0) {
-      spc <- ifelse(n > 1, "spectra", "spectrum")
+      spc <- ngettext(n, "spectrum", "spectra", )
       ref <- names(object)
       cat("A collection of ", n, " gamma ", spc, ": ",
           paste(ref, collapse = ", "), "\n",
@@ -86,8 +86,9 @@ setMethod(
   signature = "DoseRate",
   definition = function(object) {
     n <- length(object@dose_value)
-    est <- ifelse(n > 1, "estimates", "estimate")
-    cat("A set of", n, "gamma dose rate", est, "\n", sep = " ")
+    est <- ngettext(n, "estimate", "estimates")
+    cat(n, "gamma dose rate", est, "\n", sep = " ")
+    print(methods::as(object, "data.frame"))
   }
 )
 
@@ -98,7 +99,7 @@ setMethod(
   definition = function(object) {
     if (length(object@peaks) != 0) {
       n <- nrow(object@peaks)
-      pks <- ifelse(n > 1, " peaks were ", " peak was ")
+      pks <- ngettext(n, " peak was ", " peaks were ")
       cat(n, pks, "detected:", "\n",
           "  Position (chanel):\t", paste(object@peaks$chanel, collapse = "\t"), "\n",
           "  Height (count): \t", paste(object@peaks$counts, collapse = "\t"), "\n",
@@ -116,7 +117,7 @@ setMethod(
   definition = function(object) {
     if (length(object@coefficients) != 0) {
       n <- nrow(object@coefficients)
-      pks <- ifelse(n > 1, " peaks were ", " peak was ")
+      pks <- ngettext(n, " peak was ", " peaks were ")
       cat(n, pks, "estimated:\n", sep = "")
       print(object@coefficients)
     } else {
