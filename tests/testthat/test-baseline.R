@@ -1,6 +1,6 @@
 context("Baseline")
 
-spc_file <- system.file("extdata/test.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum <- read(spc_file)
 
 spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")

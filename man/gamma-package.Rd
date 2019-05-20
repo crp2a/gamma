@@ -48,7 +48,8 @@ Useful links:
  Nicolas Frerebeau \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
  Guillaume Guérin \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
  Christelle Lahaye \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
- Brice Lebrun \tab \emph{CEREGE, Aix-Marseille Université, France}
+ Brice Lebrun \tab \emph{CEREGE, Aix-Marseille Université, France} \cr
+ Guilhem Paradol \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France}
 }
 
 \strong{Package maintainer}

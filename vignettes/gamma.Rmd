@@ -1,10 +1,10 @@
 ---
 title: "Manual"
 author:
-- "N. Frerebeau"
-- "B. Lebrun"
-- "G. Guérin"
-- "C. Lahaye"
+- N. Frerebeau
+- B. Lebrun
+- G. Guérin
+- C. Lahaye
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -42,13 +42,13 @@ Typical workflow:
 3. Calibrate the energy scale with `calibrate()`
 4. Estimate the gamma dose rate with `predict()`
 
-The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own. Check out the following vignettes for an overview of the fitting process.
+The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own (see `help(fit)`). Check out the following vignettes for an overview of the fitting process.
 
 ```{r calib-dose, eval=FALSE}
 # IRAMAT-CRP2A LaBr (#1)
 utils::vignette("CRP2A#1", package = "gamma")
 
-# CEREGE LaBr (#1)
+# CEREGE NaI (#1)
 utils::vignette("CEREGE#1", package = "gamma")
 ```
 
@@ -56,11 +56,11 @@ utils::vignette("CEREGE#1", package = "gamma")
 ```{r import, fig.width=7, fig.height=5, fig.align="center"}
 # Automatically skip the first chanels
 # Import a CNF file
-cnf_test <- system.file("extdata/test.cnf", package = "gamma")
+cnf_test <- system.file("extdata/test_CNF.cnf", package = "gamma")
 (spc_cnf <- read(cnf_test, skip = TRUE))
 
 # Import a TKA file
-tka_test <- system.file("extdata/test.tka", package = "gamma")
+tka_test <- system.file("extdata/test_TKA.tka", package = "gamma")
 (spc_tka <- read(tka_test, skip = TRUE))
 
 # Import all files in a given directory
@@ -71,7 +71,7 @@ files_test <- system.file("extdata/", package = "gamma")
 ## Inspect spectrum
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
 # Plot TKA spectrum
-plot(spc_tka) +
+plot(spc_cnf) +
   ggplot2::theme_bw()
 
 # Plot spectra
@@ -120,7 +120,7 @@ plot(peak_index) +
   ggplot2::theme_bw()
 ```
 
-```{r peak-detection-table, include=FALSE}
+```{r peak-detection-table, echo=FALSE}
 # Get peak positions
 knitr::kable(
   peak_index[["peaks"]],
@@ -140,7 +140,7 @@ plot(peak_fit_auto) +
   ggplot2::theme_bw()
 ```
 
-```{r peak-fit-auto-table, include=FALSE}
+```{r peak-fit-auto-table, echo=FALSE}
 # Get peak parameters
 knitr::kable(
   peak_fit_auto[["coefficients"]],
@@ -160,7 +160,7 @@ plot(peak_fit_chanel) +
   ggplot2::theme_bw()
 ```
 
-```{r peak-fit-manual-table, include=FALSE}
+```{r peak-fit-manual-table, echo=FALSE}
 ## Get peak positions
 knitr::kable(
   peak_fit_chanel[["coefficients"]],
@@ -178,20 +178,17 @@ calib_lines <- list(
   Cs = c(chanel = 876, energy = 2614.5)
 )
 
+# Calibrated spectrum using fixed lines
 tka_scaled1 <- calibrate(spc_tka, lines = calib_lines)
 
-plot(tka_scaled1) +
-  ggplot2::labs(title = "Calibrated spectrum (using fixed lines)") +
-  ggplot2::theme_bw()
-```
-
-```{r calibrate-peaks, fig.width=7, fig.height=5, fig.align="center"}
+# Calibrated spectrum using peak models
 tka_scaled2 <- calibrate(peak_fit_chanel, lines = c(238, 1461, 2614.5))
 
-plot(tka_scaled2) +
-  ggplot2::labs(title = "Calibrated spectrum (using peak models)") +
+plot(tka_scaled1, tka_scaled2) +
+  ggplot2::labs(title = "Calibrated spectra") +
   ggplot2::theme_bw()
 ```
+
 
 ## Gamma dose rate estimation
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}

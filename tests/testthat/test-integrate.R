@@ -1,7 +1,7 @@
 context("Integrate spectrum")
 
 test_that("Integrate GammaSpectrum", {
-  spc_file <- system.file("extdata/test.cnf", package = "gamma")
+  spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
   spectrum <- read(spc_file)
 
   int_NiEi <- integrateSignal(spectrum, NiEi = TRUE)

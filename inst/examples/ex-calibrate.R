@@ -1,5 +1,5 @@
 # Import a CNF file for calibration
-tka_file <- system.file("extdata/test.tka", package = "gamma")
+tka_file <- system.file("extdata/test_TKA.tka", package = "gamma")
 (tka_spc <- read(tka_file, skip = TRUE))
 
 ## 1. Use observed peak positions

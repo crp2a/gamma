@@ -69,7 +69,7 @@ Finds local maxima in sequential data.
 
 \examples{
 # Import a Canberra CNF file
-spc_file <- system.file("extdata/test.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum <- read(spc_file, skip = TRUE)
 
 # Find peaks

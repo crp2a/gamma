@@ -1,7 +1,7 @@
 context("Calibrate energy scale")
 
 test_that("Calibrate GammaSpectrum", {
-  spc_file <- system.file("extdata/test.cnf", package = "gamma")
+  spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
   spectrum <- read(spc_file)
 
   lines <- list(
