@@ -3,16 +3,19 @@ context("Dose rate")
 test_that("Build calibration curve", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir, skip = TRUE)
-  spectra <- spectra[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
 
-  dose <- list(
-    reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
-    dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
-    dose_error = c(36, 21, 24, 17, 18, 12, 112)
+  setDoseRate(spectra) <- list(
+    BRIQUE = c(1986, 36),
+    C341 = c(850, 21),
+    C347 = c(1424, 24),
+    GOU = c(1575, 17),
+    LMP = c(642, 18),
+    MAZ = c(1141, 12),
+    PEP = c(2538, 112)
   )
 
   calib <- fit(
-    spectra, dose = as(dose, "DoseRate"), noise = c(25312, 1.66),
+    spectra, noise = c(25312, 1.66),
     range = c(200, 2800), intercept = TRUE, weights = FALSE,
     details = NULL
   )
