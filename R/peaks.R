@@ -86,7 +86,7 @@ setMethod(
     # Find peaks in spectrum data
     pks <- spc[which(spc$chanel %in% peaks), ]
     rownames(pks) <- paste("peak #", 1:nrow(pks), sep = "")
-
+    # Fit peaks at given postion
     fit <- apply(
       X = pks,
       MARGIN = 1,
@@ -95,6 +95,21 @@ setMethod(
       },
       spectrum = spc, bounds = bounds
     )
+    # Remove NULL entries
+    null_index <- sapply(X = fit, FUN = is.null, simplify = TRUE)
+    if (any(null_index)) {
+      n <- sum(null_index)
+      warning(
+        sprintf(ngettext(
+          n,
+          "%d peak has a standard deviation of zero and was skipped:",
+          "%d peaks have a standard deviation of zero and were skipped:"
+        ), n),
+        "\n* ", paste0(rownames(pks)[null_index], collapse = ".\n* "), ".",
+        call. = FALSE
+      )
+      fit <- fit[!null_index]
+    }
 
     # Find peaks in spectrum data
     param <- t(sapply(X = fit, FUN = stats::coef))
@@ -153,6 +168,7 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
     x = x[, scale], y = x$counts
   )
   sd <- fwhm / (2 * sqrt(2 * log(2)))
+  if (sd == 0) return(NULL)
   ## Height
   height <- peaks["counts"]
 
@@ -167,8 +183,8 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
     if (n_bounds != 1 & n_bounds != n_param)
       stop(sprintf("%s must be of length one or %d, not %d",
                    sQuote("bounds"), n_param, n_bounds))
-    if (any(bounds > 1))
-      stop(sprintf("%s between 0 and 1", sQuote("bounds")))
+    # if (any(bounds > 1))
+    #   stop(sprintf("%s between 0 and 1", sQuote("bounds")))
     lower_bounds <- parameters * (1 - bounds)
     upper_bounds <- parameters * (1 + bounds)
   }
