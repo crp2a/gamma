@@ -3,9 +3,9 @@ url: http://gamma.archaeo.science
 authors:
   Université Bordeaux Montaigne:
     href: https://www.u-bordeaux-montaigne.fr
-    html: <img src="logo_ubm.jpg" height="48" />
+    html: <img src="http://gamma.archaeo.science/logo_ubm.jpg" height="48" />
   LabEx Sciences archéologiques de Bordeaux:
     href: https://lascarbx.labex.u-bordeaux.fr
-    html: <img src="logo_lascarbx.jpg" height="64" />
+    html: <img src="http://gamma.archaeo.science/logo_lascarbx.jpg" height="64" />
 development:
   mode: auto
