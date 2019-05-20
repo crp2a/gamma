@@ -3,6 +3,7 @@
 \docType{class}
 \name{GammaSpectrum-class}
 \alias{GammaSpectrum-class}
+\alias{.GammaSpectrum}
 \alias{[[,GammaSpectrum-method}
 \alias{length,GammaSpectrum-method}
 \title{An S4 class to represent a gamma sectrum}
@@ -57,30 +58,16 @@ each channel.}
 
 \item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
 scale calibration (see \code{\link{calibrate}}).}
+
+\item{\code{dose_rate}}{A length-two \code{\link{numeric}} vector giving the dose
+rate and corresponding error.}
 }}
-
-\section{Methods}{
-
-\describe{
- \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
-  object. See \code{\link{estimateBaseline}} for details.}
- \item{predict}{Estimate the in-situ gamma dose rate of a
-  \code{GammaSpectrum} object. See \code{\link{predict}} for details.}
- \item{findPeaks}{Look for local maxima to extract peaks out of a
-  \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
- \item{fitPeaks}{Adjust a Gaussian at given positions to estimate peak
-  paramaters out of a \code{GammaSpectrum} object.
-  See \code{\link{fitPeaks}} for details.}
- \item{removeBaseline}{Estimate and remove the baseline of a
-  \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
-}
-}
 
 \section{Access}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{length(x)}}{Get the number of chanel in \code{x}.}
+ \item{\code{length(x)}}{Get the number of chanels in \code{x}.}
 }
 }
 

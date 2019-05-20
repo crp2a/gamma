@@ -3,6 +3,7 @@
 \docType{class}
 \name{PeakModel-class}
 \alias{PeakModel-class}
+\alias{.PeakModel}
 \alias{[[,PeakModel-method}
 \title{An S4 class to represent a set peaks}
 \usage{

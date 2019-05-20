@@ -3,6 +3,7 @@
 \docType{class}
 \name{PeakPosition-class}
 \alias{PeakPosition-class}
+\alias{.PeakPosition}
 \alias{[[,PeakPosition-method}
 \title{An S4 class to represent a set of peaks}
 \usage{

@@ -4,22 +4,16 @@
 \name{fit}
 \alias{fit}
 \alias{fit-method}
-\alias{fit,GammaSpectra,DoseRate,numeric-method}
+\alias{fit,GammaSpectra,numeric-method}
 \title{Calibration}
 \usage{
-fit(object, doses, noise, ...)
+fit(object, noise, ...)
 
-\S4method{fit}{GammaSpectra,DoseRate,numeric}(object, doses, noise,
-  range = c(200, 2800), intercept = TRUE, weights = FALSE,
-  details = NULL, ...)
+\S4method{fit}{GammaSpectra,numeric}(object, noise, range = c(200, 2800),
+  intercept = TRUE, weights = FALSE, details = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectra}.}
-
-\item{doses}{A \code{\link{list}} of length-two numeric vectors giving the
-dose rate values and errors, respectively, for each element of
-\code{object}. Elements of the list will be matched by names to the
-references of the spectra.}
 
 \item{noise}{A \code{\link{list}} of two numeric values giving the noise
 value and error.}
@@ -45,26 +39,28 @@ An object of class \linkS4class{CalibrationCurve}.
 \description{
 Builds a calibration curve for gamma dose rate estimation.
 }
+\details{
+TODO
+}
 \examples{
 # Import CNF files for calibration
 spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-spc <- read(spc_dir, skip = TRUE)
-## Select 'BRIQUE', 'C341', 'C347', 'GOU', 'LMP', 'MAZ' and 'PEP' to build the curve
-spc_calib <- spc[c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")]
+spc_calib <- read(spc_dir, skip = TRUE)
 
 # Set dose rate values and errors for each spectrum
-known_doses <- list(
-  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
-  dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
-  dose_error = c(36, 21, 24, 17, 18, 12, 112)
+setDoseRate(spc_calib) <- list(
+  BRIQUE = c(1986, 36),
+  C341 = c(850, 21),
+  C347 = c(1424, 24),
+  GOU = c(1575, 17),
+  LMP = c(642, 18),
+  MAZ = c(1141, 12),
+  PEP = c(2538, 112)
 )
-## Coerce to a 'DoseRate' object
-known_doses <- methods::as(known_doses, "DoseRate")
 
 # Build the calibration curve
 calib_curve <- fit(
   spc_calib,
-  doses = known_doses,
   noise = c(value = 1190, error = 1),
   range = c(200, 2800)
 )

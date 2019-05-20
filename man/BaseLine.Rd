@@ -3,6 +3,7 @@
 \docType{class}
 \name{BaseLine-class}
 \alias{BaseLine-class}
+\alias{.BaseLine}
 \title{An S4 class to represent a spectrum baseline}
 \description{
 An S4 class to represent a spectrum baseline

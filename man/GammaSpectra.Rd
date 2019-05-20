@@ -3,6 +3,7 @@
 \docType{class}
 \name{GammaSpectra-class}
 \alias{GammaSpectra-class}
+\alias{.GammaSpectra}
 \alias{[,GammaSpectra-method}
 \alias{[[,GammaSpectra-method}
 \title{An S4 class to represent a collection of gamma sectra}

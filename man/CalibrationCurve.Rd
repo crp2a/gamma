@@ -3,6 +3,7 @@
 \docType{class}
 \name{CalibrationCurve-class}
 \alias{CalibrationCurve-class}
+\alias{.CalibrationCurve}
 \alias{[[,CalibrationCurve-method}
 \title{An S4 class to represent a calibration curve}
 \usage{
