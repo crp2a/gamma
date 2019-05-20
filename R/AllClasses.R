@@ -31,28 +31,16 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  each channel.
 #' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
 #'  scale calibration (see \code{\link{calibrate}}).
+#' @slot dose_rate A length-two \code{\link{numeric}} vector giving the dose
+#'  rate and corresponding error.
 #' @param x An object of class \code{GammaSpectrum}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
 #'  names of the slots.
-#' @section Methods:
-#' \describe{
-#'  \item{estimateBaseline}{Estimate the baseline of a \code{GammaSpectrum}
-#'   object. See \code{\link{estimateBaseline}} for details.}
-#'  \item{predict}{Estimate the in-situ gamma dose rate of a
-#'   \code{GammaSpectrum} object. See \code{\link{predict}} for details.}
-#'  \item{findPeaks}{Look for local maxima to extract peaks out of a
-#'   \code{GammaSpectrum} object. See \code{\link{findPeaks}} for details.}
-#'  \item{fitPeaks}{Adjust a Gaussian at given positions to estimate peak
-#'   paramaters out of a \code{GammaSpectrum} object.
-#'   See \code{\link{fitPeaks}} for details.}
-#'  \item{removeBaseline}{Estimate and remove the baseline of a
-#'   \code{GammaSpectrum} object. See \code{\link{removeBaseline}} for details.}
-#' }
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
-#'  \item{\code{length(x)}}{Get the number of chanel in \code{x}.}
+#'  \item{\code{length(x)}}{Get the number of chanels in \code{x}.}
 #' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
@@ -88,7 +76,8 @@ setClass(
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
-    calibration = "LmOrNull"
+    calibration = "LmOrNull",
+    dose_rate = "numeric"
   )
 )
 setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))

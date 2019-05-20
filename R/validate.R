@@ -53,6 +53,7 @@ setValidity(
     live_time <- object@live_time
     real_time <- object@real_time
     calibration <- object@calibration
+    dose_rate <- object@dose_rate
     message <- c()
 
     length_hash <- length(hash)
@@ -134,6 +135,20 @@ setValidity(
                   sQuote("chanel"), length(chanel),
                   sQuote("count"), length(count),
                   sQuote("energy"), length(energy))
+        )
+      }
+    }
+    if (length(dose_rate) != 0) {
+      if (!isPositive(dose_rate, strict = FALSE)) {
+        message <- c(
+          message,
+          sprintf("%s must be a strictly positive number.", sQuote("dose_rate"))
+        )
+      }
+      if (length(dose_rate) != 2) {
+        message <- c(
+          message,
+          sprintf("%s must be a length-two numeric vector.", sQuote("dose_rate"))
         )
       }
     }

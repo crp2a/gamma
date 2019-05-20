@@ -6,10 +6,6 @@ NULL
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param doses A \code{\link{list}} of length-two numeric vectors giving the
-#'  dose rate values and errors, respectively, for each element of
-#'  \code{object}. Elements of the list will be matched by names to the
-#'  references of the spectra.
 #' @param noise A \code{\link{list}} of two numeric values giving the noise
 #'  value and error.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
@@ -22,6 +18,8 @@ NULL
 #' @param details A list of \code{\link{character}} vector specifying additional
 #'  informations about the instrument for which the curve is built.
 #' @param ... Currently not used.
+#' @details
+#'  TODO
 #' @return An object of class \linkS4class{CalibrationCurve}.
 #' @seealso \link{predict}, \link{integrateSignal}
 #' @example inst/examples/ex-doserate.R
@@ -31,7 +29,7 @@ NULL
 #' @aliases fit-method
 setGeneric(
   name = "fit",
-  def = function(object, doses, noise, ...) standardGeneric("fit")
+  def = function(object, noise, ...) standardGeneric("fit")
 )
 
 #' Spectrum calibration
@@ -261,4 +259,29 @@ if (!isGeneric("plot")) {
 setGeneric(
   name = "read",
   def = function(file, ...) standardGeneric("read")
+)
+
+#' Extract or Replace Parts of an Object
+#'
+#' @param object An object from which to extract element(s) or in which to
+#'  replace element(s).
+#' @param value A possible value for the element(s) of \code{object}
+#' @author N. Frerebeau
+#' @docType methods
+#' @name extract
+#' @rdname extract
+#' @aliases extract-method replace-method
+NULL
+
+#' @export
+#' @rdname extract
+setGeneric(
+  name = "getDoseRate",
+  def = function(object) standardGeneric("getDoseRate")
+)
+#' @export
+#' @rdname extract
+setGeneric(
+  name = "setDoseRate<-",
+  def = function(object, value) standardGeneric("setDoseRate<-")
 )

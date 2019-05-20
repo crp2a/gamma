@@ -28,6 +28,29 @@ setMethod(
   }
 )
 
+#' @export
+#' @rdname extract
+#' @aliases getDoseRate,GammaSpectrum-method
+setMethod(
+  f = "getDoseRate",
+  signature = "GammaSpectrum",
+  definition = function(object) x@dose_rate
+)
+
+#' @export
+#' @rdname extract
+#' @aliases setDoseRate,GammaSpectrum-method
+setMethod(
+  f = "setDoseRate<-",
+  signature = "GammaSpectrum",
+  definition = function(object, value) {
+    value <- as.numeric(value)
+    object@dose_rate <- value
+    methods::validObject(object)
+    object
+  }
+)
+
 # GammaSpectra ================================================================
 #' @export
 #' @rdname GammaSpectra
@@ -73,6 +96,96 @@ setMethod(
     if (is.numeric(i)) i <- as.integer(i)
     item <- x@.Data[[i]]
     return(item)
+  }
+)
+
+#' @export
+#' @rdname extract
+#' @aliases getDoseRate,GammaSpectrum-method
+setMethod(
+  f = "getDoseRate",
+  signature = "GammaSpectrum",
+  definition = function(object) object@dose_rate
+)
+
+#' @export
+#' @rdname extract
+#' @aliases getDoseRate,GammaSpectra-method
+setMethod(
+  f = "getDoseRate",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    spc <- methods::S3Part(object, strictS3 = TRUE)
+    dose_rate <- lapply(
+      X = spc,
+      FUN = function(x) methods::slot(x, "dose_rate")
+    )
+    if (length(unlist(dose_rate)) == 0)
+      stop("No dose rate available for this spectra.", call. = FALSE)
+
+    dose_mtx <- do.call(rbind, dose_rate) %>%
+      as.data.frame(stringsAsFactors = FALSE) %>%
+      magrittr::set_colnames(c("value", "error")) %>%
+      dplyr::transmute(reference = rownames(.),
+                       dose_value = .data$value,
+                       dose_error = .data$error)
+    dose_mtx
+  }
+)
+
+#' @export
+#' @rdname extract
+#' @aliases setDoseRate,GammaSpectrum-method
+setMethod(
+  f = "setDoseRate<-",
+  signature = "GammaSpectrum",
+  definition = function(object, value) {
+    if (!is.numeric(value) | length(value) != 2)
+      stop("`value` must be a length-two numeric vector", call. = FALSE)
+
+    names(value) <- c("value", "error")
+    object@dose_rate <- value
+    methods::validObject(object)
+    object
+  }
+)
+
+#' @export
+#' @rdname extract
+#' @aliases setDoseRate,GammaSpectra-method
+setMethod(
+  f = "setDoseRate<-",
+  signature = "GammaSpectra",
+  definition = function(object, value) {
+    # Validation
+    if (!is.list(value))
+      stop("`value` must be a list.", call. = FALSE)
+    length_value <- length(value)
+    length_object <- length(object)
+    if (any(lengths(value) != rep(2, length_value)))
+      stop("`value` must be a list of length-two numeric vectors.",
+           call. = FALSE)
+
+    names_doses <- names(value)
+    names_object <- names(object)
+    if (is.null(names_doses)) {
+      if (length_value != length_object) {
+        stop(sprintf("`value` must be of length %d (not %d), ",
+                     length_object, length_value),
+             "otherwise each element of `value` must be named.", call. = FALSE)
+      } else {
+        mapply(FUN = methods::`slot<-`, object = object, value = value,
+               MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
+      }
+    } else {
+      sub_object <- object[names_doses]
+      sub_list <- methods::S3Part(sub_object, strictS3 = TRUE)
+      mapply(FUN = methods::`slot<-`, object = sub_list, value = value,
+             MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
+    }
+
+    methods::validObject(object)
+    object
   }
 )
 

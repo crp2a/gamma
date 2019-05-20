@@ -9,9 +9,14 @@ setMethod(
   definition = function(object) {
     if (length(object) != 0) {
       E <- if (length(object@energy) != 0) {
-        paste(range(round(object@energy, 2)), collapse = "-")
+        paste0(range(round(object@energy, 2)), collapse = " - ")
       } else {
         "not calibrated"
+      }
+      D <- if (length(object@dose_rate) != 0) {
+        paste0(object@dose_rate, collapse = " +/- ")
+      } else {
+        "not known"
       }
       cat("Gamma spectrum:", "\n",
           "  Reference: ", object@reference, "\n",
@@ -19,9 +24,10 @@ setMethod(
           "  Date: ", as.character(object@date), "\n",
           "  Number of chanels: ", length(object@chanel), "\n",
           "  Energy range (keV): ", E, "\n",
+          "  Dose rate: ", D, "\n",
           sep = "")
     } else {
-      cat("An empty gamma spectrum\n", sep = "")
+      cat("An empty gamma spectrum.\n", sep = "")
     }
   }
 )
@@ -39,7 +45,7 @@ setMethod(
           paste(ref, collapse = ", "), "\n",
           sep = "")
     } else {
-      cat("An empty set of gamma spectra\n", sep = "")
+      cat("An empty set of gamma spectra.\n", sep = "")
     }
   }
 )
