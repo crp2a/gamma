@@ -37,6 +37,7 @@
 #' @keywords internal
 "_PACKAGE"
 
+#' @importFrom methods new
 #' @importFrom graphics plot
 #' @importFrom magrittr %<>%
 #' @importFrom magrittr %>%

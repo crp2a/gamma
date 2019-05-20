@@ -62,7 +62,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @docType class
 #' @rdname GammaSpectrum
 #' @aliases GammaSpectrum-class
-setClass(
+.GammaSpectrum <- setClass(
   Class = "GammaSpectrum",
   slots = c(
     hash = "character",
@@ -135,7 +135,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' @docType class
 #' @rdname GammaSpectra
 #' @aliases GammaSpectra-class
-setClass(
+.GammaSpectra <- setClass(
   Class = "GammaSpectra",
   contains = "list"
 )
@@ -149,7 +149,7 @@ setClass(
 #' @docType class
 #' @rdname BaseLine
 #' @aliases BaseLine-class
-setClass(
+.BaseLine <- setClass(
   Class = "BaseLine",
   # TODO
   # slots = c(
@@ -227,7 +227,7 @@ setClass(
 #' @docType class
 #' @rdname CalibrationCurve
 #' @aliases CalibrationCurve-class
-setClass(
+.CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
   slots = c(
     details = "list",
@@ -260,7 +260,7 @@ setClass(
 #' @docType class
 #' @rdname PeakModel
 #' @aliases PeakModel-class
-setClass(
+.PeakModel <- setClass(
   Class = "PeakModel",
   slots = c(
     model = "list",
@@ -297,7 +297,7 @@ setClass(
 #' @docType class
 #' @rdname PeakPosition
 #' @aliases PeakPosition-class
-setClass(
+.PeakPosition <- setClass(
   Class = "PeakPosition",
   slots = list(
     method = "character",
