@@ -217,7 +217,7 @@ setMethod(
     # Bind data frame for 'ggplot2'
     data <- dplyr::bind_rows(calib, measure) %>%
       dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
-                                 rep("estimated", nrow(measure))))
+                                 rep("estimate", nrow(measure))))
     # Set error bar width and height
     error_width <- sum(range(data$signal_value) * c(-1, 1)) / 100
     error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
