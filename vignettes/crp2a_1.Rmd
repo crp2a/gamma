@@ -28,25 +28,6 @@ library(gamma)
 library(magrittr)
 ```
 
-## Set parameters
-```{r parameters}
-# Expected peak positions (energy scale)
-expected_peaks <- c(238, 1461, 2614.5)
-
-# Integration range (in keV)
-integration_range <- c(165, 2800)
-
-# Known values for dose rate estimation
-## List known values and errors
-known_doses <- list(
-  reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
-  dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
-  dose_error = c(36, 21, 24, 17, 18, 12, 112)
-)
-## Coerce to a 'DoseRate' object
-known_doses <- methods::as(known_doses, "DoseRate")
-```
-
 ## Import files
 ```{r import}
 # Import CNF files for calibration
@@ -64,7 +45,6 @@ noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
   ggplot2::labs(title = "Calibration spectra") +
   ggplot2::theme_bw()
 
@@ -80,11 +60,21 @@ plot(noise_spc) +
 # Peak parameters estimation
 # Fit peaks at chanel 75, 463, 825 (starting positions)
 # (expected energy: 238, 1461, 2614.5 keV)
-calib_peaks <- lapply(
-  X = calib_spc, 
-  FUN = fitPeaks, 
-  peaks = c(75, 463, 825),
-  bounds = c(0.5)
+calib_peaks <- list(
+  ## BRIQUE
+  BRIQUE = fitPeaks(calib_spc[["BRIQUE"]], peaks = c(75, 463, 825)),
+  ## C341
+  C341 = fitPeaks(calib_spc[["C341"]], peaks = c(75, 463, 825)),
+  ## C347
+  C347 = fitPeaks(calib_spc[["C347"]], peaks = c(75, 463, 825), bounds = c(0.5)),
+  ## GOU
+  GOU = fitPeaks(calib_spc[["GOU"]], peaks = c(75, 463, 825)),
+  ## LMP
+  LMP = fitPeaks(calib_spc[["LMP"]], peaks = c(75, 463, 825), bounds = c(0.5)),
+  ## MAZ
+  MAZ = fitPeaks(calib_spc[["MAZ"]], peaks = c(75, 463, 825)),
+  ## PEP
+  PEP = fitPeaks(calib_spc[["PEP"]], peaks = c(75, 463, 825))
 )
 ```
 
@@ -129,6 +119,9 @@ plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
 ```
 
 ```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
+# Expected energies (keV)
+expected_peaks <- c(238, 1461, 2614.5)
+
 # Energy scale calibration
 calib_scaled <- lapply(X = calib_peaks, FUN = calibrate,  lines = expected_peaks)
 calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
@@ -153,7 +146,14 @@ plot(noise_spc, noise_scaled, xaxis = "energy", yaxis = "rate") +
 ```
 
 ## Signal integration
-```{r integrate}
+### Get integration boudaries
+```{r integrate-bounds}
+# Integration range (in keV)
+integration_range <- c(165, 2800)
+```
+
+### Integrate
+```{r integrate-norm}
 # Integrate background noise
 # Compare with previous value of 25279.63 +/- 1.66
 noise <- integrateSignal(
@@ -184,19 +184,35 @@ knitr::kable(
 ```
 
 ## Build Calibration curve
+### Set dose rates
+```{r dose_rate}
+setDoseRate(calib_scaled) <- list(
+  BRIQUE = c(1986, 36),
+  C341 = c(850, 21),
+  C347 = c(1424, 24),
+  GOU = c(1575, 17),
+  LMP = c(642, 18),
+  MAZ = c(1141, 12),
+  PEP = c(2538, 112)
+)
+
+getDoseRate(calib_scaled)
+```
+
 ### Linear regression
 ```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
 # Build calibration curve
 (BDX1 <- fit(
   calib_scaled,
-  doses = known_doses,
   noise = noise,
   range = integration_range,
   intercept = TRUE,
-  details = list(laboratory = "IRAMAT-CRP2A (UMR 5060)",
-                 instrument = "InSpector 1000",
-                 detector = "LaBr",
-                 authors = "CRP2A Luminescence Team")
+  details = list(
+    laboratory = "IRAMAT-CRP2A (UMR 5060)",
+    instrument = "InSpector 1000",
+    detector = "LaBr",
+    authors = "CRP2A Luminescence Team"
+  )
 ))
 
 # Plot Calibration curve
@@ -274,8 +290,7 @@ dose_predict <- predict(BDX1, epsilon = 0.03) %>%
   dplyr::select(-signal_value, -signal_error) %>%
   dplyr::rename(pred_value = dose_value, pred_error = dose_error)
 
-dose_known <- methods::as(known_doses, "data.frame") %>%
-  dplyr::select(-signal_value, -signal_error) %>%
+dose_known <- getDoseRate(calib_scaled) %>%
   dplyr::rename(exp_value = "dose_value", exp_error = "dose_error")
 
 dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
@@ -302,7 +317,7 @@ test_dir <- system.file("extdata/crp2a/test", package = "gamma")
 (test_spc <- read(test_dir, skip = TRUE))
 ```
 
-```{r test-calibrate}
+```{r test-calibrate, fig.width=7, fig.height=5, fig.align="center"}
 # Peak parameters estimation
 # Fit peaks at chanel 75, 463, 825 (starting positions)
 # (expected energy: 238, 1461, 2614.5 keV)

@@ -22,7 +22,14 @@ CRP2A Calibration Curve #1
 \section{Changelog}{
 
  \describe{
-  \item{v0.1}{Curve creation.}
+  \item{v0.1.1}{Edit the energy scale of the calibration spectra.
+  Model summary: slope: 0.032 +/- 0; intercept: -41.173 +/- 20.847;
+  residual standard error: 20.83; multiple R-squared: 0.99916;
+  adjusted R-squared: 0.999.}
+  \item{v0.1.0}{Curve creation.
+  Model summary: slope: 0.032 +/- 0; intercept: -41.329 +/- 20.922;
+  residual standard error: 20.91; multiple R-squared: 0.99916;
+  adjusted R-squared: 0.99899.}
  }
 }
 
@@ -32,6 +39,6 @@ utils::data("BDX1", package = "gamma")
 BDX1
 
 # See how to replicate the curve
-utils::vignette("CRP2A #1", package = "gamma")
+utils::vignette("CRP2A#1", package = "gamma")
 }
 \keyword{datasets}
