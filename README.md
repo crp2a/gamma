@@ -40,6 +40,35 @@ devtools::install_github("crp2a/gamma")
 utils::vignette("gamma", package = "gamma")
 ```
 
+``` r
+# A minimal example
+# You may want to give extra attention to the energy calibration step.
+
+## Set the expected chanel/energy peaks for the energy scale calibration.
+calib_lines <- list(
+  Pb = c(chanel = 86, energy = 238),
+  K40 = c(chanel = 496, energy = 1461),
+  Cs = c(chanel = 876, energy = 2614.5)
+)
+
+## Load the calibration curve for the dose rate estimation.
+## As this curve is instrument specific, you will have to build your own.
+## See help(fit)
+data(BDX1, package = "gamma")
+
+## Find the full path to the spectrum file
+spectrum <- system.file("extdata/test_CNF.cnf", package = "gamma")
+
+## Estimate the gamma dose rate
+spectrum %>%
+  gamma::read(skip = TRUE) %>%
+  gamma::calibrate(lines = calib_lines) %>%
+  gamma::predict(BDX1, .) %>%
+  gamma::plot(BDX1, .)
+```
+
+<img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
+
 ## Contributing
 
 Please note that the `gamma` project is released with a [Contributor
