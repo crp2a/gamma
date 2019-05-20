@@ -73,8 +73,8 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
   # Read file
   spc_xy <- rxylib::read_xyData(file = file, ..., verbose = getOption("verbose"))
   # Get and check file format
-  format <- attr(spc_xy, "format_name")
-  if(format != "Canberra CNF")
+  file_format <- attr(spc_xy, "format_name")
+  if(file_format != "Canberra CNF")
     stop("Only Canberra CNF files are supported.")
 
   # Get metadata
@@ -106,7 +106,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
     reference = tools::file_path_sans_ext(basename(file)),
     date = date,
     instrument = instrument_name,
-    file_format = format,
+    file_format = "CNF",
     chanel = spc_data$chanel,
     energy = spc_data$energy,
     counts = spc_data$counts,
@@ -127,8 +127,6 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
 readCanberraTKA <- function(file, skip = NULL, ...) {
   # Read file
   spc_xy <- utils::read.table(file = file)
-  # Get and check file format
-  format <- "Canberra TKA"
 
   # Get metadata
   live_time <- as.numeric(spc_xy[1, 1])
@@ -154,7 +152,7 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
     hash = hash,
     reference = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
-    file_format = format,
+    file_format = "TKA",
     chanel = spc_data$chanel,
     counts = spc_data$count,
     live_time = live_time,
