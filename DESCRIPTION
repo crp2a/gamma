@@ -1,7 +1,7 @@
 Package: gamma
 Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
     Luminescence Dating
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Authors@R: 
     c(person(given = "Nicolas",
              family = "Frerebeau",
