@@ -196,18 +196,14 @@ plot(tka_scaled1, tka_scaled2) +
 data(BDX1)
 
 # Estimate the gamma dose rate
-dose_rate <- predict(BDX1, tka_scaled2)
-
-# Estimate the gamma dose rate
-plot(BDX1, dose_rate) +
-  ggplot2::theme_bw()
+dose_rate <- predict(BDX1, tka_scaled2, simplify = TRUE)
 ```
 
 ```{r dose-rate-table, echo=FALSE}
 knitr::kable(
-  as(dose_rate, "data.frame"),
+  dose_rate,
   digits = 3,
-  col.names = c("Reference", "Dose", "Dose error", "Signal", "Signal error"),
+  col.names = c("Dose", "Dose error"),
   caption = "Gamma dose rate estimates"
 )
 ```

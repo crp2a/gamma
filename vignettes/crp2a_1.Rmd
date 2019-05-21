@@ -159,7 +159,6 @@ integration_range <- c(165, 2800)
 noise <- integrateSignal(
   noise_scaled,
   range = integration_range,
-  noise = NULL,
   NiEi = TRUE
 )
 knitr::kable(
@@ -177,7 +176,7 @@ signal <- integrateSignal(
   simplify = TRUE
 )
 knitr::kable(
-  t(signal),
+  signal,
   digits = 3,
   caption = "Reference spectra integration"
 )
@@ -221,6 +220,7 @@ plot(BDX1) +
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
+# Danger zone ! Don't touch !
 usethis::use_data(BDX1, overwrite = FALSE)
 ```
 
@@ -231,7 +231,7 @@ summary(BDX1@model)
 
 ```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
 calib_residuals <- data.frame(
-  reference = BDX1[["data"]]@reference,
+  reference = BDX1[["data"]]$reference,
   fitted = BDX1[["model"]]$fitted.values,
   residuals = BDX1[["model"]]$residuals,
   standardized = stats::rstandard(BDX1[["model"]]),
@@ -285,13 +285,17 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
                 x = "Observation", y = "D")
 
 # Relative error on dose rate estimation
-dose_predict <- predict(BDX1, epsilon = 0.03) %>%
-  methods::as(., "data.frame") %>%
-  dplyr::select(-signal_value, -signal_error) %>%
-  dplyr::rename(pred_value = dose_value, pred_error = dose_error)
+dose_predict <- predict(BDX1, epsilon = 0.03, simplify = TRUE) %>%
+  as.data.frame() %>%
+  dplyr::transmute(reference = rownames(.),
+                   pred_value = value, 
+                   pred_error = error)
 
 dose_known <- getDoseRate(calib_scaled) %>%
-  dplyr::rename(exp_value = "dose_value", exp_error = "dose_error")
+  as.data.frame() %>%
+  dplyr::transmute(reference = rownames(.),
+                   exp_value = value, 
+                   exp_error = error)
 
 dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
   dplyr::mutate(rel_error = ((pred_value - exp_value) / exp_value) * 100)
@@ -339,41 +343,37 @@ plot(test_scaled, xaxis = "energy", yaxis = "rate") +
 
 ```{r test-dose, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate the gamma dose rate
-test_dose <- predict(BDX1, test_scaled)
-
-# Plot results
-plot(BDX1, test_dose) +
-  ggplot2::theme_bw()
+test_dose <- predict(BDX1, test_scaled, simplify = TRUE)
 ```
 
 ```{r test-dose-table, echo=FALSE}
 knitr::kable(
-  as(test_dose, "data.frame"),
+  test_dose,
   digits = 3,
-  col.names = c("Reference", "Dose", "Dose error", "Signal", "Signal error"),
+  col.names = c("Dose", "Dose error"),
   caption = "Gamma dose rate estimates"
 )
 ```
 
-```{r integrate-diff, echo=FALSE, fig.width=7, fig.height=3.5, fig.align="center"}
+```{r integrate-diff, echo=FALSE, fig.width=5, fig.height=3.5, fig.align="center"}
 # Results from the VBA macro in use in the laboratory
 test_diff <- test_dose %>%
-  methods::as(., "data.frame") %>%
+  as.data.frame() %>%
   dplyr::mutate(
-    signal_old = c(13491.21, 9482.82, 9398.50, 7695.64, 48385.39, 15836.60,
-                   14668.34, 14446.89, 12078.79, 10786.86),
+  #   signal_old = c(13491.21, 9482.82, 9398.50, 7695.64, 48385.39, 15836.60,
+  #                  14668.34, 14446.89, 12078.79, 10786.86),
+    reference = rownames(.),
     dose_old = c(405, 279, 276, 223, 1500, 478, 442, 435, 360, 320)) %>%
-  dplyr::mutate(signal_diff = ((signal_value - signal_old) / signal_old) * 100,
-                dose_diff = ((dose_value - dose_old) / dose_old) * 100)
+  dplyr::mutate(dose_diff = ((value - dose_old) / dose_old) * 100)
 
-plot_signal <- ggplot2::ggplot(
-  data = test_diff,
-  mapping = ggplot2::aes(x = reference, y = signal_diff)) +
-  ggplot2::geom_col() +
-  ggplot2::labs(title = "Spectrum integration",
-                x = "Reference", y = "Relative difference [%]") +
-  ggplot2::theme_bw() +
-  ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
+# plot_signal <- ggplot2::ggplot(
+#   data = test_diff,
+#   mapping = ggplot2::aes(x = reference, y = signal_diff)) +
+#   ggplot2::geom_col() +
+#   ggplot2::labs(title = "Spectrum integration",
+#                 x = "Reference", y = "Relative difference [%]") +
+#   ggplot2::theme_bw() +
+#   ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
 
 plot_dose <- ggplot2::ggplot(
   data = test_diff,
@@ -383,11 +383,12 @@ plot_dose <- ggplot2::ggplot(
                 x = "Reference", y = "Relative difference [%]") +
   ggplot2::theme_bw() +
   ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
+plot_dose
 
-cowplot::plot_grid(
-  plot_signal, plot_dose,
-  ncol = 2, labels = "AUTO"
-)
+# cowplot::plot_grid(
+#   plot_signal, plot_dose,
+#   ncol = 2, labels = "AUTO"
+# )
 ```
 
 ## R session

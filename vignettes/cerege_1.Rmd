@@ -154,7 +154,6 @@ integration_range <- c(200, 2800)
 noise <- integrateSignal(
   noise_scaled,
   range = integration_range,
-  noise = NULL,
   NiEi = TRUE
 )
 knitr::kable(
@@ -172,7 +171,7 @@ signal <- integrateSignal(
   simplify = TRUE
 )
 knitr::kable(
-  t(signal),
+  signal,
   digits = 3,
   caption = "Reference spectra integration"
 )
@@ -214,6 +213,7 @@ plot(AIX1) +
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
+# Danger zone ! Don't touch !
 usethis::use_data(AIX1, overwrite = FALSE)
 ```
 
@@ -224,7 +224,7 @@ summary(AIX1@model)
 
 ```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
 calib_residuals <- data.frame(
-  reference = AIX1[["data"]]@reference,
+  reference = AIX1[["data"]]$reference,
   fitted = AIX1[["model"]]$fitted.values,
   residuals = AIX1[["model"]]$residuals,
   standardized = stats::rstandard(AIX1[["model"]]),
@@ -278,13 +278,17 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
                 x = "Observation", y = "D")
 
 # Relative error on dose rate estimation
-dose_predict <- predict(AIX1, epsilon = 0.03) %>%
-  methods::as(., "data.frame") %>%
-  dplyr::select(-signal_value, -signal_error) %>%
-  dplyr::rename(pred_value = dose_value, pred_error = dose_error)
+dose_predict <- predict(AIX1, epsilon = 0.03, simplify = TRUE) %>%
+  as.data.frame() %>%
+  dplyr::transmute(reference = rownames(.),
+                   pred_value = value, 
+                   pred_error = error)
 
 dose_known <- getDoseRate(calib_scaled) %>%
-  dplyr::rename(exp_value = "dose_value", exp_error = "dose_error")
+  as.data.frame() %>%
+  dplyr::transmute(reference = rownames(.),
+                   exp_value = value,
+                   exp_error = error)
 
 dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
   dplyr::mutate(rel_error = ((pred_value - exp_value) / exp_value) * 100)

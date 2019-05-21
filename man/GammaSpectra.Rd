@@ -29,23 +29,6 @@ Represents a collection of spectra of gamma ray spectrometry measurements.
 This class extends the base \code{\link{list}} and can only contains
  \linkS4class{GammaSpectrum} objects.
 }
-\section{Methods}{
-
-\describe{
- \item{estimateBaseline}{Estimate the baseline of each gamma spectrum in a
- \code{GammaSpectra} object. See \code{\link{estimateBaseline}} for details.}
- \item{predict}{Estimate the in-situ gamma dose rate of each gamma
- spectrum in a \code{GammaSpectra} object. See \code{\link{predict}}
- for details.}
- \item{findPeaks}{Look for local maxima to extract peaks out of each gamma
- spectrum in a \code{GammaSpectra} object. See \code{\link{findPeaks}} for
- details.}
- \item{removeBaseline}{Estimate and remove the baseline of each gamma
- spectrum in a \code{GammaSpectra} object. See \code{\link{removeBaseline}}
- for details.}
-}
-}
-
 \section{Access}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
