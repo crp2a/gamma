@@ -9,7 +9,10 @@
 #' }
 #' @section Changelog:
 #'  \describe{
-#'   \item{v0.1.1}{Curve creation.}
+#'   \item{v0.1.1}{Curve creation.
+#'   Model summary: slope: 0.018 +/- 0; intercept: -34.342 +/- 49.303; residual
+#'   standard error: 34.56; multiple R-squared: 0.99775;
+#'   adjusted R-squared: 0.997}
 #'  }
 #' @examples
 #' # Load the curve
