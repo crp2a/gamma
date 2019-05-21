@@ -220,7 +220,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  threshold.
 #' @slot window A length one \code{\link{numeric}} vector giving the half-window
 #'  size.
-#' @slot peaks A four columns \code{\link[=data.frame]{data frame}} giving the
+#' @slot peaks A four columns \code{\link{numeric}} matrix giving the
 #'  peak positions.
 #' @slot spectrum A \linkS4class{GammaSpectrum} object.
 #' @slot baseline A \linkS4class{BaseLine} object.
@@ -245,7 +245,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
     method = "character",
     noise = "numeric",
     window = "numeric",
-    peaks = "data.frame",
+    peaks = "matrix",
     spectrum = "GammaSpectrum",
     baseline = "BaseLine"
   )

@@ -31,7 +31,7 @@ threshold.}
 \item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
 size.}
 
-\item{\code{peaks}}{A four columns \code{\link[=data.frame]{data frame}} giving the
+\item{\code{peaks}}{A four columns \code{\link{numeric}} matrix giving the
 peak positions.}
 
 \item{\code{spectrum}}{A \linkS4class{GammaSpectrum} object.}

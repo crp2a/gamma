@@ -55,14 +55,13 @@ setMethod(
       subset(., counts[.] >= threshold)
 
     pks <- spc[index_noise, ]
-    rownames(pks) <- NULL
+    rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))
 
-    methods::new(
-      "PeakPosition",
+    .PeakPosition(
       method = method,
       noise = threshold,
       window = span,
-      peaks = pks,
+      peaks = as.matrix(pks),
       spectrum = object,
       baseline = baseline
     )
@@ -84,8 +83,8 @@ setMethod(
     spc <- methods::as(spc_clean, "data.frame")
 
     # Find peaks in spectrum data
-    pks <- spc[which(spc$chanel %in% peaks), ]
-    rownames(pks) <- paste("peak #", 1:nrow(pks), sep = "")
+    pks <- spc[which(spc$chanel %in% peaks), , drop = FALSE]
+    rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))
     # Fit peaks at given postion
     fit <- apply(
       X = pks,
@@ -114,8 +113,7 @@ setMethod(
     # Find peaks in spectrum data
     param <- t(sapply(X = fit, FUN = stats::coef))
 
-    methods::new(
-      "PeakModel",
+    .PeakModel(
       model = fit,
       coefficients = param,
       spectrum = object,
@@ -133,7 +131,7 @@ setMethod(
   definition = function(object, bounds = NULL, ...) {
     # Get data
     spc <- object@spectrum
-    pks <- object@peaks[, "chanel"]
+    pks <- object@peaks[, "chanel", drop = TRUE]
 
     fitPeaks(spc, peaks = pks, bounds = bounds)
   }
@@ -143,7 +141,7 @@ setMethod(
 #'
 #' Determine the nonlinear least-squares estimates of the peaks parameters.
 #' @param x A \code{\link[=data.frame]{data frame}}.
-#' @param peaks A length-two \code{\link{numeric}} vector.
+#' @param peaks A \code{\link{numeric}} vector.
 #' @param scale A \code{\link{character}} string specifying the scale of
 #'  \code{peaks}. It must be one of "\code{chanel}" (the default) or
 #'  "\code{energy}". Any unambiguous substring can be given.
@@ -157,6 +155,11 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
                    bounds = NULL, ...) {
   # Validation
   scale <- match.arg(scale, several.ok = FALSE)
+  if (!is.numeric(peaks))
+    stop("`peaks` must be a numeric vector.", call. = FALSE)
+  if (!all(c(scale, "counts") %in% names(peaks)))
+    stop("`peaks` is a numeric vector, but does not have components '", scale,
+         "' and 'counts'.", call. = FALSE)
 
   # Get starting values for each peak
   ## Mean
@@ -165,13 +168,13 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
   fwhm <- sapply(
     X = mean,
     FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
-    x = x[, scale], y = x$counts
+    x = x[, scale], y = x[, "counts"]
   )
   sd <- fwhm / (2 * sqrt(2 * log(2)))
-  if (sd == 0) return(NULL)
   ## Height
   height <- peaks["counts"]
 
+  if (sd == 0 | height == 0) return(NULL)
   parameters <- c(mean, sd, height)
   names(parameters) <- c("mean", "sd", "height")
 
@@ -181,8 +184,8 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
     n_bounds <- length(bounds)
     n_param <- length(parameters)
     if (n_bounds != 1 & n_bounds != n_param)
-      stop(sprintf("%s must be of length one or %d, not %d",
-                   sQuote("bounds"), n_param, n_bounds))
+      stop(sprintf("`bounds` must be of length one or %d, not %d.",
+                   n_param, n_bounds), call. = FALSE)
     # if (any(bounds > 1))
     #   stop(sprintf("%s between 0 and 1", sQuote("bounds")))
     lower_bounds <- parameters * (1 - bounds)
@@ -239,9 +242,9 @@ MAD <- function(x, k = 1.4826, na.rm = FALSE) {
 FWHM <- function(x, y, center) {
   if (missing(y)) {
     z <- x
-    if (is.list(z) & c("x", "y") %in% names(z)) {
-      x <- z[["x"]]
-      y <- z[["y"]]
+    if (is.list(z)) {
+      x <- z[[1]]
+      y <- z[[2]]
     }
     if (is.matrix(z) | is.data.frame(z)) {
       x <- z[, 1]
@@ -249,7 +252,7 @@ FWHM <- function(x, y, center) {
     }
   } else {
     if (length(x) != length(y))
-      stop("'x' and 'y' lengths differ.")
+      stop("`x` and `y` lengths differ.", call. = FALSE)
   }
 
   i <- which(x == center)
