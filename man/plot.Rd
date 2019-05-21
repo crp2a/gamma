@@ -10,7 +10,6 @@
 \alias{plot,PeakPosition,missing-method}
 \alias{plot,PeakModel,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
-\alias{plot,CalibrationCurve,DoseRate-method}
 \title{Plot}
 \usage{
 \S4method{plot}{GammaSpectrum,missing}(x, y, ...)
@@ -26,8 +25,6 @@
 \S4method{plot}{PeakModel,missing}(x, y, ...)
 
 \S4method{plot}{CalibrationCurve,missing}(x, y, ...)
-
-\S4method{plot}{CalibrationCurve,DoseRate}(x, y, ...)
 }
 \arguments{
 \item{x, y}{Objects to be plotted.}

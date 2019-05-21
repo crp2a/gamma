@@ -33,7 +33,8 @@ and error (see \code{\link{integrateSignal}}).}
 \item{\code{integration}}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (see \code{\link{integrateSignal}}).}
 
-\item{\code{data}}{A \linkS4class{DoseRate} object.}
+\item{\code{data}}{A \code{\link[=data.frame]{data frame}} giving the data used for
+linear model fitting.}
 }}
 
 \section{Subset}{

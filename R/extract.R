@@ -204,21 +204,6 @@ setMethod(
   }
 )
 
-# DoseRate =====================================================================
-#' @export
-#' @rdname DoseRate
-#' @aliases [[,DoseRate-method
-setMethod(
-  f = "[[",
-  signature = "DoseRate",
-  definition = function(x, i) {
-    i <- match.arg(i, choices = methods::slotNames("DoseRate"),
-                   several.ok = FALSE)
-    data <- methods::slot(x, i)
-    return(data)
-  }
-)
-
 # Peaks ========================================================================
 #' @export
 #' @rdname PeakPosition

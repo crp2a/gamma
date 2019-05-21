@@ -203,59 +203,60 @@ setMethod(
   }
 )
 
-#' @export
-#' @rdname plot
-#' @aliases plot,CalibrationCurve,DoseRate-method
-setMethod(
-  f = "plot",
-  signature = signature(x = "CalibrationCurve", y = "DoseRate"),
-  definition = function(x, y, ...) {
-    # Get data
-    calib <- methods::as(x@data, "data.frame")
-    measure <- methods::as(y, "data.frame")
-
-    # Bind data frame for 'ggplot2'
-    data <- dplyr::bind_rows(calib, measure) %>%
-      dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
-                                 rep("estimate", nrow(measure))))
-    # Set error bar width and height
-    error_width <- sum(range(data$signal_value) * c(-1, 1)) / 100
-    error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
-
-    # Curve
-    calib_signal <- range(calib$signal_value)
-    curve <- data.frame(signal_value = calib_signal) %>%
-      stats::predict.lm(x@model, .) %>%
-      c(calib_signal, .) %>%
-      magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
-      as.matrix() %>%
-      t() %>%
-      as.data.frame()
-
-    ggplot2::ggplot(
-      data = data,
-      mapping = ggplot2::aes_string(
-        x = "signal_value", y = "dose_value",
-        colour = "spectrum", label = "reference")) +
-      ggplot2::geom_segment(
-        data = curve,
-        mapping = ggplot2::aes_string(
-          x = "x", xend = "xmin",
-          y = "y", yend = "ymin"),
-        colour = "black",
-        inherit.aes = FALSE) +
-      ggplot2::geom_errorbar(
-        mapping = ggplot2::aes_string(
-          ymin = "dose_value - dose_error",
-          ymax = "dose_value + dose_error"),
-        width = error_width) +
-      ggplot2::geom_errorbarh(
-        mapping = ggplot2::aes_string(
-          xmin = "signal_value - signal_error",
-          xmax = "signal_value + signal_error"),
-        height = error_height) +
-      ggplot2::geom_point() +
-      ggplot2::scale_x_continuous(name = "Signal") +
-      ggplot2::scale_y_continuous(name = "Dose rate [\u03BCGy/y]")
-  }
-)
+# TODO
+# @export
+# @rdname plot
+# @aliases plot,CalibrationCurve,GammaSpectra-method
+# setMethod(
+#   f = "plot",
+#   signature = signature(x = "CalibrationCurve", y = "GammaSpectra"),
+#   definition = function(x, y, ...) {
+#     # Get data
+#     calib <- methods::as(x@data, "data.frame")
+#     measure <- getDoseRate(y)
+#
+#     # Bind data frame for 'ggplot2'
+#     data <- dplyr::bind_rows(calib, measure) %>%
+#       dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
+#                                  rep("estimate", nrow(measure))))
+#     # Set error bar width and height
+#     error_width <- sum(range(data$signal_value) * c(-1, 1)) / 100
+#     error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
+#
+#     # Curve
+#     calib_signal <- range(calib$signal_value)
+#     curve <- data.frame(signal_value = calib_signal) %>%
+#       stats::predict.lm(x@model, .) %>%
+#       c(calib_signal, .) %>%
+#       magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
+#       as.matrix() %>%
+#       t() %>%
+#       as.data.frame()
+#
+#     ggplot2::ggplot(
+#       data = data,
+#       mapping = ggplot2::aes_string(
+#         x = "signal_value", y = "dose_value",
+#         colour = "spectrum", label = "reference")) +
+#       ggplot2::geom_segment(
+#         data = curve,
+#         mapping = ggplot2::aes_string(
+#           x = "x", xend = "xmin",
+#           y = "y", yend = "ymin"),
+#         colour = "black",
+#         inherit.aes = FALSE) +
+#       ggplot2::geom_errorbar(
+#         mapping = ggplot2::aes_string(
+#           ymin = "dose_value - dose_error",
+#           ymax = "dose_value + dose_error"),
+#         width = error_width) +
+#       ggplot2::geom_errorbarh(
+#         mapping = ggplot2::aes_string(
+#           xmin = "signal_value - signal_error",
+#           xmax = "signal_value + signal_error"),
+#         height = error_height) +
+#       ggplot2::geom_point() +
+#       ggplot2::scale_x_continuous(name = "Signal") +
+#       ggplot2::scale_y_continuous(name = "Dose rate [\u03BCGy/y]")
+#   }
+# )

@@ -66,7 +66,7 @@ setMethod(
       model = fit,
       noise = noise,
       integration = range,
-      data = methods::as(fit_data, "DoseRate")
+      data = fit_data
     )
   }
 )

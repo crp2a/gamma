@@ -95,20 +95,6 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' @details
 #'  This class extends the base \code{\link{list}} and can only contains
 #'  \linkS4class{GammaSpectrum} objects.
-#' @section Methods:
-#' \describe{
-#'  \item{estimateBaseline}{Estimate the baseline of each gamma spectrum in a
-#'  \code{GammaSpectra} object. See \code{\link{estimateBaseline}} for details.}
-#'  \item{predict}{Estimate the in-situ gamma dose rate of each gamma
-#'  spectrum in a \code{GammaSpectra} object. See \code{\link{predict}}
-#'  for details.}
-#'  \item{findPeaks}{Look for local maxima to extract peaks out of each gamma
-#'  spectrum in a \code{GammaSpectra} object. See \code{\link{findPeaks}} for
-#'  details.}
-#'  \item{removeBaseline}{Estimate and remove the baseline of each gamma
-#'  spectrum in a \code{GammaSpectra} object. See \code{\link{removeBaseline}}
-#'  for details.}
-#' }
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
@@ -158,51 +144,6 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
   contains = "GammaSpectrum"
 )
 
-#' An S4 class to represent a gamma dose rate (in µGy/y)
-#'
-#' @slot reference A \code{\link{character}} vector giving the spectrum
-#'  references.
-#' @slot dose_value A \code{\link{numeric}} vector giving the dose rate
-#'  estimation.
-#' @slot dose_error A \code{\link{numeric}} vector giving the dose rate
-#'  estimation error.
-#' @slot signal_value A \code{\link{numeric}} vector giving the integrated
-#'  signal value.
-#' @slot signal_error A \code{\link{numeric}} vector giving the integrated
-#'  signal error.
-#' @param x An object of class \code{DoseRate}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
-#' @section Coerce:
-#' In the code snippets below, \code{x} is a \code{DoseRate} object.
-#' \describe{
-#'  \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
-#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
-#'  \code{\link[=data.frame]{data frame}}.}
-#' }
-#' @section Subset:
-#' In the code snippets below, \code{x} is a \code{DoseRate} object.
-#' \describe{
-#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
-#' }
-#' @author N. Frerebeau
-#' @docType class
-#' @rdname DoseRate
-#' @aliases DoseRate-class
-setClass(
-  Class = "DoseRate",
-  slots = c(
-    reference = "character",
-    dose_value = "numeric",
-    dose_error = "numeric",
-    signal_value = "numeric",
-    signal_error = "numeric"
-  )
-)
-
 #' An S4 class to represent a calibration curve
 #'
 #' @slot details A \code{\link{list}} of metadata.
@@ -212,7 +153,8 @@ setClass(
 #'  and error (see \code{\link{integrateSignal}}).
 #' @slot integration A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (see \code{\link{integrateSignal}}).
-#' @slot data A \linkS4class{DoseRate} object.
+#' @slot data A \code{\link[=data.frame]{data frame}} giving the data used for
+#'  linear model fitting.
 #' @param x An object of class \code{CalibrationCurve}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -234,7 +176,7 @@ setClass(
     model = "LmOrNull",
     noise = "numeric",
     integration = "numeric",
-    data = "DoseRate"
+    data = "data.frame"
   )
 )
 
@@ -391,25 +333,6 @@ setMethod(
     if (!missing(noise)) .Object@noise <- noise
     if (!missing(integration)) .Object@integration <- integration
     if (!missing(data)) .Object@data <- data
-
-    methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
-    }
-    return(.Object)
-  }
-)
-## DoseRate --------------------------------------------------------------------
-setMethod(
-  f = "initialize",
-  signature = "DoseRate",
-  definition = function(.Object, reference, dose_value, dose_error,
-                        signal_value, signal_error) {
-    if (!missing(reference)) .Object@reference <- reference
-    if (!missing(dose_value)) .Object@dose_value <- dose_value
-    if (!missing(dose_error)) .Object@dose_error <- dose_error
-    if (!missing(signal_value)) .Object@signal_value <- signal_value
-    if (!missing(signal_error)) .Object@signal_error <- signal_error
 
     methods::validObject(.Object)
     if (getOption("verbose")) {

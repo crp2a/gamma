@@ -80,18 +80,6 @@ setMethod(
   }
 )
 
-# DoseRate =====================================================================
-setMethod(
-  f = "show",
-  signature = "DoseRate",
-  definition = function(object) {
-    n <- length(object@dose_value)
-    est <- ngettext(n, "estimate", "estimates")
-    cat(n, "gamma dose rate", est, "\n", sep = " ")
-    print(methods::as(object, "data.frame"))
-  }
-)
-
 # PeakPosition =================================================================
 setMethod(
   f = "show",

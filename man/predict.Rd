@@ -8,7 +8,7 @@
 \title{Gamma dose rate}
 \usage{
 \S4method{predict}{CalibrationCurve}(object, spectra, epsilon = 0.03,
-  ...)
+  simplify = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{CalibrationCurve}.}
@@ -19,7 +19,14 @@ values are used.}
 
 \item{epsilon}{A \code{\link{numeric}} value.}
 
+\item{simplify}{A \code{\link{logical}} scalar: should the result be
+simplified to a matrix? If \code{FALSE} (default), returns a list.}
+
 \item{...}{Currently not used.}
+}
+\value{
+If \code{simplify} is \code{FALSE} returns a list of length-two numeric
+ vectors (default), else returns a matrix.
 }
 \description{
 Predict in-situ gamma dose rate.
@@ -55,11 +62,10 @@ plot(calib_curve) +
   ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 
 # Estimate gamma dose rates
-(dose_rate <- predict(calib_curve, spc_calib))
-
-# Plot the estimated values
-plot(calib_curve, dose_rate) +
-  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
+(dose_rate <- predict(calib_curve, spc_calib, simplify = TRUE))
+}
+\seealso{
+\link{fit}
 }
 \author{
 N. Frerebeau

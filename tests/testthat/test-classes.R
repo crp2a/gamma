@@ -80,7 +80,7 @@ test_that("Initialize an empty CalibrationCurve instance", {
   expect_is(calib[["model"]], "NULL")
   expect_is(calib[["noise"]], "numeric")
   expect_is(calib[["integration"]], "numeric")
-  expect_is(calib[["data"]], "DoseRate")
+  expect_is(calib[["data"]], "data.frame")
 
   expect_error(new("CalibrationCurve", details = list(instrument = LETTERS)),
                "must be a character vector of length 1 not 26")
@@ -92,69 +92,6 @@ test_that("Initialize an empty CalibrationCurve instance", {
                "must be a numeric vector of length 2 not 3")
   expect_error(new("CalibrationCurve", integration = 1:3),
                "must be a numeric vector of length 2 not 3")
-})
-test_that("Initialize an empty DoseRate instance", {
-  options("verbose" = TRUE)
-  expect_s4_class(new("DoseRate"), "DoseRate")
-  expect_message(new("DoseRate"))
-
-  options("verbose" = FALSE)
-  dose <- new("DoseRate")
-  expect_output(show(dose), "gamma dose rate estimate")
-
-  expect_is(dose[["reference"]], "character")
-  expect_is(dose[["dose_value"]], "numeric")
-  expect_is(dose[["dose_error"]], "numeric")
-  expect_is(dose[["signal_value"]], "numeric")
-  expect_is(dose[["signal_error"]], "numeric")
-
-  expect_is(as(dose, "data.frame"), "data.frame")
-
-  expect_error(new("DoseRate", reference = NA_character_),
-               "Missing values were detected")
-  expect_error(new("DoseRate", dose_value = NA_real_),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", dose_value = NaN),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", dose_value = Inf),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", dose_error = NA_real_),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", dose_error = NaN),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", dose_error = Inf),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_value = NA_real_),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_value = NaN),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_value = Inf),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_error = NA_real_),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_error = NaN),
-               "Missing or infinite values were detected")
-  expect_error(new("DoseRate", signal_error = Inf),
-               "Missing or infinite values were detected")
-
-  dose <- list(
-    reference = c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP"),
-    dose_value = c(1986, 850, 1424, 1575, 642, 1141, 2538),
-    dose_error = c(36, 21, 24, 17, 18, 12, 112)
-  )
-
-  dose_alt <- dose
-  names(dose_alt) <- NULL
-  expect_error(as(dose_alt, "DoseRate"), "elements of the list must be named")
-  dose_alt <- dose
-  dose_alt[[1]] <- c("BRIQUE", "C341", "C347")
-  expect_error(as(dose_alt, "DoseRate"), "must have the same length")
-  dose_alt <- dose
-  names(dose_alt) <- c("A", "B", "C")
-  expect_error(as(dose_alt, "DoseRate"), "must one or more of")
-  dose_alt <- dose
-  names(dose_alt)[1] <- c("A")
-  expect_warning(as(dose_alt, "DoseRate"), "ignored")
 })
 test_that("Initialize an empty PeakModel instance", {
   options("verbose" = TRUE)
