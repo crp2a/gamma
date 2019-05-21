@@ -74,4 +74,6 @@ test_that("SNIP algorithm", {
   expect_equal(spc3[["energy"]], spectrum[["energy"]])
   expect_equal(spc3[["counts"]], spectrum[["counts"]])
   expect_equal(spc3[["rate"]], spectrum[["rate"]])
+
+  expect_error(SNIP(LETTERS), "A numeric vector is expected.")
 })

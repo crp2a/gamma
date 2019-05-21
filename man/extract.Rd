@@ -23,11 +23,7 @@ setDoseRate(object) <- value
 
 \S4method{setDoseRate}{GammaSpectrum}(object) <- value
 
-\S4method{getDoseRate}{GammaSpectrum}(object)
-
 \S4method{getDoseRate}{GammaSpectra}(object)
-
-\S4method{setDoseRate}{GammaSpectrum}(object) <- value
 
 \S4method{setDoseRate}{GammaSpectra}(object) <- value
 }

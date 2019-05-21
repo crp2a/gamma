@@ -22,9 +22,8 @@ setMethod(
         if (methods::is(spectra, "GammaSpectrum")) {
           spectra <- methods::as(spectra, "GammaSpectra")
         } else {
-          stop(sprintf("%s must be a %s or a %s object.",
-                       "`spectra`", sQuote("GammaSpectrum"),
-                       sQuote("GammaSpectra")))
+          stop(sprintf("`spectra` must be a %s or a %s object.",
+                       sQuote("GammaSpectrum"), sQuote("GammaSpectra")))
         }
       }
       # Integrate spectra
@@ -32,8 +31,8 @@ setMethod(
         do.call(rbind, .) %>%
         as.data.frame() %>%
         dplyr::transmute(reference = rownames(.),
-                         signal_value = as.numeric(.data$value),
-                         signal_error = as.numeric(.data$error))
+                         signal_value = .data$value,
+                         signal_error = .data$error)
     }
 
     # Get linear regression results

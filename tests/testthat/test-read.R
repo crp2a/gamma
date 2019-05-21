@@ -11,6 +11,10 @@ test_that("Import a gamma spectrum", {
   cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
   cnf_spectrum <- read(cnf_file)
   expect_output(show(cnf_spectrum), "Gamma spectrum")
+
+  expect_type(methods::as(cnf_spectrum, "matrix"), "double")
+  expect_s3_class(methods::as(cnf_spectrum, "data.frame"), "data.frame")
+  expect_type(methods::as(cnf_spectrum, "list"), "list")
 })
 test_that("Import a set of gamma spectra", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
@@ -21,7 +25,7 @@ test_that("Import a set of gamma spectra", {
   expect_output(show(spectra), "A collection")
   expect_length(spectra, 7)
   expect_length(names(spectra), 7)
-  expect_is(names(spectra), "character")
+  expect_type(names(spectra), "character")
 
   expect_length(spectra[], 7) # All spectra
   expect_length(spectra[NULL], 7) # All spectra
@@ -32,8 +36,27 @@ test_that("Import a set of gamma spectra", {
   expect_length(spectra["BRIQUE"], 1) # The spectrum named 'BRIQUE'
   expect_length(spectra[c("BRIQUE", "C347")], 2) # The spectra named 'BRIQUE' and 'C347'
 
-  expect_is(spectra[1:3, "energy"], "list") # The slot 'energy' of the first three spectra
+  expect_type(spectra[1:3, "energy"], "list") # The slot 'energy' of the first three spectra
 
   expect_s4_class(spectra[[1]], "GammaSpectrum")
   expect_s4_class(spectra[["BRIQUE"]], "GammaSpectrum")
+
+  expect_type(methods::as(spectra, "list"), "list")
+  expect_s3_class(methods::as(spectra, "data.frame"), "data.frame")
+})
+test_that("Skip chanels", {
+  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  expect_error(read(spc_dir, skip = LETTERS),
+               "`skip` must be a list of numeric vectors or logical scalars.")
+  expect_error(read(spc_dir, skip = list(TRUE, FALSE)),
+               "`skip` must be of length 1 or 7, not 2.")
+
+  options("verbose" = TRUE)
+  cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  expect_message(read(cnf_file, skip = 1025), "0 chanels skiped.")
+  expect_message(read(cnf_file, skip = 1024), "1 chanel skiped.")
+  expect_message(read(cnf_file, skip = TRUE), "35 chanels skiped.")
+  expect_identical(read(cnf_file, skip = TRUE), read(cnf_file, skip = 1:35))
+
+  expect_error(skipChanels(LETTERS, skip = TRUE), "A data.frame is expected.")
 })

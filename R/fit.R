@@ -17,6 +17,11 @@ setMethod(
     if (n_noise != 2)
       stop(sprintf("`noise` must be a numeric vector of length two, not %d.",
                    n_noise), call. = FALSE)
+    ## Range
+    n_range <- length(range)
+    if (n_range != 2)
+      stop(sprintf("`range` must be a numeric vector of length two, not %d.",
+                   n_range), call. = FALSE)
     ## Dose rate
     doses <- getDoseRate(object) %>%
       as.data.frame() %>%

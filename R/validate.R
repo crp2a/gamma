@@ -329,7 +329,7 @@ setValidity(
       if (!all(col_names %in% colnames(peaks))) {
         message <- c(
           message,
-          sprintf("%s must be a 4 columns data frame, with column names: %s",
+          sprintf("%s must be a matrix with four columns, with column names: %s",
                   sQuote("peaks"), paste(sQuote(col_names), collapse = ", "))
         )
       }

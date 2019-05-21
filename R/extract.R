@@ -34,7 +34,7 @@ setMethod(
 setMethod(
   f = "getDoseRate",
   signature = "GammaSpectrum",
-  definition = function(object) x@dose_rate
+  definition = function(object) object@dose_rate
 )
 
 #' @export
@@ -44,7 +44,10 @@ setMethod(
   f = "setDoseRate<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
-    value <- as.numeric(value)
+    if (!is.numeric(value) | length(value) != 2)
+      stop("`value` must be a length-two numeric vector.", call. = FALSE)
+
+    names(value) <- c("value", "error")
     object@dose_rate <- value
     methods::validObject(object)
     object
@@ -101,15 +104,6 @@ setMethod(
 
 #' @export
 #' @rdname extract
-#' @aliases getDoseRate,GammaSpectrum-method
-setMethod(
-  f = "getDoseRate",
-  signature = "GammaSpectrum",
-  definition = function(object) object@dose_rate
-)
-
-#' @export
-#' @rdname extract
 #' @aliases getDoseRate,GammaSpectra-method
 setMethod(
   f = "getDoseRate",
@@ -125,27 +119,9 @@ setMethod(
 
     dose_mtx <- do.call(rbind, dose_rate) %>%
       as.data.frame(stringsAsFactors = FALSE) %>%
-      magrittr::set_colnames(c("value", "error")) %>%
-      magrittr::set_rownames(names(dose_rate))
+      magrittr::set_colnames(c("value", "error"))
 
     as.matrix(dose_mtx)
-  }
-)
-
-#' @export
-#' @rdname extract
-#' @aliases setDoseRate,GammaSpectrum-method
-setMethod(
-  f = "setDoseRate<-",
-  signature = "GammaSpectrum",
-  definition = function(object, value) {
-    if (!is.numeric(value) | length(value) != 2)
-      stop("`value` must be a length-two numeric vector", call. = FALSE)
-
-    names(value) <- c("value", "error")
-    object@dose_rate <- value
-    methods::validObject(object)
-    object
   }
 )
 

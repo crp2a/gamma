@@ -17,7 +17,7 @@ setMethod(
     if(!utils::file_test("-f", file)) {
       file_list <- tools::list_files_with_exts(file, exts = extensions)
       if(length(file_list) == 0)
-        stop("No spectrum files were fund.")
+        stop("No spectrum files were fund.", call. = FALSE)
       file <- as.list(file_list)
     }
 
@@ -25,8 +25,8 @@ setMethod(
       all_numeric <- all(sapply(skip, function(x) is.numeric(x) | is.null(x)))
       all_logical <- all(sapply(skip, function(x) is.logical(x) | is.null(x)))
       if(!all_numeric & !all_logical) {
-        stop(sprintf("%s must be a list of numeric vectors or logical scalars.",
-                     sQuote("skip")))
+        stop("`skip` must be a list of numeric vectors or logical scalars.",
+             call. = FALSE)
       }
     } else {
       skip <- FALSE
@@ -36,8 +36,8 @@ setMethod(
     n_files <- length(file)
     n_skip <- length(skip)
     if (n_skip != 1 & n_skip != n_files) {
-      stop(sprintf("%s must be of length 1 or %d, not %d.",
-                   sQuote("skip"), n_files, n_skip))
+      stop(sprintf("`skip` must be of length 1 or %d, not %d.",
+                   n_files, n_skip), call. = FALSE)
     }
 
     # Read files
@@ -71,7 +71,7 @@ setMethod(
 #' @noRd
 readCanberraCNF <- function(file, skip = NULL, ...) {
   # Read file
-  spc_xy <- rxylib::read_xyData(file = file, ..., verbose = getOption("verbose"))
+  spc_xy <- rxylib::read_xyData(file = file, ..., verbose = FALSE)
   # Get and check file format
   file_format <- attr(spc_xy, "format_name")
   if(file_format != "Canberra CNF")
@@ -170,19 +170,24 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
 #' @noRd
 skipChanels <- function(x, skip) {
   # Validation
-  if(!is.data.frame(x))
+  if (!is.data.frame(x))
     stop("A data.frame is expected.")
 
-  if(is.logical(skip)) {
-    if(skip) {
-      skip_chanel <- seq_len(which.max(x$counts))
-      x <- x[-skip_chanel, ]
+  skip_chanel <- x$chanel
+  if (is.logical(skip)) {
+    if (skip) {
+      skip_chanel <- -seq_len(which.max(x$counts))
     }
   }
-  if(is.numeric(skip)) {
-    skip <- as.integer(skip)
-    skip_chanel <- x$chanel %in% skip
-    x <- x[!skip_chanel, ]
+  if (is.numeric(skip)) {
+    skip_chanel <- -which(x$chanel %in% as.integer(skip))
   }
-  return(x)
+  if (length(skip_chanel) == 0) {
+    skip_chanel <- x$chanel
+  }
+  if (getOption("verbose")) {
+    n <- if (all(skip_chanel %in% x$chanel)) 0 else length(skip_chanel)
+    message(sprintf(ngettext(n, "%d chanel skiped.", "%d chanels skiped."), n))
+  }
+  x[skip_chanel, , drop = FALSE]
 }

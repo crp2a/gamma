@@ -73,7 +73,7 @@ plot(calib_curve) +
   ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 
 # Estimate gamma dose rates
-(dose_rate <- predict(calib_curve, spc_calib, simplify = TRUE))
+(dose_rate <- predict(calib_curve, spc_calib))
 }
 \seealso{
 \link{predict}, \link{integrateSignal}

@@ -57,6 +57,14 @@ setMethod(
   definition = function(object) {
     if (length(object@model) != 0) {
       sum_up <- summary(object@model)
+      coef <- round(sum_up$coef, 3)
+      if (nrow(coef) > 1) {
+        intercept <- paste(coef[1, 1], "+/-", coef[1, 2], sep = " ")
+        slope <- paste(coef[2, 1], "+/-", coef[2, 2], sep = " ")
+      } else {
+        intercept <- "0 (not estimated)"
+        slope <- paste(coef[1], "+/-", coef[2], sep = " ")
+      }
       cat("Calibration curve:\n",
           "  Details:\n",
           "  - Laboratory:", object@details$laboratory, "\n",
@@ -65,10 +73,8 @@ setMethod(
           "  - Authors:", object@details$authors, "\n",
           "  - Date:", as.character(object@details$date), "\n",
           "  Model summary:\n",
-          "  - Slope:", round(sum_up$coef[2,1], 3), "+/-",
-          round(sum_up$coef[2,2], 3), "\n",
-          "  - Intercept:", round(sum_up$coef[1,1], 3), "+/-",
-          round(sum_up$coef[1,2], 3), "\n",
+          "  - Slope:", slope, "\n",
+          "  - Intercept:", intercept, "\n",
           "  - Residual standard error:", round(sum_up$sigma, 2), "\n",
           "  - Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
           "  - Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
@@ -88,10 +94,8 @@ setMethod(
     if (length(object@peaks) != 0) {
       n <- nrow(object@peaks)
       pks <- ngettext(n, " peak was ", " peaks were ")
-      cat(n, pks, "detected:", "\n",
-          "  Position (chanel):\t", paste(object@peaks$chanel, collapse = "\t"), "\n",
-          "  Height (count): \t", paste(object@peaks$counts, collapse = "\t"), "\n",
-          sep = "")
+      cat(n, pks, "detected:\n", sep = "")
+      print(object@peaks)
     } else {
       cat("No peaks were detected.\n", sep = " ")
     }

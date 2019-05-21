@@ -11,11 +11,13 @@
 findClosest <- function(x, value) {
   # Validation
   if (!is.numeric(x) | !is.numeric(value))
-    stop("Numeric vectors are expected.")
+    stop("Numeric vectors are expected.", call. = FALSE)
 
-  index <- sapply(X = value,
-                  FUN = function(i, x) which.min(abs(x - i)),
-                  x = x)
+  index <- sapply(
+    X = value,
+    FUN = function(i, x) which.min(abs(x - i)),
+    x = x
+  )
   return(index)
 }
 
@@ -33,7 +35,7 @@ findClosest <- function(x, value) {
 isEqual <- function(x, tolerance = .Machine$double.eps^0.5, na.rm = TRUE) {
   # Validation
   if (!is.numeric(x))
-    stop("A numeric vector is expected.")
+    stop("A numeric vector is expected.", call. = FALSE)
   abs(max(x, na.rm = na.rm) - min(x, na.rm = na.rm)) <= tolerance
 }
 
@@ -50,7 +52,7 @@ isEqual <- function(x, tolerance = .Machine$double.eps^0.5, na.rm = TRUE) {
 isPositive <- function(x, strict = FALSE, na.rm = TRUE) {
   # Validation
   if (!is.numeric(x))
-    stop("A numeric vector is expected.")
+    stop("A numeric vector is expected.", call. = FALSE)
 
   if (strict) {
     !any(x <= 0, na.rm = na.rm)

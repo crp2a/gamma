@@ -70,8 +70,8 @@ setMethod(
 
     if (xaxis == "energy" & anyNA(spc$energy)) {
       xaxis <- "chanel"
-      warning(paste("The energy scale is missing for one or more spectra",
-                    "using the chanel scale instead.", sep = ", "))
+      warning("The energy scale is missing for one or more spectra, ",
+              "using the chanel scale instead.", call. = FALSE)
     }
     xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
     ylabel <- switch(yaxis, counts = "Counts", rate = "Count rate [1/s]")
