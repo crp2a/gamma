@@ -18,7 +18,11 @@ setMethod(
       stop(sprintf("`noise` must be a numeric vector of length two, not %d.",
                    n_noise), call. = FALSE)
     ## Dose rate
-    doses <- getDoseRate(object)
+    doses <- getDoseRate(object) %>%
+      as.data.frame() %>%
+      dplyr::transmute(reference = rownames(.),
+                       dose_value = .data$value,
+                       dose_error = .data$error)
     if (nrow(doses) != length(object)) {
       names_missing <- names(object)[!(names(object) %in% doses$reference)]
       length_missing <- length(names_missing)

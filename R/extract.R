@@ -126,10 +126,9 @@ setMethod(
     dose_mtx <- do.call(rbind, dose_rate) %>%
       as.data.frame(stringsAsFactors = FALSE) %>%
       magrittr::set_colnames(c("value", "error")) %>%
-      dplyr::transmute(reference = rownames(.),
-                       dose_value = .data$value,
-                       dose_error = .data$error)
-    dose_mtx
+      magrittr::set_rownames(names(dose_rate))
+
+    as.matrix(dose_mtx)
   }
 )
 
@@ -179,8 +178,9 @@ setMethod(
       }
     } else {
       sub_object <- object[names_doses]
-      sub_list <- methods::S3Part(sub_object, strictS3 = TRUE)
-      mapply(FUN = methods::`slot<-`, object = sub_list, value = value,
+      if (length(sub_object) == 0)
+        stop("Names of `value` do not match.", call. = FALSE)
+      mapply(FUN = methods::`slot<-`, object = sub_object, value = value,
              MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
     }
 
