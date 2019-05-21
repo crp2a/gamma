@@ -4,29 +4,45 @@
 \name{integrateSignal}
 \alias{integrateSignal}
 \alias{integrateSignal-method}
-\alias{integrateSignal,GammaSpectra-method}
-\alias{integrateSignal,GammaSpectrum-method}
+\alias{integrateSignal,GammaSpectra,numeric,numeric-method}
+\alias{integrateSignal,GammaSpectra,numeric,missing-method}
+\alias{integrateSignal,GammaSpectra,numeric,GammaSpectrum-method}
+\alias{integrateSignal,GammaSpectrum,numeric,missing-method}
+\alias{integrateSignal,GammaSpectrum,numeric,numeric-method}
+\alias{integrateSignal,GammaSpectrum,numeric,GammaSpectrum-method}
 \title{Signal integration}
 \usage{
-integrateSignal(object, ...)
+integrateSignal(object, range, noise, ...)
 
-\S4method{integrateSignal}{GammaSpectra}(object, range = c(200, 2800),
-  noise = NULL, NiEi = TRUE, ..., simplify = FALSE)
+\S4method{integrateSignal}{GammaSpectra,numeric,numeric}(object, range,
+  noise, NiEi = TRUE, simplify = FALSE, ...)
 
-\S4method{integrateSignal}{GammaSpectrum}(object, range = c(200, 2800),
-  noise = NULL, NiEi = TRUE, ...)
+\S4method{integrateSignal}{GammaSpectra,numeric,missing}(object, range,
+  NiEi = TRUE, simplify = FALSE, ...)
+
+\S4method{integrateSignal}{GammaSpectra,numeric,GammaSpectrum}(object,
+  range, noise, NiEi = TRUE, simplify = FALSE, ...)
+
+\S4method{integrateSignal}{GammaSpectrum,numeric,missing}(object, range,
+  NiEi = TRUE, ...)
+
+\S4method{integrateSignal}{GammaSpectrum,numeric,numeric}(object, range,
+  noise, NiEi = TRUE, ...)
+
+\S4method{integrateSignal}{GammaSpectrum,numeric,GammaSpectrum}(object,
+  range, noise, NiEi = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \linkS4class{GammaSpectrum} or
 \linkS4class{GammaSpectra}.}
-
-\item{...}{Currently not used.}
 
 \item{range}{A length two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
 \item{noise}{A length-two \code{\link{numeric}} vector giving the noise
 value and error, respectively (see details).}
+
+\item{...}{Currently not used.}
 
 \item{NiEi}{A \code{\link{logical}} scalar.
 Change this only if you know what you are doing.}
@@ -35,7 +51,7 @@ Change this only if you know what you are doing.}
 simplified to a matrix? The default value, \code{FALSE}, returns a list.}
 }
 \value{
-If \code{simplify} is \code{FALSE}, then returns a list length-two
+If \code{simplify} is \code{FALSE} returns a list of length-two
  numeric vectors (default), else returns a matrix.
 }
 \description{

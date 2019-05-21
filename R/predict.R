@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "predict",
   signature = signature(object = "CalibrationCurve"),
-  definition = function(object, spectra, epsilon = 0.03, ...) {
+  definition = function(object, spectra, epsilon = 0.03, simplify = FALSE, ...) {
 
     # Get noise value and integration range
     noise <- object@noise
@@ -22,8 +22,8 @@ setMethod(
         if (methods::is(spectra, "GammaSpectrum")) {
           spectra <- methods::as(spectra, "GammaSpectra")
         } else {
-          stop(sprintf("%s must be a %s or %s object.",
-                       sQuote("spectra"), sQuote("GammaSpectrum"),
+          stop(sprintf("%s must be a %s or a %s object.",
+                       "`spectra`", sQuote("GammaSpectrum"),
                        sQuote("GammaSpectra")))
         }
       }
@@ -31,10 +31,9 @@ setMethod(
       new_data <- integrateSignal(spectra, range = int_range, noise = noise) %>%
         do.call(rbind, .) %>%
         as.data.frame() %>%
-        dplyr::mutate(reference = rownames(.)) %>%
-        dplyr::rename(signal_value = "value", signal_error = "error") %>%
-        dplyr::mutate(signal_value = as.numeric(.data$signal_value),
-                      signal_error = as.numeric(.data$signal_error))
+        dplyr::transmute(reference = rownames(.),
+                         signal_value = as.numeric(.data$value),
+                         signal_error = as.numeric(.data$error))
     }
 
     # Get linear regression results
@@ -45,15 +44,20 @@ setMethod(
 
     dose_value <- stats::predict.lm(fit, new_data[, "signal_value", drop = FALSE])
 
-    dose_error <- dose_value * sqrt((slope_error / slope)^2 +
-                                (new_data$signal_error / new_data$signal_value)^2 +
-                                epsilon^2)
+    dose_error <- dose_value *
+      sqrt((slope_error / slope)^2 +
+             (new_data$signal_error / new_data$signal_value)^2 +
+             epsilon^2)
 
-    methods::new("DoseRate",
-                 reference = as.character(new_data$reference),
-                 dose_value = dose_value,
-                 dose_error = dose_error,
-                 signal_value = new_data$signal_value,
-                 signal_error = new_data$signal_error)
+    results <- cbind(
+      value = dose_value,
+      error = dose_error
+    )
+    rownames(results) <- new_data$reference
+    if (simplify) {
+      results
+    } else {
+      split(results, f = new_data$reference)
+    }
   }
 )

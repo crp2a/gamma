@@ -39,8 +39,8 @@ setMethod(
     info <- if (is.list(details)) details else list()
 
     # Signal integration
-    signals <- integrateSignal(object, range = range, noise = noise) %>%
-      do.call(rbind, .) %>%
+    signals <- integrateSignal(object, range = range, noise = noise,
+                               simplify = TRUE) %>%
       as.data.frame() %>%
       dplyr::mutate(reference = rownames(.)) %>%
       dplyr::rename(signal_value = "value", signal_error = "error")

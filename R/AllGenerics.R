@@ -20,7 +20,8 @@ NULL
 #' @param ... Currently not used.
 #' @details
 #'  TODO
-#' @return An object of class \linkS4class{CalibrationCurve}.
+#' @return
+#'  Returns an object of class \linkS4class{CalibrationCurve}.
 #' @seealso \link{predict}, \link{integrateSignal}
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
@@ -112,7 +113,13 @@ setGeneric(
 #'  which to look for variables with which to predict. If omitted, the fitted
 #'  values are used.
 #' @param epsilon A \code{\link{numeric}} value.
+#' @param simplify A \code{\link{logical}} scalar: should the result be
+#'  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
+#' @return
+#'  If \code{simplify} is \code{FALSE} returns a list of length-two numeric
+#'  vectors (default), else returns a matrix.
+#' @seealso \link{fit}
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -186,15 +193,15 @@ setGeneric(
 #'  value and error, respectively (see details).
 #' @param NiEi A \code{\link{logical}} scalar.
 #'  Change this only if you know what you are doing.
-#' @param ... Currently not used.
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
+#' @param ... Currently not used.
 #' @details
 #'  TODO
 #'
 #'  It assumes that each spectrum is calibrated in energy.
 #' @return
-#'  If \code{simplify} is \code{FALSE}, then returns a list length-two
+#'  If \code{simplify} is \code{FALSE} returns a list of length-two
 #'  numeric vectors (default), else returns a matrix.
 #' @author N. Frerebeau
 #' @docType methods
@@ -203,7 +210,7 @@ setGeneric(
 #' @keywords internal
 setGeneric(
   name = "integrateSignal",
-  def = function(object, ...) standardGeneric("integrateSignal")
+  def = function(object, range, noise, ...) standardGeneric("integrateSignal")
 )
 
 #' Plot
