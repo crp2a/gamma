@@ -10,6 +10,7 @@ output:
   rmarkdown::html_vignette:
     fig_caption: yes
     toc: true
+    number_sections: true
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{amssymb}
@@ -31,28 +32,34 @@ library(gamma)
 library(magrittr)
 ```
 
-## Overview
+# Overview
 
 `gamma` is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy scale of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. This package only supports Canberra CNF and TKA files.
 
 Typical workflow:
 
-1. Import spectrum data with `read()`
-2. Inspect spectrum with `plot()`
-3. Calibrate the energy scale with `calibrate()`
-4. Estimate the gamma dose rate with `predict()`
+1. Import spectrum data with `read()`,
+2. Inspect spectrum with `plot()`,
+3. Calibrate the energy scale with `calibrate()`,
+4. Estimate the gamma dose rate with `predict()`.
 
-The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own (see `help(fit)`). Check out the following vignettes for an overview of the fitting process.
+The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own (see `help(fit)`). These built-in curves are in use in several labs and can be used to reproduce published results. Check out the following vignettes for an overview of the fitting process.
 
 ```{r calib-dose, eval=FALSE}
-# IRAMAT-CRP2A LaBr (#1)
+# IRAMAT-CRP2A LaBr (BDX1)
 utils::vignette("CRP2A#1", package = "gamma")
 
-# CEREGE NaI (#1)
+# CEREGE NaI (AIX1)
 utils::vignette("CEREGE#1", package = "gamma")
 ```
 
-## Import file
+Note that `gamma` uses the *International System of Units*: energy values are assumed to be in keV and dose rates in µGy/y.
+
+# Import file
+Both Canberra CNF and TKA files can be imported. Several channels can be skipped during import to retain only part of the spectrum.
+
+If `skip` is `TRUE`, an attempt is made to define the number of channels to skip at the beginning of the spectrum. This skips all channels before the highest count maximum. This is intended to deal with the artefact produced by the rapid growth of random background noise towards low energies.
+
 ```{r import, fig.width=7, fig.height=5, fig.align="center"}
 # Automatically skip the first chanels
 # Import a CNF file
@@ -64,27 +71,41 @@ tka_test <- system.file("extdata/test_TKA.tka", package = "gamma")
 (spc_tka <- read(tka_test, skip = TRUE))
 
 # Import all files in a given directory
-files_test <- system.file("extdata/", package = "gamma")
+files_test <- system.file("extdata", package = "gamma")
 (spc <- read(files_test, skip = TRUE))
 ```
 
-## Inspect spectrum
+# Inspect spectrum
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
 # Plot TKA spectrum
 plot(spc_cnf) +
   ggplot2::theme_bw()
-
 # Plot spectra
 plot(spc, facet = TRUE) +
   ggplot2::theme_bw()
 ```
 
-## Calibrate the energy scale
+# Calibrate the energy scale
+The energy calibration of a spectrum is the most tricky part. To do this, you must specify the position of at least two observed peaks and the corresponding energy value (in keV).
+
+The package allows you to provide the channel-energy pairs you want to use. However, the spectrum can be noisy so it is difficult to properly determine the peak channel. In this case, a better approach may be to fit each peak with a Gaussian curve and then use the parameters estimated in this way.
+
+Regardless of the approach you choose, it is strongly recommended to check the result before proceeding.
+
+## Peak parameters estimation
+The automatic estimation of peak parameters is performed in two steps that can influence the final result. First, the baseline of the spectrum is estimated and removed. Then, a non-linear model is fitted for each peak. The model parameters can finally be used for the spectrum energy scale calibration.
+
+These two steps (baseline and peak fitting) are performed in one go. The following sections will help you to fine-tune the individual parameters.
+
 ### Estimate and remove baseline
-SNIP algorithm [@ryan1988; @morhac1997; @morhac2008]
+The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morhac1997; @morhac2008]. You can apply the LLS operator to your data, use a decreasing clipping window or change the number of iterations (see references).
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
-# Estimate baseline of a single file
+# Estimate the baseline of a single file
+# Default parameters:
+# * The LLS operator is not used,
+# * An increasing clipping window is used,
+# * 100 iterations are performed.
 baseline <- estimateBaseline(spc_tka)
 
 # Plot spectrum + baseline
@@ -100,17 +121,31 @@ spc_clean2 <- removeBaseline(spc_tka)
 
 identical(spc_clean1, spc_clean2)
 
-# Plot spectrum
+# Plot the corrected spectrum
 plot(spc_clean1) +
   ggplot2::theme_bw()
 ```
 
+```{r baseline-plot, fig.width=7, fig.height=5, fig.align="center"}
+# You can change the default parameters (see help for details)
+# help(SNIP)
+spc_clean3 <- removeBaseline(spc_tka, LLS = TRUE)
+
+# The default settings don't seem too bad
+plot(spc_clean1, spc_clean3) +
+  ggplot2::theme_bw()
+```
+
 ```{r baseline-remove-multi, eval=FALSE}
-# Remove the baseline of multiple spectra in one go
+# You can remove the baseline of multiple spectra in one go
+# Note that the same parameters will be used for all spectra
 spc_clean <- removeBaseline(spc)
 ```
 
 ### Automatic peak detection
+Once you have fixed the parameters for the baseline estimation, you can try to automatically find peaks in the spectrum. A local maximum has to be the highest one in the given window and has to be higher than $k$ times the noise to be recognized as peak.
+
+Again, peak finding is performed on the baseline corrected spectrum, so you may want to pass extra arguments for the baseline estimation.
 ```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
 # Detect peaks in a single file
 peak_index <- findPeaks(spc_tka)
@@ -130,32 +165,19 @@ knitr::kable(
 )
 ```
 
-### Peak parameters estimation
-```{r peak-fit-auto, fig.width=7, fig.height=5, fig.align="center"}
-# Fit peaks found by automatic detection
-peak_fit_auto <- fitPeaks(peak_index)
+The result of this automatic detection can be used as starting positions for peak fitting.
 
-plot(peak_fit_auto) +
-  ggplot2::labs(title = "Fitted peaks from automatic detection") +
-  ggplot2::theme_bw()
-```
+### Peak fitting
+If you know the approximate position of some peaks, you can refine it by fitting each peak with a Gaussian. The parameters of these non-linear models are determined using the *port* algorithm (see `help(nls)` from the `{stats}` package).
 
-```{r peak-fit-auto-table, echo=FALSE}
-# Get peak parameters
-knitr::kable(
-  peak_fit_auto[["coefficients"]],
-  digits = 3,
-  col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
-  caption = "Peak parameters estimate"
-)
-```
+You only need to provide the starting peak positions (chanel). If problems arise, it may be useful to constrain the parameters (see `help(fit)`) or improve the baseline estimate (peak fitting is performed on the baseline corrected spectrum).
 
 ```{r peak-fit-manual, fig.width=7, fig.height=5, fig.align="center"}
 # Fit peaks at a given chanel
-peak_fit_chanel <- fitPeaks(spc_tka, peaks = c(86, 496, 876))
+peak_fit <- fitPeaks(spc_tka, peaks = c(86, 496, 876))
 
 ## Plot results
-plot(peak_fit_chanel) +
+plot(peak_fit) +
   ggplot2::labs(title = "Fitted peaks from fixed starting positions") +
   ggplot2::theme_bw()
 ```
@@ -163,49 +185,100 @@ plot(peak_fit_chanel) +
 ```{r peak-fit-manual-table, echo=FALSE}
 ## Get peak positions
 knitr::kable(
-  peak_fit_chanel[["coefficients"]],
+  peak_fit[["coefficients"]],
   digits = 3,
   col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
   caption = "Peak positions"
 )
 ```
 
-### Energy scale calibration
+## Energy scale calibration
+If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then the chanel values are used to predict the new energy scale.
+
 ```{r calibrate-fixed, fig.width=7, fig.height=5, fig.align="center"}
+# Create a list of chanel-enegy pairs
+# Names are optional, but values must always be set in this order
+# (channel then energy)
 calib_lines <- list(
-  Pb = c(chanel = 86, energy = 238),
-  K40 = c(chanel = 496, energy = 1461),
-  Cs = c(chanel = 876, energy = 2614.5)
+  Pb212 = c(chanel = 84, energy = 239),
+  K40 = c(chanel = 492, energy = 1461),
+  Tl208 = c(chanel = 865, energy = 2615)
 )
 
-# Calibrated spectrum using fixed lines
+# Calibrate the spectrum using these fixed lines
 tka_scaled1 <- calibrate(spc_tka, lines = calib_lines)
+```
 
-# Calibrated spectrum using peak models
-tka_scaled2 <- calibrate(peak_fit_chanel, lines = c(238, 1461, 2614.5))
+Alternatively, you can use the results of the peak fitting and pass the expected energy values.
+```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
+# Calibrate the spectrum using the peak models
+# Lines should be in keV
+tka_scaled2 <- calibrate(peak_fit, lines = c(238, 1461, 2615))
 
-plot(tka_scaled1, tka_scaled2) +
+# Plot the spectrum (note the top scale)
+plot(tka_scaled2) +
   ggplot2::labs(title = "Calibrated spectra") +
   ggplot2::theme_bw()
 ```
 
+# Estimate the gamma dose rate
+To estimate the gamma dose rate, you can either use one of the calibration curves distributed with this package or build your own.
 
-## Gamma dose rate estimation
+The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.
+
+```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
+# Import the reference spectra
+calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+calib_spc <- read(calib_dir, skip = TRUE)
+
+# Import the spectra for background noise measurement
+noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
+noise_spc <- read(noise_dir, skip = TRUE)
+
+# Set the known dose rates
+setDoseRate(calib_spc) <- list(
+  BRIQUE = c(1986, 36),
+  C341 = c(850, 21),
+  C347 = c(1424, 24),
+  GOU = c(1575, 17),
+  LMP = c(642, 18),
+  MAZ = c(1141, 12),
+  PEP = c(2538, 112)
+)
+
+# Build the calibration curve
+calib_curve <- fit(
+  calib_spc,
+  noise_spc,
+  range = c(165, 2800), # Set the integration range (in keV)
+  intercept = TRUE
+)
+
+# The linear model can be accessed for further investigations
+# summary(calib_curve[["model"]])
+
+# Plot the calibration curve
+plot(calib_curve) +
+  ggplot2::theme_bw()
+```
+
+New dose rate values can be predicted.
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
-# Load the calibration curve
-data(BDX1)
+# Import spectra
+test_dir <- system.file("extdata/crp2a/test", package = "gamma")
+test_spc <- read(test_dir, skip = TRUE)
 
 # Estimate the gamma dose rate
-dose_rate <- predict(BDX1, tka_scaled2, simplify = TRUE)
+dose_rate <- predict(calib_curve, test_spc, simplify = TRUE)
 ```
 
 ```{r dose-rate-table, echo=FALSE}
 knitr::kable(
   dose_rate,
   digits = 3,
-  col.names = c("Dose", "Dose error"),
+  col.names = c("Dose", "Error"),
   caption = "Gamma dose rate estimates"
 )
 ```
 
-## References
+# References

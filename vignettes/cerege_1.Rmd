@@ -59,7 +59,6 @@ plot(noise_spc) +
 ```{r calib-peaks}
 # Peak parameters estimation
 # Fit peaks at chanel 82, 492, 872 (starting positions)
-# (expected energy: 238, 1461, 2614.5 keV)
 calib_peaks <- list(
   ## BRIQUE
   BRIQUE = fitPeaks(calib_spc[["BRIQUE"]], peaks = c(82, 492, 872)),
@@ -116,7 +115,7 @@ plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
 
 ```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
 # Expected peak positions (energy scale)
-expected_peaks <- c(238, 1461, 2614.5)
+expected_peaks <- c(Pb212 = 239, K40 = 1461, Tl208 = 2615)
 
 # Energy scale calibration
 calib_scaled <- lapply(X = calib_peaks, FUN = calibrate,  lines = expected_peaks)
@@ -130,9 +129,9 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 ### Background noise spectrum
 ```{r calibrate-noise, fig.width=7, fig.height=5, fig.align="center"}
 noise_lines <- list(
-  La138 = c(chanel = 84, energy = 238),
+  Pb212 = c(chanel = 84, energy = 239),
   K40 = c(chanel = 492, energy = 1461),
-  Cs = c(chanel = 865, energy = 2614.5)
+  Tl208 = c(chanel = 865, energy = 2615)
 )
 noise_scaled <- calibrate(noise_spc, lines = noise_lines)
 
@@ -196,7 +195,7 @@ getDoseRate(calib_scaled)
 # Build calibration curve
 (AIX1 <- fit(
   calib_scaled,
-  noise = noise,
+  noise_scaled,
   range = integration_range,
   intercept = TRUE,
   details = list(
