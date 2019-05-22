@@ -25,10 +25,10 @@ CEREGE Calibration Curve #1
   \item{v0.1.1}{Curve creation.
   Model summary:
   slope: 0.018 +/- 0;
-  intercept: -33.977 +/- 49.046;
-  residual standard error: 34.39;
-  multiple R-squared: 0.99778;
-  adjusted R-squared: 0.99703}
+  intercept: -34.361 +/- 49.326;
+  residual standard error: 34.58;
+  multiple R-squared: 0.99775;
+  adjusted R-squared: 0.997}
  }
 }
 

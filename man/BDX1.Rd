@@ -25,9 +25,9 @@ CRP2A Calibration Curve #1
   \item{v0.1.1}{Edit the energy scale of the reference spectra.
   Model summary:
   slope: 0.032 +/- 0;
-  intercept: -41.497 +/- 20.818;
-  residual standard error: 20.8 on 5 degrees of freedom;
-  multiple R-squared: 0.9992;
+  intercept: -41.116 +/- 20.846;
+  residual standard error: 20.83 on 5 degrees of freedom;
+  multiple R-squared: 0.99916;
   adjusted R-squared: 0.999.}
   \item{v0.1.0}{Curve creation.
   Model summary:
