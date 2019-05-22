@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -44,17 +46,17 @@ utils::vignette("gamma", package = "gamma")
 
 ```{r usage, fig.width=7, fig.height=5, fig.align="center", message=FALSE}
 # A minimal example
-# You may want to give extra attention to the energy calibration step.
+# You may want to give extra attention to the energy calibration step
 
-## Set the expected chanel/energy peaks for the energy scale calibration.
+## Set the expected chanel/energy peaks for the energy scale calibration
 calib_lines <- list(
   c(chanel = 86, energy = 238),
   c(chanel = 496, energy = 1461),
   c(chanel = 876, energy = 2614.5)
 )
 
-## Load the calibration curve for the dose rate estimation.
-## As this curve is instrument specific, you will have to build your own.
+## Load the calibration curve for the dose rate estimation
+## As this curve is instrument specific, you will have to build your own
 ## See help(fit)
 data(BDX1, package = "gamma")
 
@@ -65,9 +67,7 @@ spectrum <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
-  gamma::predict(BDX1, .) %T>%
-  print() %>%
-  gamma::plot(BDX1, .)
+  gamma::predict(BDX1, ., simplify = TRUE)
 ```
 
 ## Contributing

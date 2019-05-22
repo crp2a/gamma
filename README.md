@@ -42,17 +42,17 @@ utils::vignette("gamma", package = "gamma")
 
 ``` r
 # A minimal example
-# You may want to give extra attention to the energy calibration step.
+# You may want to give extra attention to the energy calibration step
 
-## Set the expected chanel/energy peaks for the energy scale calibration.
+## Set the expected chanel/energy peaks for the energy scale calibration
 calib_lines <- list(
   c(chanel = 86, energy = 238),
   c(chanel = 496, energy = 1461),
   c(chanel = 876, energy = 2614.5)
 )
 
-## Load the calibration curve for the dose rate estimation.
-## As this curve is instrument specific, you will have to build your own.
+## Load the calibration curve for the dose rate estimation
+## As this curve is instrument specific, you will have to build your own
 ## See help(fit)
 data(BDX1, package = "gamma")
 
@@ -63,15 +63,10 @@ spectrum <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
-  gamma::predict(BDX1, .) %T>%
-  print() %>%
-  gamma::plot(BDX1, .)
-#> 1 gamma dose rate estimate 
-#>   reference dose_value dose_error signal_value signal_error
-#> 1  test_CNF   3971.732   129.7594     126139.5     9.603408
+  gamma::predict(BDX1, ., simplify = TRUE)
+#>             value    error
+#> test_CNF 3971.732 129.7594
 ```
-
-<img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
 
 ## Contributing
 
