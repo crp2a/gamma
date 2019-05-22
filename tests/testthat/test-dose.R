@@ -121,6 +121,8 @@ test_that("Build calibration curve", {
 test_that("Estimate dose rate", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir, skip = TRUE)
+  bdf_dir <- system.file("extdata/crp2a/background", package = "gamma")
+  bdf <- read(bdf_dir, skip = TRUE)
 
   setDoseRate(spectra) <- list(
     BRIQUE = c(1986, 36),
@@ -131,17 +133,24 @@ test_that("Estimate dose rate", {
     MAZ = c(1141, 12),
     PEP = c(2538, 112)
   )
-  calib <- fit(
-    spectra, noise = c(25312, 1.66), range = c(200, 2800),
+  noise <- integrateSignal(bdf, range = c(200, 2800))
+  calib1 <- fit(
+    spectra, noise = noise, range = c(200, 2800),
     intercept = FALSE, weights = FALSE,
     details = NULL
   )
+  calib2 <- fit(
+    spectra, noise = bdf, range = c(200, 2800),
+    intercept = FALSE, weights = FALSE,
+    details = NULL
+  )
+  expect_equal(calib1@model, calib2@model)
 
-  dose_rate <- predict(calib, spectra, simplify = TRUE)
+  dose_rate <- predict(calib1, spectra, simplify = TRUE)
   expect_type(dose_rate, "double")
   expect_equal(dim(dose_rate), c(7, 2))
 
-  expect_identical(predict(calib, spectra), predict(calib))
-  expect_error(predict(calib, 1:3), "`spectra` must be a")
-  expect_type(predict(calib, spectra[[1]], simplify = TRUE), "double")
+  expect_identical(predict(calib1, spectra), predict(calib1))
+  expect_error(predict(calib1, 1:3), "`spectra` must be a")
+  expect_type(predict(calib1, spectra[[1]], simplify = TRUE), "double")
 })

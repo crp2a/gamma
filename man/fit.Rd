@@ -4,10 +4,14 @@
 \name{fit}
 \alias{fit}
 \alias{fit-method}
+\alias{fit,GammaSpectra,GammaSpectrum-method}
 \alias{fit,GammaSpectra,numeric-method}
 \title{Calibration}
 \usage{
 fit(object, noise, ...)
+
+\S4method{fit}{GammaSpectra,GammaSpectrum}(object, noise, range = c(200,
+  2800), intercept = TRUE, weights = FALSE, details = NULL, ...)
 
 \S4method{fit}{GammaSpectra,numeric}(object, noise, range = c(200, 2800),
   intercept = TRUE, weights = FALSE, details = NULL, ...)

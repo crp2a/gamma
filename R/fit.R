@@ -4,6 +4,22 @@ NULL
 
 #' @export
 #' @rdname fit
+#' @aliases fit,GammaSpectra,GammaSpectrum-method
+setMethod(
+  f = "fit",
+  signature = signature(object = "GammaSpectra", noise = "GammaSpectrum"),
+  definition = function(object, noise, range = c(200, 2800),
+                        intercept = TRUE, weights = FALSE,
+                        details = NULL, ...) {
+    # Integrate background noise
+    int_noise <- integrateSignal(noise, range = range)
+    fit(object, int_noise, range = range, intercept = intercept,
+        weights = weights, details = details, ...)
+  }
+)
+
+#' @export
+#' @rdname fit
 #' @aliases fit,GammaSpectra,numeric-method
 setMethod(
   f = "fit",
