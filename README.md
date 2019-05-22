@@ -46,7 +46,7 @@ utils::vignette("gamma", package = "gamma")
 
 ## Set the expected chanel/energy peaks for the energy scale calibration
 calib_lines <- list(
-  Pb212 = c(chanel = 86, energy = 239),
+  Pb212 = c(chanel = 86, energy = 238),
   K40 = c(chanel = 496, energy = 1461),
   Tl208 = c(chanel = 876, energy = 2615)
 )
@@ -64,8 +64,8 @@ spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
   gamma::predict(BDX1, ., simplify = TRUE)
-#>             value    error
-#> test_CNF 4001.902 130.7124
+#>            value    error
+#> test_CNF 3964.39 129.4871
 ```
 
 ## Contributing

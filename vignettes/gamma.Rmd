@@ -200,7 +200,7 @@ If you know the correspondence between several channels and the energy scale, yo
 # Names are optional, but values must always be set in this order
 # (channel then energy)
 calib_lines <- list(
-  Pb212 = c(chanel = 84, energy = 239),
+  Pb212 = c(chanel = 84, energy = 238),
   K40 = c(chanel = 492, energy = 1461),
   Tl208 = c(chanel = 865, energy = 2615)
 )

@@ -119,7 +119,7 @@ plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
 
 ```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
 # Expected energies (keV)
-expected_peaks <- c(Pb212 = 239, K40 = 1461, Tl208 = 2615)
+expected_peaks <- c(Pb212 = 238, K40 = 1461, Tl208 = 2615)
 
 # Energy scale calibration
 calib_scaled <- lapply(X = calib_peaks, FUN = calibrate,  lines = expected_peaks)
