@@ -46,7 +46,8 @@ test_that("Initialize an empty GammaSpectra instance", {
   expect_equal(length(names(spectra)), 0)
   expect_type(names(spectra), "character")
 
-  expect_error(getDoseRate(spectra), "No dose rate available for this spectra.")
+  expect_error(getDoseRate(spectra),
+               "No dose rate available for these spectra.")
 })
 test_that("Initialize an empty BaseLine instance", {
   options("verbose" = TRUE)

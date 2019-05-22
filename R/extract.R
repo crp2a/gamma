@@ -115,7 +115,7 @@ setMethod(
       FUN = function(x) methods::slot(x, "dose_rate")
     )
     if (length(unlist(dose_rate)) == 0)
-      stop("No dose rate available for this spectra.", call. = FALSE)
+      stop("No dose rate available for these spectra.", call. = FALSE)
 
     dose_mtx <- do.call(rbind, dose_rate) %>%
       as.data.frame(stringsAsFactors = FALSE) %>%
