@@ -90,16 +90,19 @@ test_that("Initialize an empty CalibrationCurve instance", {
   expect_type(calib[["integration"]], "double")
   expect_s4_class(calib[["data"]], "data.frame")
 
-  expect_error(new("CalibrationCurve", details = list(instrument = LETTERS)),
-               "must be a character vector of length 1 not 26")
-  expect_error(new("CalibrationCurve", details = list(laboratory = LETTERS)),
-               "must be a character vector of length 1 not 26")
-  expect_error(new("CalibrationCurve", details = list(authors = LETTERS)),
-               "must be a character vector of length 1 not 26")
+  expect_error(new("CalibrationCurve", details = list(X = "X")),
+               "`details` is a list, but does not have components")
+  info_details <- list(
+    instrument = LETTERS, laboratory = LETTERS,
+    detector = LETTERS, authors = 1:3
+  )
+  expect_error(new("CalibrationCurve", details = info_details),
+               "must be a length-one character vector")
+
   expect_error(new("CalibrationCurve", noise = 1:3),
-               "must be a numeric vector of length 2 not 3")
+               "must be a numeric vector of length two, not 3")
   expect_error(new("CalibrationCurve", integration = 1:3),
-               "must be a numeric vector of length 2 not 3")
+               "must be a numeric vector of length two, not 3")
 })
 test_that("Initialize an empty PeakModel instance", {
   options("verbose" = TRUE)
@@ -140,16 +143,16 @@ test_that("Initialize an empty PeakPosition instance", {
   expect_s4_class(peak[["baseline"]], "BaseLine")
 
   expect_error(new("PeakPosition", method = LETTERS),
-               "must be a character vector of length 1 not 26")
+               "must be a character vector of length one, not 26")
   expect_error(new("PeakPosition", noise = 1:26),
-               "must be a numeric vector of length 1 not 26")
+               "must be a numeric vector of length one, not 26")
   expect_error(new("PeakPosition", noise = -1),
                "must be a positive number")
   expect_error(new("PeakPosition", window = 1:26),
-               "must be a numeric vector of length 1 not 26")
+               "must be a numeric vector of length one, not 26")
   expect_error(new("PeakPosition", window = -1),
                "must be a positive number")
   mtx <- cbind(chanel = 1:26, energy = 1:26, dose = 1:26, rate = 1:26)
   expect_error(new("PeakPosition", peaks = mtx[, 1:3]),
-               "must be a matrix with four columns")
+               "must be a 4 columns matrix")
 })

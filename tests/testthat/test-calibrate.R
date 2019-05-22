@@ -59,9 +59,8 @@ test_that("Calibrate GammaSpectra", {
     dnorm(1:1024, mean = 876, sd = 10)
   # Add some noise
   set.seed(12345)
-  spc <- new("GammaSpectrum",
-             chanel = 1:1024,
-             counts = cts * 10^5 + sample(1:10, 1024, TRUE))
+  spc <- .GammaSpectrum(chanel = 1:1024,
+                        counts = cts * 10^5 + sample(1:10, 1024, TRUE))
   # Fit peaks
   fit <- fitPeaks(spc, peaks = c(86, 493, 876))
 

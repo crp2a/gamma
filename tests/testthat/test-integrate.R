@@ -53,4 +53,9 @@ test_that("Integrate GammaSpectra", {
   expect_type(int3, "list")
   expect_length(int3, length(spectra))
   expect_equivalent(lengths(int3), rep(2, length(spectra)))
+
+  expect_type(integrateSignal(spectra, range = c(200, 2800), simplify = TRUE),
+              "double")
+  expect_type(integrateSignal(spectra, range = c(200, 2800), noise = noise,
+                              simplify = TRUE), "double")
 })

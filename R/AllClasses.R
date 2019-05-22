@@ -275,7 +275,7 @@ setMethod(
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }
@@ -288,7 +288,7 @@ setMethod(
     .Object <- methods::callNextMethod(.Object, ...)
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }
@@ -308,7 +308,7 @@ setMethod(
     .Object@.Data <- spc_list
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }
@@ -317,17 +317,20 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",
-  definition = function(.Object, details, model, noise,
-                        integration, data) {
-    info <- list()
+  definition = function(.Object, details, model, noise, integration, data) {
+
+    info <- list(
+      laboratory = character(0), instrument = character(0),
+      detector = character(0), authors = character(0)
+    )
     if (!missing(details)) {
-      if (is.list(details)) {
+      if (is.list(details) & length(details) != 0) {
         info_fields <- c("laboratory", "instrument", "detector", "authors")
         k <- which(names(details) %in% info_fields)
         info <- details[k]
       }
     }
-    info[["date"]] <- Sys.time()
+    info$date <- Sys.time()
     .Object@details <- info
     if (!missing(model)) .Object@model <- model
     if (!missing(noise)) .Object@noise <- noise
@@ -336,7 +339,7 @@ setMethod(
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }
@@ -353,7 +356,7 @@ setMethod(
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }
@@ -373,7 +376,7 @@ setMethod(
 
     methods::validObject(.Object)
     if (getOption("verbose")) {
-      message(paste(class(.Object), "instance initialized.", sep = " "))
+      message(class(.Object), " instance initialized.")
     }
     return(.Object)
   }

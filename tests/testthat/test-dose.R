@@ -44,12 +44,25 @@ test_that("Get and set dose rate", {
     DD = c(1575, 17),
     EE = c(2538, 112)
   )
+  dose_rate5 <- list(
+    c(1986, 36),
+    c(850, 21),
+    c(1424, 24),
+    c(1575, 17),
+    c(642, 18),
+    c(1141, 12),
+    c(2538, 112)
+  )
+
+  expect_error(setDoseRate(spectra) <- 1:7,
+               "`value` must be a list.")
   expect_error(setDoseRate(spectra) <- dose_rate2,
                "`value` must be a list of length-two numeric vectors.")
   expect_error(setDoseRate(spectra) <- dose_rate3,
                "`value` must be of length 7")
   expect_error(setDoseRate(spectra) <- dose_rate4,
                "Names of `value` do not match.")
+  expect_invisible(setDoseRate(spectra) <- dose_rate5)
 })
 test_that("Build calibration curve", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")

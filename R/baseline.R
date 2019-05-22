@@ -18,7 +18,7 @@ setMethod(
     )
     names(baseline) <- names(object)
 
-    methods::new("GammaSpectra", baseline)
+    .GammaSpectra(baseline)
   }
 )
 
@@ -41,8 +41,7 @@ setMethod(
       SNIP = SNIP(x_counts, ...)
     )
 
-    methods::new(
-      "BaseLine",
+    .BaseLine(
       hash = object@hash,
       reference = object@reference,
       date = as.POSIXct(object@date),
