@@ -76,10 +76,7 @@ setMethod(
     # Get data
     peaks <- object@coefficients
     spectrum <- object@spectrum
-
-    # TODO: check that!
-    k <- findClosest(spectrum@chanel, peaks[, "mean"])
-    chanels <- spectrum@chanel[k]
+    chanels <- round(peaks[, "mean"], digits = 0)
 
     # Validation
     n_lines <- length(lines)

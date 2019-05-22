@@ -136,7 +136,7 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 noise_lines <- list(
   La138 = c(chanel = 251, energy = 789),
   K40 = c(chanel = 460, energy = 1461),
-  Cs = c(chanel = 813, energy = 2614.5)
+  Ac227 = c(chanel = 813, energy = 2614.5)
 )
 noise_scaled <- calibrate(noise_spc, lines = noise_lines)
 
