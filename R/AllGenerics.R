@@ -268,6 +268,41 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
+#' Smooth
+#'
+#' @param object A spectrum to be smoothed (a \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra} object).
+#' @param method A \code{\link{character}} string specifying the smoothing
+#'  method to be used. It must be one of "\code{unweighted}" (default) or
+#'  "\code{weighted}". Any unambiguous substring can be given.
+#' @param m An odd \code{\link{integer}} value giving the number of adjacent
+#'  points to mean.
+#' @param ... Currently not used.
+#' @details
+#'  The following smoothing methods are available:
+#'  \describe{
+#'   \item{unweighted}{Unweighted sliding-average or rectangular smooth.
+#'   It replaces each point in the signal with the average of \code{m} adjacent
+#'   points.}
+#'   \item{weighted}{Weighted sliding-average or triangular smooth.
+#'   It replaces each point in the signal with the weighted mean of \code{m}
+#'   adjacent points.}
+#'  }
+#'  There will be \eqn{(m - 1)/2} points both at the beginning and at the end of
+#'  the spectrum for which a complete \code{m}-width smooth cannot be
+#'  calculated. To prevent data loss, progressively smaller smooths are used at
+#'  the ends of the spectra.
+#' @return
+#'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname smooth
+#' @aliases smooth-method
+setGeneric(
+  name = "smooth",
+  def = function(object, ...) standardGeneric("smooth")
+)
+
 #' Extract or Replace Parts of an Object
 #'
 #' @param object An object from which to extract element(s) or in which to

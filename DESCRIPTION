@@ -81,5 +81,6 @@ Collate:
     'predict.R'
     'read.R'
     'show.R'
+    'smooth.R'
     'utilities.R'
     'validate.R'
