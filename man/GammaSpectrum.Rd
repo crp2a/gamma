@@ -49,7 +49,7 @@ Numeric values are coerced to integer as by \code{\link{as.integer}}
 \item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
 (in keV).}
 
-\item{\code{counts}}{A \code{\link{integer}} vector giving the counts number for
+\item{\code{counts}}{A \code{\link{numeric}} vector giving the counts number for
 each channel. Numeric values are coerced to integer as by
 \code{\link{as.integer}} (and hence truncated towards zero).}
 

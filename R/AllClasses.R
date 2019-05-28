@@ -24,7 +24,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  (and hence truncated towards zero).
 #' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
 #'  (in keV).
-#' @slot counts A \code{\link{integer}} vector giving the counts number for
+#' @slot counts A \code{\link{numeric}} vector giving the counts number for
 #'  each channel. Numeric values are coerced to integer as by
 #'  \code{\link{as.integer}} (and hence truncated towards zero).
 #' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
@@ -72,7 +72,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     file_format = "character",
     chanel = "integer",
     energy = "numeric",
-    counts = "integer",
+    counts = "numeric",
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
