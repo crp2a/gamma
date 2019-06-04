@@ -1,16 +1,5 @@
 {
-  "license": "GPL-3.0",
-  "description": "<p>&#39;gamma&#39; is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy shifts of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files</p>",
-  "language": "eng",
-  "keywords": [
-    "geochronology",
-    "luminescence dating"
-    ],
-  "communities": [
-    {
-      "identifier": "archaeo"
-    }
-    ],
+  "description": "<p><code>gamma</code> is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy shifts of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files</p>",
   "creators": [
     {
       "orcid": "0000-0001-5759-4944",
@@ -37,6 +26,17 @@
     {
       "affiliation": "Universit\u00e9 Bordeaux Montaigne",
       "name": "Paradol, Guilhem"
+    }
+    ],
+  "license": "GPL-3.0",
+  "language": "eng",
+  "keywords": [
+    "geochronology",
+    "luminescence dating"
+    ],
+  "communities": [
+    {
+      "identifier": "archaeo"
     }
     ]
 }
