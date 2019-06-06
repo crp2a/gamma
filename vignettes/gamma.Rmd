@@ -193,12 +193,13 @@ knitr::kable(
 ```
 
 ## Energy scale calibration
+### The careful way
 If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then the chanel values are used to predict the new energy scale.
 
 ```{r calibrate-fixed, fig.width=7, fig.height=5, fig.align="center"}
 # Create a list of chanel-enegy pairs
-# Names are optional, but values must always be set in this order
-# (channel then energy)
+# Names are optional, but values must always be set in this order:
+# channel then energy
 calib_lines <- list(
   Pb212 = c(chanel = 84, energy = 238),
   K40 = c(chanel = 492, energy = 1461),
@@ -221,8 +222,37 @@ plot(tka_scaled2) +
   ggplot2::theme_bw()
 ```
 
+### The fast way
+If you want to calibrate several spectra at once, you can try the following approach.
+```{r calibrate-multi, fig.width=7, fig.height=5, fig.align="center"}
+# The 'GammaSpectra' class inherits from 'list'
+# You can apply a function over it
+
+# First, fit peaks at a given chanel
+# The same starting peak positions are used for all spectra
+multi_fit <- lapply(X = spc, FUN = fitPeaks, peaks = c(86, 496, 876))
+                       
+# Then, calibrate the spectra using the peak models                   
+multi_scaled <- lapply(X = multi_fit, FUN = calibrate, 
+                       lines = c(238, 1461, 2615))
+
+# Finally, coerce the result to a 'GammaSpectra' object
+multi_spc <- as(multi_scaled, "GammaSpectra")
+
+# Plot the spectra
+plot(multi_spc, xaxis = "energy") +
+  ggplot2::labs(title = "Calibrated spectra") +
+  ggplot2::theme_bw()
+```
+
 # Estimate the gamma dose rate
 To estimate the gamma dose rate, you can either use one of the calibration curves distributed with this package or build your own.
+
+```{r dose-rate-curves, eval=FALSE}
+# Load one of the built-in curves
+data(BDX1) # IRAMAT-CRP2A (Bordeaux)
+data(AIX1) # CEREGE (Aix-en-Provence)
+```
 
 The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.
 

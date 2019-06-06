@@ -16,6 +16,9 @@
 to extract or replace (see below). Character sring will be matched to the
 names of the slots.}
 }
+\value{
+TODO
+}
 \description{
 An S4 class to represent a calibration curve
 }

@@ -8,6 +8,8 @@ NULL
 #' @param object An object from which to extract element(s) or in which to
 #'  replace element(s).
 #' @param value A possible value for the element(s) of \code{object}
+#' @return
+#'  TODO
 #' @author N. Frerebeau
 #' @docType methods
 #' @name extract
@@ -261,6 +263,8 @@ setGeneric(
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels
 #'  defined by spectrum be drawn?
 #' @param ... Currently not used.
+#' @return
+#'  TODO
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods

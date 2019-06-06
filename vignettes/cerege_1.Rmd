@@ -218,7 +218,7 @@ usethis::use_data(AIX1, overwrite = FALSE)
 
 ### Check model
 ```{r lm-summary, echo=FALSE}
-summary(AIX1@model)
+summary(AIX1[["model"]])
 ```
 
 ```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}

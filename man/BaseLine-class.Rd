@@ -5,6 +5,9 @@
 \alias{BaseLine-class}
 \alias{.BaseLine}
 \title{An S4 class to represent a spectrum baseline}
+\value{
+TODO
+}
 \description{
 An S4 class to represent a spectrum baseline
 }

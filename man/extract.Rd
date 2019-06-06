@@ -33,6 +33,9 @@ replace element(s).}
 
 \item{value}{A possible value for the element(s) of \code{object}}
 }
+\value{
+TODO
+}
 \description{
 Extract or Replace Parts of an Object
 }

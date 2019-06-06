@@ -22,6 +22,9 @@ Numeric values are coerced to integer as by \code{\link{as.integer}}
 (and hence truncated towards zero). Character vectors will be matched to
 the names of the object.}
 }
+\value{
+TODO
+}
 \description{
 Represents a collection of spectra of gamma ray spectrometry measurements.
 }

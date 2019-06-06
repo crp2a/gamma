@@ -4,7 +4,7 @@ NULL
 
 # ================================================================ GammaSpectrum
 #' @export
-#' @rdname GammaSpectrum
+#' @rdname GammaSpectrum-class
 #' @aliases [[,GammaSpectrum-method
 setMethod(
   f = "[[",
@@ -18,7 +18,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname GammaSpectrum
+#' @rdname GammaSpectrum-class
 #' @aliases length,GammaSpectrum-method
 setMethod(
   f = "length",
@@ -56,7 +56,7 @@ setMethod(
 
 # ================================================================= GammaSpectra
 #' @export
-#' @rdname GammaSpectra
+#' @rdname GammaSpectra-class
 #' @aliases [,GammaSpectra-method
 setMethod(
   f = "[",
@@ -89,7 +89,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname GammaSpectra
+#' @rdname GammaSpectra-class
 #' @aliases [[,GammaSpectra-method
 setMethod(
   f = "[[",
@@ -167,7 +167,7 @@ setMethod(
 
 # ============================================================= CalibrationCurve
 #' @export
-#' @rdname CalibrationCurve
+#' @rdname CalibrationCurve-class
 #' @aliases [[,CalibrationCurve-method
 setMethod(
   f = "[[",
@@ -182,7 +182,7 @@ setMethod(
 
 # ======================================================================== Peaks
 #' @export
-#' @rdname PeakPosition
+#' @rdname PeakPosition-class
 #' @aliases [[,PeakPosition-method
 setMethod(
   f = "[[",
@@ -195,7 +195,7 @@ setMethod(
   }
 )
 #' @export
-#' @rdname PeakModel
+#' @rdname PeakModel-class
 #' @aliases [[,PeakModel-method
 setMethod(
   f = "[[",

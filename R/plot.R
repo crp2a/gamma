@@ -92,7 +92,7 @@ setMethod(
       data = spc,
       mapping = aes_plot) +
       ggplot2::geom_line() +
-      ggplot2::labs(x = xlabel, y = ylabel) +
+      ggplot2::labs(x = xlabel, y = ylabel, colour = "Reference") +
       facet
   }
 )
@@ -196,8 +196,7 @@ setMethod(
                                xmax = .data$signal_value + .data$signal_error),
         height = error_height) +
       ggplot2::geom_point() +
-      ggplot2::scale_x_continuous(name = "Signal") +
-      ggplot2::scale_y_continuous(name = "Dose rate [\u03BCGy/y]")
+      ggplot2::labs(x = "Signal", y = "Dose rate [\u03BCGy/y]")
   }
 )
 

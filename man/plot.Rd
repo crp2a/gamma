@@ -42,6 +42,9 @@ giving the selection of the spectrum that are drawn.}
 \item{facet}{A \code{\link{logical}} scalar: should a matrix of panels
 defined by spectrum be drawn?}
 }
+\value{
+TODO
+}
 \description{
 Plot
 }

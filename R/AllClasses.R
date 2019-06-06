@@ -54,11 +54,12 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
+#' @return
+#'  TODO
 #' @seealso \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname GammaSpectrum
 #' @aliases GammaSpectrum-class
 .GammaSpectrum <- setClass(
   Class = "GammaSpectrum",
@@ -113,11 +114,12 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'   \code{i} can be a \code{numeric} or \code{character} vector
 #'   of length one. Returns the corresponding \linkS4class{GammaSpectrum} object.}
 #' }
+#' @return
+#'  TODO
 #' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-GammaSpectra.R
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname GammaSpectra
 #' @aliases GammaSpectra-class
 .GammaSpectra <- setClass(
   Class = "GammaSpectra",
@@ -127,11 +129,12 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' An S4 class to represent a spectrum baseline
 #'
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
+#' @return
+#'  TODO
 #' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname BaseLine
 #' @aliases BaseLine-class
 .BaseLine <- setClass(
   Class = "BaseLine",
@@ -163,9 +166,10 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
 #'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 #' }
+#' @return
+#'  TODO
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname CalibrationCurve
 #' @aliases CalibrationCurve-class
 .CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
@@ -196,9 +200,10 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
+#' @return
+#'  TODO
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname PeakModel
 #' @aliases PeakModel-class
 .PeakModel <- setClass(
   Class = "PeakModel",
@@ -233,9 +238,10 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
+#' @return
+#'  TODO
 #' @author N. Frerebeau
 #' @docType class
-#' @rdname PeakPosition
 #' @aliases PeakPosition-class
 .PeakPosition <- setClass(
   Class = "PeakPosition",

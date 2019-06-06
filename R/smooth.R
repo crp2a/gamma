@@ -70,29 +70,29 @@ setMethod(
   }
 )
 
-
-differenciate <- function(object,
-                          method = c("central", "forward", "backward")) {
-  # Validation
-  method <- match.arg(method, several.ok = FALSE)
-  # Get data
-  x <- object@chanel
-  y <- object@counts
-
-  h <- 1
-  n <- length(x)
-  z <- switch (
-    method,
-    central = (y[(1 + 2*h):n] - y[1:(n - 2*h)]) / (x[(1 + 2*h):n] - x[1:(n - 2*h)]),
-    forward = (y[(1 + h):n] - y[1:(n - h)]) / (x[(1 + h):n] - x[1:(n - h)]),
-    backward = "",
-    stop(sprintf("There is no such method: '%s'.", method), call. = FALSE)
-  )
-
-  tmp <- object
-  tmp@chanel <- object@chanel[-c(n-1, n)]
-  tmp@counts <- z
-  if (length(object@energy) != 0) tmp@energy <- object@energy[-c(n-1, n)]
-  if (length(object@rate) != 0) tmp@rate <- object@rate[-c(n-1, n)]
-  tmp
-}
+#
+# differenciate <- function(object,
+#                           method = c("central", "forward", "backward")) {
+#   # Validation
+#   method <- match.arg(method, several.ok = FALSE)
+#   # Get data
+#   x <- object@chanel
+#   y <- object@counts
+#
+#   h <- 1
+#   n <- length(x)
+#   z <- switch (
+#     method,
+#     central = (y[(1 + 2*h):n] - y[1:(n - 2*h)]) / (x[(1 + 2*h):n] - x[1:(n - 2*h)]),
+#     forward = (y[(1 + h):n] - y[1:(n - h)]) / (x[(1 + h):n] - x[1:(n - h)]),
+#     backward = "",
+#     stop(sprintf("There is no such method: '%s'.", method), call. = FALSE)
+#   )
+#
+#   tmp <- object
+#   tmp@chanel <- object@chanel[-c(n-1, n)]
+#   tmp@counts <- z
+#   if (length(object@energy) != 0) tmp@energy <- object@energy[-c(n-1, n)]
+#   if (length(object@rate) != 0) tmp@rate <- object@rate[-c(n-1, n)]
+#   tmp
+# }

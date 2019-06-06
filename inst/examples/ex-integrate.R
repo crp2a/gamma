@@ -11,7 +11,7 @@ noise <- read(bkg_dir)
 
 # Then, integrate spectra and substract background noise value (net signal)
 int_spc1 <- integrateSignal(spectra, range = c(200, 2800), noise = int_noise,
-                            simplify = F)
+                            simplify = FALSE)
 
 # Or, do it in one go
 int_spc2 <- integrateSignal(spectra, range = c(200, 2800), noise = noise,

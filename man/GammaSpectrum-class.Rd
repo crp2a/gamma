@@ -19,6 +19,9 @@
 to extract or replace (see below). Character sring will be matched to the
 names of the slots.}
 }
+\value{
+TODO
+}
 \description{
 Represents a single spectrum of a gamma ray spectrometry measurement.
 }
