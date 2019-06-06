@@ -22,8 +22,14 @@ setMethod(
     }
 
     if(!is.null(skip)) {
-      all_numeric <- all(sapply(skip, function(x) is.numeric(x) | is.null(x)))
-      all_logical <- all(sapply(skip, function(x) is.logical(x) | is.null(x)))
+      all_numeric <- all(
+        vapply(X = skip, FUN = function(x) is.numeric(x) || is.null(x),
+               FUN.VALUE = logical(1))
+      )
+      all_logical <- all(
+        vapply(X = skip, FUN = function(x) is.logical(x) || is.null(x),
+               FUN.VALUE = logical(1))
+      )
       if(!all_numeric & !all_logical) {
         stop("`skip` must be a list of numeric vectors or logical scalars.",
              call. = FALSE)
@@ -135,7 +141,7 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
 
   # Get data
   spc_data <- data.frame(count = as.numeric(spc_xy[, 1])) %>%
-    magrittr::inset(1:2, 1, c(0, 0)) %>%
+    magrittr::inset(c(1, 2), 1, c(0, 0)) %>%
     dplyr::mutate(chanel = dplyr::row_number()) %>%
     magrittr::set_colnames(c("counts", "chanel"))
 

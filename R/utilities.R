@@ -13,9 +13,10 @@ findClosest <- function(x, value) {
   if (!is.numeric(x) | !is.numeric(value))
     stop("Numeric vectors are expected.", call. = FALSE)
 
-  index <- sapply(
+  index <- vapply(
     X = value,
     FUN = function(i, x) which.min(abs(x - i)),
+    FUN.VALUE = integer(1),
     x = x
   )
   return(index)

@@ -60,7 +60,7 @@ setMethod(
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
     if (is.null(select))
-      select <- 1:length(x)
+      select <- seq_len(length(x))
     if (is.numeric(select))
       select <- as.integer(select)
 
@@ -136,7 +136,7 @@ setMethod(
     # Build long table for ggplot2
     spc_long <- do.call(cbind, fit) %>%
       as.data.frame() %>%
-      stats::setNames(paste("peak", 1:ncol(.), sep = " ")) %>%
+      stats::setNames(paste("peak", seq_len(ncol(.)), sep = " ")) %>%
       dplyr::bind_cols(spc_df) %>%
       tidyr::gather(key = "peak", value = "fit",
                     -.data$chanel, -.data$energy, -.data$counts, -.data$rate)
@@ -147,7 +147,8 @@ setMethod(
         mapping = ggplot2::aes(x = .data$chanel, y = .data$fit,
                                fill = .data$peak, colour = .data$peak),
         alpha = 0.5
-      )
+      ) +
+      ggplot2::labs(colour = "Peak", fill = "Peak")
   }
 )
 

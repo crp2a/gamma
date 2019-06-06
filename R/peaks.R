@@ -27,7 +27,7 @@ setMethod(
     }
 
     shape <- diff(sign(diff(counts, na.pad = FALSE)))
-    index_shape <- sapply(
+    index_shape <- unlist(lapply(
       X = which(shape < 0),
       FUN = function(i, data, span) {
         n <- length(data)
@@ -43,7 +43,7 @@ setMethod(
       },
       data = counts,
       span = span
-    )
+    ))
 
     noise <- switch (
       method,

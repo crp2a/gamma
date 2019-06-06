@@ -128,7 +128,7 @@ SNIP <- function(x, LLS = FALSE, decreasing = FALSE, k = 100) {
 
   N <- length(x)
   y <- vector(mode = "numeric", length = N)
-  clip <- if (decreasing) k:1 else 1:k
+  clip <- if (decreasing) rev(seq_len(k)) else seq_len(k)
 
   for (p in clip) {
     i <- p
