@@ -16,7 +16,8 @@ library(magrittr)
 ```
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
-[![Build Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
+[![Appveyor build status](https://ci.appveyor.com/api/projects/status/h7jjppg72oiq9pnf?svg=true)](https://ci.appveyor.com/project/nfrerebeau/gamma)
+[![Travis build Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 [![GitHub Release](https://img.shields.io/github/release/crp2a/gamma.svg)](https://github.com/crp2a/gamma/releases)
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)

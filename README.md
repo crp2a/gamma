@@ -3,7 +3,9 @@
 
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
-[![Build
+[![Appveyor build
+status](https://ci.appveyor.com/api/projects/status/h7jjppg72oiq9pnf?svg=true)](https://ci.appveyor.com/project/nfrerebeau/gamma)
+[![Travis build
 Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 [![GitHub
@@ -64,8 +66,8 @@ spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
   gamma::predict(BDX1, ., simplify = TRUE)
-#>            value    error
-#> test_CNF 3964.39 129.4871
+#>           value    error
+#> test_CNF 3971.7 129.7577
 ```
 
 ## Contributing
