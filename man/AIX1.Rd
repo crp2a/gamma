@@ -22,7 +22,7 @@ CEREGE Calibration Curve #1
 \section{Changelog}{
 
  \describe{
-  \item{v0.1.1}{Curve creation.
+  \item{0.1.1}{Curve creation.
   Model summary:
   slope: 0.018 +/- 0;
   intercept: -34.361 +/- 49.326;
@@ -37,7 +37,9 @@ CEREGE Calibration Curve #1
 utils::data("AIX1", package = "gamma")
 AIX1
 
+\dontrun{
 # See how to replicate the curve
 utils::vignette("AIX1#1", package = "gamma")
+}
 }
 \keyword{datasets}
