@@ -11,11 +11,11 @@
 #' \strong{Full list of authors and contributors} (alphabetic order)
 #'
 #' \tabular{ll}{
-#'  Nicolas Frerebeau \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
-#'  Guillaume Guérin \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
-#'  Christelle Lahaye \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France} \cr
-#'  Brice Lebrun \tab \emph{CEREGE, Aix-Marseille Université, France} \cr
-#'  Guilhem Paradol \tab \emph{IRAMAT-CRP2A, Université Bordeaux Montaigne, France}
+#'  Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
+#'  Guillaume Guérin \tab \emph{CNRS, France} \cr
+#'  Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
+#'  Brice Lebrun \tab \emph{Aix-Marseille Université, France} \cr
+#'  Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France}
 #' }
 #'
 #' \strong{Package maintainer}
@@ -25,7 +25,7 @@
 #'
 #' IRAMAT-CRP2A (UMR 5060)\cr
 #' Maison de l'Archéologie\cr
-#' Universite Bordeaux Montaigne\cr
+#' Université Bordeaux Montaigne\cr
 #' F-33607 Pessac cedex\cr
 #' France
 #' @note

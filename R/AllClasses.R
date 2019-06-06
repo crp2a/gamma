@@ -1,6 +1,4 @@
 # CLASSES DEFINITION AND INITIALIZATION
-#' @include gamma.R
-NULL
 
 # Class Unions =================================================================
 setClassUnion("LmOrNull", c("lm", "NULL"))

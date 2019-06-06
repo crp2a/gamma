@@ -65,7 +65,6 @@ Encoding: UTF-8
 LazyData: false
 RoxygenNote: 6.1.1
 Collate: 
-    'gamma.R'
     'AllClasses.R'
     'AllGenerics.R'
     'operators.R'
@@ -75,6 +74,7 @@ Collate:
     'data.R'
     'extract.R'
     'fit.R'
+    'gamma-package.R'
     'integrateSignal.R'
     'peaks.R'
     'plot.R'
