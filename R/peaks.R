@@ -90,31 +90,37 @@ setMethod(
       X = pks,
       MARGIN = 1,
       FUN = function(peaks, spectrum, bounds) {
-        fitNLS(x = spectrum, peaks = peaks, scale = "chanel", bounds = bounds)
+        tryCatch(
+          error = conditionMessage,
+          fitNLS(x = spectrum, peaks = peaks, scale = "chanel", bounds = bounds)
+        )
       },
       spectrum = spc, bounds = bounds
     )
-    # Remove NULL entries
-    null_index <- sapply(X = fit, FUN = is.null, simplify = TRUE)
-    if (any(null_index)) {
-      n <- sum(null_index)
-      warning(
-        sprintf(ngettext(
-          n,
-          "%d peak has a standard deviation of zero and was skipped:",
-          "%d peaks have a standard deviation of zero and were skipped:"
-        ), n),
-        "\n* ", paste0(rownames(pks)[null_index], collapse = ".\n* "), ".",
-        call. = FALSE
-      )
-      fit <- fit[!null_index]
+    # Find errors, if any
+    isNotNLS <- function(x) !inherits(x, "nls")
+    errors <- detect(isNotNLS, fit)
+    if (any(errors)) {
+      # Remove errors, if any
+      fit_clean <- compact(isNotNLS, fit)
+      if (isEmpty(fit_clean)) {
+        stop("What a failure! No peaks could be fitted correctly.",
+             call. = FALSE)
+      } else {
+        warning(
+          "Something goes wrong, the following peaks were skipped:\n",
+          paste0("* ", names(fit)[errors], ": ", fit[errors], collapse = "\n"),
+          call. = FALSE
+        )
+      }
+    } else {
+      fit_clean <- fit
     }
-
     # Find peaks in spectrum data
-    param <- t(sapply(X = fit, FUN = stats::coef))
+    param <- do.call(rbind, lapply(X = fit_clean, FUN = stats::coef))
 
     .PeakModel(
-      model = fit,
+      model = fit_clean,
       coefficients = param,
       spectrum = object,
       baseline = baseline
@@ -163,19 +169,26 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
 
   # Get starting values for each peak
   ## Mean
-  mean <- peaks[scale]
+  mean_start <- peaks[scale]
   ## Standart deviation
-  fwhm <- sapply(
-    X = mean,
+  fwhm <- vapply(
+    X = mean_start,
     FUN = function(i, x, y) FWHM(x = x, y = y, center = i),
+    FUN.VALUE = numeric(1),
     x = x[, scale], y = x[, "counts"]
   )
-  sd <- fwhm / (2 * sqrt(2 * log(2)))
+  sd_start <- fwhm / (2 * sqrt(2 * log(2)))
   ## Height
   height <- peaks["counts"]
+  ## Check starting values
+  if (sd_start == 0)
+    stopCustom("nls_wrong_start_value",
+               "This peak has a zero standard deviation.")
+  if (height == 0)
+    stopCustom("nls_wrong_start_value",
+               "This peak has a zero height.")
 
-  if (sd == 0 | height == 0) return(NULL)
-  parameters <- c(mean, sd, height)
+  parameters <- c(mean_start, sd_start, height)
   names(parameters) <- c("mean", "sd", "height")
 
   # Lower and upper paramters bounds
@@ -183,8 +196,8 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
   if (is.numeric(bounds)) {
     n_bounds <- length(bounds)
     n_param <- length(parameters)
-    if (n_bounds != 1 & n_bounds != n_param)
-      stop(sprintf("`bounds` must be of length one or %d, not %d.",
+    if (n_bounds != 1 && n_bounds != n_param)
+      stop(sprintf("`bounds` must be of length 1 or %d, not %d.",
                    n_param, n_bounds), call. = FALSE)
     # if (any(bounds > 1))
     #   stop(sprintf("%s between 0 and 1", sQuote("bounds")))
@@ -210,6 +223,13 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
                     algorithm = "port",
                     lower = lower_bounds,
                     upper = upper_bounds)
+
+  # TODO: Check parameters
+  # mean_end <- stats::coef(fit)[["mean"]]
+  # if (abs(mean_end - mean_start))
+  #   stopCustom("nls_wrong_end_value",
+  #              "The difference between the starting and adjusted position is greater than 10 channels.")
+
   return(fit)
 }
 

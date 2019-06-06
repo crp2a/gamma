@@ -28,14 +28,14 @@ test_that("Calibrate GammaSpectrum", {
   expect_is(calib[["calibration"]], "lm")
 
   expect_error(calibrate(spectrum, lines = lines[1]),
-               "provide at least two lines")
+               "provide at least 2 lines")
   lines <- list(
     Pb = c(76, 238),
     K = c(chanel = 459, energy = 1461),
     Cs = c(chanel = 816, energy = 2614.5)
   )
   expect_error(calibrate(spectrum, lines = lines),
-               "a list of length-two numeric vectors with names")
+               "`lines` is a list but does not have components 'chanel' and 'energy'.")
 })
 
 test_that("Calibrate GammaSpectra", {

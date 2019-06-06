@@ -54,14 +54,15 @@ test_that("Fit NLS", {
   fit <- fitNLS(df, peaks = c(chanel = 86, counts = 5))
   expect_s3_class(fit, "nls")
 
-  expect_null(fitNLS(df, peaks = c(chanel = 250, counts = 0)))
+  expect_error(fitNLS(df, peaks = c(chanel = 250, counts = 0)),
+               class = "nls_wrong_start_value")
   expect_error(fitNLS(df, peaks = c(250, 0)),
                "`peaks` is a numeric vector, but does not have components")
   expect_error(fitNLS(df, peaks = c("a", "b")),
                "`peaks` must be a numeric vector.")
   expect_error(fitNLS(df, peaks = c(chanel = 86, counts = 5000),
                       bounds = c(1, 2)),
-               "`bounds` must be of length one or 3, not 2.")
+               "`bounds` must be of length 1 or 3, not 2.")
 })
 test_that("FWHM", {
   df <- methods::as(spc, "data.frame")[, c("chanel", "counts")]
