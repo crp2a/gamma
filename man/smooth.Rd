@@ -50,6 +50,11 @@ The following smoothing methods are available:
  calculated. To prevent data loss, progressively smaller smooths are used at
  the ends of the spectra.
 }
+\seealso{
+Other signal processing: \code{\link{integrateSignal}},
+  \code{\link{peaks}}, \code{\link{processBaseline}}
+}
 \author{
 N. Frerebeau
 }
+\concept{signal processing}

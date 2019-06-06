@@ -2,37 +2,33 @@
 #' @include AllClasses.R
 NULL
 
-#' Calibration
+# ====================================================================== Extract
+#' Extract or Replace Parts of an Object
 #'
-#' Builds a calibration curve for gamma dose rate estimation.
-#' @param object An object of class \linkS4class{GammaSpectra}.
-#' @param noise A \code{\link{list}} of two numeric values giving the noise
-#'  value and error.
-#' @param range A length-two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (in keV).
-#' @param intercept A \code{\link{logical}} scalar: should the intercept of the
-#'  curve be estimated?
-#' @param weights A \code{\link{logical}} scalar: should weights be used in the
-#'  fitting process. If \code{TRUE}, the inverse of the squared dose errors are
-#'  used.
-#' @param details A list of \code{\link{character}} vector specifying additional
-#'  informations about the instrument for which the curve is built.
-#' @param ... Currently not used.
-#' @details
-#'  TODO
-#' @return
-#'  Returns an object of class \linkS4class{CalibrationCurve}.
-#' @seealso \link{predict}, \link{integrateSignal}
-#' @example inst/examples/ex-doserate.R
+#' @param object An object from which to extract element(s) or in which to
+#'  replace element(s).
+#' @param value A possible value for the element(s) of \code{object}
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname fit
-#' @aliases fit-method
+#' @name extract
+#' @rdname extract
+#' @aliases extract-method replace-method
+NULL
+
+#' @export
+#' @rdname extract
 setGeneric(
-  name = "fit",
-  def = function(object, noise, ...) standardGeneric("fit")
+  name = "getDoseRate",
+  def = function(object) standardGeneric("getDoseRate")
+)
+#' @export
+#' @rdname extract
+setGeneric(
+  name = "setDoseRate<-",
+  def = function(object, value) standardGeneric("setDoseRate<-")
 )
 
+# ===================================================== Energy scale calibration
 #' Spectrum calibration
 #'
 #' Calibrate the energy scale of a gamma spectrum.
@@ -57,6 +53,7 @@ setGeneric(
   def = function(object, lines, ...) standardGeneric("calibrate")
 )
 
+# ===================================================================== Baseline
 #' Baseline estimation and removal
 #'
 #' @param object A \code{\link{numeric}} vector.
@@ -71,7 +68,8 @@ setGeneric(
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
-#'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1), p. 113-132.
+#'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
+#'  p. 113-132.
 #'  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
 #'
 #'  Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
@@ -85,6 +83,7 @@ setGeneric(
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @example inst/examples/ex-baseline.R
+#' @family signal processing
 #' @author N. Frerebeau
 #' @docType methods
 #' @name processBaseline
@@ -105,6 +104,39 @@ setGeneric(
   def = function(object, ...) standardGeneric("removeBaseline")
 )
 
+# ========================================================= Dose rate prediction
+#' Calibration
+#'
+#' Builds a calibration curve for gamma dose rate estimation.
+#' @param object An object of class \linkS4class{GammaSpectra}.
+#' @param noise A \code{\link{list}} of two numeric values giving the noise
+#'  value and error.
+#' @param range A length-two \code{\link{numeric}} vector giving the energy
+#'  range to integrate within (in keV).
+#' @param intercept A \code{\link{logical}} scalar: should the intercept of the
+#'  curve be estimated?
+#' @param weights A \code{\link{logical}} scalar: should weights be used in the
+#'  fitting process. If \code{TRUE}, the inverse of the squared dose errors are
+#'  used.
+#' @param details A list of \code{\link{character}} vector specifying additional
+#'  informations about the instrument for which the curve is built.
+#' @param ... Currently not used.
+#' @details
+#'  TODO
+#' @return
+#'  Returns an object of class \linkS4class{CalibrationCurve}.
+#' @seealso \link{integrateSignal}
+#' @family dose rate
+#' @example inst/examples/ex-doserate.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname fit
+#' @aliases fit-method
+setGeneric(
+  name = "fit",
+  def = function(object, noise, ...) standardGeneric("fit")
+)
+
 #' Gamma dose rate
 #'
 #' Predict in-situ gamma dose rate.
@@ -119,7 +151,7 @@ setGeneric(
 #' @return
 #'  If \code{simplify} is \code{FALSE} returns a list of length-two numeric
 #'  vectors (default), else returns a matrix.
-#' @seealso \link{fit}
+#' @family dose rate
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -133,6 +165,39 @@ if (!isGeneric("predict")) {
   )
 }
 
+# ==================================================================== Integrate
+#' Signal integration
+#'
+#' @param object An object of class \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra}.
+#' @param range A length two \code{\link{numeric}} vector giving the energy
+#'  range to integrate within (in keV).
+#' @param noise A length-two \code{\link{numeric}} vector giving the noise
+#'  value and error, respectively (see details).
+#' @param NiEi A \code{\link{logical}} scalar.
+#'  Change this only if you know what you are doing.
+#' @param simplify A \code{\link{logical}} scalar: should the result be
+#'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
+#' @param ... Currently not used.
+#' @details
+#'  TODO
+#'
+#'  It assumes that each spectrum is calibrated in energy.
+#' @return
+#'  If \code{simplify} is \code{FALSE} returns a list of length-two
+#'  numeric vectors (default), else returns a matrix.
+#' @author N. Frerebeau
+#' @family signal processing
+#' @docType methods
+#' @rdname integrateSignal
+#' @aliases integrateSignal-method
+#' @keywords internal
+setGeneric(
+  name = "integrateSignal",
+  def = function(object, range, noise, ...) standardGeneric("integrateSignal")
+)
+
+# ======================================================================== Peaks
 #' Peaks
 #'
 #' Finds local maxima in sequential data.
@@ -162,7 +227,7 @@ if (!isGeneric("predict")) {
 #'
 #'  \code{fitPeaks} returns an object of class \linkS4class{PeakModel}.
 #' @example inst/examples/ex-peaks.R
-#' @seealso \link{estimateBaseline}
+#' @family signal processing
 #' @author N. Frerebeau
 #' @docType methods
 #' @name peaks
@@ -183,36 +248,7 @@ setGeneric(
   def = function(object, peaks, ...) standardGeneric("fitPeaks")
 )
 
-#' Signal integration
-#'
-#' @param object An object of class \linkS4class{GammaSpectrum} or
-#'  \linkS4class{GammaSpectra}.
-#' @param range A length two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (in keV).
-#' @param noise A length-two \code{\link{numeric}} vector giving the noise
-#'  value and error, respectively (see details).
-#' @param NiEi A \code{\link{logical}} scalar.
-#'  Change this only if you know what you are doing.
-#' @param simplify A \code{\link{logical}} scalar: should the result be
-#'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
-#' @param ... Currently not used.
-#' @details
-#'  TODO
-#'
-#'  It assumes that each spectrum is calibrated in energy.
-#' @return
-#'  If \code{simplify} is \code{FALSE} returns a list of length-two
-#'  numeric vectors (default), else returns a matrix.
-#' @author N. Frerebeau
-#' @docType methods
-#' @rdname integrateSignal
-#' @aliases integrateSignal-method
-#' @keywords internal
-setGeneric(
-  name = "integrateSignal",
-  def = function(object, range, noise, ...) standardGeneric("integrateSignal")
-)
-
+# ========================================================================= Plot
 #' Plot
 #'
 #' @param x,y Objects to be plotted.
@@ -238,6 +274,7 @@ if (!isGeneric("plot")) {
   )
 }
 
+# ============================================================== Read/write data
 #' Data input
 #'
 #' Reads a gamma ray spectrum file.
@@ -268,6 +305,7 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
+# ==================================================================== Smoothing
 #' Smooth
 #'
 #' @param object A spectrum to be smoothed (a \linkS4class{GammaSpectrum} or
@@ -295,35 +333,11 @@ setGeneric(
 #' @return
 #'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 #' @author N. Frerebeau
+#' @family signal processing
 #' @docType methods
 #' @rdname smooth
 #' @aliases smooth-method
 setGeneric(
   name = "smooth",
   def = function(object, ...) standardGeneric("smooth")
-)
-
-#' Extract or Replace Parts of an Object
-#'
-#' @param object An object from which to extract element(s) or in which to
-#'  replace element(s).
-#' @param value A possible value for the element(s) of \code{object}
-#' @author N. Frerebeau
-#' @docType methods
-#' @name extract
-#' @rdname extract
-#' @aliases extract-method replace-method
-NULL
-
-#' @export
-#' @rdname extract
-setGeneric(
-  name = "getDoseRate",
-  def = function(object) standardGeneric("getDoseRate")
-)
-#' @export
-#' @rdname extract
-setGeneric(
-  name = "setDoseRate<-",
-  def = function(object, value) standardGeneric("setDoseRate<-")
 )

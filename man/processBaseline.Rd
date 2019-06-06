@@ -65,7 +65,8 @@ plot(spc_clean1) +
 Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
  Background elimination methods for multidimensional gamma-ray spectra.
  \emph{Nuclear Instruments and Methods in Physics Research Section A:
- Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1), p. 113-132.
+ Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
+ p. 113-132.
  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
 
  Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
@@ -79,6 +80,11 @@ Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 }
+\seealso{
+Other signal processing: \code{\link{integrateSignal}},
+  \code{\link{peaks}}, \code{\link{smooth}}
+}
 \author{
 N. Frerebeau
 }
+\concept{signal processing}

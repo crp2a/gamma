@@ -65,8 +65,9 @@ plot(calib_curve) +
 (dose_rate <- predict(calib_curve, spc_calib))
 }
 \seealso{
-\link{fit}
+Other dose rate: \code{\link{fit}}
 }
 \author{
 N. Frerebeau
 }
+\concept{dose rate}

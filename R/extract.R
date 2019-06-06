@@ -2,7 +2,7 @@
 #' @include AllClasses.R
 NULL
 
-# GammaSpectrum ================================================================
+# ================================================================ GammaSpectrum
 #' @export
 #' @rdname GammaSpectrum
 #' @aliases [[,GammaSpectrum-method
@@ -44,7 +44,7 @@ setMethod(
   f = "setDoseRate<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
-    if (!is.numeric(value) | length(value) != 2)
+    if (!is.numeric(value) || length(value) != 2)
       stop("`value` must be a length-two numeric vector.", call. = FALSE)
 
     names(value) <- c("value", "error")
@@ -54,7 +54,7 @@ setMethod(
   }
 )
 
-# GammaSpectra ================================================================
+# ================================================================= GammaSpectra
 #' @export
 #' @rdname GammaSpectra
 #' @aliases [,GammaSpectra-method
@@ -165,7 +165,7 @@ setMethod(
   }
 )
 
-# CalibrationCurve =============================================================
+# ============================================================= CalibrationCurve
 #' @export
 #' @rdname CalibrationCurve
 #' @aliases [[,CalibrationCurve-method
@@ -180,7 +180,7 @@ setMethod(
   }
 )
 
-# Peaks ========================================================================
+# ======================================================================== Peaks
 #' @export
 #' @rdname PeakPosition
 #' @aliases [[,PeakPosition-method

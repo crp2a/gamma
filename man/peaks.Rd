@@ -85,8 +85,10 @@ plot(fit1)
 plot(fit2)
 }
 \seealso{
-\link{estimateBaseline}
+Other signal processing: \code{\link{integrateSignal}},
+  \code{\link{processBaseline}}, \code{\link{smooth}}
 }
 \author{
 N. Frerebeau
 }
+\concept{signal processing}

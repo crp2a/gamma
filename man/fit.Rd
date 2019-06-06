@@ -80,8 +80,11 @@ plot(calib_curve) +
 (dose_rate <- predict(calib_curve, spc_calib))
 }
 \seealso{
-\link{predict}, \link{integrateSignal}
+\link{integrateSignal}
+
+Other dose rate: \code{\link{predict}}
 }
 \author{
 N. Frerebeau
 }
+\concept{dose rate}

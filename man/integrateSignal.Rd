@@ -62,7 +62,12 @@ TODO
 
  It assumes that each spectrum is calibrated in energy.
 }
+\seealso{
+Other signal processing: \code{\link{peaks}},
+  \code{\link{processBaseline}}, \code{\link{smooth}}
+}
 \author{
 N. Frerebeau
 }
+\concept{signal processing}
 \keyword{internal}
