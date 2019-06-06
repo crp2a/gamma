@@ -5,11 +5,11 @@
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-<!-- # gamma 0.1.0.9004 (2019-06-06) -->
+<!-- # gamma 0.1.1 (2019-06-06) -->
 
 # gamma 0.1.1 (release date: 2019-06-06)
 
-### New classes and methods
+## New classes and methods
 
   - The functions `getDoseRate()` and `getDoseRate<-` allow to extract
     and replace the gamma dose rate in `GammaSpectrum` objects.
@@ -18,7 +18,7 @@
   - `fit()` gained a method for the `GammaSpectra,GammaSpectrum`
     signature.
 
-### Bugfixes & changes
+## Bugfixes & changes
 
   - The `BDX1` curve was slightly corrected (see `help(BDX1)` for
     details).
@@ -28,7 +28,7 @@
   - The slot `count` of the `GammaSpectrum` class is now of class
     `integer`.
 
-### Internals
+## Internals
 
   - Use `vapply()` instead of `sapply()`.
   - Use `seq_len()` instead of `1:...`.
@@ -36,7 +36,7 @@
     raised: problematic cases are skipped and errors are returned as
     warnings.
 
-### Enhancements
+## Enhancements
 
   - The `AIX1` dataset contains the CEREGE calibration curve for dose
     rate estimation.
