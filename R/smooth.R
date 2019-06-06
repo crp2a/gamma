@@ -96,6 +96,3 @@ differenciate <- function(object,
   if (length(object@rate) != 0) tmp@rate <- object@rate[-c(n-1, n)]
   tmp
 }
-
-
-

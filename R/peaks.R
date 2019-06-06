@@ -12,7 +12,7 @@ setMethod(
   definition = function(object, method = c("MAD"), SNR = 2, span = NULL, ...) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
-    SNR <- as.integer(SNR)[1]
+    SNR <- as.integer(SNR)[[1L]]
 
     # Remove baseline
     baseline <- estimateBaseline(object, ...)
@@ -23,7 +23,7 @@ setMethod(
     span <- if (is.null(span)) {
       round(length(counts) * 0.05)
     } else {
-      as.integer(span)[1]
+      as.integer(span)[[1L]]
     }
 
     shape <- diff(sign(diff(counts, na.pad = FALSE)))
