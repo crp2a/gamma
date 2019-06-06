@@ -28,7 +28,7 @@ setMethod(
       )
     }
     # Plot
-    ggplot2::ggplot(spc, ggplot2::aes_string(x = "chanel", y = "counts")) +
+    ggplot2::ggplot(spc, ggplot2::aes(x = .data$chanel, y = .data$counts)) +
       sec_xaxis + sec_yaxis +
       ggplot2::geom_line()
   }
@@ -78,20 +78,21 @@ setMethod(
 
     facet <- if (n == 1) FALSE else facet
     if (facet) {
-      colour <- NULL
-      facet <- ggplot2::facet_wrap(. ~ reference, nrow = n, scales = "free_y")
+      facet <- ggplot2::facet_wrap(ggplot2::vars(.data$reference),
+                                   nrow = n, scales = "free_y")
+      aes_plot <- ggplot2::aes(x = .data[[xaxis]], y = .data[[yaxis]],
+                               group = .data$reference)
     } else {
-      colour <- "reference"
       facet <- NULL
+      aes_plot <- ggplot2::aes(x = .data[[xaxis]], y = .data[[yaxis]],
+                               group = .data$reference,
+                               colour = .data$reference)
     }
     ggplot2::ggplot(
       data = spc,
-      mapping = ggplot2::aes_string(
-        x = xaxis, y = yaxis,
-        group = "reference", colour = colour)) +
+      mapping = aes_plot) +
       ggplot2::geom_line() +
-      ggplot2::scale_x_continuous(name = xlabel) +
-      ggplot2::scale_y_continuous(name = ylabel) +
+      ggplot2::labs(x = xlabel, y = ylabel) +
       facet
   }
 )
@@ -143,8 +144,8 @@ setMethod(
     plot(spc_clean) +
       ggplot2::geom_area(
         data = spc_long,
-        mapping = ggplot2::aes_string(x = "chanel", y = "fit",
-                                      fill = "peak", colour = "peak"),
+        mapping = ggplot2::aes(x = .data$chanel, y = .data$fit,
+                               fill = .data$peak, colour = .data$peak),
         alpha = 0.5
       )
   }
@@ -176,26 +177,22 @@ setMethod(
 
     ggplot2::ggplot(
       data = data,
-      mapping = ggplot2::aes_string(
-        x = "signal_value", y = "dose_value",
-        label = "reference")) +
+      mapping = ggplot2::aes(x = .data$signal_value, y = .data$dose_value,
+                             label = .data$reference)) +
       ggplot2::geom_segment(
         data = curve,
-        mapping = ggplot2::aes_string(
-          x = "x", xend = "xmin",
-          y = "y", yend = "ymin"),
+        mapping = ggplot2::aes(x = .data$x, xend = .data$xmin,
+                               y = .data$y, yend = .data$ymin),
         colour = "red",
         inherit.aes = FALSE
       ) +
       ggplot2::geom_errorbar(
-        mapping = ggplot2::aes_string(
-          ymin = "dose_value - dose_error",
-          ymax = "dose_value + dose_error"),
+        mapping = ggplot2::aes(ymin = .data$dose_value - .data$dose_error,
+                               ymax = .data$dose_value + .data$dose_error),
         width = error_width) +
       ggplot2::geom_errorbarh(
-        mapping = ggplot2::aes_string(
-          xmin = "signal_value - signal_error",
-          xmax = "signal_value + signal_error"),
+        mapping = ggplot2::aes(xmin = .data$signal_value - .data$signal_error,
+                               xmax = .data$signal_value + .data$signal_error),
         height = error_height) +
       ggplot2::geom_point() +
       ggplot2::scale_x_continuous(name = "Signal") +

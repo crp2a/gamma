@@ -42,7 +42,7 @@
 #' @importFrom graphics plot
 #' @importFrom magrittr %<>%
 #' @importFrom magrittr %>%
-#' @import ggplot2
+#' @importFrom rlang .data
 NULL
 
 # Quiets concerns of R CMD check: the .'s that appear in pipelines
