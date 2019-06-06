@@ -1,4 +1,3 @@
-destination: docs
 url: http://gamma.archaeo.science
 authors:
   Université Bordeaux Montaigne:
@@ -8,4 +7,4 @@ authors:
     href: https://lascarbx.labex.u-bordeaux.fr
     html: <img src="http://gamma.archaeo.science/logo_lascarbx.jpg" height="64" />
 development:
-  mode: unreleased
+  mode: auto
