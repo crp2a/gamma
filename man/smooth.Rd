@@ -11,29 +11,33 @@
 smooth(object, ...)
 
 \S4method{smooth}{GammaSpectra}(object, method = c("unweighted",
-  "weighted"), m = 3, ...)
+  "weighted", "savitzky"), m = 3, p = 2)
 
 \S4method{smooth}{GammaSpectrum}(object, method = c("unweighted",
-  "weighted"), m = 3, ...)
+  "weighted", "savitzky"), m = 3, p = 2)
 }
 \arguments{
-\item{object}{A spectrum to be smoothed (a \linkS4class{GammaSpectrum} or
-\linkS4class{GammaSpectra} object).}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+object.}
 
 \item{...}{Currently not used.}
 
 \item{method}{A \code{\link{character}} string specifying the smoothing
-method to be used. It must be one of "\code{unweighted}" (default) or
-"\code{weighted}". Any unambiguous substring can be given.}
+method to be used. It must be one of "\code{unweighted}" (default),
+"\code{weighted}" or "\code{savitzky}" (see details).
+Any unambiguous substring can be given.}
 
-\item{m}{An odd \code{\link{integer}} value giving the number of adjacent
-points to mean.}
+\item{m}{An odd \code{\link{integer}} scalar giving the number of adjacent
+points to be used.}
+
+\item{p}{An \code{\link{integer}} scalar giving the polynomial degree.
+Only used if \code{method} is \code{savitzky}.}
 }
 \value{
 A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 }
 \description{
-Smooth
+Smoothes a spectrum.
 }
 \details{
 The following smoothing methods are available:
@@ -44,11 +48,42 @@ The following smoothing methods are available:
   \item{weighted}{Weighted sliding-average or triangular smooth.
   It replaces each point in the signal with the weighted mean of \code{m}
   adjacent points.}
+  \item{savitzky}{Savitzky-Golay filter.}
  }
- There will be \eqn{(m - 1)/2} points both at the beginning and at the end of
- the spectrum for which a complete \code{m}-width smooth cannot be
+ There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
+ of the spectrum for which a complete \code{m}-width smooth cannot be
  calculated. To prevent data loss, progressively smaller smooths are used at
- the ends of the spectra.
+ the ends of the spectrum if \code{method} is \code{unweighted} or
+ \code{weighted}. If the Savitzky-Golay filter is used, the original
+ \eqn{(m - 1) / 2} points at the ends of the spectrum are preserved.
+}
+\examples{
+# Import CNF files
+spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spectrum <- read(spc_file, skip = TRUE)
+
+# Plot spectrum
+spectrum \%>\%
+  removeBaseline() \%>\%
+  plot()
+
+# Rectangular smooth
+spectrum \%>\%
+  smooth(method = "unweighted", m = 3) \%>\%
+  removeBaseline() \%>\%
+  plot()
+
+# Triangular smooth
+spectrum \%>\%
+  smooth(method = "weighted", m = 5) \%>\%
+  removeBaseline() \%>\%
+  plot()
+
+# Savitzky–Golay
+spectrum \%>\%
+  smooth(method = "savitzky", m = 5, p = 2) \%>\%
+  removeBaseline() \%>\%
+  plot()
 }
 \seealso{
 Other signal processing: \code{\link{integrateSignal}},
