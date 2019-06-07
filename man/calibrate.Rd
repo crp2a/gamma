@@ -18,7 +18,7 @@ calibrate(object, lines, ...)
 \S4method{calibrate}{PeakModel,numeric}(object, lines, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum},
+\item{object}{A \linkS4class{GammaSpectrum} object,
 \linkS4class{GammaSpectra} or \linkS4class{PeakModel}.}
 
 \item{lines}{A list of or a \code{\link{numeric}} vector.
@@ -30,7 +30,7 @@ numeric \code{vector}, each element must be an expected energy value.}
 \item{...}{Currently not used.}
 }
 \value{
-An object of class \linkS4class{GammaSpectrum}.
+A \linkS4class{GammaSpectrum} object.
 }
 \description{
 Calibrate the energy scale of a gamma spectrum.

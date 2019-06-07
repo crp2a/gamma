@@ -11,9 +11,9 @@
   simplify = FALSE, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{CalibrationCurve}.}
+\item{object}{A \linkS4class{CalibrationCurve} object.}
 
-\item{spectra}{An optional object of class \linkS4class{GammaSpectra} in
+\item{spectra}{An optional \linkS4class{GammaSpectra} object in
 which to look for variables with which to predict. If omitted, the fitted
 values are used.}
 

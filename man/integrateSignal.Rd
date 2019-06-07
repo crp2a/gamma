@@ -33,10 +33,10 @@ integrateSignal(object, range, noise, ...)
   range, noise, NiEi = TRUE, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum} or
-\linkS4class{GammaSpectra}.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+object.}
 
-\item{range}{A length two \code{\link{numeric}} vector giving the energy
+\item{range}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
 \item{noise}{A length-two \code{\link{numeric}} vector giving the noise

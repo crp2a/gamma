@@ -34,7 +34,7 @@ setGeneric(
 #' Spectrum calibration
 #'
 #' Calibrate the energy scale of a gamma spectrum.
-#' @param object An object of class \linkS4class{GammaSpectrum},
+#' @param object A \linkS4class{GammaSpectrum} object,
 #'  \linkS4class{GammaSpectra} or \linkS4class{PeakModel}.
 #' @param lines A list of or a \code{\link{numeric}} vector.
 #'  If a \code{list} is provided, each element must be a named length-two
@@ -44,7 +44,8 @@ setGeneric(
 #' @param ... Currently not used.
 #' @details
 #'  TODO
-#' @return An object of class \linkS4class{GammaSpectrum}.
+#' @return
+#'  A \linkS4class{GammaSpectrum} object.
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -138,7 +139,7 @@ setGeneric(
 #' @details
 #'  TODO
 #' @return
-#'  Returns an object of class \linkS4class{CalibrationCurve}.
+#'  A \linkS4class{CalibrationCurve} object.
 #' @seealso \link{integrateSignal}
 #' @family dose rate
 #' @example inst/examples/ex-doserate.R
@@ -154,8 +155,8 @@ setGeneric(
 #' Gamma dose rate
 #'
 #' Predict in-situ gamma dose rate.
-#' @param object An object of class \linkS4class{CalibrationCurve}.
-#' @param spectra An optional object of class \linkS4class{GammaSpectra} in
+#' @param object A \linkS4class{CalibrationCurve} object.
+#' @param spectra An optional \linkS4class{GammaSpectra} object in
 #'  which to look for variables with which to predict. If omitted, the fitted
 #'  values are used.
 #' @param epsilon A \code{\link{numeric}} value.
@@ -182,9 +183,9 @@ if (!isGeneric("predict")) {
 # ==================================================================== Integrate
 #' Signal integration
 #'
-#' @param object An object of class \linkS4class{GammaSpectrum} or
-#'  \linkS4class{GammaSpectra}.
-#' @param range A length two \code{\link{numeric}} vector giving the energy
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+#'  object.
+#' @param range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (in keV).
 #' @param noise A length-two \code{\link{numeric}} vector giving the noise
 #'  value and error, respectively (see details).
@@ -215,8 +216,8 @@ setGeneric(
 #' Peaks
 #'
 #' Finds local maxima in sequential data.
-#' @param object An object of class \linkS4class{GammaSpectrum} or
-#'  \linkS4class{PeakPosition}.
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
+#'  object.
 #' @param peaks A \code{\link{numeric}} vector giving the starting peak postions
 #'  for the nonlinear model fitting (see below).
 #' @param bounds A \code{\link{numeric}} vector giving the
@@ -276,7 +277,7 @@ setGeneric(
 #'  defined by spectrum be drawn?
 #' @param ... Currently not used.
 #' @return
-#'  TODO
+#'  A \code{ggplot} object.
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -298,18 +299,25 @@ if (!isGeneric("plot")) {
 #'  imported.
 #' @param extensions A \code{\link{character}} vector specifying the possible
 #'  file extensions. It must be one or more of "\code{cnf}", "\code{tka}".
-#' @param skip A list of \code{\link{numeric}} vectors or of
-#'  \code{\link{logical}} scalars (re-cycled to the number of files to be
-#'  imported).
-#'  If \code{numeric}, the corresponding chanels of the data file will be
-#'  skipped. If \code{TRUE}, it will try to automatically process the
-#'  spectrum: all channels before the first maximum will be skipped. If
-#'  \code{NULL} (the default), all data are imported.
+#' @param skip An \code{\link{integer}} vector or a \code{\link{logical}} scalar
+#'  (see details). If \code{NULL} (the default) or \code{FALSE}, all data are
+#'  imported.
 #' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
+#' @details
+#'  If \code{skip} is not \code{NULL}, several channels are skipped during
+#'  import to retain only a part of the spectrum.
+#'  If \code{skip} is an \code{integer} vector, the corresponding chanels of the
+#'  data file will be skipped.
+#'  If \code{skip} is \code{TRUE}, an attempt is made to define the number of
+#'  channels to skip at the beginning of the spectrum. This skips all channels
+#'  before the highest count maximum. This is intended to deal with the artefact
+#'  produced by the rapid growth of random background noise towards low
+#'  energies.
 #' @note
 #'  \emph{Only supports Canberra CNF and TKA files.}
 #' @return
-#'  An object of class \linkS4class{GammaSpectra}.
+#'  A \linkS4class{GammaSpectra} object if more than one spectrum are imported
+#'  at once, else a \linkS4class{GammaSpectrum} object.
 #' @seealso \link[rxylib]{read_xyData}
 #' @example inst/examples/ex-read.R
 #' @author N. Frerebeau
@@ -324,13 +332,17 @@ setGeneric(
 # ==================================================================== Smoothing
 #' Smooth
 #'
-#' @param object A spectrum to be smoothed (a \linkS4class{GammaSpectrum} or
-#'  \linkS4class{GammaSpectra} object).
+#' Smoothes a spectrum.
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+#'  object.
 #' @param method A \code{\link{character}} string specifying the smoothing
-#'  method to be used. It must be one of "\code{unweighted}" (default) or
-#'  "\code{weighted}". Any unambiguous substring can be given.
-#' @param m An odd \code{\link{integer}} value giving the number of adjacent
-#'  points to mean.
+#'  method to be used. It must be one of "\code{unweighted}" (default),
+#'  "\code{weighted}" or "\code{savitzky}" (see details).
+#'  Any unambiguous substring can be given.
+#' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
+#'  points to be used.
+#' @param p An \code{\link{integer}} scalar giving the polynomial degree.
+#'  Only used if \code{method} is \code{savitzky}.
 #' @param ... Currently not used.
 #' @details
 #'  The following smoothing methods are available:
@@ -341,15 +353,19 @@ setGeneric(
 #'   \item{weighted}{Weighted sliding-average or triangular smooth.
 #'   It replaces each point in the signal with the weighted mean of \code{m}
 #'   adjacent points.}
+#'   \item{savitzky}{Savitzky-Golay filter.}
 #'  }
-#'  There will be \eqn{(m - 1)/2} points both at the beginning and at the end of
-#'  the spectrum for which a complete \code{m}-width smooth cannot be
+#'  There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
+#'  of the spectrum for which a complete \code{m}-width smooth cannot be
 #'  calculated. To prevent data loss, progressively smaller smooths are used at
-#'  the ends of the spectra.
+#'  the ends of the spectrum if \code{method} is \code{unweighted} or
+#'  \code{weighted}. If the Savitzky-Golay filter is used, the original
+#'  \eqn{(m - 1) / 2} points at the ends of the spectrum are preserved.
 #' @return
 #'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 #' @author N. Frerebeau
 #' @family signal processing
+#' @example inst/examples/ex-smooth.R
 #' @docType methods
 #' @rdname smooth
 #' @aliases smooth-method

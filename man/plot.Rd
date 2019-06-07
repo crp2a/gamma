@@ -43,7 +43,7 @@ giving the selection of the spectrum that are drawn.}
 defined by spectrum be drawn?}
 }
 \value{
-TODO
+A \code{ggplot} object.
 }
 \description{
 Plot

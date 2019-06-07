@@ -25,8 +25,8 @@ fitPeaks(object, peaks, ...)
 \S4method{fitPeaks}{PeakPosition,missing}(object, bounds = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \linkS4class{GammaSpectrum} or
-\linkS4class{PeakPosition}.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
+object.}
 
 \item{...}{Extra parameters passed to \code{\link{estimateBaseline}}.}
 

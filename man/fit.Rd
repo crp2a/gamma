@@ -38,7 +38,7 @@ used.}
 informations about the instrument for which the curve is built.}
 }
 \value{
-Returns an object of class \linkS4class{CalibrationCurve}.
+A \linkS4class{CalibrationCurve} object.
 }
 \description{
 Builds a calibration curve for gamma dose rate estimation.
