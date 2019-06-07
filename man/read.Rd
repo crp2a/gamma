@@ -21,19 +21,27 @@ imported.}
 \item{extensions}{A \code{\link{character}} vector specifying the possible
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
 
-\item{skip}{A list of \code{\link{numeric}} vectors or of
-\code{\link{logical}} scalars (re-cycled to the number of files to be
-imported).
-If \code{numeric}, the corresponding chanels of the data file will be
-skipped. If \code{TRUE}, it will try to automatically process the
-spectrum: all channels before the first maximum will be skipped. If
-\code{NULL} (the default), all data are imported.}
+\item{skip}{An \code{\link{integer}} vector or a \code{\link{logical}} scalar
+(see details). If \code{NULL} (the default) or \code{FALSE}, all data are
+imported.}
 }
 \value{
-An object of class \linkS4class{GammaSpectra}.
+A \linkS4class{GammaSpectra} object if more than one spectrum are imported
+ at once, else a \linkS4class{GammaSpectrum} object.
 }
 \description{
 Reads a gamma ray spectrum file.
+}
+\details{
+If \code{skip} is not \code{NULL}, several channels are skipped during
+ import to retain only a part of the spectrum.
+ If \code{skip} is an \code{integer} vector, the corresponding chanels of the
+ data file will be skipped.
+ If \code{skip} is \code{TRUE}, an attempt is made to define the number of
+ channels to skip at the beginning of the spectrum. This skips all channels
+ before the highest count maximum. This is intended to deal with the artefact
+ produced by the rapid growth of random background noise towards low
+ energies.
 }
 \note{
 \emph{Only supports Canberra CNF and TKA files.}

@@ -21,40 +21,28 @@ setMethod(
       file <- as.list(file_list)
     }
 
-    if(!is.null(skip)) {
-      all_numeric <- all(
-        vapply(X = skip, FUN = function(x) is.numeric(x) || is.null(x),
-               FUN.VALUE = logical(1))
-      )
-      all_logical <- all(
-        vapply(X = skip, FUN = function(x) is.logical(x) || is.null(x),
-               FUN.VALUE = logical(1))
-      )
-      if(!all_numeric & !all_logical) {
-        stop("`skip` must be a list of numeric vectors or logical scalars.",
+    if(!is.null(skip) || length(skip) != 0) {
+      if (is.numeric(skip)) {
+        skip <- as.integer(skip)
+      } else if (is.logical(skip)) {
+        skip <- skip[[1L]]
+      } else {
+        stop("`skip` must be a numeric vector or a logical scalar.",
              call. = FALSE)
       }
     } else {
       skip <- FALSE
     }
-    if(is.numeric(skip)) skip <- list(skip)
-    if(is.logical(skip)) skip <- as.list(skip)
-    n_files <- length(file)
-    n_skip <- length(skip)
-    if (n_skip != 1 & n_skip != n_files) {
-      stop(sprintf("`skip` must be of length 1 or %d, not %d.",
-                   n_files, n_skip), call. = FALSE)
-    }
 
     # Read files
-    spc <- mapply(FUN = function(x, y, ...) {
+    spc <- lapply(X = file, FUN = function(x, y, ...) {
       extension <- tolower(tools::file_ext(x))
       switch(
         extension,
         cnf = readCanberraCNF(file = x, skip = y, ...),
         tka = readCanberraTKA(file = x, skip = y, ...)
       )
-    }, x = file, y = skip, MoreArgs = list(...))
+    }, y = skip, ...)
 
     if(length(spc) > 1) {
       # Return a GammaSpectra object

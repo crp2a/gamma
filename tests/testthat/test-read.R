@@ -47,9 +47,9 @@ test_that("Import a set of gamma spectra", {
 test_that("Skip chanels", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   expect_error(read(spc_dir, skip = LETTERS),
-               "`skip` must be a list of numeric vectors or logical scalars.")
+               "`skip` must be a numeric vector or a logical scalar.")
   expect_error(read(spc_dir, skip = list(TRUE, FALSE)),
-               "`skip` must be of length 1 or 7, not 2.")
+               "`skip` must be a numeric vector or a logical scalar.")
 
   options("verbose" = TRUE)
   cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
