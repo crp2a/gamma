@@ -58,6 +58,8 @@ The following smoothing methods are available:
  \eqn{(m - 1) / 2} points at the ends of the spectrum are preserved.
 }
 \examples{
+library(magrittr)
+
 # Import CNF files
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum <- read(spc_file, skip = TRUE)
@@ -84,6 +86,17 @@ spectrum \%>\%
   smooth(method = "savitzky", m = 5, p = 2) \%>\%
   removeBaseline() \%>\%
   plot()
+}
+\references{
+Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
+ the Convolution (Savitzky-Golay) Method. \emph{Analytical Chemistry}, 62(6),
+ p. 570-573.
+ DOI: \href{https://doi.org/10.1021/ac00205a007}{10.1021/ac00205a007}.
+
+ Savitzky, A. and Golay, M. J. E. (1964). Smoothing and Differentiation of
+ Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
+ 36(8), p. 1627-1639.
+ DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
 }
 \seealso{
 Other signal processing: \code{\link{integrateSignal}},

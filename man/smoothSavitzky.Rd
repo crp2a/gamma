@@ -10,7 +10,7 @@ smoothSavitzky(x, m, p = 2)
 coefficientSavitzky(m, p = 2)
 }
 \arguments{
-\item{x}{A \code{\link{numeric vector}} of observed values to be smoothed.}
+\item{x}{A \code{\link{numeric}} vector of observed values to be smoothed.}
 
 \item{m}{An odd \code{\link{integer}} scalar giving the number of adjacent
 points to use.}

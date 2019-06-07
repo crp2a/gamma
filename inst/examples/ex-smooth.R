@@ -1,3 +1,5 @@
+library(magrittr)
+
 # Import CNF files
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum <- read(spc_file, skip = TRUE)

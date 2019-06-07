@@ -58,7 +58,7 @@ setMethod(
 #' Rectangular Smooth
 #'
 #' Unweighted sliding-average.
-#' @param x A \code{\link{numeric vector}} of observed values to be smoothed.
+#' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
 #' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
 #'  points to use.
 #' @return A \code{\link{numeric}} vector of the same length as \code{x}.
@@ -84,7 +84,7 @@ smoothRectangular <- function(x, m) {
 #' Triangular Smooth
 #'
 #' Weighted sliding-average.
-#' @param x A \code{\link{numeric vector}} of observed values to be smoothed.
+#' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
 #' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
 #'  points to use.
 #' @return A \code{\link{numeric}} vector of the same length as \code{x}.
@@ -113,7 +113,7 @@ smoothTriangular <- function(x, m) {
 #' \code{smoothSavitzky} smoothes the data using the Savitzky-Golay filter.
 #' \code{coefficientSavitzky} computes the Savitzky-Golay convolution
 #' coefficients.
-#' @param x A \code{\link{numeric vector}} of observed values to be smoothed.
+#' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
 #' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
 #'  points to use.
 #' @param p An \code{\link{integer}} scalar giving the polynomial degree.
