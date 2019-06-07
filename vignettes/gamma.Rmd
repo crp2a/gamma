@@ -231,7 +231,7 @@ If you want to calibrate several spectra at once, you can try the following appr
 # First, fit peaks at a given chanel
 # The same starting peak positions are used for all spectra
 multi_fit <- lapply(X = spc, FUN = fitPeaks, peaks = c(86, 496, 876))
-                       
+
 # Then, calibrate the spectra using the peak models                   
 multi_scaled <- lapply(X = multi_fit, FUN = calibrate, 
                        lines = c(238, 1461, 2615))
