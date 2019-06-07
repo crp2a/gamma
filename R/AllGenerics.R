@@ -58,13 +58,25 @@ setGeneric(
 # ===================================================================== Baseline
 #' Baseline estimation and removal
 #'
-#' @param object A \code{\link{numeric}} vector.
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+#'  object.
 #' @param method A \code{\link{character}} string specifying the method to be
-#'  used for baseline estimation.
-#' @param ... Extra parameters passed to internal functions.
+#'  used for baseline estimation (see details).
+#' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
+#'  on \code{x} before employing SNIP algorithm?
+#' @param decreasing A \code{\link{logical}} scalar: should a decreasing
+#'  clipping window be used? Only used if \code{method} is \code{SNIP}.
+#' @param k An \code{\link{integer}} value giving the numerber of iterations.
+#'  Only used if \code{method} is \code{SNIP}.
+#' @param ... Extra parameters passed to \code{estimateBaseline}.
+#' @details
+#'  The following methods are availble for baseline estimation:
+#'  \describe{
+#'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm
+#'   (see references).}
+#'  }
 #' @return
-#'  \code{estimateBaseline} and \code{removeBaseline} return a
-#'  \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
+#'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
 #'  \code{object}).
 #' @references
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).

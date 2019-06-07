@@ -2,7 +2,7 @@
 % Please edit documentation in R/baseline.R
 \name{SNIP}
 \alias{SNIP}
-\title{SNIP algorithm}
+\title{SNIP Algorithm}
 \usage{
 SNIP(x, LLS = FALSE, decreasing = FALSE, k = 100)
 }
@@ -21,7 +21,7 @@ clipping window be used?}
 A \code{numeric} vector.
 }
 \description{
-SNIP algorithm
+SNIP Algorithm
 }
 \references{
 Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).

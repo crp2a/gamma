@@ -18,30 +18,46 @@ estimateBaseline(object, ...)
 removeBaseline(object, ...)
 
 \S4method{estimateBaseline}{GammaSpectra}(object, method = c("SNIP"),
-  ...)
+  LLS = FALSE, decreasing = FALSE, k = 100)
 
 \S4method{estimateBaseline}{GammaSpectrum}(object, method = c("SNIP"),
-  ...)
+  LLS = FALSE, decreasing = FALSE, k = 100)
 
 \S4method{removeBaseline}{GammaSpectra}(object, method = c("SNIP"), ...)
 
 \S4method{removeBaseline}{GammaSpectrum}(object, method = c("SNIP"), ...)
 }
 \arguments{
-\item{object}{A \code{\link{numeric}} vector.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+object.}
 
-\item{...}{Extra parameters passed to internal functions.}
+\item{...}{Extra parameters passed to \code{estimateBaseline}.}
 
 \item{method}{A \code{\link{character}} string specifying the method to be
-used for baseline estimation.}
+used for baseline estimation (see details).}
+
+\item{LLS}{A \code{\link{logical}} scalar: should the LLS operator be applied
+on \code{x} before employing SNIP algorithm?}
+
+\item{decreasing}{A \code{\link{logical}} scalar: should a decreasing
+clipping window be used? Only used if \code{method} is \code{SNIP}.}
+
+\item{k}{An \code{\link{integer}} value giving the numerber of iterations.
+Only used if \code{method} is \code{SNIP}.}
 }
 \value{
-\code{estimateBaseline} and \code{removeBaseline} return a
- \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
+A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
  \code{object}).
 }
 \description{
 Baseline estimation and removal
+}
+\details{
+The following methods are availble for baseline estimation:
+ \describe{
+  \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm
+  (see references).}
+ }
 }
 \examples{
 # Import a CNF file

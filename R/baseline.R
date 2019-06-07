@@ -8,13 +8,14 @@ NULL
 setMethod(
   f = "estimateBaseline",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, method = c("SNIP"), ...) {
+  definition = function(object, method = c("SNIP"),
+                        LLS = FALSE, decreasing = FALSE, k = 100) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     baseline <- lapply(
       X = spectra,
-      FUN = function(x, method, ...) estimateBaseline(x, method, ...),
-      method = method, ...
+      FUN = estimateBaseline,
+      method, LLS, decreasing, k
     )
     names(baseline) <- names(object)
 
@@ -28,7 +29,8 @@ setMethod(
 setMethod(
   f = "estimateBaseline",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, method = c("SNIP"), ...) {
+  definition = function(object, method = c("SNIP"),
+                        LLS = FALSE, decreasing = FALSE, k = 100) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
 
@@ -38,7 +40,8 @@ setMethod(
 
     baseline <- switch (
       method,
-      SNIP = SNIP(x_counts, ...)
+      SNIP = SNIP(x_counts, LLS, decreasing, k),
+      stop("There is no such method: ", method, call. = FALSE)
     )
 
     .BaseLine(
@@ -72,7 +75,7 @@ setMethod(
     )
     names(baseline) <- names(object)
 
-    methods::new("GammaSpectra", baseline)
+    .GammaSpectra(baseline)
   }
 )
 
@@ -89,7 +92,7 @@ setMethod(
   }
 )
 
-#' SNIP algorithm
+#' SNIP Algorithm
 #'
 #' @param x A \code{\link{numeric}} vector.
 #' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
@@ -147,31 +150,15 @@ SNIP <- function(x, LLS = FALSE, decreasing = FALSE, k = 100) {
   return(x)
 }
 
-#' LLS operator
-#'
-#' @param x A \code{numeric} vector.
-#' @return A \code{numeric} vector.
-#' @author N. Frerebeau
-#' @references
-#'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
-#'  Background elimination methods for multidimensional gamma-ray spectra.
-#'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
-#'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1), p. 113-132.
-#'  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
-#'
-#'  Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
-#'  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
-#'  DOI: \href{https://doi.org/10.1366/000370208783412762}{10.1366/000370208783412762}
+#' @rdname SNIP
 #' @keywords internal
-#' @name LLS
-#' @rdname LLS
-NULL
-
-#' @rdname LLS
+#' @noRd
 LLS <- function(x) {
   log(log(sqrt(x + 1) + 1) + 1)
 }
-#' @rdname LLS
+#' @rdname SNIP
+#' @keywords internal
+#' @noRd
 inverseLLS <- function(x) {
   (exp(exp(x) - 1) - 1)^2 - 1
 }
