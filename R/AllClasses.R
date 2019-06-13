@@ -271,7 +271,7 @@ setMethod(
                         chanel, energy, counts, live_time, real_time,
                         calibration) {
     if (!missing(hash)) .Object@hash <- hash else .Object@hash <- "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    if (!missing(reference)) .Object@reference <- reference
+    if (!missing(reference)) .Object@reference <- reference else .Object@reference <- "unknown"
     if (!missing(date)) .Object@date <- date else .Object@date <- Sys.time()
     if (!missing(instrument)) .Object@instrument <- instrument
     if (!missing(file_format)) .Object@file_format <- file_format
