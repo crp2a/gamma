@@ -25,16 +25,5 @@
   fit_spc <- stats::predict(fit_poly, spc_data[, "chanel", drop = FALSE])
 
   # Return a new gamma spectrum with adjusted energy
-  .GammaSpectrum(
-    hash = spectrum@hash,
-    reference = spectrum@reference,
-    instrument = spectrum@instrument,
-    file_format = spectrum@file_format,
-    chanel = spc_data$chanel,
-    energy = fit_spc,
-    counts = spc_data$counts,
-    live_time = spectrum@live_time,
-    real_time = spectrum@real_time,
-    calibration = fit_poly
-  )
+  methods::initialize(spectrum, energy = fit_spc, calibration = fit_poly)
 }

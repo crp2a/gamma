@@ -24,19 +24,7 @@ setMethod(
     # Validation
     # TODO
 
-    methods::new(
-      "GammaSpectrum",
-      hash = e1@hash,
-      reference = e1@reference,
-      date = e1@date,
-      instrument = e1@instrument,
-      file_format = e1@file_format,
-      chanel = e2@chanel,
-      energy = e2@energy,
-      counts = e1@counts - e2@counts,
-      live_time = e1@live_time,
-      real_time = e1@real_time
-    )
+    methods::initialize(e1, counts = e1@counts - e2@counts)
   }
 )
 
@@ -50,17 +38,6 @@ setMethod(
     # Validation
     # TODO
 
-    methods::new(
-      "GammaSpectrum",
-      reference = e1@reference,
-      date = e1@date,
-      instrument = e1@instrument,
-      file_format = e1@file_format,
-      chanel = e2@chanel,
-      energy = e2@energy,
-      counts = e1@counts + e2@counts,
-      live_time = e1@live_time,
-      real_time = e1@real_time
-    )
+    methods::initialize(e1, counts = e1@counts + e2@counts)
   }
 )

@@ -50,9 +50,7 @@ setMethod(
       stop(sprintf("There is no such method: '%s'.", method), call. = FALSE)
     )
 
-    tmp <- object
-    tmp@counts <- z
-    tmp
+    methods::initialize(object, counts = z)
   }
 )
 #' Rectangular Smooth

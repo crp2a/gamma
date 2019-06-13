@@ -77,6 +77,21 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     real_time = "numeric",
     calibration = "LmOrNull",
     dose_rate = "numeric"
+  ),
+  prototype = list(
+    hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    reference = "unknown",
+    date = Sys.time(),
+    instrument = "unknown",
+    file_format = "unknown",
+    chanel = integer(0),
+    energy = numeric(0),
+    counts = numeric(0),
+    rate = numeric(0),
+    live_time = numeric(0),
+    real_time = numeric(0),
+    calibration = NULL,
+    dose_rate = numeric(0)
   )
 )
 setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
@@ -179,6 +194,13 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
     noise = "numeric",
     integration = "numeric",
     data = "data.frame"
+  ),
+  prototype = list(
+    details = list(),
+    model = NULL,
+    noise = numeric(0),
+    integration = numeric(0),
+    data = data.frame()
   )
 )
 
@@ -255,53 +277,37 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     noise_method = "unknown",
-    noise_threshold = NA_real_,
-    window = NA_integer_,
-    chanel = NA_integer_,
-    energy = NA_real_
+    noise_threshold = numeric(0),
+    window = integer(0),
+    chanel = integer(0),
+    energy = numeric(0)
   )
 )
 
 # INITIALIZATION ===============================================================
 ## GammaSpectrum ---------------------------------------------------------------
+# /!\ initialize() GammaSpectrum retains copy construction
 setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
-  definition = function(.Object, hash, reference, date, instrument, file_format,
-                        chanel, energy, counts, live_time, real_time,
-                        calibration) {
-    if (!missing(hash)) .Object@hash <- hash else .Object@hash <- "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    if (!missing(reference)) .Object@reference <- reference else .Object@reference <- "unknown"
-    if (!missing(date)) .Object@date <- date else .Object@date <- Sys.time()
-    if (!missing(instrument)) .Object@instrument <- instrument
-    if (!missing(file_format)) .Object@file_format <- file_format
-    if (!missing(chanel)) .Object@chanel <- as.integer(chanel)
-    if (!missing(energy)) .Object@energy <- energy
-    if (!missing(counts)) .Object@counts <- counts
-    if (!missing(counts) & !missing(live_time))
-      .Object@rate <- counts / live_time
-    if (!missing(live_time)) .Object@live_time <- live_time
-    if (!missing(real_time)) .Object@real_time <- real_time
-    if (!missing(calibration)) .Object@calibration <- calibration
+  definition = function(
+    .Object, ..., hash = .Object@hash, reference = .Object@reference,
+    date = .Object@date, instrument = .Object@instrument,
+    file_format = .Object@file_format, chanel = .Object@chanel,
+    energy = .Object@energy, counts = .Object@counts, rate = .Object@rate,
+    live_time = .Object@live_time, real_time = .Object@real_time,
+    calibration = .Object@calibration
+  ) {
 
-    methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
-    return(.Object)
-  }
-)
-## BaseLine --------------------------------------------------------------------
-setMethod(
-  f = "initialize",
-  signature = "BaseLine",
-  definition = function(.Object, ...) {
-    .Object <- methods::callNextMethod(.Object, ...)
-    methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
-    return(.Object)
+    if (length(rate) == 0 && length(counts) > 0 && length(live_time) == 1)
+      rate <- counts / live_time
+
+    methods::callNextMethod(
+      .Object, ..., hash = hash, reference = reference, date = date,
+      instrument = instrument, file_format = file_format, chanel = chanel,
+      energy = energy, counts = counts, rate = rate, live_time = live_time,
+      real_time = real_time, calibration = calibration
+    )
   }
 )
 ## GammaSpectra ----------------------------------------------------------------
@@ -320,10 +326,8 @@ setMethod(
     ))
     names(spc_list) <- spc_ref
     .Object@.Data <- spc_list
+
     methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
     return(.Object)
   }
 )
@@ -352,26 +356,6 @@ setMethod(
     if (!missing(data)) .Object@data <- data
 
     methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
-    return(.Object)
-  }
-)
-## PeakModel -------------------------------------------------------------------
-setMethod(
-  f = "initialize",
-  signature = "PeakModel",
-  definition = function(.Object, model, coefficients, spectrum, baseline) {
-    if (!missing(model)) .Object@model <- model
-    if (!missing(coefficients)) .Object@coefficients <- coefficients
-    if (!missing(spectrum)) .Object@spectrum <- spectrum
-    if (!missing(baseline)) .Object@baseline <- baseline
-
-    methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
     return(.Object)
   }
 )

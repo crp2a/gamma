@@ -1,11 +1,8 @@
 context("Classes")
 
 test_that("Initialize an empty GammaSpectrum instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("GammaSpectrum"), "GammaSpectrum")
-  expect_message(new("GammaSpectrum"), "instance initialized")
 
-  options("verbose" = FALSE)
   spectrum <- new("GammaSpectrum")
   expect_output(show(spectrum), "An empty gamma spectrum")
 
@@ -34,12 +31,9 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_equal(length(spectrum), 0)
 })
 test_that("Initialize an empty GammaSpectra instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("GammaSpectra"), "GammaSpectra")
   expect_s4_class(new("GammaSpectra"), "list")
-  expect_message(new("GammaSpectra"), "instance initialized")
 
-  options("verbose" = FALSE)
   spectra <- new("GammaSpectra")
   expect_output(show(spectra), "An empty set of gamma spectra")
   expect_equal(length(spectra), 0)
@@ -50,11 +44,8 @@ test_that("Initialize an empty GammaSpectra instance", {
                "No dose rate available for these spectra.")
 })
 test_that("Initialize an empty BaseLine instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("BaseLine"), "BaseLine")
-  expect_message(new("BaseLine"), "instance initialized")
 
-  options("verbose" = FALSE)
   baseline <- new("BaseLine")
   expect_output(show(baseline), "An empty gamma spectrum")
 
@@ -76,11 +67,8 @@ test_that("Initialize an empty BaseLine instance", {
   expect_s3_class(as(baseline, "data.frame"), "data.frame")
 })
 test_that("Initialize an empty CalibrationCurve instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("CalibrationCurve"), "CalibrationCurve")
-  expect_message(new("CalibrationCurve"), "instance initialized")
 
-  options("verbose" = FALSE)
   calib <- new("CalibrationCurve")
   expect_output(show(calib), "no model")
 
@@ -89,7 +77,7 @@ test_that("Initialize an empty CalibrationCurve instance", {
   expect_type(calib[["model"]], "NULL")
   expect_type(calib[["noise"]], "double")
   expect_type(calib[["integration"]], "double")
-  expect_s4_class(calib[["data"]], "data.frame")
+  expect_s3_class(calib[["data"]], "data.frame")
 
   expect_error(new("CalibrationCurve", details = list(X = "X")),
                "`details` is a list, but does not have components")
@@ -106,11 +94,8 @@ test_that("Initialize an empty CalibrationCurve instance", {
                "must be a numeric vector of length two, not 3")
 })
 test_that("Initialize an empty PeakModel instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("PeakModel"), "PeakModel")
-  expect_message(new("PeakModel"), "instance initialized")
 
-  options("verbose" = FALSE)
   peak <- new("PeakModel")
   expect_output(show(peak), "No peaks parameters")
 

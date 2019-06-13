@@ -94,8 +94,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
   # Compute 32-bytes MD5 hash
   hash <- as.character(tools::md5sum(file))
 
-  methods::new(
-    "GammaSpectrum",
+  .GammaSpectrum(
     hash = hash,
     reference = tools::file_path_sans_ext(basename(file)),
     date = date,
@@ -141,8 +140,7 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
   # Compute 32-bytes MD5 hash
   hash <- as.character(tools::md5sum(file))
 
-  methods::new(
-    "GammaSpectrum",
+  .GammaSpectrum(
     hash = hash,
     reference = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,

@@ -11,9 +11,8 @@ setMethod(
   definition = function(object, method = c("SNIP"),
                         LLS = FALSE, decreasing = FALSE, k = 100) {
 
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     baseline <- lapply(
-      X = spectra,
+      X = object,
       FUN = estimateBaseline,
       method, LLS, decreasing, k
     )
@@ -44,18 +43,8 @@ setMethod(
       stop("There is no such method: ", method, call. = FALSE)
     )
 
-    .BaseLine(
-      hash = object@hash,
-      reference = object@reference,
-      date = as.POSIXct(object@date),
-      instrument = object@instrument,
-      file_format = object@file_format,
-      chanel = x$chanel,
-      energy = x$energy,
-      counts = baseline,
-      live_time = object@live_time,
-      real_time = object@real_time
-    )
+    spc <- methods::initialize(object, counts = baseline)
+    methods::as(spc, "BaseLine")
   }
 )
 
@@ -67,9 +56,8 @@ setMethod(
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP"), ...) {
 
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     baseline <- lapply(
-      X = spectra,
+      X = object,
       FUN = function(x, method, ...) removeBaseline(x, method, ...),
       method = method, ...
     )

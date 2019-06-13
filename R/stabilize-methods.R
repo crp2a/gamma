@@ -9,8 +9,7 @@ setMethod(
   f = "stabilize",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, transformation, ...) {
-    tmp <- object
-    tmp@counts <- transformation(object@counts, ...)
-    tmp
+    count <- transformation(object@counts, ...)
+    methods::initialize(object, counts = count)
   }
 )
