@@ -31,12 +31,12 @@ library(magrittr)
 ## Import files
 ```{r import}
 # Import CNF files for calibration
-# Skip the 30 first chanels
+# Skip the first chanels
 calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (calib_spc <- read(calib_dir, skip = TRUE))
 
 # Import CNF files for background noise measurement
-# Skip the 30 first chanels
+# Skip the first chanels
 noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 (noise_spc <- read(noise_dir, skip = TRUE))
 ```
@@ -45,7 +45,7 @@ noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
-  ggplot2::labs(title = "Calibration spectra") +
+  ggplot2::labs(title = "Reference spectra") +
   ggplot2::theme_bw()
 
 # Plot background noise spectrum
@@ -56,77 +56,111 @@ plot(noise_spc) +
 
 ## Energy scale calibration
 ### Reference spectra
-```{r calib-peaks}
-# Peak parameters estimation
-# Fit peaks at chanel 75, 463 and 825 (starting positions)
-calib_peaks <- list(
-  ## BRIQUE
-  BRIQUE = fitPeaks(calib_spc[["BRIQUE"]], peaks = c(75, 463, 825)),
-  ## C341
-  C341 = fitPeaks(calib_spc[["C341"]], peaks = c(75, 463, 825)),
-  ## C347
-  C347 = fitPeaks(calib_spc[["C347"]], peaks = c(75, 463, 825), bounds = c(0.5)),
-  ## GOU
-  GOU = fitPeaks(calib_spc[["GOU"]], peaks = c(75, 463, 825)),
-  ## LMP
-  LMP = fitPeaks(calib_spc[["LMP"]], peaks = c(75, 463, 825), bounds = c(0.5)),
-  ## MAZ
-  MAZ = fitPeaks(calib_spc[["MAZ"]], peaks = c(75, 463, 825)),
-  ## PEP
-  PEP = fitPeaks(calib_spc[["PEP"]], peaks = c(75, 463, 825))
-)
+Energies in keV (expected chanel):
+
+* Pb212: 238 (75)
+* K40: 1461 (465)
+* Tl208: 2615 (829)
+
+#### BRIQUE
+```{r calib-BRIQUE}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["BRIQUE"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, 2615)
+# Recalibrate the energy scale
+BRIQUE <- calibrate(calib_spc[["BRIQUE"]], pks)
 ```
 
-```{r calib-peaks-fit, echo=FALSE, fig.width=7, fig.height=5, fig.align="center", results="asis"}
-# Visual inspection
-plot_peaks <- lapply(X = calib_peaks, FUN = function(x) {
-  # Set labels and theme
-  plot_theme <- list(ggplot2::theme_bw(),
-                     ggplot2::theme(legend.position = "none"))
-  # Zoomed plots
-  plot_zoom <- cowplot::plot_grid(
-    plot(x) + plot_theme +
-      ggplot2::coord_cartesian(xlim = c(65, 85), 
-                               ylim = c(0, coef(x@model[[1]])[3])),
-    plot(x) + plot_theme +
-      ggplot2::coord_cartesian(xlim = c(425, 500), 
-                               ylim = c(0, coef(x@model[[2]])[3])),
-    plot(x) + plot_theme +
-      ggplot2::coord_cartesian(xlim = c(785, 865), 
-                               ylim = c(0, coef(x@model[[3]])[3] + 5)),
-    ncol = 3
-  )
-  # Multiple plots
-  plot_spc <- cowplot::plot_grid(
-    plot(x) + ggplot2::theme_bw() +
-      ggplot2::labs(title = x[["spectrum"]][["reference"]]), 
-    plot_zoom,
-    nrow = 2
-  )
-  print(plot_spc)
-  # Table of peak position
-  table_peaks <- knitr::kable(
-    x[["coefficients"]],
-    digits = 3,
-    col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
-    caption = paste(x[["spectrum"]][["reference"]],
-                    "Estimated peak parameters", sep = " - ")
-  )
-  print(table_peaks)
-  cat("\n")
-})
+#### C341
+```{r calib-C341}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["C341"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, NA, NA, 2615)
+# Recalibrate the energy scale
+C341 <- calibrate(calib_spc[["C341"]], pks)
 ```
 
+#### C347
+```{r calib-C347}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["C347"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(SNR = 1, span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, NA, NA, 2615)
+# Recalibrate the energy scale
+C347 <- calibrate(calib_spc[["C347"]], pks)
+```
+
+#### GOU
+```{r calib-GOU}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["GOU"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, 2615)
+# Recalibrate the energy scale
+GOU <- calibrate(calib_spc[["GOU"]], pks)
+```
+
+#### LMP
+```{r calib-LMP}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["LMP"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(SNR = 1, span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, NA, NA, NA, NA, 2615)
+# Recalibrate the energy scale
+LMP <- calibrate(calib_spc[["LMP"]], pks)
+```
+
+#### MAZ
+```{r calib-MAZ}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["MAZ"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, 2615)
+# Recalibrate the energy scale
+MAZ <- calibrate(calib_spc[["MAZ"]], pks)
+```
+
+#### PEP
+```{r calib-PEP}
+# Spectrum pre-processing and peak detection
+pks <- calib_spc[["PEP"]] %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks(span = 20)
+# Set energy values
+setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, 2615)
+# Recalibrate the energy scale
+PEP <- calibrate(calib_spc[["PEP"]], pks)
+```
+
+#### Inspect results
 ```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
-# Expected energies (keV)
-expected_peaks <- c(Pb212 = 238, K40 = 1461, Tl208 = 2615)
-
 # Energy scale calibration
-calib_scaled <- lapply(X = calib_peaks, FUN = calibrate,  lines = expected_peaks)
+calib_scaled <- list(BRIQUE, C341, C347, GOU, LMP, MAZ, PEP)
 calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
 
 plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
+  ggplot2::labs(title = "Calibrated spectra") +
   ggplot2::theme_bw()
 ```
 
@@ -135,12 +169,12 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 noise_lines <- list(
   La138 = c(chanel = 251, energy = 789),
   K40 = c(chanel = 460, energy = 1461),
-  Tl208 = c(chanel = 813, energy = 2615)
+  Tl208 = c(chanel = 814, energy = 2615)
 )
 noise_scaled <- calibrate(noise_spc, lines = noise_lines)
 
 plot(noise_spc, noise_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(789, 1461, 2614.5), linetype = 3) +
+  ggplot2::geom_vline(xintercept = c(789, 1461, 2615), linetype = 3) +
   ggplot2::theme_bw()
 ```
 
@@ -323,13 +357,15 @@ test_dir <- system.file("extdata/crp2a/test", package = "gamma")
 ```{r test-calibrate, fig.width=7, fig.height=5, fig.align="center"}
 # Peak parameters estimation
 # Fit peaks at chanel 75, 463, 825 (starting positions)
-# (expected energy: 239, 1461, 2615 keV)
+# (expected energy: 238, 1461, 2615 keV)
 test_peaks <- lapply(
   X = test_spc, 
   FUN = fitPeaks, 
   peaks = c(75, 463, 825),
   bounds = c(0.5)
 )
+# Expected energies (keV)
+expected_peaks <- c(Pb212 = 238, K40 = 1461, Tl208 = 2615)
 
 # Energy scale calibration
 test_scaled <- lapply(X = test_peaks, FUN = calibrate,  lines = expected_peaks)
