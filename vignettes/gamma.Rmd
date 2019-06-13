@@ -77,7 +77,7 @@ files_test <- system.file("extdata", package = "gamma")
 
 # Inspect spectrum
 ```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
-# Plot TKA spectrum
+# Plot CNF spectrum
 plot(spc_cnf) +
   ggplot2::theme_bw()
 # Plot spectra
@@ -86,18 +86,26 @@ plot(spc, facet = TRUE) +
 ```
 
 # Calibrate the energy scale
-The energy calibration of a spectrum is the most tricky part. To do this, you must specify the position of at least two observed peaks and the corresponding energy value (in keV).
+The energy calibration of a spectrum is the most tricky part. To do this, you must specify the position of at least three observed peaks and the corresponding energy value (in keV).
 
 The package allows you to provide the channel-energy pairs you want to use. However, the spectrum can be noisy so it is difficult to properly determine the peak channel. In this case, a better approach may be to fit each peak with a Gaussian curve and then use the parameters estimated in this way.
 
 Regardless of the approach you choose, it is strongly recommended to check the result before proceeding.
 
-## Peak parameters estimation
-The automatic estimation of peak parameters is performed in two steps that can influence the final result. First, the baseline of the spectrum is estimated and removed. Then, a non-linear model is fitted for each peak. The model parameters can finally be used for the spectrum energy scale calibration.
+## Workflow
+### Stabilization
+```{r stabilize, fig.width=7, fig.height=5, fig.align="center"}
+# Use a square root transformation
+transformed <- gamma::stabilize(spc_tka, transformation = sqrt)
+```
 
-These two steps (baseline and peak fitting) are performed in one go. The following sections will help you to fine-tune the individual parameters.
+### Smoothing
+```{r smoothing}
+# Use a 21 point Savitzky-Golay-Filter to smooth the spectrum
+smoothed <- smooth(transformed, method = "savitzky", m = 21)
+```
 
-### Estimate and remove baseline
+### Baseline correction
 The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morhac1997; @morhac2008]. You can apply the LLS operator to your data, use a decreasing clipping window or change the number of iterations (see references).
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
@@ -106,96 +114,61 @@ The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morha
 # * The LLS operator is not used,
 # * An increasing clipping window is used,
 # * 100 iterations are performed.
-baseline <- estimateBaseline(spc_tka)
+baseline <- estimateBaseline(smoothed)
 
 # Plot spectrum + baseline
-plot(spc_tka, baseline) +
+plot(smoothed, baseline) +
   ggplot2::theme_bw()
 ```
 
 ```{r baseline-remove, fig.width=7, fig.height=5, fig.align="center"}
-# Substract the previously estimated baseline
-spc_clean1 <- spc_tka - baseline
+# Substract the estimated baseline
+corrected <- smoothed - baseline
 # Or, remove the baseline in one go
-spc_clean2 <- removeBaseline(spc_tka)
-
-identical(spc_clean1, spc_clean2)
+# corrected <- removeBaseline(smoothed)
 
 # Plot the corrected spectrum
-plot(spc_clean1) +
-  ggplot2::theme_bw()
-```
-
-```{r baseline-plot, fig.width=7, fig.height=5, fig.align="center"}
-# You can change the default parameters (see help for details)
-# help(SNIP)
-spc_clean3 <- removeBaseline(spc_tka, LLS = TRUE)
-
-# The default settings don't seem too bad
-plot(spc_clean1, spc_clean3) +
+plot(corrected) +
   ggplot2::theme_bw()
 ```
 
 ```{r baseline-remove-multi, eval=FALSE}
 # You can remove the baseline of multiple spectra in one go
 # Note that the same parameters will be used for all spectra
-spc_clean <- removeBaseline(spc)
+clean <- removeBaseline(spc)
 ```
 
-### Automatic peak detection
-Once you have fixed the parameters for the baseline estimation, you can try to automatically find peaks in the spectrum. A local maximum has to be the highest one in the given window and has to be higher than $k$ times the noise to be recognized as peak.
+### Peak detection
+Once you have a baseline-corrected spectrum, you can try to automatically find peaks in the spectrum. A local maximum has to be the highest one in the given window and has to be higher than $k$ times the noise to be recognized as peak.
 
-Again, peak finding is performed on the baseline corrected spectrum, so you may want to pass extra arguments for the baseline estimation.
 ```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
 # Detect peaks in a single file
-peak_index <- findPeaks(spc_tka)
+peaks <- findPeaks(corrected)
 
 # Plot spectrum
-plot(peak_index) +
+plot(corrected, peaks) +
   ggplot2::theme_bw()
 ```
 
-```{r peak-detection-table, echo=FALSE}
-# Get peak positions
-knitr::kable(
-  peak_index[["peaks"]],
-  digits = 3,
-  col.names = c("Chanel", "Energy [keV]", "Count", "Count rate [1/s]"),
-  caption = "Automatic peak detection"
-)
-```
+### Energy scale calibration
+#### The careful way
+If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then used to predict the new energy scale of the spectrum.
 
-The result of this automatic detection can be used as starting positions for peak fitting.
+You can use the results of the peak detection and set the expected energy values.
+```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
+# Set the energy values (in keV)
+setEnergy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
-### Peak fitting
-If you know the approximate position of some peaks, you can refine it by fitting each peak with a Gaussian. The parameters of these non-linear models are determined using the *port* algorithm (see `help(nls)` from the `{stats}` package).
+# Calibrate the spectrum using the peak positions
+scaled <- calibrate(spc_tka, peaks)
 
-You only need to provide the starting peak positions (chanel). If problems arise, it may be useful to constrain the parameters (see `help(fit)`) or improve the baseline estimate (peak fitting is performed on the baseline corrected spectrum).
-
-```{r peak-fit-manual, fig.width=7, fig.height=5, fig.align="center"}
-# Fit peaks at a given chanel
-peak_fit <- fitPeaks(spc_tka, peaks = c(86, 496, 876))
-
-## Plot results
-plot(peak_fit) +
-  ggplot2::labs(title = "Fitted peaks from fixed starting positions") +
+# Plot the spectrum (note the top scale)
+plot(scaled) +
+  ggplot2::labs(title = "Calibrated spectra") +
   ggplot2::theme_bw()
 ```
 
-```{r peak-fit-manual-table, echo=FALSE}
-## Get peak positions
-knitr::kable(
-  peak_fit[["coefficients"]],
-  digits = 3,
-  col.names = c("Mean (chanel)", "Std. dev. (chanel)", "Height (count)"),
-  caption = "Peak positions"
-)
-```
-
-## Energy scale calibration
-### The careful way
-If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then the chanel values are used to predict the new energy scale.
-
+Alternatively, you can do it by hand.
 ```{r calibrate-fixed, fig.width=7, fig.height=5, fig.align="center"}
 # Create a list of chanel-enegy pairs
 # Names are optional, but values must always be set in this order:
@@ -207,42 +180,29 @@ calib_lines <- list(
 )
 
 # Calibrate the spectrum using these fixed lines
-tka_scaled1 <- calibrate(spc_tka, lines = calib_lines)
+scaled2 <- calibrate(spc_tka, lines = calib_lines)
 ```
 
-Alternatively, you can use the results of the peak fitting and pass the expected energy values.
-```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
-# Calibrate the spectrum using the peak models
-# Lines should be in keV
-tka_scaled2 <- calibrate(peak_fit, lines = c(238, 1461, 2615))
-
-# Plot the spectrum (note the top scale)
-plot(tka_scaled2) +
-  ggplot2::labs(title = "Calibrated spectra") +
-  ggplot2::theme_bw()
-```
-
-### The fast way
+#### The fast way
 If you want to calibrate several spectra at once, you can try the following approach.
 ```{r calibrate-multi, fig.width=7, fig.height=5, fig.align="center"}
 # The 'GammaSpectra' class inherits from 'list'
 # You can apply a function over it
 
-# First, fit peaks at a given chanel
-# The same starting peak positions are used for all spectra
-multi_fit <- lapply(X = spc, FUN = fitPeaks, peaks = c(86, 496, 876))
+# TODO!
+```
 
-# Then, calibrate the spectra using the peak models                   
-multi_scaled <- lapply(X = multi_fit, FUN = calibrate, 
-                       lines = c(238, 1461, 2615))
+## Use the pipe!
+```{r pipe}
+pks <- spc_tka %>%
+  stabilize(transformation = sqrt) %>%
+  smooth(method = "savitzky", m = 21) %>%
+  removeBaseline(decreasing = TRUE, k = 100) %>%
+  findPeaks()
 
-# Finally, coerce the result to a 'GammaSpectra' object
-multi_spc <- as(multi_scaled, "GammaSpectra")
+setEnergy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
-# Plot the spectra
-plot(multi_spc, xaxis = "energy") +
-  ggplot2::labs(title = "Calibrated spectra") +
-  ggplot2::theme_bw()
+cal <- calibrate(spc_tka, pks)
 ```
 
 # Estimate the gamma dose rate
