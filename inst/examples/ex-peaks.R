@@ -4,12 +4,9 @@ spectrum <- read(spc_file, skip = TRUE)
 
 # Find peaks
 (peaks <- findPeaks(spectrum))
-plot(peaks)
+plot(spectrum, peaks)
 
 # Fit peaks
-## Using previously detected peaks
-(fit1 <- fitPeaks(peaks))
-plot(fit1)
-## Specifying starting positions
-(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
-plot(fit2)
+## Specify starting positions
+(fit <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
+plot(fit)

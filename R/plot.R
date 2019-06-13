@@ -121,8 +121,8 @@ setMethod(
       legend <- ggplot2::annotate(
         "text",
         x = peak_chanel[index_energy],
-        y = max(x@counts) * 0.9,
-        label = paste0(peak_energy[index_energy], " keV"),
+        y = max(x@counts) * 0.8,
+        label = paste0(round(peak_energy[index_energy], 1), " keV"),
         angle = 90, hjust = 0, vjust = 1.5
       )
     }

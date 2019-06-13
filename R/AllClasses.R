@@ -253,7 +253,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
     energy = "numeric"
   ),
   prototype = list(
-    hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     noise_method = "unknown",
     noise_threshold = NA_real_,
     window = NA_integer_,
@@ -270,7 +270,7 @@ setMethod(
   definition = function(.Object, hash, reference, date, instrument, file_format,
                         chanel, energy, counts, live_time, real_time,
                         calibration) {
-    if (!missing(hash)) .Object@hash <- hash
+    if (!missing(hash)) .Object@hash <- hash else .Object@hash <- "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     if (!missing(reference)) .Object@reference <- reference
     if (!missing(date)) .Object@date <- date else .Object@date <- Sys.time()
     if (!missing(instrument)) .Object@instrument <- instrument

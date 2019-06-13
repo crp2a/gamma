@@ -122,21 +122,6 @@ setMethod(
   }
 )
 
-#' @export
-#' @rdname peaks
-#' @aliases fitPeaks,PeakPosition,missing-method
-setMethod(
-  f = "fitPeaks",
-  signature = signature(object = "PeakPosition", peaks = "missing"),
-  definition = function(object, bounds = NULL, ...) {
-    # Get data
-    spc <- object@spectrum
-    pks <- object@peaks[, "chanel", drop = TRUE]
-
-    fitPeaks(spc, peaks = pks, bounds = bounds)
-  }
-)
-
 #' NLS
 #'
 #' Determine the nonlinear least-squares estimates of the peaks parameters.
