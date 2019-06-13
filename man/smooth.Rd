@@ -43,15 +43,17 @@ Smoothes a spectrum.
 The following smoothing methods are available:
  \describe{
   \item{unweighted}{Unweighted sliding-average or rectangular smooth.
-  It replaces each point in the signal with the average of \code{m} adjacent
+  It replaces each point in the signal with the average of \eqn{m} adjacent
   points.}
   \item{weighted}{Weighted sliding-average or triangular smooth.
-  It replaces each point in the signal with the weighted mean of \code{m}
+  It replaces each point in the signal with the weighted mean of \eqn{m}
   adjacent points.}
-  \item{savitzky}{Savitzky-Golay filter.}
+  \item{savitzky}{Savitzky-Golay filter. This method is based on the
+  least-squares fitting of polynomials to segments of \eqn{m} adjacent
+  points.}
  }
  There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
- of the spectrum for which a complete \code{m}-width smooth cannot be
+ of the spectrum for which a complete \eqn{m}-width smooth cannot be
  calculated. To prevent data loss, progressively smaller smooths are used at
  the ends of the spectrum if \code{method} is \code{unweighted} or
  \code{weighted}. If the Savitzky-Golay filter is used, the original
@@ -100,7 +102,8 @@ Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
 }
 \seealso{
 Other signal processing: \code{\link{integrateSignal}},
-  \code{\link{peaks}}, \code{\link{processBaseline}}
+  \code{\link{peaks}}, \code{\link{processBaseline}},
+  \code{\link{stabilize}}
 }
 \author{
 N. Frerebeau

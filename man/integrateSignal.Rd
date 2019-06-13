@@ -64,7 +64,8 @@ TODO
 }
 \seealso{
 Other signal processing: \code{\link{peaks}},
-  \code{\link{processBaseline}}, \code{\link{smooth}}
+  \code{\link{processBaseline}}, \code{\link{smooth}},
+  \code{\link{stabilize}}
 }
 \author{
 N. Frerebeau

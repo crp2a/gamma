@@ -9,7 +9,6 @@
 \alias{fitPeaks-method}
 \alias{findPeaks,GammaSpectrum-method}
 \alias{fitPeaks,GammaSpectrum,numeric-method}
-\alias{fitPeaks,PeakPosition,missing-method}
 \title{Peaks}
 \usage{
 findPeaks(object, ...)
@@ -21,8 +20,6 @@ fitPeaks(object, peaks, ...)
 
 \S4method{fitPeaks}{GammaSpectrum,numeric}(object, peaks, bounds = NULL,
   ...)
-
-\S4method{fitPeaks}{PeakPosition,missing}(object, bounds = NULL, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
@@ -74,19 +71,17 @@ spectrum <- read(spc_file, skip = TRUE)
 
 # Find peaks
 (peaks <- findPeaks(spectrum))
-plot(peaks)
+plot(spectrum, peaks)
 
 # Fit peaks
-## Using previously detected peaks
-(fit1 <- fitPeaks(peaks))
-plot(fit1)
-## Specifying starting positions
-(fit2 <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
-plot(fit2)
+## Specify starting positions
+(fit <- fitPeaks(spectrum, peaks = c(86, 496, 876)))
+plot(fit)
 }
 \seealso{
 Other signal processing: \code{\link{integrateSignal}},
-  \code{\link{processBaseline}}, \code{\link{smooth}}
+  \code{\link{processBaseline}}, \code{\link{smooth}},
+  \code{\link{stabilize}}
 }
 \author{
 N. Frerebeau

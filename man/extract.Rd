@@ -7,17 +7,26 @@
 \alias{replace-method}
 \alias{getDoseRate}
 \alias{setDoseRate<-}
+\alias{getEnergy}
+\alias{setEnergy<-}
 \alias{getDoseRate,GammaSpectrum-method}
 \alias{setDoseRate<-,GammaSpectrum-method}
 \alias{setDoseRate,GammaSpectrum-method}
 \alias{getDoseRate,GammaSpectra-method}
 \alias{setDoseRate<-,GammaSpectra-method}
 \alias{setDoseRate,GammaSpectra-method}
+\alias{getEnergy,PeakPosition-method}
+\alias{setEnergy<-,PeakPosition-method}
+\alias{setEnergy,PeakPosition-method}
 \title{Extract or Replace Parts of an Object}
 \usage{
 getDoseRate(object)
 
 setDoseRate(object) <- value
+
+getEnergy(object)
+
+setEnergy(object) <- value
 
 \S4method{getDoseRate}{GammaSpectrum}(object)
 
@@ -26,6 +35,10 @@ setDoseRate(object) <- value
 \S4method{getDoseRate}{GammaSpectra}(object)
 
 \S4method{setDoseRate}{GammaSpectra}(object) <- value
+
+\S4method{getEnergy}{PeakPosition}(object)
+
+\S4method{setEnergy}{PeakPosition}(object) <- value
 }
 \arguments{
 \item{object}{An object from which to extract element(s) or in which to

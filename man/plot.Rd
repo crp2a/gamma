@@ -7,7 +7,7 @@
 \alias{plot,GammaSpectrum,missing-method}
 \alias{plot,GammaSpectrum,GammaSpectrum-method}
 \alias{plot,GammaSpectra,missing-method}
-\alias{plot,PeakPosition,missing-method}
+\alias{plot,GammaSpectrum,PeakPosition-method}
 \alias{plot,PeakModel,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
 \title{Plot}
@@ -20,7 +20,7 @@
 \S4method{plot}{GammaSpectra,missing}(x, xaxis = c("chanel", "energy"),
   yaxis = c("counts", "rate"), select = NULL, facet = FALSE, ...)
 
-\S4method{plot}{PeakPosition,missing}(x, y, ...)
+\S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
 
 \S4method{plot}{PeakModel,missing}(x, y, ...)
 
@@ -43,7 +43,7 @@ giving the selection of the spectrum that are drawn.}
 defined by spectrum be drawn?}
 }
 \value{
-A \code{ggplot} object.
+A \code{\link[ggplot2]{ggplot}} object.
 }
 \description{
 Plot

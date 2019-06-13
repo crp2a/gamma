@@ -98,7 +98,8 @@ Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
 }
 \seealso{
 Other signal processing: \code{\link{integrateSignal}},
-  \code{\link{peaks}}, \code{\link{smooth}}
+  \code{\link{peaks}}, \code{\link{smooth}},
+  \code{\link{stabilize}}
 }
 \author{
 N. Frerebeau

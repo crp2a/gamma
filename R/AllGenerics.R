@@ -348,7 +348,7 @@ setGeneric(
 #' @param K TODO
 #' @param Th TODO
 #' @param U TODO
-#' @param energy A length-two \ocde{\link{numeric}} vector giving the energy
+#' @param energy A length-two \code{\link{numeric}} vector giving the energy
 #'  range (in keV).
 #' @param n An \code{\link{integer}} giving TODO.
 #' @param ... Currently not used.

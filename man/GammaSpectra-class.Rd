@@ -4,11 +4,12 @@
 \name{GammaSpectra-class}
 \alias{GammaSpectra-class}
 \alias{.GammaSpectra}
+\alias{[,GammaSpectra,ANY,ANY-method}
 \alias{[,GammaSpectra-method}
 \alias{[[,GammaSpectra-method}
 \title{An S4 class to represent a collection of gamma sectra}
 \usage{
-\S4method{[}{GammaSpectra}(x, i, j)
+\S4method{[}{GammaSpectra,ANY,ANY}(x, i, j)
 
 \S4method{[[}{GammaSpectra}(x, i)
 }

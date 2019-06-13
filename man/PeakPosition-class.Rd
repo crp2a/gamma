@@ -25,21 +25,20 @@ An S4 class to represent a set of peaks
 \section{Slots}{
 
 \describe{
-\item{\code{method}}{A \code{\link{character}} string specifying the method used for
-peak detection.}
+\item{\code{hash}}{TODO.}
 
-\item{\code{noise}}{A length one \code{\link{numeric}} vector giving the noise
-threshold.}
+\item{\code{noise_method}}{A \code{\link{character}} string specifying the method
+used for peak detection.}
+
+\item{\code{noise_threshold}}{A length one \code{\link{numeric}} vector giving the
+noise threshold.}
 
 \item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
 size.}
 
-\item{\code{peaks}}{A four columns \code{\link{numeric}} matrix giving the
-peak positions.}
+\item{\code{chanel}}{TODO.}
 
-\item{\code{spectrum}}{A \linkS4class{GammaSpectrum} object.}
-
-\item{\code{baseline}}{A \linkS4class{BaseLine} object.}
+\item{\code{energy}}{TODO.}
 }}
 
 \section{Subset}{

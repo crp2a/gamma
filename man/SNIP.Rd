@@ -4,7 +4,7 @@
 \alias{SNIP}
 \title{SNIP Algorithm}
 \usage{
-SNIP(x, LLS = FALSE, decreasing = FALSE, k = 100)
+SNIP(x, LLS = FALSE, decreasing = FALSE, iterations = 100)
 }
 \arguments{
 \item{x}{A \code{\link{numeric}} vector.}
@@ -15,7 +15,8 @@ on \code{x} before employing SNIP algorithm?}
 \item{decreasing}{A \code{\link{logical}} scalar: should a decreasing
 clipping window be used?}
 
-\item{k}{An \code{\link{integer}} value giving the numerber of iterations.}
+\item{iterations}{An \code{\link{integer}} value giving the numerber of
+iterations.}
 }
 \value{
 A \code{numeric} vector.
