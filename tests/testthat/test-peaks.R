@@ -6,33 +6,19 @@ cts <- dnorm(1:1024, mean = 86, sd = 5) +
   dnorm(1:1024, mean = 876, sd = 10)
 # Add some noise
 set.seed(12345)
-spc <- new("GammaSpectrum",
-           chanel = 1:1024,
-           counts = cts * 10^5 + sample(1:10, 1024, TRUE))
+spc <- .GammaSpectrum(chanel = 1:1024,
+                      counts = cts * 10^5 + sample(1:10, 1024, TRUE))
 
 test_that("Find peaks", {
   peaks <- findPeaks(spc, SNR = 3, span = 50)
-  expect_length(peaks@peaks, 12)
+  expect_length(peaks@chanel, 3)
 
   peaks <- findPeaks(spc, SNR = 3, span = NULL)
   expect_output(show(peaks), "3 peaks were detected")
 
-  expect_equal(nrow(peaks@peaks), 3)
-  expect_equivalent(peaks@peaks[, "chanel"], c(86, 493, 876))
-  expect_s3_class(plot(peaks), "ggplot")
+  expect_equal(peaks@chanel, c(86, 493, 876))
+  expect_s3_class(plot(spc, peaks), "ggplot")
   expect_s3_class(as(peaks, "data.frame"), "data.frame")
-})
-test_that("Fit peaks (autodetect)", {
-  peaks <- findPeaks(spc, SNR = 3, span = 50)
-
-  fit <- fitPeaks(peaks)
-  expect_silent(fit)
-
-  expect_equal(nrow(fit@coefficients), 3)
-  expect_equivalent(fit@coefficients[, "mean"], c(86, 493, 876),
-                    tolerance = 0.00001)
-  expect_s3_class(plot(fit), "ggplot")
-  expect_s3_class(as(fit, "data.frame"), "data.frame")
 })
 test_that("Fit peaks", {
   fit <- fitPeaks(spc, peaks = c(86, 493, 876), bounds = c(0.1, 0.1, 0.1))

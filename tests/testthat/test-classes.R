@@ -128,32 +128,29 @@ test_that("Initialize an empty PeakModel instance", {
                "must be a 3 columns matrix")
 })
 test_that("Initialize an empty PeakPosition instance", {
-  options("verbose" = TRUE)
   expect_s4_class(new("PeakPosition"), "PeakPosition")
-  expect_message(new("PeakPosition"), "instance initialized")
 
-  options("verbose" = FALSE)
-  peak <- new("PeakPosition")
+  peak <- .PeakPosition()
   expect_output(show(peak), "No peaks were detected")
 
-  expect_type(peak[["method"]], "character")
-  expect_type(peak[["noise"]], "double")
-  expect_type(peak[["window"]], "double")
-  expect_type(peak[["peaks"]], "double")
-  expect_s4_class(peak[["spectrum"]], "GammaSpectrum")
-  expect_s4_class(peak[["baseline"]], "BaseLine")
+  expect_type(peak[["noise_method"]], "character")
+  expect_type(peak[["noise_threshold"]], "double")
+  expect_type(peak[["window"]], "integer")
+  expect_type(peak[["chanel"]], "integer")
+  expect_type(peak[["energy"]], "double")
+  expect_error(peak[["X"]])
 
-  expect_error(new("PeakPosition", method = LETTERS),
-               "must be a character vector of length one, not 26")
-  expect_error(new("PeakPosition", noise = 1:26),
-               "must be a numeric vector of length one, not 26")
-  expect_error(new("PeakPosition", noise = -1),
+  expect_error(.PeakPosition(noise_method = LETTERS),
+               "must be a character vector of length 1, not 26")
+  expect_error(.PeakPosition(noise_threshold = 1:26),
+               "must be a numeric vector of length 1, not 26")
+  expect_error(.PeakPosition(noise_threshold = -1),
                "must be a positive number")
-  expect_error(new("PeakPosition", window = 1:26),
-               "must be a numeric vector of length one, not 26")
-  expect_error(new("PeakPosition", window = -1),
-               "must be a positive number")
+  expect_error(.PeakPosition(window = 1:26),
+               "must be an integer vector of length 1, not 26")
+  expect_error(.PeakPosition(window = as.integer(-1)),
+               "Slot `window` must be a strictly positive integer, not -1.")
   mtx <- cbind(chanel = 1:26, energy = 1:26, dose = 1:26, rate = 1:26)
-  expect_error(new("PeakPosition", peaks = mtx[, 1:3]),
-               "must be a 4 columns matrix")
+  expect_error(.PeakPosition(chanel = 1:26),
+               "Slots `chanel` and `energy` must have the same length.")
 })

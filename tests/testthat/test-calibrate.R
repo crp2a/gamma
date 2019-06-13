@@ -15,7 +15,7 @@ test_that("Calibrate GammaSpectrum", {
 
   expect_equal(calib[["hash"]], spectrum[["hash"]])
   expect_equal(calib[["reference"]], spectrum[["reference"]])
-  expect_is(calib[["date"]], "POSIXct")
+  expect_s3_class(calib[["date"]], "POSIXct")
   expect_equal(calib[["instrument"]], spectrum[["instrument"]])
   expect_equal(calib[["file_format"]], spectrum[["file_format"]])
   expect_equal(calib[["live_time"]], spectrum[["live_time"]])
@@ -25,10 +25,10 @@ test_that("Calibrate GammaSpectrum", {
   expect_true(all(calib[["energy"]] != spectrum[["energy"]]))
   expect_equal(calib[["counts"]], spectrum[["counts"]])
   expect_equal(calib[["rate"]], spectrum[["rate"]])
-  expect_is(calib[["calibration"]], "lm")
+  expect_s3_class(calib[["calibration"]], "lm")
 
   expect_error(calibrate(spectrum, lines = lines[1]),
-               "provide at least 2 lines")
+               "You have to provide at least 3 lines for calibration, not 1.")
   lines <- list(
     Pb = c(76, 238),
     K = c(chanel = 459, energy = 1461),
@@ -70,7 +70,7 @@ test_that("Calibrate GammaSpectra", {
   expect_length(calib[["energy"]], 1024)
   expect_length(calib[["counts"]], 1024)
   expect_length(calib[["rate"]], 0)
-  expect_is(calib[["calibration"]], "lm")
+  expect_s3_class(calib[["calibration"]], "lm")
 
   expect_error(calibrate(fit, lines = c(76, 459)),
                "must be of length")
