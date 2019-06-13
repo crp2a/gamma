@@ -115,15 +115,17 @@ setValidity(
     }
     # TODO: check counts (baseline may produces negative count)
     # TODO: check rate (baseline may produces negative count)
-    if (!isEqual(lengths(list(chanel, count)))) {
-      message <- c(
-        message,
-        sprintf(
-          "%s (%d) and %s (%d) must have the same length.",
-          sQuote("chanel"), length(chanel),
-          sQuote("count"), length(count)
+    if (length(chanel) != 0) {
+      if (!isEqual(lengths(list(chanel, count)))) {
+        message <- c(
+          message,
+          sprintf(
+            "%s (%d) and %s (%d) must have the same length.",
+            sQuote("chanel"), length(chanel),
+            sQuote("count"), length(count)
+          )
         )
-      )
+      }
     }
     if (length(rate) != 0) {
       if (!isEqual(lengths(list(count, rate)))) {
@@ -138,13 +140,13 @@ setValidity(
       }
     }
     if (length(energy) != 0) {
-      if (!isEqual(lengths(list(chanel, energy)))) {
+      if (!isEqual(lengths(list(energy, count)))) {
         message <- c(
           message,
           sprintf(
             "%s (%d) and %s (%d) must have the same length.",
-            sQuote("chanel"), length(chanel),
-            sQuote("energy"), length(energy)
+            sQuote("energy"), length(energy),
+            sQuote("count"), length(count)
           )
         )
       }
@@ -348,74 +350,58 @@ setValidity(
 setValidity(
   Class = "PeakPosition",
   method = function(object) {
-    method <- object@method
-    noise <- object@noise
+    hash <- object@hash
+    noise_method <- object@noise_method
+    threshold <- object@noise_threshold
     window <- object@window
-    peaks <- object@peaks
-    spectrum <- object@spectrum
-    baseline <- object@baseline
+    chanel <- object@chanel
+    energy <- object@energy
     message <- c()
 
-    length_method <- length(method)
+    length_hash <- length(hash)
+    if (length_hash != 1 || (length_hash == 1 && nchar(hash) != 32)) {
+        message <- c(message, "Slot `hash` must be a 32-character string.")
+    }
+    length_method <- length(noise_method)
     if (length_method > 1) {
       message <- c(
         message,
-        sprintf("%s must be a character vector of length one, not %d.",
-                sQuote("method"), length_method)
+        sprintf("Slot `noise_method` must be a character vector of length 1, not %d.",
+                length_method)
       )
     }
-    length_noise <- length(noise)
-    if (length_noise != 0) {
-      if (length_noise > 1) {
-        message <- c(
-          message,
-          sprintf("%s must be a numeric vector of length one, not %d.",
-                  sQuote("noise"), length_noise)
-        )
-      } else if (!isPositive(noise, strict = FALSE)) {
-        message <- c(message, sprintf("%s must be a positive number.",
-                                      sQuote("noise")))
-      }
+    length_noise <- length(threshold)
+    if (length_noise > 1) {
+      message <- c(
+        message,
+        sprintf("Slot `noise_threshold` must be a numeric vector of length 1, not %d.",
+                length_noise)
+      )
+    } else if (!is.na(threshold) && !isPositive(threshold, strict = FALSE)) {
+      message <- c(message,
+                   "Slot `noise_threshold` must be a positive number.")
     }
     length_window <- length(window)
-    if (length_window != 0) {
-      if (length_window > 1) {
-        message <- c(
-          message,
-          sprintf("%s must be a numeric vector of length one, not %d.",
-                  sQuote("window"), length_window)
-        )
-      } else if (!isPositive(window, strict = FALSE)) {
-        message <- c(
-          message,
-          sprintf("%s must be a positive number.", sQuote("window"))
-        )
-      }
+    if (length_window > 1) {
+      message <- c(
+        message,
+        sprintf("Slot `window` must be an integer vector of length 1, not %d.",
+                length_window)
+      )
+    } else if (!is.na(window) && !isPositive(window, strict = TRUE)) {
+      message <- c(
+        message,
+        sprintf("Slot `window` must be a strictly positive integer, not %d.",
+                window)
+      )
     }
-    if (length(peaks) != 0) {
-      if (!is.numeric(peaks)) {
-        message <- c(message, sprintf("%s must be a numeric matrix.",
-                                      sQuote("peaks")))
-      }
-      col_names <- c("chanel", "energy", "counts", "rate")
-      if (!all(colnames(peaks) %in% col_names)) {
-        message <- c(
-          message,
-          sprintf("%s must be a 4 columns matrix, with column names: %s",
-                  sQuote("peaks"), paste(sQuote(col_names), collapse = ", "))
-        )
-      }
-    }
-    if (length(spectrum@hash) != 0 & length(baseline@hash) != 0) {
-      if (spectrum@hash != baseline@hash) {
-        message <- c(message, sprintf("%s and %s do not match.",
-                                      sQuote("spectrum"), sQuote("baseline"))
-        )
-      }
+    if (length(chanel) != length(energy)) {
+      message <- c(message,
+                   "Slots `chanel` and `energy` must have the same length.")
     }
 
     if (length(message) != 0) {
-      stop("* ", paste0(message, collapse = "\n  * "))
+      stop("* ", paste0(message, collapse = "\n* "), call. = FALSE)
     } else {
       return(TRUE)
     }

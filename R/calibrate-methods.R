@@ -27,12 +27,12 @@ setMethod(
   definition = function(object, lines, ...) {
     # Validation
     n_lines <- length(lines)
-    if (n_lines < 2) {
-      msg <- "You have to provide at least 2 lines for calibration, not %d."
+    if (n_lines < 3) {
+      msg <- "You have to provide at least 3 lines for calibration, not %d."
       stop(sprintf(msg, n_lines), call. = FALSE)
     }
     if (any(lengths(lines) != 2)) {
-      msg <- "`lines` must be a list of length-two numeric vectors"
+      msg <- "`lines` must be a list of length-two numeric vectors."
       stop(msg, call. = FALSE)
     }
     lines_names <- vapply(
@@ -47,31 +47,31 @@ setMethod(
            " but does not have components 'chanel' and 'energy'.",
            call. = FALSE)
 
-    # Get spectrum data
-    spc_data <- methods::as(object, "data.frame")
-
     # Adjust spectrum for energy shift
     ## Get corresponding chanels
     fit_data <- as.data.frame(do.call(rbind, lines))
-    ## Fit second order polynomial
-    fit_poly <- stats::lm(energy ~ stats::poly(chanel, degree = 2, raw = TRUE),
-                          data = fit_data)
-    ## Predict shifted energy values
-    fit_spc <- stats::predict(fit_poly, spc_data[, "chanel", drop = FALSE])
-
     # Return a new gamma spectrum with adjusted energy
-    .GammaSpectrum(
-      hash = object@hash,
-      reference = object@reference,
-      instrument = object@instrument,
-      file_format = object@file_format,
-      chanel = spc_data$chanel,
-      energy = fit_spc,
-      counts = spc_data$counts,
-      live_time = object@live_time,
-      real_time = object@real_time,
-      calibration = fit_poly
-    )
+    .calibrate(object, fit_data)
+  }
+)
+
+#' @export
+#' @rdname calibrate
+#' @aliases calibrate,GammaSpectrum,PeakPosition-method
+setMethod(
+  f = "calibrate",
+  signature = signature(object = "GammaSpectrum", lines = "PeakPosition"),
+  definition = function(object, lines, ...) {
+    # Get data
+    peaks <- methods::as(lines, "data.frame")
+    clean <- stats::na.omit(peaks)
+    # Validation
+    if (nrow(clean) == 0)
+      stop("You must set the corresponding energy (keV).", call. = FALSE)
+
+    # Adjust spectrum for energy shift
+    # Return a new gamma spectrum with adjusted energy
+    .calibrate(object, clean)
   }
 )
 
@@ -94,8 +94,7 @@ setMethod(
       stop(sprintf("`lines` must be of length %d, not %d", n_chanels, n_lines),
            call. = FALSE)
 
-    fit_data <- data.frame(energy = lines, chanel = chanels) %>%
-      split(., f = seq_len(nrow(.)))
-    calibrate(spectrum, fit_data)
+    fit_data <- data.frame(energy = lines, chanel = chanels)
+    .calibrate(spectrum, fit_data)
   }
 )

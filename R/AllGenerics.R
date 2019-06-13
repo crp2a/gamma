@@ -30,6 +30,19 @@ setGeneric(
   def = function(object, value) standardGeneric("setDoseRate<-")
 )
 
+#' @export
+#' @rdname extract
+setGeneric(
+  name = "getEnergy",
+  def = function(object) standardGeneric("getEnergy")
+)
+#' @export
+#' @rdname extract
+setGeneric(
+  name = "setEnergy<-",
+  def = function(object, value) standardGeneric("setEnergy<-")
+)
+
 # ===================================================== Energy scale calibration
 #' Spectrum calibration
 #'
@@ -277,7 +290,7 @@ setGeneric(
 #'  defined by spectrum be drawn?
 #' @param ... Currently not used.
 #' @return
-#'  A \code{ggplot} object.
+#'  A \code{\link[ggplot2]{ggplot}} object.
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -329,6 +342,26 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
+# =================================================================== Simulation
+#' Simulate a Gamma Spectrum
+#'
+#' @param K TODO
+#' @param Th TODO
+#' @param U TODO
+#' @param energy A length-two \ocde{\link{numeric}} vector giving the energy
+#'  range (in keV).
+#' @param n An \code{\link{integer}} giving TODO.
+#' @param ... Currently not used.
+#' @return A \linkS4class{GammaSpectrum} object.
+#' @author N. Frerebeau
+#' @docType methods
+#' @rdname simulate
+#' @aliases simulate-method
+setGeneric(
+  name = "simulate",
+  def = function(K, Th, U, ...) standardGeneric("simulate")
+)
+
 # ==================================================================== Smoothing
 #' Smooth
 #'
@@ -348,15 +381,17 @@ setGeneric(
 #'  The following smoothing methods are available:
 #'  \describe{
 #'   \item{unweighted}{Unweighted sliding-average or rectangular smooth.
-#'   It replaces each point in the signal with the average of \code{m} adjacent
+#'   It replaces each point in the signal with the average of \eqn{m} adjacent
 #'   points.}
 #'   \item{weighted}{Weighted sliding-average or triangular smooth.
-#'   It replaces each point in the signal with the weighted mean of \code{m}
+#'   It replaces each point in the signal with the weighted mean of \eqn{m}
 #'   adjacent points.}
-#'   \item{savitzky}{Savitzky-Golay filter.}
+#'   \item{savitzky}{Savitzky-Golay filter. This method is based on the
+#'   least-squares fitting of polynomials to segments of \eqn{m} adjacent
+#'   points.}
 #'  }
 #'  There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
-#'  of the spectrum for which a complete \code{m}-width smooth cannot be
+#'  of the spectrum for which a complete \eqn{m}-width smooth cannot be
 #'  calculated. To prevent data loss, progressively smaller smooths are used at
 #'  the ends of the spectrum if \code{method} is \code{unweighted} or
 #'  \code{weighted}. If the Savitzky-Golay filter is used, the original
@@ -382,4 +417,23 @@ setGeneric(
 setGeneric(
   name = "smooth",
   def = function(object, ...) standardGeneric("smooth")
+)
+
+# ==================================================================== Stabilize
+#' Transform Intensities
+#'
+#' @param object A \linkS4class{GammaSpectrum} object.
+#' @param transformation A \code{\link{function}} that takes a numeric vector as
+#'  argument and returns a numeric vector.
+#' @param ... Extra arguments to be passed to \code{transformation}.
+#' @return A new \linkS4class{GammaSpectrum} object with transformed
+#'  intensities.
+#' @author N. Frerebeau
+#' @family signal processing
+#' @docType methods
+#' @rdname stabilize
+#' @aliases stabilize-method
+setGeneric(
+  name = "stabilize",
+  def = function(object, ...) standardGeneric("stabilize")
 )

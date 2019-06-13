@@ -11,25 +11,29 @@ setMethod(
   definition = function(x, ...) {
     # Get data
     spc <- methods::as(x, "data.frame")
-    # Secondary axes
-    sec_xaxis <- ggplot2::scale_x_continuous(name = "Chanel")
-    sec_yaxis <- ggplot2::scale_y_continuous(name = "Count")
-    if (!anyNA(spc$energy)) {
-      sec_xaxis <- ggplot2::scale_x_continuous(
-        name = "Chanel",
-        sec.axis = ggplot2::sec_axis(~ spc$energy, name = "Energy [keV]")
-      )
+
+    sec_xaxis <- sec_yaxis <- ggplot2::waiver()
+    if (!anyNA(spc[["chanel"]])) {
+      xaxis <- "chanel"
+      if (!anyNA(spc[["energy"]])) {
+        sec_xaxis <- ggplot2::sec_axis(~ spc[["energy"]], name = "Energy [keV]")
+      }
+    } else if (!anyNA(spc[["energy"]])) {
+      xaxis <- "energy"
+    } else {
+      stop("Nothing to plot!", call. = FALSE)
     }
+
     live_time <- x[["live_time"]]
     if (length(live_time) != 0) {
-      sec_yaxis <- ggplot2::scale_y_continuous(
-        name = "Count",
-        sec.axis = ggplot2::sec_axis(~ . / live_time, name = "Count rate [1/s]")
-      )
+      sec_yaxis <- ggplot2::sec_axis(~ . / live_time, name = "Count rate [1/s]")
     }
+
     # Plot
-    ggplot2::ggplot(spc, ggplot2::aes(x = .data$chanel, y = .data$counts)) +
-      sec_xaxis + sec_yaxis +
+    ggplot2::ggplot(spc, ggplot2::aes(x = .data[[xaxis]], y = .data$counts)) +
+      ggplot2::scale_x_continuous(sec.axis = sec_xaxis) +
+      ggplot2::scale_y_continuous(sec.axis = sec_yaxis) +
+      ggplot2::labs(x = xaxis, y = "Count") +
       ggplot2::geom_line()
   }
 )
@@ -42,7 +46,7 @@ setMethod(
   signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),
   definition = function(x, y, xaxis = c("chanel", "energy"),
                         yaxis = c("counts", "rate"), ...) {
-    spc <- methods::new("GammaSpectra", list(x, y))
+    spc <- .GammaSpectra(list(x, y))
     plot(spc, xaxis = xaxis, yaxis = yaxis, select = NULL, facet = FALSE)
   }
 )
@@ -99,18 +103,37 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,PeakPosition,missing-method
+#' @aliases plot,GammaSpectrum,PeakPosition-method
 setMethod(
   f = "plot",
-  signature = signature(x = "PeakPosition", y = "missing"),
-  definition = function(x, ...) {
-    # Get data
-    spc <- x@spectrum
-    peaks <- x@peaks
+  signature = signature(x = "GammaSpectrum", y = "PeakPosition"),
+  definition = function(x, y, ...) {
+    # Validation
+    if (x@hash != y@hash)
+      stop("`x` and `y` do not match.", call. = FALSE)
 
-    plot(spc) +
-      ggplot2::geom_vline(xintercept = peaks[, "chanel"], linetype = 3,
-                          colour = "red")
+    # Get data
+    peak_chanel <- y@chanel
+    peak_energy <- y@energy
+    index_energy <- !is.na(peak_energy)
+    legend <- NULL
+    if (any(index_energy)) {
+      legend <- ggplot2::annotate(
+        "text",
+        x = peak_chanel[index_energy],
+        y = max(x@counts) * 0.9,
+        label = paste0(peak_energy[index_energy], " keV"),
+        angle = 90, hjust = 0, vjust = 1.5
+      )
+    }
+
+    plot(x) +
+      ggplot2::geom_vline(
+        xintercept = peak_chanel,
+        linetype = 3,
+        colour = "red"
+      ) +
+      legend
   }
 )
 

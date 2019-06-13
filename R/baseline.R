@@ -40,7 +40,7 @@ setMethod(
 
     baseline <- switch (
       method,
-      SNIP = SNIP(x_counts, LLS, decreasing, k),
+      SNIP = SNIP(x_counts, LLS, decreasing, iterations = k),
       stop("There is no such method: ", method, call. = FALSE)
     )
 
@@ -99,7 +99,8 @@ setMethod(
 #'  on \code{x} before employing SNIP algorithm?
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
 #'  clipping window be used?
-#' @param k An \code{\link{integer}} value giving the numerber of iterations.
+#' @param iterations An \code{\link{integer}} value giving the numerber of
+#'  iterations.
 #' @return A \code{numeric} vector.
 #' @author N. Frerebeau
 #' @references
@@ -120,26 +121,24 @@ setMethod(
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @keywords internal
-SNIP <- function(x, LLS = FALSE, decreasing = FALSE, k = 100) {
+SNIP <- function(x, LLS = FALSE, decreasing = FALSE, iterations = 100) {
   # Validation
-  if (!is.vector(x) | !is.numeric(x))
+  if (!is.atomic(x) | !is.numeric(x))
     stop("A numeric vector is expected.")
-  k <- as.integer(k)
+  m <- as.integer(iterations)[[1L]]
 
   # LLS operator
   x <- if (LLS) LLS(x) else x
 
-  N <- length(x)
-  y <- vector(mode = "numeric", length = N)
-  clip <- if (decreasing) rev(seq_len(k)) else seq_len(k)
+  n <- length(x)
+  iter <- if (decreasing) rev(seq_len(m)) else seq_len(m)
 
-  for (p in clip) {
-    i <- p
-    while (i < (N - p)) {
-      a1 <- x[i]
-      a2 <- (x[i - p] + x[i + p]) / 2
-      y[i] <- min(a1, a2)
-      i <- i + 1
+  y <- x
+  for (p in iter) {
+    for (i in p:(n-p)) {
+      a <- x[i]
+      b <- (x[i - p] + x[i + p]) / 2
+      y[i] <- min(a, b)
     }
     x <- y
   }

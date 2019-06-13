@@ -16,7 +16,7 @@ setMethod(
       D <- if (length(object@dose_rate) != 0) {
         paste0(object@dose_rate, collapse = " +/- ")
       } else {
-        "not known"
+        "unknown"
       }
       cat("Gamma spectrum:", "\n",
           "  Reference: ", object@reference, "\n",
@@ -91,11 +91,12 @@ setMethod(
   f = "show",
   signature = "PeakPosition",
   definition = function(object) {
-    if (length(object@peaks) != 0) {
-      n <- nrow(object@peaks)
+    peaks <- methods::as(object, "data.frame")
+    n <- nrow(peaks)
+    if (!all(is.na(peaks))) {
       pks <- ngettext(n, " peak was ", " peaks were ")
       cat(n, pks, "detected:\n", sep = "")
-      print(object@peaks)
+      print(peaks)
     } else {
       cat("No peaks were detected.\n", sep = " ")
     }

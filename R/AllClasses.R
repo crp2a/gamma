@@ -217,16 +217,15 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
 #' An S4 class to represent a set of peaks
 #'
-#' @slot method A \code{\link{character}} string specifying the method used for
-#'  peak detection.
-#' @slot noise A length one \code{\link{numeric}} vector giving the noise
-#'  threshold.
+#' @slot hash TODO.
+#' @slot noise_method A \code{\link{character}} string specifying the method
+#'  used for peak detection.
+#' @slot noise_threshold A length one \code{\link{numeric}} vector giving the
+#'  noise threshold.
 #' @slot window A length one \code{\link{numeric}} vector giving the half-window
 #'  size.
-#' @slot peaks A four columns \code{\link{numeric}} matrix giving the
-#'  peak positions.
-#' @slot spectrum A \linkS4class{GammaSpectrum} object.
-#' @slot baseline A \linkS4class{BaseLine} object.
+#' @slot chanel TODO.
+#' @slot energy TODO.
 #' @param x An object of class \code{PeakPosition}.
 #' @param i A length-one \code{\link{character}} vector specifying the element
 #'  to extract or replace (see below). Character sring will be matched to the
@@ -246,12 +245,20 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 .PeakPosition <- setClass(
   Class = "PeakPosition",
   slots = list(
-    method = "character",
-    noise = "numeric",
-    window = "numeric",
-    peaks = "matrix",
-    spectrum = "GammaSpectrum",
-    baseline = "BaseLine"
+    hash = "character",
+    noise_method = "character",
+    noise_threshold = "numeric",
+    window = "integer",
+    chanel = "integer",
+    energy = "numeric"
+  ),
+  prototype = list(
+    hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    noise_method = "unknown",
+    noise_threshold = NA_real_,
+    window = NA_integer_,
+    chanel = NA_integer_,
+    energy = NA_real_
   )
 )
 
@@ -270,7 +277,7 @@ setMethod(
     if (!missing(file_format)) .Object@file_format <- file_format
     if (!missing(chanel)) .Object@chanel <- as.integer(chanel)
     if (!missing(energy)) .Object@energy <- energy
-    if (!missing(counts)) .Object@counts <- as.integer(counts)
+    if (!missing(counts)) .Object@counts <- counts
     if (!missing(counts) & !missing(live_time))
       .Object@rate <- counts / live_time
     if (!missing(live_time)) .Object@live_time <- live_time
@@ -355,26 +362,6 @@ setMethod(
   definition = function(.Object, model, coefficients, spectrum, baseline) {
     if (!missing(model)) .Object@model <- model
     if (!missing(coefficients)) .Object@coefficients <- coefficients
-    if (!missing(spectrum)) .Object@spectrum <- spectrum
-    if (!missing(baseline)) .Object@baseline <- baseline
-
-    methods::validObject(.Object)
-    if (getOption("verbose")) {
-      message(class(.Object), " instance initialized.")
-    }
-    return(.Object)
-  }
-)
-## PeakPosition ----------------------------------------------------------------
-setMethod(
-  f = "initialize",
-  signature = "PeakPosition",
-  definition = function(.Object, method, noise, window, peaks, spectrum,
-                        baseline) {
-    if (!missing(method)) .Object@method <- method
-    if (!missing(noise)) .Object@noise <- noise
-    if (!missing(window)) .Object@window <- window
-    if (!missing(peaks)) .Object@peaks <- peaks
     if (!missing(spectrum)) .Object@spectrum <- spectrum
     if (!missing(baseline)) .Object@baseline <- baseline
 

@@ -14,20 +14,14 @@ setMethod(
     method <- match.arg(method, several.ok = FALSE)
     SNR <- as.integer(SNR)[[1L]]
 
-    # Remove baseline
-    baseline <- estimateBaseline(object, ...)
-    spc_clean <- object - baseline
     # Get count data
-    spc <- methods::as(spc_clean, "data.frame")
-    counts <- spc$counts
-    span <- if (is.null(span)) {
-      round(length(counts) * 0.05)
-    } else {
-      as.integer(span)[[1L]]
-    }
+    spc <- methods::as(object, "data.frame")
+    counts <- spc[["counts"]]
+    if (is.null(span)) span <- round(length(counts) * 0.05)
+    span <- as.integer(span)[[1L]]
 
     shape <- diff(sign(diff(counts, na.pad = FALSE)))
-    index_shape <- unlist(lapply(
+    index_shape <- lapply(
       X = which(shape < 0),
       FUN = function(i, data, span) {
         n <- length(data)
@@ -43,7 +37,7 @@ setMethod(
       },
       data = counts,
       span = span
-    ))
+    )
 
     noise <- switch (
       method,
@@ -58,12 +52,12 @@ setMethod(
     rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))
 
     .PeakPosition(
-      method = method,
-      noise = threshold,
+      hash = object@hash,
+      noise_method = method,
+      noise_threshold = threshold,
       window = span,
-      peaks = as.matrix(pks),
-      spectrum = object,
-      baseline = baseline
+      chanel = pks[["chanel"]],
+      energy = pks[["energy"]]
     )
   }
 )

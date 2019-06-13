@@ -24,7 +24,7 @@ setMethod(
   f = "length",
   signature = "GammaSpectrum",
   definition = function(x) {
-    length(x@chanel)
+    max(length(x@chanel), length(x@energy))
   }
 )
 
@@ -194,6 +194,33 @@ setMethod(
     return(data)
   }
 )
+
+#' @export
+#' @rdname extract
+#' @aliases getEnergy,PeakPosition-method
+setMethod(
+  f = "getEnergy",
+  signature = "PeakPosition",
+  definition = function(object) object@energy
+)
+
+#' @export
+#' @rdname extract
+#' @aliases setEnergy,PeakPosition-method
+setMethod(
+  f = "setEnergy<-",
+  signature = "PeakPosition",
+  definition = function(object, value) {
+    if (!is.atomic(value) || !is.numeric(value))
+      stop("`value` must be a numeric vector.", call. = FALSE)
+
+    index <- which(!is.na(value))
+    object@energy <- value
+    methods::validObject(object)
+    object
+  }
+)
+
 #' @export
 #' @rdname PeakModel-class
 #' @aliases [[,PeakModel-method

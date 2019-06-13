@@ -1,0 +1,34 @@
+#' (Re)Calibrate the Energy Scale
+#'
+#' @param spectrum A \linkS4class{GammaSpectrum} object.
+#' @param lines A \code{\link[=data.frame]{data frame}}.
+#' @return Returns a new \linkS4class{GammaSpectrum} object with an
+#'  adjusted energy scale.
+#' @author N. Frerebeau
+#' @keywords internal
+#' @noRd
+.calibrate <- function(spectrum, lines) {
+  # Get spectrum data
+  spc_data <- methods::as(spectrum, "data.frame")
+
+  # Adjust spectrum for energy shift
+  ## Fit second order polynomial
+  fit_poly <- stats::lm(energy ~ stats::poly(chanel, degree = 2, raw = TRUE),
+                        data = lines)
+  ## Predict shifted energy values
+  fit_spc <- stats::predict(fit_poly, spc_data[, "chanel", drop = FALSE])
+
+  # Return a new gamma spectrum with adjusted energy
+  .GammaSpectrum(
+    hash = spectrum@hash,
+    reference = spectrum@reference,
+    instrument = spectrum@instrument,
+    file_format = spectrum@file_format,
+    chanel = spc_data$chanel,
+    energy = fit_spc,
+    counts = spc_data$counts,
+    live_time = spectrum@live_time,
+    real_time = spectrum@real_time,
+    calibration = fit_poly
+  )
+}

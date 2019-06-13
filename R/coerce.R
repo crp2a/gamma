@@ -17,7 +17,7 @@ setAs(
   to = "data.frame",
   def = function(from) {
     data.frame(
-      chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
+      chanel = if (length(from@chanel) != 0) from@chanel else NA_integer_,
       energy = if (length(from@energy) != 0) from@energy else NA_real_,
       counts = if (length(from@counts) != 0) from@counts else NA_real_,
       rate = if (length(from@rate) != 0) from@rate else NA_real_,
@@ -45,7 +45,11 @@ setAs(
   from = "PeakPosition",
   to = "data.frame",
   def = function(from) {
-    as.data.frame(from@peaks, stringsAsFactors = FALSE)
+    data.frame(
+      chanel = if (length(from@chanel) != 0) from@chanel else NA_integer_,
+      energy = if (length(from@energy) != 0) from@energy else NA_real_,
+      stringsAsFactors = FALSE
+    )
   }
 )
 
