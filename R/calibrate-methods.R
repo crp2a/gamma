@@ -26,11 +26,6 @@ setMethod(
   signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
     # Validation
-    n_lines <- length(lines)
-    if (n_lines < 3) {
-      msg <- "You have to provide at least 3 lines for calibration, not %d."
-      stop(sprintf(msg, n_lines), call. = FALSE)
-    }
     if (any(lengths(lines) != 2)) {
       msg <- "`lines` must be a list of length-two numeric vectors."
       stop(msg, call. = FALSE)

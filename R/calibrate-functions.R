@@ -8,6 +8,12 @@
 #' @keywords internal
 #' @noRd
 .calibrate <- function(spectrum, lines) {
+  # Validation
+  n_lines <- nrow(lines)
+  if (n_lines < 3) {
+    msg <- "You have to provide at least 3 lines for calibration, not %d."
+    stop(sprintf(msg, n_lines), call. = FALSE)
+  }
   # Get spectrum data
   spc_data <- methods::as(spectrum, "data.frame")
 

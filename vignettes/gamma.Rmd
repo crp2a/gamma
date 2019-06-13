@@ -26,7 +26,9 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  message = FALSE,
+  comment = "#>",
+  out.width = NULL
 )
 library(gamma)
 library(magrittr)
@@ -60,7 +62,7 @@ Both Canberra CNF and TKA files can be imported. Several channels can be skipped
 
 If `skip` is `TRUE`, an attempt is made to define the number of channels to skip at the beginning of the spectrum. This skips all channels before the highest count maximum. This is intended to deal with the artefact produced by the rapid growth of random background noise towards low energies.
 
-```{r import, fig.width=7, fig.height=5, fig.align="center"}
+```{r import}
 # Automatically skip the first chanels
 # Import a CNF file
 cnf_test <- system.file("extdata/test_CNF.cnf", package = "gamma")
@@ -80,21 +82,20 @@ files_test <- system.file("extdata", package = "gamma")
 # Plot CNF spectrum
 plot(spc_cnf) +
   ggplot2::theme_bw()
-# Plot spectra
-plot(spc, facet = TRUE) +
-  ggplot2::theme_bw()
 ```
 
 # Calibrate the energy scale
 The energy calibration of a spectrum is the most tricky part. To do this, you must specify the position of at least three observed peaks and the corresponding energy value (in keV).
 
-The package allows you to provide the channel-energy pairs you want to use. However, the spectrum can be noisy so it is difficult to properly determine the peak channel. In this case, a better approach may be to fit each peak with a Gaussian curve and then use the parameters estimated in this way.
+The package allows you to provide the channel-energy pairs you want to use. However, the spectrum can be noisy so it is difficult to properly determine the peak channel. In this case, a better approach may be to pre-process the spectrum (variance-stabilization, smoothing and baseline correction) and perform a peak detection. Once the identified peaks are satisfactory, you can set the corresponding energy values (in keV) and use these lines to calibrate the energy scale of the spectrum.
 
 Regardless of the approach you choose, it is strongly recommended to check the result before proceeding.
 
 ## Workflow
+The following steps illustrate how to properly fine-tune the parameters for spectrum processing before peak detection.
+
 ### Stabilization
-```{r stabilize, fig.width=7, fig.height=5, fig.align="center"}
+```{r stabilize}
 # Use a square root transformation
 transformed <- gamma::stabilize(spc_tka, transformation = sqrt)
 ```
@@ -110,14 +111,11 @@ The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morha
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate the baseline of a single file
-# Default parameters:
-# * The LLS operator is not used,
-# * An increasing clipping window is used,
-# * 100 iterations are performed.
-baseline <- estimateBaseline(smoothed)
+baseline <- estimateBaseline(smoothed, decreasing = TRUE)
 
 # Plot spectrum + baseline
 plot(smoothed, baseline) +
+  ggplot2::labs(title = "Spectrum + baseline") +
   ggplot2::theme_bw()
 ```
 
@@ -129,6 +127,7 @@ corrected <- smoothed - baseline
 
 # Plot the corrected spectrum
 plot(corrected) +
+  ggplot2::labs(title = "Baseline-corrected spectrum") +
   ggplot2::theme_bw()
 ```
 
@@ -141,17 +140,13 @@ clean <- removeBaseline(spc)
 ### Peak detection
 Once you have a baseline-corrected spectrum, you can try to automatically find peaks in the spectrum. A local maximum has to be the highest one in the given window and has to be higher than $k$ times the noise to be recognized as peak.
 
-```{r peak-detection, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
+```{r peak-detection}
 # Detect peaks in a single file
 peaks <- findPeaks(corrected)
 
-# Plot spectrum
-plot(corrected, peaks) +
-  ggplot2::theme_bw()
 ```
 
 ### Energy scale calibration
-#### The careful way
 If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then used to predict the new energy scale of the spectrum.
 
 You can use the results of the peak detection and set the expected energy values.
@@ -164,12 +159,12 @@ scaled <- calibrate(spc_tka, peaks)
 
 # Plot the spectrum (note the top scale)
 plot(scaled) +
-  ggplot2::labs(title = "Calibrated spectra") +
+  ggplot2::labs(title = "Calibrated spectrum") +
   ggplot2::theme_bw()
 ```
 
 Alternatively, you can do it by hand.
-```{r calibrate-fixed, fig.width=7, fig.height=5, fig.align="center"}
+```{r calibrate-fixed}
 # Create a list of chanel-enegy pairs
 # Names are optional, but values must always be set in this order:
 # channel then energy
@@ -183,26 +178,24 @@ calib_lines <- list(
 scaled2 <- calibrate(spc_tka, lines = calib_lines)
 ```
 
-#### The fast way
-If you want to calibrate several spectra at once, you can try the following approach.
-```{r calibrate-multi, fig.width=7, fig.height=5, fig.align="center"}
-# The 'GammaSpectra' class inherits from 'list'
-# You can apply a function over it
-
-# TODO!
-```
-
 ## Use the pipe!
-```{r pipe}
+```{r pipe, fig.width=7, fig.height=5, fig.align="center", fig.show="hold"}
+# Spectrum pre-processing and peak detection
 pks <- spc_tka %>%
   stabilize(transformation = sqrt) %>%
   smooth(method = "savitzky", m = 21) %>%
   removeBaseline(decreasing = TRUE, k = 100) %>%
   findPeaks()
 
+# Set the energy values (in keV)
 setEnergy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
+# Calibrate the energy scale
 cal <- calibrate(spc_tka, pks)
+
+# Plot spectrum
+plot(cal, pks) +
+  ggplot2::theme_bw()
 ```
 
 # Estimate the gamma dose rate
