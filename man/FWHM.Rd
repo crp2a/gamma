@@ -15,10 +15,10 @@ can be provided.}
 \code{x} units.}
 }
 \value{
-A \code{numeric} value.
+A \code{\link{numeric}} value.
 }
 \description{
-Estimates the half-width at half-maximum for a given peak.
+Estimates the Half-Width at Half-Maximum (FWHM) for a given peak.
 }
 \details{
 It tries to get the smallest possible estimate.

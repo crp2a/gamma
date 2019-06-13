@@ -17,7 +17,7 @@ MAD(x, k = 1.4826, na.rm = FALSE)
 A \code{numeric} value.
 }
 \description{
-Calculates the median absolute deviation.
+Calculates the Median Absolute Deviation (MAD).
 }
 \author{
 N. Frerebeau

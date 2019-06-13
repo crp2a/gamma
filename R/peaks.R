@@ -214,7 +214,7 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
 
 #' MAD
 #'
-#' Calculates the median absolute deviation.
+#' Calculates the Median Absolute Deviation (MAD).
 #' @param x A \code{\link{numeric}} vector.
 #' @param k A \code{\link{numeric}} value.
 #' @param na.rm A \code{\link{logical}} scalar.
@@ -227,13 +227,13 @@ MAD <- function(x, k = 1.4826, na.rm = FALSE) {
 
 #' FWHM
 #'
-#' Estimates the half-width at half-maximum for a given peak.
+#' Estimates the Half-Width at Half-Maximum (FWHM) for a given peak.
 #' @param x,y A \code{\link{numeric}} vector giving the \eqn{x} and \eqn{y}
 #'  coordinates of a set of points. Alternatively, a single argument \eqn{x}
 #'  can be provided.
 #' @param center A \code{\link{numeric}} value giving the peak position in
 #'  \code{x} units.
-#' @return A \code{numeric} value.
+#' @return A \code{\link{numeric}} value.
 #' @details
 #'  It tries to get the smallest possible estimate.
 #' @author N. Frerebeau
