@@ -76,6 +76,20 @@ setAs(
 
 # To GammaSpectra ==============================================================
 setAs(
+  from = "list",
+  to = "GammaSpectra",
+  def = function(from) {
+    spc_ref <- make.unique(vapply(
+      X = from,
+      FUN = "[[",
+      FUN.VALUE = character(1),
+      i = "reference"
+    ))
+    names(from) <- spc_ref
+    .GammaSpectra(from)
+  }
+)
+setAs(
   from = "GammaSpectrum",
   to = "GammaSpectra",
   def = function(from) {

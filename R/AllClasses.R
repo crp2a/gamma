@@ -312,9 +312,12 @@ setMethod(
     .Object <- methods::callNextMethod(.Object, ...)
     # Get spectrum references
     spc_list <- .Object@.Data
-    spc_ref <- unlist(lapply(X = spc_list, FUN = "[[", i = "reference")) %>%
-      as.character() %>%
-      make.unique()
+    spc_ref <- make.unique(vapply(
+      X = spc_list,
+      FUN = "[[",
+      FUN.VALUE = character(1),
+      i = "reference"
+    ))
     names(spc_list) <- spc_ref
     .Object@.Data <- spc_list
     methods::validObject(.Object)
