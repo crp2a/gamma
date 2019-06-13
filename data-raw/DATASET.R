@@ -5,4 +5,4 @@ decay <- utils::read.table("./data-raw/decay.csv",
 decay %<>% dplyr::mutate(
   post_radon = as.logical(.data$post_radon)
 )
-usethis::use_data(decay, internal = TRUE)
+usethis::use_data(decay, internal = TRUE, overwrite = FALSE)
