@@ -170,15 +170,13 @@ setValidity(
     if (length(data) != 0) {
       data_class <- unlist(lapply(X = data, FUN = is, class2 = "GammaSpectrum"))
       if (!all(data_class)) {
-        message <- c(
-          message,
-          sprintf("All elements must be of class %s.", sQuote("GammaSpectrum"))
-        )
+        message <- c(message,
+                     "All elements must be of class `GammaSpectrum`.")
       }
     }
 
     if (length(message) != 0) {
-      stop("* ", paste0(message, collapse = "\n  * "))
+      stop("* ", paste0(message, collapse = "\n* "), call. = FALSE)
     } else {
       return(TRUE)
     }
@@ -197,100 +195,67 @@ setValidity(
     message <- c()
 
     if (length(details) != 0) {
-      fields <- c("instrument", "laboratory", "authors", "detector", "date")
-      if (!all(fields %in% names(details))) {
+      if (!("date" %in% names(details))) {
         message <- c(
           message,
-          sprintf("`details` is a list, but does not have components %s.",
-                  paste0(sQuote(fields), collapse = ", "))
+          "Slot `details` is a list, but does not have a component `date`."
         )
       } else {
-        instrument <- details$instrument
-        laboratory <- details$laboratory
-        authors <- details$authors
-        detector <- details$detector
-        date <- details$date
-        if (!is.character(instrument) | length(instrument) > 1) {
-          message <- c(
-            message,
-            sprintf("%s must be a length-one character vector.",
-                    sQuote("instrument"))
-          )
+        if (!methods::is(details$date, "POSIXct")) {
+          message <- c(message, "Slot `date` must be a `POSIXct` object.")
         }
-        if (!is.character(laboratory) | length(laboratory) > 1) {
-          message <- c(
-            message,
-            sprintf("%s must be a length-one character vector.",
-                    sQuote("laboratory"))
-          )
-        }
-        if (!is.character(authors)) {
-          message <- c(message, sprintf("%s must be a character vector.",
-                                        sQuote("authors")))
-        }
-        if (!is.character(detector) | length(detector) > 1) {
-          message <- c(
-            message,
-            sprintf("%s must be a length-one character vector.",
-                    sQuote("detector"))
-          )
-        }
-        if (!methods::is(date, "POSIXct")) {
-          message <- c(message, sprintf("%s must be a %s object.",
-                                        sQuote("date"), sQuote("POSIXct")))
-        }
+      }
+      if (any(lengths(details) != 1)) {
+        message <- c(
+          message,
+          "Slot `details` is a list, but some components are not of length 1."
+        )
       }
     }
     length_noise <- length(noise)
     if (length_noise != 0) {
       if (!isPositive(noise, strict = FALSE)) {
-        message <- c(
-          message,
-          sprintf("%s must be a vector of positive numbers.", sQuote("noise"))
-        )
+        message <- c(message,
+                     "Slot `noise` must be a vector of positive numbers.")
       }
       if (length_noise != 2) {
         message <- c(
           message,
-          sprintf("%s must be a numeric vector of length two, not %d.",
-                  sQuote("noise"), length_noise)
+          sprintf("Slot `noise` must be a numeric vector of length 2, not %d.",
+                  length_noise)
         )
       }
     }
     length_integration <- length(integration)
     if (length_integration != 0) {
       if (!isPositive(integration, strict = FALSE)) {
-        message <- c(
-          message,
-          sprintf("%s must be a vector of positive numbers.",
-                  sQuote("integration"))
-        )
+        message <- c(message,
+                     "Slot `integration` must be a vector of positive numbers.")
       }
       if (length_integration != 2) {
         message <- c(
           message,
-          sprintf("%s must be a numeric vector of length two, not %d.",
-                  sQuote("integration"), length_integration)
+          sprintf("Slot `integration` must be a numeric vector of length 2, not %d.",
+                  length_integration)
         )
       }
     }
     if (length(data) != 0) {
       if (!is.numeric(as.matrix(data[, -1]))) {
-        message <- c(message, sprintf("%s must contain numeric values.",
-                                      sQuote("data")))
+        message <- c(message, "Slot `data` must contain numeric values.")
       }
       ncol_data <- ncol(data)
       if (ncol_data != 5) {
         message <- c(
           message,
-          sprintf("%s must be a five (not %d) columns data.frame.",
-                  sQuote("data"), ncol_data)
+          sprintf("Slot `data` must be a 5 (not %d) columns data.frame.",
+                  ncol_data)
         )
       }
     }
 
     if (length(message) != 0) {
-      stop("* ", paste0(message, collapse = "\n  * "))
+      stop("* ", paste0(message, collapse = "\n* "), call. = FALSE)
     } else {
       return(TRUE)
     }

@@ -79,19 +79,17 @@ test_that("Initialize an empty CalibrationCurve instance", {
   expect_type(calib[["integration"]], "double")
   expect_s3_class(calib[["data"]], "data.frame")
 
-  expect_error(new("CalibrationCurve", details = list(X = "X")),
-               "`details` is a list, but does not have components")
   info_details <- list(
     instrument = LETTERS, laboratory = LETTERS,
     detector = LETTERS, authors = 1:3
   )
   expect_error(new("CalibrationCurve", details = info_details),
-               "must be a length-one character vector")
+               "Slot `details` is a list, but some components are not of length 1.")
 
   expect_error(new("CalibrationCurve", noise = 1:3),
-               "must be a numeric vector of length two, not 3")
+               "Slot `noise` must be a numeric vector of length 2, not 3.")
   expect_error(new("CalibrationCurve", integration = 1:3),
-               "must be a numeric vector of length two, not 3")
+               "Slot `integration` must be a numeric vector of length 2, not 3.")
 })
 test_that("Initialize an empty PeakModel instance", {
   expect_s4_class(new("PeakModel"), "PeakModel")

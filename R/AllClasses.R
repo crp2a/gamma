@@ -196,7 +196,13 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
     data = "data.frame"
   ),
   prototype = list(
-    details = list(),
+    details = list(
+      laboratory = "unknown",
+      instrument = "unknown",
+      detector = "unknown",
+      authors = "unknown",
+      date = Sys.time()
+    ),
     model = NULL,
     noise = numeric(0),
     integration = numeric(0),
@@ -299,6 +305,8 @@ setMethod(
     calibration = .Object@calibration
   ) {
 
+    if (length(date) == 0)
+      date <- Sys.time()
     if (length(rate) == 0 && length(counts) > 0 && length(live_time) == 1)
       rate <- counts / live_time
 
@@ -337,17 +345,7 @@ setMethod(
   signature = "CalibrationCurve",
   definition = function(.Object, details, model, noise, integration, data) {
 
-    info <- list(
-      laboratory = character(0), instrument = character(0),
-      detector = character(0), authors = character(0)
-    )
-    if (!missing(details)) {
-      if (is.list(details) & length(details) != 0) {
-        info_fields <- c("laboratory", "instrument", "detector", "authors")
-        k <- which(names(details) %in% info_fields)
-        info <- details[k]
-      }
-    }
+    if (!missing(details)) info <- details else info <- list()
     info$date <- Sys.time()
     .Object@details <- info
     if (!missing(model)) .Object@model <- model
