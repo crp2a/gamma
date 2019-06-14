@@ -1,18 +1,11 @@
 context("Dose rate")
+data("clermont")
 
 test_that("Get and set dose rate", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir)
 
-  dose_rate1 <- list(
-    BRIQUE = c(value = 1986, error = 36),
-    C341 = c(850, 21),
-    C347 = c(1424, 24),
-    GOU = c(1575, 17),
-    LMP = c(642, 18),
-    MAZ = c(1141, 12),
-    PEP = c(2538, 112)
-  )
+  dose_rate1 <- clermont[, c("gamma", "gamma_error")]
 
   setDoseRate(spectra[["BRIQUE"]]) <- c(1986, 36)
   setDoseRate(spectra[["C341"]]) <- c(850, 21)
@@ -23,60 +16,14 @@ test_that("Get and set dose rate", {
   setDoseRate(spectra[["PEP"]]) <- c(2538, 112)
 
   expect_output(show(spectra[["BRIQUE"]]), "Dose rate: 1986 \\+/- 36")
-  expect_identical(getDoseRate(spectra), do.call(rbind, dose_rate1))
 
-  dose_rate2 <- list(
-    c(1986, 36, 5),
-    c(850, 21),
-    c(1575, 17),
-    c(2538, 112)
-  )
-  dose_rate3 <- list(
-    c(1986, 36),
-    c(850, 21),
-    c(1575, 17),
-    c(2538, 112)
-  )
-  dose_rate4 <- list(
-    AA = c(1986, 36),
-    BB = c(850, 21),
-    CC = c(1424, 24),
-    DD = c(1575, 17),
-    EE = c(2538, 112)
-  )
-  dose_rate5 <- list(
-    c(1986, 36),
-    c(850, 21),
-    c(1424, 24),
-    c(1575, 17),
-    c(642, 18),
-    c(1141, 12),
-    c(2538, 112)
-  )
-
-  expect_error(setDoseRate(spectra) <- 1:7,
-               "`value` must be a list.")
-  expect_error(setDoseRate(spectra) <- dose_rate2,
-               "`value` must be a list of length-two numeric vectors.")
-  expect_error(setDoseRate(spectra) <- dose_rate3,
-               "`value` must be of length 7")
-  expect_error(setDoseRate(spectra) <- dose_rate4,
-               "Names of `value` do not match.")
-  expect_invisible(setDoseRate(spectra) <- dose_rate5)
+  expect_invisible(setDoseRate(spectra) <- dose_rate1)
 })
 test_that("Build calibration curve", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir, skip = TRUE)
 
-  setDoseRate(spectra) <- list(
-    BRIQUE = c(1986, 36),
-    C341 = c(850, 21),
-    C347 = c(1424, 24),
-    GOU = c(1575, 17),
-    LMP = c(642, 18),
-    MAZ = c(1141, 12),
-    PEP = c(2538, 112)
-  )
+  setDoseRate(spectra) <- clermont[, c("gamma", "gamma_error")]
 
   # Fit with intercept
   calib1 <- fit(
@@ -124,15 +71,7 @@ test_that("Estimate dose rate", {
   bdf_dir <- system.file("extdata/crp2a/background", package = "gamma")
   bdf <- read(bdf_dir, skip = TRUE)
 
-  setDoseRate(spectra) <- list(
-    BRIQUE = c(1986, 36),
-    C341 = c(850, 21),
-    C347 = c(1424, 24),
-    GOU = c(1575, 17),
-    LMP = c(642, 18),
-    MAZ = c(1141, 12),
-    PEP = c(2538, 112)
-  )
+  setDoseRate(spectra) <- clermont[, c("gamma", "gamma_error")]
   noise <- integrateSignal(bdf, range = c(200, 2800))
   calib1 <- fit(
     spectra, noise = noise, range = c(200, 2800),

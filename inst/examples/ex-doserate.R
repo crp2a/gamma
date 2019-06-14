@@ -3,15 +3,8 @@ spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 spc_calib <- read(spc_dir, skip = TRUE)
 
 # Set dose rate values and errors for each spectrum
-setDoseRate(spc_calib) <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  LMP = c(642, 18),
-  MAZ = c(1141, 12),
-  PEP = c(2538, 112)
-)
+data("clermont")
+setDoseRate(spc_calib) <- clermont[, c("gamma", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit(

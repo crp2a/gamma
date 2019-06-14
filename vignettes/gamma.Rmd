@@ -219,15 +219,8 @@ noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 noise_spc <- read(noise_dir, skip = TRUE)
 
 # Set the known dose rates
-setDoseRate(calib_spc) <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  LMP = c(642, 18),
-  MAZ = c(1141, 12),
-  PEP = c(2538, 112)
-)
+data("clermont")
+setDoseRate(calib_spc) <- clermont[, c("gamma", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit(

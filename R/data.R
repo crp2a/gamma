@@ -26,6 +26,15 @@
 "decay"
 
 # ==============================================================================
+#' Clermont Reference Data
+#'
+#' @format TODO
+#' @source
+#'  Miallier, D., Guérin, G., Mercier, N., Pilleyre, T. & Sanzelle, S.
+#'  (2009). The Clermont Radiometric Reference Rocks: A Convenient Tool
+#'  for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.
+"clermont"
+
 #' CEREGE Calibration Curve #1
 #'
 #' @details
