@@ -17,7 +17,8 @@
 which to look for variables with which to predict. If omitted, the fitted
 values are used.}
 
-\item{epsilon}{A \code{\link{numeric}} value.}
+\item{epsilon}{A \code{\link{numeric}} value giving the error introduced by
+the energy calibration of the spectrum.}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be
 simplified to a matrix? If \code{FALSE} (default), returns a list.}

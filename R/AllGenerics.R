@@ -172,7 +172,8 @@ setGeneric(
 #' @param spectra An optional \linkS4class{GammaSpectra} object in
 #'  which to look for variables with which to predict. If omitted, the fitted
 #'  values are used.
-#' @param epsilon A \code{\link{numeric}} value.
+#' @param epsilon A \code{\link{numeric}} value giving the error introduced by
+#'  the energy calibration of the spectrum.
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.

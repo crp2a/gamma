@@ -30,6 +30,9 @@
 #'
 #' @format TODO
 #' @source
+#'  Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
+#'  Update. \emph{Ancient TL}, 29(1), p. 5-8.
+#'
 #'  Miallier, D., Guérin, G., Mercier, N., Pilleyre, T. & Sanzelle, S.
 #'  (2009). The Clermont Radiometric Reference Rocks: A Convenient Tool
 #'  for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.

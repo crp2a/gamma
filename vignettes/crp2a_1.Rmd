@@ -324,8 +324,9 @@ cowplot::plot_grid(
 # Data from the VBA macro in use in the laboratory
 signal_old <- data.frame(
   signal_value = c(
-    BRIQUE = 64071.59, C347 = 46580.21, C341 = 27974.89, PEP = 80121.52,
-    LMP = 21227.36, MAZ = 38008.82, GOU = 52645.12
+    BRIQUE = 64071.58877, C347 = 46580.21115, C341 = 27974.88571, 
+    PEP = 80121.51546, LMP = 21227.36116, MAZ = 38008.81789, 
+    GOU = 52645.11600
   ),
   signal_error = c(
     BRIQUE = 4.59247, C347 = 14.29817, C341 = 10.44644, PEP = 20.39077,
@@ -334,8 +335,8 @@ signal_old <- data.frame(
   reference = c("BRIQUE", "C347", "C341", "PEP", "LMP", "MAZ", "GOU")
 )
 calib_old <- merge(clermont, signal_old, by = "reference")
-
 # fit <- lm(signal_value ~ gamma, data = calib_old)
+# Slope: 31.16884 / Intercept: 2006.62935
 fit <- lm(gamma ~ signal_value, data = calib_old)
 summary(fit)
 ```

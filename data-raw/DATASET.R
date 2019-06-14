@@ -1,6 +1,7 @@
 library(magrittr)
 
 # Milieux Clermont =============================================================
+# Conversion factors from Guérin et al. 2011
 clermont <- utils::read.table("./data-raw/clermont.csv",
                               header = TRUE, sep = ",", dec = ".") %>%
   dplyr::mutate(
