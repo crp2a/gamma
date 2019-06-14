@@ -57,7 +57,8 @@ setMethod(
   definition = function(object) {
     if (length(object@model) != 0) {
       sum_up <- summary(object@model)
-      coef <- round(sum_up$coef, 3)
+      coef <- round(sum_up$coef, 5)
+      fstat <- round(sum_up$fstatistic, 0)
       if (nrow(coef) > 1) {
         intercept <- paste(coef[1, 1], "+/-", coef[1, 2], sep = " ")
         slope <- paste(coef[2, 1], "+/-", coef[2, 2], sep = " ")
@@ -66,18 +67,14 @@ setMethod(
         slope <- paste(coef[1], "+/-", coef[2], sep = " ")
       }
       cat("Calibration curve:\n",
-          "  Details:\n",
-          "  - Laboratory:", object@details$laboratory, "\n",
-          "  - Instrument:", object@details$instrument, "\n",
-          "  - Detector:", object@details$detector, "\n",
-          "  - Authors:", object@details$authors, "\n",
-          "  - Date:", as.character(object@details$date), "\n",
+          "  Date:", as.character(object@details$date), "\n",
           "  Model summary:\n",
           "  - Slope:", slope, "\n",
           "  - Intercept:", intercept, "\n",
           "  - Residual standard error:", round(sum_up$sigma, 2), "\n",
           "  - Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
           "  - Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
+          "  - F-statistic:", fstat[[1]], "on", fstat[[2]], "and", fstat[[3]], "DF",
           sep = " ")
     } else {
       cat("Calibration curve: no model.\n",
