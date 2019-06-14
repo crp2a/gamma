@@ -23,6 +23,9 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   message = FALSE,
+  fig.width = 7,
+  fig.height = 5,
+  fig.align = "center",
   comment = "#>"
 )
 library(gamma)
@@ -43,7 +46,7 @@ noise_dir <- system.file("extdata/cerege/background", package = "gamma")
 ```
 
 ## Inspect spectra
-```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
+```{r inspect}
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "Calibration spectra") +
@@ -57,7 +60,7 @@ plot(noise_spc) +
 
 ## Energy scale calibration
 ### Reference spectra
-Energies in keV (expected chanel):
+Lines used for energy scale calibration (in keV):
 
 * Pb212: 238 (85)
 * K40: 1461 (495)
@@ -129,7 +132,7 @@ PEP <- calibrate(calib_spc[["PEP"]], pks)
 ```
 
 #### Inspect results
-```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
+```{r calib-scale}
 # Energy scale calibration
 calib_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
 calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
@@ -140,13 +143,7 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 ```
 
 ### Background noise spectrum
-```{r calibrate-noise, fig.width=7, fig.height=5, fig.align="center"}
-# noise_spc %>%
-#   stabilize(transformation = sqrt) %>%
-#   smooth(method = "savitzky", m = 21) %>%
-#   removeBaseline(decreasing = TRUE, k = 100) %>%
-#   findPeaks()
-
+```{r calibrate-noise}
 noise_lines <- list(
   Pb212 = c(chanel = 86, energy = 238),
   K40 = c(chanel = 496, energy = 1461),
@@ -174,11 +171,6 @@ noise <- integrateSignal(
   range = integration_range,
   NiEi = TRUE
 )
-knitr::kable(
-  rbind(noise),
-  digits = 3,
-  caption = "Background spectrum integration"
-)
 
 # Integrate reference spectra
 signal <- integrateSignal(
@@ -188,23 +180,21 @@ signal <- integrateSignal(
   NiEi = TRUE,
   simplify = TRUE
 )
+```
+
+```{r integrate-results, echo=FALSE}
 knitr::kable(
-  signal,
+  rbind(rbind(noise), signal),
   digits = 3,
-  caption = "Reference spectra integration"
+  caption = "Spectra integration"
 )
 ```
 
 ## Build Calibration curve
 ### Set dose rates
 ```{r dose_rate}
-setDoseRate(calib_scaled) <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  PEP = c(2538, 112)
-)
+data("clermont")
+setDoseRate(calib_scaled) <- clermont[, c("gamma", "gamma_error")]
 
 getDoseRate(calib_scaled)
 ```
@@ -295,32 +285,23 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
   ggplot2::labs(title = "Cook's distance",
                 x = "Observation", y = "D")
 
-# Relative error on dose rate estimation
-dose_predict <- predict(AIX1, epsilon = 0.03, simplify = TRUE) %>%
-  as.data.frame() %>%
-  dplyr::transmute(reference = rownames(.),
-                   pred_value = value, 
-                   pred_error = error)
-
-dose_known <- getDoseRate(calib_scaled) %>%
-  as.data.frame() %>%
-  dplyr::transmute(reference = rownames(.),
-                   exp_value = value,
-                   exp_error = error)
-
-dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
-  dplyr::mutate(rel_error = ((pred_value - exp_value) / exp_value) * 100)
-
-plot_errors <- ggplot2::ggplot(dose_errors, 
-                               ggplot2::aes(x = reference, y = rel_error)) +
-  ggplot2::geom_col() +
-  ggplot2::labs(title = "Relative error on fitted values",
-                x = "Reference", y = "Relative error [%]") +
-  ggplot2::theme_bw()
-
 cowplot::plot_grid(
   plot_res, plot_stdres, plot_cook, plot_qq,
   ncol = 2, labels = "AUTO"
+)
+```
+
+```{r test-old-compare, echo=FALSE}
+criteria <- data.frame(
+  AIC = c(stats::AIC(AIX1[["model"]])),
+  BIC = c(stats::BIC(AIX1[["model"]])),
+  row.names = c("AIX1")
+)
+
+knitr::kable(
+  criteria,
+  digits = 3,
+  caption = "Information Criterion"
 )
 ```
 

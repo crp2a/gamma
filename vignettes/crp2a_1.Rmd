@@ -23,6 +23,9 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   message = FALSE,
+  fig.width = 7,
+  fig.height = 5,
+  fig.align = "center",
   comment = "#>"
 )
 library(gamma)
@@ -43,7 +46,7 @@ noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
 ```
 
 ## Inspect spectra
-```{r inspect, fig.width=7, fig.height=5, fig.align="center"}
+```{r inspect}
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "Reference spectra") +
@@ -57,11 +60,11 @@ plot(noise_spc) +
 
 ## Energy scale calibration
 ### Reference spectra
-Energies in keV (expected chanel):
+Lines used for energy scale calibration (in keV):
 
-* Pb212: 238 (75)
-* K40: 1461 (465)
-* Tl208: 2615 (829)
+* Pb212: 238
+* K40: 1461
+* Tl208: 2615
 
 #### BRIQUE
 ```{r calib-BRIQUE}
@@ -155,7 +158,7 @@ PEP <- calibrate(calib_spc[["PEP"]], pks)
 ```
 
 #### Inspect results
-```{r calib-scale, fig.width=7, fig.height=5, fig.align="center"}
+```{r calib-scale}
 # Energy scale calibration
 calib_scaled <- list(BRIQUE, C341, C347, GOU, LMP, MAZ, PEP)
 calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
@@ -166,7 +169,7 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 ```
 
 ### Background noise spectrum
-```{r calibrate-noise, fig.width=7, fig.height=5, fig.align="center"}
+```{r calibrate-noise}
 noise_lines <- list(
   La138 = c(chanel = 251, energy = 789),
   K40 = c(chanel = 460, energy = 1461),
@@ -189,16 +192,11 @@ integration_range <- c(165, 2800)
 ### Integrate
 ```{r integrate-norm}
 # Integrate background noise
-# Compare with previous value of 25279.63 +/- 1.66
+# Compare with previous value of 25279.63171 +/- 1.66235
 noise <- integrateSignal(
   noise_scaled,
   range = integration_range,
   NiEi = TRUE
-)
-knitr::kable(
-  rbind(noise),
-  digits = 3,
-  caption = "Background spectrum integration"
 )
 
 # Integrate reference spectra
@@ -209,31 +207,27 @@ signal <- integrateSignal(
   NiEi = TRUE,
   simplify = TRUE
 )
+```
+
+```{r integrate-results, echo=FALSE}
 knitr::kable(
-  signal,
+  rbind(rbind(noise), signal),
   digits = 3,
-  caption = "Reference spectra integration"
+  caption = "Spectra integration"
 )
 ```
 
 ## Build Calibration curve
 ### Set dose rates
 ```{r dose_rate}
-setDoseRate(calib_scaled) <- list(
-  BRIQUE = c(1986, 36),
-  C341 = c(850, 21),
-  C347 = c(1424, 24),
-  GOU = c(1575, 17),
-  LMP = c(642, 18),
-  MAZ = c(1141, 12),
-  PEP = c(2538, 112)
-)
+data("clermont")
+setDoseRate(calib_scaled) <- clermont[, c("gamma", "gamma_error")]
 
 getDoseRate(calib_scaled)
 ```
 
 ### Linear regression
-```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
+```{r calibration}
 # Build calibration curve
 (BDX1 <- fit(
   calib_scaled,
@@ -263,13 +257,14 @@ usethis::use_data(BDX1, overwrite = FALSE)
 summary(BDX1[["model"]])
 ```
 
-```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
+```{r lm-check, echo=FALSE}
 calib_residuals <- data.frame(
   reference = BDX1[["data"]]$reference,
   fitted = BDX1[["model"]]$fitted.values,
   residuals = BDX1[["model"]]$residuals,
   standardized = stats::rstandard(BDX1[["model"]]),
-  cook = stats::cooks.distance(BDX1[["model"]])
+  cook = stats::cooks.distance(BDX1[["model"]]),
+  stringsAsFactors = FALSE
 )
 
 # Residuals vs fitted values
@@ -318,29 +313,6 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
   ggplot2::labs(title = "Cook's distance",
                 x = "Observation", y = "D")
 
-# Relative error on dose rate estimation
-dose_predict <- predict(BDX1, epsilon = 0.03, simplify = TRUE) %>%
-  as.data.frame() %>%
-  dplyr::transmute(reference = rownames(.),
-                   pred_value = value, 
-                   pred_error = error)
-
-dose_known <- getDoseRate(calib_scaled) %>%
-  as.data.frame() %>%
-  dplyr::transmute(reference = rownames(.),
-                   exp_value = value, 
-                   exp_error = error)
-
-dose_errors <- merge(dose_predict, dose_known, by = "reference") %>%
-  dplyr::mutate(rel_error = ((pred_value - exp_value) / exp_value) * 100)
-
-plot_errors <- ggplot2::ggplot(dose_errors, 
-                               ggplot2::aes(x = reference, y = rel_error)) +
-  ggplot2::geom_col() +
-  ggplot2::labs(title = "Relative error on fitted values",
-                x = "Reference", y = "Relative error [%]") +
-  ggplot2::theme_bw()
-
 cowplot::plot_grid(
   plot_res, plot_stdres, plot_cook, plot_qq,
   ncol = 2, labels = "AUTO"
@@ -348,83 +320,39 @@ cowplot::plot_grid(
 ```
 
 ## Compare with previous values
-```{r test-import}
-# Import CNF files for calibration
-# Skip the 30 first chanels
-test_dir <- system.file("extdata/crp2a/test", package = "gamma")
-(test_spc <- read(test_dir, skip = TRUE))
-```
-
-```{r test-calibrate, fig.width=7, fig.height=5, fig.align="center"}
-# Peak parameters estimation
-# Fit peaks at chanel 75, 463, 825 (starting positions)
-# (expected energy: 238, 1461, 2615 keV)
-test_peaks <- lapply(
-  X = test_spc, 
-  FUN = fitPeaks, 
-  peaks = c(75, 463, 825),
-  bounds = c(0.5)
+```{r test-old-data}
+# Data from the VBA macro in use in the laboratory
+signal_old <- data.frame(
+  signal_value = c(
+    BRIQUE = 64071.59, C347 = 46580.21, C341 = 27974.89, PEP = 80121.52,
+    LMP = 21227.36, MAZ = 38008.82, GOU = 52645.12
+  ),
+  signal_error = c(
+    BRIQUE = 4.59247, C347 = 14.29817, C341 = 10.44644, PEP = 20.39077,
+    LMP = 10.12118, MAZ = 11.45285, GOU = 12.43433
+  ),
+  reference = c("BRIQUE", "C347", "C341", "PEP", "LMP", "MAZ", "GOU")
 )
-# Expected energies (keV)
-expected_peaks <- c(Pb212 = 238, K40 = 1461, Tl208 = 2615)
+calib_old <- merge(clermont, signal_old, by = "reference")
 
-# Energy scale calibration
-test_scaled <- lapply(X = test_peaks, FUN = calibrate,  lines = expected_peaks)
-test_scaled <- methods::as(test_scaled, "GammaSpectra")
-
-plot(test_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = expected_peaks, linetype = 3) +
-  ggplot2::theme_bw()
+# fit <- lm(signal_value ~ gamma, data = calib_old)
+fit <- lm(gamma ~ signal_value, data = calib_old)
+summary(fit)
 ```
 
-```{r test-dose, fig.width=7, fig.height=5, fig.align="center"}
-# Estimate the gamma dose rate
-test_dose <- predict(BDX1, test_scaled, simplify = TRUE)
-```
+The smaller the AIC or BIC, the better the fit:
+```{r test-old-compare, echo=FALSE}
+criteria <- data.frame(
+  AIC = c(stats::AIC(BDX1[["model"]]), stats::AIC(fit)),
+  BIC = c(stats::BIC(BDX1[["model"]]), stats::BIC(fit)),
+  row.names = c("New curve (BDX1)", "Old curve (VBA macro)")
+)
 
-```{r test-dose-table, echo=FALSE}
 knitr::kable(
-  test_dose,
+  criteria,
   digits = 3,
-  col.names = c("Dose", "Dose error"),
-  caption = "Gamma dose rate estimates"
+  caption = "Information Criterion"
 )
-```
-
-```{r integrate-diff, echo=FALSE, fig.width=5, fig.height=3.5, fig.align="center"}
-# Results from the VBA macro in use in the laboratory
-test_diff <- test_dose %>%
-  as.data.frame() %>%
-  dplyr::mutate(
-  #   signal_old = c(13491.21, 9482.82, 9398.50, 7695.64, 48385.39, 15836.60,
-  #                  14668.34, 14446.89, 12078.79, 10786.86),
-    reference = rownames(.),
-    dose_old = c(405, 279, 276, 223, 1500, 478, 442, 435, 360, 320)) %>%
-  dplyr::mutate(dose_diff = ((value - dose_old) / dose_old) * 100)
-
-# plot_signal <- ggplot2::ggplot(
-#   data = test_diff,
-#   mapping = ggplot2::aes(x = reference, y = signal_diff)) +
-#   ggplot2::geom_col() +
-#   ggplot2::labs(title = "Spectrum integration",
-#                 x = "Reference", y = "Relative difference [%]") +
-#   ggplot2::theme_bw() +
-#   ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
-
-plot_dose <- ggplot2::ggplot(
-  data = test_diff,
-  mapping = ggplot2::aes(x = reference, y = dose_diff)) +
-  ggplot2::geom_col() +
-  ggplot2::labs(title = "Gamma dose rate",
-                x = "Reference", y = "Relative difference [%]") +
-  ggplot2::theme_bw() +
-  ggplot2::theme(axis.text.x = ggplot2::element_text(vjust = 0.5, angle = 90))
-plot_dose
-
-# cowplot::plot_grid(
-#   plot_signal, plot_dose,
-#   ncol = 2, labels = "AUTO"
-# )
 ```
 
 ## R session
