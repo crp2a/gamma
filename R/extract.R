@@ -132,33 +132,24 @@ setMethod(
   f = "setDoseRate<-",
   signature = "GammaSpectra",
   definition = function(object, value) {
-    # Validation
-    if (!is.list(value))
-      stop("`value` must be a list.", call. = FALSE)
-    length_value <- length(value)
-    length_object <- length(object)
-    if (any(lengths(value) != rep(2, length_value)))
-      stop("`value` must be a list of length-two numeric vectors.",
-           call. = FALSE)
 
-    names_doses <- names(value)
     names_object <- names(object)
-    if (is.null(names_doses)) {
-      if (length_value != length_object) {
-        stop(sprintf("`value` must be of length %d (not %d), ",
-                     length_object, length_value),
-             "otherwise each element of `value` must be named.", call. = FALSE)
-      } else {
-        mapply(FUN = methods::`slot<-`, object = object, value = value,
-               MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
+
+    if (is.matrix(value) || is.data.frame(value)) {
+      names_doses <- rownames(value)
+      if (length(names_doses) != 0) {
+        index <- stats::na.omit(match(names_object, names_doses))
+        if (length(index) == 0)
+          stop("Names of `value` do not match.", call. = FALSE)
+        value <- value[index, ]
+        names_doses <- names_doses[index]
       }
-    } else {
-      sub_object <- object[names_doses]
-      if (length(sub_object) == 0)
-        stop("Names of `value` do not match.", call. = FALSE)
-      mapply(FUN = methods::`slot<-`, object = sub_object, value = value,
-             MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
+      doses_ls <- split(x = value, f = names_doses)
+      doses_num <- lapply(X = doses_ls, FUN = as.numeric)
     }
+
+    mapply(FUN = methods::`slot<-`, object = object, value = doses_num,
+             MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
 
     methods::validObject(object)
     object
