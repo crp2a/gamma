@@ -60,7 +60,8 @@ Suggests:
     cowplot,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    vdiffr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
@@ -71,8 +72,7 @@ Collate:
     'AllGenerics.R'
     'operators.R'
     'baseline.R'
-    'calibrate-functions.R'
-    'calibrate-methods.R'
+    'calibrate.R'
     'coerce.R'
     'data.R'
     'extract.R'
@@ -84,8 +84,8 @@ Collate:
     'predict.R'
     'read.R'
     'show.R'
-    'simulate-methods.R'
+    'simulate.R'
     'smooth.R'
-    'stabilize-methods.R'
+    'stabilize.R'
     'utilities.R'
     'validate.R'
