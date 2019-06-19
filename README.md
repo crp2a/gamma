@@ -8,13 +8,18 @@ status](https://ci.appveyor.com/api/projects/status/h7jjppg72oiq9pnf/branch/mast
 [![Travis build
 Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
-[![GitHub
-Release](https://img.shields.io/github/release/crp2a/gamma.svg)](https://github.com/crp2a/gamma/releases)
-[![CRAN
-Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
-[![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
+
+<!-- CRAN badges
+[![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
+[![CRAN checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
+-->
+
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 
 ## Overview
@@ -45,6 +50,7 @@ utils::vignette("gamma", package = "gamma")
 ``` r
 # A minimal example
 # You may want to give extra attention to the energy calibration step
+library(magrittr)
 
 ## Set the expected chanel/energy peaks for the energy scale calibration
 calib_lines <- list(
@@ -66,8 +72,8 @@ spectrum %>%
   gamma::read(skip = TRUE) %>%
   gamma::calibrate(lines = calib_lines) %>%
   gamma::predict(BDX1, ., simplify = TRUE)
-#>           value    error
-#> test_CNF 3971.7 129.7577
+#>             value    error
+#> test_CNF 3920.904 130.9033
 ```
 
 ## Contributing
