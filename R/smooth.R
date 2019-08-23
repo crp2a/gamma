@@ -1,7 +1,21 @@
-# SMOOTH SIGNAL
+# SIGNAL PROCESSING
 #' @include AllGenerics.R
 NULL
 
+# TRANSFORM INTENSITY ==========================================================
+#' @export
+#' @rdname stabilize
+#' @aliases stabilize,GammaSpectrum-method
+setMethod(
+  f = "stabilize",
+  signature = signature(object = "GammaSpectrum"),
+  definition = function(object, transformation, ...) {
+    count <- transformation(object@counts, ...)
+    methods::initialize(object, counts = count)
+  }
+)
+
+# SMOOTH SIGNAL ================================================================
 #' @export
 #' @rdname smooth
 #' @aliases smooth,GammaSpectra-method
@@ -25,7 +39,7 @@ setMethod(
 
 #' @export
 #' @rdname smooth
-#' @aliases smooth,GammaSpectrum-method
+#' @aliases smooth,smooth-method
 setMethod(
   f = "smooth",
   signature = signature(object = "GammaSpectrum"),
@@ -44,9 +58,9 @@ setMethod(
     # Smooth
     z <- switch (
       method,
-      unweighted = smoothRectangular(y, m),
-      weighted = smoothTriangular(y, m),
-      savitzky = smoothSavitzky(y, m, p),
+      unweighted = smooth_rectangular(y, m),
+      weighted = smooth_triangular(y, m),
+      savitzky = smooth_savitzky(y, m, p),
       stop(sprintf("There is no such method: '%s'.", method), call. = FALSE)
     )
 
@@ -61,7 +75,8 @@ setMethod(
 #'  points to use.
 #' @return A \code{\link{numeric}} vector of the same length as \code{x}.
 #' @keywords internal
-smoothRectangular <- function(x, m) {
+#' @noRd
+smooth_rectangular <- function(x, m) {
   # Index
   k <- (m - 1) / 2
   index_k <- seq_len(k)
@@ -87,7 +102,8 @@ smoothRectangular <- function(x, m) {
 #'  points to use.
 #' @return A \code{\link{numeric}} vector of the same length as \code{x}.
 #' @keywords internal
-smoothTriangular <- function(x, m) {
+#' @noRd
+smooth_triangular <- function(x, m) {
   # Index
   k <- (m - 1) / 2
   index_k <- seq_len(k)
@@ -108,20 +124,20 @@ smoothTriangular <- function(x, m) {
 }
 #' Savitzky-Golay Filter
 #'
-#' \code{smoothSavitzky} smoothes the data using the Savitzky-Golay filter.
-#' \code{coefficientSavitzky} computes the Savitzky-Golay convolution
-#' coefficients.
+#' \code{smooth_savitzky} smoothes the data using the Savitzky-Golay filter.
+#' \code{coef_savitzky} computes the Savitzky-Golay convolution coefficients.
 #' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
 #' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
 #'  points to use.
 #' @param p An \code{\link{integer}} scalar giving the polynomial degree.
 #' @return A \code{\link{numeric}} vector.
 #' @keywords internal
-smoothSavitzky <- function(x, m, p = 2) {
+#' @noRd
+smooth_savitzky <- function(x, m, p = 2) {
   k <- (m - 1) / 2
   i <- seq(from = -k, to = k, by = 1)
-  j <- seq_along(x) %>% utils::tail(n = -k) %>% utils::head(n = -k)
-  conv <- coefficientSavitzky(m, p)
+  j <- utils::head(utils::tail(seq_along(x), n = -k), n = -k)
+  conv <- coef_savitzky(m, p)
 
   smoothed <- vapply(
     X = j,
@@ -136,9 +152,10 @@ smoothSavitzky <- function(x, m, p = 2) {
   x[j] <- smoothed
   x
 }
-#' @rdname smoothSavitzky
+#' @rdname smooth_savitzky
 #' @keywords internal
-coefficientSavitzky <- function(m, p = 2) {
+#' @noRd
+coef_savitzky <- function(m, p = 2) {
   k <- (m - 1) / 2
   z <- seq(from = -k, to = k, by = 1)
   J <- vapply(X = c(0, p), FUN = function(p, z) z^p, z, FUN.VALUE = double(m))

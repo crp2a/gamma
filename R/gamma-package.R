@@ -3,7 +3,6 @@
 #'  \strong{Package:} \tab gamma \cr
 #'  \strong{Type:} \tab Package \cr
 #'  \strong{Version:} \tab 0.1.1 \cr
-#'  \strong{Date:} \tab 2019-06-06 \cr
 #'  \strong{License:} \tab GPL-3 \cr
 #'  \strong{DOI:} \tab \href{https://doi.org/10.5281/zenodo.2652393}{10.5281/zenodo.2652393}
 #' }
@@ -40,11 +39,5 @@
 
 #' @importFrom methods new
 #' @importFrom graphics plot
-#' @importFrom magrittr %<>%
-#' @importFrom magrittr %>%
 #' @importFrom rlang .data
 NULL
-
-# Quiets concerns of R CMD check: the .'s that appear in pipelines
-# See https://github.com/tidyverse/magrittr/issues/29
-if(getRversion() >= "2.15.1") utils::globalVariables(c("."))

@@ -10,7 +10,8 @@ setMethod(
   signature = signature(file = "character"),
   definition = function(file, extensions = c("cnf", "tka"), skip = NULL, ...) {
     # Validation
-    extensions <- match.arg(extensions, several.ok = TRUE) %>% c(., toupper(.))
+    extensions <- match.arg(extensions, several.ok = TRUE)
+    extensions <- c(extensions, toupper(extensions))
 
     # If input is a directory and not a single file
     # Then, look for all files with allowed extensions
@@ -78,10 +79,10 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
   real_time <- as.numeric(spc_meta[6, 2])
 
   # Get data
-  spc_data <- spc_xy$dataset[[1]]$data_block %>%
-    as.data.frame() %>%
-    dplyr::mutate(chanel = dplyr::row_number()) %>%
-    magrittr::set_colnames(c("energy", "counts", "chanel"))
+  spc_data <- as.data.frame(spc_xy$dataset[[1]]$data_block)
+  # Add a column to store the chanel number
+  spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
+  colnames(spc_data) <- c("energy", "counts", "chanel")
 
   # Skip chanels
   if(!is.null(skip)) {
@@ -127,10 +128,12 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
   instrument_name <- "unknown"
 
   # Get data
-  spc_data <- data.frame(count = as.numeric(spc_xy[, 1])) %>%
-    magrittr::inset(c(1, 2), 1, c(0, 0)) %>%
-    dplyr::mutate(chanel = dplyr::row_number()) %>%
-    magrittr::set_colnames(c("counts", "chanel"))
+  spc_data <- data.frame(count = as.numeric(spc_xy[, 1]))
+  # Remove the first two value (live time and real time)
+  spc_data[c(1, 2), 1] <- c(0, 0)
+  # Add a column to store the chanel number
+  spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
+  colnames(spc_data) <- c("counts", "chanel")
 
   # Skip chanels
   if(!is.null(skip)) {

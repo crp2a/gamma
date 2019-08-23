@@ -26,7 +26,8 @@ setMethod(
     # Nombre de désintégration par seconde
     D <- (mass * abundance * avogadro / M) * activity
 
-    chain <- decay[["decay_chain"]] %>% factor(., levels = unique(.))
+    chain <- factor(decay[["decay_chain"]],
+                    levels = unique(decay[["decay_chain"]]))
     k <- mapply(
       FUN = function(energy, count) {
         energy * count

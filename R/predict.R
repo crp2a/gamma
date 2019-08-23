@@ -27,12 +27,11 @@ setMethod(
         }
       }
       # Integrate spectra
-      new_data <- integrateSignal(spectra, range = int_range, noise = noise) %>%
-        do.call(rbind, .) %>%
-        as.data.frame() %>%
-        dplyr::transmute(reference = rownames(.),
-                         signal_value = .data$value,
-                         signal_error = .data$error)
+      new_data <- integrateSignal(spectra, range = int_range, noise = noise,
+                                  simplify = TRUE)
+      new_data <- cbind.data.frame(new_data, rownames(new_data),
+                                   stringsAsFactors = FALSE)
+      colnames(new_data) <- c("signal_value", "signal_error", "reference")
     }
 
     # Get linear regression results

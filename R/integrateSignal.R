@@ -75,7 +75,7 @@ setMethod(
                         noise = "missing"),
   definition = function(object, range, NiEi = TRUE, ...) {
     # Validation
-    if (!is.numeric(range) | length(range) != 2)
+    if (!is.numeric(range) || length(range) != 2)
       stop(sprintf("`range` must be a numeric vector of length two, not %d",
                    length(range)), call. = FALSE)
     if (length(object@energy) == 0)
@@ -114,7 +114,7 @@ setMethod(
                         noise = "numeric"),
   definition = function(object, range, noise, NiEi = TRUE, ...) {
     # Validation
-    if (!is.numeric(noise) | length(noise) != 2)
+    if (!is.numeric(noise) || length(noise) != 2)
       stop(sprintf("`noise` must be a numeric vector of length two, not %d",
                    length(noise)), call. = FALSE)
 

@@ -156,13 +156,12 @@ setMethod(
       data = spc_df[, "chanel"]
     )
 
-    # Build long table for ggplot2
-    spc_long <- do.call(cbind, fit) %>%
-      as.data.frame() %>%
-      stats::setNames(paste("peak", seq_len(ncol(.)), sep = " ")) %>%
-      dplyr::bind_cols(spc_df) %>%
-      tidyr::gather(key = "peak", value = "fit",
-                    -.data$chanel, -.data$energy, -.data$counts, -.data$rate)
+    # Build a long table for ggplot2
+    spc_fit <- do.call(cbind.data.frame, args = list(fit, stringsAsFactors = FALSE))
+    colnames(spc_fit) <- c(paste("peak", seq_len(ncol(spc_fit)), sep = " "))
+    spc_stacked <- utils::stack(spc_fit)
+    spc_long <- cbind.data.frame(spc_stacked, spc_df, stringsAsFactors = FALSE)
+    colnames(spc_long) <- c("fit", "peak", "chanel", "energy", "counts", "rate")
 
     plot(spc_clean) +
       ggplot2::geom_area(
@@ -191,20 +190,18 @@ setMethod(
     error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
 
     # Curve
-    curve <- data.frame(signal_value = signal) %>%
-      stats::predict.lm(x@model, .) %>%
-      c(signal, .) %>%
-      magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
-      as.matrix() %>%
-      t() %>%
-      as.data.frame()
+    new_data <- data.frame(signal_value = signal)
+    predicted <- stats::predict.lm(x@model, new_data)
+    segment_xy <- c(signal, predicted)
+    names(segment_xy) <- c("x", "xmin", "y", "ymin")
+    segment <- as.data.frame(t(as.matrix(segment_xy)))
 
     ggplot2::ggplot(
       data = data,
       mapping = ggplot2::aes(x = .data$signal_value, y = .data$dose_value,
                              label = .data$reference)) +
       ggplot2::geom_segment(
-        data = curve,
+        data = segment,
         mapping = ggplot2::aes(x = .data$x, xend = .data$xmin,
                                y = .data$y, yend = .data$ymin),
         colour = "red",
@@ -231,52 +228,6 @@ setMethod(
 #   f = "plot",
 #   signature = signature(x = "CalibrationCurve", y = "GammaSpectra"),
 #   definition = function(x, y, ...) {
-#     # Get data
-#     calib <- methods::as(x@data, "data.frame")
-#     measure <- getDoseRate(y)
 #
-#     # Bind data frame for 'ggplot2'
-#     data <- dplyr::bind_rows(calib, measure) %>%
-#       dplyr::mutate(spectrum = c(rep("calibration", nrow(calib)),
-#                                  rep("estimate", nrow(measure))))
-#     # Set error bar width and height
-#     error_width <- sum(range(data$signal_value) * c(-1, 1)) / 100
-#     error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
-#
-#     # Curve
-#     calib_signal <- range(calib$signal_value)
-#     curve <- data.frame(signal_value = calib_signal) %>%
-#       stats::predict.lm(x@model, .) %>%
-#       c(calib_signal, .) %>%
-#       magrittr::set_names(c("x", "xmin", "y", "ymin")) %>%
-#       as.matrix() %>%
-#       t() %>%
-#       as.data.frame()
-#
-#     ggplot2::ggplot(
-#       data = data,
-#       mapping = ggplot2::aes_string(
-#         x = "signal_value", y = "dose_value",
-#         colour = "spectrum", label = "reference")) +
-#       ggplot2::geom_segment(
-#         data = curve,
-#         mapping = ggplot2::aes_string(
-#           x = "x", xend = "xmin",
-#           y = "y", yend = "ymin"),
-#         colour = "black",
-#         inherit.aes = FALSE) +
-#       ggplot2::geom_errorbar(
-#         mapping = ggplot2::aes_string(
-#           ymin = "dose_value - dose_error",
-#           ymax = "dose_value + dose_error"),
-#         width = error_width) +
-#       ggplot2::geom_errorbarh(
-#         mapping = ggplot2::aes_string(
-#           xmin = "signal_value - signal_error",
-#           xmax = "signal_value + signal_error"),
-#         height = error_height) +
-#       ggplot2::geom_point() +
-#       ggplot2::scale_x_continuous(name = "Signal") +
-#       ggplot2::scale_y_continuous(name = "Dose rate [\u03BCGy/y]")
 #   }
 # )

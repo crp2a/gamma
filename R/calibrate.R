@@ -46,7 +46,7 @@ setMethod(
     ## Get corresponding chanels
     fit_data <- as.data.frame(do.call(rbind, lines))
     # Return a new gamma spectrum with adjusted energy
-    calibrateEnergy(object, fit_data)
+    calibrate_energy(object, fit_data)
   }
 )
 
@@ -66,7 +66,7 @@ setMethod(
 
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy
-    calibrateEnergy(object, clean)
+    calibrate_energy(object, clean)
   }
 )
 
@@ -90,7 +90,7 @@ setMethod(
            call. = FALSE)
 
     fit_data <- data.frame(energy = lines, chanel = chanels)
-    calibrateEnergy(spectrum, fit_data)
+    calibrate_energy(spectrum, fit_data)
   }
 )
 
@@ -104,7 +104,7 @@ setMethod(
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-calibrateEnergy <- function(spectrum, lines) {
+calibrate_energy <- function(spectrum, lines) {
   # Validation
   n_lines <- nrow(lines)
   if (n_lines < 3) {

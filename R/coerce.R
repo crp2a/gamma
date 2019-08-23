@@ -30,7 +30,9 @@ setAs(
   to = "data.frame",
   def = function(from) {
     df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
-    df_long <- dplyr::bind_rows(df_list, .id = "reference")
+    df_nrow <- vapply(X = df_list, FUN = nrow, FUN.VALUE = 1L)
+    df_long <- do.call(rbind, df_list)
+    df_long[["reference"]] <- rep(names(df_list), times = df_nrow)
     return(df_long)
   }
 )

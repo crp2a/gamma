@@ -44,11 +44,10 @@ setMethod(
       MAD = MAD(counts, ...)
     )
     threshold <- noise * SNR
-    index_noise <- index_shape %>%
-      unlist() %>%
-      subset(., counts[.] >= threshold)
+    index_noise <- unlist(index_shape)
+    index_subset <- subset(index_noise, counts[index_noise] >= threshold)
 
-    pks <- spc[index_noise, ]
+    pks <- spc[index_subset, ]
     rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))
 
     .PeakPosition(
@@ -98,8 +97,7 @@ setMethod(
       # Remove errors, if any
       fit_clean <- compact(isNotNLS, fit)
       if (isEmpty(fit_clean)) {
-        stop("What a failure! No peaks could be fitted correctly.",
-             call. = FALSE)
+        stop("No peaks could be fitted correctly.", call. = FALSE)
       } else {
         warning(
           "Something goes wrong, the following peaks were skipped:\n",
@@ -203,12 +201,6 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
                     lower = lower_bounds,
                     upper = upper_bounds)
 
-  # TODO: Check parameters
-  # mean_end <- stats::coef(fit)[["mean"]]
-  # if (abs(mean_end - mean_start))
-  #   stopCustom("nls_wrong_end_value",
-  #              "The difference between the starting and adjusted position is greater than 10 channels.")
-
   return(fit)
 }
 
@@ -221,6 +213,7 @@ fitNLS <- function(x, peaks, scale = c("chanel", "energy"),
 #' @return A \code{numeric} value.
 #' @author N. Frerebeau
 #' @keywords internal
+#' @noRd
 MAD <- function(x, k = 1.4826, na.rm = FALSE) {
   k * stats::median(abs(x - stats::median(x, na.rm = na.rm)), na.rm = na.rm)
 }
@@ -238,6 +231,7 @@ MAD <- function(x, k = 1.4826, na.rm = FALSE) {
 #'  It tries to get the smallest possible estimate.
 #' @author N. Frerebeau
 #' @keywords internal
+#' @noRd
 FWHM <- function(x, y, center) {
   if (missing(y)) {
     z <- x
@@ -259,7 +253,7 @@ FWHM <- function(x, y, center) {
   scale_for_roots <- y - peak_height / 2
   root_indices <- which(diff(sign(scale_for_roots)) != 0)
 
-  tmp <- c(root_indices, i) %>% sort()
+  tmp <- sort(c(root_indices, i))
   k <- which(tmp == i)
 
   root_left <- root_indices[k - 1]

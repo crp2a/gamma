@@ -117,10 +117,8 @@ setMethod(
     if (length(unlist(dose_rate)) == 0)
       stop("No dose rate available for these spectra.", call. = FALSE)
 
-    dose_mtx <- do.call(rbind, dose_rate) %>%
-      as.data.frame(stringsAsFactors = FALSE) %>%
-      magrittr::set_colnames(c("value", "error"))
-
+    dose_mtx <- do.call(rbind, dose_rate)
+    colnames(dose_mtx) <- c("value", "error")
     as.matrix(dose_mtx)
   }
 )

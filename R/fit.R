@@ -39,11 +39,14 @@ setMethod(
       stop(sprintf("`range` must be a numeric vector of length two, not %d.",
                    n_range), call. = FALSE)
     ## Dose rate
-    doses <- getDoseRate(object) %>%
-      as.data.frame() %>%
-      dplyr::transmute(reference = rownames(.),
-                       dose_value = .data$value,
-                       dose_error = .data$error)
+    dose_rate <- as.data.frame(getDoseRate(object))
+    doses <- data.frame(
+      reference = rownames(dose_rate),
+      dose_value = dose_rate[["value"]],
+      dose_error = dose_rate[["error"]],
+      stringsAsFactors = FALSE
+    )
+
     if (nrow(doses) != length(object)) {
       names_missing <- names(object)[!(names(object) %in% doses$reference)]
       length_missing <- length(names_missing)
@@ -65,15 +68,13 @@ setMethod(
 
     # Signal integration
     signals <- integrateSignal(object, range = range, noise = noise,
-                               simplify = TRUE) %>%
-      as.data.frame() %>%
-      dplyr::mutate(reference = rownames(.)) %>%
-      dplyr::rename(signal_value = "value", signal_error = "error")
+                               simplify = TRUE)
+    signals <- cbind.data.frame(signals, rownames(signals),
+                                stringsAsFactors = FALSE)
+    colnames(signals) <- c("signal_value", "signal_error", "reference")
 
     # Fit linear regression
-    fit_data <- doses %>%
-      dplyr::mutate(reference = as.character(.data$reference)) %>%
-      dplyr::inner_join(., signals, by = "reference")
+    fit_data <- merge(doses, signals, by = "reference", all = FALSE)
 
     # TODO: check weights!
     fit_weights <- if (weights) 1 / fit_data$dose_error^2 else NULL
