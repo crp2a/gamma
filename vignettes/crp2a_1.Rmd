@@ -28,6 +28,8 @@ knitr::opts_chunk$set(
   fig.align = "center",
   comment = "#>"
 )
+```
+```{r packages}
 library(gamma)
 library(magrittr)
 ```
@@ -227,7 +229,7 @@ getDoseRate(calib_scaled)
 ```
 
 ### Linear regression
-```{r calibration}
+```{r calibration, fig.width=5, fig.height=5}
 # Build calibration curve
 (BDX1 <- fit(
   calib_scaled,
@@ -249,7 +251,7 @@ plot(BDX1) +
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
 # Danger zone ! Don't touch !
-usethis::use_data(BDX1, overwrite = FALSE)
+# usethis::use_data(BDX1, overwrite = FALSE)
 ```
 
 ### Check model
@@ -257,7 +259,7 @@ usethis::use_data(BDX1, overwrite = FALSE)
 summary(BDX1[["model"]])
 ```
 
-```{r lm-check, echo=FALSE}
+```{r lm-check, echo=FALSE, fig.width=7, fig.height=7}
 calib_residuals <- data.frame(
   reference = BDX1[["data"]]$reference,
   fitted = BDX1[["model"]]$fitted.values,
@@ -343,15 +345,20 @@ summary(fit)
 
 The smaller the AIC or BIC, the better the fit:
 ```{r test-old-compare, echo=FALSE}
+criterion_aic <- c(stats::AIC(BDX1[["model"]]), stats::AIC(fit))
+criterion_bic <- c(stats::BIC(BDX1[["model"]]), stats::BIC(fit))
+
 criteria <- data.frame(
-  AIC = c(stats::AIC(BDX1[["model"]]), stats::AIC(fit)),
-  BIC = c(stats::BIC(BDX1[["model"]]), stats::BIC(fit)),
+  AIC = criterion_aic,
+  D_AIC = criterion_aic - min(criterion_aic),
+  BIC = criterion_bic,
   row.names = c("New curve (BDX1)", "Old curve (VBA macro)")
 )
 
 knitr::kable(
   criteria,
   digits = 3,
+  col.names = c("AIC", "\u0394i", "BIC"),
   caption = "Information Criterion"
 )
 ```

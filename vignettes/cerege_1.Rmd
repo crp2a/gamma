@@ -28,6 +28,8 @@ knitr::opts_chunk$set(
   fig.align = "center",
   comment = "#>"
 )
+```
+```{r packages}
 library(gamma)
 library(magrittr)
 ```
@@ -200,7 +202,7 @@ getDoseRate(calib_scaled)
 ```
 
 ### Linear regression
-```{r calibration, fig.width=5, fig.height=5, fig.align="center"}
+```{r calibration, fig.width=5, fig.height=5}
 # Build calibration curve
 (AIX1 <- fit(
   calib_scaled,
@@ -222,7 +224,7 @@ plot(AIX1) +
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
 # Danger zone ! Don't touch !
-usethis::use_data(AIX1, overwrite = FALSE)
+# usethis::use_data(AIX1, overwrite = FALSE)
 ```
 
 ### Check model
@@ -230,7 +232,7 @@ usethis::use_data(AIX1, overwrite = FALSE)
 summary(AIX1[["model"]])
 ```
 
-```{r lm-check, echo=FALSE, warning=FALSE, fig.width=7, fig.height=7, fig.align="center"}
+```{r lm-check, echo=FALSE, fig.width=7, fig.height=7}
 calib_residuals <- data.frame(
   reference = AIX1[["data"]]$reference,
   fitted = AIX1[["model"]]$fitted.values,
