@@ -14,7 +14,7 @@ Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
  for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.
 }
 \usage{
-clermont
+data("clermont")
 }
 \description{
 Clermont Reference Data

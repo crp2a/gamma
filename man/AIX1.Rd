@@ -6,7 +6,7 @@
 \title{CEREGE Calibration Curve #1}
 \format{An object of class \code{CalibrationCurve} of length 1.}
 \usage{
-AIX1
+data("AIX1")
 }
 \description{
 CEREGE Calibration Curve #1

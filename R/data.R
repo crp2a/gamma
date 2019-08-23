@@ -3,6 +3,7 @@
 #'
 #' An internal dataset containing the decay data for the following isotopes:
 #' 232-Th, 235-U, 238-U and 40-K.
+#' @usage data("decay")
 #' @format
 #'  A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
 #'  with the following columns (absolute errors):
@@ -28,6 +29,7 @@
 # ==============================================================================
 #' Clermont Reference Data
 #'
+#' @usage data("clermont")
 #' @format TODO
 #' @source
 #'  Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
@@ -40,6 +42,7 @@
 
 #' CEREGE Calibration Curve #1
 #'
+#' @usage data("AIX1")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory:} \tab CEREGE \cr
@@ -70,6 +73,7 @@
 
 #' CRP2A Calibration Curve #1
 #'
+#' @usage data("BDX1")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory:} \tab IRAMAT-CRP2A (UMR 5060) \cr

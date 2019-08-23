@@ -6,7 +6,7 @@
 \title{CRP2A Calibration Curve #1}
 \format{An object of class \code{CalibrationCurve} of length 1.}
 \usage{
-BDX1
+data("BDX1")
 }
 \description{
 CRP2A Calibration Curve #1
