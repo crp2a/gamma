@@ -24,7 +24,7 @@
  Accessed 2019-06-07.
 }
 \usage{
-data("decay")
+decay
 }
 \description{
 An internal dataset containing the decay data for the following isotopes:

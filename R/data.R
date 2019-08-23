@@ -3,7 +3,6 @@
 #'
 #' An internal dataset containing the decay data for the following isotopes:
 #' 232-Th, 235-U, 238-U and 40-K.
-#' @usage data("decay")
 #' @format
 #'  A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
 #'  with the following columns (absolute errors):
