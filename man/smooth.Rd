@@ -27,17 +27,17 @@ method to be used. It must be one of "\code{unweighted}" (default),
 "\code{weighted}" or "\code{savitzky}" (see details).
 Any unambiguous substring can be given.}
 
-\item{m}{An odd \code{\link{integer}} scalar giving the number of adjacent
+\item{m}{An odd \code{\link{integer}} giving the number of adjacent
 points to be used.}
 
-\item{p}{An \code{\link{integer}} scalar giving the polynomial degree.
+\item{p}{An \code{\link{integer}} giving the polynomial degree.
 Only used if \code{method} is \code{savitzky}.}
 }
 \value{
 A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 }
 \description{
-Smoothes a spectrum.
+Smoothes intensities.
 }
 \details{
 The following smoothing methods are available:

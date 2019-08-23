@@ -215,6 +215,15 @@ if (!isGeneric("predict")) {
 #' @return
 #'  If \code{simplify} is \code{FALSE} returns a list of length-two
 #'  numeric vectors (default), else returns a matrix.
+#' @references
+#'  Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
+#'  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
+#'  \emph{Radiation Measurements}, 46(2), p. 190-195.
+#'  DOI: \href{https://www.doi.org/10.1016/j.radmeas.2010.10.003}{10.1016/j.radmeas.2010.10.003}.
+#'
+#'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+#'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+#'  \emph{Ancient TL}, 25(1), p. 1-4.
 #' @author N. Frerebeau
 #' @family signal processing
 #' @docType methods
@@ -316,7 +325,8 @@ if (!isGeneric("plot")) {
 #' @param skip An \code{\link{integer}} vector or a \code{\link{logical}} scalar
 #'  (see details). If \code{NULL} (the default) or \code{FALSE}, all data are
 #'  imported.
-#' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
+#' @param ... Extra parameters to be passed to
+#'  \code{\link[rxylib]{read_xyData}}.
 #' @details
 #'  If \code{skip} is not \code{NULL}, several channels are skipped during
 #'  import to retain only a part of the spectrum.
@@ -366,16 +376,16 @@ setGeneric(
 # ==================================================================== Smoothing
 #' Smooth
 #'
-#' Smoothes a spectrum.
+#' Smoothes intensities.
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
 #' @param method A \code{\link{character}} string specifying the smoothing
 #'  method to be used. It must be one of "\code{unweighted}" (default),
 #'  "\code{weighted}" or "\code{savitzky}" (see details).
 #'  Any unambiguous substring can be given.
-#' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
+#' @param m An odd \code{\link{integer}} giving the number of adjacent
 #'  points to be used.
-#' @param p An \code{\link{integer}} scalar giving the polynomial degree.
+#' @param p An \code{\link{integer}} giving the polynomial degree.
 #'  Only used if \code{method} is \code{savitzky}.
 #' @param ... Currently not used.
 #' @details

@@ -62,6 +62,16 @@ TODO
 
  It assumes that each spectrum is calibrated in energy.
 }
+\references{
+Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
+ Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
+ \emph{Radiation Measurements}, 46(2), p. 190-195.
+ DOI: \href{https://www.doi.org/10.1016/j.radmeas.2010.10.003}{10.1016/j.radmeas.2010.10.003}.
+
+ Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+ a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+ \emph{Ancient TL}, 25(1), p. 1-4.
+}
 \seealso{
 Other signal processing: \code{\link{peaks}},
   \code{\link{processBaseline}}, \code{\link{smooth}},

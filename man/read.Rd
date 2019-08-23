@@ -16,7 +16,8 @@ read(file, ...)
 \item{file}{A \code{\link{character}} string giving the path of files to be
 imported.}
 
-\item{...}{Extra parameters passed to \code{\link[rxylib]{read_xyData}}.}
+\item{...}{Extra parameters to be passed to
+\code{\link[rxylib]{read_xyData}}.}
 
 \item{extensions}{A \code{\link{character}} vector specifying the possible
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
