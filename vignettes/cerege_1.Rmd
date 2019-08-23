@@ -25,7 +25,6 @@ knitr::opts_chunk$set(
   message = FALSE,
   fig.width = 7,
   fig.height = 5,
-  fig.align = "center",
   comment = "#>"
 )
 ```
@@ -48,7 +47,7 @@ noise_dir <- system.file("extdata/cerege/background", package = "gamma")
 ```
 
 ## Inspect spectra
-```{r inspect}
+```{r inspect, fig.align='center'}
 # Plot calibration spectra
 plot(calib_spc, xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "Calibration spectra") +
@@ -134,7 +133,7 @@ PEP <- calibrate(calib_spc[["PEP"]], pks)
 ```
 
 #### Inspect results
-```{r calib-scale}
+```{r calib-scale, fig.align='center'}
 # Energy scale calibration
 calib_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
 calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
@@ -145,7 +144,7 @@ plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
 ```
 
 ### Background noise spectrum
-```{r calibrate-noise}
+```{r calibrate-noise, fig.align='center'}
 noise_lines <- list(
   Pb212 = c(chanel = 86, energy = 238),
   K40 = c(chanel = 496, energy = 1461),
@@ -202,7 +201,7 @@ getDoseRate(calib_scaled)
 ```
 
 ### Linear regression
-```{r calibration, fig.width=5, fig.height=5}
+```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
 # Build calibration curve
 (AIX1 <- fit(
   calib_scaled,
@@ -232,7 +231,7 @@ plot(AIX1) +
 summary(AIX1[["model"]])
 ```
 
-```{r lm-check, echo=FALSE, fig.width=7, fig.height=7}
+```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
   reference = AIX1[["data"]]$reference,
   fitted = AIX1[["model"]]$fitted.values,
@@ -242,8 +241,7 @@ calib_residuals <- data.frame(
 )
 
 # Residuals vs fitted values
-plot_res <- ggplot2::ggplot(calib_residuals, 
-                            ggplot2::aes(x = fitted, y = residuals)) +
+ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = residuals)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
                                      y = 0, yend = residuals)) + 
@@ -253,8 +251,7 @@ plot_res <- ggplot2::ggplot(calib_residuals,
                 x = "Fitted values", y = "Residuals")
 
 # Std. residuals vs fitted values
-plot_stdres <- ggplot2::ggplot(calib_residuals, 
-                               ggplot2::aes(x = fitted, y = standardized)) +
+ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = standardized)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
@@ -265,8 +262,7 @@ plot_stdres <- ggplot2::ggplot(calib_residuals,
                 x = "Fitted values", y = "Standardized residuals")
 
 # Normal QQ plot of standardized residuals
-plot_qq <- ggplot2::ggplot(calib_residuals, 
-                           ggplot2::aes(sample = standardized)) + 
+ggplot2::ggplot(calib_residuals, ggplot2::aes(sample = standardized)) + 
   ggplot2::geom_abline(slope = 1, intercept = 0) +
   ggplot2::geom_qq_line(colour = "red") +
   ggplot2::geom_qq() +
@@ -276,8 +272,7 @@ plot_qq <- ggplot2::ggplot(calib_residuals,
                 y = "Standardize residuals")
 
 # Cook's distance
-plot_cook <- ggplot2::ggplot(calib_residuals, 
-                             ggplot2::aes(x = reference, y = cook)) +
+ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = reference, xend = reference,
@@ -286,11 +281,6 @@ plot_cook <- ggplot2::ggplot(calib_residuals,
   ggplot2::theme_bw() +
   ggplot2::labs(title = "Cook's distance",
                 x = "Observation", y = "D")
-
-cowplot::plot_grid(
-  plot_res, plot_stdres, plot_cook, plot_qq,
-  ncol = 2, labels = "AUTO"
-)
 ```
 
 ```{r test-old-compare, echo=FALSE}

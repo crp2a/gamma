@@ -54,7 +54,6 @@ Imports:
     tools
 Suggests: 
     covr,
-    cowplot,
     knitr,
     magrittr,
     rmarkdown,
