@@ -7,7 +7,7 @@ spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 spectra <- read(spc_dir)
 
 test_that("Estimate baseline from GammaSpectrum", {
-  baseline <- estimateBaseline(spectrum)
+  baseline <- estimate_baseline(spectrum)
 
   expect_equal(baseline[["hash"]], spectrum[["hash"]])
   expect_equal(baseline[["reference"]], spectrum[["reference"]])
@@ -26,14 +26,14 @@ test_that("Estimate baseline from GammaSpectrum", {
   expect_s3_class(plot(spectrum, baseline), "ggplot")
 })
 test_that("Estimate baseline from GammaSpectra", {
-  baseline <- estimateBaseline(spectra)
+  baseline <- estimate_baseline(spectra)
 
   expect_s4_class(baseline, "GammaSpectra")
   expect_equal(length(baseline), length(spectra))
   expect_s3_class(plot(baseline), "ggplot")
 })
 test_that("Remove baseline from GammaSpectrum", {
-  baseline <- removeBaseline(spectrum)
+  baseline <- remove_baseline(spectrum)
 
   expect_equal(baseline[["hash"]], spectrum[["hash"]])
   expect_equal(baseline[["reference"]], spectrum[["reference"]])
@@ -51,7 +51,7 @@ test_that("Remove baseline from GammaSpectrum", {
   expect_s3_class(plot(baseline), "ggplot")
 })
 test_that("Remove baseline from GammaSpectra", {
-  baseline <- removeBaseline(spectra)
+  baseline <- remove_baseline(spectra)
 
   expect_s4_class(baseline, "GammaSpectra")
   expect_equal(length(baseline), length(spectra))
@@ -59,10 +59,10 @@ test_that("Remove baseline from GammaSpectra", {
 })
 test_that("SNIP algorithm", {
   k <- 6
-  baseline <- estimateBaseline(spectrum, LLS = TRUE, k = k)
+  baseline <- estimate_baseline(spectrum, LLS = TRUE, k = k)
 
   spc1 <- spectrum - baseline
-  spc2 <- removeBaseline(spectrum, LLS = TRUE, k = k)
+  spc2 <- remove_baseline(spectrum, LLS = TRUE, k = k)
 
   expect_equal(spc1[["chanel"]], spc2[["chanel"]])
   expect_equal(spc1[["energy"]], spc2[["energy"]])

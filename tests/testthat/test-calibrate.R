@@ -10,7 +10,7 @@ test_that("Calibrate GammaSpectrum", {
     Cs = c(chanel = 816, energy = 2614.5)
   )
 
-  calib <- calibrate(spectrum, lines = lines)
+  calib <- calibrate_energy(spectrum, lines = lines)
   expect_s4_class(calib, "GammaSpectrum")
 
   expect_equal(calib[["hash"]], spectrum[["hash"]])
@@ -27,14 +27,14 @@ test_that("Calibrate GammaSpectrum", {
   expect_equal(calib[["rate"]], spectrum[["rate"]])
   expect_s3_class(calib[["calibration"]], "lm")
 
-  expect_error(calibrate(spectrum, lines = lines[1]),
+  expect_error(calibrate_energy(spectrum, lines = lines[1]),
                "You have to provide at least 3 lines for calibration, not 1.")
   lines <- list(
     Pb = c(76, 238),
     K = c(chanel = 459, energy = 1461),
     Cs = c(chanel = 816, energy = 2614.5)
   )
-  expect_error(calibrate(spectrum, lines = lines),
+  expect_error(calibrate_energy(spectrum, lines = lines),
                "`lines` is a list but does not have components 'chanel' and 'energy'.")
 })
 
@@ -48,30 +48,6 @@ test_that("Calibrate GammaSpectra", {
     Cs = c(chanel = 816, energy = 2614.5)
   )
 
-  calib <- calibrate(spectra, lines = lines)
+  calib <- calibrate_energy(spectra, lines = lines)
   expect_s4_class(calib, "GammaSpectra")
-})
-
-test_that("Calibrate GammaSpectra", {
-  # Make a fake spectrum with no baseline
-  cts <- dnorm(1:1024, mean = 86, sd = 5) +
-    dnorm(1:1024, mean = 493, sd = 7) +
-    dnorm(1:1024, mean = 876, sd = 10)
-  # Add some noise
-  set.seed(12345)
-  spc <- .GammaSpectrum(chanel = 1:1024,
-                        counts = cts * 10^5 + sample(1:10, 1024, TRUE))
-  # Fit peaks
-  fit <- fitPeaks(spc, peaks = c(86, 493, 876))
-
-  calib <- calibrate(fit, lines = c(76, 459, 816))
-  expect_s4_class(calib, "GammaSpectrum")
-  expect_length(calib[["chanel"]], 1024)
-  expect_length(calib[["energy"]], 1024)
-  expect_length(calib[["counts"]], 1024)
-  expect_length(calib[["rate"]], 0)
-  expect_s3_class(calib[["calibration"]], "lm")
-
-  expect_error(calibrate(fit, lines = c(76, 459)),
-               "must be of length")
 })

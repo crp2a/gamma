@@ -43,8 +43,8 @@ Typical workflow:
 
 1. Import spectrum data with `read()`,
 2. Inspect spectrum with `plot()`,
-3. Calibrate the energy scale with `calibrate()`,
-4. Estimate the gamma dose rate with `predict()`.
+3. Calibrate the energy scale with `calibrate_energy()`,
+4. Estimate the gamma dose rate with `predict_dose()`.
 
 The estimation of the gamma dose rate requires a calibration curve. This package contains several built-in curves, but as these are instrument-specific you may need to build your own (see `help(fit)`). These built-in curves are in use in several labs and can be used to reproduce published results. Check out the following vignettes for an overview of the fitting process.
 
@@ -98,13 +98,13 @@ The following steps illustrate how to properly fine-tune the parameters for spec
 ### Stabilization
 ```{r stabilize}
 # Use a square root transformation
-transformed <- gamma::stabilize(spc_tka, transformation = sqrt)
+transformed <- stabilize_signal(spc_tka, transformation = sqrt)
 ```
 
 ### Smoothing
 ```{r smoothing}
 # Use a 21 point Savitzky-Golay-Filter to smooth the spectrum
-smoothed <- smooth(transformed, method = "savitzky", m = 21)
+smoothed <- smooth_signal(transformed, method = "savitzky", m = 21)
 ```
 
 ### Baseline correction
@@ -112,7 +112,7 @@ The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morha
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate the baseline of a single file
-baseline <- estimateBaseline(smoothed, decreasing = TRUE)
+baseline <- estimate_baseline(smoothed, decreasing = TRUE)
 
 # Plot spectrum + baseline
 plot(smoothed, baseline) +
@@ -135,7 +135,7 @@ plot(corrected) +
 ```{r baseline-remove-multi, eval=FALSE}
 # You can remove the baseline of multiple spectra in one go
 # Note that the same parameters will be used for all spectra
-clean <- removeBaseline(spc)
+clean <- remove_baseline(spc)
 ```
 
 ### Peak detection
@@ -143,8 +143,13 @@ Once you have a baseline-corrected spectrum, you can try to automatically find p
 
 ```{r peak-detection}
 # Detect peaks in a single file
-peaks <- findPeaks(corrected)
+peaks <- find_peaks(corrected)
+peaks
 
+# Plot spectrum + peaks
+plot(corrected, peaks) +
+  ggplot2::labs(title = "Peaks") +
+  ggplot2::theme_bw()
 ```
 
 ### Energy scale calibration
@@ -153,10 +158,10 @@ If you know the correspondence between several channels and the energy scale, yo
 You can use the results of the peak detection and set the expected energy values.
 ```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
 # Set the energy values (in keV)
-setEnergy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
+set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 # Calibrate the spectrum using the peak positions
-scaled <- calibrate(spc_tka, peaks)
+scaled <- calibrate_energy(spc_tka, peaks)
 
 # Plot the spectrum (note the top scale)
 plot(scaled) +
@@ -176,7 +181,7 @@ calib_lines <- list(
 )
 
 # Calibrate the spectrum using these fixed lines
-scaled2 <- calibrate(spc_tka, lines = calib_lines)
+scaled2 <- calibrate_energy(spc_tka, lines = calib_lines)
 ```
 
 ## Use the pipe!
@@ -185,16 +190,16 @@ library(magrittr)
 
 # Spectrum pre-processing and peak detection
 pks <- spc_tka %>%
-  stabilize(transformation = sqrt) %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks()
+  stabilize_signal(transformation = sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline(decreasing = TRUE, k = 100) %>%
+  find_peaks()
 
 # Set the energy values (in keV)
-setEnergy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 # Calibrate the energy scale
-cal <- calibrate(spc_tka, pks)
+cal <- calibrate_energy(spc_tka, pks)
 
 # Plot spectrum
 plot(cal, pks) +
@@ -223,10 +228,10 @@ noise_spc <- read(noise_dir, skip = TRUE)
 
 # Set the known dose rates
 data("clermont")
-setDoseRate(calib_spc) <- clermont[, c("gamma", "gamma_error")]
+set_dose(calib_spc) <- clermont[, c("gamma", "gamma_error")]
 
 # Build the calibration curve
-calib_curve <- fit(
+calib_curve <- fit_dose(
   calib_spc,
   noise_spc,
   range = c(165, 2800), # Set the integration range (in keV)
@@ -248,7 +253,7 @@ test_dir <- system.file("extdata/crp2a/test", package = "gamma")
 test_spc <- read(test_dir, skip = TRUE)
 
 # Estimate the gamma dose rate
-dose_rate <- predict(calib_curve, test_spc, simplify = TRUE)
+dose_rate <- predict_dose(calib_curve, test_spc, simplify = TRUE)
 ```
 
 ```{r dose-rate-table, echo=FALSE}

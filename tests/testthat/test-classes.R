@@ -17,18 +17,18 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_type(spectrum[["energy"]], "double")
   expect_type(spectrum[["counts"]], "double")
   expect_type(spectrum[["rate"]], "double")
-  expect_type(spectrum[["calibration"]], "NULL")
+  expect_type(spectrum[["calibration"]], "list")
   expect_type(spectrum[["dose_rate"]], "double")
 
-  expect_type(getDoseRate(spectrum), "double")
-  expect_error(setDoseRate(spectrum) <- c(1, 2, 3),
+  expect_type(get_dose(spectrum), "double")
+  expect_error(set_dose(spectrum) <- c(1, 2, 3),
                "`value` must be a length-two numeric vector.")
 
   expect_type(as(spectrum, "matrix"), "double")
   expect_s3_class(as(spectrum, "data.frame"), "data.frame")
   expect_s4_class(as(spectrum, "GammaSpectra"), "GammaSpectra")
 
-  expect_equal(length(spectrum), 0)
+  expect_equal(get_chanels(spectrum), 0)
 })
 test_that("Initialize an empty GammaSpectra instance", {
   expect_s4_class(new("GammaSpectra"), "GammaSpectra")
@@ -36,12 +36,11 @@ test_that("Initialize an empty GammaSpectra instance", {
 
   spectra <- new("GammaSpectra")
   expect_output(show(spectra), "An empty set of gamma spectra")
-  expect_equal(length(spectra), 0)
-  expect_equal(length(names(spectra)), 0)
+  expect_length(spectra, 0)
+  expect_length(names(spectra), 0)
   expect_type(names(spectra), "character")
 
-  expect_error(getDoseRate(spectra),
-               "No dose rate available for these spectra.")
+  expect_length(get_dose(spectra), 2)
 })
 test_that("Initialize an empty BaseLine instance", {
   expect_s4_class(new("BaseLine"), "BaseLine")
@@ -60,7 +59,7 @@ test_that("Initialize an empty BaseLine instance", {
   expect_type(baseline[["energy"]], "double")
   expect_type(baseline[["counts"]], "double")
   expect_type(baseline[["rate"]], "double")
-  expect_type(baseline[["calibration"]], "NULL")
+  expect_type(baseline[["calibration"]], "list")
   expect_type(baseline[["dose_rate"]], "double")
 
   expect_type(as(baseline, "matrix"), "double")
@@ -74,7 +73,7 @@ test_that("Initialize an empty CalibrationCurve instance", {
 
   expect_type(calib[["details"]], "list")
   expect_s3_class(calib[["details"]]$date, "POSIXct")
-  expect_type(calib[["model"]], "NULL")
+  expect_type(calib[["model"]], "list")
   expect_type(calib[["noise"]], "double")
   expect_type(calib[["integration"]], "double")
   expect_s3_class(calib[["data"]], "data.frame")
@@ -90,25 +89,6 @@ test_that("Initialize an empty CalibrationCurve instance", {
                "Slot `noise` must be a numeric vector of length 2, not 3.")
   expect_error(new("CalibrationCurve", integration = 1:3),
                "Slot `integration` must be a numeric vector of length 2, not 3.")
-})
-test_that("Initialize an empty PeakModel instance", {
-  expect_s4_class(new("PeakModel"), "PeakModel")
-
-  peak <- new("PeakModel")
-  expect_output(show(peak), "No peaks parameters")
-
-  expect_type(peak[["model"]], "list")
-  expect_type(peak[["coefficients"]], "double")
-  expect_s4_class(peak[["spectrum"]], "GammaSpectrum")
-  expect_s4_class(peak[["baseline"]], "BaseLine")
-
-  expect_error(new("PeakModel", model = list(1:3)),
-               "must be of class")
-  expect_error(new("PeakModel", coefficients = as.matrix(LETTERS)),
-               "must be a numeric matrix")
-  df <- data.frame(mean = 1:26, sd = 1:26, height = 1:26)
-  expect_error(new("PeakModel", coefficients = as.matrix(df[, 1:2])),
-               "must be a 3 columns matrix")
 })
 test_that("Initialize an empty PeakPosition instance", {
   expect_s4_class(new("PeakPosition"), "PeakPosition")

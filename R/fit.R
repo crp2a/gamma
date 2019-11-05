@@ -4,25 +4,25 @@ NULL
 
 #' @export
 #' @rdname fit
-#' @aliases fit,GammaSpectra,GammaSpectrum-method
+#' @aliases fit_dose,GammaSpectra,GammaSpectrum-method
 setMethod(
-  f = "fit",
+  f = "fit_dose",
   signature = signature(object = "GammaSpectra", noise = "GammaSpectrum"),
   definition = function(object, noise, range = c(200, 2800),
                         intercept = TRUE, weights = FALSE,
                         details = NULL, ...) {
     # Integrate background noise
-    int_noise <- integrateSignal(noise, range = range)
-    fit(object, int_noise, range = range, intercept = intercept,
-        weights = weights, details = details, ...)
+    int_noise <- integrate_signal(noise, range = range)
+    fit_dose(object, int_noise, range = range, intercept = intercept,
+             weights = weights, details = details, ...)
   }
 )
 
 #' @export
 #' @rdname fit
-#' @aliases fit,GammaSpectra,numeric-method
+#' @aliases fit_dose,GammaSpectra,numeric-method
 setMethod(
-  f = "fit",
+  f = "fit_dose",
   signature = signature(object = "GammaSpectra", noise = "numeric"),
   definition = function(object, noise, range = c(200, 2800),
                         intercept = TRUE, weights = FALSE,
@@ -31,15 +31,15 @@ setMethod(
     ## Noise
     n_noise <- length(noise)
     if (n_noise != 2)
-      stop(sprintf("`noise` must be a numeric vector of length two, not %d.",
+      stop(sprintf("`noise` must be a numeric vector of length 2, not %d.",
                    n_noise), call. = FALSE)
     ## Range
     n_range <- length(range)
     if (n_range != 2)
-      stop(sprintf("`range` must be a numeric vector of length two, not %d.",
+      stop(sprintf("`range` must be a numeric vector of length 2, not %d.",
                    n_range), call. = FALSE)
     ## Dose rate
-    dose_rate <- as.data.frame(getDoseRate(object))
+    dose_rate <- get_dose(object)
     doses <- data.frame(
       reference = rownames(dose_rate),
       dose_value = dose_rate[["value"]],
@@ -47,15 +47,16 @@ setMethod(
       stringsAsFactors = FALSE
     )
 
-    if (nrow(doses) != length(object)) {
-      names_missing <- names(object)[!(names(object) %in% doses$reference)]
+    zero_dose <- doses$dose_value == 0
+    if (any(zero_dose)) {
+      names_missing <- names(object)[zero_dose]
       length_missing <- length(names_missing)
-      stop(
+      warning(
         sprintf(
           ngettext(
             length_missing,
-            "%d spectrum do not have a dose rate:",
-            "%d spectra do not have a dose rate:"
+            "%d spectrum have a dose rate of 0:",
+            "%d spectra have a dose rate of 0:"
           ),
           length_missing
         ),
@@ -67,8 +68,8 @@ setMethod(
     info <- if (is.list(details)) details else list()
 
     # Signal integration
-    signals <- integrateSignal(object, range = range, noise = noise,
-                               simplify = TRUE)
+    signals <- integrate_signal(object, range = range, noise = noise,
+                                simplify = TRUE)
     signals <- cbind.data.frame(signals, rownames(signals),
                                 stringsAsFactors = FALSE)
     colnames(signals) <- c("signal_value", "signal_error", "reference")

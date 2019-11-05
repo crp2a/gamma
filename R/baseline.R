@@ -3,17 +3,17 @@
 NULL
 
 #' @export
-#' @rdname processBaseline
-#' @aliases estimateBaseline,GammaSpectra-method
+#' @rdname baseline
+#' @aliases estimate_baseline,GammaSpectra-method
 setMethod(
-  f = "estimateBaseline",
+  f = "estimate_baseline",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP"),
                         LLS = FALSE, decreasing = FALSE, k = 100) {
 
     baseline <- lapply(
       X = object,
-      FUN = estimateBaseline,
+      FUN = estimate_baseline,
       method, LLS, decreasing, k
     )
     names(baseline) <- names(object)
@@ -23,10 +23,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname processBaseline
-#' @aliases estimateBaseline,GammaSpectrum-method
+#' @rdname baseline
+#' @aliases estimate_baseline,GammaSpectrum-method
 setMethod(
-  f = "estimateBaseline",
+  f = "estimate_baseline",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("SNIP"),
                         LLS = FALSE, decreasing = FALSE, k = 100) {
@@ -49,16 +49,16 @@ setMethod(
 )
 
 #' @export
-#' @rdname processBaseline
-#' @aliases removeBaseline,GammaSpectra-method
+#' @rdname baseline
+#' @aliases remove_baseline,GammaSpectra-method
 setMethod(
-  f = "removeBaseline",
+  f = "remove_baseline",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP"), ...) {
 
     baseline <- lapply(
       X = object,
-      FUN = function(x, method, ...) removeBaseline(x, method, ...),
+      FUN = function(x, method, ...) remove_baseline(x, method, ...),
       method = method, ...
     )
     names(baseline) <- names(object)
@@ -68,14 +68,14 @@ setMethod(
 )
 
 #' @export
-#' @rdname processBaseline
-#' @aliases removeBaseline,GammaSpectrum-method
+#' @rdname baseline
+#' @aliases remove_baseline,GammaSpectrum-method
 setMethod(
-  f = "removeBaseline",
+  f = "remove_baseline",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("SNIP"), ...) {
 
-    baseline <- estimateBaseline(object, method = method, ...)
+    baseline <- estimate_baseline(object, method = method, ...)
     object - baseline
   }
 )

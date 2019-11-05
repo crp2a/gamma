@@ -4,6 +4,33 @@
 #' An internal dataset containing the decay data for the following isotopes:
 #' 232-Th, 235-U, 238-U and 40-K.
 #' @format
+#'  A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
+#'  with the following columns (absolute errors):
+#'  \describe{
+#'    \item{decay_chain}{}
+#'    \item{isotope}{}
+#'    \item{occurrence}{}
+#'    \item{occurrence_error}{}
+#'    \item{post_radon}{}
+#'    \item{half_life}{}
+#'    \item{half_life_error}{}
+#'    \item{energy}{Energy in keV.}
+#'    \item{energy_error}{}
+#'    \item{gamma_intensity}{}
+#'    \item{gamma_intensity_error}{}
+#'    \item{counts_chain}{}
+#'    \item{counts_chain_error}{}
+#'  }
+#' @source
+#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
+#'  Accessed 2019-06-07.
+#' @keywords internal
+".decay"
+
+#' Lanthanum Decay Data
+#'
+#' An internal dataset containing the decay data for the Lanthanum isotopes.
+#' @format
 #'  A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
 #'  with the following columns (absolute errors):
 #'  \describe{
@@ -23,7 +50,7 @@
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
 #' @keywords internal
-"decay"
+".decay_La"
 
 # ==============================================================================
 #' Clermont Reference Data

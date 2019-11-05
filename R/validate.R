@@ -262,55 +262,6 @@ setValidity(
   }
 )
 
-# PeakModel ====================================================================
-setValidity(
-  Class = "PeakModel",
-  method = function(object) {
-    model <- object@model
-    coefficients <- object@coefficients
-    spectrum <- object@spectrum
-    baseline <- object@baseline
-    message <- c()
-
-    if (length(model) != 0) {
-      model_class <- unlist(lapply(X = model, FUN = is, class2 = "nls"))
-      if (!all(model_class)) {
-        message <- c(message, sprintf("All elements of %s must be of class %s.",
-                                      sQuote("model"), sQuote("nls")))
-      }
-    }
-    if (length(coefficients) != 0) {
-      if (!is.numeric(coefficients)) {
-        message <- c(message, sprintf("%s must be a numeric matrix.",
-                                      sQuote("coefficients")))
-      }
-      col_names <- c("mean", "sd", "height")
-      if (!all(colnames(coefficients) %in% col_names) |
-          ncol(coefficients) != 3) {
-        message <- c(
-          message,
-          sprintf(
-            "%s must be a 3 columns matrix, with column names: %s.",
-            sQuote("coefficients"),
-            paste(sQuote(col_names), collapse = ", ")
-          )
-        )
-      }
-    }
-    if (length(spectrum@hash) != 0 & length(baseline@hash) != 0) {
-      if (spectrum@hash != baseline@hash)
-        message <- c(message, sprintf("%s and %s do not match.",
-                                      sQuote("spectrum"), sQuote("baseline")))
-    }
-
-    if (length(message) != 0) {
-      stop("* ", paste0(message, collapse = "\n  * "))
-    } else {
-      return(TRUE)
-    }
-  }
-)
-
 # PeakPosition =================================================================
 setValidity(
   Class = "PeakPosition",

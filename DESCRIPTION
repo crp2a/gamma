@@ -1,6 +1,6 @@
 Package: gamma
-Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for
-    Luminescence Dating
+Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
+    Measurements for Luminescence Dating
 Version: 0.1.1.9003
 Authors@R: 
     c(person(given = "Nicolas",
@@ -25,20 +25,20 @@ Authors@R:
              comment = c(ORCID = "https://orcid.org/0000-0003-2215-9015")),
       person(given = "Guilhem",
              family = "Paradol",
-             role = "ctb",
+             role = "aut",
              email = "guilhem.paradol@phelma.grenoble-inp.fr"),
-      person("Université Bordeaux Montaigne",
+      person(given = "Université Bordeaux Montaigne",
              role = c("cph", "fnd")),
-      person("LabEx Sciences archéologiques de Bordeaux",
-             role = c("fnd")))
+      person(given = "LabEx Sciences archéologiques de Bordeaux",
+             role = "fnd"))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
-Description: 'gamma' is intended to process in-situ
-    gamma-ray spectrometry measurements for luminescence dating. This
-    package allows to import, inspect and (automatically) correct the energy 
-    shifts of the spectrum. It provides methods for estimating the gamma 
-    dose rate by the use of a calibration curve. The package only supports 
-    Canberra CNF and TKA files.
+Description: Process in-situ Gamma-Ray Spectrometry for
+    Luminescence Dating. This package allows to import, inspect and
+    (automatically) correct the energy shifts of Gamma-Ray spectra. It
+    provides methods for estimating the gamma dose rate by the use of a
+    calibration curve. The package only supports Canberra CNF and TKA
+    files.
 License: GPL-3
 URL: http://gamma.archaeo.science, http://github.com/crp2a/gamma
 BugReports: http://github.com/crp2a/gamma/issues
@@ -50,6 +50,7 @@ Imports:
     methods,
     rlang (>= 0.3.1),
     rxylib (>= 0.2.1),
+    shiny,
     stats,
     tools
 Suggests: 
@@ -75,13 +76,18 @@ Collate:
     'extract.R'
     'fit.R'
     'gamma-package.R'
-    'integrateSignal.R'
+    'integrate.R'
+    'launch.R'
     'peaks.R'
     'plot.R'
+    'predicates.R'
     'predict.R'
     'read.R'
+    'shiny_server.R'
+    'shiny_ui.R'
     'show.R'
     'simulate.R'
     'smooth.R'
+    'statistics.R'
     'utilities.R'
     'validate.R'

@@ -3,12 +3,12 @@
 NULL
 
 #' @export
-#' @rdname simulate
-#' @aliases simulate,numeric,numeric,numeric-method
+#' @rdname simulate_spectrum
+#' @aliases simulate_spectrum,numeric,numeric,numeric-method
 setMethod(
-  f = "simulate",
-  signature = signature(K = "numeric", Th = "numeric", U = "numeric"),
-  definition = function(K, Th, U, energy = c(1, 3200), n = 1024, ...) {
+  f = "simulate_spectrum",
+  signature = signature(K = "numeric", U = "numeric", Th = "numeric"),
+  definition = function(K, U, Th, energy = c(1, 3200), n = 1024, ...) {
     # Get data
     n <- as.integer(n)[[1L]]
 
@@ -26,26 +26,20 @@ setMethod(
     # Nombre de désintégration par seconde
     D <- (mass * abundance * avogadro / M) * activity
 
-    chain <- factor(decay[["decay_chain"]],
-                    levels = unique(decay[["decay_chain"]]))
-    k <- mapply(
-      FUN = function(energy, count) {
-        energy * count
-      },
-      energy = split(decay[["gamma_intensity"]], chain),
-      count = as.list(D),
-      SIMPLIFY = FALSE
-    )
+    chain <- .decay[["decay_chain"]]
+    k <- .decay[["counts_chain"]] *
+      rep(D, times = table(.decay[["decay_chain"]]))
 
     energy_range <- seq(from = energy[[1L]], to = energy[[2L]], length.out = n)
     count <- lapply(
-      X = decay[["energy"]],
+      X = .decay[["energy"]],
       FUN = function(x) stats::dnorm(energy_range, mean = x, sd = sqrt(x))
     )
     .GammaSpectrum(
       reference = "simulation",
       energy = energy_range,
-      counts = colSums(do.call(rbind, count) * unlist(k))
+      # chanel = seq_len(n),
+      counts = colSums(do.call(rbind, count) * k)
     )
   }
 )

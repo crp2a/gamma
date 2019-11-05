@@ -7,8 +7,8 @@ setMethod(
   f = "show",
   signature = "GammaSpectrum",
   definition = function(object) {
-    if (length(object) != 0) {
-      E <- if (length(object@energy) != 0) {
+    if (get_chanels(object) != 0) {
+      E <- if (is_calibrated(object)) {
         paste0(range(round(object@energy, 2)), collapse = " - ")
       } else {
         "not calibrated"
@@ -55,7 +55,7 @@ setMethod(
   f = "show",
   signature = "CalibrationCurve",
   definition = function(object) {
-    if (length(object@model) != 0) {
+    if (length(object@model$coefficients) != 0) {
       sum_up <- summary(object@model)
       coef <- round(sum_up$coef, 5)
       fstat <- round(sum_up$fstatistic, 0)
@@ -96,22 +96,6 @@ setMethod(
       print(peaks)
     } else {
       cat("No peaks were detected.\n", sep = " ")
-    }
-  }
-)
-
-# PeakModel ====================================================================
-setMethod(
-  f = "show",
-  signature = "PeakModel",
-  definition = function(object) {
-    if (length(object@coefficients) != 0) {
-      n <- nrow(object@coefficients)
-      pks <- ngettext(n, " peak was ", " peaks were ")
-      cat(n, pks, "estimated:\n", sep = "")
-      print(object@coefficients)
-    } else {
-      cat("No peaks parameters were estimated.\n", sep = " ")
     }
   }
 )

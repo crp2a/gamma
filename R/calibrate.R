@@ -4,14 +4,14 @@ NULL
 
 #' @export
 #' @rdname calibrate
-#' @aliases calibrate,GammaSpectra,list-method
+#' @aliases calibrate_energy,GammaSpectra,list-method
 setMethod(
-  f = "calibrate",
+  f = "calibrate_energy",
   signature = signature(object = "GammaSpectra", lines = "list"),
   definition = function(object, lines, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    energy <- lapply(X = spectra, FUN = calibrate, lines = lines, ...)
+    energy <- lapply(X = spectra, FUN = calibrate_energy, lines = lines, ...)
     names(energy) <- names(object)
 
     .GammaSpectra(energy)
@@ -20,9 +20,9 @@ setMethod(
 
 #' @export
 #' @rdname calibrate
-#' @aliases calibrate,GammaSpectrum,list-method
+#' @aliases calibrate_energy,GammaSpectrum,list-method
 setMethod(
-  f = "calibrate",
+  f = "calibrate_energy",
   signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
     # Validation
@@ -46,15 +46,15 @@ setMethod(
     ## Get corresponding chanels
     fit_data <- as.data.frame(do.call(rbind, lines))
     # Return a new gamma spectrum with adjusted energy
-    calibrate_energy(object, fit_data)
+    do_calibrate_energy(object, fit_data)
   }
 )
 
 #' @export
 #' @rdname calibrate
-#' @aliases calibrate,GammaSpectrum,PeakPosition-method
+#' @aliases calibrate_energy,GammaSpectrum,PeakPosition-method
 setMethod(
-  f = "calibrate",
+  f = "calibrate_energy",
   signature = signature(object = "GammaSpectrum", lines = "PeakPosition"),
   definition = function(object, lines, ...) {
     # Get data
@@ -66,31 +66,7 @@ setMethod(
 
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy
-    calibrate_energy(object, clean)
-  }
-)
-
-#' @export
-#' @rdname calibrate
-#' @aliases calibrate,PeakModel,numeric-method
-setMethod(
-  f = "calibrate",
-  signature = signature(object = "PeakModel", lines = "numeric"),
-  definition = function(object, lines, ...) {
-    # Get data
-    peaks <- object@coefficients
-    spectrum <- object@spectrum
-    chanels <- round(peaks[, "mean"], digits = 0)
-
-    # Validation
-    n_lines <- length(lines)
-    n_chanels <- length(chanels)
-    if (n_lines != n_chanels)
-      stop(sprintf("`lines` must be of length %d, not %d", n_chanels, n_lines),
-           call. = FALSE)
-
-    fit_data <- data.frame(energy = lines, chanel = chanels)
-    calibrate_energy(spectrum, fit_data)
+    do_calibrate_energy(object, clean)
   }
 )
 
@@ -104,7 +80,7 @@ setMethod(
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-calibrate_energy <- function(spectrum, lines) {
+do_calibrate_energy <- function(spectrum, lines) {
   # Validation
   n_lines <- nrow(lines)
   if (n_lines < 3) {

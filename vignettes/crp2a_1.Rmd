@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
 ```{r packages}
 library(gamma)
 library(magrittr)
@@ -69,183 +70,73 @@ Lines used for energy scale calibration (in keV):
 
 #### BRIQUE
 ```{r calib-BRIQUE}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["BRIQUE"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, 2615)
-# Recalibrate the energy scale
-BRIQUE <- calibrate(calib_spc[["BRIQUE"]], pks)
+plot(calib_spc[["BRIQUE"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "BRIQUE") +
+  ggplot2::theme_bw()
 ```
 
 #### C341
 ```{r calib-C341}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["C341"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, NA, NA, 2615)
-# Recalibrate the energy scale
-C341 <- calibrate(calib_spc[["C341"]], pks)
+plot(calib_spc[["C341"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "C341") +
+  ggplot2::theme_bw()
 ```
 
 #### C347
 ```{r calib-C347}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["C347"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(SNR = 1, span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, NA, NA, 2615)
-# Recalibrate the energy scale
-C347 <- calibrate(calib_spc[["C347"]], pks)
+plot(calib_spc[["C347"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "C347") +
+  ggplot2::theme_bw()
 ```
 
 #### GOU
 ```{r calib-GOU}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["GOU"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, 2615)
-# Recalibrate the energy scale
-GOU <- calibrate(calib_spc[["GOU"]], pks)
+plot(calib_spc[["GOU"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "GOU") +
+  ggplot2::theme_bw()
 ```
 
 #### LMP
 ```{r calib-LMP}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["LMP"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(SNR = 1, span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, NA, NA, NA, NA, 2615)
-# Recalibrate the energy scale
-LMP <- calibrate(calib_spc[["LMP"]], pks)
+plot(calib_spc[["LMP"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "LMP") +
+  ggplot2::theme_bw()
 ```
 
 #### MAZ
 ```{r calib-MAZ}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["MAZ"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, 2615)
-# Recalibrate the energy scale
-MAZ <- calibrate(calib_spc[["MAZ"]], pks)
+plot(calib_spc[["MAZ"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "MAZ") +
+  ggplot2::theme_bw()
 ```
 
 #### PEP
 ```{r calib-PEP}
-# Spectrum pre-processing and peak detection
-pks <- calib_spc[["PEP"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
-# Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, NA, 1461, 2615)
-# Recalibrate the energy scale
-PEP <- calibrate(calib_spc[["PEP"]], pks)
-```
-
-#### Inspect results
-```{r calib-scale, fig.align='center'}
-# Energy scale calibration
-calib_scaled <- list(BRIQUE, C341, C347, GOU, LMP, MAZ, PEP)
-calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
-
-plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::labs(title = "Calibrated spectra") +
+plot(calib_spc[["PEP"]], xaxis = "energy", yaxis = "rate") +
+  ggplot2::labs(title = "PEP") +
   ggplot2::theme_bw()
 ```
 
 ### Background noise spectrum
 ```{r calibrate-noise, fig.align='center'}
-noise_lines <- list(
-  La138 = c(chanel = 251, energy = 789),
-  K40 = c(chanel = 460, energy = 1461),
-  Tl208 = c(chanel = 814, energy = 2615)
-)
-noise_scaled <- calibrate(noise_spc, lines = noise_lines)
-
-plot(noise_spc, noise_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::geom_vline(xintercept = c(789, 1461, 2615), linetype = 3) +
+plot(noise_spc) +
+  ggplot2::labs(title = "Background noise spectrum") +
   ggplot2::theme_bw()
 ```
 
-## Signal integration
-### Get integration boudaries
-```{r integrate-bounds}
-# Integration range (in keV)
-integration_range <- c(165, 2800)
-```
-
-### Integrate
-```{r integrate-norm}
-# Integrate background noise
-# Compare with previous value of 25279.63171 +/- 1.66235
-noise <- integrateSignal(
-  noise_scaled,
-  range = integration_range,
-  NiEi = TRUE
-)
-
-# Integrate reference spectra
-signal <- integrateSignal(
-  calib_scaled, 
-  range = integration_range, 
-  noise = noise,
-  NiEi = TRUE,
-  simplify = TRUE
-)
-```
-
-```{r integrate-results, echo=FALSE}
-knitr::kable(
-  rbind(rbind(noise), signal),
-  digits = 3,
-  caption = "Spectra integration"
-)
-```
-
-## Build Calibration curve
-### Set dose rates
-```{r dose_rate}
-data("clermont")
-setDoseRate(calib_scaled) <- clermont[, c("gamma", "gamma_error")]
-
-getDoseRate(calib_scaled)
-```
-
-### Linear regression
+## Calibration curve
+### Summary
 ```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
-# Build calibration curve
-(BDX1 <- fit(
-  calib_scaled,
-  noise_scaled,
-  range = integration_range,
-  intercept = TRUE,
-  details = list(
-    laboratory = "IRAMAT-CRP2A (UMR 5060)",
-    instrument = "InSpector 1000",
-    detector = "LaBr",
-    authors = "CRP2A Luminescence Team"
-  )
-))
+data("BDX1")
 
 # Plot Calibration curve
 plot(BDX1) +
   ggplot2::theme_bw()
+```
+
+```{r lm-summary, echo=FALSE}
+# Slope: 31.16884 / Intercept: 2006.62935
+summary(BDX1[["model"]])
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
@@ -254,10 +145,6 @@ plot(BDX1) +
 ```
 
 ### Check model
-```{r lm-summary, echo=FALSE}
-summary(BDX1[["model"]])
-```
-
 ```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
   reference = BDX1[["data"]]$reference,
@@ -311,32 +198,10 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
                 x = "Observation", y = "D")
 ```
 
-## Compare with previous values
-```{r test-old-data}
-# Data from the VBA macro in use in the laboratory
-signal_old <- data.frame(
-  signal_value = c(
-    BRIQUE = 64071.58877, C347 = 46580.21115, C341 = 27974.88571, 
-    PEP = 80121.51546, LMP = 21227.36116, MAZ = 38008.81789, 
-    GOU = 52645.11600
-  ),
-  signal_error = c(
-    BRIQUE = 4.59247, C347 = 14.29817, C341 = 10.44644, PEP = 20.39077,
-    LMP = 10.12118, MAZ = 11.45285, GOU = 12.43433
-  ),
-  reference = c("BRIQUE", "C347", "C341", "PEP", "LMP", "MAZ", "GOU")
-)
-calib_old <- merge(clermont, signal_old, by = "reference")
-# fit <- lm(signal_value ~ gamma, data = calib_old)
-# Slope: 31.16884 / Intercept: 2006.62935
-fit <- lm(gamma ~ signal_value, data = calib_old)
-summary(fit)
-```
-
-The smaller the AIC or BIC, the better the fit:
-```{r test-old-compare, echo=FALSE}
-criterion_aic <- c(stats::AIC(BDX1[["model"]]), stats::AIC(fit))
-criterion_bic <- c(stats::BIC(BDX1[["model"]]), stats::BIC(fit))
+```{r test-old-compare, echo=FALSE, eval=FALSE}
+# The smaller the AIC or BIC, the better the fit
+criterion_aic <- c(stats::AIC(BDX1[["model"]]))
+criterion_bic <- c(stats::BIC(BDX1[["model"]]))
 
 criteria <- data.frame(
   AIC = criterion_aic,

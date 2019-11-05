@@ -4,12 +4,9 @@
 \name{BaseLine-class}
 \alias{BaseLine-class}
 \alias{.BaseLine}
-\title{An S4 class to represent a spectrum baseline}
-\value{
-TODO
-}
+\title{An S4 Class to Represent a Spectrum Baseline}
 \description{
-An S4 class to represent a spectrum baseline
+An S4 Class to Represent a Spectrum Baseline
 }
 \note{
 This class extends the \linkS4class{GammaSpectrum} class.
@@ -20,13 +17,13 @@ spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 spectrum <- read(spc_file, skip = TRUE)
 
 # Estimate baseline
-baseline <- estimateBaseline(spectrum)
+baseline <- estimate_baseline(spectrum)
 
 plot(spectrum, baseline) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts")
 
 # Remove baseline
-spc_clean1 <- removeBaseline(spectrum)
+spc_clean1 <- remove_baseline(spectrum)
 spc_clean2 <- spectrum - baseline
 
 plot(spc_clean1) +
@@ -34,7 +31,13 @@ plot(spc_clean1) +
 }
 \seealso{
 \linkS4class{GammaSpectrum}.
+
+Other class: \code{\link{CalibrationCurve-class}},
+  \code{\link{GammaSpectra-class}},
+  \code{\link{GammaSpectrum-class}},
+  \code{\link{PeakPosition-class}}
 }
 \author{
 N. Frerebeau
 }
+\concept{class}

@@ -2,12 +2,12 @@
 #' @include AllGenerics.R
 NULL
 
-# TRANSFORM INTENSITY ==========================================================
+# ==================================================================== Stabilize
 #' @export
-#' @rdname stabilize
-#' @aliases stabilize,GammaSpectrum-method
+#' @rdname stabilize_signal
+#' @aliases stabilize_signal,GammaSpectrum-method
 setMethod(
-  f = "stabilize",
+  f = "stabilize_signal",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, transformation, ...) {
     count <- transformation(object@counts, ...)
@@ -15,12 +15,31 @@ setMethod(
   }
 )
 
-# SMOOTH SIGNAL ================================================================
 #' @export
-#' @rdname smooth
-#' @aliases smooth,GammaSpectra-method
+#' @rdname stabilize_signal
+#' @aliases stabilize_signal,GammaSpectra-method
 setMethod(
-  f = "smooth",
+  f = "stabilize_signal",
+  signature = signature(object = "GammaSpectra"),
+  definition = function(object, transformation, ...) {
+    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
+    stabilized <- lapply(
+      X = spectra,
+      FUN = function(x, transformation) stabilize_signal(x, transformation),
+      transformation = transformation
+    )
+    names(stabilized) <- names(object)
+
+    .GammaSpectra(stabilized)
+  }
+)
+
+# ======================================================================= Smooth
+#' @export
+#' @rdname smooth_signal
+#' @aliases smooth_signal,GammaSpectra-method
+setMethod(
+  f = "smooth_signal",
   signature = signature(object = "GammaSpectra"),
   definition = function(object,
                         method = c("unweighted", "weighted", "savitzky"),
@@ -28,7 +47,7 @@ setMethod(
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     smoothed <- lapply(
       X = spectra,
-      FUN = function(x, method, m, p) smooth(x, method, m, p),
+      FUN = function(x, method, m, p) smooth_signal(x, method, m, p),
       method = method, m = m, p = p
     )
     names(smoothed) <- names(object)
@@ -38,10 +57,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname smooth
-#' @aliases smooth,smooth-method
+#' @rdname smooth_signal
+#' @aliases smooth_signal,GammaSpectrum-method
 setMethod(
-  f = "smooth",
+  f = "smooth_signal",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object,
                         method = c("unweighted", "weighted", "savitzky"),
@@ -67,6 +86,8 @@ setMethod(
     methods::initialize(object, counts = z)
   }
 )
+
+# ------------------------------------------------------------------------------
 #' Rectangular Smooth
 #'
 #' Unweighted sliding-average.
@@ -94,6 +115,7 @@ smooth_rectangular <- function(x, m) {
   )
   smoothed
 }
+
 #' Triangular Smooth
 #'
 #' Weighted sliding-average.
@@ -122,15 +144,24 @@ smooth_triangular <- function(x, m) {
   )
   smoothed
 }
+
 #' Savitzky-Golay Filter
 #'
 #' \code{smooth_savitzky} smoothes the data using the Savitzky-Golay filter.
+#'
 #' \code{coef_savitzky} computes the Savitzky-Golay convolution coefficients.
 #' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
 #' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
 #'  points to use.
 #' @param p An \code{\link{integer}} scalar giving the polynomial degree.
 #' @return A \code{\link{numeric}} vector.
+#' @name smooth_savitzky
+#' @rdname smooth_savitzky
+#' @keywords internal
+#' @noRd
+NULL
+
+#' @rdname smooth_savitzky
 #' @keywords internal
 #' @noRd
 smooth_savitzky <- function(x, m, p = 2) {
@@ -152,6 +183,7 @@ smooth_savitzky <- function(x, m, p = 2) {
   x[j] <- smoothed
   x
 }
+
 #' @rdname smooth_savitzky
 #' @keywords internal
 #' @noRd

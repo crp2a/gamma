@@ -4,9 +4,9 @@ NULL
 
 #' @export
 #' @rdname predict
-#' @aliases predict,CalibrationCurve-method
+#' @aliases predict_dose,CalibrationCurve-method
 setMethod(
-  f = "predict",
+  f = "predict_dose",
   signature = signature(object = "CalibrationCurve"),
   definition = function(object, spectra, epsilon = 0.03, simplify = FALSE, ...) {
 
@@ -27,8 +27,8 @@ setMethod(
         }
       }
       # Integrate spectra
-      new_data <- integrateSignal(spectra, range = int_range, noise = noise,
-                                  simplify = TRUE)
+      new_data <- integrate_signal(spectra, range = int_range, noise = noise,
+                                   simplify = TRUE)
       new_data <- cbind.data.frame(new_data, rownames(new_data),
                                    stringsAsFactors = FALSE)
       colnames(new_data) <- c("signal_value", "signal_error", "reference")

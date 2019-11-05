@@ -3,17 +3,17 @@
 NULL
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectra,numeric,numeric-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra,numeric,numeric-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectra", range = "numeric",
                         noise = "numeric"),
   definition = function(object, range, noise, NiEi = TRUE,
                         simplify = FALSE, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrateSignal,
+    signals <- lapply(X = spectra, FUN = integrate_signal,
                       range = range, noise = noise, NiEi = NiEi)
     if (simplify) {
       do.call(rbind, signals)
@@ -24,16 +24,16 @@ setMethod(
 )
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectra,numeric,missing-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra,numeric,missing-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectra", range = "numeric",
                         noise = "missing"),
   definition = function(object, range, NiEi = TRUE, simplify = FALSE, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrateSignal,
+    signals <- lapply(X = spectra, FUN = integrate_signal,
                       range = range, NiEi = NiEi)
     if (simplify) {
       do.call(rbind, signals)
@@ -44,18 +44,19 @@ setMethod(
 )
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectra,numeric,GammaSpectrum-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra,numeric,GammaSpectrum-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectra", range = "numeric",
                         noise = "GammaSpectrum"),
-  definition = function(object, range, noise, NiEi = TRUE, simplify = FALSE, ...) {
+  definition = function(object, range, noise,
+                        NiEi = TRUE, simplify = FALSE, ...) {
     # Compute noise value
-    noise_value <- integrateSignal(noise, range = range, NiEi = NiEi)
+    noise_value <- integrate_signal(noise, range = range, NiEi = NiEi)
     # Integrate spectra
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrateSignal,
+    signals <- lapply(X = spectra, FUN = integrate_signal,
                       range = range, noise = noise_value, NiEi = NiEi)
 
     if (simplify) {
@@ -67,10 +68,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectrum,numeric,missing-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectrum,numeric,missing-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectrum", range = "numeric",
                         noise = "missing"),
   definition = function(object, range, NiEi = TRUE, ...) {
@@ -106,10 +107,10 @@ setMethod(
 )
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectrum,numeric,numeric-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectrum,numeric,numeric-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectrum", range = "numeric",
                         noise = "numeric"),
   definition = function(object, range, noise, NiEi = TRUE, ...) {
@@ -119,7 +120,7 @@ setMethod(
                    length(noise)), call. = FALSE)
 
     # Compute normalized signal
-    signal <- integrateSignal(object = object, range = range, NiEi = NiEi, ...)
+    signal <- integrate_signal(object = object, range = range, NiEi = NiEi, ...)
 
     names(signal) <- names(noise) <- NULL
     # Compute net signal (substracted background noise)
@@ -131,17 +132,17 @@ setMethod(
 )
 
 #' @export
-#' @rdname integrateSignal
-#' @aliases integrateSignal,GammaSpectrum,numeric,GammaSpectrum-method
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectrum,numeric,GammaSpectrum-method
 setMethod(
-  f = "integrateSignal",
+  f = "integrate_signal",
   signature = signature(object = "GammaSpectrum", range = "numeric",
                         noise = "GammaSpectrum"),
   definition = function(object, range, noise, NiEi = TRUE, ...) {
     # Compute noise value
-    noise_value <- integrateSignal(noise, range = range, NiEi = NiEi)
+    noise_value <- integrate_signal(noise, range = range, NiEi = NiEi)
     # Integrate spectrum
-    signal_value <- integrateSignal(object, range = range, noise = noise_value,
+    signal_value <- integrate_signal(object, range = range, noise = noise_value,
                                     NiEi = NiEi)
     signal_value
   }

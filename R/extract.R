@@ -4,7 +4,7 @@ NULL
 
 # ================================================================ GammaSpectrum
 #' @export
-#' @rdname GammaSpectrum-class
+#' @rdname subset
 #' @aliases [[,GammaSpectrum-method
 setMethod(
   f = "[[",
@@ -18,30 +18,46 @@ setMethod(
 )
 
 #' @export
-#' @rdname GammaSpectrum-class
-#' @aliases length,GammaSpectrum-method
+#' @rdname access
+#' @aliases get_hash,GammaSpectrum-method
 setMethod(
-  f = "length",
+  f = "get_hash",
   signature = "GammaSpectrum",
-  definition = function(x) {
-    max(length(x@chanel), length(x@energy))
-  }
+  definition = function(object) object@hash
 )
 
 #' @export
-#' @rdname extract
-#' @aliases getDoseRate,GammaSpectrum-method
+#' @rdname access
+#' @aliases get_length,GammaSpectrum-method
 setMethod(
-  f = "getDoseRate",
+  f = "get_chanels",
+  signature = "GammaSpectrum",
+  definition = function(object) length(object@chanel)
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_energy,GammaSpectrum-method
+setMethod(
+  f = "get_energy",
+  signature = "GammaSpectrum",
+  definition = function(object) range(object@energy)
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_dose,GammaSpectrum-method
+setMethod(
+  f = "get_dose",
   signature = "GammaSpectrum",
   definition = function(object) object@dose_rate
 )
 
 #' @export
-#' @rdname extract
-#' @aliases setDoseRate,GammaSpectrum-method
+#' @rdname access
+#' @aliases set_dose,GammaSpectrum-method
 setMethod(
-  f = "setDoseRate<-",
+  f = "set_dose<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
     if (!is.numeric(value) || length(value) != 2)
@@ -56,7 +72,7 @@ setMethod(
 
 # ================================================================= GammaSpectra
 #' @export
-#' @rdname GammaSpectra-class
+#' @rdname subset
 #' @aliases [,GammaSpectra-method
 setMethod(
   f = "[",
@@ -89,7 +105,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname GammaSpectra-class
+#' @rdname subset
 #' @aliases [[,GammaSpectra-method
 setMethod(
   f = "[[",
@@ -103,31 +119,57 @@ setMethod(
 )
 
 #' @export
-#' @rdname extract
-#' @aliases getDoseRate,GammaSpectra-method
+#' @rdname access
+#' @aliases get_hash,GammaSpectra-method
 setMethod(
-  f = "getDoseRate",
+  f = "get_hash",
   signature = "GammaSpectra",
   definition = function(object) {
-    spc <- methods::S3Part(object, strictS3 = TRUE)
-    dose_rate <- lapply(
-      X = spc,
-      FUN = function(x) methods::slot(x, "dose_rate")
-    )
-    if (length(unlist(dose_rate)) == 0)
-      stop("No dose rate available for these spectra.", call. = FALSE)
-
-    dose_mtx <- do.call(rbind, dose_rate)
-    colnames(dose_mtx) <- c("value", "error")
-    as.matrix(dose_mtx)
+    vapply(object, FUN = get_hash, FUN.VALUE = character(1))
   }
 )
 
 #' @export
-#' @rdname extract
-#' @aliases setDoseRate,GammaSpectra-method
+#' @rdname access
+#' @aliases get_length,GammaSpectra-method
 setMethod(
-  f = "setDoseRate<-",
+  f = "get_chanels",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    vapply(object, FUN = get_chanels, FUN.VALUE = numeric(1))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_energy,GammaSpectra-method
+setMethod(
+  f = "get_energy",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    vapply(object, FUN = get_energy, FUN.VALUE = numeric(2))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_dose,GammaSpectra-method
+setMethod(
+  f = "get_dose",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    dose <- vapply(object, FUN = get_dose, FUN.VALUE = numeric(2))
+    dose <- as.data.frame(t(dose))
+    colnames(dose) <- c("value", "error")
+    dose
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases set_dose,GammaSpectra-method
+setMethod(
+  f = "set_dose<-",
   signature = "GammaSpectra",
   definition = function(object, value) {
 
@@ -156,7 +198,7 @@ setMethod(
 
 # ============================================================= CalibrationCurve
 #' @export
-#' @rdname CalibrationCurve-class
+#' @rdname subset
 #' @aliases [[,CalibrationCurve-method
 setMethod(
   f = "[[",
@@ -171,7 +213,7 @@ setMethod(
 
 # ======================================================================== Peaks
 #' @export
-#' @rdname PeakPosition-class
+#' @rdname subset
 #' @aliases [[,PeakPosition-method
 setMethod(
   f = "[[",
@@ -185,19 +227,28 @@ setMethod(
 )
 
 #' @export
-#' @rdname extract
-#' @aliases getEnergy,PeakPosition-method
+#' @rdname access
+#' @aliases get_chanels,PeakPosition-method
 setMethod(
-  f = "getEnergy",
+  f = "get_chanels",
+  signature = "PeakPosition",
+  definition = function(object) length(object@chanel)
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_energy,PeakPosition-method
+setMethod(
+  f = "get_energy",
   signature = "PeakPosition",
   definition = function(object) object@energy
 )
 
 #' @export
-#' @rdname extract
-#' @aliases setEnergy,PeakPosition-method
+#' @rdname access
+#' @aliases set_energy,PeakPosition-method
 setMethod(
-  f = "setEnergy<-",
+  f = "set_energy<-",
   signature = "PeakPosition",
   definition = function(object, value) {
     if (!is.atomic(value) || !is.numeric(value))
@@ -207,19 +258,5 @@ setMethod(
     object@energy <- value
     methods::validObject(object)
     object
-  }
-)
-
-#' @export
-#' @rdname PeakModel-class
-#' @aliases [[,PeakModel-method
-setMethod(
-  f = "[[",
-  signature = "PeakModel",
-  definition = function(x, i) {
-    i <- match.arg(i, choices = methods::slotNames("PeakModel"),
-                   several.ok = FALSE)
-    data <- methods::slot(x, i)
-    return(data)
   }
 )

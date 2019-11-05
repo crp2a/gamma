@@ -139,43 +139,6 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,PeakModel,missing-method
-setMethod(
-  f = "plot",
-  signature = signature(x = "PeakModel", y = "missing"),
-  definition = function(x, ...) {
-    # Get data
-    bl <- x@baseline
-    spc <- x@spectrum
-
-    spc_clean <- spc - bl
-    spc_df <- methods::as(spc_clean, "data.frame")
-    fit <- lapply(
-      X = x@model,
-      FUN = function(x, data) stats::predict(x, data),
-      data = spc_df[, "chanel"]
-    )
-
-    # Build a long table for ggplot2
-    spc_fit <- do.call(cbind.data.frame, args = list(fit, stringsAsFactors = FALSE))
-    colnames(spc_fit) <- c(paste("peak", seq_len(ncol(spc_fit)), sep = " "))
-    spc_stacked <- utils::stack(spc_fit)
-    spc_long <- cbind.data.frame(spc_stacked, spc_df, stringsAsFactors = FALSE)
-    colnames(spc_long) <- c("fit", "peak", "chanel", "energy", "counts", "rate")
-
-    plot(spc_clean) +
-      ggplot2::geom_area(
-        data = spc_long,
-        mapping = ggplot2::aes(x = .data$chanel, y = .data$fit,
-                               fill = .data$peak, colour = .data$peak),
-        alpha = 0.5
-      ) +
-      ggplot2::labs(colour = "Peak", fill = "Peak")
-  }
-)
-
-#' @export
-#' @rdname plot
 #' @aliases plot,CalibrationCurve,missing-method
 setMethod(
   f = "plot",

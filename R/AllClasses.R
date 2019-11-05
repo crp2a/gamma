@@ -4,7 +4,7 @@
 setClassUnion("LmOrNull", c("lm", "NULL"))
 
 # DEFINITION ===================================================================
-#' An S4 class to represent a gamma sectrum
+#' An S4 Class to Represent a Gamma Sectrum
 #'
 #' Represents a single spectrum of a gamma ray spectrometry measurement.
 #' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
@@ -28,17 +28,16 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
 #'  each channel.
 #' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
-#'  scale calibration (see \code{\link{calibrate}}).
+#'  scale calibration (see \code{\link{calibrate_energy}}).
 #' @slot dose_rate A length-two \code{\link{numeric}} vector giving the dose
 #'  rate and corresponding error.
-#' @param x An object of class \code{GammaSpectrum}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
-#'  \item{\code{length(x)}}{Get the number of chanels in \code{x}.}
+#'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+#'  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
+#'  \item{\code{get_energy(x)}}{Get the energy scale of \code{x}.}
+#'  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
 #' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
@@ -52,14 +51,13 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' \describe{
 #'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
 #'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
+#'  of length one and will be matched to the name of the slots.}
 #' }
-#' @return
-#'  TODO
 #' @seealso \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
 #' @docType class
+#' @family class
 #' @aliases GammaSpectrum-class
 .GammaSpectrum <- setClass(
   Class = "GammaSpectrum",
@@ -75,7 +73,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
-    calibration = "LmOrNull",
+    calibration = "lm",
     dose_rate = "numeric"
   ),
   prototype = list(
@@ -90,22 +88,16 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = numeric(0),
     live_time = numeric(0),
     real_time = numeric(0),
-    calibration = NULL,
-    dose_rate = numeric(0)
+    calibration = stats::lm(0 ~ 0),
+    dose_rate = numeric(2)
   )
 )
 setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
-#' An S4 class to represent a collection of gamma sectra
+#' An S4 Class to Represent a Collection of Gamma Sectra
 #'
 #' Represents a collection of spectra of gamma ray spectrometry measurements.
 #' @param x An object of class \code{GammaSpectra}.
-#' @param i,j Indices specifying elements to extract or replace (see below).
-#'  Indices are \code{\link{numeric}} or \code{\link{character}} vectors or
-#'  empty (\code{\link{missing}}) or \code{\link{NULL}}.
-#'  Numeric values are coerced to integer as by \code{\link{as.integer}}
-#'  (and hence truncated towards zero). Character vectors will be matched to
-#'  the names of the object.
 #' @details
 #'  This class extends the base \code{\link{list}} and can only contains
 #'  \linkS4class{GammaSpectrum} objects.
@@ -113,7 +105,11 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
 #'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
-#'  \item{\code{names(x)}}{Get the names of the elements.}
+#'  \item{\code{names(x)}}{Get the names of the elements of \code{x}.}
+#'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+#'  \item{\code{get_chanels(x)}}{Get the number of chanels of \code{x}.}
+#'  \item{\code{get_energy(x)}}{Get the energy scales of \code{x}.}
+#'  \item{\code{get_dose(x)}}{Get the dose rates of \code{x}.}
 #' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
@@ -127,29 +123,28 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'   length one. Returns a \code{list}.}
 #'  \item{\code{x[[i]]}}{Extracts the elements selected by subscript \code{i}.
 #'   \code{i} can be a \code{numeric} or \code{character} vector
-#'   of length one. Returns the corresponding \linkS4class{GammaSpectrum} object.}
+#'   of length one. Returns the corresponding \linkS4class{GammaSpectrum}
+#'   object.}
 #' }
-#' @return
-#'  TODO
 #' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-GammaSpectra.R
 #' @author N. Frerebeau
 #' @docType class
+#' @family class
 #' @aliases GammaSpectra-class
 .GammaSpectra <- setClass(
   Class = "GammaSpectra",
   contains = "list"
 )
 
-#' An S4 class to represent a spectrum baseline
+#' An S4 Class to Represent a Spectrum Baseline
 #'
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
-#' @return
-#'  TODO
 #' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
 #' @docType class
+#' @family class
 #' @aliases BaseLine-class
 .BaseLine <- setClass(
   Class = "BaseLine",
@@ -160,37 +155,32 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
   contains = "GammaSpectrum"
 )
 
-#' An S4 class to represent a calibration curve
+#' An S4 class to Represent a Dose Rate Calibration Curve
 #'
 #' @slot details A \code{\link{list}} of metadata.
 #' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
 #'  curve.
 #' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
-#'  and error (see \code{\link{integrateSignal}}).
+#'  and error (see \code{\link{integrate_signal}}).
 #' @slot integration A length-two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (see \code{\link{integrateSignal}}).
+#'  range to integrate within (see \code{\link{integrate_signal}}).
 #' @slot data A \code{\link[=data.frame]{data frame}} giving the data used for
 #'  linear model fitting.
-#' @param x An object of class \code{CalibrationCurve}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 #' \describe{
 #'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
 #'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 #' }
-#' @return
-#'  TODO
 #' @author N. Frerebeau
 #' @docType class
+#' @family class
 #' @aliases CalibrationCurve-class
 .CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
   slots = c(
     details = "list",
-    model = "LmOrNull",
+    model = "lm",
     noise = "numeric",
     integration = "numeric",
     data = "data.frame"
@@ -203,47 +193,14 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
       authors = "unknown",
       date = Sys.time()
     ),
-    model = NULL,
+    model = stats::lm(0 ~ 0),
     noise = numeric(0),
     integration = numeric(0),
     data = data.frame()
   )
 )
 
-#' An S4 class to represent a set peaks
-#'
-#' @slot model A list of \code{\link[stats:nls]{nonlinear models}} giving the
-#'  fitted model for each peak.
-#' @slot coefficients A \code{\link{numeric}} matrix giving the peak parameters.
-#' @slot spectrum A \linkS4class{GammaSpectrum} object.
-#' @slot baseline A \linkS4class{BaseLine} object.
-#' @param x An object of class \code{PeakModel}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
-#' @section Subset:
-#' In the code snippets below, \code{x} is a \code{PeakModel} object.
-#' \describe{
-#'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
-#'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
-#' }
-#' @return
-#'  TODO
-#' @author N. Frerebeau
-#' @docType class
-#' @aliases PeakModel-class
-.PeakModel <- setClass(
-  Class = "PeakModel",
-  slots = c(
-    model = "list",
-    coefficients = "matrix",
-    spectrum = "GammaSpectrum",
-    baseline = "BaseLine"
-  )
-)
-
-#' An S4 class to represent a set of peaks
+#' An S4 Class to Represent a Set of Peaks
 #'
 #' @slot hash TODO.
 #' @slot noise_method A \code{\link{character}} string specifying the method
@@ -254,10 +211,6 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  size.
 #' @slot chanel TODO.
 #' @slot energy TODO.
-#' @param x An object of class \code{PeakPosition}.
-#' @param i A length-one \code{\link{character}} vector specifying the element
-#'  to extract or replace (see below). Character sring will be matched to the
-#'  names of the slots.
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
 #' \describe{
@@ -265,10 +218,9 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
-#' @return
-#'  TODO
 #' @author N. Frerebeau
 #' @docType class
+#' @family class
 #' @aliases PeakPosition-class
 .PeakPosition <- setClass(
   Class = "PeakPosition",

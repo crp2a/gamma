@@ -37,13 +37,6 @@ setAs(
   }
 )
 setAs(
-  from = "PeakModel",
-  to = "data.frame",
-  def = function(from) {
-    as.data.frame(from@coefficients, stringsAsFactors = FALSE)
-  }
-)
-setAs(
   from = "PeakPosition",
   to = "data.frame",
   def = function(from) {

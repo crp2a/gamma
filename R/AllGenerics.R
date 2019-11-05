@@ -3,52 +3,113 @@
 NULL
 
 # ====================================================================== Extract
-#' Extract or Replace Parts of an Object
+#' Get or Set Parts of an Object
 #'
-#' @param object An object from which to extract element(s) or in which to
-#'  replace element(s).
-#' @param value A possible value for the element(s) of \code{object}
+#' Getters and setters to extract or replace parts of an object.
+#' @param object An object from which to get or set element(s).
+#' @param value A possible value for the element(s) of \code{object} (see
+#'  below).
 #' @return
-#'  TODO
+#'  An object of the same sort as \code{object} with the new values assigned.
 #' @author N. Frerebeau
 #' @docType methods
-#' @name extract
-#' @rdname extract
-#' @aliases extract-method replace-method
+#' @family mutator
+#' @name access
+#' @rdname access
+#' @aliases get set
 NULL
 
 #' @export
-#' @rdname extract
+#' @rdname access
 setGeneric(
-  name = "getDoseRate",
-  def = function(object) standardGeneric("getDoseRate")
-)
-#' @export
-#' @rdname extract
-setGeneric(
-  name = "setDoseRate<-",
-  def = function(object, value) standardGeneric("setDoseRate<-")
+  name = "get_hash",
+  def = function(object) standardGeneric("get_hash")
 )
 
 #' @export
-#' @rdname extract
+#' @rdname access
 setGeneric(
-  name = "getEnergy",
-  def = function(object) standardGeneric("getEnergy")
+  name = "get_chanels",
+  def = function(object) standardGeneric("get_chanels")
+)
+
+#' @export
+#' @rdname access
+setGeneric(
+  name = "get_dose",
+  def = function(object) standardGeneric("get_dose")
 )
 #' @export
-#' @rdname extract
+#' @rdname access
 setGeneric(
-  name = "setEnergy<-",
-  def = function(object, value) standardGeneric("setEnergy<-")
+  name = "set_dose<-",
+  def = function(object, value) standardGeneric("set_dose<-")
+)
+
+#' @export
+#' @rdname access
+setGeneric(
+  name = "get_energy",
+  def = function(object) standardGeneric("get_energy")
+)
+#' @export
+#' @rdname access
+setGeneric(
+  name = "set_energy<-",
+  def = function(object, value) standardGeneric("set_energy<-")
+)
+
+# ------------------------------------------------------------------------------
+#' Extract or Replace Parts of an Object
+#'
+#' Operators acting on objects to extract or replace parts.
+#' @param x An object from which to extract element(s) or in which to
+#'  replace element(s).
+#' @param i,j Indices specifying elements to extract or replace. Indices are
+#'  \code{\link{numeric}}, \code{\link{integer}} or \code{\link{character}}
+#'  vectors or empty (missing) or \code{NULL}. Numeric values are coerced to
+#'  \code{\link{integer}} as by \code{\link{as.integer}} (and hence truncated
+#'  towards zero). Character vectors will be matched to the name of the
+#'  elements. An empty index (a comma separated blank) indicates that all
+#'  entries in that dimension are selected.
+# @param drop A \code{\link{logical}} scalar: should the result be coerced to
+#  the lowest possible dimension? This only works for extracting elements,
+#  not for the replacement.
+#' @return
+#'  A subsetted object.
+#' @author N. Frerebeau
+#' @docType methods
+#' @family mutator
+#' @name subset
+#' @rdname subset
+NULL
+
+# =================================================================== Predicates
+#' Predicates
+#'
+#' @param object An object from which to get or set element(s).
+#' @return
+#'  A \code{\link{logical}} vector.
+#' @author N. Frerebeau
+#' @docType methods
+#' @family predicates
+#' @name predicates
+#' @rdname predicates
+NULL
+
+#' @export
+#' @rdname predicates
+setGeneric(
+  name = "is_calibrated",
+  def = function(object) standardGeneric("is_calibrated")
 )
 
 # ===================================================== Energy scale calibration
 #' Spectrum calibration
 #'
 #' Calibrate the energy scale of a gamma spectrum.
-#' @param object A \linkS4class{GammaSpectrum} object,
-#'  \linkS4class{GammaSpectra} or \linkS4class{PeakModel}.
+#' @param object A \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra} object.
 #' @param lines A list of or a \code{\link{numeric}} vector.
 #'  If a \code{list} is provided, each element must be a named length-two
 #'  numeric vector giving the observed peak position (chanel) and the
@@ -62,11 +123,12 @@ setGeneric(
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
+#' @family energy
 #' @rdname calibrate
-#' @aliases calibrate-method
+#' @aliases calibrate_energy-method
 setGeneric(
-  name = "calibrate",
-  def = function(object, lines, ...) standardGeneric("calibrate")
+  name = "calibrate_energy",
+  def = function(object, lines, ...) standardGeneric("calibrate_energy")
 )
 
 # ===================================================================== Baseline
@@ -111,29 +173,29 @@ setGeneric(
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 #'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 #' @example inst/examples/ex-baseline.R
-#' @family signal processing
 #' @author N. Frerebeau
 #' @docType methods
-#' @name processBaseline
-#' @rdname processBaseline
+#' @family signal processing
+#' @name baseline
+#' @rdname baseline
 NULL
 
-#' @rdname processBaseline
-#' @aliases estimateBaseline-method
+#' @rdname baseline
+#' @aliases estimate_baseline-method
 setGeneric(
-  name = "estimateBaseline",
-  def = function(object, ...) standardGeneric("estimateBaseline")
+  name = "estimate_baseline",
+  def = function(object, ...) standardGeneric("estimate_baseline")
 )
 
-#' @rdname processBaseline
-#' @aliases removeBaseline-method
+#' @rdname baseline
+#' @aliases remove_baseline-method
 setGeneric(
-  name = "removeBaseline",
-  def = function(object, ...) standardGeneric("removeBaseline")
+  name = "remove_baseline",
+  def = function(object, ...) standardGeneric("remove_baseline")
 )
 
 # ========================================================= Dose rate prediction
-#' Calibration
+#' Dose Rate Estimation
 #'
 #' Builds a calibration curve for gamma dose rate estimation.
 #' @param object An object of class \linkS4class{GammaSpectra}.
@@ -151,18 +213,17 @@ setGeneric(
 #' @param ... Currently not used.
 #' @details
 #'  TODO
-#' @return
-#'  A \linkS4class{CalibrationCurve} object.
-#' @seealso \link{integrateSignal}
-#' @family dose rate
+#' @return A \linkS4class{CalibrationCurve} object.
+#' @seealso \link{integrate_signal}
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
+#' @family dose rate
 #' @docType methods
 #' @rdname fit
-#' @aliases fit-method
+#' @aliases fit_dose-method
 setGeneric(
-  name = "fit",
-  def = function(object, noise, ...) standardGeneric("fit")
+  name = "fit_dose",
+  def = function(object, noise, ...) standardGeneric("fit_dose")
 )
 
 #' Gamma dose rate
@@ -180,19 +241,16 @@ setGeneric(
 #' @return
 #'  If \code{simplify} is \code{FALSE} returns a list of length-two numeric
 #'  vectors (default), else returns a matrix.
-#' @family dose rate
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
+#' @family dose rate
 #' @docType methods
-#' @name predict
 #' @rdname predict
-#' @aliases predict-method
-if (!isGeneric("predict")) {
-  setGeneric(
-    name = "predict",
-    def = function(object, ...) standardGeneric("predict")
-  )
-}
+#' @aliases predict_dose-method
+setGeneric(
+  name = "predict_dose",
+  def = function(object, ...) standardGeneric("predict_dose")
+)
 
 # ==================================================================== Integrate
 #' Signal integration
@@ -227,12 +285,11 @@ if (!isGeneric("predict")) {
 #' @author N. Frerebeau
 #' @family signal processing
 #' @docType methods
-#' @rdname integrateSignal
-#' @aliases integrateSignal-method
-#' @keywords internal
+#' @rdname integrate
+#' @aliases integrate_signal-method
 setGeneric(
-  name = "integrateSignal",
-  def = function(object, range, noise, ...) standardGeneric("integrateSignal")
+  name = "integrate_signal",
+  def = function(object, range, noise, ...) standardGeneric("integrate_signal")
 )
 
 # ======================================================================== Peaks
@@ -241,12 +298,6 @@ setGeneric(
 #' Finds local maxima in sequential data.
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
 #'  object.
-#' @param peaks A \code{\link{numeric}} vector giving the starting peak postions
-#'  for the nonlinear model fitting (see below).
-#' @param bounds A \code{\link{numeric}} vector giving the
-#'  parameters bounds (in percent), replicated to be of length three (see
-#'  below). If \code{NULL} (the default), all parameters are assumed to be
-#'  unconstrained.
 #' @param method A \code{\link{character}} string specifying the methode to be
 #'  used for background noise estimation (see below).
 #' @param SNR An \code{\link{integer}} giving the signal-to-noise-ratio for
@@ -254,36 +305,22 @@ setGeneric(
 #' @param span An \code{\link{integer}} giving the half window size (in number
 #'  of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 #'  half window size.
-#' @param ... Extra parameters passed to \code{\link{estimateBaseline}}.
+#' @param ... Extra parameters to be passed to internal methods.
 #' @section Peak detection:
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 #' @section Peak fitting:
 #'  TODO
-#' @return
-#'  \code{findPeaks} returns an object of class \linkS4class{PeakPosition}.
-#'
-#'  \code{fitPeaks} returns an object of class \linkS4class{PeakModel}.
+#' @return An object of class \linkS4class{PeakPosition}.
 #' @example inst/examples/ex-peaks.R
-#' @family signal processing
 #' @author N. Frerebeau
 #' @docType methods
-#' @name peaks
+#' @family signal processing
 #' @rdname peaks
-NULL
-
-#' @rdname peaks
-#' @aliases findPeaks-method
+#' @aliases find_peaks-method
 setGeneric(
-  name = "findPeaks",
-  def = function(object, ...) standardGeneric("findPeaks")
-)
-
-#' @rdname peaks
-#' @aliases fitPeaks-method
-setGeneric(
-  name = "fitPeaks",
-  def = function(object, peaks, ...) standardGeneric("fitPeaks")
+  name = "find_peaks",
+  def = function(object, ...) standardGeneric("find_peaks")
 )
 
 # ========================================================================= Plot
@@ -354,23 +391,23 @@ setGeneric(
 )
 
 # =================================================================== Simulation
-#' Simulate a Gamma Spectrum
+#' Simulate a Gamma-Ray Spectrum
 #'
-#' @param K TODO
-#' @param Th TODO
-#' @param U TODO
+#' Rough simulation of a gamma-ray spectrum.
+#' @param K,Th,U A length-one \code{\link{numeric}} vector giving the K-U-Th
+#'  ratio that caracterize a natural spectrum.
 #' @param energy A length-two \code{\link{numeric}} vector giving the energy
 #'  range (in keV).
-#' @param n An \code{\link{integer}} giving TODO.
+#' @param n An \code{\link{integer}} giving the number of chanel.
 #' @param ... Currently not used.
 #' @return A \linkS4class{GammaSpectrum} object.
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname simulate
-#' @aliases simulate-method
+#' @rdname simulate_spectrum
+#' @aliases simulate_spectrum-method
 setGeneric(
-  name = "simulate",
-  def = function(K, Th, U, ...) standardGeneric("simulate")
+  name = "simulate_spectrum",
+  def = function(K, U, Th, ...) standardGeneric("simulate_spectrum")
 )
 
 # ==================================================================== Smoothing
@@ -423,11 +460,11 @@ setGeneric(
 #' @family signal processing
 #' @example inst/examples/ex-smooth.R
 #' @docType methods
-#' @rdname smooth
-#' @aliases smooth-method
+#' @rdname smooth_signal
+#' @aliases smooth_signal-method
 setGeneric(
-  name = "smooth",
-  def = function(object, ...) standardGeneric("smooth")
+  name = "smooth_signal",
+  def = function(object, ...) standardGeneric("smooth_signal")
 )
 
 # ==================================================================== Stabilize
@@ -442,9 +479,9 @@ setGeneric(
 #' @author N. Frerebeau
 #' @family signal processing
 #' @docType methods
-#' @rdname stabilize
-#' @aliases stabilize-method
+#' @rdname stabilize_signal
+#' @aliases stabilize_signal-method
 setGeneric(
-  name = "stabilize",
-  def = function(object, ...) standardGeneric("stabilize")
+  name = "stabilize_signal",
+  def = function(object, ...) standardGeneric("stabilize_signal")
 )

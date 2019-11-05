@@ -8,7 +8,6 @@
 \alias{plot,GammaSpectrum,GammaSpectrum-method}
 \alias{plot,GammaSpectra,missing-method}
 \alias{plot,GammaSpectrum,PeakPosition-method}
-\alias{plot,PeakModel,missing-method}
 \alias{plot,CalibrationCurve,missing-method}
 \title{Plot}
 \usage{
@@ -21,8 +20,6 @@
   yaxis = c("counts", "rate"), select = NULL, facet = FALSE, ...)
 
 \S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
-
-\S4method{plot}{PeakModel,missing}(x, y, ...)
 
 \S4method{plot}{CalibrationCurve,missing}(x, y, ...)
 }

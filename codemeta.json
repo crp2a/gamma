@@ -5,8 +5,8 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "gamma",
-  "description": "'gamma' is intended to process in-situ\n    gamma-ray spectrometry measurements for luminescence dating. This\n    package allows to import, inspect and (automatically) correct the energy \n    shifts of the spectrum. It provides methods for estimating the gamma \n    dose rate by the use of a calibration curve. The package only supports \n    Canberra CNF and TKA files.",
-  "name": "gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements for\n    Luminescence Dating",
+  "description": "Process in-situ Gamma-Ray Spectrometry for\n    Luminescence Dating. This package allows to import, inspect and\n    (automatically) correct the energy shifts of Gamma-Ray spectra. It\n    provides methods for estimating the gamma dose rate by the use of a\n    calibration curve. The package only supports Canberra CNF and TKA\n    files.",
+  "name": "gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry\n    Measurements for Luminescence Dating",
   "codeRepository": "http://github.com/crp2a/gamma",
   "relatedLink": "http://gamma.archaeo.science",
   "issueTracker": "http://github.com/crp2a/gamma/issues",
@@ -15,10 +15,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.0",
+    "version": "3.6.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.0 (2019-04-26)",
+  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
   "author": [
     {
       "@type": "Person",
@@ -47,9 +47,7 @@
       "familyName": "Lahaye",
       "email": "christelle.lahaye@u-bordeaux-montaigne.fr",
       "@id": "https://orcid.org/0000-0003-2215-9015"
-    }
-  ],
-  "contributor": [
+    },
     {
       "@type": "Person",
       "givenName": "Guilhem",
@@ -57,6 +55,7 @@
       "email": "guilhem.paradol@phelma.grenoble-inp.fr"
     }
   ],
+  "contributor": {},
   "copyrightHolder": [
     {
       "@type": "Organization",
@@ -225,7 +224,7 @@
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "fileSize": "944.285KB",
+  "fileSize": "641.407KB",
   "contIntegration": [
     "https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master",
     "https://travis-ci.org/crp2a/gamma",
@@ -239,7 +238,8 @@
     "geochronology",
     "luminescence-dating",
     "archaeology",
-    "archaeological-science"
+    "archaeological-science",
+    "r-package"
   ],
   "citation": [
     {
