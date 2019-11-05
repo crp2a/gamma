@@ -10,8 +10,13 @@
 ^NEWS\.Rmd$
 ^README\.Rmd$
 ^data-raw$
+^doc$
 ^docs$
+^Meta$
 ^\man\figures\README-.*\.png$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^\.covrignore$
+^paper\.md$
+^paper\.bib$
