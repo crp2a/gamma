@@ -35,7 +35,7 @@ setMethod(
 
     # Get count data
     x <- methods::as(object, "data.frame")
-    x_counts <- x$counts
+    x_counts <- x$count
 
     baseline <- switch (
       method,
@@ -43,7 +43,7 @@ setMethod(
       stop("There is no such method: ", method, call. = FALSE)
     )
 
-    spc <- methods::initialize(object, counts = baseline)
+    spc <- methods::initialize(object, count = baseline)
     methods::as(spc, "BaseLine")
   }
 )

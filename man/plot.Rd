@@ -11,13 +11,14 @@
 \alias{plot,CalibrationCurve,missing-method}
 \title{Plot}
 \usage{
-\S4method{plot}{GammaSpectrum,missing}(x, y, ...)
+\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("chanel", "energy"),
+  yaxis = c("count", "rate"), ...)
 
 \S4method{plot}{GammaSpectrum,GammaSpectrum}(x, y, xaxis = c("chanel",
-  "energy"), yaxis = c("counts", "rate"), ...)
+  "energy"), yaxis = c("count", "rate"), ...)
 
 \S4method{plot}{GammaSpectra,missing}(x, xaxis = c("chanel", "energy"),
-  yaxis = c("counts", "rate"), select = NULL, facet = FALSE, ...)
+  yaxis = c("count", "rate"), select = NULL, facet = FALSE, ...)
 
 \S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
 
@@ -26,12 +27,12 @@
 \arguments{
 \item{x, y}{Objects to be plotted.}
 
-\item{...}{Currently not used.}
-
 \item{xaxis, yaxis}{A \code{\link{character}} string specifying the data to
 be plotted along each axis. It must be one of "\code{energy}" or
 "\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
 (\code{y} axis). Any unambiguous substring can be given.}
+
+\item{...}{Currently not used.}
 
 \item{select}{A \code{\link{numeric}} or \code{\link{character}} vector
 giving the selection of the spectrum that are drawn.}
@@ -52,19 +53,15 @@ spectra <- read(spc_dir)
 
 # Plot all spectra
 plot(spectra, yaxis = "rate", facet = FALSE) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 
 # Plot the spectrum named 'BRIQUE'
-plot(spectra, xaxis = "energy", yaxis = "count",
-     select = "BRIQUE", facet = TRUE) +
-  ggplot2::labs(x = "Energy [keV]", y = "Count") +
+plot(spectra, xaxis = "energy", yaxis = "count", select = "BRIQUE") +
   ggplot2::theme_bw()
 
 # Plot the first three spectra
 plot(spectra, xaxis = "chanel", yaxis = "rate",
      select = 1:3, facet = TRUE) +
-  ggplot2::labs(x = "Chanel", y = "Count rate [1/s]") +
   ggplot2::theme_bw()
 }
 \author{

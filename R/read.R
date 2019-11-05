@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "read",
   signature = signature(file = "character"),
-  definition = function(file, extensions = c("cnf", "tka"), skip = NULL, ...) {
+  definition = function(file, extensions = c("cnf", "tka"), ...) {
     # Validation
     extensions <- match.arg(extensions, several.ok = TRUE)
     extensions <- c(extensions, toupper(extensions))
@@ -22,28 +22,15 @@ setMethod(
       file <- as.list(file_list)
     }
 
-    if(!is.null(skip) || length(skip) != 0) {
-      if (is.numeric(skip)) {
-        skip <- as.integer(skip)
-      } else if (is.logical(skip)) {
-        skip <- skip[[1L]]
-      } else {
-        stop("`skip` must be a numeric vector or a logical scalar.",
-             call. = FALSE)
-      }
-    } else {
-      skip <- FALSE
-    }
-
     # Read files
     spc <- lapply(X = file, FUN = function(x, y, ...) {
       extension <- tolower(tools::file_ext(x))
       switch(
         extension,
-        cnf = readCanberraCNF(file = x, skip = y, ...),
-        tka = readCanberraTKA(file = x, skip = y, ...)
+        cnf = readCanberraCNF(file = x, ...),
+        tka = readCanberraTKA(file = x, ...)
       )
-    }, y = skip, ...)
+    }, ...)
 
     if(length(spc) > 1) {
       # Return a GammaSpectra object
@@ -64,7 +51,7 @@ setMethod(
 #'  An object of class \linkS4class{GammaSpectrum}.
 #' @keywords internal
 #' @noRd
-readCanberraCNF <- function(file, skip = NULL, ...) {
+readCanberraCNF <- function(file, ...) {
   # Read file
   spc_xy <- rxylib::read_xyData(file = file, ..., verbose = FALSE)
   # Get and check file format
@@ -82,12 +69,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
   spc_data <- as.data.frame(spc_xy$dataset[[1]]$data_block)
   # Add a column to store the chanel number
   spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
-  colnames(spc_data) <- c("energy", "counts", "chanel")
-
-  # Skip chanels
-  if(!is.null(skip)) {
-    spc_data <- skipChanels(spc_data, skip = skip)
-  }
+  colnames(spc_data) <- c("energy", "count", "chanel")
 
   # Get instrument name (remove the last word)
   instrument_name <- gsub("\\s*\\w*$", "", names(spc_xy$dataset))
@@ -103,7 +85,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
     file_format = "CNF",
     chanel = spc_data$chanel,
     energy = spc_data$energy,
-    counts = spc_data$counts,
+    count = spc_data$count,
     live_time = live_time,
     real_time = real_time
   )
@@ -118,7 +100,7 @@ readCanberraCNF <- function(file, skip = NULL, ...) {
 #'  An object of class \linkS4class{GammaSpectrum}.
 #' @keywords internal
 #' @noRd
-readCanberraTKA <- function(file, skip = NULL, ...) {
+readCanberraTKA <- function(file, ...) {
   # Read file
   spc_xy <- utils::read.table(file = file)
 
@@ -135,11 +117,6 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
   spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
   colnames(spc_data) <- c("counts", "chanel")
 
-  # Skip chanels
-  if(!is.null(skip)) {
-    spc_data <- skipChanels(spc_data, skip = skip)
-  }
-
   # Compute 32-bytes MD5 hash
   hash <- as.character(tools::md5sum(file))
 
@@ -149,40 +126,8 @@ readCanberraTKA <- function(file, skip = NULL, ...) {
     instrument = instrument_name,
     file_format = "TKA",
     chanel = spc_data$chanel,
-    counts = spc_data$count,
+    count = spc_data$count,
     live_time = live_time,
     real_time = real_time
   )
-}
-
-#' Skip chanels
-#'
-#' @param x A \code{\link[=data.frame]{data frame}}.
-#' @param skip A \code{\link{logical}} scalar or a \code{\link{numeric}} vector.
-#' @return A \code{\link[=data.frame]{data frame}}.
-#' @author N. Frerebeau
-#' @keywords internal
-#' @noRd
-skipChanels <- function(x, skip) {
-  # Validation
-  if (!is.data.frame(x))
-    stop("A data.frame is expected.")
-
-  skip_chanel <- x$chanel
-  if (is.logical(skip)) {
-    if (skip) {
-      skip_chanel <- -seq_len(which.max(x$counts))
-    }
-  }
-  if (is.numeric(skip)) {
-    skip_chanel <- -which(x$chanel %in% as.integer(skip))
-  }
-  if (length(skip_chanel) == 0) {
-    skip_chanel <- x$chanel
-  }
-  if (getOption("verbose")) {
-    n <- if (all(skip_chanel %in% x$chanel)) 0 else length(skip_chanel)
-    message(sprintf(ngettext(n, "%d chanel skiped.", "%d chanels skiped."), n))
-  }
-  x[skip_chanel, , drop = FALSE]
 }

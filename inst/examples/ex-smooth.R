@@ -1,6 +1,7 @@
 # Import CNF files
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
-spectrum <- read(spc_file, skip = TRUE)
+spectrum <- read(spc_file)
+spectrum <- slice_signal(spectrum)
 
 # Plot spectrum
 spc_clean <- remove_baseline(spectrum)

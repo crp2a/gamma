@@ -359,21 +359,8 @@ if (!isGeneric("plot")) {
 #'  imported.
 #' @param extensions A \code{\link{character}} vector specifying the possible
 #'  file extensions. It must be one or more of "\code{cnf}", "\code{tka}".
-#' @param skip An \code{\link{integer}} vector or a \code{\link{logical}} scalar
-#'  (see details). If \code{NULL} (the default) or \code{FALSE}, all data are
-#'  imported.
 #' @param ... Extra parameters to be passed to
 #'  \code{\link[rxylib]{read_xyData}}.
-#' @details
-#'  If \code{skip} is not \code{NULL}, several channels are skipped during
-#'  import to retain only a part of the spectrum.
-#'  If \code{skip} is an \code{integer} vector, the corresponding chanels of the
-#'  data file will be skipped.
-#'  If \code{skip} is \code{TRUE}, an attempt is made to define the number of
-#'  channels to skip at the beginning of the spectrum. This skips all channels
-#'  before the highest count maximum. This is intended to deal with the artefact
-#'  produced by the rapid growth of random background noise towards low
-#'  energies.
 #' @note
 #'  \emph{Only supports Canberra CNF and TKA files.}
 #' @return
@@ -408,6 +395,36 @@ setGeneric(
 setGeneric(
   name = "simulate_spectrum",
   def = function(K, U, Th, ...) standardGeneric("simulate_spectrum")
+)
+
+# ======================================================================== Slice
+#' Simulate a Gamma-Ray Spectrum
+#'
+#' Rough simulation of a gamma-ray spectrum.
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+#'  object.
+#' @param ... \code{\link{integer}} values giving the chanels of the
+#'  spectrum to be kept/dropped (see below). Numeric values are coerced to
+#'  integer as by \code{\link{as.integer}} (and hence truncated towards zero).
+#' @details
+#'  Either positive values to keep, or negative values to drop, should be
+#'  provided. The values provided must be either all positive or all negative.
+#'
+#'  If no value is provided, an attempt is made to define the number
+#'  of channels to skip at the beginning of the spectrum. This drops all
+#'  channels before the highest count maximum. This is intended to deal with the
+#'  artefact produced by the rapid growth of random background noise towards low
+#'  energies.
+#' @return A \linkS4class{GammaSpectrum} object.
+#' @author N. Frerebeau
+#' @example inst/examples/ex-slice.R
+#' @docType methods
+#' @family signal processing
+#' @rdname slice
+#' @aliases slice_signal-method
+setGeneric(
+  name = "slice_signal",
+  def = function(object, ...) standardGeneric("slice_signal")
 )
 
 # ==================================================================== Smoothing
@@ -457,10 +474,10 @@ setGeneric(
 #'  36(8), p. 1627-1639.
 #'  DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
 #' @author N. Frerebeau
-#' @family signal processing
 #' @example inst/examples/ex-smooth.R
 #' @docType methods
-#' @rdname smooth_signal
+#' @family signal processing
+#' @rdname smooth
 #' @aliases smooth_signal-method
 setGeneric(
   name = "smooth_signal",
@@ -477,9 +494,9 @@ setGeneric(
 #' @return A new \linkS4class{GammaSpectrum} object with transformed
 #'  intensities.
 #' @author N. Frerebeau
-#' @family signal processing
 #' @docType methods
-#' @rdname stabilize_signal
+#' @family signal processing
+#' @rdname stabilize
 #' @aliases stabilize_signal-method
 setGeneric(
   name = "stabilize_signal",

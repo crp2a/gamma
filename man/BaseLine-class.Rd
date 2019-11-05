@@ -14,7 +14,10 @@ This class extends the \linkS4class{GammaSpectrum} class.
 \examples{
 # Import a CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
-spectrum <- read(spc_file, skip = TRUE)
+spectrum <- read(spc_file)
+
+# Remove the first chanels
+spectrum <- slice_signal(spectrum)
 
 # Estimate baseline
 baseline <- estimate_baseline(spectrum)

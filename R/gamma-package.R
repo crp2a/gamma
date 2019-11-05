@@ -37,7 +37,11 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom methods new
+#' @import shiny
+#' @importFrom methods new as
 #' @importFrom graphics plot
+#' @importFrom ggplot2 aes facet_wrap ggplot geom_errorbar geom_errorbarh
+#' geom_path geom_point geom_segment geom_vline labs scale_x_continuous sec_axis
+#' vars
 #' @importFrom rlang .data
 NULL

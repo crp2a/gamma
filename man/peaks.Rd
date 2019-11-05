@@ -48,17 +48,16 @@ Finds local maxima in sequential data.
 \examples{
 # Import a Canberra CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
-spectrum <- read(spc_file, skip = TRUE)
+spectrum <- read(spc_file)
 
 # Find peaks
 (peaks <- find_peaks(spectrum))
 plot(spectrum, peaks)
-
 }
 \seealso{
 Other signal processing: \code{\link{baseline}},
   \code{\link{integrate_signal}},
-  \code{\link{smooth_signal}},
+  \code{\link{slice_signal}}, \code{\link{smooth_signal}},
   \code{\link{stabilize_signal}}
 }
 \author{

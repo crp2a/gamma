@@ -13,7 +13,7 @@ setValidity(
     file_format <- object@file_format
     chanel <- object@chanel
     energy <- object@energy
-    count <- object@counts
+    count <- object@count
     rate <- object@rate
     live_time <- object@live_time
     real_time <- object@real_time

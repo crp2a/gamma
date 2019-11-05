@@ -39,7 +39,7 @@ setMethod(
       reference = "simulation",
       energy = energy_range,
       # chanel = seq_len(n),
-      counts = colSums(do.call(rbind, count) * k)
+      count = colSums(do.call(rbind, count) * k)
     )
   }
 )

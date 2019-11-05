@@ -12,7 +12,6 @@ test_that("Import a gamma spectrum", {
   cnf_spectrum <- read(cnf_file)
   expect_output(show(cnf_spectrum), "Gamma spectrum")
 
-  expect_type(methods::as(cnf_spectrum, "matrix"), "double")
   expect_s3_class(methods::as(cnf_spectrum, "data.frame"), "data.frame")
   expect_type(methods::as(cnf_spectrum, "list"), "list")
 })
@@ -43,20 +42,4 @@ test_that("Import a set of gamma spectra", {
 
   expect_type(methods::as(spectra, "list"), "list")
   expect_s3_class(methods::as(spectra, "data.frame"), "data.frame")
-})
-test_that("Skip chanels", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-  expect_error(read(spc_dir, skip = LETTERS),
-               "`skip` must be a numeric vector or a logical scalar.")
-  expect_error(read(spc_dir, skip = list(TRUE, FALSE)),
-               "`skip` must be a numeric vector or a logical scalar.")
-
-  options("verbose" = TRUE)
-  cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
-  expect_message(read(cnf_file, skip = 1025), "0 chanels skiped.")
-  expect_message(read(cnf_file, skip = 1024), "1 chanel skiped.")
-  expect_message(read(cnf_file, skip = TRUE), "35 chanels skiped.")
-  expect_identical(read(cnf_file, skip = TRUE), read(cnf_file, skip = 1:35))
-
-  expect_error(skipChanels(LETTERS, skip = TRUE), "A data.frame is expected.")
 })

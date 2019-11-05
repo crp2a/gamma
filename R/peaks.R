@@ -16,11 +16,11 @@ setMethod(
 
     # Get count data
     spc <- methods::as(object, "data.frame")
-    counts <- spc[["counts"]]
-    if (is.null(span)) span <- round(length(counts) * 0.05)
+    count <- spc[["count"]]
+    if (is.null(span)) span <- round(length(count) * 0.05)
     span <- as.integer(span)[[1L]]
 
-    shape <- diff(sign(diff(counts, na.pad = FALSE)))
+    shape <- diff(sign(diff(count, na.pad = FALSE)))
     index_shape <- lapply(
       X = which(shape < 0),
       FUN = function(i, data, span) {
@@ -35,17 +35,17 @@ setMethod(
           return(numeric(0))
         }
       },
-      data = counts,
+      data = count,
       span = span
     )
 
     noise <- switch (
       method,
-      MAD = MAD(counts, ...)
+      MAD = MAD(count, ...)
     )
     threshold <- noise * SNR
     index_noise <- unlist(index_shape)
-    index_subset <- subset(index_noise, counts[index_noise] >= threshold)
+    index_subset <- subset(index_noise, count[index_noise] >= threshold)
 
     pks <- spc[index_subset, ]
     rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))

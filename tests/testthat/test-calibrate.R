@@ -23,7 +23,7 @@ test_that("Calibrate GammaSpectrum", {
   expect_equal(calib[["chanel"]], spectrum[["chanel"]])
   expect_length(calib[["energy"]], 1024)
   expect_true(all(calib[["energy"]] != spectrum[["energy"]]))
-  expect_equal(calib[["counts"]], spectrum[["counts"]])
+  expect_equal(calib[["count"]], spectrum[["count"]])
   expect_equal(calib[["rate"]], spectrum[["rate"]])
   expect_s3_class(calib[["calibration"]], "lm")
 

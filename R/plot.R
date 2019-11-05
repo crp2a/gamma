@@ -8,33 +8,33 @@ NULL
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "missing"),
-  definition = function(x, ...) {
+  definition = function(x, xaxis = c("chanel", "energy"),
+                        yaxis = c("count", "rate"), ...) {
+    # Validation
+    xaxis <- match.arg(xaxis, several.ok = FALSE)
+    yaxis <- match.arg(yaxis, several.ok = FALSE)
+
     # Get data
+    calib <- is_calibrated(x)
     spc <- methods::as(x, "data.frame")
-
-    sec_xaxis <- sec_yaxis <- ggplot2::waiver()
-    if (!anyNA(spc[["chanel"]])) {
-      xaxis <- "chanel"
-      if (!anyNA(spc[["energy"]])) {
-        sec_xaxis <- ggplot2::sec_axis(~ spc[["energy"]], name = "Energy [keV]")
+    if (xaxis == "energy") {
+      if (anyNA(spc[["energy"]])) {
+        xaxis <- "chanel"
+        warning("The energy scale is missing, displaying chanels instead.",
+                call. = FALSE)
       }
-    } else if (!anyNA(spc[["energy"]])) {
-      xaxis <- "energy"
-    } else {
-      stop("Nothing to plot!", call. = FALSE)
+      else if (!calib && getOption("verbose")) {
+        message("It seems that the energy scale has not been corrected.",
+                call. = FALSE)
+      }
     }
-
-    live_time <- x[["live_time"]]
-    if (length(live_time) != 0) {
-      sec_yaxis <- ggplot2::sec_axis(~ . / live_time, name = "Count rate [1/s]")
-    }
+    xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
+    ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     # Plot
-    ggplot2::ggplot(spc, ggplot2::aes(x = .data[[xaxis]], y = .data$counts)) +
-      ggplot2::scale_x_continuous(sec.axis = sec_xaxis) +
-      ggplot2::scale_y_continuous(sec.axis = sec_yaxis) +
-      ggplot2::labs(x = xaxis, y = "Count") +
-      ggplot2::geom_line()
+    ggplot(spc, aes(x = .data[[xaxis]], y = .data[[yaxis]])) +
+      labs(x = xlabel, y = ylabel) +
+      geom_path()
   }
 )
 
@@ -45,7 +45,7 @@ setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),
   definition = function(x, y, xaxis = c("chanel", "energy"),
-                        yaxis = c("counts", "rate"), ...) {
+                        yaxis = c("count", "rate"), ...) {
     spc <- .GammaSpectra(list(x, y))
     plot(spc, xaxis = xaxis, yaxis = yaxis, select = NULL, facet = FALSE)
   }
@@ -58,11 +58,12 @@ setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectra", y = "missing"),
   definition = function(x, xaxis = c("chanel", "energy"),
-                        yaxis = c("counts", "rate"),
+                        yaxis = c("count", "rate"),
                         select = NULL, facet = FALSE, ...) {
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
+
     if (is.null(select))
       select <- seq_len(length(x))
     if (is.numeric(select))
@@ -75,28 +76,25 @@ setMethod(
     if (xaxis == "energy" & anyNA(spc$energy)) {
       xaxis <- "chanel"
       warning("The energy scale is missing for one or more spectra, ",
-              "using the chanel scale instead.", call. = FALSE)
+              "displaying chanels instead.", call. = FALSE)
     }
     xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
-    ylabel <- switch(yaxis, counts = "Counts", rate = "Count rate [1/s]")
+    ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     facet <- if (n == 1) FALSE else facet
     if (facet) {
-      facet <- ggplot2::facet_wrap(ggplot2::vars(.data$reference),
-                                   nrow = n, scales = "free_y")
-      aes_plot <- ggplot2::aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                               group = .data$reference)
+      facet <- facet_wrap(vars(.data$reference), nrow = n, scales = "free_y")
+      aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
+                      group = .data$reference)
     } else {
       facet <- NULL
-      aes_plot <- ggplot2::aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                               group = .data$reference,
-                               colour = .data$reference)
+      aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
+                      group = .data$reference,
+                      colour = .data$reference)
     }
-    ggplot2::ggplot(
-      data = spc,
-      mapping = aes_plot) +
-      ggplot2::geom_line() +
-      ggplot2::labs(x = xlabel, y = ylabel, colour = "Reference") +
+    ggplot(data = spc, mapping = aes_plot) +
+      geom_path() +
+      labs(x = xlabel, y = ylabel, colour = "Reference") +
       facet
   }
 )
@@ -113,27 +111,24 @@ setMethod(
       stop("`x` and `y` do not match.", call. = FALSE)
 
     # Get data
-    peak_chanel <- y@chanel
-    peak_energy <- y@energy
+    peak_chanel <- y[["chanel"]]
+    peak_energy <- y[["energy"]]
+
     index_energy <- !is.na(peak_energy)
-    legend <- NULL
+    peak_legend <- NULL
     if (any(index_energy)) {
-      legend <- ggplot2::annotate(
-        "text",
-        x = peak_chanel[index_energy],
-        y = max(x@counts) * 0.8,
-        label = paste0(round(peak_energy[index_energy], 1), " keV"),
-        angle = 90, hjust = 0, vjust = 1.5
+      peak_legend <- scale_x_continuous(
+        sec.axis = sec_axis(
+          trans = ~.,
+          breaks = peak_chanel[index_energy],
+          labels = paste0(round(peak_energy[index_energy], 1), " keV")
+        )
       )
     }
 
     plot(x) +
-      ggplot2::geom_vline(
-        xintercept = peak_chanel,
-        linetype = 3,
-        colour = "red"
-      ) +
-      legend
+      geom_vline(xintercept = peak_chanel, linetype = 3, colour = "red") +
+      peak_legend
   }
 )
 
@@ -145,45 +140,44 @@ setMethod(
   signature = signature(x = "CalibrationCurve", y = "missing"),
   definition = function(x, ...) {
     # Get data
-    data <- methods::as(x@data, "data.frame")
+    data <- x[["data"]]
     signal <- range(data$signal_value)
+
+    # Curve
+    new_data <- data.frame(signal_value = signal)
+    predicted <- stats::predict.lm(x[["model"]], new_data)
+    segment_xy <- c(signal, predicted)
+    names(segment_xy) <- c("x", "xmin", "y", "ymin")
+    segment <- as.data.frame(t(as.matrix(segment_xy)))
 
     # Set error bar width and height
     error_width <- sum(signal * c(-1, 1)) / 100
     error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
 
-    # Curve
-    new_data <- data.frame(signal_value = signal)
-    predicted <- stats::predict.lm(x@model, new_data)
-    segment_xy <- c(signal, predicted)
-    names(segment_xy) <- c("x", "xmin", "y", "ymin")
-    segment <- as.data.frame(t(as.matrix(segment_xy)))
-
-    ggplot2::ggplot(
+    ggplot(
       data = data,
-      mapping = ggplot2::aes(x = .data$signal_value, y = .data$dose_value,
-                             label = .data$reference)) +
-      ggplot2::geom_segment(
+      mapping = aes(x = .data$signal_value, y = .data$dose_value,
+                    label = .data$reference)) +
+      geom_segment(
         data = segment,
-        mapping = ggplot2::aes(x = .data$x, xend = .data$xmin,
-                               y = .data$y, yend = .data$ymin),
+        mapping = aes(x = .data$x, xend = .data$xmin,
+                      y = .data$y, yend = .data$ymin),
         colour = "red",
         inherit.aes = FALSE
       ) +
-      ggplot2::geom_errorbar(
-        mapping = ggplot2::aes(ymin = .data$dose_value - .data$dose_error,
-                               ymax = .data$dose_value + .data$dose_error),
+      geom_errorbar(
+        mapping = aes(ymin = .data$dose_value - .data$dose_error,
+                      ymax = .data$dose_value + .data$dose_error),
         width = error_width) +
-      ggplot2::geom_errorbarh(
-        mapping = ggplot2::aes(xmin = .data$signal_value - .data$signal_error,
-                               xmax = .data$signal_value + .data$signal_error),
+      geom_errorbarh(
+        mapping = aes(xmin = .data$signal_value - .data$signal_error,
+                      xmax = .data$signal_value + .data$signal_error),
         height = error_height) +
-      ggplot2::geom_point() +
-      ggplot2::labs(x = "Signal", y = "Dose rate [\u03BCGy/y]")
+      geom_point() +
+      labs(x = "Signal", y = "Dose rate [\u03BCGy/y]")
   }
 )
 
-# TODO
 # @export
 # @rdname plot
 # @aliases plot,CalibrationCurve,GammaSpectra-method

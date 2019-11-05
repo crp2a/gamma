@@ -9,8 +9,7 @@
 \usage{
 read(file, ...)
 
-\S4method{read}{character}(file, extensions = c("cnf", "tka"),
-  skip = NULL, ...)
+\S4method{read}{character}(file, extensions = c("cnf", "tka"), ...)
 }
 \arguments{
 \item{file}{A \code{\link{character}} string giving the path of files to be
@@ -21,10 +20,6 @@ imported.}
 
 \item{extensions}{A \code{\link{character}} vector specifying the possible
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
-
-\item{skip}{An \code{\link{integer}} vector or a \code{\link{logical}} scalar
-(see details). If \code{NULL} (the default) or \code{FALSE}, all data are
-imported.}
 }
 \value{
 A \linkS4class{GammaSpectra} object if more than one spectrum are imported
@@ -32,17 +27,6 @@ A \linkS4class{GammaSpectra} object if more than one spectrum are imported
 }
 \description{
 Reads a gamma ray spectrum file.
-}
-\details{
-If \code{skip} is not \code{NULL}, several channels are skipped during
- import to retain only a part of the spectrum.
- If \code{skip} is an \code{integer} vector, the corresponding chanels of the
- data file will be skipped.
- If \code{skip} is \code{TRUE}, an attempt is made to define the number of
- channels to skip at the beginning of the spectrum. This skips all channels
- before the highest count maximum. This is intended to deal with the artefact
- produced by the rapid growth of random background noise towards low
- energies.
 }
 \note{
 \emph{Only supports Canberra CNF and TKA files.}
@@ -59,7 +43,7 @@ tka_file <- system.file("extdata/test_TKA.tka", package = "gamma")
 # Import all files in a given directory
 # Skip the 35 first chanels
 spc_dir <- system.file("extdata/", package = "gamma")
-(spc_spectra <- read(spc_dir, skip = 1:35))
+(spc_spectra <- read(spc_dir))
 }
 \seealso{
 \link[rxylib]{read_xyData}

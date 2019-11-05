@@ -7,7 +7,7 @@ cts <- dnorm(1:1024, mean = 86, sd = 5) +
 # Add some noise
 set.seed(12345)
 spc <- .GammaSpectrum(chanel = 1:1024,
-                      counts = cts * 10^5 + sample(1:10, 1024, TRUE))
+                      count = cts * 10^5 + sample(1:10, 1024, TRUE))
 
 test_that("Find peaks", {
   peaks <- find_peaks(spc, SNR = 3, span = 50)
@@ -21,7 +21,7 @@ test_that("Find peaks", {
   expect_s3_class(as(peaks, "data.frame"), "data.frame")
 })
 test_that("FWHM", {
-  df <- methods::as(spc, "data.frame")[, c("chanel", "counts")]
+  df <- methods::as(spc, "data.frame")[, c("chanel", "count")]
   fwhm <- FWHM(df, center = 86)
   expect_true(fwhm == 10)
   expect_equal(fwhm / (2 * sqrt(2 * log(2))), 5, tolerance = 0.2)

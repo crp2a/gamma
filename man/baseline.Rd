@@ -63,7 +63,10 @@ The following methods are availble for baseline estimation:
 \examples{
 # Import a CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
-spectrum <- read(spc_file, skip = TRUE)
+spectrum <- read(spc_file)
+
+# Remove the first chanels
+spectrum <- slice_signal(spectrum)
 
 # Estimate baseline
 baseline <- estimate_baseline(spectrum)
@@ -100,7 +103,7 @@ Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
 \seealso{
 Other signal processing: \code{\link{find_peaks}},
   \code{\link{integrate_signal}},
-  \code{\link{smooth_signal}},
+  \code{\link{slice_signal}}, \code{\link{smooth_signal}},
   \code{\link{stabilize_signal}}
 }
 \author{

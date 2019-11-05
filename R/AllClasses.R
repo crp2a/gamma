@@ -22,7 +22,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  (and hence truncated towards zero).
 #' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
 #'  (in keV).
-#' @slot counts A \code{\link{numeric}} vector giving the counts number for
+#' @slot count A \code{\link{numeric}} vector giving the counts number for
 #'  each channel. Numeric values are coerced to integer as by
 #'  \code{\link{as.integer}} (and hence truncated towards zero).
 #' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
@@ -36,7 +36,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' \describe{
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
 #'  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
-#'  \item{\code{get_energy(x)}}{Get the energy scale of \code{x}.}
+#'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
 #'  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
 #' }
 #' @section Coerce:
@@ -69,7 +69,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     file_format = "character",
     chanel = "integer",
     energy = "numeric",
-    counts = "numeric",
+    count = "numeric",
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
@@ -84,7 +84,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     file_format = "unknown",
     chanel = integer(0),
     energy = numeric(0),
-    counts = numeric(0),
+    count = numeric(0),
     rate = numeric(0),
     live_time = numeric(0),
     real_time = numeric(0),
@@ -108,7 +108,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  \item{\code{names(x)}}{Get the names of the elements of \code{x}.}
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
 #'  \item{\code{get_chanels(x)}}{Get the number of chanels of \code{x}.}
-#'  \item{\code{get_energy(x)}}{Get the energy scales of \code{x}.}
+#'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
 #'  \item{\code{get_dose(x)}}{Get the dose rates of \code{x}.}
 #' }
 #' @section Subset:
@@ -252,20 +252,20 @@ setMethod(
     .Object, ..., hash = .Object@hash, reference = .Object@reference,
     date = .Object@date, instrument = .Object@instrument,
     file_format = .Object@file_format, chanel = .Object@chanel,
-    energy = .Object@energy, counts = .Object@counts, rate = .Object@rate,
+    energy = .Object@energy, count = .Object@count, rate = .Object@rate,
     live_time = .Object@live_time, real_time = .Object@real_time,
     calibration = .Object@calibration
   ) {
 
     if (length(date) == 0)
       date <- Sys.time()
-    if (length(rate) == 0 && length(counts) > 0 && length(live_time) == 1)
-      rate <- counts / live_time
+    if (length(rate) == 0 && length(count) > 0 && length(live_time) == 1)
+      rate <- count / live_time
 
     methods::callNextMethod(
       .Object, ..., hash = hash, reference = reference, date = date,
       instrument = instrument, file_format = file_format, chanel = chanel,
-      energy = energy, counts = counts, rate = rate, live_time = live_time,
+      energy = energy, count = count, rate = rate, live_time = live_time,
       real_time = real_time, calibration = calibration
     )
   }

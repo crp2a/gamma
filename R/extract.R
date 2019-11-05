@@ -147,7 +147,10 @@ setMethod(
   f = "get_energy",
   signature = "GammaSpectra",
   definition = function(object) {
-    vapply(object, FUN = get_energy, FUN.VALUE = numeric(2))
+    energy <- vapply(object, FUN = get_energy, FUN.VALUE = numeric(2))
+    energy <- as.data.frame(t(energy))
+    colnames(energy) <- c("min", "max")
+    energy
   }
 )
 
@@ -254,7 +257,6 @@ setMethod(
     if (!is.atomic(value) || !is.numeric(value))
       stop("`value` must be a numeric vector.", call. = FALSE)
 
-    index <- which(!is.na(value))
     object@energy <- value
     methods::validObject(object)
     object

@@ -21,7 +21,8 @@ test_that("Get and set dose rate", {
 })
 test_that("Build calibration curve", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-  spectra <- read(spc_dir, skip = TRUE)
+  spectra <- read(spc_dir)
+  spectra <- slice_signal(spectra)
 
   set_dose(spectra) <- clermont[, c("gamma", "gamma_error")]
 
@@ -67,9 +68,11 @@ test_that("Build calibration curve", {
 })
 test_that("Estimate dose rate", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-  spectra <- read(spc_dir, skip = TRUE)
+  spectra <- read(spc_dir)
+  spectra <- slice_signal(spectra)
   bdf_dir <- system.file("extdata/crp2a/background", package = "gamma")
-  bdf <- read(bdf_dir, skip = TRUE)
+  bdf <- read(bdf_dir)
+  bdf <- slice_signal(bdf)
 
   set_dose(spectra) <- clermont[, c("gamma", "gamma_error")]
   noise <- integrate_signal(bdf, range = c(200, 2800))

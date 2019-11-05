@@ -1,15 +1,19 @@
-# Import all CNF files in a given directory
+## Import all CNF files in a given directory
 spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (spectra <- read(spc_dir))
 
-# Access
+## Access
 names(spectra)
 length(spectra)
+get_hash(spectra)
+get_chanels(spectra)
+get_energy(spectra)
 
-# Coerce
-as(spectra, "list")
+## Coerce
+# (returns a long data frame)
+# as(spectra, "data.frame")
 
-# Subset
+## Subset
 spectra[] # All spectra
 spectra[NULL] # All spectra
 spectra[1] # The first spectrum

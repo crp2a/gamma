@@ -12,7 +12,7 @@
 
 Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and
-    (automatically) correct the energy shifts of Gamma-Ray spectra. It
+    (automatically) correct the energy shifts of Gamma-ray spectra. It
     provides methods for estimating the gamma dose rate by the use of a
     calibration curve. The package only supports Canberra CNF and TKA
     files.

@@ -6,10 +6,8 @@
 \alias{integrate_signal-method}
 \alias{integrate_signal,GammaSpectra,numeric,numeric-method}
 \alias{integrate_signal,GammaSpectra,numeric,missing-method}
-\alias{integrate_signal,GammaSpectra,numeric,GammaSpectrum-method}
 \alias{integrate_signal,GammaSpectrum,numeric,missing-method}
 \alias{integrate_signal,GammaSpectrum,numeric,numeric-method}
-\alias{integrate_signal,GammaSpectrum,numeric,GammaSpectrum-method}
 \title{Signal integration}
 \usage{
 integrate_signal(object, range, noise, ...)
@@ -20,17 +18,11 @@ integrate_signal(object, range, noise, ...)
 \S4method{integrate_signal}{GammaSpectra,numeric,missing}(object, range,
   NiEi = TRUE, simplify = FALSE, ...)
 
-\S4method{integrate_signal}{GammaSpectra,numeric,GammaSpectrum}(object,
-  range, noise, NiEi = TRUE, simplify = FALSE, ...)
-
 \S4method{integrate_signal}{GammaSpectrum,numeric,missing}(object, range,
   NiEi = TRUE, ...)
 
 \S4method{integrate_signal}{GammaSpectrum,numeric,numeric}(object, range,
   noise, NiEi = TRUE, ...)
-
-\S4method{integrate_signal}{GammaSpectrum,numeric,GammaSpectrum}(object,
-  range, noise, NiEi = TRUE, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -74,7 +66,8 @@ Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 }
 \seealso{
 Other signal processing: \code{\link{baseline}},
-  \code{\link{find_peaks}}, \code{\link{smooth_signal}},
+  \code{\link{find_peaks}}, \code{\link{slice_signal}},
+  \code{\link{smooth_signal}},
   \code{\link{stabilize_signal}}
 }
 \author{

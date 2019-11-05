@@ -1,16 +1,16 @@
 # Import CNF files for calibration
 spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-spc_calib <- read(spc_dir, skip = TRUE)
+spectra <- read(spc_dir)
 
 # Set dose rate values and errors for each spectrum
 data("clermont")
-set_dose(spc_calib) <- clermont[, c("gamma", "gamma_error")]
+set_dose(spectra) <- clermont[, c("gamma", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit_dose(
-  spc_calib,
-  noise = c(value = 1190, error = 1),
-  range = c(200, 2800)
+  spectra,
+  noise = c(25279.63171, 1.66235),
+  range = c(165, 2800)
 )
 
 # Check the linear model
@@ -21,4 +21,4 @@ plot(calib_curve) +
   ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
 
 # Estimate gamma dose rates
-(dose_rate <- predict_dose(calib_curve, spc_calib))
+(dose_rate <- predict_dose(calib_curve, spectra))

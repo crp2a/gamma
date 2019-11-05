@@ -1,10 +1,6 @@
 ---
 title: "Manual"
-author:
-- N. Frerebeau
-- B. Lebrun
-- G. Guérin
-- C. Lahaye
+author: "N. Frerebeau"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -37,7 +33,7 @@ library(gamma)
 
 # Overview
 
-`gamma` is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy scale of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. This package only supports Canberra CNF and TKA files.
+**gamma** is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy scale of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. This package only supports Canberra CNF and TKA files.
 
 Typical workflow:
 
@@ -56,26 +52,24 @@ utils::vignette("CRP2A#1", package = "gamma")
 utils::vignette("CEREGE#1", package = "gamma")
 ```
 
-Note that `gamma` uses the *International System of Units*: energy values are assumed to be in keV and dose rates in µGy/y.
+Note that **gamma** uses the *International System of Units*: energy values are assumed to be in keV and dose rates in µGy/y.
 
 # Import file
-Both Canberra CNF and TKA files can be imported. Several channels can be skipped during import to retain only part of the spectrum.
-
-If `skip` is `TRUE`, an attempt is made to define the number of channels to skip at the beginning of the spectrum. This skips all channels before the highest count maximum. This is intended to deal with the artefact produced by the rapid growth of random background noise towards low energies.
+Both Canberra CNF and TKA files can be imported.
 
 ```{r import}
 # Automatically skip the first chanels
 # Import a CNF file
 cnf_test <- system.file("extdata/test_CNF.cnf", package = "gamma")
-(spc_cnf <- read(cnf_test, skip = TRUE))
+(spc_cnf <- read(cnf_test))
 
 # Import a TKA file
 tka_test <- system.file("extdata/test_TKA.tka", package = "gamma")
-(spc_tka <- read(tka_test, skip = TRUE))
+(spc_tka <- read(tka_test))
 
 # Import all files in a given directory
 files_test <- system.file("extdata", package = "gamma")
-(spc <- read(files_test, skip = TRUE))
+(spc <- read(files_test))
 ```
 
 # Inspect spectrum
@@ -95,10 +89,18 @@ Regardless of the approach you choose, it is strongly recommended to check the r
 ## Workflow
 The following steps illustrate how to properly fine-tune the parameters for spectrum processing before peak detection.
 
+### Clean
+Several channels can be dropped to retain only part of the spectrum. If no specific value is provided, an attempt is made to define the number of channels to skip at the beginning of the spectrum. This drops all channels before the highest count maximum. This is intended to deal with the artefact produced by the rapid growth of random background noise towards low energies.
+
+```{r slice}
+# Use a square root transformation
+sliced <- slice_signal(spc_tka)
+```
+
 ### Stabilization
 ```{r stabilize}
 # Use a square root transformation
-transformed <- stabilize_signal(spc_tka, transformation = sqrt)
+transformed <- stabilize_signal(sliced, transformation = sqrt)
 ```
 
 ### Smoothing
@@ -144,7 +146,6 @@ Once you have a baseline-corrected spectrum, you can try to automatically find p
 ```{r peak-detection}
 # Detect peaks in a single file
 peaks <- find_peaks(corrected)
-peaks
 
 # Plot spectrum + peaks
 plot(corrected, peaks) +
@@ -159,12 +160,13 @@ You can use the results of the peak detection and set the expected energy values
 ```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
 # Set the energy values (in keV)
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
+peaks
 
 # Calibrate the spectrum using the peak positions
 scaled <- calibrate_energy(spc_tka, peaks)
 
-# Plot the spectrum (note the top scale)
-plot(scaled) +
+# Plot the spectrum
+plot(scaled, xaxis = "energy") +
   ggplot2::labs(title = "Calibrated spectrum") +
   ggplot2::theme_bw()
 ```
@@ -190,6 +192,7 @@ library(magrittr)
 
 # Spectrum pre-processing and peak detection
 pks <- spc_tka %>%
+  slice_signal() %>%
   stabilize_signal(transformation = sqrt) %>%
   smooth_signal(method = "savitzky", m = 21) %>%
   remove_baseline(decreasing = TRUE, k = 100) %>%
@@ -220,11 +223,11 @@ The construction of a calibration curve requires a set of reference spectra for 
 ```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
 # Import the reference spectra
 calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-calib_spc <- read(calib_dir, skip = TRUE)
+calib_spc <- read(calib_dir)
 
 # Import the spectra for background noise measurement
 noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
-noise_spc <- read(noise_dir, skip = TRUE)
+noise_spc <- read(noise_dir)
 
 # Set the known dose rates
 data("clermont")
@@ -250,7 +253,7 @@ New dose rate values can be predicted.
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
 # Import spectra
 test_dir <- system.file("extdata/crp2a/test", package = "gamma")
-test_spc <- read(test_dir, skip = TRUE)
+test_spc <- read(test_dir)
 
 # Estimate the gamma dose rate
 dose_rate <- predict_dose(calib_curve, test_spc, simplify = TRUE)

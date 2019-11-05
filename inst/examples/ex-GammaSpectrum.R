@@ -2,6 +2,12 @@
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 (spectrum <- read(spc_file))
 
+## Access
+get_hash(spectrum)
+get_chanels(spectrum)
+get_energy(spectrum)
+get_dose(spectrum)
+
 # Coerce
 df <- as(spectrum, "data.frame")
 head(df)

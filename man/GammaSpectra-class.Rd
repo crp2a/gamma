@@ -23,7 +23,7 @@ In the code snippets below, \code{x} is a \code{GammaSpectra} object.
  \item{\code{names(x)}}{Get the names of the elements of \code{x}.}
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
  \item{\code{get_chanels(x)}}{Get the number of chanels of \code{x}.}
- \item{\code{get_energy(x)}}{Get the energy scales of \code{x}.}
+ \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
  \item{\code{get_dose(x)}}{Get the dose rates of \code{x}.}
 }
 }
@@ -47,18 +47,22 @@ In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 }
 
 \examples{
-# Import all CNF files in a given directory
+## Import all CNF files in a given directory
 spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
 (spectra <- read(spc_dir))
 
-# Access
+## Access
 names(spectra)
 length(spectra)
+get_hash(spectra)
+get_chanels(spectra)
+get_energy(spectra)
 
-# Coerce
-as(spectra, "list")
+## Coerce
+# (returns a long data frame)
+# as(spectra, "data.frame")
 
-# Subset
+## Subset
 spectra[] # All spectra
 spectra[NULL] # All spectra
 spectra[1] # The first spectrum

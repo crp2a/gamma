@@ -35,7 +35,7 @@ Numeric values are coerced to integer as by \code{\link{as.integer}}
 \item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
 (in keV).}
 
-\item{\code{counts}}{A \code{\link{numeric}} vector giving the counts number for
+\item{\code{count}}{A \code{\link{numeric}} vector giving the counts number for
 each channel. Numeric values are coerced to integer as by
 \code{\link{as.integer}} (and hence truncated towards zero).}
 
@@ -55,7 +55,7 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
- \item{\code{get_energy(x)}}{Get the energy scale of \code{x}.}
+ \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
 }
 }
@@ -84,6 +84,12 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 # Import a Canberra CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 (spectrum <- read(spc_file))
+
+## Access
+get_hash(spectrum)
+get_chanels(spectrum)
+get_energy(spectrum)
+get_dose(spectrum)
 
 # Coerce
 df <- as(spectrum, "data.frame")

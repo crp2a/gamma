@@ -24,7 +24,7 @@ setMethod(
     # Validation
     # TODO
 
-    methods::initialize(e1, counts = e1@counts - e2@counts)
+    methods::initialize(e1, count = e1@count - e2@count)
   }
 )
 
@@ -38,6 +38,6 @@ setMethod(
     # Validation
     # TODO
 
-    methods::initialize(e1, counts = e1@counts + e2@counts)
+    methods::initialize(e1, count = e1@count + e2@count)
   }
 )

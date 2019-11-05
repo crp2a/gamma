@@ -4,14 +4,17 @@ test_that("plot a GammaSpectrum object", {
   spc_file_cnf <- system.file("extdata/test_CNF.cnf", package = "gamma")
   spectrum_cnf <- read(spc_file_cnf)
 
-  gg_spectrum_cnf <- plot(spectrum_cnf)
-  vdiffr::expect_doppelganger("spectrum_CNF", gg_spectrum_cnf)
+  gg_spectrum_chanel <- plot(spectrum_cnf, xaxis= "chanel")
+  vdiffr::expect_doppelganger("spectrum_chanel", gg_spectrum_chanel)
 
-  spc_file_tka <- system.file("extdata/test_TKA.tka", package = "gamma")
-  spectrum_tka <- read(spc_file_tka)
+  gg_spectrum_energy <- plot(spectrum_cnf, xaxis= "energy")
+  vdiffr::expect_doppelganger("spectrum_energy", gg_spectrum_energy)
 
-  gg_spectrum_tka <- plot(spectrum_tka)
-  vdiffr::expect_doppelganger("spectrum_TKA", gg_spectrum_tka)
+  gg_spectrum_count <- plot(spectrum_cnf, yaxis= "count")
+  vdiffr::expect_doppelganger("spectrum_count", gg_spectrum_count)
+
+  gg_spectrum_rate <- plot(spectrum_cnf, yaxis= "rate")
+  vdiffr::expect_doppelganger("spectrum_rate", gg_spectrum_rate)
 })
 test_that("plot GammaSpectrum and PeakPosition objects", {
   spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")

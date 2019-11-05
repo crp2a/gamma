@@ -45,30 +45,6 @@ setMethod(
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,numeric,GammaSpectrum-method
-setMethod(
-  f = "integrate_signal",
-  signature = signature(object = "GammaSpectra", range = "numeric",
-                        noise = "GammaSpectrum"),
-  definition = function(object, range, noise,
-                        NiEi = TRUE, simplify = FALSE, ...) {
-    # Compute noise value
-    noise_value <- integrate_signal(noise, range = range, NiEi = NiEi)
-    # Integrate spectra
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, noise = noise_value, NiEi = NiEi)
-
-    if (simplify) {
-      do.call(rbind, signals)
-    } else {
-      signals
-    }
-  }
-)
-
-#' @export
-#' @rdname integrate
 #' @aliases integrate_signal,GammaSpectrum,numeric,missing-method
 setMethod(
   f = "integrate_signal",
@@ -91,9 +67,9 @@ setMethod(
                          spc_data$energy <= range[2])
     if (NiEi) {
       int_signal <- as.numeric(crossprod(spc_data$energy[int_index],
-                                         spc_data$counts[int_index]))
+                                         spc_data$count[int_index]))
     } else {
-      int_signal <- sum(spc_data$counts[int_index])
+      int_signal <- sum(spc_data$count[int_index])
     }
 
     # Normalize integrated signal to time
@@ -131,19 +107,3 @@ setMethod(
   }
 )
 
-#' @export
-#' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,numeric,GammaSpectrum-method
-setMethod(
-  f = "integrate_signal",
-  signature = signature(object = "GammaSpectrum", range = "numeric",
-                        noise = "GammaSpectrum"),
-  definition = function(object, range, noise, NiEi = TRUE, ...) {
-    # Compute noise value
-    noise_value <- integrate_signal(noise, range = range, NiEi = NiEi)
-    # Integrate spectrum
-    signal_value <- integrate_signal(object, range = range, noise = noise_value,
-                                    NiEi = NiEi)
-    signal_value
-  }
-)

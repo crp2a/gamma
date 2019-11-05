@@ -15,7 +15,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_type(spectrum[["real_time"]], "double")
   expect_type(spectrum[["chanel"]], "integer")
   expect_type(spectrum[["energy"]], "double")
-  expect_type(spectrum[["counts"]], "double")
+  expect_type(spectrum[["count"]], "double")
   expect_type(spectrum[["rate"]], "double")
   expect_type(spectrum[["calibration"]], "list")
   expect_type(spectrum[["dose_rate"]], "double")
@@ -24,7 +24,6 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_error(set_dose(spectrum) <- c(1, 2, 3),
                "`value` must be a length-two numeric vector.")
 
-  expect_type(as(spectrum, "matrix"), "double")
   expect_s3_class(as(spectrum, "data.frame"), "data.frame")
   expect_s4_class(as(spectrum, "GammaSpectra"), "GammaSpectra")
 
@@ -57,12 +56,11 @@ test_that("Initialize an empty BaseLine instance", {
   expect_type(baseline[["real_time"]], "double")
   expect_type(baseline[["chanel"]], "integer")
   expect_type(baseline[["energy"]], "double")
-  expect_type(baseline[["counts"]], "double")
+  expect_type(baseline[["count"]], "double")
   expect_type(baseline[["rate"]], "double")
   expect_type(baseline[["calibration"]], "list")
   expect_type(baseline[["dose_rate"]], "double")
 
-  expect_type(as(baseline, "matrix"), "double")
   expect_s3_class(as(baseline, "data.frame"), "data.frame")
 })
 test_that("Initialize an empty CalibrationCurve instance", {

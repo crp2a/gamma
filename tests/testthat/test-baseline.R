@@ -18,7 +18,7 @@ test_that("Estimate baseline from GammaSpectrum", {
   expect_equal(baseline[["real_time"]], spectrum[["real_time"]])
   expect_type(baseline[["chanel"]], "integer")
   expect_type(baseline[["energy"]], "double")
-  expect_type(baseline[["counts"]], "double")
+  expect_type(baseline[["count"]], "double")
   expect_type(baseline[["rate"]], "double")
   expect_equal(baseline[["calibration"]], spectrum[["calibration"]])
 
@@ -44,7 +44,7 @@ test_that("Remove baseline from GammaSpectrum", {
   expect_equal(baseline[["real_time"]], spectrum[["real_time"]])
   expect_type(baseline[["chanel"]], "integer")
   expect_type(baseline[["energy"]], "double")
-  expect_type(baseline[["counts"]], "double")
+  expect_type(baseline[["count"]], "double")
   expect_type(baseline[["rate"]], "double")
   expect_equal(baseline[["calibration"]], spectrum[["calibration"]])
 
@@ -66,13 +66,13 @@ test_that("SNIP algorithm", {
 
   expect_equal(spc1[["chanel"]], spc2[["chanel"]])
   expect_equal(spc1[["energy"]], spc2[["energy"]])
-  expect_equal(spc1[["counts"]], spc2[["counts"]])
+  expect_equal(spc1[["count"]], spc2[["count"]])
   expect_equal(spc1[["rate"]], spc2[["rate"]])
 
   spc3 <- spc1 + baseline
   expect_equal(spc3[["chanel"]], spectrum[["chanel"]])
   expect_equal(spc3[["energy"]], spectrum[["energy"]])
-  expect_equal(spc3[["counts"]], spectrum[["counts"]])
+  expect_equal(spc3[["count"]], spectrum[["count"]])
   expect_equal(spc3[["rate"]], spectrum[["rate"]])
 
   expect_error(SNIP(LETTERS), "A numeric vector is expected.")

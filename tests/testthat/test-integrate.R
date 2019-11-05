@@ -3,23 +3,20 @@ context("Integrate spectrum")
 test_that("Integrate GammaSpectrum", {
   spc_cnf <- system.file("extdata/test_CNF.cnf", package = "gamma")
   cnf <- read(spc_cnf)
+  cnf <- slice_signal(cnf)
   noise_file <- system.file("extdata/crp2a/background", package = "gamma")
   noise <- read(noise_file)
+  noise <- slice_signal(noise)
 
-  int3 <- integrate_signal(cnf, range = c(200, 2800), NiEi = TRUE)
-  expect_equivalent(int3, c(1.483392e+05, 9.361146e+00),
+  int1 <- integrate_signal(cnf, range = c(200, 2800), NiEi = TRUE)
+  expect_equivalent(int1, c(1.483392e+05, 9.361146e+00),
                     tolerance = 1e-06)
-  expect_length(int3, 2)
+  expect_length(int1, 2)
 
   int2 <- integrate_signal(cnf, range = c(200, 2800), noise = c(50, 10),
                            NiEi = FALSE)
   expect_equivalent(int2, c(233.98690, 10.00838), tolerance = 1e-07)
   expect_length(int2, 2)
-
-  int3 <- integrate_signal(cnf, range = c(200, 2800), noise = noise,
-                           NiEi = FALSE)
-  expect_equivalent(int3, c(258.6836050, 0.4129534), tolerance = 1e-07)
-  expect_length(int3, 2)
 
   expect_error(integrate_signal(cnf, range = c(200)),
                "must be a numeric vector of length two")
@@ -35,8 +32,10 @@ test_that("Integrate GammaSpectrum", {
 test_that("Integrate GammaSpectra", {
   spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
   spectra <- read(spc_dir)
+  spectra <- slice_signal(spectra)
   noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
   noise <- read(noise_dir)
+  noise <- slice_signal(noise)
 
   int1 <- integrate_signal(spectra, range = c(200, 2800), noise = c(50, 10),
                            simplify = TRUE)
@@ -49,13 +48,6 @@ test_that("Integrate GammaSpectra", {
   expect_length(int2, length(spectra))
   expect_equivalent(lengths(int2), rep(2, length(spectra)))
 
-  int3 <- integrate_signal(spectra, range = c(200, 2800), noise = noise)
-  expect_type(int3, "list")
-  expect_length(int3, length(spectra))
-  expect_equivalent(lengths(int3), rep(2, length(spectra)))
-
   expect_type(integrate_signal(spectra, range = c(200, 2800), simplify = TRUE),
               "double")
-  expect_type(integrate_signal(spectra, range = c(200, 2800), noise = noise,
-                               simplify = TRUE), "double")
 })
