@@ -24,7 +24,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 ## Overview
 
-`gamma` is intended to process in-situ gamma-ray spectrometry
+**gamma** is intended to process in-situ gamma-ray spectrometry
 measurements for luminescence dating. This package allows to import,
 inspect and (automatically) correct the energy scale of the spectrum. It
 provides methods for estimating the gamma dose rate by the use of a
@@ -42,6 +42,14 @@ devtools::install_github("crp2a/gamma")
 
 ## Usage
 
+A [**Shiny**](https://shiny.rstudio.com) application provides an
+exhanced graphical user interface:
+
+``` r
+# Run the app
+launch_app()
+```
+
 ``` r
 # See the package manual
 utils::vignette("gamma", package = "gamma")
@@ -50,35 +58,50 @@ utils::vignette("gamma", package = "gamma")
 ``` r
 # A minimal example
 # You may want to give extra attention to the energy calibration step
+library(gamma)
 library(magrittr)
 
-## Set the expected chanel/energy peaks for the energy scale calibration
-calib_lines <- list(
-  Pb212 = c(chanel = 86, energy = 238),
-  K40 = c(chanel = 496, energy = 1461),
-  Tl208 = c(chanel = 876, energy = 2615)
-)
+# Find the full path to the spectrum file
+spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 
-## Load the calibration curve for the dose rate estimation
-## As this curve is instrument specific, you will have to build your own
-## See help(fit)
+# Import the spectrum
+spectrum <- read(spc_file)
+
+# Set the expected chanel/energy peaks for the energy scale calibration
+# Spectrum pre-processing and peak detection
+peaks <- spectrum %>%
+  slice_signal() %>%
+  stabilize_signal(transformation = sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline(decreasing = TRUE, k = 100) %>%
+  find_peaks()
+# Set the energy values (in keV)
+set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
+# Inspect Peaks
+plot(spectrum, peaks)
+```
+
+<img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
+
+``` r
+
+# Calibrate the energy scale
+cal <- calibrate_energy(spectrum, peaks)
+
+# Load the calibration curve for the dose rate estimation
+# As this curve is instrument specific, you will have to build your own
+# See help(fit_dose)
 data(BDX1, package = "gamma")
 
-## Find the full path to the spectrum file
-spectrum <- system.file("extdata/test_CNF.cnf", package = "gamma")
-
-## Estimate the gamma dose rate
-spectrum %>%
-  gamma::read(skip = TRUE) %>%
-  gamma::calibrate(lines = calib_lines) %>%
-  gamma::predict(BDX1, ., simplify = TRUE)
+# Estimate the gamma dose rate
+(doses <- predict_dose(BDX1, spectrum, simplify = TRUE))
 #>             value    error
-#> test_CNF 3920.904 130.9033
+#> test_CNF 4217.026 149.5216
 ```
 
 ## Contributing
 
-Please note that the `gamma` project is released with a [Contributor
+Please note that the **gamma** project is released with a [Contributor
 Code of
 Conduct](https://github.com/crp2a/gamma/blob/master/.github/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
