@@ -50,6 +50,8 @@ exhanced graphical user interface:
 launch_app()
 ```
 
+![](man/figures/README-shiny-1.png)
+
 ``` r
 # See the package manual
 utils::vignette("gamma", package = "gamma")
@@ -95,8 +97,8 @@ data(BDX1, package = "gamma")
 
 # Estimate the gamma dose rate
 (doses <- predict_dose(BDX1, spectrum, simplify = TRUE))
-#>             value    error
-#> test_CNF 4217.026 149.5216
+#>          reference signal_value signal_error dose_value dose_error
+#> test_CNF  test_CNF     133600.4      9.82962   4217.026    79.6977
 ```
 
 ## Contributing

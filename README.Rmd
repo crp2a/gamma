@@ -52,6 +52,8 @@ A [**Shiny**](https://shiny.rstudio.com) application provides an exhanced graphi
 launch_app()
 ```
 
+![](man/figures/README-shiny-1.png)
+
 ```{r manual, eval=FALSE}
 # See the package manual
 utils::vignette("gamma", package = "gamma")
