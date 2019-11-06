@@ -29,6 +29,20 @@ setGeneric(
 #' @export
 #' @rdname access
 setGeneric(
+  name = "get_reference",
+  def = function(object) standardGeneric("get_reference")
+)
+
+#' @export
+#' @rdname access
+setGeneric(
+  name = "set_reference<-",
+  def = function(object, value) standardGeneric("set_reference<-")
+)
+
+#' @export
+#' @rdname access
+setGeneric(
   name = "get_chanels",
   def = function(object) standardGeneric("get_chanels")
 )
@@ -501,4 +515,21 @@ setGeneric(
 setGeneric(
   name = "stabilize_signal",
   def = function(object, ...) standardGeneric("stabilize_signal")
+)
+
+# ==================================================================== Summarize
+#' Summarize
+#'
+#' @param object A \linkS4class{GammaSpectrum} or  \linkS4class{GammaSpectra}
+#' object.
+#' @param ... Currently not used.
+#' @return A \code{\link{data.frame}}
+#' @author N. Frerebeau
+#' @docType methods
+#' @family summarise
+#' @rdname summarise
+#' @aliases summarise-method
+setGeneric(
+  name = "summarise",
+  def = function(object, ...) standardGeneric("summarise")
 )

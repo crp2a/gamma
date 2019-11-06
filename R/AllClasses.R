@@ -291,6 +291,23 @@ setMethod(
     return(.Object)
   }
 )
+## PeakPosition ----------------------------------------------------------------
+# /!\ initialize() PeakPosition retains copy construction
+setMethod(
+  f = "initialize",
+  signature = "PeakPosition",
+  definition = function(
+    .Object, ..., hash = .Object@hash, noise_method = .Object@noise_method,
+    noise_threshold = .Object@noise_threshold, window = .Object@window,
+    chanel = .Object@chanel, energy = .Object@energy
+  ) {
+    methods::callNextMethod(
+      .Object, ..., hash = hash, noise_method = noise_method,
+      noise_threshold = noise_threshold, window = window, chanel = chanel,
+      energy = energy
+    )
+  }
+)
 ## CalibrationCurve ------------------------------------------------------------
 setMethod(
   f = "initialize",

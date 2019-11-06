@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve"),
-  definition = function(object, spectra, epsilon = 0.03, simplify = FALSE, ...) {
+  definition = function(object, spectra, epsilon = 0, simplify = FALSE, ...) {
 
     # Get noise value and integration range
     noise <- object@noise
@@ -47,9 +47,13 @@ setMethod(
              (new_data$signal_error / new_data$signal_value)^2 +
              epsilon^2)
 
-    results <- cbind(
-      value = dose_value,
-      error = dose_error
+    results <- cbind.data.frame(
+      reference = new_data$reference,
+      signal_value = new_data$signal_value,
+      signal_error = new_data$signal_error,
+      dose_value = dose_value,
+      dose_error = dose_error,
+      stringsAsFactors = FALSE
     )
     rownames(results) <- new_data$reference
     if (simplify) {

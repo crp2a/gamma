@@ -9,8 +9,8 @@
 \usage{
 predict_dose(object, ...)
 
-\S4method{predict_dose}{CalibrationCurve}(object, spectra,
-  epsilon = 0.03, simplify = FALSE, ...)
+\S4method{predict_dose}{CalibrationCurve}(object, spectra, epsilon = 0,
+  simplify = FALSE, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{CalibrationCurve} object.}

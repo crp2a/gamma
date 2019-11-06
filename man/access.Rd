@@ -6,12 +6,17 @@
 \alias{get}
 \alias{set}
 \alias{get_hash}
+\alias{get_reference}
+\alias{set_reference<-}
 \alias{get_chanels}
 \alias{get_dose}
 \alias{set_dose<-}
 \alias{get_energy}
 \alias{set_energy<-}
 \alias{get_hash,GammaSpectrum-method}
+\alias{get_reference,GammaSpectrum-method}
+\alias{set_reference<-,GammaSpectrum-method}
+\alias{set_reference,GammaSpectrum-method}
 \alias{get_chanels,GammaSpectrum-method}
 \alias{get_length,GammaSpectrum-method}
 \alias{get_energy,GammaSpectrum-method}
@@ -19,6 +24,9 @@
 \alias{set_dose<-,GammaSpectrum-method}
 \alias{set_dose,GammaSpectrum-method}
 \alias{get_hash,GammaSpectra-method}
+\alias{get_reference,GammaSpectra-method}
+\alias{set_reference<-,GammaSpectra-method}
+\alias{set_reference,GammaSpectra-method}
 \alias{get_chanels,GammaSpectra-method}
 \alias{get_length,GammaSpectra-method}
 \alias{get_energy,GammaSpectra-method}
@@ -33,6 +41,10 @@
 \usage{
 get_hash(object)
 
+get_reference(object)
+
+set_reference(object) <- value
+
 get_chanels(object)
 
 get_dose(object)
@@ -45,6 +57,10 @@ set_energy(object) <- value
 
 \S4method{get_hash}{GammaSpectrum}(object)
 
+\S4method{get_reference}{GammaSpectrum}(object)
+
+\S4method{set_reference}{GammaSpectrum}(object) <- value
+
 \S4method{get_chanels}{GammaSpectrum}(object)
 
 \S4method{get_energy}{GammaSpectrum}(object)
@@ -54,6 +70,10 @@ set_energy(object) <- value
 \S4method{set_dose}{GammaSpectrum}(object) <- value
 
 \S4method{get_hash}{GammaSpectra}(object)
+
+\S4method{get_reference}{GammaSpectra}(object)
+
+\S4method{set_reference}{GammaSpectra}(object) <- value
 
 \S4method{get_chanels}{GammaSpectra}(object)
 

@@ -28,6 +28,28 @@ setMethod(
 
 #' @export
 #' @rdname access
+#' @aliases get_reference,GammaSpectrum-method
+setMethod(
+  f = "get_reference",
+  signature = "GammaSpectrum",
+  definition = function(object) object@reference
+)
+
+#' @export
+#' @rdname access
+#' @aliases set_reference,GammaSpectrum-method
+setMethod(
+  f = "set_reference<-",
+  signature = "GammaSpectrum",
+  definition = function(object, value) {
+    object@reference <- value
+    methods::validObject(object)
+    object
+  }
+)
+
+#' @export
+#' @rdname access
 #' @aliases get_length,GammaSpectrum-method
 setMethod(
   f = "get_chanels",
@@ -126,6 +148,33 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(object) {
     vapply(object, FUN = get_hash, FUN.VALUE = character(1))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_reference,GammaSpectra-method
+setMethod(
+  f = "get_reference",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    vapply(object, FUN = get_reference, FUN.VALUE = character(1))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases set_reference,GammaSpectra-method
+setMethod(
+  f = "set_reference<-",
+  signature = "GammaSpectra",
+  definition = function(object, value) {
+    names(object) <- value
+    mapply(FUN = methods::`slot<-`, object = object, value = value,
+           MoreArgs = list(name = "reference"), SIMPLIFY = FALSE)
+
+    methods::validObject(object)
+    object
   }
 )
 

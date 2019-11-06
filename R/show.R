@@ -1,4 +1,4 @@
-# SHOW METHODS
+# SHOW & SUMMARISE METHODS
 #' @include AllClasses.R
 NULL
 
@@ -32,6 +32,37 @@ setMethod(
   }
 )
 
+#' @rdname summarise
+#' @aliases summarise,GammaSpectrum-method
+#' @export
+setMethod(
+  f = "summarise",
+  signature = "GammaSpectrum",
+  definition = function(object) {
+    E <- if (length(object@energy) != 0) {
+      paste0(range(round(object@energy, 2)), collapse = " - ")
+    } else {
+      "not calibrated"
+    }
+    D <- if (length(object@dose_rate) != 0) {
+      paste0(object@dose_rate, collapse = " +/- ")
+    } else {
+      "unknown"
+    }
+    cbind.data.frame(
+      Reference = object@reference,
+      Date = as.character(object@date),
+      # Instrument = object@instrument,
+      `Live time` = object@live_time,
+      `Real time` = object@real_time,
+      Chanels = length(object@chanel),
+      `Energy range` = E,
+      # `Dose rate` = D,
+      stringsAsFactors = FALSE
+    )
+  }
+)
+
 # GammaSpectra =================================================================
 setMethod(
   f = "show",
@@ -40,13 +71,25 @@ setMethod(
     n <- length(object)
     if (n != 0) {
       spc <- ngettext(n, "spectrum", "spectra", )
-      ref <- names(object)
+      ref <- get_reference(object)
       cat("A collection of ", n, " gamma ", spc, ": ",
           paste(ref, collapse = ", "), "\n",
           sep = "")
     } else {
       cat("An empty set of gamma spectra.\n", sep = "")
     }
+  }
+)
+
+#' @rdname summarise
+#' @aliases summarise,GammaSpectra-method
+#' @export
+setMethod(
+  f = "summarise",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    sum_up <- lapply(X = object, FUN = summarise)
+    do.call(rbind, sum_up)
   }
 )
 

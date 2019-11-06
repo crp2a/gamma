@@ -15,9 +15,9 @@ setMethod(
 
     # If input is a directory and not a single file
     # Then, look for all files with allowed extensions
-    if(!utils::file_test("-f", file)) {
+    if (!all(utils::file_test("-f", file))) {
       file_list <- tools::list_files_with_exts(file, exts = extensions)
-      if(length(file_list) == 0)
+      if (length(file_list) == 0)
         stop("No spectrum files were fund.", call. = FALSE)
       file <- as.list(file_list)
     }
@@ -32,7 +32,7 @@ setMethod(
       )
     }, ...)
 
-    if(length(spc) > 1) {
+    if (length(spc) > 1) {
       # Return a GammaSpectra object
       methods::new("GammaSpectra", spc)
     } else {

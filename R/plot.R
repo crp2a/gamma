@@ -121,7 +121,7 @@ setMethod(
         sec.axis = sec_axis(
           trans = ~.,
           breaks = peak_chanel[index_energy],
-          labels = paste0(round(peak_energy[index_energy], 1), " keV")
+          labels = paste0(round(peak_energy[index_energy], 0), " keV")
         )
       )
     }

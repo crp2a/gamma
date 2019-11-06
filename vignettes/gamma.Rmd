@@ -262,8 +262,7 @@ dose_rate <- predict_dose(calib_curve, test_spc, simplify = TRUE)
 ```{r dose-rate-table, echo=FALSE}
 knitr::kable(
   dose_rate,
-  digits = 3,
-  col.names = c("Dose", "Error"),
+  digits = 2,
   caption = "Gamma dose rate estimates"
 )
 ```

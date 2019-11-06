@@ -89,10 +89,10 @@ test_that("Estimate dose rate", {
   expect_equal(calib1@model, calib2@model)
 
   dose_rate <- predict_dose(calib1, spectra, simplify = TRUE)
-  expect_type(dose_rate, "double")
-  expect_equal(dim(dose_rate), c(7, 2))
+  expect_type(dose_rate, "list")
+  expect_equal(dim(dose_rate), c(7, 5))
 
   expect_identical(predict_dose(calib1, spectra), predict_dose(calib1))
   expect_error(predict_dose(calib1, 1:3), "`spectra` must be a")
-  expect_type(predict_dose(calib1, spectra[[1]], simplify = TRUE), "double")
+  expect_type(predict_dose(calib1, spectra[[1]], simplify = FALSE), "list")
 })

@@ -19,26 +19,6 @@ CRP2A Calibration Curve #1
  \strong{Authors:} \tab CRP2A Luminescence Team
 }
 }
-\section{Changelog}{
-
- \describe{
-  \item{0.1.1}{Edit the energy scale of the reference spectra.
-  Model summary:
-  slope: 0.032 +/- 0;
-  intercept: -41.116 +/- 20.846;
-  residual standard error: 20.83 on 5 degrees of freedom;
-  multiple R-squared: 0.99916;
-  adjusted R-squared: 0.999.}
-  \item{0.1.0}{Curve creation.
-  Model summary:
-  slope: 0.032 +/- 0;
-  intercept: -41.329 +/- 20.922;
-  residual standard error: 20.91 on 5 degrees of freedom;
-  multiple R-squared: 0.99916;
-  adjusted R-squared: 0.99899.}
- }
-}
-
 \examples{
 # Load the curve
 utils::data("BDX1", package = "gamma")
