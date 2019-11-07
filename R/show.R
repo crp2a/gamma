@@ -8,24 +8,9 @@ setMethod(
   signature = "GammaSpectrum",
   definition = function(object) {
     if (get_chanels(object) != 0) {
-      E <- if (is_calibrated(object)) {
-        paste0(range(round(object@energy, 2)), collapse = " - ")
-      } else {
-        "not calibrated"
-      }
-      D <- if (length(object@dose_rate) != 0) {
-        paste0(object@dose_rate, collapse = " +/- ")
-      } else {
-        "unknown"
-      }
-      cat("Gamma spectrum:", "\n",
-          "  Reference: ", object@reference, "\n",
-          "  Instrument: ", object@instrument, "\n",
-          "  Date: ", as.character(object@date), "\n",
-          "  Number of chanels: ", length(object@chanel), "\n",
-          "  Energy range (keV): ", E, "\n",
-          "  Dose rate: ", D, "\n",
-          sep = "")
+      meta <- summarise(object)
+      meta <- paste(colnames(meta), unlist(meta), sep = ": ")
+      cat("Gamma spectrum:", paste("* ", meta), sep = "\n")
     } else {
       cat("An empty gamma spectrum.\n", sep = "")
     }
@@ -40,7 +25,7 @@ setMethod(
   signature = "GammaSpectrum",
   definition = function(object) {
     E <- if (length(object@energy) != 0) {
-      paste0(range(round(object@energy, 2)), collapse = " - ")
+      paste0(range(round(object@energy, 2)), collapse = " ")
     } else {
       "not calibrated"
     }
@@ -99,29 +84,31 @@ setMethod(
   signature = "CalibrationCurve",
   definition = function(object) {
     if (length(object@model$coefficients) != 0) {
-      sum_up <- summary(object@model)
-      coef <- round(sum_up$coef, 5)
-      fstat <- round(sum_up$fstatistic, 0)
+      meta <- summary(object@model)
+      coef <- round(meta$coefficients, 5)
+      fstat <- round(meta$fstatistic, 0)
       if (nrow(coef) > 1) {
-        intercept <- paste(coef[1, 1], "+/-", coef[1, 2], sep = " ")
-        slope <- paste(coef[2, 1], "+/-", coef[2, 2], sep = " ")
+        intercept <- paste0(coef[1, c(1, 2)], collapse = " +/- ")
+        slope <- paste0(coef[2, c(1, 2)], collapse = " +/- ")
       } else {
-        intercept <- "0 (not estimated)"
-        slope <- paste(coef[1], "+/-", coef[2], sep = " ")
+        intercept <- NA_character_
+        slope <- paste0(coef[c(1, 2)], collapse = " +/- ")
       }
-      cat("Calibration curve:\n",
-          "  Date:", as.character(object@details$date), "\n",
-          "  Model summary:\n",
-          "  - Slope:", slope, "\n",
-          "  - Intercept:", intercept, "\n",
-          "  - Residual standard error:", round(sum_up$sigma, 2), "\n",
-          "  - Multiple R-squared:", round(sum_up$r.squared, 5), "\n",
-          "  - Adjusted R-squared:", round(sum_up$adj.r.squared, 5), "\n",
-          "  - F-statistic:", fstat[[1]], "on", fstat[[2]], "and", fstat[[3]], "DF",
-          sep = " ")
+      cat(
+        "Calibration curve:\n",
+        "* Date: ", as.character(object@details$date), "\n",
+        "* Model summary:\n",
+        "  - slope: ", slope, "\n",
+        "  - intercept: ", intercept, "\n",
+        "  - residual standard error: ", round(meta$sigma, 2), "\n",
+        "  - multiple R-squared: ", round(meta$r.squared, 5), "\n",
+        "  - adjusted R-squared: ", round(meta$adj.r.squared, 5), "\n",
+        "  - F-statistic: ", fstat[[1]], " on ", fstat[[2]], " and ",
+        fstat[[3]], " DF",
+        sep = ""
+      )
     } else {
-      cat("Calibration curve: no model.\n",
-          sep = " ")
+      cat("Calibration curve: no model.\n", sep = " ")
     }
   }
 )

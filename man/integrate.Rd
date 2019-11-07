@@ -4,37 +4,29 @@
 \name{integrate_signal}
 \alias{integrate_signal}
 \alias{integrate_signal-method}
-\alias{integrate_signal,GammaSpectra,numeric,numeric-method}
-\alias{integrate_signal,GammaSpectra,numeric,missing-method}
-\alias{integrate_signal,GammaSpectrum,numeric,missing-method}
-\alias{integrate_signal,GammaSpectrum,numeric,numeric-method}
+\alias{integrate_signal,GammaSpectrum-method}
+\alias{integrate_signal,GammaSpectra-method}
 \title{Signal integration}
 \usage{
-integrate_signal(object, range, noise, ...)
+integrate_signal(object, ...)
 
-\S4method{integrate_signal}{GammaSpectra,numeric,numeric}(object, range,
-  noise, NiEi = TRUE, simplify = FALSE, ...)
-
-\S4method{integrate_signal}{GammaSpectra,numeric,missing}(object, range,
-  NiEi = TRUE, simplify = FALSE, ...)
-
-\S4method{integrate_signal}{GammaSpectrum,numeric,missing}(object, range,
+\S4method{integrate_signal}{GammaSpectrum}(object, range, noise = NULL,
   NiEi = TRUE, ...)
 
-\S4method{integrate_signal}{GammaSpectrum,numeric,numeric}(object, range,
-  noise, NiEi = TRUE, ...)
+\S4method{integrate_signal}{GammaSpectra}(object, range, noise = c(0, 0),
+  NiEi = TRUE, simplify = FALSE, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 object.}
+
+\item{...}{Currently not used.}
 
 \item{range}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
 \item{noise}{A length-two \code{\link{numeric}} vector giving the noise
 value and error, respectively (see details).}
-
-\item{...}{Currently not used.}
 
 \item{NiEi}{A \code{\link{logical}} scalar.
 Change this only if you know what you are doing.}

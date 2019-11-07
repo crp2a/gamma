@@ -7,9 +7,8 @@ spectrum <- slice_signal(spectrum)
 
 ## Set peak positions (chanel) and expected energy values
 calib_lines <- list(
-  Pb = c(chanel = 86, energy = 238),
-  K = c(chanel = 496, energy = 1461),
-  Cs = c(chanel = 876, energy = 2614.5)
+  chanel = c(86, 496, 876),
+  energy = c(238, 1461, 2614.5)
 )
 
 ## Correct the energy scale

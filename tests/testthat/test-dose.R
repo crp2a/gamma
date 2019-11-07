@@ -15,7 +15,7 @@ test_that("Get and set dose rate", {
   set_dose(spectra[["MAZ"]]) <- c(1141, 12)
   set_dose(spectra[["PEP"]]) <- c(2538, 112)
 
-  expect_output(show(spectra[["BRIQUE"]]), "Dose rate: 1986 \\+/- 36")
+  expect_output(show(spectra[["BRIQUE"]]), "Date: 2009-08-28 11:43:20")
 
   expect_invisible(set_dose(spectra) <- dose_rate1)
 })
@@ -93,6 +93,6 @@ test_that("Estimate dose rate", {
   expect_equal(dim(dose_rate), c(7, 5))
 
   expect_identical(predict_dose(calib1, spectra), predict_dose(calib1))
-  expect_error(predict_dose(calib1, 1:3), "`spectra` must be a")
   expect_type(predict_dose(calib1, spectra[[1]], simplify = FALSE), "list")
+  expect_error(do_predict_dose(calib1, 1:3), "must be a data frame")
 })

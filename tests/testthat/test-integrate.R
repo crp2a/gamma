@@ -19,9 +19,9 @@ test_that("Integrate GammaSpectrum", {
   expect_length(int2, 2)
 
   expect_error(integrate_signal(cnf, range = c(200)),
-               "must be a numeric vector of length two")
+               "must be a numeric vector of length 2")
   expect_error(integrate_signal(cnf, range = c(200, 2800), noise = 1),
-               "must be a numeric vector of length two")
+               "must be a numeric vector of length 2")
 
   spc_tka <- system.file("extdata/test_TKA.tka", package = "gamma")
   tka <- read(spc_tka)

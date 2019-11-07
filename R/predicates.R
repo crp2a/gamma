@@ -9,7 +9,7 @@ NULL
 setMethod(
   f = "is_calibrated",
   signature = "GammaSpectrum",
-  definition = function(object) length(object@calibration$coefficients == 0)
+  definition = function(object) length(object@energy != 0)
 )
 
 # ================================================================= GammaSpectra

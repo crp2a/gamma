@@ -174,12 +174,9 @@ plot(scaled, xaxis = "energy") +
 Alternatively, you can do it by hand.
 ```{r calibrate-fixed}
 # Create a list of chanel-enegy pairs
-# Names are optional, but values must always be set in this order:
-# channel then energy
 calib_lines <- list(
-  Pb212 = c(chanel = 84, energy = 238),
-  K40 = c(chanel = 492, energy = 1461),
-  Tl208 = c(chanel = 865, energy = 2615)
+  chanel = c(84, 492, 865),
+  energy = c(238, 1461, 2615)
 )
 
 # Calibrate the spectrum using these fixed lines
@@ -214,8 +211,8 @@ To estimate the gamma dose rate, you can either use one of the calibration curve
 
 ```{r dose-rate-curves, eval=FALSE}
 # Load one of the built-in curves
-data(BDX1) # IRAMAT-CRP2A (Bordeaux)
-data(AIX1) # CEREGE (Aix-en-Provence)
+data(BDX100) # IRAMAT-CRP2A (Bordeaux)
+data(AIX100) # CEREGE (Aix-en-Provence)
 ```
 
 The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.

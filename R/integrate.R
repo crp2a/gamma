@@ -4,58 +4,23 @@ NULL
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,numeric,numeric-method
+#' @aliases integrate_signal,GammaSpectrum-method
 setMethod(
   f = "integrate_signal",
-  signature = signature(object = "GammaSpectra", range = "numeric",
-                        noise = "numeric"),
-  definition = function(object, range, noise, NiEi = TRUE,
-                        simplify = FALSE, ...) {
-
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, noise = noise, NiEi = NiEi)
-    if (simplify) {
-      do.call(rbind, signals)
-    } else {
-      signals
-    }
-  }
-)
-
-#' @export
-#' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,numeric,missing-method
-setMethod(
-  f = "integrate_signal",
-  signature = signature(object = "GammaSpectra", range = "numeric",
-                        noise = "missing"),
-  definition = function(object, range, NiEi = TRUE, simplify = FALSE, ...) {
-
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, NiEi = NiEi)
-    if (simplify) {
-      do.call(rbind, signals)
-    } else {
-      signals
-    }
-  }
-)
-
-#' @export
-#' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,numeric,missing-method
-setMethod(
-  f = "integrate_signal",
-  signature = signature(object = "GammaSpectrum", range = "numeric",
-                        noise = "missing"),
-  definition = function(object, range, NiEi = TRUE, ...) {
+  signature = signature(object = "GammaSpectrum"),
+  definition = function(object, range, noise = NULL, NiEi = TRUE, ...) {
     # Validation
     if (!is.numeric(range) || length(range) != 2)
-      stop(sprintf("`range` must be a numeric vector of length two, not %d",
+      stop(sprintf("`range` must be a numeric vector of length 2, not %d.",
                    length(range)), call. = FALSE)
-    if (length(object@energy) == 0)
+    if (!is.null(noise)) {
+      if (!is.numeric(noise) || length(noise) != 2)
+        stop(sprintf("`noise` must be a numeric vector of length 2, not %d.",
+                     length(noise)), call. = FALSE)
+    } else {
+      noise <- c(0, 0)
+    }
+    if (!is_calibrated(object))
       stop("You must calibrate the energy scale of your spectrum first.",
            call. = FALSE)
 
@@ -63,8 +28,8 @@ setMethod(
     spc_data <- methods::as(object, "data.frame")
 
     # Integrate signal between boundaries
-    int_index <- which(spc_data$energy >= range[1] &
-                         spc_data$energy <= range[2])
+    int_index <- which(spc_data$energy >= range[[1L]] &
+                         spc_data$energy <= range[[2L]])
     if (NiEi) {
       int_signal <- as.numeric(crossprod(spc_data$energy[int_index],
                                          spc_data$count[int_index]))
@@ -77,33 +42,30 @@ setMethod(
     norm_signal <- int_signal / active_time
     norm_error <- sqrt(2 * int_signal) / active_time
 
-    # list(nls = nls_fit, poly = poly_fit, peaks = energy)
-    c(value = norm_signal, error = norm_error)
-  }
-)
-
-#' @export
-#' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,numeric,numeric-method
-setMethod(
-  f = "integrate_signal",
-  signature = signature(object = "GammaSpectrum", range = "numeric",
-                        noise = "numeric"),
-  definition = function(object, range, noise, NiEi = TRUE, ...) {
-    # Validation
-    if (!is.numeric(noise) || length(noise) != 2)
-      stop(sprintf("`noise` must be a numeric vector of length two, not %d",
-                   length(noise)), call. = FALSE)
-
-    # Compute normalized signal
-    signal <- integrate_signal(object = object, range = range, NiEi = NiEi, ...)
-
-    names(signal) <- names(noise) <- NULL
     # Compute net signal (substracted background noise)
-    net_signal <- signal[1] - noise[1]
-    net_error <- sqrt(signal[2]^2 + noise[2]^2)
+    net_signal <- norm_signal - noise[[1L]]
+    net_error <- sqrt(norm_error^2 + noise[[2L]]^2)
 
     c(value = net_signal, error = net_error)
   }
 )
 
+#' @export
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra-method
+setMethod(
+  f = "integrate_signal",
+  signature = signature(object = "GammaSpectra"),
+  definition = function(object, range, noise = c(0, 0), NiEi = TRUE,
+                        simplify = FALSE, ...) {
+
+    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
+    signals <- lapply(X = spectra, FUN = integrate_signal,
+                      range = range, NiEi = NiEi)
+    if (simplify) {
+      do.call(rbind, signals)
+    } else {
+      signals
+    }
+  }
+)

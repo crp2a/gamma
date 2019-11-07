@@ -244,11 +244,11 @@ setGeneric(
 #'
 #' Predict in-situ gamma dose rate.
 #' @param object A \linkS4class{CalibrationCurve} object.
-#' @param spectra An optional \linkS4class{GammaSpectra} object in
-#'  which to look for variables with which to predict. If omitted, the fitted
-#'  values are used.
-#' @param epsilon A \code{\link{numeric}} value giving the error introduced by
-#'  the energy calibration of the spectrum.
+#' @param spectrum An optional \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra} object in which to look for variables with which
+#'  to predict. If omitted, the fitted values are used.
+#' @param epsilon A \code{\link{numeric}} value giving an extra error term
+#'  introduced by the energy calibration of the spectrum.
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
@@ -263,7 +263,7 @@ setGeneric(
 #' @aliases predict_dose-method
 setGeneric(
   name = "predict_dose",
-  def = function(object, ...) standardGeneric("predict_dose")
+  def = function(object, spectrum, ...) standardGeneric("predict_dose")
 )
 
 # ==================================================================== Integrate
@@ -303,7 +303,7 @@ setGeneric(
 #' @aliases integrate_signal-method
 setGeneric(
   name = "integrate_signal",
-  def = function(object, range, noise, ...) standardGeneric("integrate_signal")
+  def = function(object, ...) standardGeneric("integrate_signal")
 )
 
 # ======================================================================== Peaks
@@ -520,11 +520,12 @@ setGeneric(
 # ==================================================================== Summarize
 #' Summarize
 #'
-#' @param object A \linkS4class{GammaSpectrum} or  \linkS4class{GammaSpectra}
+#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #' object.
 #' @param ... Currently not used.
-#' @return A \code{\link{data.frame}}
+#' @return A \code{\link{data.frame}}.
 #' @author N. Frerebeau
+#' @example inst/examples/ex-summarise.R
 #' @docType methods
 #' @family summarise
 #' @rdname summarise

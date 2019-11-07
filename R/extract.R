@@ -224,27 +224,35 @@ setMethod(
   f = "set_dose<-",
   signature = "GammaSpectra",
   definition = function(object, value) {
-
-    names_object <- names(object)
-
     if (is.matrix(value) || is.data.frame(value)) {
-      names_doses <- rownames(value)
-      if (length(names_doses) != 0) {
-        index <- stats::na.omit(match(names_object, names_doses))
-        if (length(index) == 0)
+      object_names <- names(object)
+      value <- data.matrix(value)
+      if (ncol(value) >= 2) {
+        doses <- value[, c(1, 2)]
+        doses_names <- rownames(doses)
+        # Match by names
+        index <- stats::na.omit(match(object_names, doses_names))
+        if (length(index) != 0 && length(index) == length(object)) {
+          doses <- doses[index, ]
+          doses_names <- doses_names[index]
+        } else {
           stop("Names of `value` do not match.", call. = FALSE)
-        value <- value[index, ]
-        names_doses <- names_doses[index]
+        }
+      } else {
+        stop("`value` must have at least 2 columns.", call. = FALSE)
       }
-      doses_ls <- split(x = value, f = names_doses)
-      doses_num <- lapply(X = doses_ls, FUN = as.numeric)
-    }
 
-    mapply(FUN = methods::`slot<-`, object = object, value = doses_num,
+      doses_ls <- split(x = doses, f = doses_names)
+      doses_num <- lapply(X = doses_ls, FUN = as.numeric)
+
+      mapply(FUN = methods::`slot<-`, object = object, value = doses_num,
              MoreArgs = list(name = "dose_rate"), SIMPLIFY = FALSE)
 
-    methods::validObject(object)
-    object
+      methods::validObject(object)
+      return(object)
+    } else {
+      stop("`value` must be a matrix or a data.frame.", call. = FALSE)
+    }
   }
 )
 

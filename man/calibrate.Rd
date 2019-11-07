@@ -4,14 +4,11 @@
 \name{calibrate_energy}
 \alias{calibrate_energy}
 \alias{calibrate_energy-method}
-\alias{calibrate_energy,GammaSpectra,list-method}
 \alias{calibrate_energy,GammaSpectrum,list-method}
 \alias{calibrate_energy,GammaSpectrum,PeakPosition-method}
 \title{Spectrum calibration}
 \usage{
 calibrate_energy(object, lines, ...)
-
-\S4method{calibrate_energy}{GammaSpectra,list}(object, lines, ...)
 
 \S4method{calibrate_energy}{GammaSpectrum,list}(object, lines, ...)
 
@@ -48,9 +45,8 @@ spectrum <- slice_signal(spectrum)
 
 ## Set peak positions (chanel) and expected energy values
 calib_lines <- list(
-  Pb = c(chanel = 86, energy = 238),
-  K = c(chanel = 496, energy = 1461),
-  Cs = c(chanel = 876, energy = 2614.5)
+  chanel = c(86, 496, 876),
+  energy = c(238, 1461, 2614.5)
 )
 
 ## Correct the energy scale

@@ -15,16 +15,29 @@ summarise(object, ...)
 \S4method{summarise}{GammaSpectra}(object)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or  \linkS4class{GammaSpectra}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 object.}
 
 \item{...}{Currently not used.}
 }
 \value{
-A \code{\link{data.frame}}
+A \code{\link{data.frame}}.
 }
 \description{
 Summarize
+}
+\examples{
+## Import a Canberra CNF file
+cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+(spectrum <- read(cnf_file))
+
+summarise(spectrum)
+
+## Import all CNF files in a given directory
+spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+(spectra <- read(spc_dir))
+
+summarise(spectra)
 }
 \author{
 N. Frerebeau

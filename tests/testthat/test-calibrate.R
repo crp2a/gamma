@@ -5,9 +5,8 @@ test_that("Calibrate GammaSpectrum", {
   spectrum <- read(spc_file)
 
   lines <- list(
-    Pb = c(chanel = 76, energy = 238),
-    K = c(chanel = 459, energy = 1461),
-    Cs = c(chanel = 816, energy = 2614.5)
+    chanel = c(76, 459, 816),
+    energy = c(238, 1461, 2614.5)
   )
 
   calib <- calibrate_energy(spectrum, lines = lines)
@@ -27,27 +26,11 @@ test_that("Calibrate GammaSpectrum", {
   expect_equal(calib[["rate"]], spectrum[["rate"]])
   expect_s3_class(calib[["calibration"]], "lm")
 
-  expect_error(calibrate_energy(spectrum, lines = lines[1]),
-               "You have to provide at least 3 lines for calibration, not 1.")
   lines <- list(
     Pb = c(76, 238),
     K = c(chanel = 459, energy = 1461),
     Cs = c(chanel = 816, energy = 2614.5)
   )
   expect_error(calibrate_energy(spectrum, lines = lines),
-               "`lines` is a list but does not have components 'chanel' and 'energy'.")
-})
-
-test_that("Calibrate GammaSpectra", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
-  spectra <- read(spc_dir)
-
-  lines <- list(
-    Pb = c(chanel = 76, energy = 238),
-    K = c(chanel = 459, energy = 1461),
-    Cs = c(chanel = 816, energy = 2614.5)
-  )
-
-  calib <- calibrate_energy(spectra, lines = lines)
-  expect_s4_class(calib, "GammaSpectra")
+               "does not have components 'chanel' and 'energy'")
 })
