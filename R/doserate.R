@@ -111,7 +111,7 @@ setMethod(
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectrum"),
   definition = function(object, spectrum, epsilon = 0, simplify = FALSE, ...) {
     spectrum <- methods::as(spectrum, "GammaSpectra")
-    predict_dose(object, epsilon = epsilon, simplify = simplify, ...)
+    predict_dose(object, spectrum, epsilon = epsilon, simplify = simplify, ...)
   }
 )
 
