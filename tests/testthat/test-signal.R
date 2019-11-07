@@ -32,8 +32,8 @@ test_that("Stabilize signal", {
   spc_files <- system.file("extdata/", package = "gamma")
   spc_set <- read(spc_files)
 
-  spc2 <- stabilize_signal(spc_cnf, sqrt)
-  expect_equal(get_hash(spc_cnf), get_hash(spc2))
+  spc2 <- stabilize_signal(spc_set, sqrt)
+  expect_equal(get_hash(spc_set), get_hash(spc2))
 })
 test_that("Smooth signal", {
   smooth_methods <- c("unweighted", "weighted", "savitzky")
