@@ -19,4 +19,10 @@ data("clermont")
 \description{
 Clermont Reference Data
 }
+\seealso{
+Other datasets: \code{\link{.decay_La}},
+  \code{\link{.decay}}, \code{\link{AIX100}},
+  \code{\link{BDX100}}
+}
+\concept{datasets}
 \keyword{datasets}

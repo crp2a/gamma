@@ -6,7 +6,7 @@
 \alias{integrate_signal-method}
 \alias{integrate_signal,GammaSpectrum-method}
 \alias{integrate_signal,GammaSpectra-method}
-\title{Signal integration}
+\title{Signal Integration}
 \usage{
 integrate_signal(object, ...)
 
@@ -39,12 +39,10 @@ If \code{simplify} is \code{FALSE} returns a list of length-two
  numeric vectors (default), else returns a matrix.
 }
 \description{
-Signal integration
+Signal Integration
 }
 \details{
-TODO
-
- It assumes that each spectrum is calibrated in energy.
+It assumes that each spectrum is calibrated in energy.
 }
 \references{
 Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma

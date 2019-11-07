@@ -21,6 +21,11 @@ A \linkS4class{GammaSpectrum} object.
 \description{
 Performs operation on spectra.
 }
+\seealso{
+Other IO: \code{\link{launch_app}}, \code{\link{plot}},
+  \code{\link{read}}, \code{\link{summarise}}
+}
 \author{
 N. Frerebeau
 }
+\concept{IO}

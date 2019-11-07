@@ -24,7 +24,8 @@
 #' @source
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
-#' @keywords internal
+#' @family datasets
+#' @keywords datasets internal
 ".decay"
 
 #' Lanthanum Decay Data
@@ -49,7 +50,8 @@
 #' @source
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
-#' @keywords internal
+#' @family datasets
+#' @keywords datasets internal
 ".decay_La"
 
 # ==============================================================================
@@ -64,6 +66,8 @@
 #'  Miallier, D., Guérin, G., Mercier, N., Pilleyre, T. & Sanzelle, S.
 #'  (2009). The Clermont Radiometric Reference Rocks: A Convenient Tool
 #'  for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.
+#' @family datasets
+#' @keywords datasets
 "clermont"
 
 #' CEREGE Calibration Curve #1
@@ -85,6 +89,8 @@
 #' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
+#' @family datasets
+#' @keywords datasets
 "AIX100"
 
 #' CRP2A Calibration Curve #1
@@ -106,4 +112,6 @@
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
+#' @family datasets
+#' @keywords datasets
 "BDX100"

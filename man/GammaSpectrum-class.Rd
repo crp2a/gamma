@@ -49,6 +49,9 @@ scale calibration (see \code{\link{calibrate_energy}}).}
 rate and corresponding error.}
 }}
 
+\note{
+This class retains copy construction.
+}
 \section{Access}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.

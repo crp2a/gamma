@@ -4,7 +4,7 @@ NULL
 
 # ========================================================================== Fit
 #' @export
-#' @rdname fit
+#' @rdname doserate
 #' @aliases fit_dose,GammaSpectra,GammaSpectrum-method
 setMethod(
   f = "fit_dose",
@@ -20,7 +20,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname fit
+#' @rdname doserate
 #' @aliases fit_dose,GammaSpectra,numeric-method
 setMethod(
   f = "fit_dose",
@@ -90,7 +90,7 @@ setMethod(
 
 # ====================================================================== Predict
 #' @export
-#' @rdname predict
+#' @rdname doserate
 #' @aliases predict_dose,CalibrationCurve,missing-method
 setMethod(
   f = "predict_dose",
@@ -104,7 +104,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname predict
+#' @rdname doserate
 #' @aliases predict_dose,CalibrationCurve,GammaSpectrum-method
 setMethod(
   f = "predict_dose",
@@ -116,7 +116,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname predict
+#' @rdname doserate
 #' @aliases predict_dose,CalibrationCurve,GammaSpectra-method
 setMethod(
   f = "predict_dose",

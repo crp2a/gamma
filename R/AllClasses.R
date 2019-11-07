@@ -53,6 +53,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one and will be matched to the name of the slots.}
 #' }
+#' @note This class retains copy construction.
 #' @seealso \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
@@ -148,7 +149,6 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' @aliases BaseLine-class
 .BaseLine <- setClass(
   Class = "BaseLine",
-  # TODO
   # slots = c(
   #   method = "character"
   # ),
@@ -218,6 +218,7 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector
 #'  of length one.}
 #' }
+#' @note This class retains copy construction.
 #' @author N. Frerebeau
 #' @docType class
 #' @family class

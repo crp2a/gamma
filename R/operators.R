@@ -9,6 +9,7 @@ NULL
 #' @return A \linkS4class{GammaSpectrum} object.
 #' @author N. Frerebeau
 #' @docType methods
+#' @family IO
 #' @name operators
 #' @rdname operators
 #' @aliases operators-method

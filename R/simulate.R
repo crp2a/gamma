@@ -3,8 +3,9 @@
 NULL
 
 #' @export
-#' @rdname simulate_spectrum
+#' @rdname simulate
 #' @aliases simulate_spectrum,numeric,numeric,numeric-method
+#' @keywords internal
 setMethod(
   f = "simulate_spectrum",
   signature = signature(K = "numeric", U = "numeric", Th = "numeric"),

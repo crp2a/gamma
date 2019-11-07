@@ -32,3 +32,4 @@ Rough simulation of a gamma-ray spectrum.
 \author{
 N. Frerebeau
 }
+\keyword{internal}

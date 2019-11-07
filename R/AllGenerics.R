@@ -2,6 +2,19 @@
 #' @include AllClasses.R
 NULL
 
+# ======================================================================== Shiny
+#' Launch the Shiny App
+#'
+#' A wrapper for \code{\link[shiny]{shinyApp}}.
+#' @examples \dontrun{launch_app()}
+#' @return A \pkg{shiny} application object.
+#' @family IO
+#' @author N. Frerebeau
+#' @export
+launch_app <- function() {
+  shinyApp(ui = shiny_ui, server = shiny_server)
+}
+
 # ====================================================================== Extract
 #' Get or Set Parts of an Object
 #'
@@ -19,7 +32,6 @@ NULL
 #' @aliases get set
 NULL
 
-#' @export
 #' @rdname access
 #' @aliases get_hash-method
 setGeneric(
@@ -27,7 +39,6 @@ setGeneric(
   def = function(object) standardGeneric("get_hash")
 )
 
-#' @export
 #' @rdname access
 #' @aliases get_name-method
 setGeneric(
@@ -35,7 +46,6 @@ setGeneric(
   def = function(object) standardGeneric("get_name")
 )
 
-#' @export
 #' @rdname access
 #' @aliases set_name-method
 setGeneric(
@@ -43,7 +53,6 @@ setGeneric(
   def = function(object, value) standardGeneric("set_name<-")
 )
 
-#' @export
 #' @rdname access
 #' @aliases get_chanels-method
 setGeneric(
@@ -51,14 +60,13 @@ setGeneric(
   def = function(object) standardGeneric("get_chanels")
 )
 
-#' @export
 #' @rdname access
 #' @aliases get_dose-method
 setGeneric(
   name = "get_dose",
   def = function(object) standardGeneric("get_dose")
 )
-#' @export
+
 #' @rdname access
 #' @aliases set_dose-method
 setGeneric(
@@ -66,14 +74,13 @@ setGeneric(
   def = function(object, value) standardGeneric("set_dose<-")
 )
 
-#' @export
 #' @rdname access
 #' @aliases get_energy-method
 setGeneric(
   name = "get_energy",
   def = function(object) standardGeneric("get_energy")
 )
-#' @export
+
 #' @rdname access
 #' @aliases set_energy-method
 setGeneric(
@@ -106,30 +113,10 @@ setGeneric(
 #' @rdname subset
 NULL
 
-# =================================================================== Predicates
-#' Predicates
-#'
-#' @param object An object from which to get or set element(s).
-#' @return
-#'  A \code{\link{logical}} vector.
-#' @author N. Frerebeau
-#' @docType methods
-#' @family predicates
-#' @name predicates
-#' @rdname predicates
-NULL
-
-#' @export
-#' @rdname predicates
-setGeneric(
-  name = "is_calibrated",
-  def = function(object) standardGeneric("is_calibrated")
-)
-
 # ===================================================== Energy scale calibration
-#' Spectrum calibration
+#' Energy Scale Calibration
 #'
-#' Calibrate the energy scale of a gamma spectrum.
+#' Calibrates the energy scale of a gamma spectrum.
 #' @param object A \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object.
 #' @param lines A list of or a \code{\link{numeric}} vector.
@@ -141,16 +128,28 @@ setGeneric(
 #' @details
 #'  TODO
 #' @return
-#'  A \linkS4class{GammaSpectrum} object.
+#'  \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
+#'
+#'  \code{is_calibrated} returns a \code{\link{logical}} vector.
 #' @example inst/examples/ex-calibrate.R
 #' @author N. Frerebeau
 #' @docType methods
 #' @family energy
-#' @rdname calibrate
+#' @name energy
+#' @rdname energy
+NULL
+
+#' @rdname energy
 #' @aliases calibrate_energy-method
 setGeneric(
   name = "calibrate_energy",
   def = function(object, lines, ...) standardGeneric("calibrate_energy")
+)
+
+#' @rdname energy
+setGeneric(
+  name = "is_calibrated",
+  def = function(object) standardGeneric("is_calibrated")
 )
 
 # ===================================================================== Baseline
@@ -219,8 +218,11 @@ setGeneric(
 # ========================================================= Dose rate prediction
 #' Dose Rate Estimation
 #'
-#' Builds a calibration curve for gamma dose rate estimation.
-#' @param object An object of class \linkS4class{GammaSpectra}.
+#' \code{fit_dose} builds a calibration curve for gamma dose rate estimation.
+#'
+#' \code{predict_dose} predicts in-situ gamma dose rate.
+#' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
+#'  object.
 #' @param noise A \code{\link{list}} of two numeric values giving the noise
 #'  value and error.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
@@ -232,26 +234,6 @@ setGeneric(
 #'  used.
 #' @param details A list of \code{\link{character}} vector specifying additional
 #'  informations about the instrument for which the curve is built.
-#' @param ... Currently not used.
-#' @details
-#'  TODO
-#' @return A \linkS4class{CalibrationCurve} object.
-#' @seealso \link{integrate_signal}
-#' @example inst/examples/ex-doserate.R
-#' @author N. Frerebeau
-#' @family dose rate
-#' @docType methods
-#' @rdname fit
-#' @aliases fit_dose-method
-setGeneric(
-  name = "fit_dose",
-  def = function(object, noise, ...) standardGeneric("fit_dose")
-)
-
-#' Gamma dose rate
-#'
-#' Predict in-situ gamma dose rate.
-#' @param object A \linkS4class{CalibrationCurve} object.
 #' @param spectrum An optional \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object in which to look for variables with which
 #'  to predict. If omitted, the fitted values are used.
@@ -260,14 +242,24 @@ setGeneric(
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
-#' @return
-#'  If \code{simplify} is \code{FALSE} returns a list of length-two numeric
-#'  vectors (default), else returns a matrix.
+#' @return A \linkS4class{CalibrationCurve} object.
+#' @seealso \link{integrate_signal}
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
-#' @family dose rate
 #' @docType methods
-#' @rdname predict
+#' @family dose rate
+#' @name doserate
+#' @rdname doserate
+NULL
+
+#' @rdname doserate
+#' @aliases fit_dose-method
+setGeneric(
+  name = "fit_dose",
+  def = function(object, noise, ...) standardGeneric("fit_dose")
+)
+
+#' @rdname doserate
 #' @aliases predict_dose-method
 setGeneric(
   name = "predict_dose",
@@ -275,7 +267,7 @@ setGeneric(
 )
 
 # ==================================================================== Integrate
-#' Signal integration
+#' Signal Integration
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
@@ -289,8 +281,6 @@ setGeneric(
 #'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
 #' @param ... Currently not used.
 #' @details
-#'  TODO
-#'
 #'  It assumes that each spectrum is calibrated in energy.
 #' @return
 #'  If \code{simplify} is \code{FALSE} returns a list of length-two
@@ -305,8 +295,8 @@ setGeneric(
 #'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 #'  \emph{Ancient TL}, 25(1), p. 1-4.
 #' @author N. Frerebeau
-#' @family signal processing
 #' @docType methods
+#' @family signal processing
 #' @rdname integrate
 #' @aliases integrate_signal-method
 setGeneric(
@@ -331,8 +321,6 @@ setGeneric(
 #' @section Peak detection:
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
-#' @section Peak fitting:
-#'  TODO
 #' @return An object of class \linkS4class{PeakPosition}.
 #' @example inst/examples/ex-peaks.R
 #' @author N. Frerebeau
@@ -363,6 +351,7 @@ setGeneric(
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods
+#' @family IO
 #' @name plot
 #' @rdname plot
 #' @aliases plot-method
@@ -374,7 +363,7 @@ if (!isGeneric("plot")) {
 }
 
 # ============================================================== Read/write data
-#' Data input
+#' Data Input
 #'
 #' Reads a gamma ray spectrum file.
 #' @param file A \code{\link{character}} string giving the path of files to be
@@ -392,6 +381,7 @@ if (!isGeneric("plot")) {
 #' @example inst/examples/ex-read.R
 #' @author N. Frerebeau
 #' @docType methods
+#' @family IO
 #' @rdname read
 #' @aliases read-method
 setGeneric(
@@ -412,8 +402,9 @@ setGeneric(
 #' @return A \linkS4class{GammaSpectrum} object.
 #' @author N. Frerebeau
 #' @docType methods
-#' @rdname simulate_spectrum
+#' @rdname simulate
 #' @aliases simulate_spectrum-method
+#' @keywords internal
 setGeneric(
   name = "simulate_spectrum",
   def = function(K, U, Th, ...) standardGeneric("simulate_spectrum")
@@ -535,7 +526,7 @@ setGeneric(
 #' @author N. Frerebeau
 #' @example inst/examples/ex-summarise.R
 #' @docType methods
-#' @family summarise
+#' @family IO
 #' @rdname summarise
 #' @aliases summarise-method
 setGeneric(

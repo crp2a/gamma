@@ -29,4 +29,10 @@ AIX1
 utils::vignette("AIX1#1", package = "gamma")
 }
 }
+\seealso{
+Other datasets: \code{\link{.decay_La}},
+  \code{\link{.decay}}, \code{\link{BDX100}},
+  \code{\link{clermont}}
+}
+\concept{datasets}
 \keyword{datasets}

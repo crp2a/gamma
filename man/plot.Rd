@@ -64,6 +64,12 @@ plot(spectra, xaxis = "chanel", yaxis = "rate",
      select = 1:3, facet = TRUE) +
   ggplot2::theme_bw()
 }
+\seealso{
+Other IO: \code{\link{launch_app}},
+  \code{\link{operators}}, \code{\link{read}},
+  \code{\link{summarise}}
+}
 \author{
 N. Frerebeau
 }
+\concept{IO}

@@ -29,4 +29,10 @@
 \description{
 An internal dataset containing the decay data for the Lanthanum isotopes.
 }
+\seealso{
+Other datasets: \code{\link{.decay}}, \code{\link{AIX100}},
+  \code{\link{BDX100}}, \code{\link{clermont}}
+}
+\concept{datasets}
+\keyword{datasets}
 \keyword{internal}

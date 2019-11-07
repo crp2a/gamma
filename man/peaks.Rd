@@ -40,11 +40,6 @@ Finds local maxima in sequential data.
  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 }
 
-\section{Peak fitting}{
-
- TODO
-}
-
 \examples{
 # Import a Canberra CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")

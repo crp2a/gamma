@@ -5,7 +5,7 @@
 \alias{read}
 \alias{read-method}
 \alias{read,character-method}
-\title{Data input}
+\title{Data Input}
 \usage{
 read(file, ...)
 
@@ -47,7 +47,12 @@ spc_dir <- system.file("extdata/", package = "gamma")
 }
 \seealso{
 \link[rxylib]{read_xyData}
+
+Other IO: \code{\link{launch_app}},
+  \code{\link{operators}}, \code{\link{plot}},
+  \code{\link{summarise}}
 }
 \author{
 N. Frerebeau
 }
+\concept{IO}

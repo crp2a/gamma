@@ -3,7 +3,7 @@
 NULL
 
 #' @export
-#' @rdname calibrate
+#' @rdname energy
 #' @aliases calibrate_energy,GammaSpectrum,list-method
 setMethod(
   f = "calibrate_energy",
@@ -40,7 +40,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname calibrate
+#' @rdname energy
 #' @aliases calibrate_energy,GammaSpectrum,PeakPosition-method
 setMethod(
   f = "calibrate_energy",
@@ -56,5 +56,26 @@ setMethod(
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy
     calibrate_energy(object, peaks)
+  }
+)
+
+# =================================================================== Predicates
+#' @export
+#' @rdname energy
+#' @aliases is_calibrated,GammaSpectrum-method
+setMethod(
+  f = "is_calibrated",
+  signature = "GammaSpectrum",
+  definition = function(object) length(object@energy != 0)
+)
+
+#' @export
+#' @rdname energy
+#' @aliases is_calibrated,GammaSpectra-method
+setMethod(
+  f = "is_calibrated",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    vapply(object, FUN = is_calibrated, FUN.VALUE = logical(1))
   }
 )

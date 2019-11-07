@@ -33,7 +33,7 @@ de la Recherche (France) throught the program \emph{Investissements d'avenir}
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://gamma.archaeo.science}
+  \item \url{https://crp2a.github.io/gamma}
   \item \url{http://github.com/crp2a/gamma}
   \item Report bugs at \url{http://github.com/crp2a/gamma/issues}
 }

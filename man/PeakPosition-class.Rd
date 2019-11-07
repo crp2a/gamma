@@ -27,6 +27,9 @@ size.}
 \item{\code{energy}}{TODO.}
 }}
 
+\note{
+This class retains copy construction.
+}
 \section{Subset}{
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.

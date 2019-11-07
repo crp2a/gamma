@@ -29,4 +29,10 @@ BDX1
 utils::vignette("CRP2A#1", package = "gamma")
 }
 }
+\seealso{
+Other datasets: \code{\link{.decay_La}},
+  \code{\link{.decay}}, \code{\link{AIX100}},
+  \code{\link{clermont}}
+}
+\concept{datasets}
 \keyword{datasets}
