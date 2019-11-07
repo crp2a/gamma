@@ -52,7 +52,8 @@ Imports:
     rxylib (>= 0.2.1),
     shiny,
     stats,
-    tools
+    tools,
+    utils
 Suggests: 
     covr,
     knitr,

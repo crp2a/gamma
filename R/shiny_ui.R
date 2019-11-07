@@ -11,14 +11,15 @@ shiny_ui <- fluidPage(
       icon = icon("upload"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
-          fileInput('spc_files', 'Choose spectrum file(s)', multiple = TRUE,
+          fileInput('import_files', 'Choose spectrum file(s)', multiple = TRUE,
                     accept = c('.cnf', '.CNF', '.tka', '.TKA')),
           tags$hr(),
           checkboxInput("import_facet", "Display in a grid", value = FALSE),
           selectInput("import_select", "Select a spectrum", choices = NULL,
                       multiple = TRUE),
           radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
-          radioButtons("import_yaxis", "Y axis", choices = c("count", "rate"))
+          radioButtons("import_yaxis", "Y axis", choices = c("count", "rate")),
+          downloadButton("import_export", "Export graph"),
         ),
         mainPanel = mainPanel(
           plotOutput("import_plot"),
@@ -38,8 +39,13 @@ shiny_ui <- fluidPage(
         ),
         mainPanel = mainPanel(
           fluidRow(
-            selectInput("calib_select", "Select a spectrum",
-                        choices = NULL, multiple = FALSE)
+            column(width = 4,
+                   selectInput("calib_select", "Select a spectrum",
+                               choices = NULL, selected = NULL,
+                               multiple = FALSE)),
+            column(width = 4,
+                   style = "margin-top: 25px;",
+                   downloadButton("calib_export", "Export data"))
           ),
           fluidRow(
             tabsetPanel(
@@ -56,7 +62,7 @@ shiny_ui <- fluidPage(
           width = 3,
           h4("1. Drop chanels"),
           sliderInput("calib_slice_range", "Chanels to drop",
-                      min = 1, max = 1024, value = c(1, 35), step = 5
+                      min = 1, max = 2000, value = c(1, 35), step = 5
           ),
           h4("2. Transform signal"),
           selectInput("calib_stabilize_method", "Method", selected = 1,
@@ -106,6 +112,8 @@ shiny_ui <- fluidPage(
           tabsetPanel(
             tabPanel(
               "Dose rate",
+              tags$br(),
+              downloadButton("dose_export", "Export results"),
               tableOutput("dose_table_dose")
             ),
             tabPanel(
@@ -122,12 +130,21 @@ shiny_ui <- fluidPage(
     tabPanel(
       "About",
       icon = icon("info-circle"),
-      sidebarLayout(
-        sidebarPanel = sidebarPanel(
-          "sidebar panel"
-        ),
-        mainPanel = mainPanel(
-          "main panel"
+      fluidRow(
+        column(
+          width = 8,
+          align = "center",
+          offset = 2,
+          wellPanel(
+            # imageOutput("about_logo"),
+            h4(textOutput("about_version")),
+            tags$br(),
+            uiOutput("about_license"),
+            tags$br(),
+            uiOutput("about_citation"),
+            tags$br(),
+            uiOutput("about_lascarbx")
+          )
         )
       )
     )
