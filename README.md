@@ -52,10 +52,7 @@ launch_app()
 
 ![](man/figures/README-shiny-1.png)
 
-``` r
-# See the package manual
-utils::vignette("gamma", package = "gamma")
-```
+Or, if you need a more reproducible workflow:
 
 ``` r
 # A minimal example
@@ -75,10 +72,22 @@ peaks <- spectrum %>%
   slice_signal() %>%
   stabilize_signal(transformation = sqrt) %>%
   smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline(decreasing = TRUE, k = 100) %>%
+  remove_baseline() %>%
   find_peaks()
 # Set the energy values (in keV)
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
+peaks
+#> 8 peaks were detected:
+#>   chanel energy
+#> 1     86    238
+#> 2    208     NA
+#> 3    314     NA
+#> 4    384     NA
+#> 5    496   1461
+#> 6    596     NA
+#> 7    722     NA
+#> 8    879   2615
+
 # Inspect Peaks
 plot(spectrum, peaks)
 ```
@@ -93,12 +102,12 @@ cal <- calibrate_energy(spectrum, peaks)
 # Load the calibration curve for the dose rate estimation
 # As this curve is instrument specific, you will have to build your own
 # See help(fit_dose)
-data(BDX1, package = "gamma")
+data(BDX100, package = "gamma")
 
 # Estimate the gamma dose rate
-(doses <- predict_dose(BDX1, spectrum, simplify = TRUE))
-#>          reference signal_value signal_error dose_value dose_error
-#> test_CNF  test_CNF     133600.4      9.82962   4217.026    79.6977
+(doses <- predict_dose(BDX100, spectrum, simplify = TRUE))
+#>              name signal_value signal_error dose_value dose_error
+#> test_CNF test_CNF     133600.4      9.82962   4217.026    79.6977
 ```
 
 ## Contributing
