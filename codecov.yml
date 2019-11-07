@@ -1,5 +1,9 @@
 comment: false
 
+ignore:
+  - "R/shiny_server.R"
+  - "R/shiny_ui.R"
+
 coverage:
   status:
     project:
