@@ -1,6 +1,6 @@
 context("Calibrate energy scale")
 
-test_that("Calibrate GammaSpectrum", {
+test_that("Calibrate a GammaSpectrum object with a list", {
   spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
   spectrum <- read(spc_file)
 
@@ -27,10 +27,50 @@ test_that("Calibrate GammaSpectrum", {
   expect_s3_class(calib[["calibration"]], "lm")
 
   lines <- list(
-    Pb = c(76, 238),
-    K = c(chanel = 459, energy = 1461),
-    Cs = c(chanel = 816, energy = 2614.5)
+    X = c(76, 459, 816),
+    Y = c(238, 1461, 2614.5)
   )
   expect_error(calibrate_energy(spectrum, lines = lines),
                "does not have components 'chanel' and 'energy'")
+
+  lines <- list(
+    chanel = c(76, 816),
+    energy = c(238, 2614.5)
+  )
+  expect_error(calibrate_energy(spectrum, lines = lines),
+               "You have to provide at least 3 lines for calibration, not 2.")
 })
+test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
+  spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  spectrum <- read(spc_file)
+
+  peaks <- .PeakPosition(
+    hash = spectrum@hash,
+    chanel = c(76L, 459L, 816L),
+    energy = c(NA_real_, NA_real_, NA_real_)
+  )
+
+  expect_error(calibrate_energy(spectrum, lines = peaks),
+               "You must set the corresponding energy")
+
+  set_energy(peaks) <- c(238, 1461, 2614.5)
+  calib <- calibrate_energy(spectrum, lines = peaks)
+
+  expect_s4_class(calib, "GammaSpectrum")
+  expect_length(spectrum@energy, 0)
+  expect_length(calib@energy, 1024)
+})
+test_that("the energy scale of a GammaSpectrum is set", {
+  cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  cnf_spc <- read(cnf_file)
+  expect_true(is_calibrated(cnf_spc))
+
+  tka_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  tka_spc <- read(tka_file)
+  expect_false(is_calibrated(tka_spc))
+
+  set_file <- system.file("extdata/", package = "gamma")
+  set_spc <- read(set_file)
+  expect_equivalent(is_calibrated(set_spc), c(TRUE, FALSE))
+})
+

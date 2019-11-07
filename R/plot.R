@@ -17,16 +17,10 @@ setMethod(
     # Get data
     calib <- is_calibrated(x)
     spc <- methods::as(x, "data.frame")
-    if (xaxis == "energy") {
-      if (anyNA(spc[["energy"]])) {
-        xaxis <- "chanel"
-        warning("The energy scale is missing, displaying chanels instead.",
-                call. = FALSE)
-      }
-      else if (!calib && getOption("verbose")) {
-        message("It seems that the energy scale has not been corrected.",
-                call. = FALSE)
-      }
+    if (xaxis == "energy" && anyNA(spc[["energy"]])) {
+      xaxis <- "chanel"
+      warning("The energy scale is missing, displaying chanels instead.",
+              call. = FALSE)
     }
     xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
     ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")

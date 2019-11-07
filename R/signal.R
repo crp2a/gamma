@@ -21,7 +21,8 @@ setMethod(
       count <- object[["count"]][index]
       rate <- object[["rate"]][index]
     } else {
-      stop("xxx", call. = FALSE)
+      stop("A vector of strictly positive of negative integers is expected.",
+           call. = FALSE)
     }
 
     methods::initialize(object, chanel = chanel, energy = energy,
@@ -37,14 +38,14 @@ setMethod(
   signature = signature(object = "GammaSpectra"),
   definition = function(object, ...) {
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    stabilized <- lapply(
+    sliced <- lapply(
       X = spectra,
       FUN = slice_signal,
       ...
     )
-    names(stabilized) <- names(object)
+    names(sliced) <- names(object)
 
-    .GammaSpectra(stabilized)
+    .GammaSpectra(sliced)
   }
 )
 

@@ -11,9 +11,13 @@ test_that("Import a gamma spectrum", {
   cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
   cnf_spectrum <- read(cnf_file)
   expect_output(show(cnf_spectrum), "Gamma spectrum")
+  expect_equal(get_chanels(cnf_spectrum), 1024)
+  expect_equal(round(get_energy(cnf_spectrum)), c(-7, 3125))
 
   expect_s3_class(methods::as(cnf_spectrum, "data.frame"), "data.frame")
   expect_type(methods::as(cnf_spectrum, "list"), "list")
+
+  expect_equal(dim(summarise(cnf_spectrum)), c(1, 6))
 })
 test_that("Import a set of gamma spectra", {
   spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
@@ -42,4 +46,21 @@ test_that("Import a set of gamma spectra", {
 
   expect_type(methods::as(spectra, "list"), "list")
   expect_s3_class(methods::as(spectra, "data.frame"), "data.frame")
+
+  expect_true(all(nchar(get_hash(spectra)) == 32))
+  expect_true(all(nchar(get_name(spectra)) > 0))
+  set_name(spectra) <- LETTERS[1:7]
+  expect_true(all(get_name(spectra) == LETTERS[1:7]))
+  expect_true(all(get_name(spectra) == names(spectra)))
+  expect_true(all(get_chanels(spectra) == 1024))
+  expect_equal(dim(get_energy(spectra)), c(7, 2))
+
+  doses <- data.frame(value = 1:7, error = 1:7)
+  expect_error(set_dose(spectra) <- doses, "do not match")
+  expect_error(set_dose(spectra) <- doses[, 1, drop = FALSE],
+               "must have at least 2 columns")
+  expect_error(set_dose(spectra) <- doses[, 1, drop = TRUE],
+               "must be a matrix or a data.frame")
+
+  expect_equal(dim(summarise(spectra)), c(7, 6))
 })

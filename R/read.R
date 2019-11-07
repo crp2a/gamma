@@ -56,8 +56,6 @@ readCanberraCNF <- function(file, ...) {
   spc_xy <- rxylib::read_xyData(file = file, ..., verbose = FALSE)
   # Get and check file format
   file_format <- attr(spc_xy, "format_name")
-  if(file_format != "Canberra CNF")
-    stop("Only Canberra CNF files are supported.")
 
   # Get metadata
   spc_meta <- spc_xy$dataset[[1]]$metadata_block

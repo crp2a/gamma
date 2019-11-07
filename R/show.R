@@ -29,11 +29,11 @@ setMethod(
     } else {
       "not calibrated"
     }
-    D <- if (length(object@dose_rate) != 0) {
-      paste0(object@dose_rate, collapse = " +/- ")
-    } else {
-      "unknown"
-    }
+    # D <- if (length(object@dose_rate) != 0) {
+    #   paste0(object@dose_rate, collapse = " +/- ")
+    # } else {
+    #   "unknown"
+    # }
     cbind.data.frame(
       name = object@name,
       date = as.character(object@date),

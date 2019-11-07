@@ -147,7 +147,7 @@ do_predict_dose <- function(object, new_data,
     variables <- c("signal_value", "signal_error", "name")
     if (!all(variables %in% colnames(new_data)))
       stop("`new_data` is a data.frame, ",
-           "but does not have components",
+           "but does not have components ",
            paste0(variables, collapse = ", "),
            call. = FALSE)
   }

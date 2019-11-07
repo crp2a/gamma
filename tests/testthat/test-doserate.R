@@ -94,5 +94,9 @@ test_that("Estimate dose rate", {
 
   expect_identical(predict_dose(calib1, spectra), predict_dose(calib1))
   expect_type(predict_dose(calib1, spectra[[1]], simplify = FALSE), "list")
-  expect_error(do_predict_dose(calib1, 1:3), "must be a data frame")
+
+  expect_error(do_predict_dose(calib1, 1:3),
+               "must be a data frame")
+  expect_error(do_predict_dose(calib1, data.frame()),
+               "does not have components")
 })

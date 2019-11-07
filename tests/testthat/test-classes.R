@@ -20,9 +20,15 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_type(spectrum[["calibration"]], "list")
   expect_type(spectrum[["dose_rate"]], "double")
 
-  expect_type(get_dose(spectrum), "double")
+  expect_type(get_hash(spectrum), "character")
+
+  set_name(spectrum) <- "X"
+  expect_equal(get_name(spectrum), "X")
+
+  set_dose(spectrum) <- c(1, 2)
+  expect_equal(get_dose(spectrum), c(value = 1, error = 2))
   expect_error(set_dose(spectrum) <- c(1, 2, 3),
-               "`value` must be a length-two numeric vector.")
+               "must be a length-two numeric vector.")
 
   expect_s3_class(as(spectrum, "data.frame"), "data.frame")
   expect_s4_class(as(spectrum, "GammaSpectra"), "GammaSpectra")
@@ -111,7 +117,13 @@ test_that("Initialize an empty PeakPosition instance", {
                "must be an integer vector of length 1, not 26")
   expect_error(.PeakPosition(window = as.integer(-1)),
                "Slot `window` must be a strictly positive integer, not -1.")
-  mtx <- cbind(chanel = 1:26, energy = 1:26, dose = 1:26, rate = 1:26)
   expect_error(.PeakPosition(chanel = 1:26),
                "Slots `chanel` and `energy` must have the same length.")
+
+  pks <- .PeakPosition(chanel = 1:3, energy = c(NA_real_, NA_real_, NA_real_))
+  expect_equal(get_chanels(pks), 1:3)
+  expect_equal(get_energy(pks), c(NA_real_, NA_real_, NA_real_))
+  expect_error(set_energy(pks) <- "X", "must be a numeric vector")
+  set_energy(pks) <- 1:3
+  expect_equal(get_energy(pks), 1:3)
 })

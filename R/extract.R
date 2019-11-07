@@ -292,7 +292,7 @@ setMethod(
 setMethod(
   f = "get_chanels",
   signature = "PeakPosition",
-  definition = function(object) length(object@chanel)
+  definition = function(object) object@chanel
 )
 
 #' @export
