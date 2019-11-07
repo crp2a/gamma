@@ -16,10 +16,10 @@ test_that("Import a gamma spectrum", {
   expect_type(methods::as(cnf_spectrum, "list"), "list")
 })
 test_that("Import a set of gamma spectra", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
   spectra <- read(spc_dir)
 
-  expect_error(read(system.file("extdata/crp2a/", package = "gamma")))
+  expect_error(read(system.file("extdata/BDX100/", package = "gamma")))
 
   expect_output(show(spectra), "A collection")
   expect_length(spectra, 7)

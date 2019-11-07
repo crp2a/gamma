@@ -219,11 +219,11 @@ The construction of a calibration curve requires a set of reference spectra for 
 
 ```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
 # Import the reference spectra
-calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+calib_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 calib_spc <- read(calib_dir)
 
 # Import the spectra for background noise measurement
-noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
+noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
 noise_spc <- read(noise_dir)
 
 # Set the known dose rates
@@ -249,7 +249,7 @@ plot(calib_curve) +
 New dose rate values can be predicted.
 ```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
 # Import spectra
-test_dir <- system.file("extdata/crp2a/test", package = "gamma")
+test_dir <- system.file("extdata/BDX100/test", package = "gamma")
 test_spc <- read(test_dir)
 
 # Estimate the gamma dose rate

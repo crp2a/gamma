@@ -2,7 +2,7 @@ context("Dose rate")
 data("clermont")
 
 test_that("Get and set dose rate", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
   spectra <- read(spc_dir)
 
   dose_rate1 <- clermont[, c("gamma", "gamma_error")]
@@ -20,7 +20,7 @@ test_that("Get and set dose rate", {
   expect_invisible(set_dose(spectra) <- dose_rate1)
 })
 test_that("Build calibration curve", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
   spectra <- read(spc_dir)
   spectra <- slice_signal(spectra)
 
@@ -67,10 +67,10 @@ test_that("Build calibration curve", {
                  "1 spectrum have a dose rate of 0")
 })
 test_that("Estimate dose rate", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
   spectra <- read(spc_dir)
   spectra <- slice_signal(spectra)
-  bdf_dir <- system.file("extdata/crp2a/background", package = "gamma")
+  bdf_dir <- system.file("extdata/BDX100/background", package = "gamma")
   bdf <- read(bdf_dir)
   bdf <- slice_signal(bdf)
 

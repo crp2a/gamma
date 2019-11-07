@@ -44,7 +44,7 @@ Predict in-situ gamma dose rate.
 }
 \examples{
 # Import CNF files for calibration
-spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 spectra <- read(spc_dir)
 
 # Set dose rate values and errors for each spectrum

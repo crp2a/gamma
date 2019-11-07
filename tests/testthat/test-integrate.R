@@ -4,7 +4,7 @@ test_that("Integrate GammaSpectrum", {
   spc_cnf <- system.file("extdata/test_CNF.cnf", package = "gamma")
   cnf <- read(spc_cnf)
   cnf <- slice_signal(cnf)
-  noise_file <- system.file("extdata/crp2a/background", package = "gamma")
+  noise_file <- system.file("extdata/BDX100/background", package = "gamma")
   noise <- read(noise_file)
   noise <- slice_signal(noise)
 
@@ -30,10 +30,10 @@ test_that("Integrate GammaSpectrum", {
 })
 
 test_that("Integrate GammaSpectra", {
-  spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
   spectra <- read(spc_dir)
   spectra <- slice_signal(spectra)
-  noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
+  noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
   noise <- read(noise_dir)
   noise <- slice_signal(noise)
 

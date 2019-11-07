@@ -106,7 +106,7 @@ shiny_ui <- fluidPage(
       sidebarLayout(
         sidebarPanel = sidebarPanel(
           selectInput("dose_curve", "Select a curve", selected = 1,
-                      choices = list("BDX1", "AIX1")),
+                      choices = list("BDX100", "AIX100")),
           numericInput("dose_error", "Extra error term (%)",
                        min = 0, max = 100, value = 0, step = 1)
         ),

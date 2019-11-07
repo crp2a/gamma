@@ -25,10 +25,10 @@ knitr::opts_chunk$set(
   message = FALSE,
   fig.width = 7,
   fig.height = 5,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
+
 ```{r packages}
 library(gamma)
 library(magrittr)
@@ -38,26 +38,13 @@ library(magrittr)
 ```{r import}
 # Import CNF files for calibration
 # Skip the first chanels
-calib_dir <- system.file("extdata/cerege/calibration", package = "gamma")
-(calib_spc <- read(calib_dir, skip = TRUE))
+calib_dir <- system.file("extdata/AIX100/calibration", package = "gamma")
+(calib_spc <- read(calib_dir))
 
 # Import CNF files for background noise measurement
 # Skip the first chanels
-noise_dir <- system.file("extdata/cerege/background", package = "gamma")
-(noise_spc <- read(noise_dir, skip = TRUE))
-```
-
-## Inspect spectra
-```{r inspect, fig.align='center'}
-# Plot calibration spectra
-plot(calib_spc, xaxis = "energy", yaxis = "rate") +
-  ggplot2::labs(title = "Calibration spectra") +
-  ggplot2::theme_bw()
-
-# Plot background noise spectrum
-plot(noise_spc) +
-  ggplot2::labs(title = "Background noise spectrum") +
-  ggplot2::theme_bw()
+noise_dir <- system.file("extdata/AIX100/background", package = "gamma")
+(noise_spc <- read(noise_dir))
 ```
 
 ## Energy scale calibration
@@ -69,113 +56,134 @@ Lines used for energy scale calibration (in keV):
 * Tl208: 2615 (870)
 
 #### BRIQUE
-```{r calib-BRIQUE}
+```{r calibrate-BRIQUE}
 # Spectrum pre-processing and peak detection
 pks <- calib_spc[["BRIQUE"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks()
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline() %>%
+  find_peaks()
 # Set energy values
-setEnergy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-BRIQUE <- calibrate(calib_spc[["BRIQUE"]], pks)
+BRIQUE <- calibrate_energy(calib_spc[["BRIQUE"]], pks)
+```
+
+```{r plot-BRIQUE, echo=FALSE}
+plot(BRIQUE, pks) +
+  ggplot2::theme_bw()
 ```
 
 #### C341
-```{r calib-C341}
+```{r calibrate-C341}
 # Spectrum pre-processing and peak detection
 pks <- calib_spc[["C341"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline() %>%
+  find_peaks()
 # Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
 # Recalibrate the energy scale
-C341 <- calibrate(calib_spc[["C341"]], pks)
+C341 <- calibrate_energy(calib_spc[["C341"]], pks)
+```
+
+```{r plot-C341, echo=FALSE}
+plot(C341, pks) +
+  ggplot2::theme_bw()
 ```
 
 #### C347
-```{r calib-C347}
+```{r calibrate-C347}
 # Spectrum pre-processing and peak detection
 pks <- calib_spc[["C347"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(SNR = 1, span = 20)
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline() %>%
+  find_peaks(span = 10)
 # Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, NA, 1461, NA, NA, NA, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, NA, 1461, NA, 2615)
 # Recalibrate the energy scale
-C347 <- calibrate(calib_spc[["C347"]], pks)
+C347 <- calibrate_energy(calib_spc[["C347"]], pks)
+```
+
+```{r plot-C347, echo=FALSE}
+plot(C347, pks) +
+  ggplot2::theme_bw()
 ```
 
 #### GOU
-```{r calib-GOU}
+```{r calibrate-GOU}
 # Spectrum pre-processing and peak detection
 pks <- calib_spc[["GOU"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline() %>%
+  find_peaks()
 # Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-GOU <- calibrate(calib_spc[["GOU"]], pks)
+GOU <- calibrate_energy(calib_spc[["GOU"]], pks)
+```
+
+```{r plot-GOU, echo=FALSE}
+plot(GOU, pks) +
+  ggplot2::theme_bw()
 ```
 
 #### PEP
-```{r calib-PEP}
+```{r calibrate-PEP}
 # Spectrum pre-processing and peak detection
 pks <- calib_spc[["PEP"]] %>%
-  smooth(method = "savitzky", m = 21) %>%
-  removeBaseline(decreasing = TRUE, k = 100) %>%
-  findPeaks(span = 20)
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline() %>%
+  find_peaks()
 # Set energy values
-setEnergy(pks) <- c(NA, 238, NA, NA, NA, NA, 1461, NA, 2615)
+set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-PEP <- calibrate(calib_spc[["PEP"]], pks)
+PEP <- calibrate_energy(calib_spc[["PEP"]], pks)
 ```
 
-#### Inspect results
-```{r calib-scale, fig.align='center'}
-# Energy scale calibration
-calib_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
-calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
-
-plot(calib_scaled, xaxis = "energy", yaxis = "rate") +
-  ggplot2::labs(title = "Calibrated spectra") +
+```{r plot-PEP, echo=FALSE}
+plot(PEP, pks) +
   ggplot2::theme_bw()
 ```
 
 ### Background noise spectrum
-```{r calibrate-noise, fig.align='center'}
-noise_lines <- list(
-  Pb212 = c(chanel = 86, energy = 238),
-  K40 = c(chanel = 496, energy = 1461),
-  Tl208 = c(chanel = 870, energy = 2615)
+```{r calibrate-noise}
+# Pb212, K40, Tl208
+lines <- list(
+  chanel = c(86, 496, 870),
+  energy = c(238, 1461, 2615)
 )
-noise_scaled <- calibrate(noise_spc, lines = noise_lines)
+noise_scaled <- calibrate_energy(noise_spc, lines = lines)
+```
 
-plot(noise_spc, noise_scaled, xaxis = "energy", yaxis = "rate") +
+```{r plot-noise, echo=FALSE}
+plot(noise_scaled, xaxis = "energy", yaxis = "rate") +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2615), linetype = 3) +
   ggplot2::theme_bw()
 ```
 
 ## Signal integration
-### Get integration boudaries
-```{r integrate-bounds}
+```{r integrate-norm}
 # Integration range (in keV)
 integration_range <- c(200, 2800)
-```
 
-### Integrate
-```{r integrate-norm}
 # Integrate background noise
-noise <- integrateSignal(
-  noise_scaled,
-  range = integration_range,
-  NiEi = TRUE
-)
+noise <- integrate_signal(noise_scaled, range = integration_range, NiEi = TRUE)
 
 # Integrate reference spectra
-signal <- integrateSignal(
+calib_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
+calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
+
+signal <- integrate_signal(
   calib_scaled, 
   range = integration_range, 
   noise = noise,
@@ -196,15 +204,15 @@ knitr::kable(
 ### Set dose rates
 ```{r dose_rate}
 data("clermont")
-setDoseRate(calib_scaled) <- clermont[, c("gamma", "gamma_error")]
+set_dose(calib_scaled) <- clermont[, c("gamma", "gamma_error")]
 
-getDoseRate(calib_scaled)
+get_dose(calib_scaled)
 ```
 
 ### Linear regression
 ```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
 # Build calibration curve
-(AIX1 <- fit(
+(AIX100 <- fit_dose(
   calib_scaled,
   noise_scaled,
   range = integration_range,
@@ -218,27 +226,27 @@ getDoseRate(calib_scaled)
 ))
 
 # Plot Calibration curve
-plot(AIX1) +
+plot(AIX100) +
   ggplot2::theme_bw()
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
-# Danger zone ! Don't touch !
-# usethis::use_data(AIX1, overwrite = FALSE)
+# Danger zone! Don't touch!
+# usethis::use_data(AIX100, overwrite = FALSE)
 ```
 
 ### Check model
 ```{r lm-summary, echo=FALSE}
-summary(AIX1[["model"]])
+summary(AIX100[["model"]])
 ```
 
 ```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
-  reference = AIX1[["data"]]$reference,
-  fitted = AIX1[["model"]]$fitted.values,
-  residuals = AIX1[["model"]]$residuals,
-  standardized = stats::rstandard(AIX1[["model"]]),
-  cook = stats::cooks.distance(AIX1[["model"]])
+  name = AIX100[["data"]]$name,
+  fitted = AIX100[["model"]]$fitted.values,
+  residuals = AIX100[["model"]]$residuals,
+  standardized = stats::rstandard(AIX100[["model"]]),
+  cook = stats::cooks.distance(AIX100[["model"]])
 )
 
 # Residuals vs fitted values
@@ -273,10 +281,10 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(sample = standardized)) +
                 y = "Standardize residuals")
 
 # Cook's distance
-ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
+ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = reference, xend = reference,
+  ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
                                      y = 0, yend = cook)) + 
   ggplot2::geom_point() +
   ggplot2::theme_bw() +
@@ -284,10 +292,11 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
                 x = "Observation", y = "D")
 ```
 
-```{r test-old-compare, echo=FALSE}
+```{r test-old-compare, echo=FALSE, eval=FALSE}
+# The smaller the AIC or BIC, the better the fit
 criteria <- data.frame(
-  AIC = c(stats::AIC(AIX1[["model"]])),
-  BIC = c(stats::BIC(AIX1[["model"]])),
+  AIC = c(stats::AIC(AIX100[["model"]])),
+  BIC = c(stats::BIC(AIX100[["model"]])),
   row.names = c("AIX1")
 )
 

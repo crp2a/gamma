@@ -1,5 +1,5 @@
 # Import CNF files
-spc_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 spectra <- read(spc_dir)
 
 # Plot all spectra

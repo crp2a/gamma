@@ -37,13 +37,11 @@ library(magrittr)
 ## Import files
 ```{r import}
 # Import CNF files for calibration
-# Skip the first chanels
-calib_dir <- system.file("extdata/crp2a/calibration", package = "gamma")
+calib_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 (calib_spc <- read(calib_dir))
 
 # Import CNF files for background noise measurement
-# Skip the first chanels
-noise_dir <- system.file("extdata/crp2a/background", package = "gamma")
+noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
 (noise_spc <- read(noise_dir))
 ```
 
@@ -56,49 +54,49 @@ Lines used for energy scale calibration (in keV):
 * Tl208: 2615
 
 #### BRIQUE
-```{r calib-BRIQUE}
+```{r calibrate-BRIQUE}
 plot(calib_spc[["BRIQUE"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "BRIQUE") +
   ggplot2::theme_bw()
 ```
 
 #### C341
-```{r calib-C341}
+```{r calibrate-C341}
 plot(calib_spc[["C341"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "C341") +
   ggplot2::theme_bw()
 ```
 
 #### C347
-```{r calib-C347}
+```{r calibrate-C347}
 plot(calib_spc[["C347"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "C347") +
   ggplot2::theme_bw()
 ```
 
 #### GOU
-```{r calib-GOU}
+```{r calibrate-GOU}
 plot(calib_spc[["GOU"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "GOU") +
   ggplot2::theme_bw()
 ```
 
 #### LMP
-```{r calib-LMP}
+```{r calibrate-LMP}
 plot(calib_spc[["LMP"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "LMP") +
   ggplot2::theme_bw()
 ```
 
 #### MAZ
-```{r calib-MAZ}
+```{r calibrate-MAZ}
 plot(calib_spc[["MAZ"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "MAZ") +
   ggplot2::theme_bw()
 ```
 
 #### PEP
-```{r calib-PEP}
+```{r calibrate-PEP}
 plot(calib_spc[["PEP"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "PEP") +
   ggplot2::theme_bw()
@@ -114,31 +112,26 @@ plot(noise_spc) +
 ## Calibration curve
 ### Summary
 ```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
-data("BDX1")
+data("BDX100")
 
 # Plot Calibration curve
-plot(BDX1) +
+plot(BDX100) +
   ggplot2::theme_bw()
 ```
 
 ```{r lm-summary, echo=FALSE}
 # Slope: 31.16884 / Intercept: 2006.62935
-summary(BDX1[["model"]])
-```
-
-```{r save, eval=FALSE, echo=FALSE, include=FALSE}
-# Danger zone ! Don't touch !
-# usethis::use_data(BDX1, overwrite = FALSE)
+summary(BDX100[["model"]])
 ```
 
 ### Check model
 ```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
-  reference = BDX1[["data"]]$reference,
-  fitted = BDX1[["model"]]$fitted.values,
-  residuals = BDX1[["model"]]$residuals,
-  standardized = stats::rstandard(BDX1[["model"]]),
-  cook = stats::cooks.distance(BDX1[["model"]]),
+  name = BDX100[["data"]]$name,
+  fitted = BDX100[["model"]]$fitted.values,
+  residuals = BDX100[["model"]]$residuals,
+  standardized = stats::rstandard(BDX100[["model"]]),
+  cook = stats::cooks.distance(BDX100[["model"]]),
   stringsAsFactors = FALSE
 )
 
@@ -174,10 +167,10 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(sample = standardized)) +
                 y = "Standardize residuals")
 
 # Cook's distance
-ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
+ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = reference, xend = reference,
+  ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
                                      y = 0, yend = cook)) +
   ggplot2::geom_point() +
   ggplot2::theme_bw() +
@@ -187,14 +180,14 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = reference, y = cook)) +
 
 ```{r test-old-compare, echo=FALSE, eval=FALSE}
 # The smaller the AIC or BIC, the better the fit
-criterion_aic <- c(stats::AIC(BDX1[["model"]]))
-criterion_bic <- c(stats::BIC(BDX1[["model"]]))
+criterion_aic <- c(stats::AIC(BDX100[["model"]]))
+criterion_bic <- c(stats::BIC(BDX100[["model"]]))
 
 criteria <- data.frame(
   AIC = criterion_aic,
   D_AIC = criterion_aic - min(criterion_aic),
   BIC = criterion_bic,
-  row.names = c("New curve (BDX1)", "Old curve (VBA macro)")
+  row.names = c("New curve (BDX100)", "Old curve (VBA macro)")
 )
 
 knitr::kable(

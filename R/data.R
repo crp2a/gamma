@@ -68,7 +68,7 @@
 
 #' CEREGE Calibration Curve #1
 #'
-#' @usage data("AIX1")
+#' @usage data("AIX100")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory:} \tab CEREGE \cr
@@ -76,30 +76,20 @@
 #'  \strong{Detector:} \tab NaI \cr
 #'  \strong{Authors:} \tab CEREGE Luminescence Team
 #' }
-#' @section Changelog:
-#'  \describe{
-#'   \item{0.1.1}{Curve creation.
-#'   Model summary:
-#'   slope: 0.018 +/- 0;
-#'   intercept: -34.361 +/- 49.326;
-#'   residual standard error: 34.58;
-#'   multiple R-squared: 0.99775;
-#'   adjusted R-squared: 0.997}
-#'  }
 #' @examples
-#' # Load the curve
-#' utils::data("AIX1", package = "gamma")
+#' \donttest{
+#' ## Load the curve
+#' utils::data("AIX100", package = "gamma")
 #' AIX1
 #'
-#' \dontrun{
-#' # See how to replicate the curve
+#' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
-"AIX1"
+"AIX100"
 
 #' CRP2A Calibration Curve #1
 #'
-#' @usage data("BDX1")
+#' @usage data("BDX100")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory:} \tab IRAMAT-CRP2A (UMR 5060) \cr
@@ -108,12 +98,12 @@
 #'  \strong{Authors:} \tab CRP2A Luminescence Team
 #' }
 #' @examples
-#' # Load the curve
-#' utils::data("BDX1", package = "gamma")
+#' \dontrun{
+#' ## Load the curve
+#' utils::data("BDX100", package = "gamma")
 #' BDX1
 #'
-#' \dontrun{
-#' # See how to replicate the curve
+#' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
-"BDX1"
+"BDX100"

@@ -19,6 +19,7 @@ clermont <- utils::read.table("./data-raw/clermont.csv",
     gamma_error = sqrt((.data$U_error * 111.6)^2 + (.data$Th_error * 47.96)^2 + (.data$K_error * 249.1)^2)
   )
 rownames(clermont) <- clermont[["name"]]
+usethis::use_data(clermont, internal = FALSE, overwrite = FALSE)
 
 # Calibration CRP2A1 ===========================================================
 ## Set dose rates
@@ -52,8 +53,7 @@ BDX100 <- .CalibrationCurve(
     authors = "CRP2A Luminescence Team"
   )
 )
-
-usethis::use_data(clermont, BDX100, internal = FALSE, overwrite = FALSE)
+usethis::use_data(BDX100, internal = FALSE, overwrite = FALSE)
 
 # Decay data ===================================================================
 .decay <- utils::read.table("./data-raw/decay.csv",
