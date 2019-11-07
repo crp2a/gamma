@@ -1,10 +1,33 @@
-url: http://gamma.archaeo.science
+url: https://crp2a.github.io/gamma
 authors:
   Université Bordeaux Montaigne:
     href: https://www.u-bordeaux-montaigne.fr
-    html: <img src="http://gamma.archaeo.science/reference/figures/logo_ubm.jpg" height="48" />
+    html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_ubm.jpg" height="48" />
   LabEx Sciences archéologiques de Bordeaux:
     href: https://lascarbx.labex.u-bordeaux.fr
-    html: <img src="http://gamma.archaeo.science/reference/figures/logo_lascarbx.jpg" height="64" />
+    html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_lascarbx.jpg" height="64" />
 development:
   mode: auto
+
+reference:
+- title: Data Import
+  contents:
+  - has_concept("IO")
+- title: Signal Processing
+  contents:
+  - has_concept("signal processing")
+- title: Energy Scale Calibration
+  contents:
+  - has_concept("energy")
+- title: Dose Rate Estimation
+  contents:
+  - has_concept("dose rate")
+- title: Classes
+  contents:
+  - has_concept("class")
+- title: Getters and Setters
+  contents:
+  - has_concept("mutator")
+- title: Data
+  contents:
+  - has_concept("datasets")

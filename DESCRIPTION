@@ -39,7 +39,7 @@ Description: Process in-situ Gamma-Ray Spectrometry for
     calibration curve. The package only supports Canberra CNF and TKA
     files.
 License: GPL-3
-URL: http://gamma.archaeo.science, http://github.com/crp2a/gamma
+URL: https://crp2a.github.io/gamma, http://github.com/crp2a/gamma
 BugReports: http://github.com/crp2a/gamma/issues
 Depends: 
     R (>= 3.3)

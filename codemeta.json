@@ -8,7 +8,7 @@
   "description": "Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and (automatically) correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files.",
   "name": "gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements",
   "codeRepository": "http://github.com/crp2a/gamma",
-  "relatedLink": "http://gamma.archaeo.science",
+  "relatedLink": "https://crp2a.github.io/gamma",
   "issueTracker": "http://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.2.0",
@@ -242,7 +242,7 @@
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "fileSize": "814.914KB",
+  "fileSize": "874.861KB",
   "contIntegration": [
     "https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master",
     "https://travis-ci.org/crp2a/gamma",
@@ -278,16 +278,6 @@
           "@type": "Person",
           "givenName": "Guilhem",
           "familyName": "Paradol"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Guillaume",
-          "familyName": "Guérin"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Christelle",
-          "familyName": "Lahaye"
         }
       ],
       "name": "{gamma}: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements",
