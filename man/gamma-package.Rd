@@ -5,8 +5,7 @@
 \alias{gamma-package}
 \alias{_PACKAGE}
 \alias{gamma}
-\title{gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
-    Measurements for Luminescence Dating}
+\title{gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements}
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
@@ -21,7 +20,7 @@ Process in-situ Gamma-Ray Spectrometry for
 \tabular{ll}{
  \strong{Package:} \tab gamma \cr
  \strong{Type:} \tab Package \cr
- \strong{Version:} \tab 0.1.1 \cr
+ \strong{Version:} \tab 0.2.0 \cr
  \strong{License:} \tab GPL-3 \cr
  \strong{DOI:} \tab \href{https://doi.org/10.5281/zenodo.2652393}{10.5281/zenodo.2652393}
 }

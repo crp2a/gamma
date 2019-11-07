@@ -2,7 +2,7 @@
 #' \tabular{ll}{
 #'  \strong{Package:} \tab gamma \cr
 #'  \strong{Type:} \tab Package \cr
-#'  \strong{Version:} \tab 0.1.1 \cr
+#'  \strong{Version:} \tab 0.2.0 \cr
 #'  \strong{License:} \tab GPL-3 \cr
 #'  \strong{DOI:} \tab \href{https://doi.org/10.5281/zenodo.2652393}{10.5281/zenodo.2652393}
 #' }
@@ -38,10 +38,10 @@
 "_PACKAGE"
 
 #' @import shiny
-#' @importFrom methods new as
+#' @importFrom methods as new setClass setClassUnion setGeneric setMethod
 #' @importFrom graphics plot
-#' @importFrom ggplot2 aes facet_wrap ggplot geom_errorbar geom_errorbarh
-#' geom_path geom_point geom_segment geom_vline labs scale_x_continuous sec_axis
-#' vars
+#' @importFrom ggplot2 aes facet_wrap geom_errorbar geom_errorbarh
+#' geom_path geom_point geom_segment geom_vline ggplot ggsave labs
+#' scale_x_continuous sec_axis theme_bw vars
 #' @importFrom rlang .data
 NULL
