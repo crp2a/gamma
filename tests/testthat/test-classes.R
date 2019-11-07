@@ -7,7 +7,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_output(show(spectrum), "An empty gamma spectrum")
 
   expect_type(spectrum[["hash"]], "character")
-  expect_type(spectrum[["reference"]], "character")
+  expect_type(spectrum[["name"]], "character")
   expect_s3_class(spectrum[["date"]], "POSIXct")
   expect_type(spectrum[["instrument"]], "character")
   expect_type(spectrum[["file_format"]], "character")
@@ -48,7 +48,7 @@ test_that("Initialize an empty BaseLine instance", {
   expect_output(show(baseline), "An empty gamma spectrum")
 
   expect_type(baseline[["hash"]], "character")
-  expect_type(baseline[["reference"]], "character")
+  expect_type(baseline[["name"]], "character")
   expect_s3_class(baseline[["date"]], "POSIXct")
   expect_type(baseline[["instrument"]], "character")
   expect_type(baseline[["file_format"]], "character")

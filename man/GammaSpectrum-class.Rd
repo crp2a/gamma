@@ -14,7 +14,7 @@ Represents a single spectrum of a gamma ray spectrometry measurement.
 \item{\code{hash}}{A \code{\link{character}} string giving the 32-byte MD5 hash of
 the imported file.}
 
-\item{\code{reference}}{A \code{\link{character}} string the measurement reference.}
+\item{\code{name}}{A \code{\link{character}} string the measurement reference.}
 
 \item{\code{date}}{A \code{\link{POSIXct}} element giving the measurement date and
 time.}
@@ -98,7 +98,7 @@ tail(df)
 
 # Subset
 spectrum[["hash"]]
-spectrum[["reference"]]
+spectrum[["name"]]
 spectrum[["date"]]
 spectrum[["instrument"]]
 spectrum[["file_format"]]

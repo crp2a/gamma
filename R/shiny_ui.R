@@ -14,12 +14,12 @@ shiny_ui <- fluidPage(
           fileInput('import_files', 'Choose spectrum file(s)', multiple = TRUE,
                     accept = c('.cnf', '.CNF', '.tka', '.TKA')),
           tags$hr(),
-          checkboxInput("import_facet", "Display in a grid", value = FALSE),
-          selectInput("import_select", "Select a spectrum", choices = NULL,
+          selectInput("import_select", "Select", choices = NULL,
                       multiple = TRUE),
+          checkboxInput("import_facet", "Display in a grid", value = FALSE),
           radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
           radioButtons("import_yaxis", "Y axis", choices = c("count", "rate")),
-          downloadButton("import_export", "Export graph"),
+          downloadButton("import_export", "Export plot"),
         ),
         mainPanel = mainPanel(
           plotOutput("import_plot"),
@@ -32,7 +32,7 @@ shiny_ui <- fluidPage(
       icon = icon("bolt"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
-          h4("Set energy"),
+          h4("Set energy (keV)"),
           uiOutput("calib_input_peaks"),
           actionButton("calib_action", "Calibrate"),
           actionButton("calib_reset", "Restore")
@@ -105,21 +105,30 @@ shiny_ui <- fluidPage(
       icon = icon("hourglass-half"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
-          selectInput("dose_curve", "Curve", selected = 1,
-                      choices = list("BDX1", "AIX1"))
+          selectInput("dose_curve", "Select a curve", selected = 1,
+                      choices = list("BDX1", "AIX1")),
+          numericInput("dose_error", "Extra error term (%)",
+                       min = 0, max = 100, value = 0, step = 1)
         ),
         mainPanel = mainPanel(
           tabsetPanel(
             tabPanel(
               "Dose rate",
+              icon = icon("table"),
               tags$br(),
               downloadButton("dose_export", "Export results"),
               tableOutput("dose_table_dose")
             ),
             tabPanel(
-              "View curve",
+              "Calibration curve",
+              icon = icon("chart-line"),
               plotOutput("dose_plot_curve"),
-              tableOutput("dose_table_curve")
+              h4("Estimated coefficients"),
+              tableOutput("dose_table_curve_coef"),
+              h4("Summary statistics"),
+              tableOutput("dose_table_curve_rsquared"),
+              h4("Model data"),
+              tableOutput("dose_table_curve_data")
             )
           )
         ),

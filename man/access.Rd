@@ -6,17 +6,25 @@
 \alias{get}
 \alias{set}
 \alias{get_hash}
-\alias{get_reference}
-\alias{set_reference<-}
+\alias{get_hash-method}
+\alias{get_name}
+\alias{get_name-method}
+\alias{set_name<-}
+\alias{set_name-method}
 \alias{get_chanels}
+\alias{get_chanels-method}
 \alias{get_dose}
+\alias{get_dose-method}
 \alias{set_dose<-}
+\alias{set_dose-method}
 \alias{get_energy}
+\alias{get_energy-method}
 \alias{set_energy<-}
+\alias{set_energy-method}
 \alias{get_hash,GammaSpectrum-method}
-\alias{get_reference,GammaSpectrum-method}
-\alias{set_reference<-,GammaSpectrum-method}
-\alias{set_reference,GammaSpectrum-method}
+\alias{get_name,GammaSpectrum-method}
+\alias{set_name<-,GammaSpectrum-method}
+\alias{set_name,GammaSpectrum-method}
 \alias{get_chanels,GammaSpectrum-method}
 \alias{get_length,GammaSpectrum-method}
 \alias{get_energy,GammaSpectrum-method}
@@ -24,9 +32,9 @@
 \alias{set_dose<-,GammaSpectrum-method}
 \alias{set_dose,GammaSpectrum-method}
 \alias{get_hash,GammaSpectra-method}
-\alias{get_reference,GammaSpectra-method}
-\alias{set_reference<-,GammaSpectra-method}
-\alias{set_reference,GammaSpectra-method}
+\alias{get_name,GammaSpectra-method}
+\alias{set_name<-,GammaSpectra-method}
+\alias{set_name,GammaSpectra-method}
 \alias{get_chanels,GammaSpectra-method}
 \alias{get_length,GammaSpectra-method}
 \alias{get_energy,GammaSpectra-method}
@@ -41,9 +49,9 @@
 \usage{
 get_hash(object)
 
-get_reference(object)
+get_name(object)
 
-set_reference(object) <- value
+set_name(object) <- value
 
 get_chanels(object)
 
@@ -57,9 +65,9 @@ set_energy(object) <- value
 
 \S4method{get_hash}{GammaSpectrum}(object)
 
-\S4method{get_reference}{GammaSpectrum}(object)
+\S4method{get_name}{GammaSpectrum}(object)
 
-\S4method{set_reference}{GammaSpectrum}(object) <- value
+\S4method{set_name}{GammaSpectrum}(object) <- value
 
 \S4method{get_chanels}{GammaSpectrum}(object)
 
@@ -71,9 +79,9 @@ set_energy(object) <- value
 
 \S4method{get_hash}{GammaSpectra}(object)
 
-\S4method{get_reference}{GammaSpectra}(object)
+\S4method{get_name}{GammaSpectra}(object)
 
-\S4method{set_reference}{GammaSpectra}(object) <- value
+\S4method{set_name}{GammaSpectra}(object) <- value
 
 \S4method{get_chanels}{GammaSpectra}(object)
 

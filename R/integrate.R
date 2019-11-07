@@ -61,7 +61,7 @@ setMethod(
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, NiEi = NiEi)
+                      range = range, noise = noise, NiEi = NiEi)
     if (simplify) {
       do.call(rbind, signals)
     } else {

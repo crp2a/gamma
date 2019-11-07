@@ -36,7 +36,7 @@ setMethod(
       FUN = function(x) stats::dnorm(energy_range, mean = x, sd = sqrt(x))
     )
     .GammaSpectrum(
-      reference = "simulation",
+      name = "simulation",
       energy = energy_range,
       # chanel = seq_len(n),
       count = colSums(do.call(rbind, count) * k)

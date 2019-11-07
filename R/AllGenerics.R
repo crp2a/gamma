@@ -21,6 +21,7 @@ NULL
 
 #' @export
 #' @rdname access
+#' @aliases get_hash-method
 setGeneric(
   name = "get_hash",
   def = function(object) standardGeneric("get_hash")
@@ -28,20 +29,23 @@ setGeneric(
 
 #' @export
 #' @rdname access
+#' @aliases get_name-method
 setGeneric(
-  name = "get_reference",
-  def = function(object) standardGeneric("get_reference")
+  name = "get_name",
+  def = function(object) standardGeneric("get_name")
 )
 
 #' @export
 #' @rdname access
+#' @aliases set_name-method
 setGeneric(
-  name = "set_reference<-",
-  def = function(object, value) standardGeneric("set_reference<-")
+  name = "set_name<-",
+  def = function(object, value) standardGeneric("set_name<-")
 )
 
 #' @export
 #' @rdname access
+#' @aliases get_chanels-method
 setGeneric(
   name = "get_chanels",
   def = function(object) standardGeneric("get_chanels")
@@ -49,12 +53,14 @@ setGeneric(
 
 #' @export
 #' @rdname access
+#' @aliases get_dose-method
 setGeneric(
   name = "get_dose",
   def = function(object) standardGeneric("get_dose")
 )
 #' @export
 #' @rdname access
+#' @aliases set_dose-method
 setGeneric(
   name = "set_dose<-",
   def = function(object, value) standardGeneric("set_dose<-")
@@ -62,12 +68,14 @@ setGeneric(
 
 #' @export
 #' @rdname access
+#' @aliases get_energy-method
 setGeneric(
   name = "get_energy",
   def = function(object) standardGeneric("get_energy")
 )
 #' @export
 #' @rdname access
+#' @aliases set_energy-method
 setGeneric(
   name = "set_energy<-",
   def = function(object, value) standardGeneric("set_energy<-")

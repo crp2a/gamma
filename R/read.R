@@ -79,7 +79,7 @@ readCanberraCNF <- function(file, ...) {
 
   .GammaSpectrum(
     hash = hash,
-    reference = tools::file_path_sans_ext(basename(file)),
+    name = tools::file_path_sans_ext(basename(file)),
     date = date,
     instrument = instrument_name,
     file_format = "CNF",
@@ -122,7 +122,7 @@ readCanberraTKA <- function(file, ...) {
 
   .GammaSpectrum(
     hash = hash,
-    reference = tools::file_path_sans_ext(basename(file)),
+    name = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
     file_format = "TKA",
     chanel = spc_data$chanel,

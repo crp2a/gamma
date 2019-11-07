@@ -9,7 +9,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' Represents a single spectrum of a gamma ray spectrometry measurement.
 #' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
 #'  the imported file.
-#' @slot reference A \code{\link{character}} string the measurement reference.
+#' @slot name A \code{\link{character}} string the measurement reference.
 #' @slot date A \code{\link{POSIXct}} element giving the measurement date and
 #'  time.
 #' @slot instrument A \code{\link{character}} string giving the instrument name.
@@ -63,7 +63,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   Class = "GammaSpectrum",
   slots = c(
     hash = "character",
-    reference = "character",
+    name = "character",
     date = "POSIXct",
     instrument = "character",
     file_format = "character",
@@ -78,7 +78,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   ),
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    reference = "unknown",
+    name = "unknown",
     date = Sys.time(),
     instrument = "unknown",
     file_format = "unknown",
@@ -249,7 +249,7 @@ setMethod(
   f = "initialize",
   signature = "GammaSpectrum",
   definition = function(
-    .Object, ..., hash = .Object@hash, reference = .Object@reference,
+    .Object, ..., hash = .Object@hash, name = .Object@name,
     date = .Object@date, instrument = .Object@instrument,
     file_format = .Object@file_format, chanel = .Object@chanel,
     energy = .Object@energy, count = .Object@count, rate = .Object@rate,
@@ -263,7 +263,7 @@ setMethod(
       rate <- count / live_time
 
     methods::callNextMethod(
-      .Object, ..., hash = hash, reference = reference, date = date,
+      .Object, ..., hash = hash, name = name, date = date,
       instrument = instrument, file_format = file_format, chanel = chanel,
       energy = energy, count = count, rate = rate, live_time = live_time,
       real_time = real_time, calibration = calibration
@@ -276,13 +276,13 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(.Object, ...) {
     .Object <- methods::callNextMethod(.Object, ...)
-    # Get spectrum references
+    # Get spectrum names
     spc_list <- .Object@.Data
     spc_ref <- make.unique(vapply(
       X = spc_list,
       FUN = "[[",
       FUN.VALUE = character(1),
-      i = "reference"
+      i = "name"
     ))
     names(spc_list) <- spc_ref
     .Object@.Data <- spc_list

@@ -28,21 +28,21 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_reference,GammaSpectrum-method
+#' @aliases get_name,GammaSpectrum-method
 setMethod(
-  f = "get_reference",
+  f = "get_name",
   signature = "GammaSpectrum",
-  definition = function(object) object@reference
+  definition = function(object) object@name
 )
 
 #' @export
 #' @rdname access
-#' @aliases set_reference,GammaSpectrum-method
+#' @aliases set_name,GammaSpectrum-method
 setMethod(
-  f = "set_reference<-",
+  f = "set_name<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
-    object@reference <- value
+    object@name <- value
     methods::validObject(object)
     object
   }
@@ -153,25 +153,25 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_reference,GammaSpectra-method
+#' @aliases get_name,GammaSpectra-method
 setMethod(
-  f = "get_reference",
+  f = "get_name",
   signature = "GammaSpectra",
   definition = function(object) {
-    vapply(object, FUN = get_reference, FUN.VALUE = character(1))
+    vapply(object, FUN = get_name, FUN.VALUE = character(1))
   }
 )
 
 #' @export
 #' @rdname access
-#' @aliases set_reference,GammaSpectra-method
+#' @aliases set_name,GammaSpectra-method
 setMethod(
-  f = "set_reference<-",
+  f = "set_name<-",
   signature = "GammaSpectra",
   definition = function(object, value) {
     names(object) <- value
     mapply(FUN = methods::`slot<-`, object = object, value = value,
-           MoreArgs = list(name = "reference"), SIMPLIFY = FALSE)
+           MoreArgs = list(name = "name"), SIMPLIFY = FALSE)
 
     methods::validObject(object)
     object

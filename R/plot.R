@@ -71,7 +71,7 @@ setMethod(
 
     # Subset data and build a long data frame
     spc <- methods::as(x[select], "data.frame")
-    n <- nlevels(as.factor(spc$reference))
+    n <- nlevels(as.factor(spc$name))
 
     if (xaxis == "energy" & anyNA(spc$energy)) {
       xaxis <- "chanel"
@@ -83,18 +83,18 @@ setMethod(
 
     facet <- if (n == 1) FALSE else facet
     if (facet) {
-      facet <- facet_wrap(vars(.data$reference), nrow = n, scales = "free_y")
+      facet <- facet_wrap(vars(.data$name), nrow = n, scales = "free_y")
       aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                      group = .data$reference)
+                      group = .data$name)
     } else {
       facet <- NULL
       aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                      group = .data$reference,
-                      colour = .data$reference)
+                      group = .data$name,
+                      colour = .data$name)
     }
     ggplot(data = spc, mapping = aes_plot) +
       geom_path() +
-      labs(x = xlabel, y = ylabel, colour = "Reference") +
+      labs(x = xlabel, y = ylabel, colour = "Name") +
       facet
   }
 )
@@ -157,7 +157,7 @@ setMethod(
     ggplot(
       data = data,
       mapping = aes(x = .data$signal_value, y = .data$dose_value,
-                    label = .data$reference)) +
+                    label = .data$name)) +
       geom_segment(
         data = segment,
         mapping = aes(x = .data$x, xend = .data$xmin,

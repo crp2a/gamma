@@ -31,7 +31,7 @@ setMethod(
     ## Dose rate
     dose_rate <- get_dose(object)
     doses <- data.frame(
-      reference = rownames(dose_rate),
+      name = rownames(dose_rate),
       dose_value = dose_rate[["value"]],
       dose_error = dose_rate[["error"]],
       stringsAsFactors = FALSE
@@ -62,10 +62,10 @@ setMethod(
                                 simplify = TRUE)
     signals <- cbind.data.frame(signals, rownames(signals),
                                 stringsAsFactors = FALSE)
-    colnames(signals) <- c("signal_value", "signal_error", "reference")
+    colnames(signals) <- c("signal_value", "signal_error", "name")
 
     # Fit linear regression
-    fit_data <- merge(doses, signals, by = "reference", all = FALSE)
+    fit_data <- merge(doses, signals, by = "name", all = FALSE)
 
     # TODO: check weights!
     fit_weights <- if (weights) 1 / fit_data$dose_error^2 else NULL
@@ -131,7 +131,7 @@ setMethod(
                                  simplify = TRUE)
     new_data <- cbind.data.frame(new_data, rownames(new_data),
                                  stringsAsFactors = FALSE)
-    colnames(new_data) <- c("signal_value", "signal_error", "reference")
+    colnames(new_data) <- c("signal_value", "signal_error", "name")
     # Predict dose rate
     do_predict_dose(object, new_data,
                     epsilon = epsilon, simplify = simplify, ...)
@@ -144,7 +144,7 @@ do_predict_dose <- function(object, new_data,
   if (!is.data.frame(new_data)) {
     stop("`new_data` must be a data frame.")
   } else {
-    variables <- c("signal_value", "signal_error", "reference")
+    variables <- c("signal_value", "signal_error", "name")
     if (!all(variables %in% colnames(new_data)))
       stop("`new_data` is a data.frame, ",
            "but does not have components",
@@ -166,17 +166,17 @@ do_predict_dose <- function(object, new_data,
            epsilon^2)
 
   results <- cbind.data.frame(
-    reference = new_data$reference,
+    name = new_data$name,
     signal_value = new_data$signal_value,
     signal_error = new_data$signal_error,
     dose_value = dose_value,
     dose_error = dose_error,
     stringsAsFactors = FALSE
   )
-  rownames(results) <- new_data$reference
+  rownames(results) <- new_data$name
   if (simplify) {
     results
   } else {
-    split(results, f = new_data$reference)
+    split(results, f = new_data$name)
   }
 }

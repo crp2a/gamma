@@ -13,7 +13,7 @@ test_that("Calibrate GammaSpectrum", {
   expect_s4_class(calib, "GammaSpectrum")
 
   expect_equal(calib[["hash"]], spectrum[["hash"]])
-  expect_equal(calib[["reference"]], spectrum[["reference"]])
+  expect_equal(calib[["name"]], spectrum[["name"]])
   expect_s3_class(calib[["date"]], "POSIXct")
   expect_equal(calib[["instrument"]], spectrum[["instrument"]])
   expect_equal(calib[["file_format"]], spectrum[["file_format"]])

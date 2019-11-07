@@ -20,7 +20,7 @@ shiny_server <- function(input, output, session) {
       spc_name <- tools::file_path_sans_ext(file$name)
       spc_data <- read(file$datapath)
       spc_data <- methods::as(spc_data, "GammaSpectra")
-      set_reference(spc_data) <- spc_name
+      set_name(spc_data) <- spc_name
       # Store data
       myData$spectra <- spc_data
       myData$raw <- spc_data
@@ -41,7 +41,7 @@ shiny_server <- function(input, output, session) {
     ),
     {
       mySpectrum$summary <- summarise(myData$spectra[input$import_select])
-      mySpectrum$name <- get_reference(myData$spectra)
+      mySpectrum$name <- get_name(myData$spectra)
       mySpectrum$plot <- plot(myData$spectra,
                               xaxis = input$import_xaxis,
                               yaxis = input$import_yaxis,
@@ -176,7 +176,8 @@ shiny_server <- function(input, output, session) {
   # Dose rate prediction =======================================================
   doseData <- reactive({
     if (!is.null(myData$spectra)) {
-      predict_dose(curveData(), myData$spectra, simplify = TRUE)
+      predict_dose(curveData(), myData$spectra,
+                   epsilon = input$dose_error / 100, simplify = TRUE)
     }
   })
   curveData <- reactive({
@@ -191,7 +192,30 @@ shiny_server <- function(input, output, session) {
     plot(curveData()) +
         ggplot2::theme_bw()
   })
-  output$dose_table_curve <- renderTable(
+  output$dose_table_curve_coef <- renderTable(
+    {
+      coef <- summary(curveData()[["model"]])$coefficients
+      rownames(coef) <- c("intercept", "slope")
+      coef
+    },
+    spacing = "s", width = "auto",
+    striped = TRUE, hover = TRUE, bordered = FALSE,
+    rownames = TRUE, colnames = TRUE, digits = 5
+  )
+  output$dose_table_curve_rsquared <- renderTable(
+    {
+      meta <- summary(curveData()[["model"]])
+      cbind.data.frame(
+        `residual standard error` = meta$sigma,
+        `multiple R-squared` = meta$r.squared,
+        `adjusted R-squared` = meta$adj.r.squared
+      )
+    },
+    spacing = "s", width = "auto",
+    striped = TRUE, hover = TRUE, bordered = FALSE,
+    rownames = FALSE, colnames = TRUE, digits = 5
+  )
+  output$dose_table_curve_data <- renderTable(
     { curveData()[["data"]] },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,

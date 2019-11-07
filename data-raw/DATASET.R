@@ -18,15 +18,15 @@ clermont <- utils::read.table("./data-raw/clermont.csv",
     gamma = .data$U * 111.6 + .data$Th * 47.96 + .data$K * 249.1,
     gamma_error = sqrt((.data$U_error * 111.6)^2 + (.data$Th_error * 47.96)^2 + (.data$K_error * 249.1)^2)
   )
-rownames(clermont) <- clermont[["reference"]]
+rownames(clermont) <- clermont[["name"]]
 
 # Calibration CRP2A1 ===========================================================
 ## Set dose rates
-reference <- c("BRIQUE", "C341", "C347", "PEP", "LMP", "MAZ", "GOU")
-index <- clermont$reference %in% reference
+name <- c("BRIQUE", "C341", "C347", "PEP", "LMP", "MAZ", "GOU")
+index <- clermont$name %in% name
 
 fit_data <- cbind.data.frame(
-  reference = reference,
+  name = name,
   signal_value = c(
     BRIQUE = 64071.58877, C341 = 27974.88571, C347 = 46580.21115,
     GOU = 52645.11600, LMP = 21227.36116, MAZ = 38008.81789, PEP = 80121.51546
@@ -40,7 +40,7 @@ fit_data <- cbind.data.frame(
 
 ## Linear regression
 # Build calibration curve
-BDX1 <- .CalibrationCurve(
+BDX100 <- .CalibrationCurve(
   model = lm(dose_value ~ signal_value, data = fit_data),
   noise = c(25279.63171, 1.66235),
   integration = c(165, 2800),
@@ -53,7 +53,7 @@ BDX1 <- .CalibrationCurve(
   )
 )
 
-usethis::use_data(clermont, BDX1, internal = FALSE, overwrite = FALSE)
+usethis::use_data(clermont, BDX100, internal = FALSE, overwrite = FALSE)
 
 # Decay data ===================================================================
 .decay <- utils::read.table("./data-raw/decay.csv",

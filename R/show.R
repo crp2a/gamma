@@ -35,13 +35,13 @@ setMethod(
       "unknown"
     }
     cbind.data.frame(
-      Reference = object@reference,
-      Date = as.character(object@date),
+      name = object@name,
+      date = as.character(object@date),
       # Instrument = object@instrument,
-      `Live time` = object@live_time,
-      `Real time` = object@real_time,
-      Chanels = length(object@chanel),
-      `Energy range` = E,
+      `live time` = object@live_time,
+      `real time` = object@real_time,
+      chanels = length(object@chanel),
+      `energy range` = E,
       # `Dose rate` = D,
       stringsAsFactors = FALSE
     )
@@ -56,7 +56,7 @@ setMethod(
     n <- length(object)
     if (n != 0) {
       spc <- ngettext(n, "spectrum", "spectra", )
-      ref <- get_reference(object)
+      ref <- get_name(object)
       cat("A collection of ", n, " gamma ", spc, ": ",
           paste(ref, collapse = ", "), "\n",
           sep = "")

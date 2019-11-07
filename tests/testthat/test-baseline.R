@@ -10,7 +10,7 @@ test_that("Estimate baseline from GammaSpectrum", {
   baseline <- estimate_baseline(spectrum)
 
   expect_equal(baseline[["hash"]], spectrum[["hash"]])
-  expect_equal(baseline[["reference"]], spectrum[["reference"]])
+  expect_equal(baseline[["name"]], spectrum[["name"]])
   expect_s3_class(baseline[["date"]], "POSIXct")
   expect_equal(baseline[["instrument"]], spectrum[["instrument"]])
   expect_equal(baseline[["file_format"]], spectrum[["file_format"]])
@@ -36,7 +36,7 @@ test_that("Remove baseline from GammaSpectrum", {
   baseline <- remove_baseline(spectrum)
 
   expect_equal(baseline[["hash"]], spectrum[["hash"]])
-  expect_equal(baseline[["reference"]], spectrum[["reference"]])
+  expect_equal(baseline[["name"]], spectrum[["name"]])
   expect_s3_class(baseline[["date"]], "POSIXct")
   expect_equal(baseline[["instrument"]], spectrum[["instrument"]])
   expect_equal(baseline[["file_format"]], spectrum[["file_format"]])

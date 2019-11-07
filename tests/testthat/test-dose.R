@@ -15,7 +15,7 @@ test_that("Get and set dose rate", {
   set_dose(spectra[["MAZ"]]) <- c(1141, 12)
   set_dose(spectra[["PEP"]]) <- c(2538, 112)
 
-  expect_output(show(spectra[["BRIQUE"]]), "Date: 2009-08-28 11:43:20")
+  expect_output(show(spectra[["BRIQUE"]]), "date: 2009-08-28 11:43:20")
 
   expect_invisible(set_dose(spectra) <- dose_rate1)
 })

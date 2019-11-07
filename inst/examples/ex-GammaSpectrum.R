@@ -15,7 +15,7 @@ tail(df)
 
 # Subset
 spectrum[["hash"]]
-spectrum[["reference"]]
+spectrum[["name"]]
 spectrum[["date"]]
 spectrum[["instrument"]]
 spectrum[["file_format"]]

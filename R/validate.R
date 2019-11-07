@@ -7,7 +7,7 @@ setValidity(
   Class = "GammaSpectrum",
   method = function(object) {
     hash <- object@hash
-    reference <- object@reference
+    name <- object@name
     date <- object@date
     instrument <- object@instrument
     file_format <- object@file_format
@@ -33,12 +33,12 @@ setValidity(
         )
       }
     }
-    length_reference <- length(reference)
-    if (length_reference > 1) {
+    length_name <- length(name)
+    if (length_name > 1) {
       message <- c(
         message,
         sprintf("%s must be character vector of length one, not %d.",
-                sQuote("reference"), length_reference)
+                sQuote("name"), length_name)
       )
     }
     length_instrument <- length(instrument)

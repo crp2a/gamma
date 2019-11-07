@@ -23,7 +23,7 @@ setAs(
     df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
     df_nrow <- vapply(X = df_list, FUN = nrow, FUN.VALUE = integer(1))
     df_long <- do.call(rbind, df_list)
-    df_long[["reference"]] <- rep(names(df_list), times = df_nrow)
+    df_long[["name"]] <- rep(names(df_list), times = df_nrow)
     rownames(df_long) <- NULL
     return(df_long)
   }
@@ -63,7 +63,7 @@ setAs(
       X = from,
       FUN = "[[",
       FUN.VALUE = character(1),
-      i = "reference"
+      i = "name"
     ))
     names(from) <- spc_ref
     .GammaSpectra(from)
