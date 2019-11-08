@@ -52,7 +52,8 @@ Imports:
     shiny,
     stats,
     tools,
-    utils
+    utils,
+    shinyWidgets
 Suggests: 
     covr,
     knitr,

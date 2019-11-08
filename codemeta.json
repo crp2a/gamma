@@ -238,11 +238,23 @@
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "shinyWidgets",
+      "name": "shinyWidgets",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=shinyWidgets"
     }
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "fileSize": "874.861KB",
+  "fileSize": "819.093KB",
   "contIntegration": [
     "https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master",
     "https://travis-ci.org/crp2a/gamma",

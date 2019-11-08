@@ -24,12 +24,16 @@ shiny_server <- function(input, output, session) {
       myData$names <- spc_name
       myData$raw <- spc_data
       # Update UI
-      updateSelectInput(session, "import_select",
-                        choices = spc_name, selected = spc_name)
+      # updateSelectInput(session, "import_select",
+      #                   choices = spc_name, selected = spc_name)
+      shinyWidgets::updatePickerInput(session, "import_select",
+                  choices = spc_name, selected = spc_name)
       updateSelectInput(session, "calib_select",
                         choices = spc_name, selected = spc_name[[1]])
-      updateSelectInput(session, "dose_select",
-                        choices = spc_name, selected = spc_name)
+      # updateSelectInput(session, "dose_select",
+      #                   choices = spc_name, selected = spc_name)
+      shinyWidgets::updatePickerInput(session, "dose_select",
+                                      choices = spc_name, selected = spc_name)
   })
   mySpectrum <- reactive(
     {
@@ -107,8 +111,8 @@ shiny_server <- function(input, output, session) {
       spc_raw <- myData$spectra[[input$calib_select]]
       spc_chanels <- get_chanels(spc_raw)
       # Drop chanels
-      n <- -input$calib_slice_range
-      index <- seq(from = n[[1]], to = n[[2]], by = -1)
+      n <- input$calib_slice_range
+      index <- seq(from = n[[1]], to = n[[2]], by = 1)
       spc_sliced <- slice_signal(spc_raw, index)
       # Transform intensities
       trans <- switch(input$calib_stabilize_method,
@@ -151,8 +155,9 @@ shiny_server <- function(input, output, session) {
   # Event ----------------------------------------------------------------------
   observeEvent(input$calib_select, {
     req(myData$spectra, input$calib_select)
+    max_chanel <- get_chanels(myData$spectra[[input$calib_select]])
     updateSliderInput(session, "calib_slice_range",
-                      max = get_chanels(myData$spectra[[input$calib_select]]))
+                      max = max_chanel, value = c(35, max_chanel))
   })
   observeEvent(input$calib_action, {
     req(myPeaks())
@@ -185,8 +190,9 @@ shiny_server <- function(input, output, session) {
         FUN = function(i, peaks) {
           chanel <- peaks$chanel[[i]]
           energy <- peaks$energy[[i]]
-          numericInput(paste0("calib_peak_", chanel),
-                       paste0("Chanel ", chanel), value = energy)
+          numericInput(inputId = paste0("calib_peak_", chanel),
+                       label = paste0("Chanel ", chanel),
+                       value = energy, width = "25%")
         },
         peaks
       )
