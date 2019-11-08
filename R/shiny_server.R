@@ -30,44 +30,55 @@ shiny_server <- function(input, output, session) {
       updateSelectInput(session, "calib_select",
                         choices = spc_name, selected = spc_name[[1]])
   })
-  observeEvent(
-    c(
-      input$import_facet,
-      input$import_select,
-      input$import_xaxis,
-      input$import_yaxis,
-      input$calib_action,
-      input$calib_reset
-    ),
+  mySpectrum <- reactive(
     {
-      mySpectrum$summary <- summarise(myData$spectra[input$import_select])
-      mySpectrum$name <- get_name(myData$spectra)
-      mySpectrum$plot <- plot(myData$spectra,
-                              xaxis = input$import_xaxis,
-                              yaxis = input$import_yaxis,
-                              select = input$import_select,
-                              facet = input$import_facet) +
-        ggplot2::theme_bw()
-    },
-    ignoreInit = TRUE
+      if (!is.null(myData$spectra) && !is.null(input$import_select)) {
+        list(
+          summary = summarise(myData$spectra[input$import_select]),
+          name = get_name(myData$spectra[input$import_select]),
+          plot = plot(myData$spectra,
+                      xaxis = input$import_xaxis,
+                      yaxis = input$import_yaxis,
+                      select = input$import_select,
+                      facet = input$import_facet) +
+            ggplot2::theme_bw()
+        )
+      } else {
+        return(NULL)
+      }
+    }
   )
   # Render ---------------------------------------------------------------------
   output$import_plot <- renderPlot(
-    { mySpectrum$plot }
+    { mySpectrum()$plot }
   )
   output$import_summary <- renderTable(
-    { mySpectrum$summary },
+    { mySpectrum()$summary },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
     rownames = FALSE, colnames = TRUE
   )
-  output$import_export <- downloadHandler(
-    filename = paste0(mySpectrum$name, ".png"),
+  output$import_export_plot <- downloadHandler(
+    filename = function() {
+      ifelse(
+        length(mySpectrum()$name) == 1,
+        paste0(mySpectrum()$name, ".png"),
+        "spectra.png"
+      )
+    },
     content = function(file) {
-      ggsave(file, plot = mySpectrum$plot,
+      ggsave(file, plot = mySpectrum()$plot,
              width = 7, height = 5, units = "in")
     },
     contentType = "image/png"
+  )
+  output$import_export_table <- downloadHandler(
+    filename = "summary.csv",
+    content = function(file) {
+      utils::write.csv(mySpectrum()$summary, file, row.names = FALSE,
+                       fileEncoding = "utf-8")
+    },
+    contentType = "text/csv"
   )
   # Energy calibration =========================================================
   # Event ----------------------------------------------------------------------

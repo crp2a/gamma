@@ -18,10 +18,11 @@ shiny_ui <- fluidPage(
                       multiple = TRUE),
           checkboxInput("import_facet", "Display in a grid", value = FALSE),
           radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
-          radioButtons("import_yaxis", "Y axis", choices = c("count", "rate")),
-          downloadButton("import_export", "Export plot"),
+          radioButtons("import_yaxis", "Y axis", choices = c("count", "rate"))
         ),
         mainPanel = mainPanel(
+          downloadButton("import_export_plot", "Export plot"),
+          downloadButton("import_export_table", "Export summary"),
           plotOutput("import_plot"),
           tableOutput("import_summary")
         )
