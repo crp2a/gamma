@@ -34,7 +34,7 @@ test_that("Build calibration curve", {
   )
   expect_output(show(calib1), "Calibration curve")
   expect_length(stats::coef(calib1[["model"]]), 2)
-  expect_equal(dim(calib1[["data"]]), c(7, 5))
+  expect_equal(dim(calib1[["data"]]), c(7, 6))
   expect_s3_class(plot(calib1), "ggplot")
   # Fit with no intercept
   calib2 <- fit_dose(
@@ -44,7 +44,7 @@ test_that("Build calibration curve", {
   )
   expect_output(show(calib2), "Calibration curve")
   expect_length(stats::coef(calib2[["model"]]), 1)
-  expect_equal(dim(calib2[["data"]]), c(7, 5))
+  expect_equal(dim(calib2[["data"]]), c(7, 6))
   expect_s3_class(plot(calib2), "ggplot")
   # Fit with weights
   calib3 <- fit_dose(
@@ -54,7 +54,7 @@ test_that("Build calibration curve", {
   )
   expect_output(show(calib3), "Calibration curve")
   expect_length(stats::weights(calib3[["model"]]), 7)
-  expect_equal(dim(calib3[["data"]]), c(7, 5))
+  expect_equal(dim(calib3[["data"]]), c(7, 6))
   expect_s3_class(plot(calib3), "ggplot")
 
   expect_error(fit_dose(spectra, noise = c(25312), range = c(200, 2800)),
@@ -90,7 +90,7 @@ test_that("Estimate dose rate", {
 
   dose_rate <- predict_dose(calib1, spectra, simplify = TRUE)
   expect_type(dose_rate, "list")
-  expect_equal(dim(dose_rate), c(7, 5))
+  expect_equal(dim(dose_rate), c(7, 6))
 
   expect_identical(predict_dose(calib1, spectra), predict_dose(calib1))
   expect_type(predict_dose(calib1, spectra[[1]], simplify = FALSE), "list")

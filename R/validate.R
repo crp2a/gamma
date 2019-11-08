@@ -245,10 +245,10 @@ setValidity(
         message <- c(message, "Slot `data` must contain numeric values.")
       }
       ncol_data <- ncol(data)
-      if (ncol_data != 5) {
+      if (ncol_data != 6) {
         message <- c(
           message,
-          sprintf("Slot `data` must be a 5 (not %d) columns data.frame.",
+          sprintf("Slot `data` must be a 6 (not %d) columns data.frame.",
                   ncol_data)
         )
       }

@@ -65,8 +65,12 @@ setMethod(
     colnames(signals) <- c("signal_value", "signal_error", "name")
 
     # Fit linear regression
-    fit_data <- merge(doses, signals, by = "name", all = FALSE)
-
+    fit_data <- merge(signals, doses, by = "name", all = FALSE)
+    fit_data <- cbind.data.frame(
+      name =  fit_data[, 1, drop = FALSE],
+      live_time = unlist(object[, "live_time"]),
+      fit_data[, -1]
+    )
     # TODO: check weights!
     fit_weights <- if (weights) 1 / fit_data$dose_error^2 else NULL
     if (intercept) {
