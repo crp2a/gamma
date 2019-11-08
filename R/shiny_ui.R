@@ -44,9 +44,10 @@ shiny_ui <- fluidPage(
                    selectInput("calib_select", "Select a spectrum",
                                choices = NULL, selected = NULL,
                                multiple = FALSE)),
-            column(width = 4,
+            column(width = 8,
                    style = "margin-top: 25px;",
-                   downloadButton("calib_export", "Export data"))
+                   downloadButton("calib_export_table", "Export data"),
+                   downloadButton("calib_export_plot", "Export plot"))
           ),
           fluidRow(
             tabsetPanel(
@@ -75,9 +76,9 @@ shiny_ui <- fluidPage(
           selectInput("calib_smooth_method", "Method", selected = 1,
                       choices = list("savitzky", "unweighted", "weighted")),
           numericInput("calib_smooth_m", "Window size",
-                       value = 3, min = 3, max = 10, step = 2),
+                       value = 5, min = 3, max = 10, step = 2),
           numericInput("calib_smooth_p", "Polynomial degree",
-                       min = 1, max = 6, value = 1, step = 1)
+                       min = 1, max = 6, value = 2, step = 1)
         ),
         column(
           width = 3,
@@ -97,7 +98,7 @@ shiny_ui <- fluidPage(
           numericInput("calib_peak_snr", "Signal-to-noise-ratio",
                        value = 2, min = 1, max = 5, step = 1),
           sliderInput("calib_peak_span", "Half window size",
-                      min = 0.01, max = 1, value = 0.05, step = 0.01)
+                      min = 1, max = 100, value = 5, step = 1)
         )
       )
     ),

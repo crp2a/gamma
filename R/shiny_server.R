@@ -8,11 +8,7 @@
 #' @noRd
 shiny_server <- function(input, output, session) {
   # Import =====================================================================
-  myData <- reactiveValues(spectra = NULL, raw = NULL)
-  mySpectrum <- reactiveValues(plot = NULL, name = NULL, summary = NULL)
-  myPeaks <- reactiveValues(spectrum = NULL, peaks = NULL,
-                            name = NULL, data = NULL, chanels = NULL,
-                            plot_spectrum = NULL, plot_baseline = NULL)
+  myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
   # Event ----------------------------------------------------------------------
   observeEvent(input$import_files, {
       file <- input$import_files
@@ -23,6 +19,7 @@ shiny_server <- function(input, output, session) {
       set_name(spc_data) <- spc_name
       # Store data
       myData$spectra <- spc_data
+      myData$names <- spc_name
       myData$raw <- spc_data
       # Update UI
       updateSelectInput(session, "import_select",
@@ -32,20 +29,24 @@ shiny_server <- function(input, output, session) {
   })
   mySpectrum <- reactive(
     {
-      if (!is.null(myData$spectra) && !is.null(input$import_select)) {
-        list(
-          summary = summarise(myData$spectra[input$import_select]),
-          name = get_name(myData$spectra[input$import_select]),
-          plot = plot(myData$spectra,
-                      xaxis = input$import_xaxis,
-                      yaxis = input$import_yaxis,
-                      select = input$import_select,
-                      facet = input$import_facet) +
-            ggplot2::theme_bw()
-        )
-      } else {
-        return(NULL)
-      }
+      # req(myData$spectra)
+      validate(
+        need(!is.null(myData$spectra), "Please import one or more spectra."),
+        need(!is.null(input$import_select) &&
+               input$import_select != "" &&
+               input$import_select %in% myData$names,
+             "Please select at least one spectrum.")
+      )
+      list(
+        summary = summarise(myData$spectra[input$import_select]),
+        name = get_name(myData$spectra[input$import_select]),
+        plot = plot(myData$spectra,
+                    xaxis = input$import_xaxis,
+                    yaxis = input$import_yaxis,
+                    select = input$import_select,
+                    facet = input$import_facet) +
+          ggplot2::theme_bw()
+      )
     }
   )
   # Render ---------------------------------------------------------------------
@@ -81,14 +82,24 @@ shiny_server <- function(input, output, session) {
     contentType = "text/csv"
   )
   # Energy calibration =========================================================
-  # Event ----------------------------------------------------------------------
-  observeEvent(
-    c(
-      input$calib_select,
-      input$calib_action,
-      input$calib_reset
-    ),
+  # Reactive -------------------------------------------------------------------
+  myPeaks <- reactive(
     {
+      # Validation
+      req(myData$spectra)
+      req(input$calib_select)
+      validate(
+        need(!is.null(input$calib_smooth_m) && input$calib_smooth_m != "",
+             "The window size must be set (smoothing)."),
+        need(input$calib_smooth_m %% 2 != 0,
+             "The window size must be an odd integer (smoothing)."),
+        need(!is.null(input$calib_smooth_p) && input$calib_smooth_p != "",
+             "The polynomial degree must be set (smoothing)."),
+        need(!is.null(input$calib_baseline_k) && input$calib_baseline_k != "",
+             "The number of iteration must be set (baseline)."),
+        need(!is.null(input$calib_peak_snr) && input$calib_peak_snr != "",
+             "The signal-to-noise-ratio must be set (peak searching).")
+      )
       # Get a GammaSpectrum object
       spc_raw <- myData$spectra[[input$calib_select]]
       spc_chanels <- get_chanels(spc_raw)
@@ -121,49 +132,52 @@ shiny_server <- function(input, output, session) {
         spc_baseline,
         method = input$calib_peak_method,
         SNR = input$calib_peak_snr,
-        span = round(input$calib_peak_span * spc_chanels)
+        span = input$calib_peak_span * spc_chanels / 100
       )
-      myPeaks$spectrum <- spc_raw
-      myPeaks$peaks <- spc_peaks
-      myPeaks$chanels <- spc_chanels
-      myPeaks$name <- input$calib_select
-      myPeaks$data <- methods::as(spc_raw, "data.frame")
-      myPeaks$plot_spectrum <- plot(spc_sliced, spc_peaks) + theme_bw()
-      myPeaks$plot_baseline <- plot(spc_baseline, spc_peaks) + theme_bw()
-    },
-    ignoreInit = TRUE
+      list(
+        spectrum = spc_raw,
+        peaks = spc_peaks,
+        chanels = spc_chanels,
+        name = input$calib_select,
+        data = methods::as(spc_raw, "data.frame"),
+        plot_spectrum = plot(spc_sliced, spc_peaks) + theme_bw(),
+        plot_baseline = plot(spc_baseline, spc_peaks) + theme_bw()
+      )
+    }
   )
+  # Event ----------------------------------------------------------------------
   observeEvent(input$calib_select, {
+    req(myData$spectra)
+    req(input$calib_select)
     updateSliderInput(session, "calib_slice_range",
                       max = get_chanels(myData$spectra[[input$calib_select]]))
-  }, ignoreInit = TRUE)
+  })
   observeEvent(input$calib_action, {
-    if (!is.null(myPeaks$peaks)) {
-      spc <- myPeaks$spectrum
-      chanel <- myPeaks$peaks@chanel
-      energy <- vapply(X = chanel, FUN = function(i) {
-        input[[paste0("calib_peak_", i)]]
-      }, FUN.VALUE = numeric(1))
-      peaks <- methods::initialize(myPeaks$peaks, energy = energy)
-      # Calibrate energy scale
-      spc_calib <- calibrate_energy(spc, peaks)
-      # Update spectrum
-      myData$spectra[[input$calib_select]] <- spc_calib
-    }
+    req(myPeaks())
+    spc <- myPeaks()$spectrum
+    chanel <- myPeaks()$peaks@chanel
+    energy <- vapply(X = chanel, FUN = function(i) {
+      input[[paste0("calib_peak_", i)]]
+    }, FUN.VALUE = numeric(1))
+    peaks <- methods::initialize(myPeaks()$peaks, energy = energy)
+    # Calibrate energy scale
+    spc_calib <- calibrate_energy(spc, peaks)
+    # Update spectrum
+    myData$spectra[[input$calib_select]] <- spc_calib
   })
   observeEvent(input$calib_reset, {
     myData$spectra[[input$calib_select]] <- myData$raw[[input$calib_select]]
   })
   # Render ---------------------------------------------------------------------
   output$calib_plot_peaks <- renderPlot(
-    { myPeaks$plot_spectrum }
+    { myPeaks()$plot_spectrum }
   )
   output$calib_plot_baseline <- renderPlot(
-    { myPeaks$plot_baseline }
+    { myPeaks()$plot_baseline }
   )
   output$calib_input_peaks <- renderUI({
-    if (!is.null(myPeaks$peaks)) {
-      peaks <- methods::as(myPeaks$peaks, "data.frame")
+    if (!is.null(myPeaks()$peaks)) {
+      peaks <- methods::as(myPeaks()$peaks, "data.frame")
       lapply(
         X = seq_len(nrow(peaks)),
         FUN = function(i, peaks) {
@@ -176,22 +190,31 @@ shiny_server <- function(input, output, session) {
       )
     }
   })
-  output$calib_export <- downloadHandler(
-    filename = paste0(myPeaks$name, ".csv"),
+  output$calib_export_table <- downloadHandler(
+    filename = function() paste0(myPeaks()$name, ".csv"),
     content = function(file) {
-      utils::write.csv(myPeaks$data, file, row.names = FALSE,
+      utils::write.csv(myPeaks()$data, file, row.names = FALSE,
                        fileEncoding = "utf-8")
     },
     contentType = "text/csv"
   )
+  output$calib_export_plot <- downloadHandler(
+    filename = function() paste0(myPeaks()$name, ".png"),
+    content = function(file) {
+      ggsave(file, plot = myPeaks()$plot_spectrum,
+             width = 7, height = 5, units = "in")
+    },
+    contentType = "image/png"
+  )
   # Dose rate prediction =======================================================
   doseData <- reactive({
-    if (!is.null(myData$spectra)) {
-      predict_dose(curveData(), myData$spectra,
-                   epsilon = input$dose_error / 100, simplify = TRUE)
-    }
+    req(myData$spectra)
+    req(input$dose_error)
+    predict_dose(curveData(), myData$spectra,
+                 epsilon = input$dose_error / 100, simplify = TRUE)
   })
   curveData <- reactive({
+    req(input$dose_curve)
     tmp <- new.env()
     file <- system.file("data", paste0(input$dose_curve, ".rda"),
                         package = "gamma")

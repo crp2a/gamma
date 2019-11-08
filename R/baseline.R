@@ -42,6 +42,11 @@ setMethod(
       SNIP = SNIP(x_counts, LLS, decreasing, iterations = k),
       stop("There is no such method: ", method, call. = FALSE)
     )
+    if (anyNA(baseline)) {
+      stop("Failed to estimate the baseline, ",
+           "please check your parameters.",
+           call. = FALSE)
+    }
 
     spc <- methods::initialize(object, count = baseline)
     methods::as(spc, "BaseLine")
