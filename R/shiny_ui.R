@@ -142,6 +142,18 @@ shiny_ui <- fluidPage(
       )
     ),
     tabPanel(
+      "Help",
+      icon = icon("question-circle"),
+      sidebarLayout(
+        sidebarPanel = sidebarPanel(
+          uiOutput("help_topic")
+        ),
+        mainPanel = mainPanel(
+          uiOutput("help_text")
+        )
+      )
+    ),
+    tabPanel(
       "About",
       icon = icon("info-circle"),
       fluidRow(

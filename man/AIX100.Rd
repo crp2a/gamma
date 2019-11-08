@@ -13,10 +13,10 @@ CEREGE Calibration Curve #1
 }
 \details{
 \tabular{ll}{
- \strong{Laboratory:} \tab CEREGE \cr
- \strong{Instrument:} \tab Canberra Inspector 1000 \cr
- \strong{Detector:} \tab NaI \cr
- \strong{Authors:} \tab CEREGE Luminescence Team
+ \strong{Laboratory} \tab CEREGE \cr
+ \strong{Instrument} \tab Canberra Inspector 1000 \cr
+ \strong{Detector} \tab NaI \cr
+ \strong{Authors} \tab CEREGE Luminescence Team
 }
 }
 \examples{

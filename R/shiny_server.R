@@ -9,6 +9,8 @@
 shiny_server <- function(input, output, session) {
   # Import =====================================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
+  tmp <- tempfile()
+  onSessionEnded(function() { unlink(tmp) })
   # Event ----------------------------------------------------------------------
   observeEvent(input$import_files, {
       file <- input$import_files
@@ -272,6 +274,22 @@ shiny_server <- function(input, output, session) {
     },
     contentType = "text/csv"
   )
+  # Help =======================================================================
+  # https://stackoverflow.com/questions/49210495/show-documentation-pages-in-shiny-app
+  myRd <- reactive({
+    tools::Rd_db("gamma")
+  })
+  output$help_topic <- renderUI({
+    selectInput("help_topic", "Select topic",
+                choices = sub(".Rd", "", names(myRd())))
+  })
+  output$help_text <- renderUI({
+    rd_file <- paste0(input$help_topic, ".Rd")
+    req(rd_file %in% names(myRd()))
+    tools::Rd2HTML(myRd()[[rd_file]], out = tmp, package = "gamma",
+                   no_links = TRUE)
+    includeHTML(tmp)
+  })
   # About ======================================================================
   output$about_logo <- renderImage(
     {

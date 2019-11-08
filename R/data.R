@@ -75,10 +75,10 @@
 #' @usage data("AIX100")
 #' @details
 #' \tabular{ll}{
-#'  \strong{Laboratory:} \tab CEREGE \cr
-#'  \strong{Instrument:} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector:} \tab NaI \cr
-#'  \strong{Authors:} \tab CEREGE Luminescence Team
+#'  \strong{Laboratory} \tab CEREGE \cr
+#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
+#'  \strong{Detector} \tab NaI \cr
+#'  \strong{Authors} \tab CEREGE Luminescence Team
 #' }
 #' @examples
 #' \donttest{
@@ -98,10 +98,10 @@
 #' @usage data("BDX100")
 #' @details
 #' \tabular{ll}{
-#'  \strong{Laboratory:} \tab IRAMAT-CRP2A (UMR 5060) \cr
-#'  \strong{Instrument:} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector:} \tab LaBr \cr
-#'  \strong{Authors:} \tab CRP2A Luminescence Team
+#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
+#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
+#'  \strong{Detector} \tab LaBr \cr
+#'  \strong{Authors} \tab CRP2A Luminescence Team
 #' }
 #' @examples
 #' \dontrun{
