@@ -7,14 +7,14 @@ shiny_ui <- fluidPage(
   navbarPage(
     "gamma",
     tabPanel(
-      "Import",
+      "1. Import",
       icon = icon("upload"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
           fileInput('import_files', 'Choose spectrum file(s)', multiple = TRUE,
                     accept = c('.cnf', '.CNF', '.tka', '.TKA')),
           tags$hr(),
-          selectInput("import_select", "Select", choices = NULL,
+          selectInput("import_select", "Add or remove a spectrum", choices = NULL,
                       multiple = TRUE),
           checkboxInput("import_facet", "Display in a grid", value = FALSE),
           radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
@@ -29,7 +29,7 @@ shiny_ui <- fluidPage(
       )
     ),
     tabPanel(
-      "Energy Calibration",
+      "2. Energy Calibration",
       icon = icon("bolt"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
@@ -103,7 +103,7 @@ shiny_ui <- fluidPage(
       )
     ),
     tabPanel(
-      "Dose Rate",
+      "3. Dose Rate Estimation",
       icon = icon("hourglass-half"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
