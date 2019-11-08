@@ -26,6 +26,8 @@ shiny_server <- function(input, output, session) {
                         choices = spc_name, selected = spc_name)
       updateSelectInput(session, "calib_select",
                         choices = spc_name, selected = spc_name[[1]])
+      updateSelectInput(session, "dose_select",
+                        choices = spc_name, selected = spc_name)
   })
   mySpectrum <- reactive(
     {
@@ -86,8 +88,7 @@ shiny_server <- function(input, output, session) {
   myPeaks <- reactive(
     {
       # Validation
-      req(myData$spectra)
-      req(input$calib_select)
+      req(myData$spectra, input$calib_select)
       validate(
         need(!is.null(input$calib_smooth_m) && input$calib_smooth_m != "",
              "The window size must be set (smoothing)."),
@@ -147,8 +148,7 @@ shiny_server <- function(input, output, session) {
   )
   # Event ----------------------------------------------------------------------
   observeEvent(input$calib_select, {
-    req(myData$spectra)
-    req(input$calib_select)
+    req(myData$spectra, input$calib_select)
     updateSliderInput(session, "calib_slice_range",
                       max = get_chanels(myData$spectra[[input$calib_select]]))
   })
@@ -208,8 +208,7 @@ shiny_server <- function(input, output, session) {
   )
   # Dose rate prediction =======================================================
   doseData <- reactive({
-    req(myData$spectra)
-    req(input$dose_error)
+    req(myData$spectra, input$dose_error)
     predict_dose(curveData(), myData$spectra,
                  epsilon = input$dose_error / 100, simplify = TRUE)
   })
@@ -234,7 +233,7 @@ shiny_server <- function(input, output, session) {
     },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = TRUE, colnames = TRUE, digits = 5
+    rownames = TRUE, colnames = TRUE
   )
   output$dose_table_curve_rsquared <- renderTable(
     {
@@ -247,24 +246,29 @@ shiny_server <- function(input, output, session) {
     },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE, digits = 5
+    rownames = FALSE, colnames = TRUE
   )
   output$dose_table_curve_data <- renderTable(
     { curveData()[["data"]] },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE, digits = 2
+    rownames = FALSE, colnames = TRUE
   )
   output$dose_table_dose <- renderTable(
-    { doseData() },
+    {
+      req(input$dose_select)
+      doseData()[input$dose_select, ]
+    },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE, digits = 2
+    rownames = FALSE, colnames = TRUE
   )
   output$dose_export <- downloadHandler(
     filename = "dose_rate.csv",
     content = function(file) {
-      utils::write.csv(doseData(), file, fileEncoding = "utf-8")
+      req(input$dose_select)
+      utils::write.csv(doseData()[input$dose_select, ], file,
+                       fileEncoding = "utf-8")
     },
     contentType = "text/csv"
   )

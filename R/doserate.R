@@ -122,16 +122,16 @@ setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
   definition = function(object, spectrum, epsilon = 0, simplify = FALSE, ...) {
-    spectrum <- methods::as(spectrum, "GammaSpectra")
     # Get noise value and integration range
     noise <- object@noise
     int_range <- object@integration
     # Integrate spectrum
     new_data <- integrate_signal(spectrum, range = int_range, noise = noise,
                                  simplify = TRUE)
-    new_data <- cbind.data.frame(new_data, rownames(new_data),
+    live_time <- unlist(spectrum[, "live_time"])
+    new_data <- cbind.data.frame(new_data, live_time, rownames(new_data),
                                  stringsAsFactors = FALSE)
-    colnames(new_data) <- c("signal_value", "signal_error", "name")
+    colnames(new_data) <- c("signal_value", "signal_error", "live_time", "name")
     # Predict dose rate
     do_predict_dose(object, new_data,
                     epsilon = epsilon, simplify = simplify, ...)
@@ -167,6 +167,7 @@ do_predict_dose <- function(object, new_data,
 
   results <- cbind.data.frame(
     name = new_data$name,
+    live_time = new_data$live_time,
     signal_value = new_data$signal_value,
     signal_error = new_data$signal_error,
     dose_value = dose_value,

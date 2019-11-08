@@ -11,11 +11,11 @@ shiny_ui <- fluidPage(
       icon = icon("upload"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
-          fileInput('import_files', 'Choose spectrum file(s)', multiple = TRUE,
+          fileInput('import_files', 'Import spectrum file(s)', multiple = TRUE,
                     accept = c('.cnf', '.CNF', '.tka', '.TKA')),
           tags$hr(),
-          selectInput("import_select", "Add or remove a spectrum", choices = NULL,
-                      multiple = TRUE),
+          selectInput("import_select", "Select one or more spectra",
+                      choices = NULL, selected = NULL, multiple = TRUE),
           checkboxInput("import_facet", "Display in a grid", value = FALSE),
           radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
           radioButtons("import_yaxis", "Y axis", choices = c("count", "rate"))
@@ -107,10 +107,13 @@ shiny_ui <- fluidPage(
       icon = icon("hourglass-half"),
       sidebarLayout(
         sidebarPanel = sidebarPanel(
-          selectInput("dose_curve", "Select a curve", selected = 1,
+          selectInput("dose_curve", "Select a calibration curve", selected = 1,
                       choices = list("BDX100", "AIX100")),
           numericInput("dose_error", "Extra error term (%)",
-                       min = 0, max = 100, value = 0, step = 1)
+                       min = 0, max = 100, value = 0, step = 1),
+          tags$hr(),
+          selectInput("dose_select", "Select one or more spectra",
+                      choices = NULL, selected = NULL, multiple = TRUE),
         ),
         mainPanel = mainPanel(
           tabsetPanel(
