@@ -23,11 +23,13 @@ usethis::use_data(clermont, internal = FALSE, overwrite = FALSE)
 
 # Calibration CRP2A1 ===========================================================
 ## Set dose rates
-name <- c("BRIQUE", "C341", "C347", "PEP", "LMP", "MAZ", "GOU")
+name <- c("BRIQUE", "C341", "C347", "GOU", "LMP", "MAZ", "PEP")
 index <- clermont$name %in% name
 
 fit_data <- cbind.data.frame(
   name = name,
+  live_time = c(BRIQUE = 8473.45, C341 = 976.08, C347 = 703.92, GOU = 1008.58,
+                LMP = 908.20, MAZ = 965.86, PEP = 507.07),
   signal_value = c(
     BRIQUE = 64071.58877, C341 = 27974.88571, C347 = 46580.21115,
     GOU = 52645.11600, LMP = 21227.36116, MAZ = 38008.81789, PEP = 80121.51546
