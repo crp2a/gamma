@@ -19,6 +19,7 @@ setMethod(
     # Adjust spectrum for energy shift
     # Get corresponding chanels
     lines <- as.data.frame(lines)
+    lines <- na.omit(lines)
     n <- nrow(lines)
     if (n < 3) {
       msg <- "You have to provide at least 3 lines for calibration, not %d."
@@ -48,10 +49,6 @@ setMethod(
   definition = function(object, lines, ...) {
     # Get data
     peaks <- methods::as(lines, "data.frame")
-    clean <- stats::na.omit(peaks)
-    # Validation
-    if (nrow(clean) == 0)
-      stop("You must set the corresponding energy (keV).", call. = FALSE)
 
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy

@@ -169,7 +169,6 @@ shiny_server <- function(input, output, session) {
       myRanges$x <- c(brush$xmin, brush$xmax)
       myRanges$y <- c(brush$ymin, brush$ymax)
       myRanges$expand <- FALSE
-
     } else {
       myRanges$x <- NULL
       myRanges$y <- NULL
@@ -183,13 +182,19 @@ shiny_server <- function(input, output, session) {
     energy <- vapply(X = chanel, FUN = function(i) {
       input[[paste0("calib_peak_", i)]]
     }, FUN.VALUE = numeric(1))
-    if (all(is.na(energy)))
-      stop("XXX")
     peaks <- methods::initialize(myPeaks()$peaks, energy = energy)
     # Calibrate energy scale
-    spc_calib <- calibrate_energy(spc, peaks)
+    spc_calib <- try(calibrate_energy(spc, peaks))
     # Update spectrum
-    myData$spectra[[input$calib_select]] <- spc_calib
+    if (class(spc_calib) == "try-error") {
+      showModal(modalDialog(
+        title = "Energy calibration",
+        spc_calib,
+        easyClose = TRUE
+      ))
+    } else {
+      myData$spectra[[input$calib_select]] <- spc_calib
+    }
   })
   observeEvent(input$calib_reset, {
     myData$spectra[[input$calib_select]] <- myData$raw[[input$calib_select]]
