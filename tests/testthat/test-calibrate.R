@@ -51,7 +51,7 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
   )
 
   expect_error(calibrate_energy(spectrum, lines = peaks),
-               "You must set the corresponding energy")
+               "You have to provide at least 3 lines for calibration, not 0.")
 
   set_energy(peaks) <- c(238, 1461, 2614.5)
   calib <- calibrate_energy(spectrum, lines = peaks)

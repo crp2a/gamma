@@ -284,7 +284,7 @@ setMethod(
       FUN = "[[",
       FUN.VALUE = character(1),
       i = "name"
-    ))
+    ), sep = "_")
     names(spc_list) <- spc_ref
     .Object@.Data <- spc_list
 
