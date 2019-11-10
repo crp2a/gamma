@@ -9,6 +9,7 @@
 shiny_server <- function(input, output, session) {
   # Import =====================================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
+  myRanges <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
   tmp <- tempfile()
   onSessionEnded(function() { unlink(tmp) })
   # Event ----------------------------------------------------------------------
@@ -35,6 +36,7 @@ shiny_server <- function(input, output, session) {
       shinyWidgets::updatePickerInput(session, "dose_select",
                                       choices = spc_name, selected = spc_name)
   })
+  # Reactive -------------------------------------------------------------------
   mySpectrum <- reactive(
     {
       # req(myData$spectra)
@@ -159,6 +161,21 @@ shiny_server <- function(input, output, session) {
     updateSliderInput(session, "calib_slice_range",
                       max = max_chanel, value = c(35, max_chanel))
   })
+  # When a double-click happens, check if there's a brush on the plot.
+  # If so, zoom to the brush bounds; if not, reset the zoom.
+  observeEvent(input$calib_plot_dblclick, {
+    brush <- input$calib_plot_brush
+    if (!is.null(brush)) {
+      myRanges$x <- c(brush$xmin, brush$xmax)
+      myRanges$y <- c(brush$ymin, brush$ymax)
+      myRanges$expand <- FALSE
+
+    } else {
+      myRanges$x <- NULL
+      myRanges$y <- NULL
+      myRanges$expand <- TRUE
+    }
+  })
   observeEvent(input$calib_action, {
     req(myPeaks())
     spc <- myPeaks()$spectrum
@@ -166,6 +183,8 @@ shiny_server <- function(input, output, session) {
     energy <- vapply(X = chanel, FUN = function(i) {
       input[[paste0("calib_peak_", i)]]
     }, FUN.VALUE = numeric(1))
+    if (all(is.na(energy)))
+      stop("XXX")
     peaks <- methods::initialize(myPeaks()$peaks, energy = energy)
     # Calibrate energy scale
     spc_calib <- calibrate_energy(spc, peaks)
@@ -177,26 +196,39 @@ shiny_server <- function(input, output, session) {
   })
   # Render ---------------------------------------------------------------------
   output$calib_plot_peaks <- renderPlot(
-    { myPeaks()$plot_spectrum }
+    { myPeaks()$plot_spectrum +
+        ggplot2::coord_cartesian(xlim = myRanges$x, ylim = myRanges$y,
+                                 expand = myRanges$expand) }
   )
   output$calib_plot_baseline <- renderPlot(
     { myPeaks()$plot_baseline }
   )
+  output$calib_energy_message <- renderUI({
+    req(myPeaks())
+    msg <- paste("The spectrum %s %s an energy scale.")
+    tags$div(
+      if (is_calibrated(myPeaks()$spectrum)) {
+        tags$p(sprintf(msg, input$calib_select, "has"),  class = "info")
+      } else {
+        tags$p(sprintf(msg, input$calib_select, "does not have"),
+               class = "warning")
+      },
+      class = "message"
+    )
+  })
   output$calib_input_peaks <- renderUI({
-    if (!is.null(myPeaks()$peaks)) {
-      peaks <- methods::as(myPeaks()$peaks, "data.frame")
-      lapply(
-        X = seq_len(nrow(peaks)),
-        FUN = function(i, peaks) {
-          chanel <- peaks$chanel[[i]]
-          energy <- peaks$energy[[i]]
-          numericInput(inputId = paste0("calib_peak_", chanel),
-                       label = paste0("Chanel ", chanel),
-                       value = energy, width = "25%")
-        },
-        peaks
-      )
-    }
+    req(myPeaks())
+    peaks <- methods::as(myPeaks()$peaks, "data.frame")
+    lapply(
+      X = seq_len(nrow(peaks)),
+      FUN = function(i, peaks) {
+        chanel <- peaks$chanel[[i]]
+        # energy <- peaks$energy[[i]]
+        numericInput(inputId = paste0("calib_peak_", chanel),
+                     label = paste0("Chanel ", chanel), value = NA_real_)
+      },
+      peaks
+    )
   })
   output$calib_export_table <- downloadHandler(
     filename = function() paste0(myPeaks()$name, ".csv"),
