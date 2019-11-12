@@ -154,29 +154,39 @@ shiny_ui <- fluidPage(
           numericInput("dose_error", "Extra error term (%)",
                        min = 0, max = 100, value = 0, step = 1),
           tags$hr(),
-          # selectInput("dose_select", "Select one or more spectra",
-          #             choices = NULL, selected = NULL, multiple = TRUE)
-          shinyWidgets::pickerInput(
-            inputId = "dose_select",
-            label = "Select spectra",
-            choices = NULL,
-            selected = NULL,
-            multiple = TRUE,
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            )
-          ),
+          uiOutput("dose_info")
         ),
         mainPanel = mainPanel(
           tabsetPanel(
             tabPanel(
               "Dose rate",
               icon = icon("table"),
-              tags$br(),
-              downloadButton("dose_export", "Export results"),
-              tableOutput("dose_table_dose")
+              column(
+                width = 4,
+                # selectInput("dose_select", "Select one or more spectra",
+                #             choices = NULL, selected = NULL, multiple = TRUE)
+                shinyWidgets::pickerInput(
+                  inputId = "dose_select",
+                  label = "Select spectra",
+                  choices = NULL,
+                  selected = NULL,
+                  multiple = TRUE,
+                  options = list(
+                    `actions-box` = TRUE,
+                    size = 10,
+                    `selected-text-format` = "count > 3"
+                  )
+                )
+              ),
+              column(
+                width = 8,
+                style = "margin-top: 25px;",
+                downloadButton("dose_export", "Export results")
+              ),
+              column(
+                width = 12,
+                tableOutput("dose_table_dose")
+              )
             ),
             tabPanel(
               "Calibration curve",

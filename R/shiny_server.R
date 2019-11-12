@@ -296,6 +296,19 @@ shiny_server <- function(input, output, session) {
                  epsilon = input$dose_error / 100, simplify = TRUE)
   })
   # Render ---------------------------------------------------------------------
+  output$dose_info <- renderUI({
+    info <- doseCurve()[["details"]]
+    tags$dl(
+      lapply(
+        X = seq_along(info),
+        FUN = function(i, info) {
+          tagList(tags$dt(names(info)[[i]]), tags$dd(info[[i]]))
+        },
+        info
+      ),
+      class = "gamma-details"
+    )
+  })
   output$dose_plot_curve <- renderPlot({
     plot(doseCurve()) +
         ggplot2::theme_bw()

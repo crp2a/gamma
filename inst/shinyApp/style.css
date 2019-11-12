@@ -24,3 +24,6 @@
   border-color: #D8000C;
   background-color: #FFBABA;
 }
+.gamma-details > dt {
+  margin-top: 0.5em;
+}
