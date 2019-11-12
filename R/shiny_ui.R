@@ -4,9 +4,7 @@
 #' @keywords internal
 #' @noRd
 shiny_ui <- fluidPage(
-  tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "shinyApp/style.css")
-  ),
+  includeCSS("inst/shinyApp/style.css"),
   navbarPage(
     "gamma",
     tabPanel(

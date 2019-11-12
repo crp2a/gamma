@@ -226,12 +226,12 @@ shiny_server <- function(input, output, session) {
     msg <- paste("The spectrum %s %s an energy scale.")
     tags$div(
       if (is_calibrated(myPeaks()$spectrum)) {
-        tags$p(sprintf(msg, input$calib_select, "has"),  class = "info")
+        tags$p(sprintf(msg, input$calib_select, "has"),  class = "gamma-info")
       } else {
         tags$p(sprintf(msg, input$calib_select, "does not have"),
-               class = "warning")
+               class = "gamma-warning")
       },
-      class = "message"
+      class = "gamma-message"
     )
   })
   output$calib_input_peaks <- renderUI({
