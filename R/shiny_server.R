@@ -37,6 +37,8 @@ shiny_server <- function(input, output, session) {
       shinyWidgets::updatePickerInput(session, "dose_select",
                                       choices = spc_name, selected = spc_name)
   })
+  # When a double-click happens, check if there's a brush on the plot.
+  # If so, zoom to the brush bounds; if not, reset the zoom.
   observeEvent(input$import_plot_dblclick, {
     brush <- input$import_plot_brush
     if (!is.null(brush)) {
@@ -280,12 +282,7 @@ shiny_server <- function(input, output, session) {
     contentType = "application/pdf"
   )
   # Dose rate prediction =======================================================
-  doseData <- reactive({
-    req(myData$spectra, input$dose_error)
-    predict_dose(curveData(), myData$spectra,
-                 epsilon = input$dose_error / 100, simplify = TRUE)
-  })
-  curveData <- reactive({
+  doseCurve <- reactive({
     req(input$dose_curve)
     tmp <- new.env()
     file <- system.file("data", paste0(input$dose_curve, ".rda"),
@@ -293,14 +290,19 @@ shiny_server <- function(input, output, session) {
     load(file = file, envir = tmp)
     tmp[[ls(tmp)[1]]]
   })
+  doseData <- reactive({
+    req(doseCurve(), myData$spectra, input$dose_error)
+    predict_dose(doseCurve(), myData$spectra,
+                 epsilon = input$dose_error / 100, simplify = TRUE)
+  })
   # Render ---------------------------------------------------------------------
   output$dose_plot_curve <- renderPlot({
-    plot(curveData()) +
+    plot(doseCurve()) +
         ggplot2::theme_bw()
   })
   output$dose_table_curve_coef <- renderTable(
     {
-      coef <- summary(curveData()[["model"]])$coefficients
+      coef <- summary(doseCurve()[["model"]])$coefficients
       rownames(coef) <- c("intercept", "slope")
       coef
     },
@@ -310,7 +312,7 @@ shiny_server <- function(input, output, session) {
   )
   output$dose_table_curve_rsquared <- renderTable(
     {
-      meta <- summary(curveData()[["model"]])
+      meta <- summary(doseCurve()[["model"]])
       cbind.data.frame(
         `residual standard error` = meta$sigma,
         `multiple R-squared` = meta$r.squared,
@@ -322,7 +324,7 @@ shiny_server <- function(input, output, session) {
     rownames = FALSE, colnames = TRUE
   )
   output$dose_table_curve_data <- renderTable(
-    { curveData()[["data"]] },
+    { doseCurve()[["data"]] },
     spacing = "s", width = "auto",
     striped = TRUE, hover = TRUE, bordered = FALSE,
     rownames = FALSE, colnames = TRUE

@@ -148,7 +148,9 @@ shiny_ui <- fluidPage(
       sidebarLayout(
         sidebarPanel = sidebarPanel(
           selectInput("dose_curve", "Select a calibration curve", selected = 1,
-                      choices = list("BDX100", "AIX100")),
+                      choices = list(Choose = "",
+                                     IRAMAT = c(BDX100 = "BDX100"),
+                                     CEREGE = c(AIX100 = "AIX100"))),
           numericInput("dose_error", "Extra error term (%)",
                        min = 0, max = 100, value = 0, step = 1),
           tags$hr(),
