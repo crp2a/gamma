@@ -38,7 +38,7 @@
 "_PACKAGE"
 
 #' @import shiny
-#' @importFrom shinyWidgets dropdownButton pickerInput updatePickerInput
+#' @importFrom shinyWidgets pickerInput sendSweetAlert updatePickerInput
 #' @importFrom methods as new setClass setClassUnion setGeneric setMethod
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes facet_wrap geom_errorbar geom_errorbarh

@@ -187,17 +187,30 @@ shiny_server <- function(input, output, session) {
     spc_calib <- try(calibrate_energy(spc, peaks))
     # Update spectrum
     if (class(spc_calib) == "try-error") {
-      showModal(modalDialog(
-        title = "Energy calibration",
-        spc_calib,
-        easyClose = TRUE
-      ))
+      shinyWidgets::sendSweetAlert(
+        session = session,
+        title = "Error",
+        text = spc_calib,
+        type = "error"
+      )
     } else {
       myData$spectra[[input$calib_select]] <- spc_calib
+      shinyWidgets::sendSweetAlert(
+        session = session,
+        title = "Success",
+        text = "The enegy scale has been adjusted.",
+        type = "success"
+      )
     }
   })
   observeEvent(input$calib_reset, {
     myData$spectra[[input$calib_select]] <- myData$raw[[input$calib_select]]
+    shinyWidgets::sendSweetAlert(
+      session = session,
+      title = "Info",
+      text = "The energy scale has been restored to its original values.",
+      type = "info"
+    )
   })
   # Render ---------------------------------------------------------------------
   output$calib_plot_peaks <- renderPlot(
