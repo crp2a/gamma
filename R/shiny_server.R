@@ -172,6 +172,13 @@ shiny_server <- function(input, output, session) {
     }
   )
   # Event ----------------------------------------------------------------------
+  # observe({
+  #   req(myPeaks(), input$calib_select)
+  #   msg <- sprintf("The spectrum %s %s an energy scale.", input$calib_select,
+  #                  ifelse(is_calibrated(myPeaks()$spectrum), "has", "does not have"))
+  #   type <- ifelse(is_calibrated(myPeaks()$spectrum), "message", "warning")
+  #   showNotification("msg", type = "message", duration = 10)
+  # })
   observeEvent(input$calib_select, {
     req(myData$spectra, input$calib_select)
     max_chanel <- get_chanels(myData$spectra[[input$calib_select]])
@@ -206,7 +213,7 @@ shiny_server <- function(input, output, session) {
     if (class(spc_calib) == "try-error") {
       shinyWidgets::sendSweetAlert(
         session = session,
-        title = "Error",
+        title = "Energy Calibration",
         text = spc_calib,
         type = "error"
       )
@@ -214,7 +221,7 @@ shiny_server <- function(input, output, session) {
       myData$spectra[[input$calib_select]] <- spc_calib
       shinyWidgets::sendSweetAlert(
         session = session,
-        title = "Success",
+        title = "Energy Calibration",
         text = "The enegy scale has been adjusted.",
         type = "success"
       )
@@ -224,7 +231,7 @@ shiny_server <- function(input, output, session) {
     myData$spectra[[input$calib_select]] <- myData$raw[[input$calib_select]]
     shinyWidgets::sendSweetAlert(
       session = session,
-      title = "Info",
+      title = "Restore Data",
       text = "The energy scale has been restored to its original values.",
       type = "info"
     )
@@ -238,19 +245,6 @@ shiny_server <- function(input, output, session) {
   output$calib_plot_baseline <- renderPlot(
     { myPeaks()$plot_baseline }
   )
-  output$calib_energy_message <- renderUI({
-    req(myPeaks())
-    msg <- paste("The spectrum %s %s an energy scale.")
-    tags$div(
-      if (is_calibrated(myPeaks()$spectrum)) {
-        tags$p(sprintf(msg, input$calib_select, "has"),  class = "gamma-info")
-      } else {
-        tags$p(sprintf(msg, input$calib_select, "does not have"),
-               class = "gamma-warning")
-      },
-      class = "gamma-message"
-    )
-  })
   output$calib_input_peaks <- renderUI({
     req(myPeaks())
     peaks <- methods::as(myPeaks()$peaks, "data.frame")
@@ -337,7 +331,7 @@ shiny_server <- function(input, output, session) {
       kextra <- kable_styling(kextra, bootstrap_options = c("striped", "hover"),
                               full_width = TRUE, fixed_thead = TRUE)
       row_spec(kextra, row = which(extra[[ncol(extra)]]),
-               bold = TRUE, background = "yellow")
+               bold = TRUE, background = "#EEEEBB")
     },
     # spacing = "s", width = "auto",
     # striped = TRUE, hover = TRUE, bordered = FALSE,

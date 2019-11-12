@@ -81,7 +81,6 @@ shiny_ui <- fluidPage(
             ),
             column(
               width = 12,
-              htmlOutput("calib_energy_message"),
               tabsetPanel(
                 tabPanel(
                   "Raw spectrum",
@@ -115,7 +114,7 @@ shiny_ui <- fluidPage(
             selectInput("calib_smooth_method", "Method", selected = 1,
                         choices = list("savitzky", "unweighted", "weighted")),
             numericInput("calib_smooth_m", "Window size",
-                         value = 5, min = 3, max = 10, step = 2),
+                         value = 21, min = 3, max = 50, step = 2),
             numericInput("calib_smooth_p", "Polynomial degree",
                          min = 1, max = 6, value = 2, step = 1)
           ),
