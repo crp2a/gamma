@@ -188,18 +188,39 @@ shiny_ui <- fluidPage(
         fluid = TRUE
       )
     ),
-    # tabPanel(
-    #   "Help",
-    #   icon = icon("question-circle"),
-    #   sidebarLayout(
-    #     sidebarPanel = sidebarPanel(
-    #       uiOutput("help_topic")
-    #     ),
-    #     mainPanel = mainPanel(
-    #       uiOutput("help_text")
-    #     )
-    #   )
-    # ),
+    tabPanel(
+      "Settings",
+      icon = icon("gear"),
+      sidebarLayout(
+        sidebarPanel = sidebarPanel(
+          helpText("Global settings.")
+        ),
+        mainPanel = mainPanel(
+          column(
+            width = 4,
+            h5("Print options"),
+            numericInput("options_digits", "Significant digits",
+                         value = 2, min = 1, max = 7, step = 1)
+          ),
+          column(
+            width = 4,
+            h5("Graphical output"),
+            numericInput("options_fig_width", "Figure width", value = 7),
+            numericInput("options_fig_height", "Figure height", value = 5),
+            selectInput("options_fig_units", "Figure units",
+                        choices = c("in", "cm", "mm"))
+          ),
+          column(
+            width = 4
+          ),
+          column(
+            width = 12,
+            h5("Session information"),
+            verbatimTextOutput("options_session")
+          )
+        )
+      )
+    ),
     tabPanel(
       "About",
       icon = icon("info-circle"),

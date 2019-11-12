@@ -96,7 +96,9 @@ shiny_server <- function(input, output, session) {
     },
     content = function(file) {
       ggsave(file, plot = mySpectrum()$plot,
-             width = 7, height = 5, units = "in")
+             width = input$options_fig_width,
+             height = input$options_fig_height,
+             units = input$options_fig_units)
     },
     contentType = "application/pdf"
   )
@@ -172,13 +174,6 @@ shiny_server <- function(input, output, session) {
     }
   )
   # Event ----------------------------------------------------------------------
-  # observe({
-  #   req(myPeaks(), input$calib_select)
-  #   msg <- sprintf("The spectrum %s %s an energy scale.", input$calib_select,
-  #                  ifelse(is_calibrated(myPeaks()$spectrum), "has", "does not have"))
-  #   type <- ifelse(is_calibrated(myPeaks()$spectrum), "message", "warning")
-  #   showNotification("msg", type = "message", duration = 10)
-  # })
   observeEvent(input$calib_select, {
     req(myData$spectra, input$calib_select)
     max_chanel <- get_chanels(myData$spectra[[input$calib_select]])
@@ -271,7 +266,9 @@ shiny_server <- function(input, output, session) {
     filename = function() paste0(myPeaks()$name, ".pdf"),
     content = function(file) {
       ggsave(file, plot = myPeaks()$plot_spectrum,
-             width = 7, height = 5, units = "in")
+             width = input$options_fig_width,
+             height = input$options_fig_height,
+             units = input$options_fig_units)
     },
     contentType = "application/pdf"
   )
@@ -327,15 +324,13 @@ shiny_server <- function(input, output, session) {
         xvar = "signal_value", yvar = "dose_value",
         threshold = 10, maxpoints = 1, allRows = TRUE
       )
-      kextra <- kable(extra[, -ncol(extra)], row.names = FALSE)
+      kextra <- kable(extra[, -ncol(extra)], digits = input$options_digits,
+                      row.names = FALSE)
       kextra <- kable_styling(kextra, bootstrap_options = c("striped", "hover"),
                               full_width = TRUE, fixed_thead = TRUE)
       row_spec(kextra, row = which(extra[[ncol(extra)]]),
                bold = TRUE, background = "#EEEEBB")
-    },
-    # spacing = "s", width = "auto",
-    # striped = TRUE, hover = TRUE, bordered = FALSE,
-    # rownames = FALSE, colnames = TRUE
+    }
   )
   output$dose_export <- downloadHandler(
     filename = "dose_rate.csv",
@@ -346,22 +341,12 @@ shiny_server <- function(input, output, session) {
     },
     contentType = "text/csv"
   )
+  # Settings ===================================================================
+  output$options_session <- renderPrint({
+    sessionInfo()
+  })
   # Help =======================================================================
   # https://stackoverflow.com/questions/49210495/show-documentation-pages-in-shiny-app
-  myRd <- reactive({
-    tools::Rd_db("gamma")
-  })
-  output$help_topic <- renderUI({
-    selectInput("help_topic", "Select topic",
-                choices = sub(".Rd", "", names(myRd())))
-  })
-  output$help_text <- renderUI({
-    rd_file <- paste0(input$help_topic, ".Rd")
-    req(rd_file %in% names(myRd()))
-    tools::Rd2HTML(myRd()[[rd_file]], out = tmp, package = "gamma",
-                   no_links = TRUE)
-    includeHTML(tmp)
-  })
   # About ======================================================================
   output$about_logo <- renderImage(
     {
