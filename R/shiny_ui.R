@@ -36,7 +36,12 @@ shiny_ui <- fluidPage(
         mainPanel = mainPanel(
           downloadButton("import_export_plot", "Export plot"),
           downloadButton("import_export_table", "Export summary"),
-          plotOutput("import_plot"),
+          plotOutput("import_plot",
+                     dblclick = "import_plot_dblclick",
+                     brush = brushOpts(
+                       id = "import_plot_brush",
+                       resetOnNew = TRUE
+                     )),
           tableOutput("import_summary")
         )
       )

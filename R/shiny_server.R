@@ -9,7 +9,8 @@
 shiny_server <- function(input, output, session) {
   # Import =====================================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
-  myRanges <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
+  myRangesCalib <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
+  myRangesImport <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
   tmp <- tempfile()
   onSessionEnded(function() { unlink(tmp) })
   # Event ----------------------------------------------------------------------
@@ -36,6 +37,18 @@ shiny_server <- function(input, output, session) {
       shinyWidgets::updatePickerInput(session, "dose_select",
                                       choices = spc_name, selected = spc_name)
   })
+  observeEvent(input$import_plot_dblclick, {
+    brush <- input$import_plot_brush
+    if (!is.null(brush)) {
+      myRangesImport$x <- c(brush$xmin, brush$xmax)
+      myRangesImport$y <- c(brush$ymin, brush$ymax)
+      myRangesImport$expand <- FALSE
+    } else {
+      myRangesImport$x <- NULL
+      myRangesImport$y <- NULL
+      myRangesImport$expand <- TRUE
+    }
+  })
   # Reactive -------------------------------------------------------------------
   mySpectrum <- reactive(
     {
@@ -61,7 +74,9 @@ shiny_server <- function(input, output, session) {
   )
   # Render ---------------------------------------------------------------------
   output$import_plot <- renderPlot(
-    { mySpectrum()$plot }
+    { mySpectrum()$plot +
+        ggplot2::coord_cartesian(xlim = myRangesImport$x, ylim = myRangesImport$y,
+                                 expand = myRangesImport$expand) }
   )
   output$import_summary <- renderTable(
     { mySpectrum()$summary },
@@ -166,13 +181,13 @@ shiny_server <- function(input, output, session) {
   observeEvent(input$calib_plot_dblclick, {
     brush <- input$calib_plot_brush
     if (!is.null(brush)) {
-      myRanges$x <- c(brush$xmin, brush$xmax)
-      myRanges$y <- c(brush$ymin, brush$ymax)
-      myRanges$expand <- FALSE
+      myRangesCalib$x <- c(brush$xmin, brush$xmax)
+      myRangesCalib$y <- c(brush$ymin, brush$ymax)
+      myRangesCalib$expand <- FALSE
     } else {
-      myRanges$x <- NULL
-      myRanges$y <- NULL
-      myRanges$expand <- TRUE
+      myRangesCalib$x <- NULL
+      myRangesCalib$y <- NULL
+      myRangesCalib$expand <- TRUE
     }
   })
   observeEvent(input$calib_action, {
@@ -215,8 +230,8 @@ shiny_server <- function(input, output, session) {
   # Render ---------------------------------------------------------------------
   output$calib_plot_peaks <- renderPlot(
     { myPeaks()$plot_spectrum +
-        ggplot2::coord_cartesian(xlim = myRanges$x, ylim = myRanges$y,
-                                 expand = myRanges$expand) }
+        ggplot2::coord_cartesian(xlim = myRangesCalib$x, ylim = myRangesCalib$y,
+                                 expand = myRangesCalib$expand) }
   )
   output$calib_plot_baseline <- renderPlot(
     { myPeaks()$plot_baseline }
