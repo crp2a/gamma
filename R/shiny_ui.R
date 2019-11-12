@@ -157,48 +157,32 @@ shiny_ui <- fluidPage(
           uiOutput("dose_info")
         ),
         mainPanel = mainPanel(
-          tabsetPanel(
-            tabPanel(
-              "Dose rate",
-              icon = icon("table"),
-              column(
-                width = 4,
-                # selectInput("dose_select", "Select one or more spectra",
-                #             choices = NULL, selected = NULL, multiple = TRUE)
-                shinyWidgets::pickerInput(
-                  inputId = "dose_select",
-                  label = "Select spectra",
-                  choices = NULL,
-                  selected = NULL,
-                  multiple = TRUE,
-                  options = list(
-                    `actions-box` = TRUE,
-                    size = 10,
-                    `selected-text-format` = "count > 3"
-                  )
-                )
-              ),
-              column(
-                width = 8,
-                style = "margin-top: 25px;",
-                downloadButton("dose_export", "Export results")
-              ),
-              column(
-                width = 12,
-                tableOutput("dose_table_dose")
+          column(
+            width = 4,
+            # selectInput("dose_select", "Select one or more spectra",
+            #             choices = NULL, selected = NULL, multiple = TRUE)
+            shinyWidgets::pickerInput(
+              inputId = "dose_select",
+              label = "Select spectra",
+              choices = NULL,
+              selected = NULL,
+              multiple = TRUE,
+              options = list(
+                `actions-box` = TRUE,
+                size = 10,
+                `selected-text-format` = "count > 3"
               )
-            ),
-            tabPanel(
-              "Calibration curve",
-              icon = icon("chart-line"),
-              plotOutput("dose_plot_curve"),
-              h4("Estimated coefficients"),
-              tableOutput("dose_table_curve_coef"),
-              h4("Summary statistics"),
-              tableOutput("dose_table_curve_rsquared"),
-              h4("Model data"),
-              tableOutput("dose_table_curve_data")
             )
+          ),
+          column(
+            width = 8,
+            style = "margin-top: 25px;",
+            downloadButton("dose_export", "Export results")
+          ),
+          column(
+            width = 12,
+            plotOutput("dose_plot_curve", hover = "dose_plot_hover"),
+            htmlOutput("dose_table_dose")
           )
         ),
         position = "left",

@@ -112,6 +112,8 @@ setMethod(
     peak_legend <- NULL
     if (any(index_energy)) {
       peak_legend <- scale_x_continuous(
+        breaks = peak_chanel,
+        labels = peak_chanel,
         sec.axis = sec_axis(
           trans = ~.,
           breaks = peak_chanel[index_energy],
@@ -145,8 +147,8 @@ setMethod(
     segment <- as.data.frame(t(as.matrix(segment_xy)))
 
     # Set error bar width and height
-    error_width <- sum(signal * c(-1, 1)) / 100
-    error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
+    # error_width <- sum(signal * c(-1, 1)) / 100
+    # error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
 
     ggplot(
       data = data,
@@ -159,26 +161,15 @@ setMethod(
         colour = "red",
         inherit.aes = FALSE
       ) +
-      geom_errorbar(
+      geom_pointrange(
         mapping = aes(ymin = .data$dose_value - .data$dose_error,
                       ymax = .data$dose_value + .data$dose_error),
-        width = error_width) +
+        colour = "red") +
       geom_errorbarh(
         mapping = aes(xmin = .data$signal_value - .data$signal_error,
                       xmax = .data$signal_value + .data$signal_error),
-        height = error_height) +
-      geom_point() +
+        height = 0,
+        colour = "red") +
       labs(x = "Signal", y = "Dose rate [\u03BCGy/y]")
   }
 )
-
-# @export
-# @rdname plot
-# @aliases plot,CalibrationCurve,GammaSpectra-method
-# setMethod(
-#   f = "plot",
-#   signature = signature(x = "CalibrationCurve", y = "GammaSpectra"),
-#   definition = function(x, y, ...) {
-#
-#   }
-# )

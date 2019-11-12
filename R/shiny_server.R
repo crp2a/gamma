@@ -15,27 +15,27 @@ shiny_server <- function(input, output, session) {
   onSessionEnded(function() { unlink(tmp) })
   # Event ----------------------------------------------------------------------
   observeEvent(input$import_files, {
-      file <- input$import_files
-      # Return a GammaSpectra object
-      spc_name <- tools::file_path_sans_ext(file$name)
-      spc_data <- read(file$datapath)
-      spc_data <- methods::as(spc_data, "GammaSpectra")
-      set_name(spc_data) <- spc_name
-      # Store data
-      myData$spectra <- spc_data
-      myData$names <- spc_name
-      myData$raw <- spc_data
-      # Update UI
-      # updateSelectInput(session, "import_select",
-      #                   choices = spc_name, selected = spc_name)
-      shinyWidgets::updatePickerInput(session, "import_select",
-                  choices = spc_name, selected = spc_name)
-      updateSelectInput(session, "calib_select",
-                        choices = spc_name, selected = spc_name[[1]])
-      # updateSelectInput(session, "dose_select",
-      #                   choices = spc_name, selected = spc_name)
-      shinyWidgets::updatePickerInput(session, "dose_select",
-                                      choices = spc_name, selected = spc_name)
+    file <- input$import_files
+    # Return a GammaSpectra object
+    spc_name <- tools::file_path_sans_ext(file$name)
+    spc_data <- read(file$datapath)
+    spc_data <- methods::as(spc_data, "GammaSpectra")
+    set_name(spc_data) <- spc_name
+    # Store data
+    myData$spectra <- spc_data
+    myData$names <- spc_name
+    myData$raw <- spc_data
+    # Update UI
+    # updateSelectInput(session, "import_select",
+    #                   choices = spc_name, selected = spc_name)
+    shinyWidgets::updatePickerInput(session, "import_select",
+                                    choices = spc_name, selected = spc_name)
+    updateSelectInput(session, "calib_select",
+                      choices = spc_name, selected = spc_name[[1]])
+    # updateSelectInput(session, "dose_select",
+    #                   choices = spc_name, selected = spc_name)
+    shinyWidgets::updatePickerInput(session, "dose_select",
+                                    choices = spc_name, selected = spc_name)
   })
   # When a double-click happens, check if there's a brush on the plot.
   # If so, zoom to the brush bounds; if not, reset the zoom.
@@ -310,46 +310,38 @@ shiny_server <- function(input, output, session) {
     )
   })
   output$dose_plot_curve <- renderPlot({
+    req(input$dose_select)
+    extra <- doseData()[input$dose_select, ]
+
     plot(doseCurve()) +
-        ggplot2::theme_bw()
+      geom_pointrange(
+        data = extra,
+        mapping = aes(ymin = .data$dose_value - .data$dose_error,
+                      ymax = .data$dose_value + .data$dose_error)) +
+      geom_errorbarh(
+        data = extra,
+        mapping = aes(xmin = .data$signal_value - .data$signal_error,
+                      xmax = .data$signal_value + .data$signal_error),
+        height = 0) +
+      ggplot2::theme_bw()
   })
-  output$dose_table_curve_coef <- renderTable(
-    {
-      coef <- summary(doseCurve()[["model"]])$coefficients
-      rownames(coef) <- c("intercept", "slope")
-      coef
-    },
-    spacing = "s", width = "auto",
-    striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = TRUE, colnames = TRUE
-  )
-  output$dose_table_curve_rsquared <- renderTable(
-    {
-      meta <- summary(doseCurve()[["model"]])
-      cbind.data.frame(
-        `residual standard error` = meta$sigma,
-        `multiple R-squared` = meta$r.squared,
-        `adjusted R-squared` = meta$adj.r.squared
-      )
-    },
-    spacing = "s", width = "auto",
-    striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE
-  )
-  output$dose_table_curve_data <- renderTable(
-    { doseCurve()[["data"]] },
-    spacing = "s", width = "auto",
-    striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE
-  )
-  output$dose_table_dose <- renderTable(
+  output$dose_table_dose <- renderText(
     {
       req(input$dose_select)
-      doseData()[input$dose_select, ]
+      extra <- nearPoints(
+        doseData()[input$dose_select, ], input$dose_plot_hover,
+        xvar = "signal_value", yvar = "dose_value",
+        threshold = 10, maxpoints = 1, allRows = TRUE
+      )
+      kextra <- kable(extra[, -ncol(extra)], row.names = FALSE)
+      kextra <- kable_styling(kextra, bootstrap_options = c("striped", "hover"),
+                              full_width = TRUE, fixed_thead = TRUE)
+      row_spec(kextra, row = which(extra[[ncol(extra)]]),
+               bold = TRUE, background = "yellow")
     },
-    spacing = "s", width = "auto",
-    striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE
+    # spacing = "s", width = "auto",
+    # striped = TRUE, hover = TRUE, bordered = FALSE,
+    # rownames = FALSE, colnames = TRUE
   )
   output$dose_export <- downloadHandler(
     filename = "dose_rate.csv",
@@ -410,8 +402,8 @@ shiny_server <- function(input, output, session) {
     )
   })
   output$about_citation <- renderUI({
-   lapply(X = format(utils::citation("gamma"), bibtex = FALSE),
-          FUN = tags$p)
+    lapply(X = format(utils::citation("gamma"), bibtex = FALSE),
+           FUN = tags$p)
   })
   output$about_lascarbx <- renderUI({
     tags$p(

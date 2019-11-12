@@ -46,17 +46,18 @@ Depends:
 Imports: 
     ggplot2 (>= 3.1.0),
     graphics,
+    kableExtra,
+    knitr,
     methods,
     rlang (>= 0.3.1),
     rxylib (>= 0.2.1),
     shiny,
+    shinyWidgets,
     stats,
     tools,
-    utils,
-    shinyWidgets
+    utils
 Suggests: 
     covr,
-    knitr,
     magrittr,
     rmarkdown,
     testthat,
