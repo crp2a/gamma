@@ -88,15 +88,15 @@ shiny_server <- function(input, output, session) {
     filename = function() {
       ifelse(
         length(mySpectrum()$name) == 1,
-        paste0(mySpectrum()$name, ".png"),
-        "spectra.png"
+        paste0(mySpectrum()$name, ".pdf"),
+        "spectra.pdf"
       )
     },
     content = function(file) {
       ggsave(file, plot = mySpectrum()$plot,
              width = 7, height = 5, units = "in")
     },
-    contentType = "image/png"
+    contentType = "application/pdf"
   )
   output$import_export_table <- downloadHandler(
     filename = "summary.csv",
@@ -272,12 +272,12 @@ shiny_server <- function(input, output, session) {
     contentType = "text/csv"
   )
   output$calib_export_plot <- downloadHandler(
-    filename = function() paste0(myPeaks()$name, ".png"),
+    filename = function() paste0(myPeaks()$name, ".pdf"),
     content = function(file) {
       ggsave(file, plot = myPeaks()$plot_spectrum,
              width = 7, height = 5, units = "in")
     },
-    contentType = "image/png"
+    contentType = "application/pdf"
   )
   # Dose rate prediction =======================================================
   doseData <- reactive({
