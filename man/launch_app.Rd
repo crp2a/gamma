@@ -10,16 +10,12 @@ launch_app()
 A \pkg{shiny} application object.
 }
 \description{
-A wrapper for \code{\link[shiny]{shinyApp}}.
+A wrapper for \code{\link[shiny]{shinyAppDir}}.
 }
 \examples{
 \dontrun{launch_app()}
 }
-\seealso{
-Other IO: \code{\link{operators}}, \code{\link{plot}},
-  \code{\link{read}}, \code{\link{summarise}}
-}
 \author{
 N. Frerebeau
 }
-\concept{IO}
+\concept{shiny}

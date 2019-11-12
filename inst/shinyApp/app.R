@@ -1,1 +1,1 @@
-LesAuzieres::launchApp()
+gamma::launch_app()

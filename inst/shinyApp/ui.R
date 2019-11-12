@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 shiny_ui <- fluidPage(
-  includeCSS("inst/shinyApp/style.css"),
+  includeCSS("www/style.css"),
   navbarPage(
     "gamma",
     tabPanel(
@@ -15,8 +15,6 @@ shiny_ui <- fluidPage(
           fileInput('import_files', 'Import spectrum file(s)', multiple = TRUE,
                     accept = c('.cnf', '.CNF', '.tka', '.TKA')),
           tags$hr(),
-          # selectInput("import_select", "Select one or more spectra",
-          #             choices = NULL, selected = NULL, multiple = TRUE),
           shinyWidgets::pickerInput(
             inputId = "import_select",
             label = "Select",
@@ -158,8 +156,6 @@ shiny_ui <- fluidPage(
         mainPanel = mainPanel(
           column(
             width = 4,
-            # selectInput("dose_select", "Select one or more spectra",
-            #             choices = NULL, selected = NULL, multiple = TRUE)
             shinyWidgets::pickerInput(
               inputId = "dose_select",
               label = "Select spectra",
@@ -230,14 +226,35 @@ shiny_ui <- fluidPage(
           align = "center",
           offset = 2,
           wellPanel(
-            # imageOutput("about_logo"),
-            h4(textOutput("about_version")),
+            img(src = "logo.png", width = "120px", alt = "gamma"),
+            h4(paste("gamma", utils::packageVersion("gamma"), sep = " ")),
             tags$br(),
-            uiOutput("about_license"),
+            tags$p("Source code:",
+                   tags$a(href = "https://github.com/crp2a/gamma",
+                          "https://github.com/crp2a/gamma")),
+            tags$p(
+              "This program is free software: you can redistribute it and/or
+              modify it under the terms of the GNU General Public License as
+              published by the Free Software Foundation, either version 3 of
+              the License, or (at your option) any later version."
+            ),
+            tags$p(
+              "This program is distributed in the hope that it will be useful,
+              but WITHOUT ANY WARRANTY; without even the implied warranty of
+              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+              GNU General Public License for more details."
+            ),
             tags$br(),
-            uiOutput("about_citation"),
+            tags$p(format(utils::citation("gamma"), bibtex = FALSE)[[1]]),
+            tags$p(format(utils::citation("gamma"), bibtex = FALSE)[[2]]),
             tags$br(),
-            uiOutput("about_lascarbx")
+            tags$p(
+              "This work received a state financial support
+              managed by the Agence Nationale de la Recherche (France)
+              throught the program Investissements d'avenir (ref. ",
+              tags$a(href = "https://lascarbx.labex.u-bordeaux.fr/",
+                     "ANR-10-LABX-52", .noWS = c("before", "after")), ")."
+            )
           )
         )
       )

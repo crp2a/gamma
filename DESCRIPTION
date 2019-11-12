@@ -83,8 +83,6 @@ Collate:
     'peaks.R'
     'plot.R'
     'read.R'
-    'shiny_server.R'
-    'shiny_ui.R'
     'show.R'
     'signal.R'
     'simulate.R'

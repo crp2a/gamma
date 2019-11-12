@@ -65,8 +65,7 @@ plot(spectra, xaxis = "chanel", yaxis = "rate",
   ggplot2::theme_bw()
 }
 \seealso{
-Other IO: \code{\link{launch_app}},
-  \code{\link{operators}}, \code{\link{read}},
+Other IO: \code{\link{operators}}, \code{\link{read}},
   \code{\link{summarise}}
 }
 \author{

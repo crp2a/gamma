@@ -22,8 +22,8 @@ A \linkS4class{GammaSpectrum} object.
 Performs operation on spectra.
 }
 \seealso{
-Other IO: \code{\link{launch_app}}, \code{\link{plot}},
-  \code{\link{read}}, \code{\link{summarise}}
+Other IO: \code{\link{plot}}, \code{\link{read}},
+  \code{\link{summarise}}
 }
 \author{
 N. Frerebeau
