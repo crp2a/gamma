@@ -19,7 +19,7 @@ setMethod(
     # Adjust spectrum for energy shift
     # Get corresponding chanels
     lines <- as.data.frame(lines)
-    lines <- na.omit(lines)
+    lines <- stats::na.omit(lines)
     n <- nrow(lines)
     if (n < 3) {
       msg <- "You have to provide at least 3 lines for calibration, not %d."

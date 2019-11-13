@@ -289,7 +289,7 @@ shiny_server <- function(input, output, session) {
       lapply(
         X = seq_along(info),
         FUN = function(i, info) {
-          tagList(tags$dt(names(info)[[i]]), tags$dd(info[[i]]))
+          tagList(tags$dt(names(info)[[i]]), tags$dd(as.character(info[[i]])))
         },
         info
       ),

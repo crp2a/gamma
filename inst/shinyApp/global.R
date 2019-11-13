@@ -1,5 +1,5 @@
 # Check dependencies
-pkg_needed <- c("knitr", "kableExtra", "shinyWidgets")
+pkg_needed <- c("gamma", "ggplot2", "knitr", "kableExtra", "shinyWidgets")
 pkg_missing <- !vapply(X = pkg_needed, FUN = requireNamespace,
                        FUN.VALUE = logical(1), quietly = TRUE)
 

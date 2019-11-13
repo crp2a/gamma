@@ -11,7 +11,7 @@ NULL
 #' @author N. Frerebeau
 #' @export
 launch_app <- function() {
-  if (!require("shiny", quietly = TRUE)) {
+  if (!requireNamespace("shiny", quietly = TRUE)) {
     message("Shiny must be installed to run the app.")
     answer <- readline("Do you want to install Shiny? (Y/N) ")
     answer <- ifelse(answer %in% c("y", "Y", "1"), TRUE, FALSE)
