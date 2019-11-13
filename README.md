@@ -36,7 +36,7 @@ files.
 Install the development version from GitHub with:
 
 ``` r
-if(!require("devtools")) install.packages("devtools")
+if (!require("devtools")) install.packages("devtools")
 devtools::install_github("crp2a/gamma")
 ```
 
@@ -89,7 +89,7 @@ peaks
 #> 7    722     NA
 #> 8    879   2615
 
-## Inspect Peaks
+## Inspect peaks
 plot(spectrum, peaks)
 ```
 
@@ -98,7 +98,15 @@ plot(spectrum, peaks)
 ``` r
 
 ## Calibrate the energy scale
-cal <- calibrate_energy(spectrum, peaks)
+calib <- calibrate_energy(spectrum, peaks)
+
+## Inspect results
+plot(calib, xaxis = "energy", yaxis = "rate")
+```
+
+<img src="man/figures/README-usage-2.png" style="display: block; margin: auto;" />
+
+``` r
 
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
@@ -106,11 +114,11 @@ cal <- calibrate_energy(spectrum, peaks)
 data(BDX100, package = "gamma")
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX100, spectrum, simplify = TRUE))
+(doses <- predict_dose(BDX100, calib, simplify = TRUE))
 #>              name live_time signal_value signal_error dose_value
-#> test_CNF test_CNF   3385.54     133600.4      9.82962   4217.026
+#> test_CNF test_CNF   3385.54     126234.7     9.605737   3981.133
 #>          dose_error
-#> test_CNF    79.6977
+#> test_CNF   75.23958
 ```
 
 ## Contributing

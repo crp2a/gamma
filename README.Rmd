@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 Install the development version from GitHub with:
 
 ```{r gh-installation, eval=FALSE}
-if(!require("devtools")) install.packages("devtools")
+if (!require("devtools")) install.packages("devtools")
 devtools::install_github("crp2a/gamma")
 ```
 
@@ -81,11 +81,14 @@ peaks <- spectrum %>%
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 peaks
 
-## Inspect Peaks
+## Inspect peaks
 plot(spectrum, peaks)
 
 ## Calibrate the energy scale
-cal <- calibrate_energy(spectrum, peaks)
+calib <- calibrate_energy(spectrum, peaks)
+
+## Inspect results
+plot(calib, xaxis = "energy", yaxis = "rate")
 
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
@@ -93,7 +96,7 @@ cal <- calibrate_energy(spectrum, peaks)
 data(BDX100, package = "gamma")
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX100, spectrum, simplify = TRUE))
+(doses <- predict_dose(BDX100, calib, simplify = TRUE))
 ```
 
 ## Contributing
