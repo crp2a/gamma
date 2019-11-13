@@ -168,8 +168,8 @@ shiny_server <- function(input, output, session) {
         chanels = spc_chanels,
         name = input$calib_select,
         data = methods::as(spc_raw, "data.frame"),
-        plot_spectrum = plot(spc_sliced, spc_peaks) + theme_bw(),
-        plot_baseline = plot(spc_baseline, spc_peaks) + theme_bw()
+        plot_spectrum = plot(spc_sliced, spc_peaks) + ggplot2::theme_bw(),
+        plot_baseline = plot(spc_baseline, spc_peaks) + ggplot2::theme_bw()
       )
     }
   )
