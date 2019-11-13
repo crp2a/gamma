@@ -36,7 +36,7 @@ files.
 Install the development version from GitHub with:
 
 ``` r
-# install.packages("devtools")
+if(!require("devtools")) install.packages("devtools")
 devtools::install_github("crp2a/gamma")
 ```
 
@@ -46,7 +46,7 @@ A [**Shiny**](https://shiny.rstudio.com) application provides an
 exhanced graphical user interface:
 
 ``` r
-# Run the app
+## Run the app
 launch_app()
 ```
 
@@ -55,26 +55,27 @@ launch_app()
 Or, if you need a more reproducible workflow:
 
 ``` r
-# A minimal example
-# You may want to give extra attention to the energy calibration step
+## A minimal example
+## You may want to give extra attention to the energy calibration step
 library(gamma)
 library(magrittr)
 
-# Find the full path to the spectrum file
+## Find the full path to the spectrum file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 
-# Import the spectrum
+## Import the spectrum
 spectrum <- read(spc_file)
 
-# Set the expected chanel/energy peaks for the energy scale calibration
-# Spectrum pre-processing and peak detection
+## Set the expected chanel/energy peaks for the energy scale calibration
+## Spectrum pre-processing and peak detection
 peaks <- spectrum %>%
   slice_signal() %>%
   stabilize_signal(transformation = sqrt) %>%
   smooth_signal(method = "savitzky", m = 21) %>%
   remove_baseline() %>%
   find_peaks()
-# Set the energy values (in keV)
+
+## Set the energy values (in keV)
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 peaks
 #> 8 peaks were detected:
@@ -88,7 +89,7 @@ peaks
 #> 7    722     NA
 #> 8    879   2615
 
-# Inspect Peaks
+## Inspect Peaks
 plot(spectrum, peaks)
 ```
 
@@ -96,18 +97,20 @@ plot(spectrum, peaks)
 
 ``` r
 
-# Calibrate the energy scale
+## Calibrate the energy scale
 cal <- calibrate_energy(spectrum, peaks)
 
-# Load the calibration curve for the dose rate estimation
-# As this curve is instrument specific, you will have to build your own
-# See help(fit_dose)
+## Load the calibration curve for the dose rate estimation
+## As this curve is instrument specific, you will have to build your own
+## See help(fit_dose)
 data(BDX100, package = "gamma")
 
-# Estimate the gamma dose rate
+## Estimate the gamma dose rate
 (doses <- predict_dose(BDX100, spectrum, simplify = TRUE))
-#>              name signal_value signal_error dose_value dose_error
-#> test_CNF test_CNF     133600.4      9.82962   4217.026    79.6977
+#>              name live_time signal_value signal_error dose_value
+#> test_CNF test_CNF   3385.54     133600.4      9.82962   4217.026
+#>          dose_error
+#> test_CNF    79.6977
 ```
 
 ## Contributing
