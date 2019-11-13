@@ -37,14 +37,10 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @import shiny
-#' @importFrom shinyWidgets pickerInput sendSweetAlert updatePickerInput
 #' @importFrom methods as new setClass setClassUnion setGeneric setMethod
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar
 #' geom_errorbarh geom_path geom_point geom_pointrange geom_segment geom_vline
 #' ggplot ggsave labs scale_x_continuous sec_axis theme_bw vars
-#' @importFrom knitr kable
-#' @importFrom kableExtra kable_styling row_spec
 #' @importFrom rlang .data
 NULL

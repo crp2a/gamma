@@ -1,1 +1,0 @@
-gamma::launch_app()

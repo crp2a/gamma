@@ -275,11 +275,7 @@ shiny_server <- function(input, output, session) {
   # Dose rate prediction =======================================================
   doseCurve <- reactive({
     req(input$dose_curve)
-    tmp <- new.env()
-    file <- system.file("data", paste0(input$dose_curve, ".rda"),
-                        package = "gamma")
-    load(file = file, envir = tmp)
-    tmp[[ls(tmp)[1]]]
+    get(input$dose_curve)
   })
   doseData <- reactive({
     req(doseCurve(), myData$spectra, input$dose_error)
@@ -324,12 +320,15 @@ shiny_server <- function(input, output, session) {
         xvar = "signal_value", yvar = "dose_value",
         threshold = 10, maxpoints = 1, allRows = TRUE
       )
-      kextra <- kable(extra[, -ncol(extra)], digits = input$options_digits,
-                      row.names = FALSE)
-      kextra <- kable_styling(kextra, bootstrap_options = c("striped", "hover"),
-                              full_width = TRUE, fixed_thead = TRUE)
-      row_spec(kextra, row = which(extra[[ncol(extra)]]),
-               bold = TRUE, background = "#EEEEBB")
+
+      kextra <- kableExtra::kable_styling(
+        knitr::kable(extra[, -ncol(extra)], digits = input$options_digits,
+                     row.names = FALSE),
+        bootstrap_options = c("striped", "hover"),
+        full_width = TRUE, fixed_thead = TRUE
+      )
+      kableExtra::row_spec(kextra, row = which(extra[[ncol(extra)]]),
+                           bold = TRUE, background = "#EEEEBB")
     }
   )
   output$dose_export <- downloadHandler(

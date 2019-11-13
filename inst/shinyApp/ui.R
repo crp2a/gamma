@@ -187,19 +187,16 @@ shiny_ui <- fluidPage(
     tabPanel(
       "Settings",
       icon = icon("gear"),
-      sidebarLayout(
-        sidebarPanel = sidebarPanel(
-          helpText("Global settings.")
-        ),
-        mainPanel = mainPanel(
+      fluidPage(
+        fluidRow(
           column(
-            width = 4,
+            width = 3,
             h5("Print options"),
             numericInput("options_digits", "Significant digits",
                          value = 2, min = 1, max = 7, step = 1)
           ),
           column(
-            width = 4,
+            width = 3,
             h5("Graphical output"),
             numericInput("options_fig_width", "Figure width", value = 7),
             numericInput("options_fig_height", "Figure height", value = 5),
@@ -207,7 +204,10 @@ shiny_ui <- fluidPage(
                         choices = c("in", "cm", "mm"))
           ),
           column(
-            width = 4
+            width = 3
+          ),
+          column(
+            width = 3
           ),
           column(
             width = 12,
