@@ -268,6 +268,7 @@ shiny_server <- function(input, output, session) {
     req(myPeaks())
     peaks <- methods::as(myPeaks()$peaks, "data.frame")
     peaks$energy <- rep(NA_real_, nrow(peaks))
+    print(myPairs())
     if (nrow(myPairs()) != 0) {
       req(input$options_energy_tolerance)
       tol <- input$options_energy_tolerance
@@ -386,17 +387,18 @@ shiny_server <- function(input, output, session) {
   # mySettings <- reactive({
   # })
   myPairs <- reactive({
-    read.table(
+    try(read.table(
       header = FALSE, sep = " ", dec = ".",
       strip.white = TRUE, blank.lines.skip = TRUE,
       col.names = c("chanel", "energy"),
       colClasses = c("integer", "numeric"),
       text = input$options_energy_pairs
-    )
+    ), silent = TRUE)
   })
   # Render ---------------------------------------------------------------------
   output$options_table_pairs <- renderTable({
-    myPairs()
+    if (class(myPairs()) != "try-error")
+        myPairs()
   })
   output$options_session <- renderPrint({
     sessionInfo()

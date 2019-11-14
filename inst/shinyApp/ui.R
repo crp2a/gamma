@@ -238,10 +238,10 @@ shiny_ui <- fluidPage(
             h5("Energy presets"),
             helpText(
               "You can define channel-energy pairs (in keV) to pre-fill",
-              "the values to be used for energy scale calibration.",
-              "The values must be separated by a blank space,",
+              "the values to be used for the energy scale calibration.",
+              "Values must be separated by a blank space,",
               "each pair must be on its own line.",
-              "A tolerance (in chanel) can be set to provide the limits",
+              "A tolerance (in chanel) must be set to provide the limits",
               "between which we can expect to find the specified chanels."
             ),
             column(
@@ -320,7 +320,11 @@ shiny_ui <- fluidPage(
               managed by the Agence Nationale de la Recherche (France)
               throught the program Investissements d'avenir (ref. ",
               tags$a(href = "https://lascarbx.labex.u-bordeaux.fr/",
-                     "ANR-10-LABX-52", .noWS = c("before", "after")), ")."
+                     "10-LABX-0052", .noWS = c("before", "after")),
+              " and ",
+              tags$a(href = "https://amidex.univ-amu.fr/",
+                     "11-IDEX-0001", .noWS = c("before", "after")),
+              ")."
             )
           )
         )
