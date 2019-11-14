@@ -17,7 +17,7 @@ test_that("Import a gamma spectrum", {
   expect_s3_class(methods::as(cnf_spectrum, "data.frame"), "data.frame")
   expect_type(methods::as(cnf_spectrum, "list"), "list")
 
-  expect_equal(dim(summarise(cnf_spectrum)), c(1, 6))
+  expect_equal(dim(summarise(cnf_spectrum)), c(1, 7))
 })
 test_that("Import a set of gamma spectra", {
   spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
@@ -62,5 +62,5 @@ test_that("Import a set of gamma spectra", {
   expect_error(set_dose(spectra) <- doses[, 1, drop = TRUE],
                "must be a matrix or a data.frame")
 
-  expect_equal(dim(summarise(spectra)), c(7, 6))
+  expect_equal(dim(summarise(spectra)), c(7, 7))
 })
