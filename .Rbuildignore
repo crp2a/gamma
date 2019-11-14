@@ -9,6 +9,7 @@
 ^LICENSE\.md$
 ^NEWS\.Rmd$
 ^README\.Rmd$
+^github-.*\.yml$
 ^data-raw$
 ^doc$
 ^docs$
