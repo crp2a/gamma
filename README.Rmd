@@ -105,3 +105,4 @@ Please note that the **gamma** project is released with a [Contributor Code of C
 
 ## Acknowledgements
 This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program *Investissements d'avenir* (ref. [ANR-10-LABX-52](https://lascarbx.labex.u-bordeaux.fr)).
+The project leading to this publication has received funding from the Excellence Initiative of Aix-Marseille University - A*Midex, a French “Investissements d’Avenir” programme”.
