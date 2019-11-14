@@ -2,7 +2,6 @@ on:
   push:
     paths:
       - README.Rmd
-      - github-render.yml
 
 name: Render README
 

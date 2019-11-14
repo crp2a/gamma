@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/h7jjppg72oiq9pnf/branch/master?svg=true)](https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master)
 [![Travis build Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
+![GitHub Action](https://github.com/crp2a/gamma/workflows/pkgdown/badge.svg)
 
 <!-- CRAN badges
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
