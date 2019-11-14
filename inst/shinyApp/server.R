@@ -254,16 +254,38 @@ shiny_server <- function(input, output, session) {
   output$calib_plot_baseline <- renderPlot({
     myPeaks()$plot_baseline
   })
+  output$calib_ok <- renderUI({
+    coef <- myData$spectra[[input$calib_select]][["calibration"]]$coefficients
+    if (length(coef) != 0) {
+      tags$div(
+        tags$span(icon("check-circle"), style = "color: #225522;"),
+        sprintf("The energy scale of the spectrum %s has been adjusted.",
+                input$calib_select)
+      )
+    }
+  })
   output$calib_input_peaks <- renderUI({
     req(myPeaks())
     peaks <- methods::as(myPeaks()$peaks, "data.frame")
+    peaks$energy <- rep(NA_real_, nrow(peaks))
+    if (nrow(myPairs()) != 0) {
+      req(input$options_energy_tolerance)
+      tol <- input$options_energy_tolerance
+      for (i in seq_len(nrow(myPairs()))) {
+        k <- which.min(abs(peaks$chanel - myPairs()$chanel[i]))
+        if (peaks$chanel[k] >= myPairs()$chanel[i] - tol &&
+            peaks$chanel[k] <= myPairs()$chanel[i] + tol) {
+          peaks$energy[k] <- myPairs()$energy[i]
+        }
+      }
+    }
     lapply(
       X = seq_len(nrow(peaks)),
       FUN = function(i, peaks) {
         chanel <- peaks$chanel[[i]]
-        # energy <- peaks$energy[[i]]
+        energy <- peaks$energy[[i]]
         numericInput(inputId = paste0("calib_peak_", chanel),
-                     label = paste0("Chanel ", chanel), value = NA_real_)
+                     label = paste0("Chanel ", chanel), value = energy)
       },
       peaks
     )
@@ -360,6 +382,22 @@ shiny_server <- function(input, output, session) {
     contentType = "text/csv"
   )
   # Settings ===================================================================
+  # Reactive -------------------------------------------------------------------
+  # mySettings <- reactive({
+  # })
+  myPairs <- reactive({
+    read.table(
+      header = FALSE, sep = " ", dec = ".",
+      strip.white = TRUE, blank.lines.skip = TRUE,
+      col.names = c("chanel", "energy"),
+      colClasses = c("integer", "numeric"),
+      text = input$options_energy_pairs
+    )
+  })
+  # Render ---------------------------------------------------------------------
+  output$options_table_pairs <- renderTable({
+    myPairs()
+  })
   output$options_session <- renderPrint({
     sessionInfo()
   })

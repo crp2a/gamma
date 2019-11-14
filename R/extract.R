@@ -313,7 +313,8 @@ setMethod(
   definition = function(object, value) {
     if (!is.atomic(value) || !is.numeric(value))
       stop("`value` must be a numeric vector.", call. = FALSE)
-
+    if (length(value) == 1)
+      value <- rep(value, length(object@chanel))
     object@energy <- value
     methods::validObject(object)
     object

@@ -102,6 +102,11 @@ shiny_ui <- fluidPage(
                 ),
                 column(
                   width = 12,
+                  htmlOutput("calib_ok")
+                ),
+                column(
+                  width = 12,
+                  style = "margin-top: 25px;",
                   plotOutput(
                     "calib_plot_peaks",
                     dblclick = "calib_plot_dblclick",
@@ -229,6 +234,33 @@ shiny_ui <- fluidPage(
       fluidPage(
         fluidRow(
           column(
+            width = 6,
+            h5("Energy presets"),
+            helpText(
+              "You can define channel-energy pairs (in keV) to pre-fill",
+              "the values to be used for energy scale calibration.",
+              "The values must be separated by a blank space,",
+              "each pair must be on its own line.",
+              "A tolerance (in chanel) can be set to provide the limits",
+              "between which we can expect to find the specified chanels."
+            ),
+            column(
+              width = 6,
+              textAreaInput(
+                "options_energy_pairs",
+                "Chanel-energy pairs",
+                value = "", width = NULL,
+                rows = 8, placeholder = "76 238"
+              ),
+              numericInput("options_energy_tolerance", "Tolerance (in chanel)",
+                           value = 5, min = 1, max = 50, step = 1)
+            ),
+            column(
+              width = 6,
+              tableOutput("options_table_pairs")
+            )
+          ),
+          column(
             width = 3,
             h5("Print options"),
             numericInput("options_digits", "Significant digits",
@@ -241,13 +273,9 @@ shiny_ui <- fluidPage(
             numericInput("options_fig_height", "Figure height", value = 5),
             selectInput("options_fig_units", "Figure units",
                         choices = c("in", "cm", "mm"))
-          ),
-          column(
-            width = 3
-          ),
-          column(
-            width = 3
-          ),
+          )
+        ),
+        fluidRow(
           column(
             width = 12,
             h5("Session information"),
