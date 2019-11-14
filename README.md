@@ -132,4 +132,5 @@ By contributing to this project, you agree to abide by its terms.
 
 This work received a state financial support managed by the Agence
 Nationale de la Recherche (France) throught the program *Investissements
-d’avenir* (ref. [ANR-10-LABX-52](https://lascarbx.labex.u-bordeaux.fr)).
+d’avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and
+[11-IDEX-0001](https://amidex.univ-amu.fr)).

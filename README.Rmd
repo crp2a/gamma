@@ -18,7 +18,6 @@ knitr::opts_chunk$set(
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/h7jjppg72oiq9pnf/branch/master?svg=true)](https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master)
 [![Travis build Status](https://travis-ci.org/crp2a/gamma.svg?branch=master)](https://travis-ci.org/crp2a/gamma)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
-![GitHub Action](https://github.com/crp2a/gamma/workflows/pkgdown/badge.svg)
 
 <!-- CRAN badges
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
@@ -104,4 +103,4 @@ data(BDX100, package = "gamma")
 Please note that the **gamma** project is released with a [Contributor Code of Conduct](https://github.com/crp2a/gamma/blob/master/.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
 ## Acknowledgements
-This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program *Investissements d'avenir* (ref. [ANR-10-LABX-52](https://lascarbx.labex.u-bordeaux.fr)).
+This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program *Investissements d'avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and [11-IDEX-0001](https://amidex.univ-amu.fr)).
