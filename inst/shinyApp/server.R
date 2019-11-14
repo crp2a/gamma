@@ -6,13 +6,16 @@
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-shiny_server <- function(input, output, session) {
-  # Import =====================================================================
+shiny_server <- function(input, output, session) {# Load data
+  # Load datasets ==============================================================
+  tmp <- new.env()
+  data("BDX100", package = "gamma", envir = tmp)
+  data("AIX100", package = "gamma", envir = tmp)
+  # Set reactive values ========================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
   myRangesCalib <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
   myRangesImport <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
-  tmp <- tempfile()
-  onSessionEnded(function() { unlink(tmp) })
+  # Import =====================================================================
   # Event ----------------------------------------------------------------------
   observeEvent(input$import_files, {
     file <- input$import_files
@@ -52,47 +55,49 @@ shiny_server <- function(input, output, session) {
     }
   })
   # Reactive -------------------------------------------------------------------
-  mySpectrum <- reactive(
-    {
-      # req(myData$spectra)
-      validate(
-        need(!is.null(myData$spectra), "Please import one or more spectra."),
-        need(!is.null(input$import_select) &&
-               input$import_select != "" &&
-               input$import_select %in% myData$names,
-             "Please select at least one spectrum.")
-      )
-      list(
-        summary = summarise(myData$spectra[input$import_select]),
-        name = get_name(myData$spectra[input$import_select]),
-        plot = plot(myData$spectra,
-                    xaxis = input$import_xaxis,
-                    yaxis = input$import_yaxis,
-                    select = input$import_select,
-                    facet = input$import_facet) +
-          ggplot2::theme_bw()
-      )
-    }
-  )
+  mySpectrum <- reactive({
+    # req(myData$spectra)
+    validate(
+      need(!is.null(myData$spectra), "Please import one or more spectra."),
+      need(!is.null(input$import_select) &&
+             input$import_select != "" &&
+             input$import_select %in% myData$names,
+           "Please select at least one spectrum.")
+    )
+    list(
+      summary = summarise(myData$spectra[input$import_select]),
+      name = get_name(myData$spectra[input$import_select]),
+      plot = plot(myData$spectra,
+                  xaxis = input$import_xaxis,
+                  yaxis = input$import_yaxis,
+                  select = input$import_select,
+                  facet = input$import_facet) +
+        ggplot2::theme_bw()
+    )
+  })
   # Render ---------------------------------------------------------------------
-  output$import_plot <- renderPlot(
-    { mySpectrum()$plot +
-        ggplot2::coord_cartesian(xlim = myRangesImport$x,
-                                 ylim = myRangesImport$y,
-                                 expand = myRangesImport$expand) }
-  )
+  output$import_plot <- renderPlot({
+    mySpectrum()$plot +
+      ggplot2::coord_cartesian(xlim = myRangesImport$x,
+                               ylim = myRangesImport$y,
+                               expand = myRangesImport$expand)
+  })
   output$import_summary <- renderText({
     tbl <- knitr::kable(
       x = mySpectrum()$summary,
       digits = input$options_digits,
       row.names = FALSE,
-      col.names = c("Name", "Date", "Live time", "Real time", "Chanels",
-                    "Energy min.", "Energy max.")
+      col.names = c("Name", "Date", "Live time [s]", "Real time [s]", "Chanels",
+                    "Min.", "Max.")
     )
-    kableExtra::kable_styling(
+    tbl <- kableExtra::kable_styling(
       kable_input = tbl,
       bootstrap_options = c("striped", "hover"),
       full_width = TRUE, fixed_thead = TRUE
+    )
+    kableExtra::add_header_above(
+      kable_input = tbl,
+      header = c(" " = 5, "Energy Range [keV]" = 2)
     )
   })
   output$import_export_plot <- downloadHandler(
@@ -121,73 +126,71 @@ shiny_server <- function(input, output, session) {
   )
   # Energy calibration =========================================================
   # Reactive -------------------------------------------------------------------
-  myPeaks <- reactive(
-    {
-      # Validation
-      req(myData$spectra, input$calib_select)
-      validate(
-        need(!is.null(input$calib_smooth_m) && input$calib_smooth_m != "",
-             "The window size must be set (smoothing)."),
-        need(input$calib_smooth_m %% 2 != 0,
-             "The window size must be an odd integer (smoothing)."),
-        need(!is.null(input$calib_smooth_p) && input$calib_smooth_p != "",
-             "The polynomial degree must be set (smoothing)."),
-        need(!is.null(input$calib_baseline_k) && input$calib_baseline_k != "",
-             "The number of iteration must be set (baseline)."),
-        need(!is.null(input$calib_peak_snr) && input$calib_peak_snr != "",
-             "The signal-to-noise-ratio must be set (peak searching).")
-      )
-      # Get a GammaSpectrum object
-      spc_raw <- myData$spectra[[input$calib_select]]
-      spc_chanels <- get_chanels(spc_raw)
-      # Drop chanels
-      n <- input$calib_slice_range
-      index <- seq(from = n[[1]], to = n[[2]], by = 1)
-      spc_sliced <- slice_signal(spc_raw, index)
-      # Transform intensities
-      trans <- switch(input$calib_stabilize_method,
-                      none = function(x) x,
-                      sqrt = sqrt)
-      spc_transformed <- stabilize_signal(spc_sliced, transformation = trans)
-      # Smooth intensities
-      spc_smooted <- smooth_signal(
-        spc_transformed,
-        method = input$calib_smooth_method,
-        m = input$calib_smooth_m,
-        p = input$calib_smooth_p
-      )
-      # Remove baseline
-      spc_baseline <- remove_baseline(
-        spc_smooted,
-        method = input$calib_baseline_method,
-        LLS = input$calib_baseline_lls,
-        decreasing = input$calib_baseline_decreasing,
-        k = input$calib_baseline_k
-      )
-      # Detect peaks
-      spc_peaks <- find_peaks(
-        spc_baseline,
-        method = input$calib_peak_method,
-        SNR = input$calib_peak_snr,
-        span = input$calib_peak_span * spc_chanels / 100
-      )
-      # Plot
-      gg_spectrum <- plot(spc_sliced, spc_peaks) + ggplot2::theme_bw()
-      gg_baseline <- plot(spc_baseline, spc_peaks) +
-        ggplot2::labs(title = get_name(spc_raw)) +
-        ggplot2::theme_bw()
+  myPeaks <- reactive({
+    # Validation
+    req(myData$spectra, input$calib_select)
+    validate(
+      need(!is.null(input$calib_smooth_m) && input$calib_smooth_m != "",
+           "The window size must be set (smoothing)."),
+      need(input$calib_smooth_m %% 2 != 0,
+           "The window size must be an odd integer (smoothing)."),
+      need(!is.null(input$calib_smooth_p) && input$calib_smooth_p != "",
+           "The polynomial degree must be set (smoothing)."),
+      need(!is.null(input$calib_baseline_k) && input$calib_baseline_k != "",
+           "The number of iteration must be set (baseline)."),
+      need(!is.null(input$calib_peak_snr) && input$calib_peak_snr != "",
+           "The signal-to-noise-ratio must be set (peak searching).")
+    )
+    # Get a GammaSpectrum object
+    spc_raw <- myData$spectra[[input$calib_select]]
+    spc_chanels <- get_chanels(spc_raw)
+    # Drop chanels
+    n <- input$calib_slice_range
+    index <- seq(from = n[[1]], to = n[[2]], by = 1)
+    spc_sliced <- slice_signal(spc_raw, index)
+    # Transform intensities
+    trans <- switch(input$calib_stabilize_method,
+                    none = function(x) x,
+                    sqrt = sqrt)
+    spc_transformed <- stabilize_signal(spc_sliced, transformation = trans)
+    # Smooth intensities
+    spc_smooted <- smooth_signal(
+      spc_transformed,
+      method = input$calib_smooth_method,
+      m = input$calib_smooth_m,
+      p = input$calib_smooth_p
+    )
+    # Remove baseline
+    spc_baseline <- remove_baseline(
+      spc_smooted,
+      method = input$calib_baseline_method,
+      LLS = input$calib_baseline_lls,
+      decreasing = input$calib_baseline_decreasing,
+      k = input$calib_baseline_k
+    )
+    # Detect peaks
+    spc_peaks <- find_peaks(
+      spc_baseline,
+      method = input$calib_peak_method,
+      SNR = input$calib_peak_snr,
+      span = input$calib_peak_span * spc_chanels / 100
+    )
+    # Plot
+    gg_spectrum <- plot(spc_sliced, spc_peaks) + ggplot2::theme_bw()
+    gg_baseline <- plot(spc_baseline, spc_peaks) +
+      ggplot2::labs(title = get_name(spc_raw)) +
+      ggplot2::theme_bw()
 
-      list(
-        spectrum = spc_raw,
-        peaks = spc_peaks,
-        chanels = spc_chanels,
-        name = input$calib_select,
-        data = methods::as(spc_raw, "data.frame"),
-        plot_spectrum = gg_spectrum,
-        plot_baseline = gg_baseline
-      )
-    }
-  )
+    list(
+      spectrum = spc_raw,
+      peaks = spc_peaks,
+      chanels = spc_chanels,
+      name = input$calib_select,
+      data = methods::as(spc_raw, "data.frame"),
+      plot_spectrum = gg_spectrum,
+      plot_baseline = gg_baseline
+    )
+  })
   # Event ----------------------------------------------------------------------
   observeEvent(input$calib_select, {
     req(myData$spectra, input$calib_select)
@@ -247,14 +250,14 @@ shiny_server <- function(input, output, session) {
     )
   })
   # Render ---------------------------------------------------------------------
-  output$calib_plot_peaks <- renderPlot(
-    { myPeaks()$plot_spectrum +
-        ggplot2::coord_cartesian(xlim = myRangesCalib$x, ylim = myRangesCalib$y,
-                                 expand = myRangesCalib$expand) }
-  )
-  output$calib_plot_baseline <- renderPlot(
-    { myPeaks()$plot_baseline }
-  )
+  output$calib_plot_peaks <- renderPlot({
+    myPeaks()$plot_spectrum +
+      ggplot2::coord_cartesian(xlim = myRangesCalib$x, ylim = myRangesCalib$y,
+                               expand = myRangesCalib$expand)
+  })
+  output$calib_plot_baseline <- renderPlot({
+    myPeaks()$plot_baseline
+  })
   output$calib_input_peaks <- renderUI({
     req(myPeaks())
     peaks <- methods::as(myPeaks()$peaks, "data.frame")
@@ -290,7 +293,7 @@ shiny_server <- function(input, output, session) {
   # Dose rate prediction =======================================================
   doseCurve <- reactive({
     req(input$dose_curve)
-    get(input$dose_curve)
+    get(input$dose_curve, envir = tmp)
   })
   doseData <- reactive({
     req(doseCurve(), myData$spectra, input$dose_error)
@@ -327,29 +330,30 @@ shiny_server <- function(input, output, session) {
         height = 0) +
       ggplot2::theme_bw()
   })
-  output$dose_table_dose <- renderText(
-    {
-      req(input$dose_select)
-      extra <- nearPoints(
-        doseData()[input$dose_select, ], input$dose_plot_hover,
-        xvar = "signal_value", yvar = "dose_value",
-        threshold = 10, maxpoints = 1, allRows = TRUE
-      )
-      tbl <- knitr::kable(
-        extra[, -ncol(extra)], digits = input$options_digits,
-        row.names = FALSE,
-        col.names = c("Name", "Live time", "Signal value", "Signal error",
-                      "Dose value", "Dose error")
-      )
-      kextra <- kableExtra::kable_styling(
-        kable_input = tbl,
-        bootstrap_options = c("striped", "hover"),
-        full_width = TRUE, fixed_thead = TRUE
-      )
-      kableExtra::row_spec(kextra, row = which(extra[[ncol(extra)]]),
-                           bold = TRUE, background = "#EEEEBB")
-    }
-  )
+  output$dose_table_dose <- renderText({
+    req(input$dose_select)
+    extra <- nearPoints(
+      doseData()[input$dose_select, ], input$dose_plot_hover,
+      xvar = "signal_value", yvar = "dose_value",
+      threshold = 10, maxpoints = 1, allRows = TRUE
+    )
+    tbl <- knitr::kable(
+      extra[, -ncol(extra)], digits = input$options_digits,
+      row.names = FALSE,
+      col.names = c("Name", "Live time [s]", "Value", "Error", "Value", "Error")
+    )
+    tbl <- kableExtra::kable_styling(
+      kable_input = tbl,
+      bootstrap_options = c("striped", "hover"),
+      full_width = TRUE, fixed_thead = TRUE
+    )
+    tbl <- kableExtra::add_header_above(
+      kable_input = tbl,
+      header = c(" " = 2, "Signal" = 2, "Dose Rate [\u03BCGy/y]" = 2)
+    )
+    kableExtra::row_spec(tbl, row = which(extra[[ncol(extra)]]),
+                         bold = TRUE, background = "#EEEEBB")
+  })
   output$dose_export <- downloadHandler(
     filename = "dose_rate.csv",
     content = function(file) {

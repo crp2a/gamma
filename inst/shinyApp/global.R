@@ -19,8 +19,6 @@ if (any(pkg_missing)) {
   } else {
     stop(sprintf("Please install the needed %s.", msg2), call. = FALSE)
   }
+  rm(n, msg1, msg2, answer)
 }
-
-# Load data
-data("BDX100", package = "gamma")
-data("AIX100", package = "gamma")
+rm(pkg_needed, pkg_missing)

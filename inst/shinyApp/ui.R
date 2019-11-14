@@ -79,7 +79,7 @@ shiny_ui <- fluidPage(
                 wellPanel(
                   helpText(
                     "Set the energy values (keV) corresponding to at least 3",
-                    "of the channels below and click on", dQuote("calibrate.")
+                    "of the channels below, then click on", dQuote("calibrate.")
                   ),
                   uiOutput("calib_input_peaks"),
                   actionButton("calib_action", "Calibrate"),
@@ -206,7 +206,7 @@ shiny_ui <- fluidPage(
             conditionalPanel(
               tags$hr(),
               condition = "input.dose_curve != ''",
-              numericInput("dose_error", "Extra error term (%)",
+              numericInput("dose_error", "Energy calibration error (%)",
                            min = 0, max = 100, value = 3, step = 1)
             )
           ),
