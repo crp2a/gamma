@@ -6,7 +6,7 @@
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
-shiny_server <- function(input, output, session) {# Load data
+shiny_server <- function(input, output, session) {
   # Load datasets ==============================================================
   tmp <- new.env()
   data("BDX100", package = "gamma", envir = tmp)
@@ -29,14 +29,10 @@ shiny_server <- function(input, output, session) {# Load data
     myData$names <- spc_name
     myData$raw <- spc_data
     # Update UI
-    # updateSelectInput(session, "import_select",
-    #                   choices = spc_name, selected = spc_name)
     shinyWidgets::updatePickerInput(session, "import_select",
                                     choices = spc_name, selected = spc_name)
     updateSelectInput(session, "calib_select",
                       choices = spc_name, selected = spc_name[[1]])
-    # updateSelectInput(session, "dose_select",
-    #                   choices = spc_name, selected = spc_name)
     shinyWidgets::updatePickerInput(session, "dose_select",
                                     choices = spc_name, selected = spc_name)
   })
@@ -319,11 +315,11 @@ shiny_server <- function(input, output, session) {# Load data
     extra <- doseData()[input$dose_select, ]
 
     plot(doseCurve()) +
-      geom_pointrange(
+      ggplot2::geom_pointrange(
         data = extra,
         mapping = aes(ymin = .data$dose_value - .data$dose_error,
                       ymax = .data$dose_value + .data$dose_error)) +
-      geom_errorbarh(
+      ggplot2::geom_errorbarh(
         data = extra,
         mapping = aes(xmin = .data$signal_value - .data$signal_error,
                       xmax = .data$signal_value + .data$signal_error),
@@ -352,7 +348,7 @@ shiny_server <- function(input, output, session) {# Load data
       header = c(" " = 2, "Signal" = 2, "Dose Rate [\u03BCGy/y]" = 2)
     )
     kableExtra::row_spec(tbl, row = which(extra[[ncol(extra)]]),
-                         bold = TRUE, background = "#EEEEBB")
+                         bold = TRUE, background = "#CCDDAA")
   })
   output$dose_export <- downloadHandler(
     filename = "dose_rate.csv",
