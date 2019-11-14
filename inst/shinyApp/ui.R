@@ -10,37 +10,57 @@ shiny_ui <- fluidPage(
     tabPanel(
       "1. Import",
       icon = icon("upload"),
-      sidebarLayout(
-        sidebarPanel = sidebarPanel(
-          fileInput('import_files', 'Import spectrum file(s)', multiple = TRUE,
-                    accept = c('.cnf', '.CNF', '.tka', '.TKA')),
-          tags$hr(),
-          shinyWidgets::pickerInput(
-            inputId = "import_select",
-            label = "Select",
-            choices = NULL,
-            selected = NULL,
-            multiple = TRUE,
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
+      fluidPage(
+        fluidRow(
+          column(
+            width = 4,
+            wellPanel(
+              fileInput(
+                "import_files", "Import spectrum file(s)",
+                multiple = TRUE,
+                accept = c('.cnf', '.CNF', '.tka', '.TKA')
+              ),
+              tags$hr(),
+              shinyWidgets::pickerInput(
+                inputId = "import_select",
+                label = "Select",
+                choices = NULL,
+                selected = NULL,
+                multiple = TRUE,
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                )
+              ),
+              checkboxInput("import_facet", "Display in a grid", value = FALSE),
+              radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
+              radioButtons("import_yaxis", "Y axis", choices = c("count", "rate"))
             )
           ),
-          checkboxInput("import_facet", "Display in a grid", value = FALSE),
-          radioButtons("import_xaxis", "X axis", choices = c("chanel", "energy")),
-          radioButtons("import_yaxis", "Y axis", choices = c("count", "rate"))
+          column(
+            width = 8,
+            column(
+              width = 12,
+              downloadButton("import_export_plot", "Export plot"),
+              downloadButton("import_export_table", "Export summary")
+            ),
+            column(
+              width = 12,
+              style = "margin-top: 25px;",
+              plotOutput(
+                "import_plot",
+                dblclick = "import_plot_dblclick",
+                brush = brushOpts(id = "import_plot_brush", resetOnNew = TRUE)
+              )
+            )
+          )
         ),
-        mainPanel = mainPanel(
-          downloadButton("import_export_plot", "Export plot"),
-          downloadButton("import_export_table", "Export summary"),
-          plotOutput("import_plot",
-                     dblclick = "import_plot_dblclick",
-                     brush = brushOpts(
-                       id = "import_plot_brush",
-                       resetOnNew = TRUE
-                     )),
-          tableOutput("import_summary")
+        fluidRow(
+          column(
+            width = 12,
+            htmlOutput("import_summary")
+          )
         )
       )
     ),
@@ -48,93 +68,98 @@ shiny_ui <- fluidPage(
       "2. Energy Calibration",
       icon = icon("bolt"),
       fluidPage(
-        fluidRow(
-          column(
-            width = 4,
-            wellPanel(
-              h4("Set energy (keV)"),
-              helpText(
-                "You can adjust the energy scale by setting the energy values",
-                "corresponding to at least 3 of the channels below",
-                "and clicking on", dQuote("calibrate"), "."
-              ),
-              uiOutput("calib_input_peaks"),
-              actionButton("calib_action", "Calibrate"),
-              actionButton("calib_reset", "Restore")
-            ),
-          ),
-          column(
-            width = 8,
-            column(
-              width = 4,
-              selectInput("calib_select", "Select a spectrum",
-                          choices = NULL, selected = NULL,
-                          multiple = FALSE)
-            ),
-            column(
-              width = 8,
+        tabsetPanel(
+          tabPanel(
+            "Energy Scale Adjustment",
+            icon = icon("arrows-alt-h"),
+            fluidRow(
               style = "margin-top: 25px;",
-              downloadButton("calib_export_table", "Export data"),
-              downloadButton("calib_export_plot", "Export plot")
-            ),
-            column(
-              width = 12,
-              tabsetPanel(
-                tabPanel(
-                  "Raw spectrum",
-                  plotOutput("calib_plot_peaks",
-                             dblclick = "calib_plot_dblclick",
-                             brush = brushOpts(
-                               id = "calib_plot_brush",
-                               resetOnNew = TRUE
-                             ))
+              column(
+                width = 4,
+                wellPanel(
+                  helpText(
+                    "Set the energy values (keV) corresponding to at least 3",
+                    "of the channels below and click on", dQuote("calibrate.")
+                  ),
+                  uiOutput("calib_input_peaks"),
+                  actionButton("calib_action", "Calibrate"),
+                  actionButton("calib_reset", "Restore")
+                )
+              ),
+              column(
+                width = 8,
+                column(
+                  width = 4,
+                  selectInput("calib_select", "Select a spectrum",
+                              choices = NULL, selected = NULL,
+                              multiple = FALSE)
                 ),
-                tabPanel("Baseline corrected", plotOutput("calib_plot_baseline"))
+                column(
+                  width = 8,
+                  style = "margin-top: 25px;",
+                  downloadButton("calib_export_table", "Export data"),
+                  downloadButton("calib_export_plot", "Export plot")
+                ),
+                column(
+                  width = 12,
+                  plotOutput(
+                    "calib_plot_peaks",
+                    dblclick = "calib_plot_dblclick",
+                    brush = brushOpts(id = "calib_plot_brush", resetOnNew = TRUE)
+                  )
+                )
               )
             )
-          )
-        ),
-        fluidRow(
-          h4("Peak detection parameters"),
-          column(
-            width = 3,
-            h5("1. Drop chanels"),
-            sliderInput("calib_slice_range", "Chanels to keep",
-                        min = 1, max = 2048, value = c(1, 2048), step = 5
+          ),
+          tabPanel(
+            "Peak Detection",
+            icon = icon("chart-bar"),
+            fluidRow(
+              style = "margin-top: 25px;",
+              plotOutput("calib_plot_baseline")
             ),
-            h5("2. Transform signal"),
-            selectInput("calib_stabilize_method", "Method", selected = 1,
-                        choices = list(none = "none", `square root` = "sqrt"))
-          ),
-          column(
-            width = 3,
-            h5("3. Smooth signal"),
-            selectInput("calib_smooth_method", "Method", selected = 1,
-                        choices = list("savitzky", "unweighted", "weighted")),
-            numericInput("calib_smooth_m", "Window size",
-                         value = 21, min = 3, max = 50, step = 2),
-            numericInput("calib_smooth_p", "Polynomial degree",
-                         min = 1, max = 6, value = 2, step = 1)
-          ),
-          column(
-            width = 3,
-            h5("4. Remove baseline"),
-            selectInput("calib_baseline_method", "Method", selected = 1,
-                        choices = list("SNIP")),
-            checkboxInput("calib_baseline_lls", "LLS", value = FALSE),
-            checkboxInput("calib_baseline_decreasing", "Decreasing", value = FALSE),
-            numericInput("calib_baseline_k", "Iterations",
-                         value = 100, min = 10, max = 500, step = 10)
-          ),
-          column(
-            width = 3,
-            h5("5. Detect peaks"),
-            selectInput("calib_peak_method", "Method", selected = 1,
-                        choices = list("MAD")),
-            numericInput("calib_peak_snr", "Signal-to-noise-ratio",
-                         value = 2, min = 1, max = 5, step = 1),
-            sliderInput("calib_peak_span", "Half window size",
-                        min = 1, max = 100, value = 5, step = 1)
+            fluidRow(
+              column(
+                width = 3,
+                h5("1. Drop chanels"),
+                sliderInput("calib_slice_range", "Chanels to keep",
+                            min = 1, max = 2048, value = c(1, 2048), step = 5
+                ),
+                h5("2. Transform signal"),
+                selectInput("calib_stabilize_method", "Method", selected = 1,
+                            choices = list(none = "none", `square root` = "sqrt"))
+              ),
+              column(
+                width = 3,
+                h5("3. Smooth signal"),
+                selectInput("calib_smooth_method", "Method", selected = 1,
+                            choices = list("savitzky", "unweighted", "weighted")),
+                numericInput("calib_smooth_m", "Window size",
+                             value = 21, min = 3, max = 50, step = 2),
+                numericInput("calib_smooth_p", "Polynomial degree",
+                             min = 1, max = 6, value = 2, step = 1)
+              ),
+              column(
+                width = 3,
+                h5("4. Remove baseline"),
+                selectInput("calib_baseline_method", "Method", selected = 1,
+                            choices = list("SNIP")),
+                checkboxInput("calib_baseline_lls", "LLS", value = FALSE),
+                checkboxInput("calib_baseline_decreasing", "Decreasing", value = FALSE),
+                numericInput("calib_baseline_k", "Iterations",
+                             value = 100, min = 10, max = 500, step = 10)
+              ),
+              column(
+                width = 3,
+                h5("5. Detect peaks"),
+                selectInput("calib_peak_method", "Method", selected = 1,
+                            choices = list("MAD")),
+                numericInput("calib_peak_snr", "Signal-to-noise-ratio",
+                             value = 2, min = 1, max = 5, step = 1),
+                sliderInput("calib_peak_span", "Half window size",
+                            min = 1, max = 100, value = 5, step = 1)
+              )
+            )
           )
         )
       )
@@ -142,20 +167,10 @@ shiny_ui <- fluidPage(
     tabPanel(
       "3. Dose Rate Estimation",
       icon = icon("hourglass-half"),
-      sidebarLayout(
-        sidebarPanel = sidebarPanel(
-          selectInput("dose_curve", "Select a calibration curve", selected = 1,
-                      choices = list(Choose = "",
-                                     IRAMAT = c(BDX100 = "BDX100"),
-                                     CEREGE = c(AIX100 = "AIX100"))),
-          numericInput("dose_error", "Extra error term (%)",
-                       min = 0, max = 100, value = 0, step = 1),
-          tags$hr(),
-          uiOutput("dose_info")
-        ),
-        mainPanel = mainPanel(
+      fluidPage(
+        fluidRow(
           column(
-            width = 4,
+            width = 3,
             shinyWidgets::pickerInput(
               inputId = "dose_select",
               label = "Select spectra",
@@ -169,19 +184,43 @@ shiny_ui <- fluidPage(
               )
             )
           ),
+          column(1, style = "margin-top: 25px;", icon("chevron-right", "fa-2x")),
           column(
-            width = 8,
+            width = 3,
+            selectInput("dose_curve", "Select a calibration curve", selected = 1,
+                        choices = list(Choose = "",
+                                       IRAMAT = c(BDX100 = "BDX100"),
+                                       CEREGE = c(AIX100 = "AIX100")))
+          ),
+          column(1, style = "margin-top: 25px;", icon("chevron-right", "fa-2x")),
+          column(
+            width = 3,
             style = "margin-top: 25px;",
             downloadButton("dose_export", "Export results")
-          ),
-          column(
-            width = 12,
-            plotOutput("dose_plot_curve", hover = "dose_plot_hover"),
-            htmlOutput("dose_table_dose")
           )
         ),
-        position = "left",
-        fluid = TRUE
+        fluidRow(
+          column(
+            width = 4,
+            uiOutput("dose_info"),
+            conditionalPanel(
+              tags$hr(),
+              condition = "input.dose_curve != ''",
+              numericInput("dose_error", "Extra error term (%)",
+                           min = 0, max = 100, value = 3, step = 1)
+            )
+          ),
+          column(
+            width = 8,
+            plotOutput("dose_plot_curve", hover = "dose_plot_hover")
+          )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            htmlOutput("dose_table_dose")
+          )
+        )
       )
     ),
     tabPanel(

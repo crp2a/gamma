@@ -65,7 +65,7 @@ setMethod(
     colnames(signals) <- c("signal_value", "signal_error", "name")
 
     # Fit linear regression
-    fit_data <- merge(signals, doses, by = "name", all = FALSE)
+    fit_data <- merge(signals, doses, by = "name", all = FALSE, sort = FALSE)
     fit_data <- cbind.data.frame(
       name =  fit_data[, 1, drop = FALSE],
       live_time = unlist(object[, "live_time"]),

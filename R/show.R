@@ -24,25 +24,14 @@ setMethod(
   f = "summarise",
   signature = "GammaSpectrum",
   definition = function(object) {
-    E <- if (length(object@energy) != 0) {
-      paste0(range(round(object@energy, 2)), collapse = " ")
-    } else {
-      "not calibrated"
-    }
-    # D <- if (length(object@dose_rate) != 0) {
-    #   paste0(object@dose_rate, collapse = " +/- ")
-    # } else {
-    #   "unknown"
-    # }
     cbind.data.frame(
       name = object@name,
       date = as.character(object@date),
-      # Instrument = object@instrument,
-      `live time` = object@live_time,
-      `real time` = object@real_time,
+      live_time = object@live_time,
+      real_time = object@real_time,
       chanels = length(object@chanel),
-      `energy range` = E,
-      # `Dose rate` = D,
+      energy_min = ifelse(length(object@energy) != 0, min(object@energy), NA),
+      energy_max = ifelse(length(object@energy) != 0, max(object@energy), NA),
       stringsAsFactors = FALSE
     )
   }

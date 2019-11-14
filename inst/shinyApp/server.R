@@ -77,15 +77,24 @@ shiny_server <- function(input, output, session) {
   # Render ---------------------------------------------------------------------
   output$import_plot <- renderPlot(
     { mySpectrum()$plot +
-        ggplot2::coord_cartesian(xlim = myRangesImport$x, ylim = myRangesImport$y,
+        ggplot2::coord_cartesian(xlim = myRangesImport$x,
+                                 ylim = myRangesImport$y,
                                  expand = myRangesImport$expand) }
   )
-  output$import_summary <- renderTable(
-    { mySpectrum()$summary },
-    spacing = "s", width = "auto",
-    striped = TRUE, hover = TRUE, bordered = FALSE,
-    rownames = FALSE, colnames = TRUE
-  )
+  output$import_summary <- renderText({
+    tbl <- knitr::kable(
+      x = mySpectrum()$summary,
+      digits = input$options_digits,
+      row.names = FALSE,
+      col.names = c("Name", "Date", "Live time", "Real time", "Chanels",
+                    "Energy min.", "Energy max.")
+    )
+    kableExtra::kable_styling(
+      kable_input = tbl,
+      bootstrap_options = c("striped", "hover"),
+      full_width = TRUE, fixed_thead = TRUE
+    )
+  })
   output$import_export_plot <- downloadHandler(
     filename = function() {
       ifelse(
@@ -162,14 +171,20 @@ shiny_server <- function(input, output, session) {
         SNR = input$calib_peak_snr,
         span = input$calib_peak_span * spc_chanels / 100
       )
+      # Plot
+      gg_spectrum <- plot(spc_sliced, spc_peaks) + ggplot2::theme_bw()
+      gg_baseline <- plot(spc_baseline, spc_peaks) +
+        ggplot2::labs(title = get_name(spc_raw)) +
+        ggplot2::theme_bw()
+
       list(
         spectrum = spc_raw,
         peaks = spc_peaks,
         chanels = spc_chanels,
         name = input$calib_select,
         data = methods::as(spc_raw, "data.frame"),
-        plot_spectrum = plot(spc_sliced, spc_peaks) + ggplot2::theme_bw(),
-        plot_baseline = plot(spc_baseline, spc_peaks) + ggplot2::theme_bw()
+        plot_spectrum = gg_spectrum,
+        plot_baseline = gg_baseline
       )
     }
   )
@@ -320,10 +335,14 @@ shiny_server <- function(input, output, session) {
         xvar = "signal_value", yvar = "dose_value",
         threshold = 10, maxpoints = 1, allRows = TRUE
       )
-
+      tbl <- knitr::kable(
+        extra[, -ncol(extra)], digits = input$options_digits,
+        row.names = FALSE,
+        col.names = c("Name", "Live time", "Signal value", "Signal error",
+                      "Dose value", "Dose error")
+      )
       kextra <- kableExtra::kable_styling(
-        knitr::kable(extra[, -ncol(extra)], digits = input$options_digits,
-                     row.names = FALSE),
+        kable_input = tbl,
         bootstrap_options = c("striped", "hover"),
         full_width = TRUE, fixed_thead = TRUE
       )
