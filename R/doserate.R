@@ -169,6 +169,20 @@ do_predict_dose <- function(object, new_data,
            (new_data$signal_error / new_data$signal_value)^2 +
            epsilon^2)
 
+  # Generate a warning message if some predicted values do not lie in the
+  # dose ~ signal curve range.
+  dose_range <- range(object@data$dose_value)
+  dose_out <- dose_value < min(dose_range) | dose_value > max(dose_range)
+  out <- sum(dose_out)
+  if (out != 0) {
+    warning(
+      sprintf("The following %s lie in the curve range:\n",
+              ngettext(out, "value does not", "values do not")),
+      paste0("* ", new_data$name[dose_out], collapse = "\n"),
+      call. = FALSE
+    )
+  }
+
   results <- cbind.data.frame(
     name = new_data$name,
     live_time = new_data$live_time,

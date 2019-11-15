@@ -23,7 +23,7 @@ shiny_server <- function(input, output, session) {
     spc_name <- tools::file_path_sans_ext(file$name)
     spc_data <- read(file$datapath)
     spc_data <- methods::as(spc_data, "GammaSpectra")
-    set_name(spc_data) <- spc_name
+    set_names(spc_data) <- spc_name
     # Store data
     myData$spectra <- spc_data
     myData$names <- spc_name
@@ -62,7 +62,7 @@ shiny_server <- function(input, output, session) {
     )
     list(
       summary = summarise(myData$spectra[input$import_select]),
-      name = get_name(myData$spectra[input$import_select]),
+      name = get_names(myData$spectra[input$import_select]),
       plot = plot(myData$spectra,
                   xaxis = input$import_xaxis,
                   yaxis = input$import_yaxis,
@@ -174,7 +174,7 @@ shiny_server <- function(input, output, session) {
     # Plot
     gg_spectrum <- plot(spc_sliced, spc_peaks) + ggplot2::theme_bw()
     gg_baseline <- plot(spc_baseline, spc_peaks) +
-      ggplot2::labs(title = get_name(spc_raw)) +
+      ggplot2::labs(title = get_names(spc_raw)) +
       ggplot2::theme_bw()
 
     list(
@@ -192,7 +192,7 @@ shiny_server <- function(input, output, session) {
     req(myData$spectra, input$calib_select)
     max_chanel <- get_chanels(myData$spectra[[input$calib_select]])
     updateSliderInput(session, "calib_slice_range",
-                      max = max_chanel, value = c(35, max_chanel))
+                      max = max_chanel, value = c(60, max_chanel))
   })
   # When a double-click happens, check if there's a brush on the plot.
   # If so, zoom to the brush bounds; if not, reset the zoom.
@@ -268,17 +268,18 @@ shiny_server <- function(input, output, session) {
     req(myPeaks())
     peaks <- methods::as(myPeaks()$peaks, "data.frame")
     peaks$energy <- rep(NA_real_, nrow(peaks))
-    print(myPairs())
     if (nrow(myPairs()) != 0) {
       req(input$options_energy_tolerance)
       tol <- input$options_energy_tolerance
       for (i in seq_len(nrow(myPairs()))) {
-        k <- which.min(abs(peaks$chanel - myPairs()$chanel[i]))
-        if (peaks$chanel[k] >= myPairs()$chanel[i] - tol &&
-            peaks$chanel[k] <= myPairs()$chanel[i] + tol) {
+        b <- myPairs()$chanel[i]
+        k <- which.min(abs(peaks$chanel - b))
+        a <- peaks$chanel[k]
+        if (a >= b - tol && a <= b + tol) {
           peaks$energy[k] <- myPairs()$energy[i]
         }
       }
+      # peaks <- stats::na.omit(peaks)
     }
     lapply(
       X = seq_len(nrow(peaks)),
@@ -316,8 +317,17 @@ shiny_server <- function(input, output, session) {
   })
   doseData <- reactive({
     req(doseCurve(), myData$spectra, input$dose_error)
-    predict_dose(doseCurve(), myData$spectra,
-                 epsilon = input$dose_error / 100, simplify = TRUE)
+    withCallingHandlers(
+      {
+        predict_dose(doseCurve(), myData$spectra,
+                     epsilon = input$dose_error / 100, simplify = TRUE)
+      },
+      warning = function(e) {
+        warn <- gsub("\n|\\*", "", e$message)
+        showNotification(warn, duration = 15, type = "warning")
+        invokeRestart("muffleWarning")
+      }
+    )
   })
   # Render ---------------------------------------------------------------------
   output$dose_info <- renderUI({
