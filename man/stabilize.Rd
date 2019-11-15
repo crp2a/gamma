@@ -23,8 +23,8 @@ stabilize_signal(object, ...)
 argument and returns a numeric vector.}
 }
 \value{
-A new \linkS4class{GammaSpectrum} object with transformed
- intensities.
+A new \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+ object with transformed intensities.
 }
 \description{
 Transform Intensities

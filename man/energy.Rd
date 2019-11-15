@@ -28,11 +28,10 @@ is_calibrated(object)
 \item{object}{A \linkS4class{GammaSpectrum} or
 \linkS4class{GammaSpectra} object.}
 
-\item{lines}{A list of or a \code{\link{numeric}} vector.
-If a \code{list} is provided, each element must be a named length-two
-numeric vector giving the observed peak position (chanel) and the
-corresponding expected energy value (in keV). If \code{lines} is a
-numeric \code{vector}, each element must be an expected energy value.}
+\item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of
+length two. If a \code{list} is provided, each element must be a named
+numeric vector giving the observed peak position ("\code{chanel}") and the
+corresponding expected "\code{energy}" value (in keV).}
 
 \item{...}{Currently not used.}
 }
@@ -44,21 +43,15 @@ numeric \code{vector}, each element must be an expected energy value.}
 \description{
 Calibrates the energy scale of a gamma spectrum.
 }
-\details{
-TODO
-}
 \examples{
 ## Import a CNF file for calibration
 spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
 (spectrum <- read(spc_file))
 
-# Remove the first chanels
-spectrum <- slice_signal(spectrum)
-
 ## Set peak positions (chanel) and expected energy values
 calib_lines <- list(
-  chanel = c(86, 496, 876),
-  energy = c(238, 1461, 2614.5)
+  chanel = c(86, 495, 879),
+  energy = c(238, 1461, 2615)
 )
 
 ## Correct the energy scale

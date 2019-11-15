@@ -11,7 +11,8 @@ An S4 class to Represent a Dose Rate Calibration Curve
 \section{Slots}{
 
 \describe{
-\item{\code{details}}{A \code{\link{list}} of metadata.}
+\item{\code{details}}{A \code{\link{list}} of length-one vector giving the curve
+metadata.}
 
 \item{\code{model}}{A \code{\link[stats:lm]{linear model}} specifying the calibration
 curve.}

@@ -11,7 +11,7 @@
 \alias{estimate_baseline,GammaSpectrum-method}
 \alias{remove_baseline,GammaSpectra-method}
 \alias{remove_baseline,GammaSpectrum-method}
-\title{Baseline estimation and removal}
+\title{Baseline Estimation and Removal}
 \usage{
 estimate_baseline(object, ...)
 
@@ -32,32 +32,34 @@ remove_baseline(object, ...)
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 object.}
 
-\item{...}{Extra parameters passed to \code{estimateBaseline}.}
+\item{...}{Extra parameters passed to \code{estimate_baseline}.}
 
 \item{method}{A \code{\link{character}} string specifying the method to be
 used for baseline estimation (see details).}
 
 \item{LLS}{A \code{\link{logical}} scalar: should the LLS operator be applied
-on \code{x} before employing SNIP algorithm?}
+on \code{x} before employing SNIP algorithm? Only used if
+\code{method} is "\code{SNIP}".}
 
 \item{decreasing}{A \code{\link{logical}} scalar: should a decreasing
-clipping window be used? Only used if \code{method} is \code{SNIP}.}
+clipping window be used? Only used if \code{method} is "\code{SNIP}".}
 
 \item{k}{An \code{\link{integer}} value giving the numerber of iterations.
-Only used if \code{method} is \code{SNIP}.}
+Only used if \code{method} is "\code{SNIP}".}
 }
 \value{
-A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
- \code{object}).
+\code{estimate_baseline} returns a \linkS4class{BaseLine} object.
+
+ \code{remove_baseline} returns a \linkS4class{GammaSpectrum} or
+ \linkS4class{GammaSpectra} object (same as \code{object}).
 }
 \description{
-Baseline estimation and removal
+Baseline Estimation and Removal
 }
 \details{
 The following methods are availble for baseline estimation:
  \describe{
-  \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm
-  (see references).}
+  \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
  }
 }
 \examples{
@@ -82,18 +84,18 @@ plot(spc_clean1) +
   ggplot2::labs(x = "Energy [keV]", y = "Counts")
 }
 \references{
-Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
+Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
  Background elimination methods for multidimensional gamma-ray spectra.
  \emph{Nuclear Instruments and Methods in Physics Research Section A:
  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
  p. 113-132.
  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
 
- Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
+ Morháč, M. & Matoušek, V. (2008). Peak Clipping Algorithms for Background
  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
  DOI: \href{https://doi.org/10.1366/000370208783412762}{10.1366/000370208783412762}
 
- Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. and Cousens, D. R.
+ Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. & Cousens, D. R.
  (1988). SNIP, a statistics-sensitive background treatment for the
  quantitative analysis of PIXE spectra in geoscience applications.
  \emph{Nuclear Instruments and Methods in Physics Research Section B:

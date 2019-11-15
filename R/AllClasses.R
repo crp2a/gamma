@@ -35,6 +35,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+#'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+#'   the name of \code{x} according to \code{value}.}
 #'  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
 #'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
 #'  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
@@ -42,7 +44,6 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
-#'  \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
 #'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
 #'  \code{\link[=data.frame]{data frame}}.}
 #' }
@@ -93,12 +94,10 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     dose_rate = numeric(2)
   )
 )
-setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
 #' An S4 Class to Represent a Collection of Gamma Sectra
 #'
 #' Represents a collection of spectra of gamma ray spectrometry measurements.
-#' @param x An object of class \code{GammaSpectra}.
 #' @details
 #'  This class extends the base \code{\link{list}} and can only contains
 #'  \linkS4class{GammaSpectrum} objects.
@@ -106,11 +105,18 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
 #'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
-#'  \item{\code{names(x)}}{Get the names of the elements of \code{x}.}
-#'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
-#'  \item{\code{get_chanels(x)}}{Get the number of chanels of \code{x}.}
-#'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
-#'  \item{\code{get_dose(x)}}{Get the dose rates of \code{x}.}
+#'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+#'   the names of \code{x} according to \code{value}.}
+#'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
+#'  \item{\code{get_chanels(x)}}{Get the number of chanels.}
+#'  \item{\code{get_energy(x)}}{Get the energy ranges.}
+#'  \item{\code{get_dose(x)}}{Get the dose rates.}
+#' }
+#' @section Coerce:
+#' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
+#' \describe{
+#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a long
+#'  \code{\link[=data.frame]{data frame}}.}
 #' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
@@ -157,7 +163,8 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
 #' An S4 class to Represent a Dose Rate Calibration Curve
 #'
-#' @slot details A \code{\link{list}} of metadata.
+#' @slot details A \code{\link{list}} of length-one vector giving the curve
+#'  metadata.
 #' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
 #'  curve.
 #' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
@@ -202,21 +209,39 @@ setClassUnion("GammaSpectrumOrNull", c("GammaSpectrum", "NULL"))
 
 #' An S4 Class to Represent a Set of Peaks
 #'
-#' @slot hash TODO.
+#' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
+#'  the imported spectrum file.
 #' @slot noise_method A \code{\link{character}} string specifying the method
 #'  used for peak detection.
 #' @slot noise_threshold A length one \code{\link{numeric}} vector giving the
 #'  noise threshold.
 #' @slot window A length one \code{\link{numeric}} vector giving the half-window
 #'  size.
-#' @slot chanel TODO.
-#' @slot energy TODO.
+#' @slot chanel A \code{\link{integer}} vector giving the channel number.
+#'  Numeric values are coerced to integer as by \code{\link{as.integer}}
+#'  (and hence truncated towards zero).
+#' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
+#'  (in keV).
+#' @section Access:
+#' In the code snippets below, \code{x} is a \code{PeakPosition} object.
+#' \describe{
+#'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+#'  \item{\code{get_chanels(x)}}{Get the chanels of \code{x}.}
+#'  \item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
+#'   the energy scale of \code{x} according to \code{value}.}
+#' }
+#' @section Coerce:
+#' In the code snippets below, \code{x} is a \code{PeakPosition} object.
+#' \describe{
+#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
+#'  \code{\link[=data.frame]{data frame}}.}
+#' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
 #' \describe{
 #'  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
 #'  subscript \code{i}. \code{i} is a \code{character} vector
-#'  of length one.}
+#'  of length one and will be matched to the name of the slots.}
 #' }
 #' @note This class retains copy construction.
 #' @author N. Frerebeau
@@ -255,11 +280,13 @@ setMethod(
     file_format = .Object@file_format, chanel = .Object@chanel,
     energy = .Object@energy, count = .Object@count, rate = .Object@rate,
     live_time = .Object@live_time, real_time = .Object@real_time,
-    calibration = .Object@calibration
+    calibration = .Object@calibration, dose_rate = .Object@dose_rate
   ) {
 
     if (length(date) == 0)
       date <- Sys.time()
+    if (length(chanel) != 0)
+      chanel <- as.integer(chanel)
     if (length(rate) == 0 && length(count) > 0 && length(live_time) == 1)
       rate <- count / live_time
 
@@ -267,7 +294,7 @@ setMethod(
       .Object, ..., hash = hash, name = name, date = date,
       instrument = instrument, file_format = file_format, chanel = chanel,
       energy = energy, count = count, rate = rate, live_time = live_time,
-      real_time = real_time, calibration = calibration
+      real_time = real_time, calibration = calibration, dose_rate = dose_rate
     )
   }
 )
@@ -302,6 +329,9 @@ setMethod(
     noise_threshold = .Object@noise_threshold, window = .Object@window,
     chanel = .Object@chanel, energy = .Object@energy
   ) {
+    if (length(chanel) != 0)
+      chanel <- as.integer(chanel)
+
     methods::callNextMethod(
       .Object, ..., hash = hash, noise_method = noise_method,
       noise_threshold = noise_threshold, window = window, chanel = chanel,
@@ -315,7 +345,7 @@ setMethod(
   signature = "CalibrationCurve",
   definition = function(.Object, details, model, noise, integration, data) {
 
-    if (!missing(details)) info <- details else info <- list()
+    info <- if (!missing(details)) details else list()
     info$date <- Sys.time()
     .Object@details <- info
     if (!missing(model)) .Object@model <- model

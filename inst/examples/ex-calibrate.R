@@ -2,13 +2,10 @@
 spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
 (spectrum <- read(spc_file))
 
-# Remove the first chanels
-spectrum <- slice_signal(spectrum)
-
 ## Set peak positions (chanel) and expected energy values
 calib_lines <- list(
-  chanel = c(86, 496, 876),
-  energy = c(238, 1461, 2614.5)
+  chanel = c(86, 495, 879),
+  energy = c(238, 1461, 2615)
 )
 
 ## Correct the energy scale

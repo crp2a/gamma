@@ -37,8 +37,9 @@ predict_dose(object, spectrum, ...)
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 object.}
 
-\item{noise}{A \code{\link{list}} of two numeric values giving the noise
-value and error.}
+\item{noise}{A \linkS4class{GammaSpectrum} object or a length-two
+\code{\link{numeric}} vector giving the background noise integration
+value and error, respectively.}
 
 \item{...}{Currently not used.}
 
@@ -50,17 +51,17 @@ to predict. If omitted, the fitted values are used.}
 range to integrate within (in keV).}
 
 \item{intercept}{A \code{\link{logical}} scalar: should the intercept of the
-curve be estimated?}
+curve be estimated? Change this only if you know what you are doing.}
 
 \item{weights}{A \code{\link{logical}} scalar: should weights be used in the
-fitting process. If \code{TRUE}, the inverse of the squared dose errors are
-used.}
+fitting process. If \code{TRUE}, the inverse of the squared dose rate
+errors are used. Change this only if you know what you are doing.}
 
-\item{details}{A list of \code{\link{character}} vector specifying additional
-informations about the instrument for which the curve is built.}
+\item{details}{A \code{\link{list}} of length-one vector specifying
+additional informations about the instrument for which the curve is built.}
 
 \item{epsilon}{A \code{\link{numeric}} value giving an extra error term
-introduced by the energy calibration of the spectrum.}
+introduced by the calibration of the energy scale of the spectrum.}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be
 simplified to a matrix? If \code{FALSE} (default), returns a list.}
@@ -99,6 +100,11 @@ plot(calib_curve) +
 
 # Estimate gamma dose rates
 (dose_rate <- predict_dose(calib_curve, spectra))
+}
+\references{
+Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+ a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+ \emph{Ancient TL}, 25(1), p. 1-4.
 }
 \seealso{
 \link{integrate_signal}

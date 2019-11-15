@@ -45,7 +45,7 @@ setMethod(
     n <- length(object)
     if (n != 0) {
       spc <- ngettext(n, "spectrum", "spectra", )
-      ref <- get_name(object)
+      ref <- get_names(object)
       cat("A collection of ", n, " gamma ", spc, ": ",
           paste(ref, collapse = ", "), "\n",
           sep = "")

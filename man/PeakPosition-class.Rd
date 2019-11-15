@@ -11,7 +11,8 @@ An S4 Class to Represent a Set of Peaks
 \section{Slots}{
 
 \describe{
-\item{\code{hash}}{TODO.}
+\item{\code{hash}}{A \code{\link{character}} string giving the 32-byte MD5 hash of
+the imported spectrum file.}
 
 \item{\code{noise_method}}{A \code{\link{character}} string specifying the method
 used for peak detection.}
@@ -22,21 +23,44 @@ noise threshold.}
 \item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
 size.}
 
-\item{\code{chanel}}{TODO.}
+\item{\code{chanel}}{A \code{\link{integer}} vector giving the channel number.
+Numeric values are coerced to integer as by \code{\link{as.integer}}
+(and hence truncated towards zero).}
 
-\item{\code{energy}}{TODO.}
+\item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
+(in keV).}
 }}
 
 \note{
 This class retains copy construction.
 }
+\section{Access}{
+
+In the code snippets below, \code{x} is a \code{PeakPosition} object.
+\describe{
+ \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+ \item{\code{get_chanels(x)}}{Get the chanels of \code{x}.}
+ \item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
+  the energy scale of \code{x} according to \code{value}.}
+}
+}
+
+\section{Coerce}{
+
+In the code snippets below, \code{x} is a \code{PeakPosition} object.
+\describe{
+ \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
+ \code{\link[=data.frame]{data frame}}.}
+}
+}
+
 \section{Subset}{
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
  \item{\code{x[[i]]}}{Extracts informations from a slot selected by
  subscript \code{i}. \code{i} is a \code{character} vector
- of length one.}
+ of length one and will be matched to the name of the slots.}
 }
 }
 

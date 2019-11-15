@@ -28,18 +28,18 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_name,GammaSpectrum-method
+#' @aliases get_names,GammaSpectrum-method
 setMethod(
-  f = "get_name",
+  f = "get_names",
   signature = "GammaSpectrum",
   definition = function(object) object@name
 )
 
 #' @export
 #' @rdname access
-#' @aliases set_name,GammaSpectrum-method
+#' @aliases set_names,GammaSpectrum-method
 setMethod(
-  f = "set_name<-",
+  f = "set_names<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
     object@name <- value
@@ -153,12 +153,12 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_name,GammaSpectra-method
+#' @aliases get_names,GammaSpectra-method
 setMethod(
-  f = "get_name",
+  f = "get_names",
   signature = "GammaSpectra",
   definition = function(object) {
-    vapply(object, FUN = get_name, FUN.VALUE = character(1))
+    vapply(object, FUN = get_names, FUN.VALUE = character(1))
   }
 )
 
@@ -166,7 +166,7 @@ setMethod(
 #' @rdname access
 #' @aliases set_name,GammaSpectra-method
 setMethod(
-  f = "set_name<-",
+  f = "set_names<-",
   signature = "GammaSpectra",
   definition = function(object, value) {
     names(object) <- value
@@ -284,6 +284,15 @@ setMethod(
     data <- methods::slot(x, i)
     return(data)
   }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_hash,PeakPosition-method
+setMethod(
+  f = "get_hash",
+  signature = "PeakPosition",
+  definition = function(object) object@hash
 )
 
 #' @export

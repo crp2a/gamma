@@ -4,14 +4,13 @@ spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 
 ## Access
 get_hash(spectrum)
+get_names(spectrum)
 get_chanels(spectrum)
 get_energy(spectrum)
 get_dose(spectrum)
 
 # Coerce
-df <- as(spectrum, "data.frame")
-head(df)
-tail(df)
+head(as(spectrum, "data.frame"))
 
 # Subset
 spectrum[["hash"]]

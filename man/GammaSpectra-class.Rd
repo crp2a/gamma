@@ -5,9 +5,6 @@
 \alias{GammaSpectra-class}
 \alias{.GammaSpectra}
 \title{An S4 Class to Represent a Collection of Gamma Sectra}
-\arguments{
-\item{x}{An object of class \code{GammaSpectra}.}
-}
 \description{
 Represents a collection of spectra of gamma ray spectrometry measurements.
 }
@@ -20,11 +17,21 @@ This class extends the base \code{\link{list}} and can only contains
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
- \item{\code{names(x)}}{Get the names of the elements of \code{x}.}
- \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
- \item{\code{get_chanels(x)}}{Get the number of chanels of \code{x}.}
- \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
- \item{\code{get_dose(x)}}{Get the dose rates of \code{x}.}
+ \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+  the names of \code{x} according to \code{value}.}
+ \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
+ \item{\code{get_chanels(x)}}{Get the number of chanels.}
+ \item{\code{get_energy(x)}}{Get the energy ranges.}
+ \item{\code{get_dose(x)}}{Get the dose rates.}
+}
+}
+
+\section{Coerce}{
+
+In the code snippets below, \code{x} is a \code{GammaSpectra} object.
+\describe{
+ \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a long
+ \code{\link[=data.frame]{data frame}}.}
 }
 }
 
@@ -52,8 +59,8 @@ spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 (spectra <- read(spc_dir))
 
 ## Access
-names(spectra)
 length(spectra)
+get_names(spectra)
 get_hash(spectra)
 get_chanels(spectra)
 get_energy(spectra)

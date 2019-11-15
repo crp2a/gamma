@@ -48,10 +48,10 @@ test_that("Import a set of gamma spectra", {
   expect_s3_class(methods::as(spectra, "data.frame"), "data.frame")
 
   expect_true(all(nchar(get_hash(spectra)) == 32))
-  expect_true(all(nchar(get_name(spectra)) > 0))
-  set_name(spectra) <- LETTERS[1:7]
-  expect_true(all(get_name(spectra) == LETTERS[1:7]))
-  expect_true(all(get_name(spectra) == names(spectra)))
+  expect_true(all(nchar(get_names(spectra)) > 0))
+  set_names(spectra) <- LETTERS[1:7]
+  expect_true(all(get_names(spectra) == LETTERS[1:7]))
+  expect_true(all(get_names(spectra) == names(spectra)))
   expect_true(all(get_chanels(spectra) == 1024))
   expect_equal(dim(get_energy(spectra)), c(7, 2))
 

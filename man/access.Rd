@@ -7,10 +7,10 @@
 \alias{set}
 \alias{get_hash}
 \alias{get_hash-method}
-\alias{get_name}
-\alias{get_name-method}
-\alias{set_name<-}
-\alias{set_name-method}
+\alias{get_names}
+\alias{get_names-method}
+\alias{set_names<-}
+\alias{set_names-method}
 \alias{get_chanels}
 \alias{get_chanels-method}
 \alias{get_dose}
@@ -22,9 +22,9 @@
 \alias{set_energy<-}
 \alias{set_energy-method}
 \alias{get_hash,GammaSpectrum-method}
-\alias{get_name,GammaSpectrum-method}
-\alias{set_name<-,GammaSpectrum-method}
-\alias{set_name,GammaSpectrum-method}
+\alias{get_names,GammaSpectrum-method}
+\alias{set_names<-,GammaSpectrum-method}
+\alias{set_names,GammaSpectrum-method}
 \alias{get_chanels,GammaSpectrum-method}
 \alias{get_length,GammaSpectrum-method}
 \alias{get_energy,GammaSpectrum-method}
@@ -32,8 +32,8 @@
 \alias{set_dose<-,GammaSpectrum-method}
 \alias{set_dose,GammaSpectrum-method}
 \alias{get_hash,GammaSpectra-method}
-\alias{get_name,GammaSpectra-method}
-\alias{set_name<-,GammaSpectra-method}
+\alias{get_names,GammaSpectra-method}
+\alias{set_names<-,GammaSpectra-method}
 \alias{set_name,GammaSpectra-method}
 \alias{get_chanels,GammaSpectra-method}
 \alias{get_length,GammaSpectra-method}
@@ -41,6 +41,7 @@
 \alias{get_dose,GammaSpectra-method}
 \alias{set_dose<-,GammaSpectra-method}
 \alias{set_dose,GammaSpectra-method}
+\alias{get_hash,PeakPosition-method}
 \alias{get_chanels,PeakPosition-method}
 \alias{get_energy,PeakPosition-method}
 \alias{set_energy<-,PeakPosition-method}
@@ -49,9 +50,9 @@
 \usage{
 get_hash(object)
 
-get_name(object)
+get_names(object)
 
-set_name(object) <- value
+set_names(object) <- value
 
 get_chanels(object)
 
@@ -65,9 +66,9 @@ set_energy(object) <- value
 
 \S4method{get_hash}{GammaSpectrum}(object)
 
-\S4method{get_name}{GammaSpectrum}(object)
+\S4method{get_names}{GammaSpectrum}(object)
 
-\S4method{set_name}{GammaSpectrum}(object) <- value
+\S4method{set_names}{GammaSpectrum}(object) <- value
 
 \S4method{get_chanels}{GammaSpectrum}(object)
 
@@ -79,9 +80,9 @@ set_energy(object) <- value
 
 \S4method{get_hash}{GammaSpectra}(object)
 
-\S4method{get_name}{GammaSpectra}(object)
+\S4method{get_names}{GammaSpectra}(object)
 
-\S4method{set_name}{GammaSpectra}(object) <- value
+\S4method{set_names}{GammaSpectra}(object) <- value
 
 \S4method{get_chanels}{GammaSpectra}(object)
 
@@ -90,6 +91,8 @@ set_energy(object) <- value
 \S4method{get_dose}{GammaSpectra}(object)
 
 \S4method{set_dose}{GammaSpectra}(object) <- value
+
+\S4method{get_hash}{PeakPosition}(object)
 
 \S4method{get_chanels}{PeakPosition}(object)
 

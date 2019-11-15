@@ -22,8 +22,8 @@ test_that("Initialize an empty GammaSpectrum instance", {
 
   expect_type(get_hash(spectrum), "character")
 
-  set_name(spectrum) <- "X"
-  expect_equal(get_name(spectrum), "X")
+  set_names(spectrum) <- "X"
+  expect_equal(get_names(spectrum), "X")
 
   set_dose(spectrum) <- c(1, 2)
   expect_equal(get_dose(spectrum), c(value = 1, error = 2))

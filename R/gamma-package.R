@@ -41,6 +41,6 @@
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar
 #' geom_errorbarh geom_path geom_point geom_pointrange geom_segment geom_vline
-#' ggplot ggsave labs scale_x_continuous sec_axis theme_bw vars
+#' ggplot ggsave labs scale_x_continuous sec_axis theme_bw vars waiver
 #' @importFrom rlang .data
 NULL

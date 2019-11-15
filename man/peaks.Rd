@@ -18,7 +18,7 @@ object.}
 
 \item{...}{Extra parameters to be passed to internal methods.}
 
-\item{method}{A \code{\link{character}} string specifying the methode to be
+\item{method}{A \code{\link{character}} string specifying the method to be
 used for background noise estimation (see below).}
 
 \item{SNR}{An \code{\link{integer}} giving the signal-to-noise-ratio for
@@ -34,12 +34,15 @@ An object of class \linkS4class{PeakPosition}.
 \description{
 Finds local maxima in sequential data.
 }
-\section{Peak detection}{
-
- A local maximum has to be the highest one in the given window and has to be
+\details{
+A local maximum has to be the highest one in the given window and has to be
  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
-}
 
+ The following methods are availble for noise estimation:
+ \describe{
+  \item{MAD}{Median Absolute Deviation.}
+ }
+}
 \examples{
 # Import a Canberra CNF file
 spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")

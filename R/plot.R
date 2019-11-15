@@ -109,19 +109,21 @@ setMethod(
     peak_energy <- y[["energy"]]
 
     index_energy <- !is.na(peak_energy)
-    peak_legend <- NULL
     if (any(index_energy)) {
-      peak_legend <- scale_x_continuous(
-        breaks = peak_chanel,
-        labels = peak_chanel,
-        sec.axis = sec_axis(
-          trans = ~.,
-          breaks = peak_chanel[index_energy],
-          labels = paste0(round(peak_energy[index_energy], 0), " keV")
-        )
+      sec_axis <- sec_axis(
+        trans = ~.,
+        name = "Energy [keV]",
+        breaks = peak_chanel[index_energy],
+        labels = round(peak_energy[index_energy], 0)
       )
+    } else {
+      sec_axis <- waiver()
     }
-
+    peak_legend <- scale_x_continuous(
+      breaks = peak_chanel,
+      labels = peak_chanel,
+      sec.axis = sec_axis
+    )
     plot(x) +
       geom_vline(xintercept = peak_chanel, linetype = 3, colour = "red") +
       peak_legend

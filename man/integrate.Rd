@@ -25,8 +25,8 @@ object.}
 \item{range}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
-\item{noise}{A length-two \code{\link{numeric}} vector giving the noise
-value and error, respectively (see details).}
+\item{noise}{A length-two \code{\link{numeric}} vector giving the background
+noise integration value and error, respectively (see details).}
 
 \item{NiEi}{A \code{\link{logical}} scalar.
 Change this only if you know what you are doing.}
@@ -35,8 +35,9 @@ Change this only if you know what you are doing.}
 simplified to a matrix? The default value, \code{FALSE}, returns a list.}
 }
 \value{
-If \code{simplify} is \code{FALSE} returns a list of length-two
- numeric vectors (default), else returns a matrix.
+If \code{simplify} is \code{FALSE} (the default) returns a list of
+ length-two numeric vectors (the dose rate and its error), else returns a
+ matrix.
 }
 \description{
 Signal Integration

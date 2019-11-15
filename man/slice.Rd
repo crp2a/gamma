@@ -6,7 +6,7 @@
 \alias{slice_signal-method}
 \alias{slice_signal,GammaSpectrum-method}
 \alias{slice_signal,GammaSpectra-method}
-\title{Simulate a Gamma-Ray Spectrum}
+\title{Choose Chanels by Position}
 \usage{
 slice_signal(object, ...)
 
@@ -23,10 +23,10 @@ spectrum to be kept/dropped (see below). Numeric values are coerced to
 integer as by \code{\link{as.integer}} (and hence truncated towards zero).}
 }
 \value{
-A \linkS4class{GammaSpectrum} object.
+A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 }
 \description{
-Rough simulation of a gamma-ray spectrum.
+Choose chanels by position.
 }
 \details{
 Either positive values to keep, or negative values to drop, should be

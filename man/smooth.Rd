@@ -31,7 +31,7 @@ Any unambiguous substring can be given.}
 points to be used.}
 
 \item{p}{An \code{\link{integer}} giving the polynomial degree.
-Only used if \code{method} is \code{savitzky}.}
+Only used if \code{method} is "\code{savitzky}".}
 }
 \value{
 A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
@@ -90,7 +90,7 @@ Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
  p. 570-573.
  DOI: \href{https://doi.org/10.1021/ac00205a007}{10.1021/ac00205a007}.
 
- Savitzky, A. and Golay, M. J. E. (1964). Smoothing and Differentiation of
+ Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
  Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
  36(8), p. 1627-1639.
  DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.

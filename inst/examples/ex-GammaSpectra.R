@@ -3,8 +3,8 @@ spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 (spectra <- read(spc_dir))
 
 ## Access
-names(spectra)
 length(spectra)
+get_names(spectra)
 get_hash(spectra)
 get_chanels(spectra)
 get_energy(spectra)

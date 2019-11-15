@@ -57,6 +57,8 @@ This class retains copy construction.
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+ \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+  the name of \code{x} according to \code{value}.}
  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
@@ -67,7 +69,6 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{as(x, "matrix")}}{Coerces \code{x} to a \code{\link{matrix}}.}
  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
  \code{\link[=data.frame]{data frame}}.}
 }
@@ -90,14 +91,13 @@ spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
 
 ## Access
 get_hash(spectrum)
+get_names(spectrum)
 get_chanels(spectrum)
 get_energy(spectrum)
 get_dose(spectrum)
 
 # Coerce
-df <- as(spectrum, "data.frame")
-head(df)
-tail(df)
+head(as(spectrum, "data.frame"))
 
 # Subset
 spectrum[["hash"]]

@@ -27,17 +27,17 @@ setGeneric(
 )
 
 #' @rdname access
-#' @aliases get_name-method
+#' @aliases get_names-method
 setGeneric(
-  name = "get_name",
-  def = function(object) standardGeneric("get_name")
+  name = "get_names",
+  def = function(object) standardGeneric("get_names")
 )
 
 #' @rdname access
-#' @aliases set_name-method
+#' @aliases set_names-method
 setGeneric(
-  name = "set_name<-",
-  def = function(object, value) standardGeneric("set_name<-")
+  name = "set_names<-",
+  def = function(object, value) standardGeneric("set_names<-")
 )
 
 #' @rdname access
@@ -106,14 +106,11 @@ NULL
 #' Calibrates the energy scale of a gamma spectrum.
 #' @param object A \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object.
-#' @param lines A list of or a \code{\link{numeric}} vector.
-#'  If a \code{list} is provided, each element must be a named length-two
-#'  numeric vector giving the observed peak position (chanel) and the
-#'  corresponding expected energy value (in keV). If \code{lines} is a
-#'  numeric \code{vector}, each element must be an expected energy value.
+#' @param lines A \linkS4class{PeakPosition} object or a \code{\link{list}} of
+#'  length two. If a \code{list} is provided, each element must be a named
+#'  numeric vector giving the observed peak position ("\code{chanel}") and the
+#'  corresponding expected "\code{energy}" value (in keV).
 #' @param ... Currently not used.
-#' @details
-#'  TODO
 #' @return
 #'  \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
 #'
@@ -140,41 +137,43 @@ setGeneric(
 )
 
 # ===================================================================== Baseline
-#' Baseline estimation and removal
+#' Baseline Estimation and Removal
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
 #' @param method A \code{\link{character}} string specifying the method to be
 #'  used for baseline estimation (see details).
 #' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
-#'  on \code{x} before employing SNIP algorithm?
+#'  on \code{x} before employing SNIP algorithm? Only used if
+#'  \code{method} is "\code{SNIP}".
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
-#'  clipping window be used? Only used if \code{method} is \code{SNIP}.
+#'  clipping window be used? Only used if \code{method} is "\code{SNIP}".
 #' @param k An \code{\link{integer}} value giving the numerber of iterations.
-#'  Only used if \code{method} is \code{SNIP}.
-#' @param ... Extra parameters passed to \code{estimateBaseline}.
+#'  Only used if \code{method} is "\code{SNIP}".
+#' @param ... Extra parameters passed to \code{estimate_baseline}.
 #' @details
 #'  The following methods are availble for baseline estimation:
 #'  \describe{
-#'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm
-#'   (see references).}
+#'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
 #'  }
 #' @return
-#'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object (same as
-#'  \code{object}).
+#'  \code{estimate_baseline} returns a \linkS4class{BaseLine} object.
+#'
+#'  \code{remove_baseline} returns a \linkS4class{GammaSpectrum} or
+#'  \linkS4class{GammaSpectra} object (same as \code{object}).
 #' @references
-#'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
+#'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
 #'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
 #'  p. 113-132.
 #'  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
 #'
-#'  Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
+#'  Morháč, M. & Matoušek, V. (2008). Peak Clipping Algorithms for Background
 #'  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
 #'  DOI: \href{https://doi.org/10.1366/000370208783412762}{10.1366/000370208783412762}
 #'
-#'  Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. and Cousens, D. R.
+#'  Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. & Cousens, D. R.
 #'  (1988). SNIP, a statistics-sensitive background treatment for the
 #'  quantitative analysis of PIXE spectra in geoscience applications.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section B:
@@ -210,27 +209,32 @@ setGeneric(
 #' \code{predict_dose} predicts in-situ gamma dose rate.
 #' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 #'  object.
-#' @param noise A \code{\link{list}} of two numeric values giving the noise
-#'  value and error.
+#' @param noise A \linkS4class{GammaSpectrum} object or a length-two
+#'  \code{\link{numeric}} vector giving the background noise integration
+#'  value and error, respectively.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (in keV).
 #' @param intercept A \code{\link{logical}} scalar: should the intercept of the
-#'  curve be estimated?
+#'  curve be estimated? Change this only if you know what you are doing.
 #' @param weights A \code{\link{logical}} scalar: should weights be used in the
-#'  fitting process. If \code{TRUE}, the inverse of the squared dose errors are
-#'  used.
-#' @param details A list of \code{\link{character}} vector specifying additional
-#'  informations about the instrument for which the curve is built.
+#'  fitting process. If \code{TRUE}, the inverse of the squared dose rate
+#'  errors are used. Change this only if you know what you are doing.
+#' @param details A \code{\link{list}} of length-one vector specifying
+#'  additional informations about the instrument for which the curve is built.
 #' @param spectrum An optional \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object in which to look for variables with which
 #'  to predict. If omitted, the fitted values are used.
 #' @param epsilon A \code{\link{numeric}} value giving an extra error term
-#'  introduced by the energy calibration of the spectrum.
+#'  introduced by the calibration of the energy scale of the spectrum.
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
 #' @return A \linkS4class{CalibrationCurve} object.
 #' @seealso \link{integrate_signal}
+#' @references
+#'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+#'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+#'  \emph{Ancient TL}, 25(1), p. 1-4.
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -260,8 +264,8 @@ setGeneric(
 #'  object.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (in keV).
-#' @param noise A length-two \code{\link{numeric}} vector giving the noise
-#'  value and error, respectively (see details).
+#' @param noise A length-two \code{\link{numeric}} vector giving the background
+#'  noise integration value and error, respectively (see details).
 #' @param NiEi A \code{\link{logical}} scalar.
 #'  Change this only if you know what you are doing.
 #' @param simplify A \code{\link{logical}} scalar: should the result be
@@ -270,8 +274,9 @@ setGeneric(
 #' @details
 #'  It assumes that each spectrum is calibrated in energy.
 #' @return
-#'  If \code{simplify} is \code{FALSE} returns a list of length-two
-#'  numeric vectors (default), else returns a matrix.
+#'  If \code{simplify} is \code{FALSE} (the default) returns a list of
+#'  length-two numeric vectors (the dose rate and its error), else returns a
+#'  matrix.
 #' @references
 #'  Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 #'  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
@@ -297,7 +302,7 @@ setGeneric(
 #' Finds local maxima in sequential data.
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
 #'  object.
-#' @param method A \code{\link{character}} string specifying the methode to be
+#' @param method A \code{\link{character}} string specifying the method to be
 #'  used for background noise estimation (see below).
 #' @param SNR An \code{\link{integer}} giving the signal-to-noise-ratio for
 #'  peak detection (see below).
@@ -305,9 +310,14 @@ setGeneric(
 #'  of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
 #'  half window size.
 #' @param ... Extra parameters to be passed to internal methods.
-#' @section Peak detection:
+#' @details
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
+#'
+#'  The following methods are availble for noise estimation:
+#'  \describe{
+#'   \item{MAD}{Median Absolute Deviation.}
+#'  }
 #' @return An object of class \linkS4class{PeakPosition}.
 #' @example inst/examples/ex-peaks.R
 #' @author N. Frerebeau
@@ -376,31 +386,10 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
-# =================================================================== Simulation
-#' Simulate a Gamma-Ray Spectrum
-#'
-#' Rough simulation of a gamma-ray spectrum.
-#' @param K,Th,U A length-one \code{\link{numeric}} vector giving the K-U-Th
-#'  ratio that caracterize a natural spectrum.
-#' @param energy A length-two \code{\link{numeric}} vector giving the energy
-#'  range (in keV).
-#' @param n An \code{\link{integer}} giving the number of chanel.
-#' @param ... Currently not used.
-#' @return A \linkS4class{GammaSpectrum} object.
-#' @author N. Frerebeau
-#' @docType methods
-#' @rdname simulate
-#' @aliases simulate_spectrum-method
-#' @keywords internal
-setGeneric(
-  name = "simulate_spectrum",
-  def = function(K, U, Th, ...) standardGeneric("simulate_spectrum")
-)
-
 # ======================================================================== Slice
-#' Simulate a Gamma-Ray Spectrum
+#' Choose Chanels by Position
 #'
-#' Rough simulation of a gamma-ray spectrum.
+#' Choose chanels by position.
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
 #' @param ... \code{\link{integer}} values giving the chanels of the
@@ -415,7 +404,8 @@ setGeneric(
 #'  channels before the highest count maximum. This is intended to deal with the
 #'  artefact produced by the rapid growth of random background noise towards low
 #'  energies.
-#' @return A \linkS4class{GammaSpectrum} object.
+#' @return
+#'  A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 #' @author N. Frerebeau
 #' @example inst/examples/ex-slice.R
 #' @docType methods
@@ -440,7 +430,7 @@ setGeneric(
 #' @param m An odd \code{\link{integer}} giving the number of adjacent
 #'  points to be used.
 #' @param p An \code{\link{integer}} giving the polynomial degree.
-#'  Only used if \code{method} is \code{savitzky}.
+#'  Only used if \code{method} is "\code{savitzky}".
 #' @param ... Currently not used.
 #' @details
 #'  The following smoothing methods are available:
@@ -469,7 +459,7 @@ setGeneric(
 #'  p. 570-573.
 #'  DOI: \href{https://doi.org/10.1021/ac00205a007}{10.1021/ac00205a007}.
 #'
-#'  Savitzky, A. and Golay, M. J. E. (1964). Smoothing and Differentiation of
+#'  Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
 #'  Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
 #'  36(8), p. 1627-1639.
 #'  DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
@@ -491,8 +481,8 @@ setGeneric(
 #' @param transformation A \code{\link{function}} that takes a numeric vector as
 #'  argument and returns a numeric vector.
 #' @param ... Extra arguments to be passed to \code{transformation}.
-#' @return A new \linkS4class{GammaSpectrum} object with transformed
-#'  intensities.
+#' @return A new \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+#'  object with transformed intensities.
 #' @author N. Frerebeau
 #' @docType methods
 #' @family signal processing
