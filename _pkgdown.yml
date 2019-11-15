@@ -6,6 +6,9 @@ authors:
   LabEx Sciences archéologiques de Bordeaux:
     href: https://lascarbx.labex.u-bordeaux.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_lascarbx.jpg" height="64" />
+  Idex Aix-Marseille:
+    href: https://amidex.univ-amu.fr
+    html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg" height="48" />
 development:
   mode: auto
 

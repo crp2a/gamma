@@ -71,6 +71,10 @@
     {
       "@type": "Organization",
       "name": "LabEx Sciences archéologiques de Bordeaux"
+    },
+    {
+      "@type": "Organization",
+      "name": "Idex Aix-Marseille"
     }
   ],
   "maintainer": [
@@ -266,7 +270,6 @@
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "fileSize": "833.265KB",
   "contIntegration": [
     "https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master",
     "https://travis-ci.org/crp2a/gamma",
@@ -308,5 +311,6 @@
       "url": "https://doi.org/10.5281/zenodo.2652393",
       "description": "R package version 0.2.0"
     }
-  ]
+  ],
+  "fileSize": "1635.635KB"
 }

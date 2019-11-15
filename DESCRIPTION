@@ -30,6 +30,8 @@ Authors@R:
       person(given = "Université Bordeaux Montaigne",
              role = c("cph", "fnd")),
       person(given = "LabEx Sciences archéologiques de Bordeaux",
+             role = "fnd"),
+      person(given = "Idex Aix-Marseille",
              role = "fnd"))
 Maintainer: Nicolas Frerebeau
     <nicolas.frerebeau@u-bordeaux-montaigne.fr>
