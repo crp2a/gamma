@@ -10,8 +10,9 @@ get_chanels(spectra)
 get_energy(spectra)
 
 ## Coerce
-# (returns a long data frame)
-# as(spectra, "data.frame")
+\donttest{
+as(spectra, "data.frame")
+}
 
 ## Subset
 spectra[] # All spectra

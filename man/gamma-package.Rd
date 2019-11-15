@@ -29,7 +29,8 @@ Process in-situ Gamma-Ray Spectrometry for
 \note{
 This work received a state financial support managed by the Agence Nationale
 de la Recherche (France) throught the program \emph{Investissements d'avenir}
-(ref. ANR-10-LABX-52).
+(ref. \href{https://lascarbx.labex.u-bordeaux.fr}{ANR-10-LABX-52} and
+\href{https://amidex.univ-amu.fr/}{11-IDEX-0001}).
 }
 \seealso{
 Useful links:

@@ -97,7 +97,7 @@ get_energy(spectrum)
 get_dose(spectrum)
 
 # Coerce
-head(as(spectrum, "data.frame"))
+as(spectrum, "data.frame")
 
 # Subset
 spectrum[["hash"]]
