@@ -105,10 +105,10 @@ shiny_server <- function(input, output, session) {
       )
     },
     content = function(file) {
-      ggsave(file, plot = mySpectrum()$plot,
-             width = input$options_fig_width,
-             height = input$options_fig_height,
-             units = input$options_fig_units)
+      ggplot2::ggsave(file, plot = mySpectrum()$plot,
+                      width = input$options_fig_width,
+                      height = input$options_fig_height,
+                      units = input$options_fig_units)
     },
     contentType = "application/pdf"
   )
@@ -255,11 +255,26 @@ shiny_server <- function(input, output, session) {
     myPeaks()$plot_baseline
   })
   output$calib_ok <- renderUI({
-    coef <- myData$spectra[[input$calib_select]][["calibration"]]$coefficients
-    if (length(coef) != 0) {
+    spc <- myData$spectra[[input$calib_select]]
+    if (is_calibrated(spc)) {
+      coef <- spc[["calibration"]]$coefficients
+      if (length(coef) != 0) {
+        tags$div(
+          tags$span(icon("check-circle"), style = "color: #225522;"),
+          sprintf("The energy scale of the spectrum %s has been adjusted.",
+                  input$calib_select)
+        )
+      } else {
+        tags$div(
+          tags$span(icon("exclamation-triangle"), style = "color: #666633;"),
+          sprintf("The spectrum %s has an energy scale, but has not been adjusted.",
+                  input$calib_select)
+        )
+      }
+    } else {
       tags$div(
-        tags$span(icon("check-circle"), style = "color: #225522;"),
-        sprintf("The energy scale of the spectrum %s has been adjusted.",
+        tags$span(icon("times-circle"), style = "color: #663333;"),
+        sprintf("The spectrum %s does not have an energy scale.",
                 input$calib_select)
       )
     }
@@ -303,10 +318,10 @@ shiny_server <- function(input, output, session) {
   output$calib_export_plot <- downloadHandler(
     filename = function() paste0(myPeaks()$name, ".pdf"),
     content = function(file) {
-      ggsave(file, plot = myPeaks()$plot_spectrum,
-             width = input$options_fig_width,
-             height = input$options_fig_height,
-             units = input$options_fig_units)
+      ggplot2::ggsave(file, plot = myPeaks()$plot_spectrum,
+                      width = input$options_fig_width,
+                      height = input$options_fig_height,
+                      units = input$options_fig_units)
     },
     contentType = "application/pdf"
   )
@@ -350,12 +365,12 @@ shiny_server <- function(input, output, session) {
     plot(doseCurve()) +
       ggplot2::geom_pointrange(
         data = extra,
-        mapping = aes(ymin = .data$dose_value - .data$dose_error,
-                      ymax = .data$dose_value + .data$dose_error)) +
+        mapping = ggplot2::aes(ymin = .data$dose_value - .data$dose_error,
+                               ymax = .data$dose_value + .data$dose_error)) +
       ggplot2::geom_errorbarh(
         data = extra,
-        mapping = aes(xmin = .data$signal_value - .data$signal_error,
-                      xmax = .data$signal_value + .data$signal_error),
+        mapping = ggplot2::aes(xmin = .data$signal_value - .data$signal_error,
+                               xmax = .data$signal_value + .data$signal_error),
         height = 0) +
       ggplot2::theme_bw()
   })
