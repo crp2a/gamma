@@ -51,10 +51,17 @@
     },
     {
       "@type": "Person",
-      "givenName": "Christelle",
-      "familyName": "Lahaye",
-      "email": "christelle.lahaye@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0003-2215-9015"
+      "givenName": "Norbert",
+      "familyName": "Mercier",
+      "email": "norbert.mercier@u-bordeaux-montaigne.fr",
+      "@id": "https://orcid.org/0000-0002-6375-9108"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Chantal",
+      "familyName": "Tribolo",
+      "email": "chantal.tribolo@u-bordeaux-montaigne.fr",
+      "@id": "https://orcid.org/0000-0003-0506-2430"
     }
   ],
   "copyrightHolder": [
@@ -312,5 +319,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "1635.635KB"
+  "fileSize": "1576.531KB"
 }

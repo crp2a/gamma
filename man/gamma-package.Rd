@@ -49,7 +49,9 @@ Useful links:
  Guillaume Guérin \tab \emph{CNRS, France} \cr
  Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
  Brice Lebrun \tab \emph{Aix-Marseille Université, France} \cr
- Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France}
+ Norbert Mercier \tab \emph{CNRS, France} \cr
+ Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France} \cr
+ Chantal Tribolo \tab \emph{CNRS, France}
 }
 
 \strong{Package maintainer}
