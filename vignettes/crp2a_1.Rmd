@@ -47,17 +47,19 @@ noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
 
 ## Inspect spectra
 ### Reference spectra
-Lines used for energy scale calibration (in keV):
-
-* Pb212: 238
-* K40: 1461
-* Tl208: 2615
-
 #### BRIQUE
 ```{r calibrate-BRIQUE}
-plot(calib_spc[["BRIQUE"]], xaxis = "energy", yaxis = "rate") +
+plot(calib_spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
+  ggplot2::geom_vline(xintercept = c(76, 465, 828), linetype = 2) +
   ggplot2::labs(title = "BRIQUE") +
   ggplot2::theme_bw()
+```
+
+```{r integrate-BRIQUE}
+lines <- list(chanel = c(76, 465, 828), energy = c(238, 1461, 2615))
+calib_spc[["BRIQUE"]] %>%
+  calibrate_energy(lines = lines) %>%
+  integrate_signal(range = c(165, 2800), noise = c(25279.63171, 1.66235))
 ```
 
 #### C341

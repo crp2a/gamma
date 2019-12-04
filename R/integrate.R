@@ -30,17 +30,18 @@ setMethod(
     # Integrate signal between boundaries
     int_index <- which(spc_data$energy >= range[[1L]] &
                          spc_data$energy <= range[[2L]])
+
     if (NiEi) {
-      int_signal <- as.numeric(crossprod(spc_data$energy[int_index],
-                                         spc_data$count[int_index]))
+      int_signal <- crossprod(spc_data$energy[int_index],
+                              spc_data$count[int_index])
     } else {
       int_signal <- sum(spc_data$count[int_index])
     }
 
     # Normalize integrated signal to time
-    active_time <- object@live_time
-    norm_signal <- int_signal / active_time
-    norm_error <- sqrt(2 * int_signal) / active_time
+    live_time <- object@live_time
+    norm_signal <- int_signal / live_time
+    norm_error <- sqrt(2 * int_signal) / live_time
 
     # Compute net signal (substracted background noise)
     net_signal <- norm_signal - noise[[1L]]
