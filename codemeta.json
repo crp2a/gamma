@@ -51,6 +51,13 @@
     },
     {
       "@type": "Person",
+      "givenName": "Pierre",
+      "familyName": "Guibert",
+      "email": "pierre.guibert@u-bordeaux-montaigne.fr",
+      "@id": "https://orcid.org/0000-0001-8969-8684"
+    },
+    {
+      "@type": "Person",
       "givenName": "Norbert",
       "familyName": "Mercier",
       "email": "norbert.mercier@u-bordeaux-montaigne.fr",
@@ -74,6 +81,10 @@
     {
       "@type": "Organization",
       "name": "Université Bordeaux Montaigne"
+    },
+    {
+      "@type": "Organization",
+      "name": "CNRS"
     },
     {
       "@type": "Organization",
@@ -319,5 +330,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "1576.531KB"
+  "fileSize": "2255.186KB"
 }

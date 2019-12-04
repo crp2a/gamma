@@ -4,6 +4,9 @@ authors:
   Université Bordeaux Montaigne:
     href: https://www.u-bordeaux-montaigne.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_ubm.jpg" height="64" />
+  CNRS:
+    href: https://www.cnrs.fr
+    html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_cnrs.jpg" height="64" />
   LabEx Sciences archéologiques de Bordeaux:
     href: https://lascarbx.labex.u-bordeaux.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_idex.png" height="80" />
