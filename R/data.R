@@ -25,6 +25,7 @@
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
 #' @family datasets
+#' @rdname decay
 #' @keywords datasets internal
 ".decay"
 
@@ -51,6 +52,7 @@
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
 #' @family datasets
+#' @rdname decay_La
 #' @keywords datasets internal
 ".decay_La"
 
@@ -93,7 +95,7 @@
 #' @keywords datasets
 "AIX100"
 
-#' CRP2A Calibration Curve #1
+#' CRP2A Calibration Curve LaBr #1
 #'
 #' @usage data("BDX100")
 #' @details
@@ -107,7 +109,7 @@
 #' \dontrun{
 #' ## Load the curve
 #' utils::data("BDX100", package = "gamma")
-#' BDX1
+#' BDX100
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
@@ -115,3 +117,43 @@
 #' @family datasets
 #' @keywords datasets
 "BDX100"
+
+#' CRP2A Calibration Curve LaBr #2
+#'
+#' @usage data("BDX200")
+#' @details
+#' \tabular{ll}{
+#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
+#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
+#'  \strong{Detector} \tab LaBr \cr
+#'  \strong{Authors} \tab CRP2A Luminescence Team
+#' }
+#' @examples
+#' \dontrun{
+#' ## Load the curve
+#' utils::data("BDX200", package = "gamma")
+#' BDX200
+#' }
+#' @family datasets
+#' @keywords datasets
+"BDX200"
+
+#' CRP2A Calibration Curve NaI
+#'
+#' @usage data("BDX300")
+#' @details
+#' \tabular{ll}{
+#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
+#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
+#'  \strong{Detector} \tab NaI \cr
+#'  \strong{Authors} \tab CRP2A Luminescence Team
+#' }
+#' @examples
+#' \dontrun{
+#' ## Load the curve
+#' utils::data("BDX300", package = "gamma")
+#' BDX300
+#' }
+#' @family datasets
+#' @keywords datasets
+"BDX300"
