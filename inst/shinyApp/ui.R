@@ -194,7 +194,9 @@ shiny_ui <- fluidPage(
             width = 3,
             selectInput("dose_curve", "Select a calibration curve", selected = 1,
                         choices = list(Choose = "",
-                                       IRAMAT = c(BDX100 = "BDX100"),
+                                       IRAMAT = c(BDX100 = "BDX100",
+                                                  BDX200 = "BDX200",
+                                                  BDX300 = "BDX300"),
                                        CEREGE = c(AIX100 = "AIX100")))
           ),
           column(1, style = "margin-top: 25px;", icon("chevron-right", "fa-2x")),
