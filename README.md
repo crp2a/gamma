@@ -36,7 +36,7 @@ files.
 Install the development version from GitHub with:
 
 ``` r
-if (!require("devtools")) install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("crp2a/gamma")
 ```
 
@@ -46,6 +46,9 @@ A [**Shiny**](https://shiny.rstudio.com) application provides an
 exhanced graphical user interface:
 
 ``` r
+## Load the package
+library(gamma)
+
 ## Run the app
 launch_app()
 ```

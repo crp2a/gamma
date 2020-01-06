@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 Install the development version from GitHub with:
 
 ```{r gh-installation, eval=FALSE}
-if (!require("devtools")) install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("crp2a/gamma")
 ```
 
@@ -48,6 +48,9 @@ devtools::install_github("crp2a/gamma")
 A [**Shiny**](https://shiny.rstudio.com) application provides an exhanced graphical user interface:
 
 ```{r shiny, eval=FALSE}
+## Load the package
+library(gamma)
+
 ## Run the app
 launch_app()
 ```
