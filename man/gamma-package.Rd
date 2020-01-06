@@ -52,6 +52,7 @@ Useful links:
  Brice Lebrun \tab \emph{Aix-Marseille Université, France} \cr
  Norbert Mercier \tab \emph{CNRS, France} \cr
  Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France} \cr
+ Magali Rizza \tab \emph{Aix-Marseille Université, France} \cr
  Chantal Tribolo \tab \emph{CNRS, France}
 }
 

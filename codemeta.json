@@ -15,10 +15,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
+    "version": "3.6.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
   "author": [
     {
       "@type": "Person",
@@ -31,7 +31,7 @@
       "@type": "Person",
       "givenName": "Brice",
       "familyName": "Lebrun",
-      "email": "lebrun@cerege.fr",
+      "email": "brice.lebrun@u-bordeaux-montaigne.fr",
       "@id": "https://orcid.org/0000-0001-7503-8685"
     },
     {
@@ -330,5 +330,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "2255.186KB"
+  "fileSize": "1092.262KB"
 }
