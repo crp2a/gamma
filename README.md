@@ -114,10 +114,22 @@ plot(calib, xaxis = "energy", yaxis = "rate")
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
-data(BDX100, package = "gamma")
+data(BDX100_curve, package = "gamma")
+BDX100_curve
+#> Calibration curve:
+#> * Date: 2020-01-09 14:18:54
+#> * Model summary:
+#>   - slope: 0.03203 +/- 0.00061
+#>   - intercept: -61.67793 +/- 30.81448
+#>   - residual standard error: 30.43
+#>   - multiple R-squared: 0.99822
+#>   - adjusted R-squared: 0.99786
+#>   - F-statistic: 2800 on 1 and 5 DF
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX100, calib, simplify = TRUE))
+(doses <- predict_dose(BDX100_curve, calib, simplify = TRUE))
+#> Warning: The following value does not lie in the curve range:
+#> * test_CNF
 #>              name live_time signal_value signal_error dose_value
 #> test_CNF test_CNF   3385.54     126234.7     9.605737   3981.133
 #>          dose_error
