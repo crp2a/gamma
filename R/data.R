@@ -74,7 +74,8 @@
 
 #' CEREGE Calibration Curve #1
 #'
-#' @usage data("AIX100")
+#' @usage
+#'  data("AIX100_curve")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab CEREGE \cr
@@ -85,19 +86,21 @@
 #' @examples
 #' \donttest{
 #' ## Load the curve
-#' utils::data("AIX100", package = "gamma")
-#' AIX1
+#' utils::data("AIX100_curve", package = "gamma")
+#' AIX100_curve
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-"AIX100"
+"AIX100_curve"
 
 #' CRP2A Calibration Curve LaBr #1
 #'
-#' @usage data("BDX100")
+#' @usage
+#'  data("BDX100_data")
+#'  data("BDX100_curve")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
@@ -108,19 +111,24 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data("BDX100", package = "gamma")
-#' BDX100
+#' utils::data("BDX100_curve", package = "gamma")
+#' BDX100_curve
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-"BDX100"
+"BDX100_curve"
+
+#' @rdname BDX100_curve
+"BDX100_data"
 
 #' CRP2A Calibration Curve LaBr #2
 #'
-#' @usage data("BDX200")
+#' @usage
+#'  data("BDX200_data")
+#'  data("BDX200_curve")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
@@ -131,16 +139,21 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data("BDX200", package = "gamma")
-#' BDX200
+#' utils::data("BDX200_curve", package = "gamma")
+#' BDX200_curve
 #' }
 #' @family datasets
 #' @keywords datasets
-"BDX200"
+"BDX200_curve"
+
+#' @rdname BDX200_curve
+"BDX200_data"
 
 #' CRP2A Calibration Curve NaI
 #'
-#' @usage data("BDX300")
+#' @usage
+#'  data("BDX300_data")
+#'  data("BDX300_curve")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
@@ -151,9 +164,12 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data("BDX300", package = "gamma")
-#' BDX300
+#' utils::data("BDX300_curve", package = "gamma")
+#' BDX300_curve
 #' }
 #' @family datasets
 #' @keywords datasets
-"BDX300"
+"BDX300_curve"
+
+#' @rdname BDX300_curve
+"BDX300_data"

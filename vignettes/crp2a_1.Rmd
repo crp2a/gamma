@@ -114,26 +114,33 @@ plot(noise_spc) +
 ## Calibration curve
 ### Summary
 ```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
-data("BDX100")
+data("BDX100_curve")
 
-# Plot Calibration curve
-plot(BDX100) +
+# Plot calibration curve
+plot(BDX100_curve) +
   ggplot2::theme_bw()
+```
+
+```{r calibration-data, echo=FALSE}
+data("BDX100_data")
+
+# Display curve data
+knitr::kable(BDX100_data, row.names = FALSE)
 ```
 
 ```{r lm-summary, echo=FALSE}
 # Slope: 31.16884 / Intercept: 2006.62935
-summary(BDX100[["model"]])
+summary(BDX100_curve[["model"]])
 ```
 
 ### Check model
 ```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
-  name = BDX100[["data"]]$name,
-  fitted = BDX100[["model"]]$fitted.values,
-  residuals = BDX100[["model"]]$residuals,
-  standardized = stats::rstandard(BDX100[["model"]]),
-  cook = stats::cooks.distance(BDX100[["model"]]),
+  name = BDX100_curve[["data"]]$name,
+  fitted = BDX100_curve[["model"]]$fitted.values,
+  residuals = BDX100_curve[["model"]]$residuals,
+  standardized = stats::rstandard(BDX100_curve[["model"]]),
+  cook = stats::cooks.distance(BDX100_curve[["model"]]),
   stringsAsFactors = FALSE
 )
 
@@ -182,14 +189,14 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
 
 ```{r test-old-compare, echo=FALSE, eval=FALSE}
 # The smaller the AIC or BIC, the better the fit
-criterion_aic <- c(stats::AIC(BDX100[["model"]]))
-criterion_bic <- c(stats::BIC(BDX100[["model"]]))
+criterion_aic <- c(stats::AIC(BDX100_curve[["model"]]))
+criterion_bic <- c(stats::BIC(BDX100_curve[["model"]]))
 
 criteria <- data.frame(
   AIC = criterion_aic,
   D_AIC = criterion_aic - min(criterion_aic),
   BIC = criterion_bic,
-  row.names = c("New curve (BDX100)", "Old curve (VBA macro)")
+  row.names = c("New curve (BDX100_curve)", "Old curve (VBA macro)")
 )
 
 knitr::kable(

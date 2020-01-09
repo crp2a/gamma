@@ -212,7 +212,7 @@ get_dose(calib_scaled)
 ### Linear regression
 ```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
 # Build calibration curve
-(AIX100 <- fit_dose(
+(AIX100_curve <- fit_dose(
   calib_scaled,
   noise_scaled,
   range = integration_range,
@@ -226,27 +226,27 @@ get_dose(calib_scaled)
 ))
 
 # Plot Calibration curve
-plot(AIX100) +
+plot(AIX100_curve) +
   ggplot2::theme_bw()
 ```
 
 ```{r save, eval=FALSE, echo=FALSE, include=FALSE}
 # Danger zone! Don't touch!
-# usethis::use_data(AIX100, overwrite = FALSE)
+# usethis::use_data(AIX100_curve, overwrite = FALSE)
 ```
 
 ### Check model
 ```{r lm-summary, echo=FALSE}
-summary(AIX100[["model"]])
+summary(AIX100_curve[["model"]])
 ```
 
 ```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 calib_residuals <- data.frame(
-  name = AIX100[["data"]]$name,
-  fitted = AIX100[["model"]]$fitted.values,
-  residuals = AIX100[["model"]]$residuals,
-  standardized = stats::rstandard(AIX100[["model"]]),
-  cook = stats::cooks.distance(AIX100[["model"]])
+  name = AIX100_curve[["data"]]$name,
+  fitted = AIX100_curve[["model"]]$fitted.values,
+  residuals = AIX100_curve[["model"]]$residuals,
+  standardized = stats::rstandard(AIX100_curve[["model"]]),
+  cook = stats::cooks.distance(AIX100_curve[["model"]])
 )
 
 # Residuals vs fitted values
@@ -295,8 +295,8 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
 ```{r test-old-compare, echo=FALSE, eval=FALSE}
 # The smaller the AIC or BIC, the better the fit
 criteria <- data.frame(
-  AIC = c(stats::AIC(AIX100[["model"]])),
-  BIC = c(stats::BIC(AIX100[["model"]])),
+  AIC = c(stats::AIC(AIX100_curve[["model"]])),
+  BIC = c(stats::BIC(AIX100_curve[["model"]])),
   row.names = c("AIX1")
 )
 

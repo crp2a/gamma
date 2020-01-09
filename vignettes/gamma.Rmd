@@ -211,7 +211,7 @@ To estimate the gamma dose rate, you can either use one of the calibration curve
 
 ```{r dose-rate-curves, eval=FALSE}
 # Load one of the built-in curves
-data(BDX100) # IRAMAT-CRP2A (Bordeaux)
+data(BDX100_curve) # IRAMAT-CRP2A (Bordeaux)
 data(AIX100) # CEREGE (Aix-en-Provence)
 ```
 

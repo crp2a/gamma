@@ -9,10 +9,10 @@
 shiny_server <- function(input, output, session) {
   # Load datasets ==============================================================
   tmp <- new.env()
-  data("BDX100", package = "gamma", envir = tmp)
-  data("BDX200", package = "gamma", envir = tmp)
-  data("BDX300", package = "gamma", envir = tmp)
-  data("AIX100", package = "gamma", envir = tmp)
+  data("BDX100_curve", package = "gamma", envir = tmp)
+  data("BDX200_curve", package = "gamma", envir = tmp)
+  data("BDX300_curve", package = "gamma", envir = tmp)
+  data("AIX100_curve", package = "gamma", envir = tmp)
   # Set reactive values ========================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
   myRangesCalib <- reactiveValues(x = NULL, y = NULL, expand = TRUE)

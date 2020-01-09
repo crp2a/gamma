@@ -30,9 +30,10 @@
 An internal dataset containing the decay data for the Lanthanum isotopes.
 }
 \seealso{
-Other datasets: \code{\link{.decay}}, \code{\link{AIX100}},
-  \code{\link{BDX100}}, \code{\link{BDX200}},
-  \code{\link{BDX300}}, \code{\link{clermont}}
+Other datasets: \code{\link{.decay}},
+  \code{\link{AIX100_curve}}, \code{\link{BDX100_curve}},
+  \code{\link{BDX200_curve}}, \code{\link{BDX300_curve}},
+  \code{\link{clermont}}
 }
 \concept{datasets}
 \keyword{datasets}
