@@ -20,6 +20,16 @@ setMethod(
     if (is.null(span)) span <- round(length(count) * 0.05)
     span <- as.integer(span)[[1L]]
 
+    if (SNR != 0) {
+      noise <- switch (
+        method,
+        MAD = MAD
+      )
+      threshold <- noise(count, ...) * SNR
+      index_noise <- count < threshold
+      count[index_noise] <- 0
+    }
+
     shape <- diff(sign(diff(count, na.pad = FALSE)))
     index_shape <- lapply(
       X = which(shape < 0),
@@ -38,16 +48,9 @@ setMethod(
       data = count,
       span = span
     )
-
-    noise <- switch (
-      method,
-      MAD = MAD(count, ...)
-    )
-    threshold <- noise * SNR
     index_noise <- unlist(index_shape)
-    index_subset <- subset(index_noise, count[index_noise] >= threshold)
 
-    pks <- spc[index_subset, ]
+    pks <- spc[index_noise, ]
     rownames(pks) <- paste0("peak #", seq_len(nrow(pks)))
 
     .PeakPosition(
