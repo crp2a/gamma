@@ -162,7 +162,7 @@ shiny_ui <- fluidPage(
                 numericInput("calib_peak_snr", "Signal-to-noise-ratio",
                              value = 2, min = 1, max = 5, step = 1),
                 sliderInput("calib_peak_span", "Half window size",
-                            min = 1, max = 100, value = 5, step = 1)
+                            min = 0, max = 100, value = 5, step = 1)
               )
             )
           )

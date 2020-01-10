@@ -304,7 +304,7 @@ setValidity(
         sprintf("Slot `window` must be an integer vector of length 1, not %d.",
                 length_window)
       )
-    } else if (!is.na(window) && !isPositive(window, strict = TRUE)) {
+    } else if (!is.na(window) && !isPositive(window, strict = FALSE)) {
       message <- c(
         message,
         sprintf("Slot `window` must be a strictly positive integer, not %d.",
