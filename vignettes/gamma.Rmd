@@ -60,11 +60,11 @@ Both Canberra CNF and TKA files can be imported.
 ```{r import}
 # Automatically skip the first chanels
 # Import a CNF file
-cnf_test <- system.file("extdata/test_CNF.cnf", package = "gamma")
+cnf_test <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 (spc_cnf <- read(cnf_test))
 
 # Import a TKA file
-tka_test <- system.file("extdata/test_TKA.tka", package = "gamma")
+tka_test <- system.file("extdata/test_LaBr.TKA", package = "gamma")
 (spc_tka <- read(tka_test))
 
 # Import all files in a given directory

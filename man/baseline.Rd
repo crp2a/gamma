@@ -64,7 +64,7 @@ The following methods are availble for baseline estimation:
 }
 \examples{
 # Import a CNF file
-spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 spectrum <- read(spc_file)
 
 # Remove the first chanels

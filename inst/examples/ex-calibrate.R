@@ -1,5 +1,5 @@
 ## Import a CNF file for calibration
-spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
 (spectrum <- read(spc_file))
 
 ## Set peak positions (chanel) and expected energy values

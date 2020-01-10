@@ -1,5 +1,5 @@
 ## Import a Canberra CNF file
-cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+cnf_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 (spectrum <- read(cnf_file))
 
 summarise(spectrum)

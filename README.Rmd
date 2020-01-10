@@ -66,7 +66,7 @@ library(gamma)
 library(magrittr)
 
 ## Find the full path to the spectrum file
-spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 
 ## Import the spectrum
 spectrum <- read(spc_file)

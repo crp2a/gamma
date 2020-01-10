@@ -40,7 +40,7 @@ Either positive values to keep, or negative values to drop, should be
 }
 \examples{
 ## Import CNF files
-spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 spectrum <- read(spc_file)
 
 ## Plot spectrum

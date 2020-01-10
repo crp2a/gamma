@@ -1,7 +1,7 @@
 context("Plot spectrum")
 
 test_that("plot a GammaSpectrum object", {
-  spc_file_cnf <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  spc_file_cnf <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file_cnf)
 
   gg_spectrum_chanel <- plot(spc_cnf, xaxis= "chanel")
@@ -16,14 +16,14 @@ test_that("plot a GammaSpectrum object", {
   gg_spectrum_rate <- plot(spc_cnf, yaxis= "rate")
   vdiffr::expect_doppelganger("spectrum_rate", gg_spectrum_rate)
 
-  spc_file_tka <- system.file("extdata/test_TKA.tka", package = "gamma")
+  spc_file_tka <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   spc_tka <- read(spc_file_tka)
 
   expect_warning(plot(spc_tka, xaxis = "energy"),
                  "The energy scale is missing, displaying chanels instead.")
 })
 test_that("plot GammaSpectrum and PeakPosition objects", {
-  spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
   peaks <- find_peaks(spc_cnf)
 
@@ -35,14 +35,14 @@ test_that("plot GammaSpectrum and PeakPosition objects", {
 })
 test_that("plot a GammaSpectra", {
   spc_dir <- system.file("extdata/", package = "gamma")
-  spectra <- read(spc_dir)
+  spectra <- read(spc_dir)[-1]
 
   for (i in c(TRUE, FALSE)) {
     gg_spectra <- plot(spectra, facet = i)
     vdiffr::expect_doppelganger(paste0("spectra_facet-", i), gg_spectra)
   }
 
-  spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  spc_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   spectrum <- methods::as(read(spc_file), "GammaSpectra")
   expect_warning(plot(spectrum, xaxis = "energy"),
                  "The energy scale is missing for one or more spectra")

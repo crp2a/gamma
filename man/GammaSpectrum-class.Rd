@@ -86,7 +86,7 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 \examples{
 # Import a Canberra CNF file
-spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 (spectrum <- read(spc_file))
 
 ## Access

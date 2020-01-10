@@ -64,7 +64,7 @@ library(gamma)
 library(magrittr)
 
 ## Find the full path to the spectrum file
-spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
 
 ## Import the spectrum
 spectrum <- read(spc_file)
@@ -129,11 +129,11 @@ BDX100_curve
 ## Estimate the gamma dose rate
 (doses <- predict_dose(BDX100_curve, calib, simplify = TRUE))
 #> Warning: The following value does not lie in the curve range:
-#> * test_CNF
-#>              name live_time signal_value signal_error dose_value
-#> test_CNF test_CNF   3385.54     126234.7     9.605737   3981.133
-#>          dose_error
-#> test_CNF   75.23958
+#> * test_LaBr
+#>                name live_time signal_value signal_error dose_value
+#> test_LaBr test_LaBr   3385.54     126234.7     9.605737   3981.133
+#>           dose_error
+#> test_LaBr   75.23958
 ```
 
 ## Contributing

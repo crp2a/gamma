@@ -4,11 +4,11 @@ test_that("Import a gamma spectrum", {
   tka_file <- system.file("extdata/xxx.cnf", package = "gamma")
   expect_error(read(tka_file))
 
-  tka_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  tka_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   tka_spectrum <- read(tka_file)
   expect_output(show(tka_spectrum), "Gamma spectrum")
 
-  cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  cnf_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   cnf_spectrum <- read(cnf_file)
   expect_output(show(cnf_spectrum), "Gamma spectrum")
   expect_equal(get_chanels(cnf_spectrum), 1024)

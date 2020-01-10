@@ -1,7 +1,7 @@
 context("Integrate spectrum")
 
 test_that("Integrate GammaSpectrum", {
-  spc_cnf <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  spc_cnf <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   cnf <- read(spc_cnf)
   cnf <- slice_signal(cnf)
   noise_file <- system.file("extdata/BDX100/background", package = "gamma")
@@ -23,7 +23,7 @@ test_that("Integrate GammaSpectrum", {
   expect_error(integrate_signal(cnf, range = c(200, 2800), noise = 1),
                "must be a numeric vector of length 2")
 
-  spc_tka <- system.file("extdata/test_TKA.tka", package = "gamma")
+  spc_tka <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   tka <- read(spc_tka)
   expect_error(integrate_signal(tka, range = c(200, 2800)),
                "You must calibrate the energy scale of your spectrum first.")

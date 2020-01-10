@@ -1,7 +1,7 @@
 context("Calibrate energy scale")
 
 test_that("Calibrate a GammaSpectrum object with a list", {
-  spc_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   spectrum <- read(spc_file)
 
   lines <- list(
@@ -41,7 +41,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
                "You have to provide at least 3 lines for calibration, not 2.")
 })
 test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
-  spc_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  spc_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   spectrum <- read(spc_file)
 
   peaks <- .PeakPosition(
@@ -61,16 +61,16 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
   expect_length(calib@energy, 1024)
 })
 test_that("the energy scale of a GammaSpectrum is set", {
-  cnf_file <- system.file("extdata/test_CNF.cnf", package = "gamma")
+  cnf_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   cnf_spc <- read(cnf_file)
   expect_true(is_calibrated(cnf_spc))
 
-  tka_file <- system.file("extdata/test_TKA.tka", package = "gamma")
+  tka_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
   tka_spc <- read(tka_file)
   expect_false(is_calibrated(tka_spc))
 
   set_file <- system.file("extdata/", package = "gamma")
   set_spc <- read(set_file)
-  expect_equivalent(is_calibrated(set_spc), c(TRUE, FALSE))
+  expect_equivalent(is_calibrated(set_spc), c(TRUE, TRUE, FALSE))
 })
 
