@@ -136,25 +136,32 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "CalibrationCurve", y = "missing"),
-  definition = function(x, ...) {
+  definition = function(x, threshold = c("Ni", "NiEi"), ...) {
+    # Validation
+    threshold <- match.arg(threshold, several.ok = FALSE)
+
     # Get data
     data <- x[["data"]]
-    signal <- range(data$signal_value)
+    model <- get_model(x, threshold)
+    signal_value <- paste0(threshold, "_signal")
+    signal_error <- paste0(threshold, "_error")
+    signal <- range(data[[signal_value]])
 
     # Curve
-    new_data <- data.frame(signal_value = signal)
-    predicted <- stats::predict.lm(x[["model"]], new_data)
+    new_data <- data.frame(signal)
+    colnames(new_data) <- signal_value
+    predicted <- stats::predict.lm(model, new_data)
     segment_xy <- c(signal, predicted)
     names(segment_xy) <- c("x", "xmin", "y", "ymin")
     segment <- as.data.frame(t(as.matrix(segment_xy)))
 
     # Set error bar width and height
     # error_width <- sum(signal * c(-1, 1)) / 100
-    # error_height <- sum(range(data$dose_value) * c(-1, 1)) / 100
+    # error_height <- sum(range(data$gamma_dose) * c(-1, 1)) / 100
 
     ggplot(
       data = data,
-      mapping = aes(x = .data$signal_value, y = .data$dose_value,
+      mapping = aes(x = .data[[signal_value]], y = .data$gamma_dose,
                     label = .data$name)) +
       geom_segment(
         data = segment,
@@ -164,14 +171,14 @@ setMethod(
         inherit.aes = FALSE
       ) +
       geom_pointrange(
-        mapping = aes(ymin = .data$dose_value - .data$dose_error,
-                      ymax = .data$dose_value + .data$dose_error),
+        mapping = aes(ymin = .data$gamma_dose - .data$gamma_error,
+                      ymax = .data$gamma_dose + .data$gamma_error),
         colour = "red") +
       geom_errorbarh(
-        mapping = aes(xmin = .data$signal_value - .data$signal_error,
-                      xmax = .data$signal_value + .data$signal_error),
+        mapping = aes(xmin = .data[[signal_value]] - .data[[signal_error]],
+                      xmax = .data[[signal_value]] + .data[[signal_error]]),
         height = 0,
         colour = "red") +
-      labs(x = "Signal", y = "Dose rate [\u03BCGy/y]")
+      labs(x = sprintf("Signal [%s]", threshold), y = "Dose rate [\u03BCGy/y]")
   }
 )

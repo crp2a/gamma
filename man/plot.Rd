@@ -22,7 +22,8 @@
 
 \S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
 
-\S4method{plot}{CalibrationCurve,missing}(x, y, ...)
+\S4method{plot}{CalibrationCurve,missing}(x, threshold = c("Ni", "NiEi"),
+  ...)
 }
 \arguments{
 \item{x, y}{Objects to be plotted.}
@@ -39,6 +40,10 @@ giving the selection of the spectrum that are drawn.}
 
 \item{facet}{A \code{\link{logical}} scalar: should a matrix of panels
 defined by spectrum be drawn?}
+
+\item{threshold}{A \code{\link{character}} sting specifying the threshold
+to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+(see details).}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.

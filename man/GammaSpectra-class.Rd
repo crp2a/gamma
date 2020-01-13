@@ -87,7 +87,7 @@ spectra[["BRIQUE"]]
 \linkS4class{GammaSpectrum}.
 
 Other class: \code{\link{BaseLine-class}},
-  \code{\link{CalibrationCurve-class}},
+  \code{\link{DoseRateModel-class}},
   \code{\link{GammaSpectrum-class}},
   \code{\link{PeakPosition-class}}
 }

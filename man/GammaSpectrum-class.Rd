@@ -113,7 +113,7 @@ spectrum[["calibration"]]
 \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 
 Other class: \code{\link{BaseLine-class}},
-  \code{\link{CalibrationCurve-class}},
+  \code{\link{DoseRateModel-class}},
   \code{\link{GammaSpectra-class}},
   \code{\link{PeakPosition-class}}
 }

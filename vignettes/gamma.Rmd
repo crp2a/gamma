@@ -211,8 +211,8 @@ To estimate the gamma dose rate, you can either use one of the calibration curve
 
 ```{r dose-rate-curves, eval=FALSE}
 # Load one of the built-in curves
-data(BDX100_curve) # IRAMAT-CRP2A (Bordeaux)
-data(AIX100) # CEREGE (Aix-en-Provence)
+data(BDX_LaBr_1_curve) # IRAMAT-CRP2A (Bordeaux)
+data(AIX_NaI_curve) # CEREGE (Aix-en-Provence)
 ```
 
 The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.
@@ -228,14 +228,16 @@ noise_spc <- read(noise_dir)
 
 # Set the known dose rates
 data("clermont")
-set_dose(calib_spc) <- clermont[, c("gamma", "gamma_error")]
+set_dose(calib_spc) <- clermont[, c("gamma_dose", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit_dose(
   calib_spc,
   noise_spc,
-  range = c(165, 2800), # Set the integration range (in keV)
-  intercept = TRUE
+  Ni_noise = c(22.61, 0.05),
+  Ni_range = c(300, 2800), # Set the integration range (in keV)
+  NiEi_noise = c(25280, 1.66),
+  NiEi_range = c(165, 2800)
 )
 
 # The linear model can be accessed for further investigations

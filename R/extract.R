@@ -212,7 +212,7 @@ setMethod(
   definition = function(object) {
     dose <- vapply(object, FUN = get_dose, FUN.VALUE = numeric(2))
     dose <- as.data.frame(t(dose))
-    colnames(dose) <- c("value", "error")
+    colnames(dose) <- c("gamma_dose", "gamma_error")
     dose
   }
 )
@@ -268,6 +268,45 @@ setMethod(
                    several.ok = FALSE)
     data <- methods::slot(x, i)
     return(data)
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_model,CalibrationCurve-method
+setMethod(
+  f = "get_model",
+  signature = "CalibrationCurve",
+  definition = function(object, threshold = c("Ni", "NiEi")) {
+    threshold <- match.arg(threshold, several.ok = FALSE)
+    x <- methods::slot(object, threshold)
+    x@model
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_noise,CalibrationCurve-method
+setMethod(
+  f = "get_noise",
+  signature = "CalibrationCurve",
+  definition = function(object, threshold = c("Ni", "NiEi")) {
+    threshold <- match.arg(threshold, several.ok = FALSE)
+    x <- methods::slot(object, threshold)
+    x@background
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_range,CalibrationCurve-method
+setMethod(
+  f = "get_range",
+  signature = "CalibrationCurve",
+  definition = function(object, threshold = c("Ni", "NiEi")) {
+    threshold <- match.arg(threshold, several.ok = FALSE)
+    x <- methods::slot(object, threshold)
+    x@range
   }
 )
 

@@ -163,16 +163,18 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 
 #' An S4 class to Represent a Dose Rate Calibration Curve
 #'
-#' @slot details A \code{\link{list}} of length-one vector giving the curve
-#'  metadata.
 #' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
 #'  curve.
-#' @slot noise A length-two \code{\link{numeric}} vector giving the noise value
-#'  and error (see \code{\link{integrate_signal}}).
-#' @slot integration A length-two \code{\link{numeric}} vector giving the energy
+#' @slot background A length-two \code{\link{numeric}} vector giving the
+#'  background noise value and error (see \code{\link{integrate_signal}}).
+#' @slot range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (see \code{\link{integrate_signal}}).
-#' @slot data A \code{\link[=data.frame]{data frame}} giving the data used for
+#' @slot Ni A \code{DoseRateModelNi} object.
+#' @slot NiEi A \code{DoseRateModelNi} object.
+#' @slot data A \code{\link{data.frame}} giving the data used for
 #'  linear model fitting.
+#' @slot details A \code{\link{list}} of length-one vector giving the curve
+#'  metadata.
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 #' \describe{
@@ -183,27 +185,35 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @docType class
 #' @family class
 #' @aliases CalibrationCurve-class
+
+#' @rdname CalibrationCurve-class
+.DoseRateModel <- setClass(
+  Class = "DoseRateModel",
+  slots = c(
+    model = "lm",
+    background = "numeric",
+    range = "numeric"
+  ),
+  contains = "VIRTUAL"
+)
+#' @rdname CalibrationCurve-class
+.DoseRateModelNi <- setClass(
+  Class = "DoseRateModelNi",
+  contains = "DoseRateModel"
+)
+#' @rdname CalibrationCurve-class
+.DoseRateModelNiEi <- setClass(
+  Class = "DoseRateModelNiEi",
+  contains = "DoseRateModel"
+)
+#' @rdname CalibrationCurve-class
 .CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
   slots = c(
-    details = "list",
-    model = "lm",
-    noise = "numeric",
-    integration = "numeric",
-    data = "data.frame"
-  ),
-  prototype = list(
-    details = list(
-      laboratory = "unknown",
-      instrument = "unknown",
-      detector = "unknown",
-      authors = "unknown",
-      date = Sys.time()
-    ),
-    model = stats::lm(0 ~ 0),
-    noise = numeric(0),
-    integration = numeric(0),
-    data = data.frame()
+    Ni = "DoseRateModelNi",
+    NiEi = "DoseRateModelNiEi",
+    data = "data.frame",
+    details = "list"
   )
 )
 
@@ -343,14 +353,13 @@ setMethod(
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",
-  definition = function(.Object, details, model, noise, integration, data) {
+  definition = function(.Object, Ni, NiEi, data, details) {
 
     info <- if (!missing(details)) details else list()
     info$date <- Sys.time()
     .Object@details <- info
-    if (!missing(model)) .Object@model <- model
-    if (!missing(noise)) .Object@noise <- noise
-    if (!missing(integration)) .Object@integration <- integration
+    if (!missing(Ni)) .Object@Ni <- Ni
+    if (!missing(NiEi)) .Object@NiEi <- NiEi
     if (!missing(data)) .Object@data <- data
 
     methods::validObject(.Object)

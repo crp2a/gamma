@@ -72,28 +72,10 @@ setMethod(
   f = "show",
   signature = "CalibrationCurve",
   definition = function(object) {
-    if (length(object@model$coefficients) != 0) {
-      meta <- summary(object@model)
-      coef <- round(meta$coefficients, 5)
-      fstat <- round(meta$fstatistic, 0)
-      if (nrow(coef) > 1) {
-        intercept <- paste0(coef[1, c(1, 2)], collapse = " +/- ")
-        slope <- paste0(coef[2, c(1, 2)], collapse = " +/- ")
-      } else {
-        intercept <- NA_character_
-        slope <- paste0(coef[c(1, 2)], collapse = " +/- ")
-      }
+    if (length(object@Ni@model$coefficients) != 0) {
       cat(
         "Calibration curve:\n",
-        "* Date: ", as.character(object@details$date), "\n",
-        "* Model summary:\n",
-        "  - slope: ", slope, "\n",
-        "  - intercept: ", intercept, "\n",
-        "  - residual standard error: ", round(meta$sigma, 2), "\n",
-        "  - multiple R-squared: ", round(meta$r.squared, 5), "\n",
-        "  - adjusted R-squared: ", round(meta$adj.r.squared, 5), "\n",
-        "  - F-statistic: ", fstat[[1]], " on ", fstat[[2]], " and ",
-        fstat[[3]], " DF",
+        "* Date: ", as.character(object@details$date),
         sep = ""
       )
     } else {

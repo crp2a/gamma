@@ -21,6 +21,12 @@
 \alias{get_energy-method}
 \alias{set_energy<-}
 \alias{set_energy-method}
+\alias{get_model}
+\alias{get_model-method}
+\alias{get_noise}
+\alias{get_noise-method}
+\alias{get_range}
+\alias{get_range-method}
 \alias{get_hash,GammaSpectrum-method}
 \alias{get_names,GammaSpectrum-method}
 \alias{set_names<-,GammaSpectrum-method}
@@ -41,6 +47,9 @@
 \alias{get_dose,GammaSpectra-method}
 \alias{set_dose<-,GammaSpectra-method}
 \alias{set_dose,GammaSpectra-method}
+\alias{get_model,CalibrationCurve-method}
+\alias{get_noise,CalibrationCurve-method}
+\alias{get_range,CalibrationCurve-method}
 \alias{get_hash,PeakPosition-method}
 \alias{get_chanels,PeakPosition-method}
 \alias{get_energy,PeakPosition-method}
@@ -63,6 +72,12 @@ set_dose(object) <- value
 get_energy(object)
 
 set_energy(object) <- value
+
+get_model(object, ...)
+
+get_noise(object, ...)
+
+get_range(object, ...)
 
 \S4method{get_hash}{GammaSpectrum}(object)
 
@@ -92,6 +107,15 @@ set_energy(object) <- value
 
 \S4method{set_dose}{GammaSpectra}(object) <- value
 
+\S4method{get_model}{CalibrationCurve}(object, threshold = c("Ni",
+  "NiEi"))
+
+\S4method{get_noise}{CalibrationCurve}(object, threshold = c("Ni",
+  "NiEi"))
+
+\S4method{get_range}{CalibrationCurve}(object, threshold = c("Ni",
+  "NiEi"))
+
 \S4method{get_hash}{PeakPosition}(object)
 
 \S4method{get_chanels}{PeakPosition}(object)
@@ -105,6 +129,12 @@ set_energy(object) <- value
 
 \item{value}{A possible value for the element(s) of \code{object} (see
 below).}
+
+\item{...}{Currently not used.}
+
+\item{threshold}{A \code{\link{character}} sting specifying the threshold
+to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+(see details).}
 }
 \value{
 An object of the same sort as \code{object} with the new values assigned.

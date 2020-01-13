@@ -35,7 +35,7 @@ plot(spc_clean1) +
 \seealso{
 \linkS4class{GammaSpectrum}.
 
-Other class: \code{\link{CalibrationCurve-class}},
+Other class: \code{\link{DoseRateModel-class}},
   \code{\link{GammaSpectra-class}},
   \code{\link{GammaSpectrum-class}},
   \code{\link{PeakPosition-class}}

@@ -21,9 +21,8 @@ Clermont Reference Data
 }
 \seealso{
 Other datasets: \code{\link{.decay_La}},
-  \code{\link{.decay}}, \code{\link{AIX100_curve}},
-  \code{\link{BDX100_curve}}, \code{\link{BDX200_curve}},
-  \code{\link{BDX300_curve}}
+  \code{\link{.decay}}, \code{\link{AIX_NaI_curve}},
+  \code{\link{BDX_LaBr_1_curve}}
 }
 \concept{datasets}
 \keyword{datasets}

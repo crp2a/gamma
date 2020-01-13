@@ -75,7 +75,9 @@
 #' CEREGE Calibration Curve #1
 #'
 #' @usage
-#'  data("AIX100_curve")
+#'  data("AIX_NaI_curve")
+#'
+#'  data("AIX_NaI_data")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab CEREGE \cr
@@ -86,21 +88,25 @@
 #' @examples
 #' \donttest{
 #' ## Load the curve
-#' utils::data("AIX100_curve", package = "gamma")
-#' AIX100_curve
+#' utils::data("AIX_NaI_curve", package = "gamma")
+#' AIX_NaI_curve
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-"AIX100_curve"
+#' @rdname AIX_NaI
+"AIX_NaI_curve"
+
+#' @rdname AIX_NaI
+"AIX_NaI_data"
 
 #' CRP2A Calibration Curve LaBr #1
 #'
 #' @usage
-#'  data("BDX100_data")
-#'  data("BDX100_curve")
+#'  data("BDX_LaBr_1_curve")
+#'  data("BDX_LaBr_1_data")
 #' @details
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
@@ -111,65 +117,16 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data("BDX100_curve", package = "gamma")
-#' BDX100_curve
+#' utils::data("BDX_LaBr_1_curve", package = "gamma")
+#' BDX_LaBr_1_curve
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-"BDX100_curve"
+#' @rdname BDX_LaBr_1
+"BDX_LaBr_1_curve"
 
-#' @rdname BDX100_curve
-"BDX100_data"
-
-#' CRP2A Calibration Curve LaBr #2
-#'
-#' @usage
-#'  data("BDX200_data")
-#'  data("BDX200_curve")
-#' @details
-#' \tabular{ll}{
-#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
-#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector} \tab LaBr \cr
-#'  \strong{Authors} \tab CRP2A Luminescence Team
-#' }
-#' @examples
-#' \dontrun{
-#' ## Load the curve
-#' utils::data("BDX200_curve", package = "gamma")
-#' BDX200_curve
-#' }
-#' @family datasets
-#' @keywords datasets
-"BDX200_curve"
-
-#' @rdname BDX200_curve
-"BDX200_data"
-
-#' CRP2A Calibration Curve NaI
-#'
-#' @usage
-#'  data("BDX300_data")
-#'  data("BDX300_curve")
-#' @details
-#' \tabular{ll}{
-#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
-#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector} \tab NaI \cr
-#'  \strong{Authors} \tab CRP2A Luminescence Team
-#' }
-#' @examples
-#' \dontrun{
-#' ## Load the curve
-#' utils::data("BDX300_curve", package = "gamma")
-#' BDX300_curve
-#' }
-#' @family datasets
-#' @keywords datasets
-"BDX300_curve"
-
-#' @rdname BDX300_curve
-"BDX300_data"
+#' @rdname BDX_LaBr_1
+"BDX_LaBr_1_data"

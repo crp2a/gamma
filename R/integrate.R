@@ -8,17 +8,19 @@ NULL
 setMethod(
   f = "integrate_signal",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, range, noise = NULL, NiEi = TRUE, ...) {
+  definition = function(object, range, background = NULL,
+                        threshold = c("Ni", "NiEi"), ...) {
     # Validation
+    threshold <- match.arg(threshold, several.ok = FALSE)
     if (!is.numeric(range) || length(range) != 2)
       stop(sprintf("`range` must be a numeric vector of length 2, not %d.",
                    length(range)), call. = FALSE)
-    if (!is.null(noise)) {
-      if (!is.numeric(noise) || length(noise) != 2)
-        stop(sprintf("`noise` must be a numeric vector of length 2, not %d.",
-                     length(noise)), call. = FALSE)
+    if (!is.null(background)) {
+      if (!is.numeric(background) || length(background) != 2)
+        stop(sprintf("`background` must be a numeric vector of length 2, not %d.",
+                     length(background)), call. = FALSE)
     } else {
-      noise <- c(0, 0)
+      background <- c(0, 0)
     }
     if (!is_calibrated(object))
       stop("You must calibrate the energy scale of your spectrum first.",
@@ -30,24 +32,33 @@ setMethod(
     # Integrate signal between boundaries
     int_index <- which(spc_data$energy >= range[[1L]] &
                          spc_data$energy <= range[[2L]])
+    int_signal <- c(
+      Ni = sum(spc_data$count[int_index]),
+      NiEi = crossprod(spc_data$energy[int_index], spc_data$count[int_index])
+    )
+    signal2net <- function(signal, live_time, background_value, background_error) {
+      # Normalize integrated signal to time
+      norm_signal <- signal / live_time
+      norm_error <- sqrt(2 * signal) / live_time
+      # Compute net signal (substracted background background)
+      net_signal <- norm_signal - background_value
+      net_error <- sqrt(norm_error^2 + background_error^2)
 
-    if (NiEi) {
-      int_signal <- crossprod(spc_data$energy[int_index],
-                              spc_data$count[int_index])
-    } else {
-      int_signal <- sum(spc_data$count[int_index])
+      c(signal = net_signal, error = net_error)
     }
 
     # Normalize integrated signal to time
-    live_time <- object@live_time
-    norm_signal <- int_signal / live_time
-    norm_error <- sqrt(2 * int_signal) / live_time
-
-    # Compute net signal (substracted background noise)
-    net_signal <- norm_signal - noise[[1L]]
-    net_error <- sqrt(norm_error^2 + noise[[2L]]^2)
-
-    c(value = net_signal, error = net_error)
+    net <- vapply(
+      X = int_signal,
+      FUN = signal2net,
+      FUN.VALUE = numeric(2),
+      live_time = object@live_time,
+      background_value = background[[1L]],
+      background_error = background[[2L]]
+    )
+    net <- as.data.frame(net)[[threshold]]
+    names(net) <- c(paste0(threshold, "_signal"), paste0(threshold, "_error"))
+    return(net)
   }
 )
 
@@ -57,12 +68,13 @@ setMethod(
 setMethod(
   f = "integrate_signal",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, range, noise = c(0, 0), NiEi = TRUE,
-                        simplify = FALSE, ...) {
+  definition = function(object, range, background = NULL,
+                        threshold = c("Ni", "NiEi"), simplify = FALSE, ...) {
 
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, noise = noise, NiEi = NiEi)
+                      range = range, background = background,
+                      threshold = threshold)
     if (simplify) {
       do.call(rbind, signals)
     } else {

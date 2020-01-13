@@ -9,10 +9,10 @@
 shiny_server <- function(input, output, session) {
   # Load datasets ==============================================================
   tmp <- new.env()
-  data("BDX100_curve", package = "gamma", envir = tmp)
-  data("BDX200_curve", package = "gamma", envir = tmp)
-  data("BDX300_curve", package = "gamma", envir = tmp)
-  data("AIX100_curve", package = "gamma", envir = tmp)
+  data("BDX_LaBr_1_curve", package = "gamma", envir = tmp)
+  # data("BDX200_curve", package = "gamma", envir = tmp)
+  # data("BDX300_curve", package = "gamma", envir = tmp)
+  data("AIX_NaI_curve", package = "gamma", envir = tmp)
   # Set reactive values ========================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
   myRangesCalib <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
@@ -333,11 +333,12 @@ shiny_server <- function(input, output, session) {
     get(input$dose_curve, envir = tmp)
   })
   doseData <- reactive({
-    req(doseCurve(), myData$spectra, input$dose_error)
+    req(doseCurve(), myData$spectra, input$dose_error, input$dose_threshold)
     withCallingHandlers(
       {
         predict_dose(doseCurve(), myData$spectra,
-                     epsilon = input$dose_error / 100, simplify = TRUE)
+                     epsilon = input$dose_error / 100,
+                     threshold = input$dose_threshold, simplify = TRUE)
       },
       warning = function(e) {
         warn <- gsub("\n|\\*", "", e$message)
@@ -363,16 +364,18 @@ shiny_server <- function(input, output, session) {
   output$dose_plot_curve <- renderPlot({
     req(input$dose_select)
     extra <- doseData()[input$dose_select, ]
-
-    plot(doseCurve()) +
+    print(input$dose_threshold)
+    signal_value <- paste0(input$dose_threshold, "_signal")
+    signal_error <- paste0(input$dose_threshold, "_error")
+    plot(doseCurve(), threshold = input$dose_threshold) +
       ggplot2::geom_pointrange(
         data = extra,
-        mapping = ggplot2::aes(ymin = .data$dose_value - .data$dose_error,
-                               ymax = .data$dose_value + .data$dose_error)) +
+        mapping = ggplot2::aes(ymin = .data$gamma_dose - .data$gamma_error,
+                               ymax = .data$gamma_dose + .data$gamma_error)) +
       ggplot2::geom_errorbarh(
         data = extra,
-        mapping = ggplot2::aes(xmin = .data$signal_value - .data$signal_error,
-                               xmax = .data$signal_value + .data$signal_error),
+        mapping = ggplot2::aes(xmin = .data[[signal_value]] - .data[[signal_error]],
+                               xmax = .data[[signal_value]] + .data[[signal_error]]),
         height = 0) +
       ggplot2::theme_bw()
   })

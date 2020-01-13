@@ -193,11 +193,14 @@ shiny_ui <- fluidPage(
           column(
             width = 3,
             selectInput("dose_curve", "Select a calibration curve", selected = 1,
-                        choices = list(Choose = "",
-                                       IRAMAT = c(BDX100 = "BDX100_curve",
-                                                  BDX200 = "BDX200_curve",
-                                                  BDX300 = "BDX300_curve"),
-                                       CEREGE = c(AIX100 = "AIX100_curve")))
+                        choices = list(
+                          Choose = "",
+                          IRAMAT = c(BDX_LaBr_1 = "BDX_LaBr_1_curve",
+                                     BDX_LaBr_2 = "BDX_LaBr_2_curve",
+                                     BDX_NaI = "BDX_NaI_curve"),
+                          CEREGE = c(AIX_NaI = "AIX_NaI_curve")
+                        )
+            )
           ),
           column(1, style = "margin-top: 25px;", icon("chevron-right", "fa-2x")),
           column(
@@ -213,6 +216,9 @@ shiny_ui <- fluidPage(
             conditionalPanel(
               tags$hr(),
               condition = "input.dose_curve != ''",
+              radioButtons("dose_threshold", "Threshold",
+                           choices = c(`Count (Ni)` = "Ni",
+                                       `Energy (Ni.Ei)` = "NiEi")),
               numericInput("dose_error", "Energy calibration error (%)",
                            min = 0, max = 100, value = 3, step = 1)
             )

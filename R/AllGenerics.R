@@ -9,6 +9,10 @@ NULL
 #' @param object An object from which to get or set element(s).
 #' @param value A possible value for the element(s) of \code{object} (see
 #'  below).
+#' @param threshold A \code{\link{character}} sting specifying the threshold
+#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+#'  (see details).
+#' @param ... Currently not used.
 #' @return
 #'  An object of the same sort as \code{object} with the new values assigned.
 #' @author N. Frerebeau
@@ -73,6 +77,27 @@ setGeneric(
 setGeneric(
   name = "set_energy<-",
   def = function(object, value) standardGeneric("set_energy<-")
+)
+
+#' @rdname access
+#' @aliases get_model-method
+setGeneric(
+  name = "get_model",
+  def = function(object, ...) standardGeneric("get_model")
+)
+
+#' @rdname access
+#' @aliases get_noise-method
+setGeneric(
+  name = "get_noise",
+  def = function(object, ...) standardGeneric("get_noise")
+)
+
+#' @rdname access
+#' @aliases get_range-method
+setGeneric(
+  name = "get_range",
+  def = function(object, ...) standardGeneric("get_range")
 )
 
 # ------------------------------------------------------------------------------
@@ -209,25 +234,22 @@ setGeneric(
 #' \code{predict_dose} predicts in-situ gamma dose rate.
 #' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 #'  object.
-#' @param noise A \linkS4class{GammaSpectrum} object or a length-two
-#'  \code{\link{numeric}} vector giving the background noise integration
-#'  value and error, respectively.
-#' @param range A length-two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (in keV).
-#' @param intercept A \code{\link{logical}} scalar: should the intercept of the
-#'  curve be estimated? Change this only if you know what you are doing.
-#' @param weights A \code{\link{logical}} scalar: should weights be used in the
-#'  fitting process. If \code{TRUE}, the inverse of the squared dose rate
-#'  errors are used. Change this only if you know what you are doing.
+#' @param Ni_noise,NiEi_noise A length-two \code{\link{numeric}} vector giving
+#'  the background noise integration value and error, respectively.
+#' @param Ni_range,NiEi_range A length-two \code{\link{numeric}} vector giving
+#'  the energy range to integrate within (in keV).
 #' @param details A \code{\link{list}} of length-one vector specifying
 #'  additional informations about the instrument for which the curve is built.
 #' @param spectrum An optional \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object in which to look for variables with which
 #'  to predict. If omitted, the fitted values are used.
+#' @param threshold A \code{\link{character}} sting specifying the threshold
+#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+#'  (see details).
 #' @param epsilon A \code{\link{numeric}} value giving an extra error term
 #'  introduced by the calibration of the energy scale of the spectrum.
-#' @param simplify A \code{\link{logical}} scalar: should the result be
-#'  simplified to a matrix? If \code{FALSE} (default), returns a list.
+# @param simplify A \code{\link{logical}} scalar: should the result be
+#  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
 #' @return A \linkS4class{CalibrationCurve} object.
 #' @seealso \link{integrate_signal}
@@ -247,7 +269,7 @@ NULL
 #' @aliases fit_dose-method
 setGeneric(
   name = "fit_dose",
-  def = function(object, noise, ...) standardGeneric("fit_dose")
+  def = function(object, ...) standardGeneric("fit_dose")
 )
 
 #' @rdname doserate
@@ -264,10 +286,11 @@ setGeneric(
 #'  object.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (in keV).
-#' @param noise A length-two \code{\link{numeric}} vector giving the background
-#'  noise integration value and error, respectively (see details).
-#' @param NiEi A \code{\link{logical}} scalar.
-#'  Change this only if you know what you are doing.
+#' @param background A length-two \code{\link{numeric}} vector giving the
+#'  background noise integration value and error, respectively (see details).
+#' @param threshold A \code{\link{character}} sting specifying the threshold
+#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+#'  (see details).
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
 #' @param ... Currently not used.
@@ -342,6 +365,9 @@ setGeneric(
 #'  giving the selection of the spectrum that are drawn.
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels
 #'  defined by spectrum be drawn?
+#' @param threshold A \code{\link{character}} sting specifying the threshold
+#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+#'  (see details).
 #' @param ... Currently not used.
 #' @return
 #'  A \code{\link[ggplot2]{ggplot}} object.

@@ -34,7 +34,7 @@ library(gamma)
 library(magrittr)
 ```
 
-## Import files
+## Import Files
 ```{r import}
 # Import CNF files for calibration
 calib_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
@@ -45,8 +45,8 @@ noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
 (noise_spc <- read(noise_dir))
 ```
 
-## Inspect spectra
-### Reference spectra
+## Inspect Spectra
+### Reference Spectra
 #### BRIQUE
 ```{r calibrate-BRIQUE}
 plot(calib_spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
@@ -59,7 +59,7 @@ plot(calib_spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
 lines <- list(chanel = c(76, 465, 828), energy = c(238, 1461, 2615))
 calib_spc[["BRIQUE"]] %>%
   calibrate_energy(lines = lines) %>%
-  integrate_signal(range = c(165, 2800), noise = c(25279.63171, 1.66235))
+  integrate_signal(range = c(300, 2800), noise = c(22.608, 0.050))
 ```
 
 #### C341
@@ -104,48 +104,55 @@ plot(calib_spc[["PEP"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::theme_bw()
 ```
 
-### Background noise spectrum
+### Background Noise Spectrum
 ```{r calibrate-noise, fig.align='center'}
 plot(noise_spc) +
   ggplot2::labs(title = "Background noise spectrum") +
   ggplot2::theme_bw()
 ```
 
-## Calibration curve
+## Calibration Curve
 ### Summary
-```{r calibration, fig.width=5, fig.height=5, fig.align='center'}
-data("BDX100_curve")
+```{r calibration, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
+data("BDX_LaBr_1_curve")
 
 # Plot calibration curve
-plot(BDX100_curve) +
+plot(BDX_LaBr_1_curve, threshold = "Ni") +
+  ggplot2::theme_bw()
+plot(BDX_LaBr_1_curve, threshold = "NiEi") +
   ggplot2::theme_bw()
 ```
 
 ```{r calibration-data, echo=FALSE}
-data("BDX100_data")
+data("BDX_LaBr_1_data")
 
 # Display curve data
-knitr::kable(BDX100_data, row.names = FALSE)
+knitr::kable(BDX_LaBr_1_data, row.names = FALSE)
 ```
 
-```{r lm-summary, echo=FALSE}
-# Slope: 31.16884 / Intercept: 2006.62935
-summary(BDX100_curve[["model"]])
+```{r lm-summary_Ni, echo=FALSE}
+summary(get_model(BDX_LaBr_1_curve, "Ni"))
 ```
 
-### Check model
-```{r lm-check, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-calib_residuals <- data.frame(
-  name = BDX100_curve[["data"]]$name,
-  fitted = BDX100_curve[["model"]]$fitted.values,
-  residuals = BDX100_curve[["model"]]$residuals,
-  standardized = stats::rstandard(BDX100_curve[["model"]]),
-  cook = stats::cooks.distance(BDX100_curve[["model"]]),
+```{r lm-summary_NiEi, echo=FALSE}
+summary(get_model(BDX_LaBr_1_curve, "NiEi"))
+```
+
+### Check Model
+#### Count Threshold (Ni)
+```{r lm-check-Ni, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
+Ni_model <- get_model(BDX_LaBr_1_curve, "Ni")
+Ni_residuals <- data.frame(
+  name = BDX_LaBr_1_curve[["data"]]$name,
+  fitted = Ni_model$fitted.values,
+  residuals = Ni_model$residuals,
+  standardized = stats::rstandard(Ni_model),
+  cook = stats::cooks.distance(Ni_model),
   stringsAsFactors = FALSE
 )
 
 # Residuals vs fitted values
-ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = residuals)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = residuals)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
                                      y = 0, yend = residuals)) + 
@@ -155,7 +162,7 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = residuals)) +
                 x = "Fitted values", y = "Residuals")
 
 # Std. residuals vs fitted values
-ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = standardized)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = standardized)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
@@ -166,7 +173,7 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = fitted, y = standardized)) +
                 x = "Fitted values", y = "Standardized residuals")
 
 # Normal QQ plot of standardized residuals
-ggplot2::ggplot(calib_residuals, ggplot2::aes(sample = standardized)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(sample = standardized)) +
   ggplot2::geom_abline(slope = 1, intercept = 0) +
   ggplot2::geom_qq_line(colour = "red") +
   ggplot2::geom_qq() +
@@ -176,7 +183,62 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(sample = standardized)) +
                 y = "Standardize residuals")
 
 # Cook's distance
-ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = name, y = cook)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
+                                     y = 0, yend = cook)) +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Cook's distance",
+                x = "Observation", y = "D")
+```
+
+#### Energy Threshold (Ni.Ei)
+```{r lm-check-NiEi, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
+NiEi_model <- get_model(BDX_LaBr_1_curve, "Ni")
+NiEi_residuals <- data.frame(
+  name = BDX_LaBr_1_curve[["data"]]$name,
+  fitted = NiEi_model$fitted.values,
+  residuals = NiEi_model$residuals,
+  standardized = stats::rstandard(NiEi_model),
+  cook = stats::cooks.distance(NiEi_model),
+  stringsAsFactors = FALSE
+)
+
+# Residuals vs fitted values
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = residuals)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = residuals)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Residuals vs fitted values",
+                x = "Fitted values", y = "Residuals")
+
+# Std. residuals vs fitted values
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = standardized)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = standardized)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Std. residuals vs fitted values",
+                x = "Fitted values", y = "Standardized residuals")
+
+# Normal QQ plot of standardized residuals
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(sample = standardized)) +
+  ggplot2::geom_abline(slope = 1, intercept = 0) +
+  ggplot2::geom_qq_line(colour = "red") +
+  ggplot2::geom_qq() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Normal QQ plot",
+                x = "Theoretical quantiles",
+                y = "Standardize residuals")
+
+# Cook's distance
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = name, y = cook)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
@@ -189,14 +251,14 @@ ggplot2::ggplot(calib_residuals, ggplot2::aes(x = name, y = cook)) +
 
 ```{r test-old-compare, echo=FALSE, eval=FALSE}
 # The smaller the AIC or BIC, the better the fit
-criterion_aic <- c(stats::AIC(BDX100_curve[["model"]]))
-criterion_bic <- c(stats::BIC(BDX100_curve[["model"]]))
+criterion_aic <- c(stats::AIC(BDX_LaBr_1_curve[["model"]]))
+criterion_bic <- c(stats::BIC(BDX_LaBr_1_curve[["model"]]))
 
 criteria <- data.frame(
   AIC = criterion_aic,
   D_AIC = criterion_aic - min(criterion_aic),
   BIC = criterion_bic,
-  row.names = c("New curve (BDX100_curve)", "Old curve (VBA macro)")
+  row.names = c("New curve (BDX_LaBr_1_curve)", "Old curve (VBA macro)")
 )
 
 knitr::kable(

@@ -8,19 +8,19 @@ test_that("Integrate GammaSpectrum", {
   noise <- read(noise_file)
   noise <- slice_signal(noise)
 
-  int1 <- integrate_signal(cnf, range = c(200, 2800), NiEi = TRUE)
+  int1 <- integrate_signal(cnf, range = c(200, 2800), threshold = "NiEi")
   expect_equivalent(int1, c(1.483392e+05, 9.361146e+00),
                     tolerance = 1e-06)
   expect_length(int1, 2)
 
-  int2 <- integrate_signal(cnf, range = c(200, 2800), noise = c(50, 10),
-                           NiEi = FALSE)
+  int2 <- integrate_signal(cnf, range = c(200, 2800), background = c(50, 10),
+                           threshold = "Ni")
   expect_equivalent(int2, c(233.98690, 10.00838), tolerance = 1e-07)
   expect_length(int2, 2)
 
   expect_error(integrate_signal(cnf, range = c(200)),
                "must be a numeric vector of length 2")
-  expect_error(integrate_signal(cnf, range = c(200, 2800), noise = 1),
+  expect_error(integrate_signal(cnf, range = c(200, 2800), background = 1),
                "must be a numeric vector of length 2")
 
   spc_tka <- system.file("extdata/test_LaBr.TKA", package = "gamma")
@@ -37,8 +37,8 @@ test_that("Integrate GammaSpectra", {
   noise <- read(noise_dir)
   noise <- slice_signal(noise)
 
-  int1 <- integrate_signal(spectra, range = c(200, 2800), noise = c(50, 10),
-                           simplify = TRUE)
+  int1 <- integrate_signal(spectra, range = c(200, 2800),
+                           background = c(50, 10), simplify = TRUE)
   expect_type(int1, "double")
   expect_equal(ncol(int1), 2)
   expect_equal(nrow(int1), length(spectra))

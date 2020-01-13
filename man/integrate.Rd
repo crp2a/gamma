@@ -10,11 +10,12 @@
 \usage{
 integrate_signal(object, ...)
 
-\S4method{integrate_signal}{GammaSpectrum}(object, range, noise = NULL,
-  NiEi = TRUE, ...)
+\S4method{integrate_signal}{GammaSpectrum}(object, range,
+  background = NULL, threshold = c("Ni", "NiEi"), ...)
 
-\S4method{integrate_signal}{GammaSpectra}(object, range, noise = c(0, 0),
-  NiEi = TRUE, simplify = FALSE, ...)
+\S4method{integrate_signal}{GammaSpectra}(object, range,
+  background = NULL, threshold = c("Ni", "NiEi"), simplify = FALSE,
+  ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -25,11 +26,12 @@ object.}
 \item{range}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
-\item{noise}{A length-two \code{\link{numeric}} vector giving the background
-noise integration value and error, respectively (see details).}
+\item{background}{A length-two \code{\link{numeric}} vector giving the
+background noise integration value and error, respectively (see details).}
 
-\item{NiEi}{A \code{\link{logical}} scalar.
-Change this only if you know what you are doing.}
+\item{threshold}{A \code{\link{character}} sting specifying the threshold
+to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+(see details).}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be
 simplified to a matrix? The default value, \code{FALSE}, returns a list.}

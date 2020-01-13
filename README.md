@@ -114,26 +114,17 @@ plot(calib, xaxis = "energy", yaxis = "rate")
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
-data(BDX100_curve, package = "gamma")
-BDX100_curve
+data("BDX_LaBr_1_curve", package = "gamma")
+BDX_LaBr_1_curve
 #> Calibration curve:
-#> * Date: 2020-01-09 14:18:54
-#> * Model summary:
-#>   - slope: 0.03203 +/- 0.00061
-#>   - intercept: -61.67793 +/- 30.81448
-#>   - residual standard error: 30.43
-#>   - multiple R-squared: 0.99822
-#>   - adjusted R-squared: 0.99786
-#>   - F-statistic: 2800 on 1 and 5 DF
+#> * Date: 2020-01-13 11:43:08
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX100_curve, calib, simplify = TRUE))
+(doses <- predict_dose(BDX_LaBr_1_curve, calib, simplify = TRUE))
 #> Warning: The following value does not lie in the curve range:
 #> * test_LaBr
-#>                name live_time signal_value signal_error dose_value
-#> test_LaBr test_LaBr   3385.54     126234.7     9.605737   3981.133
-#>           dose_error
-#> test_LaBr   75.23958
+#>                name live_time Ni_signal  Ni_error gamma_dose gamma_error
+#> test_LaBr test_LaBr   3385.54   141.014 0.3148497   4210.784    84.05728
 ```
 
 ## Contributing

@@ -4,21 +4,24 @@ spectra <- read(spc_dir)
 
 # Set dose rate values and errors for each spectrum
 data("clermont")
-set_dose(spectra) <- clermont[, c("gamma", "gamma_error")]
+set_dose(spectra) <- clermont[, c("gamma_dose", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit_dose(
   spectra,
-  noise = c(25279.63171, 1.66235),
-  range = c(165, 2800)
+  Ni_noise = c(22.61, 0.05),
+  Ni_range = c(300, 2800),
+  NiEi_noise = c(25279.63, 1.66),
+  NiEi_range = c(165, 2800)
 )
 
 # Check the linear model
-summary(calib_curve[["model"]])
+summary(get_model(calib_curve, "Ni"))
+summary(get_model(calib_curve, "NiEi"))
 
 # Plot the curve
-plot(calib_curve) +
-  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
+plot(calib_curve, threshold = "Ni")
 
 # Estimate gamma dose rates
-(dose_rate <- predict_dose(calib_curve, spectra))
+predict_dose(calib_curve, spectra, threshold = "Ni")
+predict_dose(calib_curve, spectra, threshold = "NiEi")

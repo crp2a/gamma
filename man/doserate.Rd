@@ -7,39 +7,27 @@
 \alias{fit_dose-method}
 \alias{predict_dose}
 \alias{predict_dose-method}
-\alias{fit_dose,GammaSpectra,GammaSpectrum-method}
-\alias{fit_dose,GammaSpectra,numeric-method}
-\alias{predict_dose,CalibrationCurve,missing-method}
+\alias{fit_dose,GammaSpectra-method}
 \alias{predict_dose,CalibrationCurve,GammaSpectrum-method}
 \alias{predict_dose,CalibrationCurve,GammaSpectra-method}
 \title{Dose Rate Estimation}
 \usage{
-fit_dose(object, noise, ...)
+fit_dose(object, ...)
 
 predict_dose(object, spectrum, ...)
 
-\S4method{fit_dose}{GammaSpectra,GammaSpectrum}(object, noise, range,
-  intercept = TRUE, weights = FALSE, details = NULL, ...)
-
-\S4method{fit_dose}{GammaSpectra,numeric}(object, noise, range,
-  intercept = TRUE, weights = FALSE, details = NULL, ...)
-
-\S4method{predict_dose}{CalibrationCurve,missing}(object, epsilon = 0,
-  simplify = FALSE, ...)
+\S4method{fit_dose}{GammaSpectra}(object, Ni_noise, Ni_range, NiEi_noise,
+  NiEi_range, details = NULL, ...)
 
 \S4method{predict_dose}{CalibrationCurve,GammaSpectrum}(object, spectrum,
-  epsilon = 0, simplify = FALSE, ...)
+  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 
 \S4method{predict_dose}{CalibrationCurve,GammaSpectra}(object, spectrum,
-  epsilon = 0, simplify = FALSE, ...)
+  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 object.}
-
-\item{noise}{A \linkS4class{GammaSpectrum} object or a length-two
-\code{\link{numeric}} vector giving the background noise integration
-value and error, respectively.}
 
 \item{...}{Currently not used.}
 
@@ -47,24 +35,21 @@ value and error, respectively.}
 \linkS4class{GammaSpectra} object in which to look for variables with which
 to predict. If omitted, the fitted values are used.}
 
-\item{range}{A length-two \code{\link{numeric}} vector giving the energy
-range to integrate within (in keV).}
+\item{Ni_noise, NiEi_noise}{A length-two \code{\link{numeric}} vector giving
+the background noise integration value and error, respectively.}
 
-\item{intercept}{A \code{\link{logical}} scalar: should the intercept of the
-curve be estimated? Change this only if you know what you are doing.}
-
-\item{weights}{A \code{\link{logical}} scalar: should weights be used in the
-fitting process. If \code{TRUE}, the inverse of the squared dose rate
-errors are used. Change this only if you know what you are doing.}
+\item{Ni_range, NiEi_range}{A length-two \code{\link{numeric}} vector giving
+the energy range to integrate within (in keV).}
 
 \item{details}{A \code{\link{list}} of length-one vector specifying
 additional informations about the instrument for which the curve is built.}
 
+\item{threshold}{A \code{\link{character}} sting specifying the threshold
+to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
+(see details).}
+
 \item{epsilon}{A \code{\link{numeric}} value giving an extra error term
 introduced by the calibration of the energy scale of the spectrum.}
-
-\item{simplify}{A \code{\link{logical}} scalar: should the result be
-simplified to a matrix? If \code{FALSE} (default), returns a list.}
 }
 \value{
 A \linkS4class{CalibrationCurve} object.
@@ -82,24 +67,27 @@ spectra <- read(spc_dir)
 
 # Set dose rate values and errors for each spectrum
 data("clermont")
-set_dose(spectra) <- clermont[, c("gamma", "gamma_error")]
+set_dose(spectra) <- clermont[, c("gamma_dose", "gamma_error")]
 
 # Build the calibration curve
 calib_curve <- fit_dose(
   spectra,
-  noise = c(25279.63171, 1.66235),
-  range = c(165, 2800)
+  Ni_noise = c(22.61, 0.05),
+  Ni_range = c(300, 2800),
+  NiEi_noise = c(25279.63, 1.66),
+  NiEi_range = c(165, 2800)
 )
 
 # Check the linear model
-summary(calib_curve[["model"]])
+summary(get_model(calib_curve, "Ni"))
+summary(get_model(calib_curve, "NiEi"))
 
 # Plot the curve
-plot(calib_curve) +
-  ggplot2::labs(x = "Signal", y = "Dose rate [µGy/y]")
+plot(calib_curve, threshold = "Ni")
 
 # Estimate gamma dose rates
-(dose_rate <- predict_dose(calib_curve, spectra))
+predict_dose(calib_curve, spectra, threshold = "Ni")
+predict_dose(calib_curve, spectra, threshold = "NiEi")
 }
 \references{
 Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with

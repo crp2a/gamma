@@ -5,39 +5,26 @@ NULL
 # ========================================================================== Fit
 #' @export
 #' @rdname doserate
-#' @aliases fit_dose,GammaSpectra,GammaSpectrum-method
+#' @aliases fit_dose,GammaSpectra-method
 setMethod(
   f = "fit_dose",
-  signature = signature(object = "GammaSpectra", noise = "GammaSpectrum"),
-  definition = function(object, noise, range,
-                        intercept = TRUE, weights = FALSE,
+  signature = signature(object = "GammaSpectra"),
+  definition = function(object, Ni_noise, Ni_range, NiEi_noise, NiEi_range,
                         details = NULL, ...) {
-    # Integrate background noise
-    int_noise <- integrate_signal(noise, range = range, noise = NULL)
-    fit_dose(object, int_noise, range = range, intercept = intercept,
-             weights = weights, details = details, ...)
-  }
-)
-
-#' @export
-#' @rdname doserate
-#' @aliases fit_dose,GammaSpectra,numeric-method
-setMethod(
-  f = "fit_dose",
-  signature = signature(object = "GammaSpectra", noise = "numeric"),
-  definition = function(object, noise, range,
-                        intercept = TRUE, weights = FALSE,
-                        details = NULL, ...) {
+    ## Validation
+    if (length(Ni_noise) != 2 || length(NiEi_noise) != 2 ||
+        length(Ni_range) != 2 || length(NiEi_range) != 2)
+      stop("`*_noise` and `*_range` must be numeric vectors of length 2.",
+           call. = FALSE)
     ## Dose rate
     dose_rate <- get_dose(object)
     doses <- data.frame(
       name = rownames(dose_rate),
-      dose_value = dose_rate[["value"]],
-      dose_error = dose_rate[["error"]],
+      dose_rate,
       stringsAsFactors = FALSE
     )
 
-    zero_dose <- doses$dose_value == 0
+    zero_dose <- doses$gamma_dose == 0
     if (any(zero_dose)) {
       names_missing <- names(object)[zero_dose]
       length_missing <- length(names_missing)
@@ -58,36 +45,34 @@ setMethod(
     info <- if (is.list(details)) details else list()
 
     # Signal integration
-    signals <- integrate_signal(object, range = range, noise = noise,
-                                simplify = TRUE)
-    signals <- cbind.data.frame(signals, rownames(signals),
-                                stringsAsFactors = FALSE)
-    colnames(signals) <- c("signal_value", "signal_error", "name")
-
+    signals <- cbind.data.frame(
+      name = names(object),
+      live_time = unlist(object[, "live_time"]),
+      integrate_signal(object, range = Ni_range, background = Ni_noise,
+                       threshold = "Ni", simplify = TRUE),
+      integrate_signal(object, range = NiEi_range, background = NiEi_noise,
+                       threshold = "NiEi", simplify = TRUE),
+      stringsAsFactors = FALSE
+    )
     # Fit linear regression
     fit_data <- merge(signals, doses, by = "name", all = FALSE, sort = FALSE)
-    fit_data <- cbind.data.frame(
-      name =  fit_data[, 1, drop = FALSE],
-      live_time = unlist(object[, "live_time"]),
-      fit_data[, -1]
-    )
-    # TODO: check weights!
-    fit_weights <- if (weights) 1 / fit_data$dose_error^2 else NULL
-    if (intercept) {
-      fit_formula <- stats::as.formula("dose_value ~ signal_value")
-    } else {
-      fit_formula <- stats::as.formula("dose_value ~ 0 + signal_value")
-    }
-    fit <- stats::lm(formula = fit_formula, data = fit_data,
-                     weights = fit_weights)
 
+    Ni_model <- .DoseRateModelNi(
+      model = stats::lm(formula = "gamma_dose ~ Ni_signal", data = fit_data),
+      background = Ni_noise,
+      range = Ni_range
+    )
+    NiEi_model <- .DoseRateModelNiEi(
+      model = stats::lm(formula = "gamma_dose ~ NiEi_signal", data = fit_data),
+      background = NiEi_noise,
+      range = NiEi_range
+    )
     methods::new(
       "CalibrationCurve",
-      details = info,
-      model = fit,
-      noise = noise,
-      integration = range,
-      data = fit_data
+      Ni = Ni_model,
+      NiEi = NiEi_model,
+      data = fit_data,
+      details = info
     )
   }
 )
@@ -95,27 +80,15 @@ setMethod(
 # ====================================================================== Predict
 #' @export
 #' @rdname doserate
-#' @aliases predict_dose,CalibrationCurve,missing-method
-setMethod(
-  f = "predict_dose",
-  signature = signature(object = "CalibrationCurve", spectrum = "missing"),
-  definition = function(object, epsilon = 0, simplify = FALSE, ...) {
-    new_data <- methods::as(object@data, "data.frame")
-    # Predict dose rate
-    do_predict_dose(object, new_data,
-                    epsilon = epsilon, simplify = simplify, ...)
-  }
-)
-
-#' @export
-#' @rdname doserate
 #' @aliases predict_dose,CalibrationCurve,GammaSpectrum-method
 setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectrum"),
-  definition = function(object, spectrum, epsilon = 0, simplify = FALSE, ...) {
+  definition = function(object, spectrum, threshold = c("Ni", "NiEi"),
+                        epsilon = 0, ...) {
     spectrum <- methods::as(spectrum, "GammaSpectra")
-    predict_dose(object, spectrum, epsilon = epsilon, simplify = simplify, ...)
+    predict_dose(object, spectrum, threshold = threshold,
+                 epsilon = epsilon, ...)
   }
 )
 
@@ -125,77 +98,67 @@ setMethod(
 setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
-  definition = function(object, spectrum, epsilon = 0, simplify = FALSE, ...) {
+  definition = function(object, spectrum, threshold = c("Ni", "NiEi"),
+                        epsilon = 0, ...) {
+
+    # Validation
+    threshold <- match.arg(threshold, several.ok = FALSE)
+
     # Get noise value and integration range
-    noise <- object@noise
-    int_range <- object@integration
+    bkg_noise <- get_noise(object, threshold)
+    int_range <- get_range(object, threshold)
     # Integrate spectrum
-    new_data <- integrate_signal(spectrum, range = int_range, noise = noise,
-                                 simplify = TRUE)
-    live_time <- unlist(spectrum[, "live_time"])
-    new_data <- cbind.data.frame(new_data, live_time, rownames(new_data),
-                                 stringsAsFactors = FALSE)
-    colnames(new_data) <- c("signal_value", "signal_error", "live_time", "name")
-    # Predict dose rate
-    do_predict_dose(object, new_data,
-                    epsilon = epsilon, simplify = simplify, ...)
+    int_data <- integrate_signal(
+      spectrum,
+      range = int_range,
+      background = bkg_noise,
+      threshold = threshold,
+      simplify = TRUE
+    )
+    int_data <- cbind.data.frame(
+      name = rownames(int_data),
+      live_time = unlist(spectrum[, "live_time"]),
+      int_data,
+      stringsAsFactors = FALSE
+    )
+
+    # Get linear regression results
+    signal_value <- paste0(threshold, "_signal")
+    signal_error <- paste0(threshold, "_error")
+    fit <- get_model(object, threshold)
+    fit_coef <- summary(fit)$coef
+
+    slope <- fit_coef[signal_value, "Estimate"]
+    slope_error <- fit_coef[signal_value, "Std. Error"]
+
+    gamma_dose <- stats::predict.lm(fit, int_data[, signal_value, drop = FALSE])
+
+    gamma_error <- gamma_dose *
+      sqrt((slope_error / slope)^2 +
+             (int_data[[signal_error]] / int_data[[signal_value]])^2 +
+             epsilon^2)
+
+    # Generate a warning message if some predicted values do not lie in the
+    # dose ~ signal curve range.
+    dose_range <- range(object@data$gamma_dose)
+    dose_out <- gamma_dose < min(dose_range) | gamma_dose > max(dose_range)
+    out <- sum(dose_out)
+    if (out != 0) {
+      warning(
+        sprintf("The following %s lie in the curve range:\n",
+                ngettext(out, "value does not", "values do not")),
+        paste0("* ", int_data$name[dose_out], collapse = "\n"),
+        call. = FALSE
+      )
+    }
+
+    results <- data.frame(
+      int_data,
+      gamma_dose = gamma_dose,
+      gamma_error = gamma_error,
+      stringsAsFactors = FALSE
+    )
+    rownames(results) <- rownames(int_data)
+    return(results)
   }
 )
-
-do_predict_dose <- function(object, new_data,
-                            epsilon = 0, simplify = FALSE, ...) {
-  # Validation
-  if (!is.data.frame(new_data)) {
-    stop("`new_data` must be a data frame.")
-  } else {
-    variables <- c("signal_value", "signal_error", "name")
-    if (!all(variables %in% colnames(new_data)))
-      stop("`new_data` is a data.frame, ",
-           "but does not have components ",
-           paste0(variables, collapse = ", "),
-           call. = FALSE)
-  }
-
-  # Get linear regression results
-  fit <- object@model
-  fit_coef <- summary(object@model)$coef
-  slope <- fit_coef["signal_value", "Estimate"]
-  slope_error <- fit_coef["signal_value", "Std. Error"]
-
-  dose_value <- stats::predict.lm(fit, new_data[, "signal_value", drop = FALSE])
-
-  dose_error <- dose_value *
-    sqrt((slope_error / slope)^2 +
-           (new_data$signal_error / new_data$signal_value)^2 +
-           epsilon^2)
-
-  # Generate a warning message if some predicted values do not lie in the
-  # dose ~ signal curve range.
-  dose_range <- range(object@data$dose_value)
-  dose_out <- dose_value < min(dose_range) | dose_value > max(dose_range)
-  out <- sum(dose_out)
-  if (out != 0) {
-    warning(
-      sprintf("The following %s lie in the curve range:\n",
-              ngettext(out, "value does not", "values do not")),
-      paste0("* ", new_data$name[dose_out], collapse = "\n"),
-      call. = FALSE
-    )
-  }
-
-  results <- cbind.data.frame(
-    name = new_data$name,
-    live_time = new_data$live_time,
-    signal_value = new_data$signal_value,
-    signal_error = new_data$signal_error,
-    dose_value = dose_value,
-    dose_error = dose_error,
-    stringsAsFactors = FALSE
-  )
-  rownames(results) <- new_data$name
-  if (simplify) {
-    results
-  } else {
-    split(results, f = new_data$name)
-  }
-}

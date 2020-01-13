@@ -34,9 +34,8 @@ An internal dataset containing the decay data for the following isotopes:
 }
 \seealso{
 Other datasets: \code{\link{.decay_La}},
-  \code{\link{AIX100_curve}}, \code{\link{BDX100_curve}},
-  \code{\link{BDX200_curve}}, \code{\link{BDX300_curve}},
-  \code{\link{clermont}}
+  \code{\link{AIX_NaI_curve}},
+  \code{\link{BDX_LaBr_1_curve}}, \code{\link{clermont}}
 }
 \concept{datasets}
 \keyword{datasets}

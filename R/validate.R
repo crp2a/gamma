@@ -184,83 +184,100 @@ setValidity(
 )
 
 # CalibrationCurve =============================================================
-setValidity(
-  Class = "CalibrationCurve",
-  method = function(object) {
-    details <- object@details
-    model <- object@model
-    noise <- object@noise
-    integration <- object@integration
-    data <- object@data
-    message <- c()
-
-    if (length(details) != 0) {
-      if (!("date" %in% names(details))) {
-        message <- c(
-          message,
-          "Slot `details` is a list, but does not have a component `date`."
-        )
-      } else {
-        if (!methods::is(details$date, "POSIXct")) {
-          message <- c(message, "Slot `date` must be a `POSIXct` object.")
-        }
-      }
-      if (any(lengths(details) != 1)) {
-        message <- c(
-          message,
-          "Slot `details` is a list, but some components are not of length 1."
-        )
-      }
-    }
-    length_noise <- length(noise)
-    if (length_noise != 0) {
-      if (!isPositive(noise, strict = FALSE)) {
-        message <- c(message,
-                     "Slot `noise` must be a vector of positive numbers.")
-      }
-      if (length_noise != 2) {
-        message <- c(
-          message,
-          sprintf("Slot `noise` must be a numeric vector of length 2, not %d.",
-                  length_noise)
-        )
-      }
-    }
-    length_integration <- length(integration)
-    if (length_integration != 0) {
-      if (!isPositive(integration, strict = FALSE)) {
-        message <- c(message,
-                     "Slot `integration` must be a vector of positive numbers.")
-      }
-      if (length_integration != 2) {
-        message <- c(
-          message,
-          sprintf("Slot `integration` must be a numeric vector of length 2, not %d.",
-                  length_integration)
-        )
-      }
-    }
-    if (length(data) != 0) {
-      if (!is.numeric(as.matrix(data[, -1]))) {
-        message <- c(message, "Slot `data` must contain numeric values.")
-      }
-      ncol_data <- ncol(data)
-      if (ncol_data != 6) {
-        message <- c(
-          message,
-          sprintf("Slot `data` must be a 6 (not %d) columns data.frame.",
-                  ncol_data)
-        )
-      }
-    }
-
-    if (length(message) != 0) {
-      stop("* ", paste0(message, collapse = "\n* "), call. = FALSE)
-    } else {
-      return(TRUE)
-    }
-  }
-)
+# setValidity(
+#   Class = "CalibrationCurve",
+#   method = function(object) {
+#     details <- object@details
+#     Ni_model <- object@Ni_model
+#     Ni_noise <- object@Ni_noise
+#     Ni_range <- object@Ni_range
+#     NiEi_model <- object@NiEi_model
+#     NiEi_noise <- object@NiEi_noise
+#     NiEi_range <- object@NiEi_range
+#     data <- object@data
+#     message <- c()
+#
+#     if (length(details) != 0) {
+#       if (!("date" %in% names(details))) {
+#         message <- c(
+#           message,
+#           "Slot `details` is a list, but does not have a component `date`."
+#         )
+#       } else {
+#         if (!methods::is(details$date, "POSIXct")) {
+#           message <- c(message, "Slot `date` must be a `POSIXct` object.")
+#         }
+#       }
+#       if (any(lengths(details) != 1)) {
+#         message <- c(
+#           message,
+#           "Slot `details` is a list, but some components are not of length 1."
+#         )
+#       }
+#     }
+#     length_Ni_noise <- length(Ni_noise)
+#     if (length_Ni_noise != 0) {
+#       if (!isPositive(Ni_noise, strict = FALSE)) {
+#         message <- c(message,
+#                      "Slot `Ni_noise` must be a vector of positive numbers.")
+#       }
+#       if (length_Ni_noise != 2) {
+#         message <- c(
+#           message,
+#           sprintf("Slot `Ni_noise` must be a numeric vector of length 2, not %d.",
+#                   length_Ni_noise)
+#         )
+#       }
+#     }
+#     length_NiEi_noise <- length(NiEi_noise)
+#     if (length_NiEi_noise != 0) {
+#       if (!isPositive(NiEi_noise, strict = FALSE)) {
+#         message <- c(message,
+#                      "Slot `NiEi_noise` must be a vector of positive numbers.")
+#       }
+#       if (length_NiEi_noise != 2) {
+#         message <- c(
+#           message,
+#           sprintf("Slot `NiEi_noise` must be a numeric vector of length 2, not %d.",
+#                   length_NiEi_noise)
+#         )
+#       }
+#     }
+#     # length_integration <- length(integration)
+#     # if (length_integration != 0) {
+#     #   if (!isPositive(integration, strict = FALSE)) {
+#     #     message <- c(message,
+#     #                  "Slot `integration` must be a vector of positive numbers.")
+#     #   }
+#     #   if (length_integration != 2) {
+#     #     message <- c(
+#     #       message,
+#     #       sprintf("Slot `integration` must be a numeric vector of length 2, not %d.",
+#     #               length_integration)
+#     #     )
+#     #   }
+#     # }
+#     # if (length(data) != 0) {
+#     #   if (!is.numeric(as.matrix(data[, -1]))) {
+#     #     message <- c(message, "Slot `data` must contain numeric values.")
+#     #   }
+#     #   ncol_data <- ncol(data)
+#     #   if (ncol_data != 10) {
+#     #     message <- c(
+#     #       message,
+#     #       sprintf("Slot `data` must be a 10 (not %d) columns data.frame.",
+#     #               ncol_data)
+#     #     )
+#     #   }
+#     # }
+#
+#     if (length(message) != 0) {
+#       stop("* ", paste0(message, collapse = "\n* "), call. = FALSE)
+#     } else {
+#       return(TRUE)
+#     }
+#   }
+# )
 
 # PeakPosition =================================================================
 setValidity(
