@@ -7,12 +7,6 @@
 #' @keywords internal
 #' @noRd
 shiny_server <- function(input, output, session) {
-  # Load datasets ==============================================================
-  tmp <- new.env()
-  data("BDX_LaBr_1_curve", package = "gamma", envir = tmp)
-  # data("BDX200_curve", package = "gamma", envir = tmp)
-  # data("BDX300_curve", package = "gamma", envir = tmp)
-  data("AIX_NaI_curve", package = "gamma", envir = tmp)
   # Set reactive values ========================================================
   myData <- reactiveValues(spectra = NULL, names = NULL, raw = NULL)
   myRangesCalib <- reactiveValues(x = NULL, y = NULL, expand = TRUE)
@@ -328,9 +322,17 @@ shiny_server <- function(input, output, session) {
     contentType = "application/pdf"
   )
   # Dose rate prediction =======================================================
+  signal_value <- reactive({
+    req(input$dose_threshold)
+    paste0(input$dose_threshold, "_signal")
+  })
+  signal_error <- reactive({
+    req(input$dose_threshold)
+    paste0(input$dose_threshold, "_error")
+  })
   doseCurve <- reactive({
     req(input$dose_curve)
-    get(input$dose_curve, envir = tmp)
+    get(input$dose_curve, envir = env_calibration)
   })
   doseData <- reactive({
     req(doseCurve(), myData$spectra, input$dose_error, input$dose_threshold)
@@ -342,7 +344,7 @@ shiny_server <- function(input, output, session) {
       },
       warning = function(e) {
         warn <- gsub("\n|\\*", "", e$message)
-        showNotification(warn, duration = 15, type = "warning")
+        showNotification(warn, duration = 10, type = "warning")
         invokeRestart("muffleWarning")
       }
     )
@@ -364,18 +366,20 @@ shiny_server <- function(input, output, session) {
   output$dose_plot_curve <- renderPlot({
     req(input$dose_select)
     extra <- doseData()[input$dose_select, ]
-    print(input$dose_threshold)
-    signal_value <- paste0(input$dose_threshold, "_signal")
-    signal_error <- paste0(input$dose_threshold, "_error")
     plot(doseCurve(), threshold = input$dose_threshold) +
       ggplot2::geom_pointrange(
         data = extra,
-        mapping = ggplot2::aes(ymin = .data$gamma_dose - .data$gamma_error,
-                               ymax = .data$gamma_dose + .data$gamma_error)) +
+        mapping = ggplot2::aes(
+          ymin = .data$gamma_dose - .data$gamma_error,
+          ymax = .data$gamma_dose + .data$gamma_error
+        )
+      ) +
       ggplot2::geom_errorbarh(
         data = extra,
-        mapping = ggplot2::aes(xmin = .data[[signal_value]] - .data[[signal_error]],
-                               xmax = .data[[signal_value]] + .data[[signal_error]]),
+        mapping = ggplot2::aes(
+          xmin = .data[[signal_value()]] - .data[[signal_error()]],
+          xmax = .data[[signal_value()]] + .data[[signal_error()]]
+        ),
         height = 0) +
       ggplot2::theme_bw()
   })
@@ -383,7 +387,7 @@ shiny_server <- function(input, output, session) {
     req(input$dose_select)
     extra <- nearPoints(
       doseData()[input$dose_select, ], input$dose_plot_hover,
-      xvar = "signal_value", yvar = "dose_value",
+      xvar = signal_value(), yvar = "gamma_dose",
       threshold = 10, maxpoints = 1, allRows = TRUE
     )
     tbl <- knitr::kable(

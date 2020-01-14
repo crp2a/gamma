@@ -72,15 +72,14 @@ setMethod(
   f = "show",
   signature = "CalibrationCurve",
   definition = function(object) {
-    if (length(object@Ni@model$coefficients) != 0) {
-      cat(
-        "Calibration curve:\n",
-        "* Date: ", as.character(object@details$date),
-        sep = ""
-      )
-    } else {
-      cat("Calibration curve: no model.\n", sep = " ")
-    }
+    details <- object[["details"]]
+    info <- vapply(
+      X = details,
+      FUN = function(x) paste0(x, collapse = ", "),
+      FUN.VALUE = character(1)
+    )
+    info <- paste0("* ", names(details), ": ", info, "\n")
+    cat("Calibration curve:\n", info, sep = "")
   }
 )
 
