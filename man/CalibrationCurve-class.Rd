@@ -5,10 +5,6 @@
 \alias{DoseRateModel-class}
 \alias{.DoseRateModel}
 \alias{CalibrationCurve-class}
-\alias{DoseRateModelNi-class}
-\alias{.DoseRateModelNi}
-\alias{DoseRateModelNiEi-class}
-\alias{.DoseRateModelNiEi}
 \alias{.CalibrationCurve}
 \title{An S4 class to Represent a Dose Rate Calibration Curve}
 \description{

@@ -16,8 +16,8 @@ calib_curve <- fit_dose(
 )
 
 # Check the linear model
-summary(get_model(calib_curve, "Ni"))
-summary(get_model(calib_curve, "NiEi"))
+get_model(calib_curve, "Ni")
+get_model(calib_curve, "NiEi")
 
 # Plot the curve
 plot(calib_curve, threshold = "Ni")

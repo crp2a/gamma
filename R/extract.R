@@ -280,7 +280,9 @@ setMethod(
   definition = function(object, threshold = c("Ni", "NiEi")) {
     threshold <- match.arg(threshold, several.ok = FALSE)
     x <- methods::slot(object, threshold)
-    x@model
+    y <- rbind(x@slope, x@intercept)
+    dimnames(y) <- list(c("slope", "intercept"), c("value", "error"))
+    y
   }
 )
 

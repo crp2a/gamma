@@ -238,6 +238,8 @@ setGeneric(
 #'  the background noise integration value and error, respectively.
 #' @param Ni_range,NiEi_range A length-two \code{\link{numeric}} vector giving
 #'  the energy range to integrate within (in keV).
+#' @param alpha A \code{\link{numeric}} value giving the cutoff value for
+#'  confidence intervals (see \code{\link[IsoplotR]{york}}).
 #' @param details A \code{\link{list}} of length-one vector specifying
 #'  additional informations about the instrument for which the curve is built.
 #' @param spectrum An optional \linkS4class{GammaSpectrum} or
@@ -299,7 +301,7 @@ setGeneric(
 #' @return
 #'  If \code{simplify} is \code{FALSE} (the default) returns a list of
 #'  length-two numeric vectors (the dose rate and its error), else returns a
-#'  matrix.
+#'  two-columns data frame.
 #' @references
 #'  Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 #'  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.

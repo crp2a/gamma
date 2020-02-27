@@ -34,14 +34,13 @@ test_that("Build calibration curve", {
     details = NULL
   )
   expect_output(show(calib1), "Calibration curve")
-  expect_length(stats::coef(calib1@Ni@model), 2)
   expect_equal(dim(calib1[["data"]]), c(7, 8))
   expect_s3_class(plot(calib1), "ggplot")
 
   expect_error(fit_dose(spectra,
                         Ni_noise = c(25312), Ni_range = c(300, 2800),
                         NiEi_noise = c(25312, 1.66), NiEi_range = c(165, 2800)),
-               "must be numeric vectors of length 2")
+               "must be a numeric vector of length 2, not 1")
 
   spectra[["BRIQUE"]]@dose_rate <- numeric(2)
   expect_warning(fit_dose(spectra,
@@ -68,7 +67,7 @@ test_that("Estimate dose rate", {
 
   dose_rate <- suppressWarnings(predict_dose(calib1, spectra, simplify = TRUE))
   expect_type(dose_rate, "list")
-  expect_equal(dim(dose_rate), c(7, 6))
+  expect_equal(dim(dose_rate), c(7, 5))
 
   expect_type(predict_dose(calib1, spectra[[1]], simplify = FALSE), "list")
 })

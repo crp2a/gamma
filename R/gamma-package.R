@@ -43,6 +43,7 @@
 "_PACKAGE"
 
 #' @importFrom methods as new setClass setClassUnion setGeneric setMethod
+#' @importFrom IsoplotR york
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar
 #' geom_errorbarh geom_path geom_point geom_pointrange geom_segment geom_vline

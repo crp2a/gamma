@@ -148,12 +148,10 @@ setMethod(
     signal <- range(data[[signal_value]])
 
     # Curve
-    new_data <- data.frame(signal)
-    colnames(new_data) <- signal_value
-    predicted <- stats::predict.lm(model, new_data)
-    segment_xy <- c(signal, predicted)
-    names(segment_xy) <- c("x", "xmin", "y", "ymin")
-    segment <- as.data.frame(t(as.matrix(segment_xy)))
+    segment_x <- range(data[[signal_value]])
+    segment_y <- model[1, 1] * segment_x + model[2, 1]
+    segment <- rbind.data.frame(c(segment_x, segment_y))
+    names(segment) <- c("x", "xmin", "y", "ymin")
 
     # Set error bar width and height
     # error_width <- sum(signal * c(-1, 1)) / 100

@@ -241,6 +241,19 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "IsoplotR",
+      "name": "IsoplotR",
+      "version": ">= 3.2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=IsoplotR"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
@@ -330,5 +343,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "1092.262KB"
+  "fileSize": "841.192KB"
 }

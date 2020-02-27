@@ -39,7 +39,7 @@ simplified to a matrix? The default value, \code{FALSE}, returns a list.}
 \value{
 If \code{simplify} is \code{FALSE} (the default) returns a list of
  length-two numeric vectors (the dose rate and its error), else returns a
- matrix.
+ two-columns data frame.
 }
 \description{
 Signal Integration

@@ -8,6 +8,7 @@
 \alias{predict_dose}
 \alias{predict_dose-method}
 \alias{fit_dose,GammaSpectra-method}
+\alias{predict_dose,CalibrationCurve,missing-method}
 \alias{predict_dose,CalibrationCurve,GammaSpectrum-method}
 \alias{predict_dose,CalibrationCurve,GammaSpectra-method}
 \title{Dose Rate Estimation}
@@ -17,7 +18,10 @@ fit_dose(object, ...)
 predict_dose(object, spectrum, ...)
 
 \S4method{fit_dose}{GammaSpectra}(object, Ni_noise, Ni_range, NiEi_noise,
-  NiEi_range, details = NULL, ...)
+  NiEi_range, alpha = 0.05, details = NULL, ...)
+
+\S4method{predict_dose}{CalibrationCurve,missing}(object,
+  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 
 \S4method{predict_dose}{CalibrationCurve,GammaSpectrum}(object, spectrum,
   threshold = c("Ni", "NiEi"), epsilon = 0, ...)
@@ -40,6 +44,9 @@ the background noise integration value and error, respectively.}
 
 \item{Ni_range, NiEi_range}{A length-two \code{\link{numeric}} vector giving
 the energy range to integrate within (in keV).}
+
+\item{alpha}{A \code{\link{numeric}} value giving the cutoff value for
+confidence intervals (see \code{\link[IsoplotR]{york}}).}
 
 \item{details}{A \code{\link{list}} of length-one vector specifying
 additional informations about the instrument for which the curve is built.}
@@ -79,8 +86,8 @@ calib_curve <- fit_dose(
 )
 
 # Check the linear model
-summary(get_model(calib_curve, "Ni"))
-summary(get_model(calib_curve, "NiEi"))
+get_model(calib_curve, "Ni")
+get_model(calib_curve, "NiEi")
 
 # Plot the curve
 plot(calib_curve, threshold = "Ni")

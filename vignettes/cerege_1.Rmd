@@ -266,7 +266,7 @@ summary(get_model(AIX_NaI_curve, "NiEi"))
 
 ### Check Model
 #### Count Threshold (Ni)
-```{r lm-check-Ni, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
+```{r lm-check-Ni, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 Ni_model <- get_model(AIX_NaI_curve, "Ni")
 Ni_residuals <- data.frame(
   name = AIX_NaI_curve[["data"]]$name,
@@ -320,7 +320,7 @@ ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = name, y = cook)) +
 ```
 
 #### Energy Threshold (Ni.Ei)
-```{r lm-check-NiEi, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
+```{r lm-check-NiEi, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
 NiEi_model <- get_model(AIX_NaI_curve, "NiEi")
 NiEi_residuals <- data.frame(
   name = AIX_NaI_curve[["data"]]$name,

@@ -5,25 +5,28 @@ NULL
 #' Launch the Shiny App
 #'
 #' A wrapper for \code{\link[shiny]{shinyAppDir}}.
-#' @examples \dontrun{launch_app()}
+#' @param app A \code{\link{character}} string specifying the Shiny application
+#'  to launch. It must be one of \code{"doserate"} or \code{"calibration"}
+#'  (see details).
+#' @details
+#'  \tabular{ll}{
+#'   **Application name** \tab  **Keyword** \cr
+#'   Dose rate estimation \tab \code{doserate} \cr
+#'   Calibration curve builder \tab \code{calibration}
+#'  }
+#' @examples
+#'  \dontrun{
+#'  launch_app("doserate")
+#'  launch_app("calibration")
+#' }
 #' @return A \pkg{shiny} application object.
 #' @family shiny
 #' @author N. Frerebeau
 #' @export
-launch_app <- function() {
-  if (!requireNamespace("shiny", quietly = TRUE)) {
-    message("Shiny must be installed to run the app.")
-    answer <- readline("Do you want to install Shiny? (Y/N) ")
-    answer <- ifelse(answer %in% c("y", "Y", "1"), TRUE, FALSE)
-    if (answer) {
-      utils::install.packages("shiny")
-    } else {
-      stop("Shiny is needed for this function to work. Please install it.",
-           call. = FALSE)
-    }
-  }
+launch_app <- function(app = c("doserate", "calibration")) {
+  app <- match.arg(app, several.ok = FALSE)
   shiny::shinyAppDir(
-    system.file("shinyApp", package = "gamma"),
-    options = list(width = 800, height = 600)
+    appDir = system.file("shiny", app, package = "gamma"),
+    options = list(launch.browser = TRUE)
   )
 }

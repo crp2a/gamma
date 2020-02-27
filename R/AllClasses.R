@@ -190,28 +190,22 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 .DoseRateModel <- setClass(
   Class = "DoseRateModel",
   slots = c(
-    model = "lm",
+    slope = "numeric",
+    intercept = "numeric",
+    residuals = "numeric",
+    df = "numeric",
+    MSWD = "numeric",
+    p_value = "numeric",
     background = "numeric",
     range = "numeric"
-  ),
-  contains = "VIRTUAL"
-)
-#' @rdname CalibrationCurve-class
-.DoseRateModelNi <- setClass(
-  Class = "DoseRateModelNi",
-  contains = "DoseRateModel"
-)
-#' @rdname CalibrationCurve-class
-.DoseRateModelNiEi <- setClass(
-  Class = "DoseRateModelNiEi",
-  contains = "DoseRateModel"
+  )
 )
 #' @rdname CalibrationCurve-class
 .CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
   slots = c(
-    Ni = "DoseRateModelNi",
-    NiEi = "DoseRateModelNiEi",
+    Ni = "DoseRateModel",
+    NiEi = "DoseRateModel",
     data = "data.frame",
     details = "list"
   )

@@ -72,6 +72,7 @@ Depends:
 Imports: 
     ggplot2 (>= 3.1.0),
     graphics,
+    IsoplotR (>= 3.2),
     methods,
     rlang (>= 0.3.1),
     rxylib (>= 0.2.1),
