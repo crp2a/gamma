@@ -100,6 +100,11 @@ predict_dose(calib_curve, spectra, threshold = "NiEi")
 Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
  \emph{Ancient TL}, 25(1), p. 1-4.
+
+ York, D., Evensen, N. M., Martı́nez, M. L. & De Basabe Delgado, J. (2004).
+ Unified Equations for the Slope, Intercept, and Standard Errors of the Best
+ Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
+ DOI: \href{https://doi.org/10.1119/1.1632486}{10.1119/1.1632486}.
 }
 \seealso{
 \link{integrate_signal}
