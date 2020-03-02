@@ -253,7 +253,23 @@ setGeneric(
 # @param simplify A \code{\link{logical}} scalar: should the result be
 #  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
-#' @return A \linkS4class{CalibrationCurve} object.
+#' @return
+#'  \code{fit_dose} returns a \linkS4class{CalibrationCurve} object.
+#'
+#'  \code{predict_dose} returns a \code{\link{data.frame}} with the following
+#'  columns:
+#'  \describe{
+#'   \item{name}{(\code{\link{character}}) the name of the spectra.}
+#'   \item{*_signal}{(\code{\link{numeric}}) the integrated signal value
+#'   (according to the value of \code{threshold}; see
+#'   \code{\link{integrate_signal}}).}
+#'   \item{*_error}{(\code{\link{numeric}}) the integrated signal error value
+#'   (according to the value of \code{threshold}; see
+#'   \code{\link{integrate_signal}}).}
+#'   \item{gamma_signal}{(\code{\link{numeric}}) the predicted gamma dose rate.}
+#'   \item{gamma_error}{(\code{\link{numeric}}) the predicted gamma dose rate
+#'   error.}
+#'  }
 #' @seealso \link{integrate_signal}
 #' @references
 #'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with

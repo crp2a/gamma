@@ -1,8 +1,5 @@
 comment: false
 
-ignore:
-  - "R/launch.R"
-
 coverage:
   status:
     project:

@@ -34,6 +34,8 @@ knitr::opts_chunk$set(
 
 **gamma** is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy scale of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. This package only supports Canberra CNF and TKA files.
 
+The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package provides an exhanced graphical user interface for the main applications of **gamma**.
+
 ## Installation
 
 Install the development version from GitHub with:
@@ -44,20 +46,6 @@ devtools::install_github("crp2a/gamma")
 ```
 
 ## Usage
-
-A [**Shiny**](https://shiny.rstudio.com) application provides an exhanced graphical user interface:
-
-```{r shiny, eval=FALSE}
-## Load the package
-library(gamma)
-
-## Run the app
-launch_app()
-```
-
-![](man/figures/README-shiny-1.png)
-
-Or, if you need a more reproducible workflow:
 
 ```{r usage, fig.width=7, fig.height=5, fig.align='center'}
 ## A minimal example

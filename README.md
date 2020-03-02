@@ -31,6 +31,10 @@ provides methods for estimating the gamma dose rate by the use of a
 calibration curve. This package only supports Canberra CNF and TKA
 files.
 
+The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package
+provides an exhanced graphical user interface for the main applications
+of **gamma**.
+
 ## Installation
 
 Install the development version from GitHub with:
@@ -41,21 +45,6 @@ devtools::install_github("crp2a/gamma")
 ```
 
 ## Usage
-
-A [**Shiny**](https://shiny.rstudio.com) application provides an
-exhanced graphical user interface:
-
-``` r
-## Load the package
-library(gamma)
-
-## Run the app
-launch_app()
-```
-
-![](man/figures/README-shiny-1.png)
-
-Or, if you need a more reproducible workflow:
 
 ``` r
 ## A minimal example
@@ -117,14 +106,18 @@ plot(calib, xaxis = "energy", yaxis = "rate")
 data("BDX_LaBr_1_curve", package = "gamma")
 BDX_LaBr_1_curve
 #> Calibration curve:
-#> * Date: 2020-01-13 11:43:08
+#> * laboratory: IRAMAT-CRP2A (UMR 5060)
+#> * instrument: InSpector 1000
+#> * detector: LaBr #1
+#> * authors: CRP2A Luminescence Team
+#> * date: 2020-02-28 16:31:01
 
 ## Estimate the gamma dose rate
 (doses <- predict_dose(BDX_LaBr_1_curve, calib, simplify = TRUE))
 #> Warning: The following value does not lie in the curve range:
 #> * test_LaBr
-#>                name live_time Ni_signal  Ni_error gamma_dose gamma_error
-#> test_LaBr test_LaBr   3385.54   141.014 0.3148497   4210.784    84.05728
+#>                name Ni_signal  Ni_error gamma_dose gamma_error
+#> test_LaBr test_LaBr   141.014 0.3148497   4171.876    92.54298
 ```
 
 ## Contributing

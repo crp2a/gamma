@@ -81,12 +81,9 @@ Imports:
     utils
 Suggests: 
     covr,
-    kableExtra,
     knitr,
     magrittr,
     rmarkdown,
-    shiny,
-    shinyWidgets,
     testthat,
     vdiffr
 VignetteBuilder: 
@@ -106,7 +103,6 @@ Collate:
     'extract.R'
     'gamma-package.R'
     'integrate.R'
-    'launch.R'
     'peaks.R'
     'plot.R'
     'read.R'

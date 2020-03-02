@@ -59,7 +59,22 @@ to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
 introduced by the calibration of the energy scale of the spectrum.}
 }
 \value{
-A \linkS4class{CalibrationCurve} object.
+\code{fit_dose} returns a \linkS4class{CalibrationCurve} object.
+
+ \code{predict_dose} returns a \code{\link{data.frame}} with the following
+ columns:
+ \describe{
+  \item{name}{(\code{\link{character}}) the name of the spectra.}
+  \item{*_signal}{(\code{\link{numeric}}) the integrated signal value
+  (according to the value of \code{threshold}; see
+  \code{\link{integrate_signal}}).}
+  \item{*_error}{(\code{\link{numeric}}) the integrated signal error value
+  (according to the value of \code{threshold}; see
+  \code{\link{integrate_signal}}).}
+  \item{gamma_signal}{(\code{\link{numeric}}) the predicted gamma dose rate.}
+  \item{gamma_error}{(\code{\link{numeric}}) the predicted gamma dose rate
+  error.}
+ }
 }
 \description{
 \code{fit_dose} builds a calibration curve for gamma dose rate estimation.
