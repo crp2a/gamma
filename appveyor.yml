@@ -18,6 +18,7 @@ environment:
   global:
     USE_RTOOLS: true
     WARNINGS_ARE_ERRORS: true
+    VDIFFR_RUN_TESTS: false
 
 build_script:
   - travis-tool.sh install_deps
