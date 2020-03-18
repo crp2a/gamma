@@ -5,11 +5,11 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "gamma",
-  "description": "Process in-situ Gamma-Ray Spectrometry for\n    Luminescence Dating. This package allows to import, inspect and\n    correct the energy shifts of Gamma-ray spectra. It provides methods\n    for estimating the gamma dose rate by the use of a calibration curve.\n    The package only supports Canberra CNF and TKA files. A 'shiny'\n    application provides an exhanced graphical user interface.",
+  "description": "Process in-situ Gamma-Ray Spectrometry for\n    Luminescence Dating. This package allows to import, inspect and\n    correct the energy shifts of Gamma-ray spectra. It provides methods\n    for estimating the gamma dose rate by the use of a calibration curve.\n    The package only supports Canberra CNF and TKA files.",
   "name": "gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry\n    Measurements",
-  "codeRepository": "http://github.com/crp2a/gamma",
+  "codeRepository": "https://github.com/crp2a/gamma",
   "relatedLink": "https://crp2a.github.io/gamma",
-  "issueTracker": "http://github.com/crp2a/gamma/issues",
+  "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.2.0",
   "programmingLanguage": {
@@ -307,5 +307,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "814.546KB"
+  "fileSize": "725.061KB"
 }

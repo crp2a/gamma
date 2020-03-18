@@ -14,8 +14,7 @@ Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and
     correct the energy shifts of Gamma-ray spectra. It provides methods
     for estimating the gamma dose rate by the use of a calibration curve.
-    The package only supports Canberra CNF and TKA files. A 'shiny'
-    application provides an exhanced graphical user interface.
+    The package only supports Canberra CNF and TKA files.
 }
 \details{
 \tabular{ll}{
@@ -36,8 +35,8 @@ de la Recherche (France) throught the program \emph{Investissements d'avenir}
 Useful links:
 \itemize{
   \item \url{https://crp2a.github.io/gamma}
-  \item \url{http://github.com/crp2a/gamma}
-  \item Report bugs at \url{http://github.com/crp2a/gamma/issues}
+  \item \url{https://github.com/crp2a/gamma}
+  \item Report bugs at \url{https://github.com/crp2a/gamma/issues}
 }
 
 }
