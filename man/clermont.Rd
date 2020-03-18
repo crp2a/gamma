@@ -20,8 +20,7 @@ data("clermont")
 Clermont Reference Data
 }
 \seealso{
-Other datasets: \code{\link{.decay_La}},
-  \code{\link{.decay}}, \code{\link{AIX_NaI_curve}},
+Other datasets: \code{\link{AIX_NaI_curve}},
   \code{\link{BDX_LaBr_1_curve}}
 }
 \concept{datasets}

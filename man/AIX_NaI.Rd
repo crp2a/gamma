@@ -4,39 +4,38 @@
 \name{AIX_NaI_curve}
 \alias{AIX_NaI_curve}
 \alias{AIX_NaI_data}
-\title{CEREGE Calibration Curve #1}
-\format{An object of class \code{CalibrationCurve} of length 1.}
-\usage{
-data("AIX_NaI_curve")
-
- data("AIX_NaI_data")
-
-AIX_NaI_data
-}
-\description{
-CEREGE Calibration Curve #1
-}
-\details{
+\title{CEREGE Calibration Curve NaI}
+\format{An object of class \linkS4class{CalibrationCurve}.
 \tabular{ll}{
  \strong{Laboratory} \tab CEREGE \cr
  \strong{Instrument} \tab Canberra Inspector 1000 \cr
  \strong{Detector} \tab NaI \cr
  \strong{Authors} \tab CEREGE Luminescence Team
+}}
+\usage{
+data(AIX_NaI_curve)
+
+data(AIX_NaI_data)
 }
+\description{
+CEREGE Calibration Curve NaI
 }
 \examples{
 \donttest{
 ## Load the curve
-utils::data("AIX_NaI_curve", package = "gamma")
+utils::data(AIX_NaI_curve, package = "gamma")
 AIX_NaI_curve
+
+## View raw data
+utils::data(AIX_NaI_data, package = "gamma")
+AIX_NaI_data
 
 ## See how to replicate the curve
 utils::vignette("AIX1#1", package = "gamma")
 }
 }
 \seealso{
-Other datasets: \code{\link{.decay_La}},
-  \code{\link{.decay}}, \code{\link{BDX_LaBr_1_curve}},
+Other datasets: \code{\link{BDX_LaBr_1_curve}},
   \code{\link{clermont}}
 }
 \concept{datasets}

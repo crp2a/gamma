@@ -32,11 +32,5 @@
 An internal dataset containing the decay data for the following isotopes:
 232-Th, 235-U, 238-U and 40-K.
 }
-\seealso{
-Other datasets: \code{\link{.decay_La}},
-  \code{\link{AIX_NaI_curve}},
-  \code{\link{BDX_LaBr_1_curve}}, \code{\link{clermont}}
-}
-\concept{datasets}
 \keyword{datasets}
 \keyword{internal}

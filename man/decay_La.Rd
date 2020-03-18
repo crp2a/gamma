@@ -29,11 +29,5 @@
 \description{
 An internal dataset containing the decay data for the Lanthanum isotopes.
 }
-\seealso{
-Other datasets: \code{\link{.decay}},
-  \code{\link{AIX_NaI_curve}},
-  \code{\link{BDX_LaBr_1_curve}}, \code{\link{clermont}}
-}
-\concept{datasets}
 \keyword{datasets}
 \keyword{internal}

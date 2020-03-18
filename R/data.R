@@ -24,7 +24,6 @@
 #' @source
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
-#' @family datasets
 #' @rdname decay
 #' @keywords datasets internal
 ".decay"
@@ -51,7 +50,6 @@
 #' @source
 #'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
 #'  Accessed 2019-06-07.
-#' @family datasets
 #' @rdname decay_La
 #' @keywords datasets internal
 ".decay_La"
@@ -72,13 +70,14 @@
 #' @keywords datasets
 "clermont"
 
-#' CEREGE Calibration Curve #1
+#' CEREGE Calibration Curve NaI
 #'
 #' @usage
-#'  data("AIX_NaI_curve")
+#' data(AIX_NaI_curve)
 #'
-#'  data("AIX_NaI_data")
-#' @details
+#' data(AIX_NaI_data)
+#' @format
+#' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab CEREGE \cr
 #'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
@@ -88,14 +87,19 @@
 #' @examples
 #' \donttest{
 #' ## Load the curve
-#' utils::data("AIX_NaI_curve", package = "gamma")
+#' utils::data(AIX_NaI_curve, package = "gamma")
 #' AIX_NaI_curve
+#'
+#' ## View raw data
+#' utils::data(AIX_NaI_data, package = "gamma")
+#' AIX_NaI_data
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
+#' @aliases AIX_NaI_curve AIX_NaI_data
 #' @rdname AIX_NaI
 "AIX_NaI_curve"
 
@@ -105,9 +109,11 @@
 #' CRP2A Calibration Curve LaBr #1
 #'
 #' @usage
-#'  data("BDX_LaBr_1_curve")
-#'  data("BDX_LaBr_1_data")
-#' @details
+#'  data(BDX_LaBr_1_curve)
+#'
+#'  data(BDX_LaBr_1_data)
+#' @format
+#' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
 #'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
@@ -117,14 +123,19 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data("BDX_LaBr_1_curve", package = "gamma")
+#' utils::data(BDX_LaBr_1_curve, package = "gamma")
 #' BDX_LaBr_1_curve
+#'
+#' ## View raw data
+#' utils::data(BDX_LaBr_1_data, package = "gamma")
+#' BDX_LaBr_1_data
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
+#' @aliases BDX_LaBr_1_curve BDX_LaBr_1_data
 #' @rdname BDX_LaBr_1
 "BDX_LaBr_1_curve"
 
