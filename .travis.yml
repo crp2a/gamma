@@ -20,7 +20,7 @@ jobs:
     deploy:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-      skip_cleanup: true
+      cleanup: false
       on:
         all_branches: true
         tags: true
