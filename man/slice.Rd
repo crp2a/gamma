@@ -54,10 +54,12 @@ sliced <- slice_signal(spectrum)
 plot(sliced)
 }
 \seealso{
-Other signal processing: \code{\link{baseline}},
-  \code{\link{find_peaks}}, \code{\link{integrate_signal}},
-  \code{\link{smooth_signal}},
-  \code{\link{stabilize_signal}}
+Other signal processing: 
+\code{\link{baseline}},
+\code{\link{find_peaks}()},
+\code{\link{integrate_signal}()},
+\code{\link{smooth_signal}()},
+\code{\link{stabilize_signal}()}
 }
 \author{
 N. Frerebeau

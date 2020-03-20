@@ -30,9 +30,12 @@ A new \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 Transform Intensities
 }
 \seealso{
-Other signal processing: \code{\link{baseline}},
-  \code{\link{find_peaks}}, \code{\link{integrate_signal}},
-  \code{\link{slice_signal}}, \code{\link{smooth_signal}}
+Other signal processing: 
+\code{\link{baseline}},
+\code{\link{find_peaks}()},
+\code{\link{integrate_signal}()},
+\code{\link{slice_signal}()},
+\code{\link{smooth_signal}()}
 }
 \author{
 N. Frerebeau

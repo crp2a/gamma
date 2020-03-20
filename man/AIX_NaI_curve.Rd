@@ -3,22 +3,21 @@
 \docType{data}
 \name{AIX_NaI_curve}
 \alias{AIX_NaI_curve}
-\alias{AIX_NaI_data}
-\title{CEREGE Calibration Curve NaI}
-\format{An object of class \linkS4class{CalibrationCurve}.
+\title{CEREGE Calibration Curve (NaI)}
+\format{
+An object of class \linkS4class{CalibrationCurve}.
 \tabular{ll}{
  \strong{Laboratory} \tab CEREGE \cr
  \strong{Instrument} \tab Canberra Inspector 1000 \cr
  \strong{Detector} \tab NaI \cr
  \strong{Authors} \tab CEREGE Luminescence Team
-}}
+}
+}
 \usage{
 data(AIX_NaI_curve)
-
-data(AIX_NaI_data)
 }
 \description{
-CEREGE Calibration Curve NaI
+CEREGE Calibration Curve (NaI)
 }
 \examples{
 \donttest{
@@ -35,8 +34,13 @@ utils::vignette("AIX1#1", package = "gamma")
 }
 }
 \seealso{
-Other datasets: \code{\link{BDX_LaBr_1_curve}},
-  \code{\link{clermont}}
+\link{AIX_NaI_data}
+
+Other datasets: 
+\code{\link{AIX_NaI_data}},
+\code{\link{BDX_LaBr_1_curve}},
+\code{\link{BDX_LaBr_1_data}},
+\code{\link{clermont}}
 }
 \concept{datasets}
 \keyword{datasets}

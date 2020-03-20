@@ -40,8 +40,10 @@ spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
 summarise(spectra)
 }
 \seealso{
-Other IO: \code{\link{operators}}, \code{\link{plot}},
-  \code{\link{read}}
+Other IO: 
+\code{\link{operators}},
+\code{\link{plot}()},
+\code{\link{read}()}
 }
 \author{
 N. Frerebeau

@@ -65,10 +65,11 @@ In the code snippets below, \code{x} is a \code{PeakPosition} object.
 }
 
 \seealso{
-Other class: \code{\link{BaseLine-class}},
-  \code{\link{DoseRateModel-class}},
-  \code{\link{GammaSpectra-class}},
-  \code{\link{GammaSpectrum-class}}
+Other class: 
+\code{\link{BaseLine-class}},
+\code{\link{DoseRateModel-class}},
+\code{\link{GammaSpectra-class}},
+\code{\link{GammaSpectrum-class}}
 }
 \author{
 N. Frerebeau

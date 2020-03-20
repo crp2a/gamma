@@ -9,8 +9,7 @@
 \usage{
 find_peaks(object, ...)
 
-\S4method{find_peaks}{GammaSpectrum}(object, method = c("MAD"),
-  SNR = 2, span = NULL, ...)
+\S4method{find_peaks}{GammaSpectrum}(object, method = c("MAD"), SNR = 2, span = NULL, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
@@ -53,10 +52,12 @@ spectrum <- read(spc_file)
 plot(spectrum, peaks)
 }
 \seealso{
-Other signal processing: \code{\link{baseline}},
-  \code{\link{integrate_signal}},
-  \code{\link{slice_signal}}, \code{\link{smooth_signal}},
-  \code{\link{stabilize_signal}}
+Other signal processing: 
+\code{\link{baseline}},
+\code{\link{integrate_signal}()},
+\code{\link{slice_signal}()},
+\code{\link{smooth_signal}()},
+\code{\link{stabilize_signal}()}
 }
 \author{
 N. Frerebeau

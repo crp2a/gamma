@@ -3,22 +3,21 @@
 \docType{data}
 \name{BDX_LaBr_1_curve}
 \alias{BDX_LaBr_1_curve}
-\alias{BDX_LaBr_1_data}
-\title{CRP2A Calibration Curve LaBr #1}
-\format{An object of class \linkS4class{CalibrationCurve}.
+\title{CRP2A Calibration Curve (LaBr #1)}
+\format{
+An object of class \linkS4class{CalibrationCurve}.
 \tabular{ll}{
  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
  \strong{Instrument} \tab Canberra Inspector 1000 \cr
  \strong{Detector} \tab LaBr \cr
  \strong{Authors} \tab CRP2A Luminescence Team
-}}
+}
+}
 \usage{
 data(BDX_LaBr_1_curve)
-
-data(BDX_LaBr_1_data)
 }
 \description{
-CRP2A Calibration Curve LaBr #1
+CRP2A Calibration Curve (LaBr #1)
 }
 \examples{
 \dontrun{
@@ -35,8 +34,13 @@ utils::vignette("CRP2A#1", package = "gamma")
 }
 }
 \seealso{
-Other datasets: \code{\link{AIX_NaI_curve}},
-  \code{\link{clermont}}
+\link{BDX_LaBr_1_data}
+
+Other datasets: 
+\code{\link{AIX_NaI_curve}},
+\code{\link{AIX_NaI_data}},
+\code{\link{BDX_LaBr_1_data}},
+\code{\link{clermont}}
 }
 \concept{datasets}
 \keyword{datasets}

@@ -10,12 +10,22 @@
 \usage{
 integrate_signal(object, ...)
 
-\S4method{integrate_signal}{GammaSpectrum}(object, range,
-  background = NULL, threshold = c("Ni", "NiEi"), ...)
+\S4method{integrate_signal}{GammaSpectrum}(
+  object,
+  range,
+  background = NULL,
+  threshold = c("Ni", "NiEi"),
+  ...
+)
 
-\S4method{integrate_signal}{GammaSpectra}(object, range,
-  background = NULL, threshold = c("Ni", "NiEi"), simplify = FALSE,
-  ...)
+\S4method{integrate_signal}{GammaSpectra}(
+  object,
+  range,
+  background = NULL,
+  threshold = c("Ni", "NiEi"),
+  simplify = FALSE,
+  ...
+)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -58,10 +68,12 @@ Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
  \emph{Ancient TL}, 25(1), p. 1-4.
 }
 \seealso{
-Other signal processing: \code{\link{baseline}},
-  \code{\link{find_peaks}}, \code{\link{slice_signal}},
-  \code{\link{smooth_signal}},
-  \code{\link{stabilize_signal}}
+Other signal processing: 
+\code{\link{baseline}},
+\code{\link{find_peaks}()},
+\code{\link{slice_signal}()},
+\code{\link{smooth_signal}()},
+\code{\link{stabilize_signal}()}
 }
 \author{
 N. Frerebeau

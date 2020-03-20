@@ -11,19 +11,22 @@
 \alias{plot,CalibrationCurve,missing-method}
 \title{Plot}
 \usage{
-\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("chanel", "energy"),
-  yaxis = c("count", "rate"), ...)
+\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("chanel", "energy"), yaxis = c("count", "rate"), ...)
 
-\S4method{plot}{GammaSpectrum,GammaSpectrum}(x, y, xaxis = c("chanel",
-  "energy"), yaxis = c("count", "rate"), ...)
+\S4method{plot}{GammaSpectrum,GammaSpectrum}(x, y, xaxis = c("chanel", "energy"), yaxis = c("count", "rate"), ...)
 
-\S4method{plot}{GammaSpectra,missing}(x, xaxis = c("chanel", "energy"),
-  yaxis = c("count", "rate"), select = NULL, facet = FALSE, ...)
+\S4method{plot}{GammaSpectra,missing}(
+  x,
+  xaxis = c("chanel", "energy"),
+  yaxis = c("count", "rate"),
+  select = NULL,
+  facet = FALSE,
+  ...
+)
 
 \S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
 
-\S4method{plot}{CalibrationCurve,missing}(x, threshold = c("Ni", "NiEi"),
-  ...)
+\S4method{plot}{CalibrationCurve,missing}(x, threshold = c("Ni", "NiEi"), ...)
 }
 \arguments{
 \item{x, y}{Objects to be plotted.}
@@ -70,8 +73,10 @@ plot(spectra, xaxis = "chanel", yaxis = "rate",
   ggplot2::theme_bw()
 }
 \seealso{
-Other IO: \code{\link{operators}}, \code{\link{read}},
-  \code{\link{summarise}}
+Other IO: 
+\code{\link{operators}},
+\code{\link{read}()},
+\code{\link{summarise}()}
 }
 \author{
 N. Frerebeau

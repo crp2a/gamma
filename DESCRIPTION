@@ -69,27 +69,27 @@ BugReports: https://github.com/crp2a/gamma/issues
 Depends:
     R (>= 3.3)
 Imports: 
-    ggplot2 (>= 3.1.0),
+    ggplot2 (>= 3.3.0),
     graphics,
-    IsoplotR (>= 3.2),
+    IsoplotR (>= 3.3),
     methods,
-    rlang (>= 0.3.1),
-    rxylib (>= 0.2.1),
+    rlang (>= 0.4.5),
+    rxylib (>= 0.2.4),
     stats,
     tools,
     utils
 Suggests: 
-    covr,
+    covr (>= 3.5.0),
     knitr,
-    magrittr,
+    magrittr (>= 1.5),
     rmarkdown,
-    testthat,
-    vdiffr
+    testthat (>= 2.3.2),
+    vdiffr (>= 0.3.1)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'

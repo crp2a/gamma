@@ -4,7 +4,9 @@
 \name{clermont}
 \alias{clermont}
 \title{Clermont Reference Data}
-\format{TODO}
+\format{
+TODO
+}
 \source{
 Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
  Update. \emph{Ancient TL}, 29(1), p. 5-8.
@@ -20,8 +22,11 @@ data("clermont")
 Clermont Reference Data
 }
 \seealso{
-Other datasets: \code{\link{AIX_NaI_curve}},
-  \code{\link{BDX_LaBr_1_curve}}
+Other datasets: 
+\code{\link{AIX_NaI_curve}},
+\code{\link{AIX_NaI_data}},
+\code{\link{BDX_LaBr_1_curve}},
+\code{\link{BDX_LaBr_1_data}}
 }
 \concept{datasets}
 \keyword{datasets}

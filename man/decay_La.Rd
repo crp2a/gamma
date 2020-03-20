@@ -4,7 +4,8 @@
 \name{.decay_La}
 \alias{.decay_La}
 \title{Lanthanum Decay Data}
-\format{A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
+\format{
+A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
  with the following columns (absolute errors):
  \describe{
    \item{decay_chain}{}
@@ -18,7 +19,8 @@
    \item{energy_error}{}
    \item{gamma_intensity}{}
    \item{gamma_intensity_error}{}
- }}
+ }
+}
 \source{
 \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
  Accessed 2019-06-07.

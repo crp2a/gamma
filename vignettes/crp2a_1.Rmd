@@ -57,9 +57,8 @@ plot(calib_spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
 
 ```{r integrate-BRIQUE}
 lines <- list(chanel = c(76, 465, 828), energy = c(238, 1461, 2615))
-calib_spc[["BRIQUE"]] %>%
-  calibrate_energy(lines = lines) %>%
-  integrate_signal(range = c(300, 2800), noise = c(22.608, 0.050))
+BRIQUE_calib <- calibrate_energy(calib_spc[["BRIQUE"]], lines = lines)
+integrate_signal(BRIQUE_calib, range = c(300, 2800), noise = c(22.608, 0.050))
 ```
 
 #### C341

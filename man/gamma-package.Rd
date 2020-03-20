@@ -8,7 +8,7 @@
 \title{gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
     Measurements}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and

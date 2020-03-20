@@ -48,8 +48,10 @@ spc_dir <- system.file("extdata/", package = "gamma")
 \seealso{
 \link[rxylib]{read_xyData}
 
-Other IO: \code{\link{operators}}, \code{\link{plot}},
-  \code{\link{summarise}}
+Other IO: 
+\code{\link{operators}},
+\code{\link{plot}()},
+\code{\link{summarise}()}
 }
 \author{
 N. Frerebeau

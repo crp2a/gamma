@@ -70,12 +70,9 @@
 #' @keywords datasets
 "clermont"
 
-#' CEREGE Calibration Curve NaI
+#' CEREGE Calibration Curve (NaI)
 #'
-#' @usage
-#' data(AIX_NaI_curve)
-#'
-#' data(AIX_NaI_data)
+#' @usage data(AIX_NaI_curve)
 #' @format
 #' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
@@ -99,19 +96,20 @@
 #' }
 #' @family datasets
 #' @keywords datasets
-#' @aliases AIX_NaI_curve AIX_NaI_data
-#' @rdname AIX_NaI
+#' @seealso \link{AIX_NaI_data}
 "AIX_NaI_curve"
 
-#' @rdname AIX_NaI
+#' CEREGE Calibration Curve Data (NaI)
+#'
+#' @usage data(AIX_NaI_data)
+#' @family datasets
+#' @keywords datasets
+#' @seealso \link{AIX_NaI_curve}
 "AIX_NaI_data"
 
-#' CRP2A Calibration Curve LaBr #1
+#' CRP2A Calibration Curve (LaBr #1)
 #'
-#' @usage
-#'  data(BDX_LaBr_1_curve)
-#'
-#'  data(BDX_LaBr_1_data)
+#' @usage data(BDX_LaBr_1_curve)
 #' @format
 #' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
@@ -135,9 +133,13 @@
 #' }
 #' @family datasets
 #' @keywords datasets
-#' @aliases BDX_LaBr_1_curve BDX_LaBr_1_data
-#' @rdname BDX_LaBr_1
+#' @seealso \link{BDX_LaBr_1_data}
 "BDX_LaBr_1_curve"
 
-#' @rdname BDX_LaBr_1
+#' CRP2A Calibration Curve Data (LaBr #1)
+#'
+#' @usage data(BDX_LaBr_1_data)
+#' @family datasets
+#' @keywords datasets
+#' @seealso \link{BDX_LaBr_1_curve}
 "BDX_LaBr_1_data"

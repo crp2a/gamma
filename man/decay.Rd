@@ -4,7 +4,8 @@
 \name{.decay}
 \alias{.decay}
 \title{Nuclear Decay Data}
-\format{A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
+\format{
+A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
  with the following columns (absolute errors):
  \describe{
    \item{decay_chain}{}
@@ -20,7 +21,8 @@
    \item{gamma_intensity_error}{}
    \item{counts_chain}{}
    \item{counts_chain_error}{}
- }}
+ }
+}
 \source{
 \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
  Accessed 2019-06-07.

@@ -17,17 +17,22 @@ fit_dose(object, ...)
 
 predict_dose(object, spectrum, ...)
 
-\S4method{fit_dose}{GammaSpectra}(object, Ni_noise, Ni_range, NiEi_noise,
-  NiEi_range, alpha = 0.05, details = NULL, ...)
+\S4method{fit_dose}{GammaSpectra}(
+  object,
+  Ni_noise,
+  Ni_range,
+  NiEi_noise,
+  NiEi_range,
+  alpha = 0.05,
+  details = NULL,
+  ...
+)
 
-\S4method{predict_dose}{CalibrationCurve,missing}(object,
-  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
+\S4method{predict_dose}{CalibrationCurve,missing}(object, threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 
-\S4method{predict_dose}{CalibrationCurve,GammaSpectrum}(object, spectrum,
-  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
+\S4method{predict_dose}{CalibrationCurve,GammaSpectrum}(object, spectrum, threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 
-\S4method{predict_dose}{CalibrationCurve,GammaSpectra}(object, spectrum,
-  threshold = c("Ni", "NiEi"), epsilon = 0, ...)
+\S4method{predict_dose}{CalibrationCurve,GammaSpectra}(object, spectrum, threshold = c("Ni", "NiEi"), epsilon = 0, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}

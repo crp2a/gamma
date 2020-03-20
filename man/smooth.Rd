@@ -10,11 +10,19 @@
 \usage{
 smooth_signal(object, ...)
 
-\S4method{smooth_signal}{GammaSpectrum}(object, method = c("unweighted",
-  "weighted", "savitzky"), m = 3, p = 2)
+\S4method{smooth_signal}{GammaSpectrum}(
+  object,
+  method = c("unweighted", "weighted", "savitzky"),
+  m = 3,
+  p = 2
+)
 
-\S4method{smooth_signal}{GammaSpectra}(object, method = c("unweighted",
-  "weighted", "savitzky"), m = 3, p = 2)
+\S4method{smooth_signal}{GammaSpectra}(
+  object,
+  method = c("unweighted", "weighted", "savitzky"),
+  m = 3,
+  p = 2
+)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -96,10 +104,12 @@ Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
  DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
 }
 \seealso{
-Other signal processing: \code{\link{baseline}},
-  \code{\link{find_peaks}}, \code{\link{integrate_signal}},
-  \code{\link{slice_signal}},
-  \code{\link{stabilize_signal}}
+Other signal processing: 
+\code{\link{baseline}},
+\code{\link{find_peaks}()},
+\code{\link{integrate_signal}()},
+\code{\link{slice_signal}()},
+\code{\link{stabilize_signal}()}
 }
 \author{
 N. Frerebeau

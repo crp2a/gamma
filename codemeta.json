@@ -15,10 +15,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.2",
+    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
+  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
   "author": [
     {
       "@type": "Person",
@@ -109,6 +109,7 @@
       "@type": "SoftwareApplication",
       "identifier": "covr",
       "name": "covr",
+      "version": ">= 3.5.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -133,6 +134,7 @@
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
+      "version": ">= 1.5",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -157,6 +159,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 2.3.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -169,6 +172,7 @@
       "@type": "SoftwareApplication",
       "identifier": "vdiffr",
       "name": "vdiffr",
+      "version": ">= 0.3.1",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -189,7 +193,7 @@
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
-      "version": ">= 3.1.0",
+      "version": ">= 3.3.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -207,7 +211,7 @@
       "@type": "SoftwareApplication",
       "identifier": "IsoplotR",
       "name": "IsoplotR",
-      "version": ">= 3.2",
+      "version": ">= 3.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -225,7 +229,7 @@
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
-      "version": ">= 0.3.1",
+      "version": ">= 0.4.5",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -238,7 +242,7 @@
       "@type": "SoftwareApplication",
       "identifier": "rxylib",
       "name": "rxylib",
-      "version": ">= 0.2.1",
+      "version": ">= 0.2.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -307,5 +311,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "725.061KB"
+  "fileSize": "708.265KB"
 }

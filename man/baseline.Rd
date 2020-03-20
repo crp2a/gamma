@@ -17,16 +17,25 @@ estimate_baseline(object, ...)
 
 remove_baseline(object, ...)
 
-\S4method{estimate_baseline}{GammaSpectra}(object, method = c("SNIP"),
-  LLS = FALSE, decreasing = FALSE, k = 100)
+\S4method{estimate_baseline}{GammaSpectra}(
+  object,
+  method = c("SNIP"),
+  LLS = FALSE,
+  decreasing = FALSE,
+  k = 100
+)
 
-\S4method{estimate_baseline}{GammaSpectrum}(object, method = c("SNIP"),
-  LLS = FALSE, decreasing = FALSE, k = 100)
+\S4method{estimate_baseline}{GammaSpectrum}(
+  object,
+  method = c("SNIP"),
+  LLS = FALSE,
+  decreasing = FALSE,
+  k = 100
+)
 
 \S4method{remove_baseline}{GammaSpectra}(object, method = c("SNIP"), ...)
 
-\S4method{remove_baseline}{GammaSpectrum}(object, method = c("SNIP"),
-  ...)
+\S4method{remove_baseline}{GammaSpectrum}(object, method = c("SNIP"), ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -103,10 +112,12 @@ Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
 }
 \seealso{
-Other signal processing: \code{\link{find_peaks}},
-  \code{\link{integrate_signal}},
-  \code{\link{slice_signal}}, \code{\link{smooth_signal}},
-  \code{\link{stabilize_signal}}
+Other signal processing: 
+\code{\link{find_peaks}()},
+\code{\link{integrate_signal}()},
+\code{\link{slice_signal}()},
+\code{\link{smooth_signal}()},
+\code{\link{stabilize_signal}()}
 }
 \author{
 N. Frerebeau
