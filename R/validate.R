@@ -2,7 +2,7 @@
 #' @include AllClasses.R
 NULL
 
-# GammaSpectrum ================================================================
+# ================================================================ GammaSpectrum
 setValidity(
   Class = "GammaSpectrum",
   method = function(object) {
@@ -160,7 +160,7 @@ setValidity(
   }
 )
 
-# GammaSpectra =================================================================
+# ================================================================= GammaSpectra
 setValidity(
   Class = "GammaSpectra",
   method = function(object) {
@@ -183,7 +183,7 @@ setValidity(
   }
 )
 
-# CalibrationCurve =============================================================
+# ============================================================= CalibrationCurve
 # setValidity(
 #   Class = "CalibrationCurve",
 #   method = function(object) {
@@ -279,7 +279,7 @@ setValidity(
 #   }
 # )
 
-# PeakPosition =================================================================
+# ================================================================= PeakPosition
 setValidity(
   Class = "PeakPosition",
   method = function(object) {

@@ -75,7 +75,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
-    calibration = "lm",
+    calibration = "LmOrNull",
     dose_rate = "numeric"
   ),
   prototype = list(
@@ -90,7 +90,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = numeric(0),
     live_time = numeric(0),
     real_time = numeric(0),
-    calibration = stats::lm(0 ~ 0),
+    calibration = NULL,
     dose_rate = numeric(2)
   )
 )
@@ -272,8 +272,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   )
 )
 
-# INITIALIZATION ===============================================================
-## GammaSpectrum ---------------------------------------------------------------
+# =================================================================== Initialize
+# ---------------------------------------------------------------- GammaSpectrum
 # /!\ initialize() GammaSpectrum retains copy construction
 setMethod(
   f = "initialize",
@@ -302,7 +302,7 @@ setMethod(
     )
   }
 )
-## GammaSpectra ----------------------------------------------------------------
+# ----------------------------------------------------------------- GammaSpectra
 setMethod(
   f = "initialize",
   signature = "GammaSpectra",
@@ -323,7 +323,7 @@ setMethod(
     return(.Object)
   }
 )
-## PeakPosition ----------------------------------------------------------------
+# ----------------------------------------------------------------- PeakPosition
 # /!\ initialize() PeakPosition retains copy construction
 setMethod(
   f = "initialize",
@@ -343,7 +343,7 @@ setMethod(
     )
   }
 )
-## CalibrationCurve ------------------------------------------------------------
+# ------------------------------------------------------------- CalibrationCurve
 setMethod(
   f = "initialize",
   signature = "CalibrationCurve",

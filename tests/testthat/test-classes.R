@@ -17,7 +17,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_type(spectrum[["energy"]], "double")
   expect_type(spectrum[["count"]], "double")
   expect_type(spectrum[["rate"]], "double")
-  expect_type(spectrum[["calibration"]], "list")
+  expect_type(spectrum[["calibration"]], "NULL")
   expect_type(spectrum[["dose_rate"]], "double")
 
   expect_type(get_hash(spectrum), "character")
@@ -64,7 +64,7 @@ test_that("Initialize an empty BaseLine instance", {
   expect_type(baseline[["energy"]], "double")
   expect_type(baseline[["count"]], "double")
   expect_type(baseline[["rate"]], "double")
-  expect_type(baseline[["calibration"]], "list")
+  expect_type(baseline[["calibration"]], "NULL")
   expect_type(baseline[["dose_rate"]], "double")
 
   expect_s3_class(as(baseline, "data.frame"), "data.frame")
