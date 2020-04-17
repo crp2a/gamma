@@ -13,6 +13,8 @@ slice_signal(object, ...)
 \S4method{slice_signal}{GammaSpectrum}(object, ...)
 
 \S4method{slice_signal}{GammaSpectra}(object, ...)
+
+\S4method{slice_signal}{GammaSpectra}(object, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}

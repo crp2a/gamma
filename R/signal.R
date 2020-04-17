@@ -37,6 +37,18 @@ setMethod(
   f = "slice_signal",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, ...) {
+    spc <- lapply(X = object, FUN = slice_signal, ...)
+    methods::as(spc, "GammaSpectra")
+  }
+)
+
+#' @export
+#' @rdname slice
+#' @aliases slice_signal,GammaSpectra-method
+setMethod(
+  f = "slice_signal",
+  signature = signature(object = "GammaSpectra"),
+  definition = function(object, ...) {
     spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
     sliced <- lapply(
       X = spectra,
