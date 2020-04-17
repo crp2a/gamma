@@ -9,6 +9,10 @@ NULL
 #' @param object An object from which to get or set element(s).
 #' @param value A possible value for the element(s) of \code{object} (see
 #'  below).
+#' @param simplify A \code{\link{logical}} scalar: should the result be
+#'  simplified to a matrix? If \code{FALSE} (default), returns a list.
+#' @param type A \code{\link{character}} string specifying the value to be
+#'  returned. It must be one of "\code{live}" (the default) or "\code{real}".
 #' @param threshold A \code{\link{character}} sting specifying the threshold
 #'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
 #'  (see details).
@@ -45,10 +49,52 @@ setGeneric(
 )
 
 #' @rdname access
+#' @aliases get_time-method
+setGeneric(
+  name = "get_time",
+  def = function(object, ...) standardGeneric("get_time")
+)
+
+#' @rdname access
+#' @aliases get_nchanels-method
+setGeneric(
+  name = "get_nchanels",
+  def = function(object) standardGeneric("get_nchanels")
+)
+
+#' @rdname access
 #' @aliases get_chanels-method
 setGeneric(
   name = "get_chanels",
-  def = function(object) standardGeneric("get_chanels")
+  def = function(object, ...) standardGeneric("get_chanels")
+)
+
+#' @rdname access
+#' @aliases get_counts-method
+setGeneric(
+  name = "get_counts",
+  def = function(object, ...) standardGeneric("get_counts")
+)
+
+#' @rdname access
+#' @aliases get_rates-method
+setGeneric(
+  name = "get_rates",
+  def = function(object, ...) standardGeneric("get_rates")
+)
+
+#' @rdname access
+#' @aliases get_energy-method
+setGeneric(
+  name = "get_energy",
+  def = function(object, ...) standardGeneric("get_energy")
+)
+
+#' @rdname access
+#' @aliases set_energy-method
+setGeneric(
+  name = "set_energy<-",
+  def = function(object, value) standardGeneric("set_energy<-")
 )
 
 #' @rdname access
@@ -63,20 +109,6 @@ setGeneric(
 setGeneric(
   name = "set_dose<-",
   def = function(object, value) standardGeneric("set_dose<-")
-)
-
-#' @rdname access
-#' @aliases get_energy-method
-setGeneric(
-  name = "get_energy",
-  def = function(object) standardGeneric("get_energy")
-)
-
-#' @rdname access
-#' @aliases set_energy-method
-setGeneric(
-  name = "set_energy<-",
-  def = function(object, value) standardGeneric("set_energy<-")
 )
 
 #' @rdname access
@@ -98,6 +130,13 @@ setGeneric(
 setGeneric(
   name = "get_range",
   def = function(object, ...) standardGeneric("get_range")
+)
+
+#' @rdname access
+#' @aliases range_energy-method
+setGeneric(
+  name = "range_energy",
+  def = function(object) standardGeneric("range_energy")
 )
 
 # ------------------------------------------------------------------------------

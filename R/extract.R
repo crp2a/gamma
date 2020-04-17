@@ -50,11 +50,55 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_length,GammaSpectrum-method
+#' @aliases get_time,GammaSpectrum-method
+setMethod(
+  f = "get_time",
+  signature = "GammaSpectrum",
+  definition = function(object, type = c("live", "real")) {
+    type <- match.arg(type, several.ok = FALSE)
+    time <- switch (
+      type,
+      live = object@live_time,
+      real = object@real_time
+    )
+    time
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_chanels,GammaSpectrum-method
 setMethod(
   f = "get_chanels",
   signature = "GammaSpectrum",
+  definition = function(object) object@chanel
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_nchanels,GammaSpectrum-method
+setMethod(
+  f = "get_nchanels",
+  signature = "GammaSpectrum",
   definition = function(object) length(object@chanel)
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_counts,GammaSpectrum-method
+setMethod(
+  f = "get_counts",
+  signature = "GammaSpectrum",
+  definition = function(object) object@count
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_rates,GammaSpectrum-method
+setMethod(
+  f = "get_rates",
+  signature = "GammaSpectrum",
+  definition = function(object) object@rate
 )
 
 #' @export
@@ -63,7 +107,7 @@ setMethod(
 setMethod(
   f = "get_energy",
   signature = "GammaSpectrum",
-  definition = function(object) range(object@energy)
+  definition = function(object) object@energy
 )
 
 #' @export
@@ -90,6 +134,15 @@ setMethod(
     methods::validObject(object)
     object
   }
+)
+
+#' @export
+#' @rdname access
+#' @aliases range_energy,GammaSpectrum-method
+setMethod(
+  f = "range_energy",
+  signature = "GammaSpectrum",
+  definition = function(object) range(object@energy)
 )
 
 # ================================================================= GammaSpectra
@@ -180,12 +233,62 @@ setMethod(
 
 #' @export
 #' @rdname access
-#' @aliases get_length,GammaSpectra-method
+#' @aliases get_time,GammaSpectra-method
+setMethod(
+  f = "get_time",
+  signature = "GammaSpectra",
+  definition = function(object, type = c("live", "real")) {
+    vapply(object, FUN = get_time, FUN.VALUE = numeric(1))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_chanels,GammaSpectra-method
 setMethod(
   f = "get_chanels",
   signature = "GammaSpectra",
+  definition = function(object, simplify = FALSE) {
+    chanels <- lapply(object, FUN = get_chanels)
+    if (simplify) chanels <- cbind(chanels)
+    chanels
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_nchanels,GammaSpectra-method
+setMethod(
+  f = "get_nchanels",
+  signature = "GammaSpectra",
   definition = function(object) {
-    vapply(object, FUN = get_chanels, FUN.VALUE = numeric(1))
+    vapply(object, FUN = get_nchanels, FUN.VALUE = numeric(1))
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_counts,GammaSpectra-method
+setMethod(
+  f = "get_counts",
+  signature = "GammaSpectra",
+  definition = function(object, simplify = FALSE) {
+    counts <- lapply(object, FUN = get_counts)
+    if (simplify) counts <- cbind(counts)
+    counts
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases get_rates,GammaSpectra-method
+setMethod(
+  f = "get_rates",
+  signature = "GammaSpectra",
+  definition = function(object, simplify = FALSE) {
+    rates <- lapply(object, FUN = get_rates)
+    if (simplify) rates <- cbind(rates)
+    rates
   }
 )
 
@@ -195,10 +298,9 @@ setMethod(
 setMethod(
   f = "get_energy",
   signature = "GammaSpectra",
-  definition = function(object) {
-    energy <- vapply(object, FUN = get_energy, FUN.VALUE = numeric(2))
-    energy <- as.data.frame(t(energy))
-    colnames(energy) <- c("min", "max")
+  definition = function(object, simplify = FALSE) {
+    energy <- lapply(object, FUN = get_energy)
+    if (simplify) energy <- cbind(energy)
     energy
   }
 )
@@ -253,6 +355,20 @@ setMethod(
     } else {
       stop("`value` must be a matrix or a data.frame.", call. = FALSE)
     }
+  }
+)
+
+#' @export
+#' @rdname access
+#' @aliases range_energy,GammaSpectra-method
+setMethod(
+  f = "range_energy",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    energy <- vapply(object, FUN = range_energy, FUN.VALUE = numeric(2))
+    energy <- as.data.frame(t(energy))
+    colnames(energy) <- c("min", "max")
+    energy
   }
 )
 

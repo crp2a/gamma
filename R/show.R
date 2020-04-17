@@ -7,7 +7,7 @@ setMethod(
   f = "show",
   signature = "GammaSpectrum",
   definition = function(object) {
-    if (get_chanels(object) != 0) {
+    if (get_nchanels(object) != 0) {
       meta <- summarise(object)
       meta <- paste(colnames(meta), unlist(meta), sep = ": ")
       cat("Gamma spectrum:", paste("* ", meta), sep = "\n")

@@ -22,9 +22,9 @@ background noise value and error (see \code{\link{integrate_signal}}).}
 \item{\code{range}}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (see \code{\link{integrate_signal}}).}
 
-\item{\code{Ni}}{A \code{DoseRateModelNi} object.}
+\item{\code{Ni}}{A \linkS4class{DoseRateModel} object.}
 
-\item{\code{NiEi}}{A \code{DoseRateModelNi} object.}
+\item{\code{NiEi}}{A \linkS4class{DoseRateModel} object.}
 
 \item{\code{data}}{A \code{\link{data.frame}} giving the data used for
 linear model fitting.}

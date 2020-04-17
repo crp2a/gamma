@@ -33,7 +33,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_s3_class(as(spectrum, "data.frame"), "data.frame")
   expect_s4_class(as(spectrum, "GammaSpectra"), "GammaSpectra")
 
-  expect_equal(get_chanels(spectrum), 0)
+  expect_equal(get_nchanels(spectrum), 0)
 })
 test_that("Initialize an empty GammaSpectra instance", {
   expect_s4_class(new("GammaSpectra"), "GammaSpectra")

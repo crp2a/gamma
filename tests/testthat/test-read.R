@@ -11,8 +11,8 @@ test_that("Import a gamma spectrum", {
   cnf_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
   cnf_spectrum <- read(cnf_file)
   expect_output(show(cnf_spectrum), "Gamma spectrum")
-  expect_equal(get_chanels(cnf_spectrum), 1024)
-  expect_equal(round(get_energy(cnf_spectrum)), c(-7, 3125))
+  expect_equal(get_nchanels(cnf_spectrum), 1024)
+  expect_equal(round(range_energy(cnf_spectrum)), c(-7, 3125))
 
   expect_s3_class(methods::as(cnf_spectrum, "data.frame"), "data.frame")
   expect_type(methods::as(cnf_spectrum, "list"), "list")
@@ -52,8 +52,8 @@ test_that("Import a set of gamma spectra", {
   set_names(spectra) <- LETTERS[1:7]
   expect_true(all(get_names(spectra) == LETTERS[1:7]))
   expect_true(all(get_names(spectra) == names(spectra)))
-  expect_true(all(get_chanels(spectra) == 1024))
-  expect_equal(dim(get_energy(spectra)), c(7, 2))
+  expect_true(all(get_nchanels(spectra) == 1024))
+  expect_equal(dim(range_energy(spectra)), c(7, 2))
 
   doses <- data.frame(value = 1:7, error = 1:7)
   expect_error(set_dose(spectra) <- doses, "do not match")

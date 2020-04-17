@@ -169,8 +169,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  background noise value and error (see \code{\link{integrate_signal}}).
 #' @slot range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (see \code{\link{integrate_signal}}).
-#' @slot Ni A \code{DoseRateModelNi} object.
-#' @slot NiEi A \code{DoseRateModelNi} object.
+#' @slot Ni A \linkS4class{DoseRateModel} object.
+#' @slot NiEi A \linkS4class{DoseRateModel} object.
 #' @slot data A \code{\link{data.frame}} giving the data used for
 #'  linear model fitting.
 #' @slot details A \code{\link{list}} of length-one vector giving the curve
