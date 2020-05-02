@@ -109,7 +109,6 @@
       "@type": "SoftwareApplication",
       "identifier": "covr",
       "name": "covr",
-      "version": ">= 3.5.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -134,7 +133,6 @@
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
-      "version": ">= 1.5",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -159,7 +157,6 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
-      "version": ">= 2.3.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -172,7 +169,6 @@
       "@type": "SoftwareApplication",
       "identifier": "vdiffr",
       "name": "vdiffr",
-      "version": ">= 0.3.1",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -311,5 +307,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "708.276KB"
+  "fileSize": "1516.708KB"
 }

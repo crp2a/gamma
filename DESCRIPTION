@@ -79,12 +79,12 @@ Imports:
     tools,
     utils
 Suggests: 
-    covr (>= 3.5.0),
+    covr,
     knitr,
-    magrittr (>= 1.5),
+    magrittr,
     rmarkdown,
-    testthat (>= 2.3.2),
-    vdiffr (>= 0.3.1)
+    testthat,
+    vdiffr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
