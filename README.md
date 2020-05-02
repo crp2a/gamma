@@ -40,7 +40,7 @@ of **gamma**.
 Install the development version from GitHub with:
 
 ``` r
-# install.packages("devtools")
+# install.packages("remotes")
 remotes::install_github("crp2a/gamma")
 ```
 
@@ -53,7 +53,7 @@ library(gamma)
 library(magrittr)
 
 ## Find the full path to the spectrum file
-spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 
 ## Import the spectrum
 spectrum <- read(spc_file)
@@ -92,14 +92,6 @@ plot(spectrum, peaks)
 ## Calibrate the energy scale
 calib <- calibrate_energy(spectrum, peaks)
 
-## Inspect results
-plot(calib, xaxis = "energy", yaxis = "rate")
-```
-
-<img src="man/figures/README-usage-2.png" style="display: block; margin: auto;" />
-
-``` r
-
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
@@ -115,9 +107,9 @@ BDX_LaBr_1_curve
 ## Estimate the gamma dose rate
 (doses <- predict_dose(BDX_LaBr_1_curve, calib, simplify = TRUE))
 #> Warning: The following value does not lie in the curve range:
-#> * test_LaBr
-#>                name Ni_signal  Ni_error gamma_dose gamma_error
-#> test_LaBr test_LaBr   141.014 0.3148497   4171.876    92.54298
+#> * LaBr
+#>      name Ni_signal  Ni_error gamma_dose gamma_error
+#> LaBr LaBr   141.014 0.3148497   4171.876    92.54298
 ```
 
 ## Contributing
