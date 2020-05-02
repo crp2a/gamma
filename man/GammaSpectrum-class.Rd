@@ -86,28 +86,24 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 \examples{
 # Import a Canberra CNF file
-spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
-(spectrum <- read(spc_file))
+spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+(spc <- read(spc_file))
 
 ## Access
-get_hash(spectrum)
-get_names(spectrum)
-get_chanels(spectrum)
-get_energy(spectrum)
-get_dose(spectrum)
+get_hash(spc)
+get_names(spc)
+get_time(spc, "live")
+get_time(spc, "real")
+get_nchanels(spc)
+range_energy(spc)
+
+spc[["date"]]
+spc[["instrument"]]
+spc[["file_format"]]
 
 # Coerce
-as(spectrum, "data.frame")
-
-# Subset
-spectrum[["hash"]]
-spectrum[["name"]]
-spectrum[["date"]]
-spectrum[["instrument"]]
-spectrum[["file_format"]]
-spectrum[["live_time"]]
-spectrum[["real_time"]]
-spectrum[["calibration"]]
+spc <- as(spc, "data.frame")
+head(spc)
 }
 \seealso{
 \linkS4class{GammaSpectra}, \linkS4class{BaseLine}

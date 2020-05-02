@@ -72,25 +72,23 @@ The following methods are availble for baseline estimation:
  }
 }
 \examples{
-# Import a CNF file
-spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
-spectrum <- read(spc_file)
+## Import a CNF file
+spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+spc <- read(spc_file)
 
-# Remove the first chanels
-spectrum <- slice_signal(spectrum)
+## Remove the first 35 chanels
+spc <- slice_signal(spc, -c(1:35))
 
-# Estimate baseline
-baseline <- estimate_baseline(spectrum)
+## Estimate baseline
+baseline <- estimate_baseline(spc)
 
-plot(spectrum, baseline) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts")
+plot(spc, baseline)
 
-# Remove baseline
-spc_clean1 <- remove_baseline(spectrum)
-spc_clean2 <- spectrum - baseline
+## Remove baseline
+spc_clean1 <- remove_baseline(spc)
+spc_clean2 <- spc - baseline
 
-plot(spc_clean1) +
-  ggplot2::labs(x = "Energy [keV]", y = "Counts")
+plot(spc_clean1)
 }
 \references{
 Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).

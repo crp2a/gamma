@@ -1,5 +1,16 @@
 # HELPERS
 
+#' Reverse Cumulative Sum
+#'
+#' @param x A \code{\link{numeric}} vector.
+#' @return A \code{\link{numeric}} vector.
+#' @author N. Frerebeau
+#' @keywords internal
+#' @noRd
+reverse_cumsum <- function(x) {
+  rev(cumsum(rev(x)))
+}
+
 #' Equality within a vector
 #'
 #' Checks for equality among all elements of a vector.

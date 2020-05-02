@@ -37,11 +37,11 @@ library(magrittr)
 ## Import Files
 ```{r import}
 # Import CNF files for calibration
-calib_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
+calib_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 (calib_spc <- read(calib_dir))
 
 # Import CNF files for background noise measurement
-noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
+noise_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
 (noise_spc <- read(noise_dir))
 ```
 

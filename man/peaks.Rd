@@ -43,13 +43,13 @@ A local maximum has to be the highest one in the given window and has to be
  }
 }
 \examples{
-# Import a Canberra CNF file
-spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
-spectrum <- read(spc_file)
+## Import a Canberra CNF file
+spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+spc <- read(spc_file)
 
-# Find peaks
-(peaks <- find_peaks(spectrum))
-plot(spectrum, peaks)
+## Find peaks
+(pks <- find_peaks(spc))
+plot(spc, pks)
 }
 \seealso{
 Other signal processing: 

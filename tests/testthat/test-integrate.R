@@ -1,10 +1,10 @@
 context("Integrate spectrum")
 
 test_that("Integrate GammaSpectrum", {
-  spc_cnf <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+  spc_cnf <- system.file("extdata/LaBr.CNF", package = "gamma")
   cnf <- read(spc_cnf)
   cnf <- slice_signal(cnf)
-  noise_file <- system.file("extdata/BDX100/background", package = "gamma")
+  noise_file <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
   noise <- read(noise_file)
   noise <- slice_signal(noise)
 
@@ -23,17 +23,17 @@ test_that("Integrate GammaSpectrum", {
   expect_error(integrate_signal(cnf, range = c(200, 2800), background = 1),
                "must be a numeric vector of length 2")
 
-  spc_tka <- system.file("extdata/test_LaBr.TKA", package = "gamma")
+  spc_tka <- system.file("extdata/LaBr.TKA", package = "gamma")
   tka <- read(spc_tka)
   expect_error(integrate_signal(tka, range = c(200, 2800)),
                "You must calibrate the energy scale of your spectrum first.")
 })
 
 test_that("Integrate GammaSpectra", {
-  spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
+  spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
   spectra <- read(spc_dir)
   spectra <- slice_signal(spectra)
-  noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
+  noise_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
   noise <- read(noise_dir)
   noise <- slice_signal(noise)
 

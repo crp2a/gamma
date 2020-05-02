@@ -4,17 +4,21 @@
 \name{subset}
 \alias{subset}
 \alias{[[,GammaSpectrum-method}
+\alias{[,GammaSpectra,ANY,ANY,ANY-method}
 \alias{[,GammaSpectra-method}
 \alias{[[,GammaSpectra-method}
+\alias{[[,DoseRateModel-method}
 \alias{[[,CalibrationCurve-method}
 \alias{[[,PeakPosition-method}
 \title{Extract or Replace Parts of an Object}
 \usage{
 \S4method{[[}{GammaSpectrum}(x, i)
 
-\S4method{[}{GammaSpectra}(x, i, j)
+\S4method{[}{GammaSpectra,ANY,ANY,ANY}(x, i, j)
 
 \S4method{[[}{GammaSpectra}(x, i)
+
+\S4method{[[}{DoseRateModel}(x, i)
 
 \S4method{[[}{CalibrationCurve}(x, i)
 

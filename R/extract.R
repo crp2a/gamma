@@ -42,6 +42,9 @@ setMethod(
   f = "set_names<-",
   signature = "GammaSpectrum",
   definition = function(object, value) {
+    if (!is.character(value) || length(value) != 1)
+      stop("`value` must be a length-one character vector.", call. = FALSE)
+
     object@name <- value
     methods::validObject(object)
     object
@@ -238,7 +241,7 @@ setMethod(
   f = "get_time",
   signature = "GammaSpectra",
   definition = function(object, type = c("live", "real")) {
-    vapply(object, FUN = get_time, FUN.VALUE = numeric(1))
+    vapply(object, FUN = get_time, FUN.VALUE = numeric(1), type = type)
   }
 )
 
@@ -369,6 +372,21 @@ setMethod(
     energy <- as.data.frame(t(energy))
     colnames(energy) <- c("min", "max")
     energy
+  }
+)
+
+# ================================================================ DoseRateModel
+#' @export
+#' @rdname subset
+#' @aliases [[,DoseRateModel-method
+setMethod(
+  f = "[[",
+  signature = "DoseRateModel",
+  definition = function(x, i) {
+    i <- match.arg(i, choices = methods::slotNames("DoseRateModel"),
+                   several.ok = FALSE)
+    data <- methods::slot(x, i)
+    return(data)
   }
 )
 

@@ -44,9 +44,9 @@ corresponding expected "\code{energy}" value (in keV).}
 Calibrates the energy scale of a gamma spectrum.
 }
 \examples{
-## Import a CNF file for calibration
-spc_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
-(spectrum <- read(spc_file))
+## Import a CNF file
+spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+(spc <- read(spc_file))
 
 ## Set peak positions (chanel) and expected energy values
 calib_lines <- list(
@@ -54,8 +54,8 @@ calib_lines <- list(
   energy = c(238, 1461, 2615)
 )
 
-## Correct the energy scale
-(spc1 <- calibrate_energy(spectrum, lines = calib_lines))
+## Adjust the energy scale
+(spc1 <- calibrate_energy(spc, lines = calib_lines))
 
 ## Inspect results
 plot(spc1, xaxis = "energy", yaxis = "count") +

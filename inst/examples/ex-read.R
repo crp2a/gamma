@@ -1,12 +1,12 @@
 ## Import a Canberra CNF file
-cnf_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
-(cnf_spectrum <- read(cnf_file))
+cnf_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+(cnf_spc <- read(cnf_file))
 
 ## Import a TKA file
-tka_file <- system.file("extdata/test_LaBr.TKA", package = "gamma")
-(tka_spectrum <- read(tka_file))
+tka_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+(tka_spc <- read(tka_file))
 
 ## Import all files in a given directory
 ## Skip the 35 first chanels
-spc_dir <- system.file("extdata/", package = "gamma")
-(spectra <- read(spc_dir))
+spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
+(spc <- read(spc_dir))

@@ -1,13 +1,16 @@
 ## Import CNF files
-spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
-spectrum <- read(spc_file)
+spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+spc <- read(spc_file)
 
 ## Plot spectrum
-plot(spectrum)
+plot(spc)
 
 ## Slice
-sliced <- slice_signal(spectrum, 450:550)
+sliced <- slice_signal(spc)
 plot(sliced)
 
-sliced <- slice_signal(spectrum)
+sliced <- slice_signal(spc, -c(1:35))
+plot(sliced)
+
+sliced <- slice_signal(spc, 450:550)
 plot(sliced)

@@ -2,7 +2,7 @@
 #' @include AllClasses.R
 NULL
 
-# GammaSpectrum ================================================================
+# ================================================================ GammaSpectrum
 setMethod(
   f = "show",
   signature = "GammaSpectrum",
@@ -37,7 +37,7 @@ setMethod(
   }
 )
 
-# GammaSpectra =================================================================
+# ================================================================= GammaSpectra
 setMethod(
   f = "show",
   signature = "GammaSpectra",
@@ -67,7 +67,16 @@ setMethod(
   }
 )
 
-# CalibrationCurve =============================================================
+# ================================================================ DoseRateModel
+setMethod(
+  f = "show",
+  signature = "DoseRateModel",
+  definition = function(object) {
+    cat("Dose vs signal linear model:\n", sep = "")
+  }
+)
+
+# ============================================================= CalibrationCurve
 setMethod(
   f = "show",
   signature = "CalibrationCurve",
@@ -83,7 +92,7 @@ setMethod(
   }
 )
 
-# PeakPosition =================================================================
+# ================================================================= PeakPosition
 setMethod(
   f = "show",
   signature = "PeakPosition",

@@ -2,7 +2,7 @@
 #' @include AllClasses.R
 NULL
 
-# ====================================================================== Extract
+# ===================================================================== Mutators
 #' Get or Set Parts of an Object
 #'
 #' Getters and setters to extract or replace parts of an object.
@@ -179,7 +179,7 @@ NULL
 #'  \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
 #'
 #'  \code{is_calibrated} returns a \code{\link{logical}} vector.
-#' @example inst/examples/ex-calibrate.R
+#' @example inst/examples/ex-energy.R
 #' @author N. Frerebeau
 #' @docType methods
 #' @family energy

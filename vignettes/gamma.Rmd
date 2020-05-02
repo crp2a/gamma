@@ -60,11 +60,11 @@ Both Canberra CNF and TKA files can be imported.
 ```{r import}
 # Automatically skip the first chanels
 # Import a CNF file
-cnf_test <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+cnf_test <- system.file("extdata/LaBr.CNF", package = "gamma")
 (spc_cnf <- read(cnf_test))
 
 # Import a TKA file
-tka_test <- system.file("extdata/test_LaBr.TKA", package = "gamma")
+tka_test <- system.file("extdata/LaBr.TKA", package = "gamma")
 (spc_tka <- read(tka_test))
 
 # Import all files in a given directory
@@ -219,11 +219,11 @@ The construction of a calibration curve requires a set of reference spectra for 
 
 ```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
 # Import the reference spectra
-calib_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
+calib_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 calib_spc <- read(calib_dir)
 
 # Import the spectra for background noise measurement
-noise_dir <- system.file("extdata/BDX100/background", package = "gamma")
+noise_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
 noise_spc <- read(noise_dir)
 
 # Set the known dose rates
@@ -249,21 +249,5 @@ plot(calib_curve) +
 ```
 
 New dose rate values can be predicted.
-```{r dose-rate, fig.width=7, fig.height=5, fig.align="center"}
-# Import spectra
-test_dir <- system.file("extdata/BDX100/test", package = "gamma")
-test_spc <- read(test_dir)
-
-# Estimate the gamma dose rate
-dose_rate <- predict_dose(calib_curve, test_spc, simplify = TRUE)
-```
-
-```{r dose-rate-table, echo=FALSE}
-knitr::kable(
-  dose_rate,
-  digits = 2,
-  caption = "Gamma dose rate estimates"
-)
-```
 
 # References

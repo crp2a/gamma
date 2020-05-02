@@ -81,9 +81,9 @@ readCanberraCNF <- function(file, ...) {
     date = date,
     instrument = instrument_name,
     file_format = "CNF",
-    chanel = spc_data$chanel,
+    chanel = as.integer(spc_data$chanel),
     energy = spc_data$energy,
-    count = spc_data$count,
+    count = as.integer(spc_data$count),
     live_time = live_time,
     real_time = real_time
   )
@@ -123,8 +123,8 @@ readCanberraTKA <- function(file, ...) {
     name = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
     file_format = "TKA",
-    chanel = spc_data$chanel,
-    count = spc_data$count,
+    chanel = as.integer(spc_data$chanel),
+    count = as.integer(spc_data$count),
     live_time = live_time,
     real_time = real_time
   )

@@ -80,10 +80,10 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   ),
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    name = "unknown",
+    name = character(0),
     date = Sys.time(),
-    instrument = "unknown",
-    file_format = "unknown",
+    instrument = character(0),
+    file_format = character(0),
     chanel = integer(0),
     energy = numeric(0),
     count = numeric(0),
@@ -91,7 +91,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     live_time = numeric(0),
     real_time = numeric(0),
     calibration = NULL,
-    dose_rate = numeric(2)
+    dose_rate = c(value = 0, error = 0)
   )
 )
 
@@ -264,7 +264,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   ),
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    noise_method = "unknown",
+    noise_method = character(0),
     noise_threshold = numeric(0),
     window = integer(0),
     chanel = integer(0),

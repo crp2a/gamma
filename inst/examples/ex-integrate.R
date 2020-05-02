@@ -1,11 +1,11 @@
 ## Import CNF files
 ### Spectra
-spc_dir <- system.file("extdata/BDX100/calibration", package = "gamma")
+spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 spc <- read(spc_dir)
 spc <- slice_signal(spc)
 
 ### Background noise
-bkg_dir <- system.file("extdata/BDX100/background", package = "gamma")
+bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
 bkg <- read(bkg_dir)
 bkg <- slice_signal(bkg)
 

@@ -1,7 +1,7 @@
 context("Signal process")
 
 test_that("Slice chanels", {
-  spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+  spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
 
   expect_equal(get_nchanels(spc_cnf), 1024)
@@ -23,7 +23,7 @@ test_that("Slice chanels", {
   expect_equal(get_hash(spc_set), get_hash(spc3))
 })
 test_that("Stabilize signal", {
-  spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+  spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
 
   spc1 <- stabilize_signal(spc_cnf, sqrt)
@@ -38,7 +38,7 @@ test_that("Stabilize signal", {
 test_that("Smooth signal", {
   smooth_methods <- c("unweighted", "weighted", "savitzky")
 
-  spc_file <- system.file("extdata/test_LaBr.CNF", package = "gamma")
+  spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
 
   for (i in smooth_methods) {
