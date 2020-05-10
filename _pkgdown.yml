@@ -17,6 +17,13 @@ authors:
 development:
   mode: auto
 
+template:
+  opengraph:
+    twitter:
+      creator: "@nfrerebeau"
+      site: "@CRP2A"
+      card: summary_large_image
+
 reference:
 - title: Data Import
   contents:
