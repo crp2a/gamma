@@ -1,4 +1,6 @@
 url: https://crp2a.github.io/gamma
+development:
+  mode: auto
 
 authors:
   Université Bordeaux Montaigne:
@@ -13,9 +15,6 @@ authors:
   Idex Aix-Marseille:
     href: https://amidex.univ-amu.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg" height="48" />
-
-development:
-  mode: auto
 
 template:
   opengraph:

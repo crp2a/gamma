@@ -183,13 +183,12 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.3"
+      "version": ">= 3.5"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
-      "version": ">= 3.3.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -207,7 +206,6 @@
       "@type": "SoftwareApplication",
       "identifier": "IsoplotR",
       "name": "IsoplotR",
-      "version": ">= 3.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -225,7 +223,6 @@
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
-      "version": ">= 0.4.5",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -238,7 +235,6 @@
       "@type": "SoftwareApplication",
       "identifier": "rxylib",
       "name": "rxylib",
-      "version": ">= 0.2.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -307,5 +303,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "1516.708KB"
+  "fileSize": "1516.623KB"
 }
