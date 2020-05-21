@@ -24,14 +24,15 @@ setMethod(
   f = "summarise",
   signature = "GammaSpectrum",
   definition = function(object) {
+    energy <- round(range_energy(object), 2)
     cbind.data.frame(
       name = object@name,
       date = as.character(object@date),
       live_time = object@live_time,
       real_time = object@real_time,
       chanels = length(object),
-      energy_min = range_energy(object)[[1L]],
-      energy_max = range_energy(object)[[2L]],
+      energy_min = energy[[1L]],
+      energy_max = energy[[2L]],
       stringsAsFactors = FALSE
     )
   }

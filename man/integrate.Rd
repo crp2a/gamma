@@ -6,8 +6,10 @@
 \alias{integrate_signal-method}
 \alias{integrate_signal,GammaSpectrum,missing-method}
 \alias{integrate_signal,GammaSpectrum,GammaSpectrum-method}
+\alias{integrate_signal,GammaSpectrum,numeric-method}
 \alias{integrate_signal,GammaSpectra,missing-method}
 \alias{integrate_signal,GammaSpectra,GammaSpectrum-method}
+\alias{integrate_signal,GammaSpectra,numeric-method}
 \title{Signal Integration}
 \usage{
 integrate_signal(object, background, ...)
@@ -16,9 +18,13 @@ integrate_signal(object, background, ...)
 
 \S4method{integrate_signal}{GammaSpectrum,GammaSpectrum}(object, background, range, energy = FALSE)
 
+\S4method{integrate_signal}{GammaSpectrum,numeric}(object, background, range, energy = FALSE)
+
 \S4method{integrate_signal}{GammaSpectra,missing}(object, range, energy = FALSE, simplify = TRUE)
 
 \S4method{integrate_signal}{GammaSpectra,GammaSpectrum}(object, background, range, energy = FALSE, simplify = TRUE)
+
+\S4method{integrate_signal}{GammaSpectra,numeric}(object, background, range, energy = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}

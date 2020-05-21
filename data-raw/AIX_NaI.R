@@ -7,37 +7,49 @@ usethis::use_data(AIX_NaI_data, internal = FALSE, overwrite = FALSE)
 
 ## Linear regression
 # Build calibration curve
-Ni_model <- IsoplotR::york(AIX_NaI_data[, c(3,4,7,8)], alpha = alpha)
+Ni_data <- AIX_NaI_data[, c(1, 3, 4, 7, 8)]
+colnames(Ni_data) <- c("names", "signal_value", "signal_error",
+                       "gamma_dose", "gamma_error")
+Ni_model <- IsoplotR::york(Ni_data[, -1], alpha = 0.05)
+
 AIX_NaI_Ni <- .DoseRateModel(
   slope = as.numeric(Ni_model$b),
   intercept = as.numeric(Ni_model$a),
-  residuals = AIX_NaI_data[, 7] - Ni_model$b[1] * AIX_NaI_data[, 3] + Ni_model$a[1],
-  df = Ni_model$df,
+  covariance = Ni_model$cov.ab,
   MSWD = Ni_model$mswd,
+  df = Ni_model$df,
   p_value = Ni_model$p.value,
-  background = c(1.40046863931121, 0.0190632603473346),
-  range = c(200, 2800)
+  data = Ni_data,
+  range = c(200, 2800),
+  background = c(1.40046863931121, 0.0190632603473346)
 )
-NiEi_model <- IsoplotR::york(AIX_NaI_data[, c(5,6,7,8)], alpha = alpha)
+
+NiEi_data <- AIX_NaI_data[, c(1, 5, 6, 7, 8)]
+colnames(NiEi_data) <- c("names", "signal_value", "signal_error",
+                         "gamma_dose", "gamma_error")
+NiEi_model <- IsoplotR::york(NiEi_data[, -1], alpha = 0.05)
+
 AIX_NaI_NiEi <- .DoseRateModel(
   slope = as.numeric(NiEi_model$b),
   intercept = as.numeric(NiEi_model$a),
-  residuals = AIX_NaI_data[, 7] - NiEi_model$b[1] * AIX_NaI_data[, 3] + Ni_model$a[1],
-  df = NiEi_model$df,
+  covariance = NiEi_model$cov.ab,
   MSWD = NiEi_model$mswd,
+  df = NiEi_model$df,
   p_value = NiEi_model$p.value,
-  background = c(1108.05656611974, 0.536218076993667),
-  range = c(200, 2800)
+  data = NiEi_data,
+  range = c(200, 2800),
+  background = c(1108.05656611974, 0.536218076993667)
 )
+
 AIX_NaI_curve <- .CalibrationCurve(
   Ni = AIX_NaI_Ni,
   NiEi = AIX_NaI_NiEi,
-  data = AIX_NaI_data,
   details = list(
     laboratory = "CEREGE",
     instrument = "InSpector 1000",
     detector = "NaI",
-    authors = "CEREGE Luminescence Team"
+    authors = "CEREGE Luminescence Team",
+    date = Sys.time()
   )
 )
 usethis::use_data(AIX_NaI_curve, internal = FALSE, overwrite = FALSE)

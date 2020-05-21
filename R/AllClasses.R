@@ -194,7 +194,8 @@ NULL
     df = "numeric",
     p_value = "numeric",
     data = "data.frame",
-    range = "numeric"
+    range = "numeric",
+    background = "numeric"
   )
 )
 
@@ -205,7 +206,6 @@ NULL
   slots = c(
     Ni = "DoseRateModel",
     NiEi = "DoseRateModel",
-    background = "GammaSpectrum",
     details = "list"
   )
 )

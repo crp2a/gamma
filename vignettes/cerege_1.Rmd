@@ -186,7 +186,7 @@ Ni_integration_range <- c(200, 2800)
 Ni_background <- integrate_signal(
   noise_scaled,
   range = Ni_integration_range,
-  threshold = "Ni"
+  energy = FALSE
 )
 
 # Integrate reference spectra
@@ -194,7 +194,7 @@ Ni_signal <- integrate_signal(
   calib_scaled, 
   range = Ni_integration_range, 
   background = Ni_background,
-  threshold = "Ni",
+  energy = FALSE,
   simplify = TRUE
 )
 ```
@@ -216,7 +216,7 @@ NiEi_integration_range <- c(200, 2800)
 NiEi_background <- integrate_signal(
   noise_scaled, 
   range = NiEi_integration_range,
-  threshold = "NiEi"
+  energy = TRUE
 )
 
 # Integrate reference spectra
@@ -224,7 +224,7 @@ NiEi_signal <- integrate_signal(
   calib_scaled, 
   range = NiEi_integration_range, 
   background = NiEi_background,
-  threshold = "NiEi",
+  energy = TRUE,
   simplify = TRUE
 )
 ```
@@ -254,123 +254,6 @@ data("AIX_NaI_data")
 
 # Display curve data
 knitr::kable(AIX_NaI_data, row.names = FALSE)
-```
-
-```{r lm-summary_Ni, echo=FALSE}
-summary(get_model(AIX_NaI_curve, "Ni"))
-```
-
-```{r lm-summary_NiEi, echo=FALSE}
-summary(get_model(AIX_NaI_curve, "NiEi"))
-```
-
-### Check Model
-#### Count Threshold (Ni)
-```{r lm-check-Ni, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-Ni_model <- get_model(AIX_NaI_curve, "Ni")
-Ni_residuals <- data.frame(
-  name = AIX_NaI_curve[["data"]]$name,
-  fitted = Ni_model$fitted.values,
-  residuals = Ni_model$residuals,
-  standardized = stats::rstandard(Ni_model),
-  cook = stats::cooks.distance(Ni_model)
-)
-
-# Residuals vs fitted values
-ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = residuals)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
-                                     y = 0, yend = residuals)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Residuals vs fitted values",
-                x = "Fitted values", y = "Residuals")
-
-# Std. residuals vs fitted values
-ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = standardized)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
-                                     y = 0, yend = standardized)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Std. residuals vs fitted values",
-                x = "Fitted values", y = "Standardized residuals")
-
-# Normal QQ plot of standardized residuals
-ggplot2::ggplot(Ni_residuals, ggplot2::aes(sample = standardized)) + 
-  ggplot2::geom_abline(slope = 1, intercept = 0) +
-  ggplot2::geom_qq_line(colour = "red") +
-  ggplot2::geom_qq() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Normal QQ plot",
-                x = "Theoretical quantiles",
-                y = "Standardize residuals")
-
-# Cook's distance
-ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = name, y = cook)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_hline(yintercept = 1, linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
-                                     y = 0, yend = cook)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Cook's distance",
-                x = "Observation", y = "D")
-```
-
-#### Energy Threshold (Ni.Ei)
-```{r lm-check-NiEi, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-NiEi_model <- get_model(AIX_NaI_curve, "NiEi")
-NiEi_residuals <- data.frame(
-  name = AIX_NaI_curve[["data"]]$name,
-  fitted = NiEi_model$fitted.values,
-  residuals = NiEi_model$residuals,
-  standardized = stats::rstandard(NiEi_model),
-  cook = stats::cooks.distance(NiEi_model)
-)
-
-# Residuals vs fitted values
-ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = residuals)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
-                                     y = 0, yend = residuals)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Residuals vs fitted values",
-                x = "Fitted values", y = "Residuals")
-
-# Std. residuals vs fitted values
-ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = standardized)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
-                                     y = 0, yend = standardized)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Std. residuals vs fitted values",
-                x = "Fitted values", y = "Standardized residuals")
-
-# Normal QQ plot of standardized residuals
-ggplot2::ggplot(NiEi_residuals, ggplot2::aes(sample = standardized)) + 
-  ggplot2::geom_abline(slope = 1, intercept = 0) +
-  ggplot2::geom_qq_line(colour = "red") +
-  ggplot2::geom_qq() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Normal QQ plot",
-                x = "Theoretical quantiles",
-                y = "Standardize residuals")
-
-# Cook's distance
-ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = name, y = cook)) +
-  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
-  ggplot2::geom_hline(yintercept = 1, linetype = 2) +
-  ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
-                                     y = 0, yend = cook)) + 
-  ggplot2::geom_point() +
-  ggplot2::theme_bw() +
-  ggplot2::labs(title = "Cook's distance",
-                x = "Observation", y = "D")
 ```
 
 ## R session

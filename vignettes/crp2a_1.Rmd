@@ -1,6 +1,6 @@
 ---
-title: "CRP2A Calibration Curve #1"
-subtitle: "Canberra Inspector 1000 - LaBr"
+title: "CRP2A Calibration Curve"
+subtitle: "Canberra Inspector 1000 - LaBr #1"
 author: "CRP2A Luminescence Team"
 date: "`r Sys.Date()`"
 output:
@@ -37,76 +37,76 @@ library(magrittr)
 ## Import Files
 ```{r import}
 # Import CNF files for calibration
-calib_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
-(calib_spc <- read(calib_dir))
+spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
+(spc <- read(spc_dir))
 
 # Import CNF files for background noise measurement
-noise_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
-(noise_spc <- read(noise_dir))
+bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
+(bkg <- read(bkg_dir))
 ```
 
 ## Inspect Spectra
 ### Reference Spectra
 #### BRIQUE
 ```{r calibrate-BRIQUE}
-plot(calib_spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
+plot(spc[["BRIQUE"]], xaxis = "chanel", yaxis = "rate") +
   ggplot2::geom_vline(xintercept = c(76, 465, 828), linetype = 2) +
   ggplot2::labs(title = "BRIQUE") +
   ggplot2::theme_bw()
 ```
 
-```{r integrate-BRIQUE}
+```{r integrate-BRIQUE, eval=FALSE, echo=FALSE}
 lines <- list(chanel = c(76, 465, 828), energy = c(238, 1461, 2615))
-BRIQUE_calib <- calibrate_energy(calib_spc[["BRIQUE"]], lines = lines)
+BRIQUE_calib <- calibrate_energy(spc[["BRIQUE"]], lines = lines)
 integrate_signal(BRIQUE_calib, range = c(300, 2800), noise = c(22.608, 0.050))
 ```
 
 #### C341
 ```{r calibrate-C341}
-plot(calib_spc[["C341"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["C341"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "C341") +
   ggplot2::theme_bw()
 ```
 
 #### C347
 ```{r calibrate-C347}
-plot(calib_spc[["C347"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["C347"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "C347") +
   ggplot2::theme_bw()
 ```
 
 #### GOU
 ```{r calibrate-GOU}
-plot(calib_spc[["GOU"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["GOU"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "GOU") +
   ggplot2::theme_bw()
 ```
 
 #### LMP
 ```{r calibrate-LMP}
-plot(calib_spc[["LMP"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["LMP"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "LMP") +
   ggplot2::theme_bw()
 ```
 
 #### MAZ
 ```{r calibrate-MAZ}
-plot(calib_spc[["MAZ"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["MAZ"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "MAZ") +
   ggplot2::theme_bw()
 ```
 
 #### PEP
 ```{r calibrate-PEP}
-plot(calib_spc[["PEP"]], xaxis = "energy", yaxis = "rate") +
+plot(spc[["PEP"]], xaxis = "energy", yaxis = "rate") +
   ggplot2::labs(title = "PEP") +
   ggplot2::theme_bw()
 ```
 
-### Background Noise Spectrum
+### Background Spectrum
 ```{r calibrate-noise, fig.align='center'}
-plot(noise_spc) +
-  ggplot2::labs(title = "Background noise spectrum") +
+plot(bkg) +
+  ggplot2::labs(title = "Background spectrum") +
   ggplot2::theme_bw()
 ```
 
@@ -126,15 +126,7 @@ plot(BDX_LaBr_1_curve, threshold = "NiEi") +
 data("BDX_LaBr_1_data")
 
 # Display curve data
-knitr::kable(BDX_LaBr_1_data, row.names = FALSE)
-```
-
-```{r lm-summary_Ni, echo=FALSE}
-summary(get_model(BDX_LaBr_1_curve, "Ni"))
-```
-
-```{r lm-summary_NiEi, echo=FALSE}
-summary(get_model(BDX_LaBr_1_curve, "NiEi"))
+knitr::kable(BDX_LaBr_1_data[, 1:8], row.names = FALSE)
 ```
 
 ### Check Model

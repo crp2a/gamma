@@ -7,16 +7,18 @@
 status](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 
-<!-- CRAN badges
-[![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
-[![CRAN checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
--->
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
+[![CRAN
+checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
+[![CRAN
+Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 
@@ -52,7 +54,6 @@ library(magrittr)
 
 ## Find the full path to the spectrum file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
-
 ## Import the spectrum
 spectrum <- read(spc_file)
 
@@ -66,18 +67,8 @@ peaks <- spectrum %>%
   find_peaks()
 
 ## Set the energy values (in keV)
-set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-peaks
-#> 8 peaks were detected:
-#>   chanel energy
-#> 1     86    238
-#> 2    208     NA
-#> 3    314     NA
-#> 4    384     NA
-#> 5    496   1461
-#> 6    596     NA
-#> 7    722     NA
-#> 8    879   2615
+(set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615))
+#> [1]  238   NA   NA   NA 1461   NA   NA 2615
 
 ## Inspect peaks
 plot(spectrum, peaks)
@@ -86,7 +77,6 @@ plot(spectrum, peaks)
 <img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
 
 ``` r
-
 ## Calibrate the energy scale
 calib <- calibrate_energy(spectrum, peaks)
 
@@ -94,20 +84,17 @@ calib <- calibrate_energy(spectrum, peaks)
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
 data("BDX_LaBr_1_curve", package = "gamma")
-BDX_LaBr_1_curve
-#> Calibration curve:
-#> * laboratory: IRAMAT-CRP2A (UMR 5060)
-#> * instrument: InSpector 1000
-#> * detector: LaBr #1
-#> * authors: CRP2A Luminescence Team
-#> * date: 2020-02-28 16:31:01
+plot(BDX_LaBr_1_curve)
+```
+
+<img src="man/figures/README-calib-1.png" style="display: block; margin: auto;" />
+
+``` r
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX_LaBr_1_curve, calib, simplify = TRUE))
-#> Warning: The following value does not lie in the curve range:
-#> * LaBr
-#>      name Ni_signal  Ni_error gamma_dose gamma_error
-#> LaBr LaBr   141.014 0.3148497   4171.876    92.54298
+(doses <- predict_dose(BDX_LaBr_1_curve, calib))
+#>   names gamma_dose_Ni gamma_error_Ni gamma_dose_NiEi gamma_error_NiEi
+#> 1  LaBr      4171.876       92.54298        3944.501         78.27257
 ```
 
 ## Contributing

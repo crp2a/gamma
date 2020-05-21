@@ -46,11 +46,29 @@ setMethod(
   definition = function(object, background, range, energy = FALSE) {
     # Normalized signal
     int_bkg <- integrate_signal(background, range = range, energy = energy)
+
+    integrate_signal(object, background = int_bkg, range = range,
+                     energy = energy)
+  }
+)
+#' @export
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectrum,numeric-method
+setMethod(
+  f = "integrate_signal",
+  signature = signature(object = "GammaSpectrum", background = "numeric"),
+  definition = function(object, background, range, energy = FALSE) {
+    # Validation
+    if (length(background) != 2)
+      stop(sprintf("%s must be of length 2; not %d", sQuote("background"),
+                   length(background)), call. = FALSE)
+
+    # Normalized signal
     int_spc <- integrate_signal(object, range = range, energy = energy)
 
     # Compute net signal (substracted background background)
-    net_signal <- int_spc[[1L]] - int_bkg[[1L]]
-    net_error <- sqrt(int_spc[[2L]]^2 + int_bkg[[2L]]^2)
+    net_signal <- int_spc[[1L]] - background[[1L]]
+    net_error <- sqrt(int_spc[[2L]]^2 + background[[2L]]^2)
 
     c(value = net_signal, error = net_error)
   }
@@ -76,6 +94,22 @@ setMethod(
 setMethod(
   f = "integrate_signal",
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum"),
+  definition = function(object, background, range, energy = FALSE,
+                        simplify = TRUE) {
+
+    signals <- lapply(X = object, FUN = integrate_signal,
+                      background = background, range = range, energy = energy)
+    if (!simplify) return(signals)
+    do.call(rbind, signals)
+  }
+)
+
+#' @export
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra,numeric-method
+setMethod(
+  f = "integrate_signal",
+  signature = signature(object = "GammaSpectra", background = "numeric"),
   definition = function(object, background, range, energy = FALSE,
                         simplify = TRUE) {
 

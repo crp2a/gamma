@@ -48,7 +48,6 @@ setMethod(
     .CalibrationCurve(
       Ni = Ni,
       NiEi = NiEi,
-      background = background,
       details = info
     )
   }
@@ -57,7 +56,8 @@ setMethod(
 fit_york <- function(object, background, doses, range,
                      energy = FALSE, alpha = 0.05) {
   # Signal integration
-  signals <- integrate_signal(object, background, range = range,
+  bkg <- integrate_signal(background, range = range, energy = energy)
+  signals <- integrate_signal(object, background = bkg, range = range,
                               energy = energy, simplify = TRUE)
   colnames(signals) <- c("signal_value", "signal_error")
 
@@ -76,7 +76,8 @@ fit_york <- function(object, background, doses, range,
     df = model$df,
     p_value = model$p.value,
     data = data,
-    range = range
+    range = range,
+    background = bkg
   )
 }
 
@@ -88,13 +89,11 @@ setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve", spectrum = "missing"),
   definition = function(object, sigma = 1, epsilon = 0) {
-    # Get background
-    background <- object[["background"]]
 
-    Ni <- predict_york(object[["Ni"]], background = background,
+    Ni <- predict_york(object[["Ni"]],
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
 
-    NiEi <- predict_york(object[["NiEi"]], background = background,
+    NiEi <- predict_york(object[["NiEi"]],
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
     merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
@@ -120,13 +119,11 @@ setMethod(
   f = "predict_dose",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
   definition = function(object, spectrum, sigma = 1, epsilon = 0) {
-    # Get background
-    background <- object[["background"]]
 
-    Ni <- predict_york(object[["Ni"]], background, spectrum,
+    Ni <- predict_york(object[["Ni"]], spectrum,
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
 
-    NiEi <- predict_york(object[["NiEi"]], background, spectrum,
+    NiEi <- predict_york(object[["NiEi"]], spectrum,
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
     merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
@@ -134,16 +131,17 @@ setMethod(
 )
 
 #' @param model A \linkS4class{DoseRateModel} object.
-#' @param spectrum A \linkS4class{GammaSpectra} object.
 #' @param sigma A \code{\link{numeric}}.
 #' @param epsilon A \code{\link{numeric}}.
 #' @return A \code{\link{data.frame}}.
 #' @keywords internal
 #' @noRd
-predict_york <- function(model, background, spectrum, energy = FALSE,
+predict_york <- function(model, spectrum, energy = FALSE,
                          sigma = 1, epsilon = 0) {
   # Get integration range
   range <- model[["range"]]
+  # Get background
+  background <- model[["background"]]
   # Integrate spectrum
   if (missing(spectrum)) {
     signals <- model[["data"]]

@@ -13,19 +13,18 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 ```
+
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
 [![R build status](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 
-<!-- CRAN badges
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
 [![CRAN checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
--->
 
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 
@@ -54,7 +53,6 @@ library(magrittr)
 
 ## Find the full path to the spectrum file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
-
 ## Import the spectrum
 spectrum <- read(spc_file)
 
@@ -68,12 +66,13 @@ peaks <- spectrum %>%
   find_peaks()
 
 ## Set the energy values (in keV)
-set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-peaks
+(set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615))
 
 ## Inspect peaks
 plot(spectrum, peaks)
+```
 
+```{r calib, fig.width=7, fig.height=5, fig.align='center'}
 ## Calibrate the energy scale
 calib <- calibrate_energy(spectrum, peaks)
 
@@ -81,10 +80,10 @@ calib <- calibrate_energy(spectrum, peaks)
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
 data("BDX_LaBr_1_curve", package = "gamma")
-BDX_LaBr_1_curve
+plot(BDX_LaBr_1_curve)
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX_LaBr_1_curve, calib, simplify = TRUE))
+(doses <- predict_dose(BDX_LaBr_1_curve, calib))
 ```
 
 ## Contributing

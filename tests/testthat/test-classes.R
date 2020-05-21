@@ -56,6 +56,7 @@ test_that("Initialize an empty DoseRateModel instance", {
   expect_identical(dose[["p_value"]], numeric(0))
   expect_identical(dose[["range"]], numeric(0))
   expect_s4_class(dose[["data"]], "data.frame")
+  expect_identical(dose[["background"]], numeric(0))
 
   expect_error(dose[["X"]])
 })
@@ -65,7 +66,6 @@ test_that("Initialize an empty CalibrationCurve instance", {
 
   expect_s4_class(calib[["Ni"]], "DoseRateModel")
   expect_s4_class(calib[["NiEi"]], "DoseRateModel")
-  expect_s4_class(calib[["background"]], "GammaSpectrum")
   expect_type(calib[["details"]], "list")
 
   expect_error(calib[["X"]])
