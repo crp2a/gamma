@@ -35,11 +35,6 @@ NULL
 #' @param value A possible value for the element(s) of \code{x}.
 #' @param na.rm A \code{\link{logical}} scalar: should \code{\link{NA}} be
 #'  omitted?
-#' @param simplify A \code{\link{logical}} scalar: should the result be
-#'  simplified to a matrix? If \code{FALSE} (default), returns a list.
-#' @param threshold A \code{\link{character}} sting specifying the threshold
-#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-#'  (see details).
 #' @param ... Currently not used.
 #' @return
 #'  An object of the same sort as \code{x} with the new values assigned.
@@ -119,27 +114,6 @@ setGeneric(
 setGeneric(
   name = "set_energy<-",
   def = function(x, value) standardGeneric("set_energy<-")
-)
-
-#' @rdname mutator
-#' @aliases get_model-method
-setGeneric(
-  name = "get_model",
-  def = function(x, ...) standardGeneric("get_model")
-)
-
-#' @rdname mutator
-#' @aliases get_noise-method
-setGeneric(
-  name = "get_noise",
-  def = function(x, ...) standardGeneric("get_noise")
-)
-
-#' @rdname mutator
-#' @aliases get_range-method
-setGeneric(
-  name = "get_range",
-  def = function(x, ...) standardGeneric("get_range")
 )
 
 #' @rdname mutator
@@ -388,7 +362,7 @@ NULL
 #' @aliases fit_dose-method
 setGeneric(
   name = "fit_dose",
-  def = function(object, ...) standardGeneric("fit_dose")
+  def = function(object, background, doses, ...) standardGeneric("fit_dose")
 )
 
 #' @rdname doserate
@@ -403,22 +377,19 @@ setGeneric(
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
+#' @param background A \linkS4class{GammaSpectrum} object.
 #' @param range A length-two \code{\link{numeric}} vector giving the energy
 #'  range to integrate within (in keV).
-#' @param background A length-two \code{\link{numeric}} vector giving the
-#'  background noise integration value and error, respectively (see details).
-#' @param threshold A \code{\link{character}} sting specifying the threshold
-#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-#'  (see details).
+#' @param energy A \code{\link{logical}} scalar: TODO?
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
 #' @param ... Currently not used.
 #' @details
 #'  It assumes that each spectrum is calibrated in energy.
 #' @return
-#'  If \code{simplify} is \code{FALSE} (the default) returns a list of
-#'  length-two numeric vectors (the dose rate and its error), else returns a
-#'  two-columns data frame.
+#'  If \code{simplify} is \code{FALSE} (the default) returns a
+#'  \code{\link{list}} of numeric vectors (the signal value and its error),
+#'  else returns a \code{\link{matrix}}.
 #' @references
 #'  Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 #'  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
@@ -435,7 +406,7 @@ setGeneric(
 #' @aliases integrate_signal-method
 setGeneric(
   name = "integrate_signal",
-  def = function(object, ...) standardGeneric("integrate_signal")
+  def = function(object, background, ...) standardGeneric("integrate_signal")
 )
 
 # ======================================================================== Peaks

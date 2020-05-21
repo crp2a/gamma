@@ -228,48 +228,6 @@ setMethod(
   }
 )
 
-# ------------------------------------------------------------- CalibrationCurve
-#' @export
-#' @rdname mutator
-#' @aliases get_model,CalibrationCurve-method
-setMethod(
-  f = "get_model",
-  signature = "CalibrationCurve",
-  definition = function(x, threshold = c("Ni", "NiEi")) {
-    threshold <- match.arg(threshold, several.ok = FALSE)
-    x <- methods::slot(x, threshold)
-    y <- rbind(x@slope, x@intercept)
-    dimnames(y) <- list(c("slope", "intercept"), c("value", "error"))
-    y
-  }
-)
-
-#' @export
-#' @rdname mutator
-#' @aliases get_noise,CalibrationCurve-method
-setMethod(
-  f = "get_noise",
-  signature = "CalibrationCurve",
-  definition = function(x, threshold = c("Ni", "NiEi")) {
-    threshold <- match.arg(threshold, several.ok = FALSE)
-    x <- methods::slot(x, threshold)
-    x@background
-  }
-)
-
-#' @export
-#' @rdname mutator
-#' @aliases get_range,CalibrationCurve-method
-setMethod(
-  f = "get_range",
-  signature = "CalibrationCurve",
-  definition = function(x, threshold = c("Ni", "NiEi")) {
-    threshold <- match.arg(threshold, several.ok = FALSE)
-    x <- methods::slot(x, threshold)
-    x@range
-  }
-)
-
 # ----------------------------------------------------------------- PeakPosition
 #' @export
 #' @rdname mutator

@@ -70,21 +70,3 @@ setMethod(
     )
   }
 )
-
-# ============================================================= CalibrationCurve
-setMethod(
-  f = "initialize",
-  signature = "CalibrationCurve",
-  definition = function(.Object, Ni, NiEi, data, details) {
-
-    info <- if (!missing(details)) details else list()
-    info$date <- Sys.time()
-    .Object@details <- info
-    if (!missing(Ni)) .Object@Ni <- Ni
-    if (!missing(NiEi)) .Object@NiEi <- NiEi
-    if (!missing(data)) .Object@data <- data
-
-    methods::validObject(.Object)
-    return(.Object)
-  }
-)

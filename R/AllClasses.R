@@ -189,11 +189,11 @@ NULL
   slots = c(
     slope = "numeric",
     intercept = "numeric",
-    residuals = "numeric",
-    df = "numeric",
+    covariance = "numeric",
     MSWD = "numeric",
+    df = "numeric",
     p_value = "numeric",
-    background = "numeric",
+    data = "data.frame",
     range = "numeric"
   )
 )
@@ -205,7 +205,7 @@ NULL
   slots = c(
     Ni = "DoseRateModel",
     NiEi = "DoseRateModel",
-    data = "data.frame",
+    background = "GammaSpectrum",
     details = "list"
   )
 )

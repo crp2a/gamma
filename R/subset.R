@@ -64,6 +64,16 @@ setMethod(
   definition = extract_slot
 )
 
+# ================================================================ DoseRateModel
+#' @export
+#' @rdname subset
+#' @aliases [[,DoseRateModel-method
+setMethod(
+  f = "[[",
+  signature = "DoseRateModel",
+  definition = extract_slot
+)
+
 # ============================================================= CalibrationCurve
 #' @export
 #' @rdname subset

@@ -25,12 +25,6 @@
 \alias{get_energy-method}
 \alias{set_energy<-}
 \alias{set_energy-method}
-\alias{get_model}
-\alias{get_model-method}
-\alias{get_noise}
-\alias{get_noise-method}
-\alias{get_range}
-\alias{get_range-method}
 \alias{range_chanels}
 \alias{range_chanels-method}
 \alias{range_energy}
@@ -56,9 +50,6 @@
 \alias{get_energy,GammaSpectra-method}
 \alias{range_energy,GammaSpectra-method}
 \alias{range_chanels,GammaSpectra-method}
-\alias{get_model,CalibrationCurve-method}
-\alias{get_noise,CalibrationCurve-method}
-\alias{get_range,CalibrationCurve-method}
 \alias{get_hash,PeakPosition-method}
 \alias{get_chanels,PeakPosition-method}
 \alias{get_energy,PeakPosition-method}
@@ -89,12 +80,6 @@ get_rates(x)
 get_energy(x)
 
 set_energy(x) <- value
-
-get_model(x, ...)
-
-get_noise(x, ...)
-
-get_range(x, ...)
 
 range_chanels(x, ...)
 
@@ -142,12 +127,6 @@ range_energy(x, ...)
 
 \S4method{range_chanels}{GammaSpectra}(x, na.rm = FALSE)
 
-\S4method{get_model}{CalibrationCurve}(x, threshold = c("Ni", "NiEi"))
-
-\S4method{get_noise}{CalibrationCurve}(x, threshold = c("Ni", "NiEi"))
-
-\S4method{get_range}{CalibrationCurve}(x, threshold = c("Ni", "NiEi"))
-
 \S4method{get_hash}{PeakPosition}(x)
 
 \S4method{get_chanels}{PeakPosition}(x)
@@ -169,13 +148,6 @@ range_energy(x, ...)
 
 \item{na.rm}{A \code{\link{logical}} scalar: should \code{\link{NA}} be
 omitted?}
-
-\item{threshold}{A \code{\link{character}} sting specifying the threshold
-to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-(see details).}
-
-\item{simplify}{A \code{\link{logical}} scalar: should the result be
-simplified to a matrix? If \code{FALSE} (default), returns a list.}
 }
 \value{
 An object of the same sort as \code{x} with the new values assigned.

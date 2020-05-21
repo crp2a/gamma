@@ -16,6 +16,8 @@
 
 \S4method{[[}{DoseRateModel}(x, i)
 
+\S4method{[[}{DoseRateModel}(x, i)
+
 \S4method{[[}{CalibrationCurve}(x, i)
 
 \S4method{[[}{PeakPosition}(x, i)

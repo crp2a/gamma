@@ -4,24 +4,15 @@ NULL
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum-method
+#' @aliases integrate_signal,GammaSpectrum,missing-method
 setMethod(
   f = "integrate_signal",
-  signature = signature(object = "GammaSpectrum"),
-  definition = function(object, range, background = NULL,
-                        threshold = c("Ni", "NiEi"), ...) {
+  signature = signature(object = "GammaSpectrum", background = "missing"),
+  definition = function(object, range, energy = FALSE) {
     # Validation
-    threshold <- match.arg(threshold, several.ok = FALSE)
     if (!is.numeric(range) || length(range) != 2)
-      stop(sprintf("`range` must be a numeric vector of length 2, not %d.",
-                   length(range)), call. = FALSE)
-    if (!is.null(background)) {
-      if (!is.numeric(background) || length(background) != 2)
-        stop(sprintf("`background` must be a numeric vector of length 2, not %d.",
-                     length(background)), call. = FALSE)
-    } else {
-      background <- c(0, 0)
-    }
+      stop(sprintf("%s must be a numeric vector of length 2, not %d.",
+                   sQuote("range"), length(range)), call. = FALSE)
     if (!is_calibrated(object))
       stop("You must calibrate the energy scale of your spectrum first.",
            call. = FALSE)
@@ -30,55 +21,72 @@ setMethod(
     spc_data <- methods::as(object, "data.frame")
 
     # Integrate signal between boundaries
-    int_index <- which(spc_data$energy >= range[[1L]] &
+    spc_index <- which(spc_data$energy >= range[[1L]] &
                          spc_data$energy <= range[[2L]])
-    int_signal <- c(
-      Ni = sum(spc_data$count[int_index]),
-      NiEi = crossprod(spc_data$energy[int_index], spc_data$count[int_index])
-    )
-    signal2net <- function(signal, live_time, background_value, background_error) {
-      # Normalize integrated signal to time
-      norm_signal <- signal / live_time
-      norm_error <- sqrt(2 * signal) / live_time
-      # Compute net signal (substracted background background)
-      net_signal <- norm_signal - background_value
-      net_error <- sqrt(norm_error^2 + background_error^2)
-
-      c(signal = net_signal, error = net_error)
+    if (energy) {
+      int_spc <- integrate(spc_data$count, spc_data$energy, spc_index)
+    } else {
+      int_spc <- integrate(spc_data$count, index = spc_index)
     }
 
     # Normalize integrated signal to time
-    net <- vapply(
-      X = int_signal,
-      FUN = signal2net,
-      FUN.VALUE = numeric(2),
-      live_time = object@live_time,
-      background_value = background[[1L]],
-      background_error = background[[2L]]
-    )
-    net <- as.data.frame(net)[[threshold]]
-    names(net) <- c(paste0(threshold, "_signal"), paste0(threshold, "_error"))
-    return(net)
+    live_time <- get_livetime(object)
+    norm_signal <- int_spc / live_time
+    norm_error <- sqrt(2 * int_spc) / live_time
+
+    c(value = norm_signal, error = norm_error)
+  }
+)
+#' @export
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectrum,GammaSpectrum-method
+setMethod(
+  f = "integrate_signal",
+  signature = signature(object = "GammaSpectrum", background = "GammaSpectrum"),
+  definition = function(object, background, range, energy = FALSE) {
+    # Normalized signal
+    int_bkg <- integrate_signal(background, range = range, energy = energy)
+    int_spc <- integrate_signal(object, range = range, energy = energy)
+
+    # Compute net signal (substracted background background)
+    net_signal <- int_spc[[1L]] - int_bkg[[1L]]
+    net_error <- sqrt(int_spc[[2L]]^2 + int_bkg[[2L]]^2)
+
+    c(value = net_signal, error = net_error)
   }
 )
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra-method
+#' @aliases integrate_signal,GammaSpectra,missing-method
 setMethod(
   f = "integrate_signal",
-  signature = signature(object = "GammaSpectra"),
-  definition = function(object, range, background = NULL,
-                        threshold = c("Ni", "NiEi"), simplify = FALSE, ...) {
+  signature = signature(object = "GammaSpectra", background = "missing"),
+  definition = function(object, range, energy = FALSE, simplify = TRUE) {
 
-    spectra <- methods::S3Part(object, strictS3 = TRUE, "list")
-    signals <- lapply(X = spectra, FUN = integrate_signal,
-                      range = range, background = background,
-                      threshold = threshold)
-    if (simplify) {
-      do.call(rbind, signals)
-    } else {
-      signals
-    }
+    signals <- lapply(X = object, FUN = integrate_signal,
+                      range = range, energy = energy)
+    if (simplify) do.call(rbind, signals) else signals
   }
 )
+
+#' @export
+#' @rdname integrate
+#' @aliases integrate_signal,GammaSpectra,GammaSpectrum-method
+setMethod(
+  f = "integrate_signal",
+  signature = signature(object = "GammaSpectra", background = "GammaSpectrum"),
+  definition = function(object, background, range, energy = FALSE,
+                        simplify = TRUE) {
+
+    signals <- lapply(X = object, FUN = integrate_signal,
+                      background = background, range = range, energy = energy)
+    if (!simplify) return(signals)
+    do.call(rbind, signals)
+  }
+)
+
+integrate <- function(count, energy, index) {
+  if (missing(energy)) sum(count[index])
+  else crossprod(energy[index], count[index])
+}

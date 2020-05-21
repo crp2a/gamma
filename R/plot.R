@@ -141,15 +141,12 @@ setMethod(
     threshold <- match.arg(threshold, several.ok = FALSE)
 
     # Get data
-    data <- x[["data"]]
-    model <- get_model(x, threshold)
-    signal_value <- paste0(threshold, "_signal")
-    signal_error <- paste0(threshold, "_error")
-    signal <- range(data[[signal_value]])
+    model <- x[[threshold]]
+    data <- model[["data"]]
 
     # Curve
-    segment_x <- range(data[[signal_value]])
-    segment_y <- model[1, 1] * segment_x + model[2, 1]
+    segment_x <- range(data$signal_value)
+    segment_y <- model[["slope"]][[1L]] * segment_x + model[["intercept"]][[1L]]
     segment <- rbind.data.frame(c(segment_x, segment_y))
     names(segment) <- c("x", "xmin", "y", "ymin")
 
@@ -157,10 +154,8 @@ setMethod(
     # error_width <- sum(signal * c(-1, 1)) / 100
     # error_height <- sum(range(data$gamma_dose) * c(-1, 1)) / 100
 
-    ggplot(
-      data = data,
-      mapping = aes(x = .data[[signal_value]], y = .data$gamma_dose,
-                    label = .data$name)) +
+    ggplot(data = data) +
+      aes(x = .data$signal_value, y = .data$gamma_dose, label = .data$names) +
       geom_segment(
         data = segment,
         mapping = aes(x = .data$x, xend = .data$xmin,
@@ -173,8 +168,8 @@ setMethod(
                       ymax = .data$gamma_dose + .data$gamma_error),
         colour = "red") +
       geom_errorbarh(
-        mapping = aes(xmin = .data[[signal_value]] - .data[[signal_error]],
-                      xmax = .data[[signal_value]] + .data[[signal_error]]),
+        mapping = aes(xmin = .data$signal_value - .data$signal_error,
+                      xmax = .data$signal_value + .data$signal_error),
         height = 0,
         colour = "red") +
       labs(x = sprintf("Signal [%s]", threshold), y = "Dose rate [\u03BCGy/y]")

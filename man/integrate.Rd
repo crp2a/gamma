@@ -4,52 +4,42 @@
 \name{integrate_signal}
 \alias{integrate_signal}
 \alias{integrate_signal-method}
-\alias{integrate_signal,GammaSpectrum-method}
-\alias{integrate_signal,GammaSpectra-method}
+\alias{integrate_signal,GammaSpectrum,missing-method}
+\alias{integrate_signal,GammaSpectrum,GammaSpectrum-method}
+\alias{integrate_signal,GammaSpectra,missing-method}
+\alias{integrate_signal,GammaSpectra,GammaSpectrum-method}
 \title{Signal Integration}
 \usage{
-integrate_signal(object, ...)
+integrate_signal(object, background, ...)
 
-\S4method{integrate_signal}{GammaSpectrum}(
-  object,
-  range,
-  background = NULL,
-  threshold = c("Ni", "NiEi"),
-  ...
-)
+\S4method{integrate_signal}{GammaSpectrum,missing}(object, range, energy = FALSE)
 
-\S4method{integrate_signal}{GammaSpectra}(
-  object,
-  range,
-  background = NULL,
-  threshold = c("Ni", "NiEi"),
-  simplify = FALSE,
-  ...
-)
+\S4method{integrate_signal}{GammaSpectrum,GammaSpectrum}(object, background, range, energy = FALSE)
+
+\S4method{integrate_signal}{GammaSpectra,missing}(object, range, energy = FALSE, simplify = TRUE)
+
+\S4method{integrate_signal}{GammaSpectra,GammaSpectrum}(object, background, range, energy = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 object.}
+
+\item{background}{A \linkS4class{GammaSpectrum} object.}
 
 \item{...}{Currently not used.}
 
 \item{range}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
 
-\item{background}{A length-two \code{\link{numeric}} vector giving the
-background noise integration value and error, respectively (see details).}
-
-\item{threshold}{A \code{\link{character}} sting specifying the threshold
-to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-(see details).}
+\item{energy}{A \code{\link{logical}} scalar: TODO?}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be
 simplified to a matrix? The default value, \code{FALSE}, returns a list.}
 }
 \value{
-If \code{simplify} is \code{FALSE} (the default) returns a list of
- length-two numeric vectors (the dose rate and its error), else returns a
- two-columns data frame.
+If \code{simplify} is \code{FALSE} (the default) returns a
+ \code{\link{list}} of numeric vectors (the signal value and its error),
+ else returns a \code{\link{matrix}}.
 }
 \description{
 Signal Integration
