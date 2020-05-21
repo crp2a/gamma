@@ -12,18 +12,6 @@
 \item{x}{An object to be coerced.}
 
 \item{...}{Currently not used.}
-
-\item{row.names}{\code{NULL} or a \code{\link{character}} vector giving the
-row names for the data frame. Missing values are not allowed.}
-
-\item{optional}{A \code{\link{logical}} scalar (see
-\code{\link[base]{as.data.frame}}).}
-
-\item{make.names}{A \code{\link{logical}} scalar (see
-\code{\link[base]{as.data.frame}}).}
-
-\item{stringsAsFactors}{A \code{\link{logical}} scalar: should the character
-vector be converted to a \code{\link{factor}}?}
 }
 \value{
 A coerced object.

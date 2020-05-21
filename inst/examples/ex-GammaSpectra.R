@@ -5,8 +5,8 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 ## Access
 get_hash(spc)
 get_names(spc)
-get_time(spc, "live")
-get_time(spc, "real")
+get_livetime(spc)
+get_realtime(spc)
 
 lengths(spc)
 range_energy(spc)

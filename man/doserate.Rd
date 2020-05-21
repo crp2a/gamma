@@ -23,8 +23,8 @@ predict_dose(object, spectrum, ...)
   object,
   background,
   doses,
-  count_range,
-  energy_range,
+  range_Ni,
+  range_NiEi,
   alpha = 0.05,
   details = NULL,
   ...
@@ -50,11 +50,20 @@ predict_dose(object, spectrum, ...)
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 object.}
 
+\item{background}{A \linkS4class{GammaSpectrum} object of a length-two
+\code{\link{numeric}} vector giving the background noise integration value
+and error, respectively.}
+
+\item{doses}{A \code{\link{matrix}} or \code{\link{data.frame}} TODO.}
+
 \item{...}{Currently not used.}
 
 \item{spectrum}{An optional \linkS4class{GammaSpectrum} or
 \linkS4class{GammaSpectra} object in which to look for variables with which
 to predict. If omitted, the fitted values are used.}
+
+\item{range_Ni, range_NiEi}{A length-two \code{\link{numeric}} vector giving
+the energy range to integrate within (in keV).}
 
 \item{alpha}{A \code{\link{numeric}} value giving the cutoff value for
 confidence intervals (see \code{\link[IsoplotR]{york}}).}
@@ -62,18 +71,10 @@ confidence intervals (see \code{\link[IsoplotR]{york}}).}
 \item{details}{A \code{\link{list}} of length-one vector specifying
 additional informations about the instrument for which the curve is built.}
 
+\item{sigma}{A \code{\link{numeric}} value giving TODO.}
+
 \item{epsilon}{A \code{\link{numeric}} value giving an extra error term
 introduced by the calibration of the energy scale of the spectrum.}
-
-\item{Ni_noise, NiEi_noise}{A length-two \code{\link{numeric}} vector giving
-the background noise integration value and error, respectively.}
-
-\item{Ni_range, NiEi_range}{A length-two \code{\link{numeric}} vector giving
-the energy range to integrate within (in keV).}
-
-\item{threshold}{A \code{\link{character}} sting specifying the threshold
-to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-(see details).}
 }
 \value{
 \code{fit_dose} returns a \linkS4class{CalibrationCurve} object.

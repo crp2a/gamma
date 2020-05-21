@@ -10,7 +10,7 @@ setMethod(
   f = "fit_dose",
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum",
                         doses = "matrix"),
-  definition = function(object, background, doses, count_range, energy_range,
+  definition = function(object, background, doses, range_Ni, range_NiEi,
                         alpha = 0.05, details = NULL, ...) {
     doses <- as.data.frame(doses)
     fit_dose(object, background, doses,
@@ -43,7 +43,7 @@ setMethod(
     Ni <- fit_york(object, background, doses, range = range_Ni,
                    energy = FALSE, alpha = alpha)
     NiEi <- fit_york(object, background, doses, range = range_NiEi,
-                     energy = TRUE, alpha = alph)
+                     energy = TRUE, alpha = alpha)
 
     .CalibrationCurve(
       Ni = Ni,

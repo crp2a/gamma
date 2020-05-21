@@ -7,6 +7,5 @@ tka_file <- system.file("extdata/LaBr.TKA", package = "gamma")
 (tka_spc <- read(tka_file))
 
 ## Import all files in a given directory
-## Skip the 35 first chanels
 spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 (spc <- read(spc_dir))

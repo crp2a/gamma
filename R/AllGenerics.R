@@ -9,14 +9,6 @@ setGeneric("length")
 #' Coerce
 #'
 #' @param x An object to be coerced.
-#' @param row.names \code{NULL} or a \code{\link{character}} vector giving the
-#'  row names for the data frame. Missing values are not allowed.
-#' @param optional A \code{\link{logical}} scalar (see
-#'  \code{\link[base]{as.data.frame}}).
-#' @param make.names A \code{\link{logical}} scalar (see
-#'  \code{\link[base]{as.data.frame}}).
-#' @param stringsAsFactors A \code{\link{logical}} scalar: should the character
-#'  vector be converted to a \code{\link{factor}}?
 #' @param ... Currently not used.
 #' @return A coerced object.
 #' @example inst/examples/ex-coerce.R
@@ -304,9 +296,11 @@ setGeneric(
 #' \code{predict_dose} predicts in-situ gamma dose rate.
 #' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 #'  object.
-#' @param Ni_noise,NiEi_noise A length-two \code{\link{numeric}} vector giving
-#'  the background noise integration value and error, respectively.
-#' @param Ni_range,NiEi_range A length-two \code{\link{numeric}} vector giving
+#' @param background A \linkS4class{GammaSpectrum} object of a length-two
+#'  \code{\link{numeric}} vector giving the background noise integration value
+#'  and error, respectively.
+#' @param doses A \code{\link{matrix}} or \code{\link{data.frame}} TODO.
+#' @param range_Ni,range_NiEi A length-two \code{\link{numeric}} vector giving
 #'  the energy range to integrate within (in keV).
 #' @param alpha A \code{\link{numeric}} value giving the cutoff value for
 #'  confidence intervals (see \code{\link[IsoplotR]{york}}).
@@ -315,13 +309,9 @@ setGeneric(
 #' @param spectrum An optional \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object in which to look for variables with which
 #'  to predict. If omitted, the fitted values are used.
-#' @param threshold A \code{\link{character}} sting specifying the threshold
-#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-#'  (see details).
+#' @param sigma A \code{\link{numeric}} value giving TODO.
 #' @param epsilon A \code{\link{numeric}} value giving an extra error term
 #'  introduced by the calibration of the energy scale of the spectrum.
-# @param simplify A \code{\link{logical}} scalar: should the result be
-#  simplified to a matrix? If \code{FALSE} (default), returns a list.
 #' @param ... Currently not used.
 #' @return
 #'  \code{fit_dose} returns a \linkS4class{CalibrationCurve} object.

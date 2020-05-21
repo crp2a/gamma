@@ -219,29 +219,21 @@ The construction of a calibration curve requires a set of reference spectra for 
 
 ```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
 # Import the reference spectra
-calib_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
-calib_spc <- read(calib_dir)
+spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
+spc <- read(spc_dir)
 
 # Import the spectra for background noise measurement
-noise_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
-noise_spc <- read(noise_dir)
+bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
+bkg <- read(bkg_dir)
 
 # Set the known dose rates
 data("clermont")
-set_dose(calib_spc) <- clermont[, c("gamma_dose", "gamma_error")]
+(doses <- clermont[, c("gamma_dose", "gamma_error")])
 
-# Build the calibration curve
-calib_curve <- fit_dose(
-  calib_spc,
-  noise_spc,
-  Ni_noise = c(22.61, 0.05),
-  Ni_range = c(300, 2800), # Set the integration range (in keV)
-  NiEi_noise = c(25280, 1.66),
-  NiEi_range = c(165, 2800)
-)
-
-# The linear model can be accessed for further investigations
-# summary(calib_curve[["model"]])
+## Build the calibration curve
+calib_curve <- fit_dose(spc, bkg, doses,
+                        range_Ni = c(300, 2800),
+                        range_NiEi = c(165, 2800))
 
 # Plot the calibration curve
 plot(calib_curve) +

@@ -5,8 +5,8 @@ spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 ## Access
 get_hash(spc)
 get_names(spc)
-get_time(spc, "live")
-get_time(spc, "real")
+get_livetime(spc)
+get_realtime(spc)
 
 length(spc)
 range_energy(spc)

@@ -42,8 +42,8 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom methods as as<- callGeneric new
-#' setClass setClassUnion setGeneric setMethod slot slot<-
+#' @importFrom methods Arith as as<- callGeneric Compare Logic Math Math2 new
+#' setClass setClassUnion setGeneric setMethod slot slot<- Summary
 #' @importFrom IsoplotR york
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar
