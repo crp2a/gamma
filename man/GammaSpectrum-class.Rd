@@ -44,9 +44,6 @@ each channel.}
 
 \item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
 scale calibration (see \code{\link{calibrate_energy}}).}
-
-\item{\code{dose_rate}}{A length-two \code{\link{numeric}} vector giving the dose
-rate and corresponding error.}
 }}
 
 \note{
@@ -56,12 +53,14 @@ This class retains copy construction.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
+ \item{\code{length(x)}}{Get number of chanel in \code{x}.}
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
   the name of \code{x} according to \code{value}.}
  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
+ \item{\code{get_counts(x)}}{Get the counts of \code{x}.}
  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
- \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
+ \item{\code{get_rates(x)}}{Get the count rates of \code{x}.}
 }
 }
 
@@ -69,8 +68,8 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
- \code{\link[=data.frame]{data frame}}.}
+ \item{\code{as.matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+ \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 }
 }
 
@@ -85,7 +84,7 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 }
 
 \examples{
-# Import a Canberra CNF file
+## Import a Canberra CNF file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 (spc <- read(spc_file))
 
@@ -94,27 +93,21 @@ get_hash(spc)
 get_names(spc)
 get_time(spc, "live")
 get_time(spc, "real")
-get_nchanels(spc)
+
+length(spc)
 range_energy(spc)
 
+## Subset
 spc[["date"]]
 spc[["instrument"]]
 spc[["file_format"]]
-
-# Coerce
-spc <- as(spc, "data.frame")
-head(spc)
 }
 \seealso{
-\linkS4class{GammaSpectra}, \linkS4class{BaseLine}
-
-Other class: 
+Other spectrum class: 
 \code{\link{BaseLine-class}},
-\code{\link{DoseRateModel-class}},
-\code{\link{GammaSpectra-class}},
-\code{\link{PeakPosition-class}}
+\code{\link{GammaSpectra-class}}
 }
 \author{
 N. Frerebeau
 }
-\concept{class}
+\concept{spectrum class}

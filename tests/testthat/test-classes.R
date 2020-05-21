@@ -16,7 +16,6 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_identical(spectrum[["count"]], numeric(0))
   expect_identical(spectrum[["rate"]], numeric(0))
   expect_null(spectrum[["calibration"]])
-  expect_identical(spectrum[["dose_rate"]], c(value = 0, error = 0))
 
   expect_error(spectrum[["X"]])
 })
@@ -42,7 +41,6 @@ test_that("Initialize an empty BaseLine instance", {
   expect_identical(baseline[["count"]], numeric(0))
   expect_identical(baseline[["rate"]], numeric(0))
   expect_null(baseline[["calibration"]])
-  expect_identical(baseline[["dose_rate"]], c(value = 0, error = 0))
 
   expect_error(baseline[["X"]])
 })

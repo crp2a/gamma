@@ -1,4 +1,4 @@
-# Import a Canberra CNF file
+## Import a Canberra CNF file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 (spc <- read(spc_file))
 
@@ -7,13 +7,11 @@ get_hash(spc)
 get_names(spc)
 get_time(spc, "live")
 get_time(spc, "real")
-get_nchanels(spc)
+
+length(spc)
 range_energy(spc)
 
+## Subset
 spc[["date"]]
 spc[["instrument"]]
 spc[["file_format"]]
-
-# Coerce
-spc <- as(spc, "data.frame")
-head(spc)

@@ -49,7 +49,6 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 \link[rxylib]{read_xyData}
 
 Other IO: 
-\code{\link{operators}},
 \code{\link{plot}()},
 \code{\link{summarise}()}
 }

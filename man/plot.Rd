@@ -73,7 +73,6 @@ plot(spc, xaxis = "chanel", yaxis = "rate", select = 1:3, facet = TRUE) +
 }
 \seealso{
 Other IO: 
-\code{\link{operators}},
 \code{\link{read}()},
 \code{\link{summarise}()}
 }

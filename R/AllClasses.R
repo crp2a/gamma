@@ -29,23 +29,23 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  each channel.
 #' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
 #'  scale calibration (see \code{\link{calibrate_energy}}).
-#' @slot dose_rate A length-two \code{\link{numeric}} vector giving the dose
-#'  rate and corresponding error.
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
+#'  \item{\code{length(x)}}{Get number of chanel in \code{x}.}
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
 #'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
 #'   the name of \code{x} according to \code{value}.}
 #'  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
+#'  \item{\code{get_counts(x)}}{Get the counts of \code{x}.}
 #'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
-#'  \item{\code{get_dose(x)}}{Get the dose rate of \code{x}.}
+#'  \item{\code{get_rates(x)}}{Get the count rates of \code{x}.}
 #' }
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
-#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
-#'  \code{\link[=data.frame]{data frame}}.}
+#'  \item{\code{as.matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+#'  \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 #' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
@@ -55,11 +55,10 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  of length one and will be matched to the name of the slots.}
 #' }
 #' @note This class retains copy construction.
-#' @seealso \linkS4class{GammaSpectra}, \linkS4class{BaseLine}
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
+#' @family spectrum class
 #' @docType class
-#' @family class
 #' @aliases GammaSpectrum-class
 .GammaSpectrum <- setClass(
   Class = "GammaSpectrum",
@@ -75,8 +74,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = "numeric",
     live_time = "numeric",
     real_time = "numeric",
-    calibration = "LmOrNull",
-    dose_rate = "numeric"
+    calibration = "LmOrNull"
   ),
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -90,8 +88,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     rate = numeric(0),
     live_time = numeric(0),
     real_time = numeric(0),
-    calibration = NULL,
-    dose_rate = c(value = 0, error = 0)
+    calibration = NULL
   )
 )
 
@@ -105,18 +102,17 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
 #'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
+#'  \item{\code{lengths(x)}}{Get the number of chanels in each element of
+#'   \code{x}.}
 #'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
 #'   the names of \code{x} according to \code{value}.}
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
-#'  \item{\code{get_chanels(x)}}{Get the number of chanels.}
-#'  \item{\code{get_energy(x)}}{Get the energy ranges.}
-#'  \item{\code{get_dose(x)}}{Get the dose rates.}
-#' }
-#' @section Coerce:
-#' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
-#' \describe{
-#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a long
-#'  \code{\link[=data.frame]{data frame}}.}
+#'  \item{\code{get_chanels(x)}}{Get the number of chanels in each element of
+#'  \code{x}.}
+#'  \item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
+#'  \item{\code{get_energy(x)}}{Get the energy range of each element of
+#'  \code{x}.}
+#'  \item{\code{get_rates(x)}}{Get the count rates of each element of \code{x}.}
 #' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
@@ -133,11 +129,10 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'   of length one. Returns the corresponding \linkS4class{GammaSpectrum}
 #'   object.}
 #' }
-#' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-GammaSpectra.R
 #' @author N. Frerebeau
+#' @family spectrum class
 #' @docType class
-#' @family class
 #' @aliases GammaSpectra-class
 .GammaSpectra <- setClass(
   Class = "GammaSpectra",
@@ -147,11 +142,10 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' An S4 Class to Represent a Spectrum Baseline
 #'
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
-#' @seealso \linkS4class{GammaSpectrum}.
 #' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
+#' @family spectrum class
 #' @docType class
-#' @family class
 #' @aliases BaseLine-class
 .BaseLine <- setClass(
   Class = "BaseLine",
@@ -182,10 +176,13 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 #' }
 #' @author N. Frerebeau
+#' @family calibration class
 #' @docType class
-#' @family class
-#' @aliases CalibrationCurve-class
+#' @name CalibrationCurve-class
+#' @rdname CalibrationCurve-class
+NULL
 
+#' @aliases DoseRateModel-class
 #' @rdname CalibrationCurve-class
 .DoseRateModel <- setClass(
   Class = "DoseRateModel",
@@ -200,6 +197,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     range = "numeric"
   )
 )
+
+#' @aliases DoseRateModel-class
 #' @rdname CalibrationCurve-class
 .CalibrationCurve <- setClass(
   Class = "CalibrationCurve",
@@ -211,6 +210,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   )
 )
 
+# ================================================================= PeakPosition
 #' An S4 Class to Represent a Set of Peaks
 #'
 #' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
@@ -237,8 +237,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @section Coerce:
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
 #' \describe{
-#'  \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
-#'  \code{\link[=data.frame]{data frame}}.}
+#'  \item{\code{matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+#'  \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 #' }
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
@@ -249,8 +249,8 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' }
 #' @note This class retains copy construction.
 #' @author N. Frerebeau
+#' @family calibration class
 #' @docType class
-#' @family class
 #' @aliases PeakPosition-class
 .PeakPosition <- setClass(
   Class = "PeakPosition",
@@ -270,93 +270,4 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     chanel = integer(0),
     energy = numeric(0)
   )
-)
-
-# =================================================================== Initialize
-# ---------------------------------------------------------------- GammaSpectrum
-# /!\ initialize() GammaSpectrum retains copy construction
-setMethod(
-  f = "initialize",
-  signature = "GammaSpectrum",
-  definition = function(
-    .Object, ..., hash = .Object@hash, name = .Object@name,
-    date = .Object@date, instrument = .Object@instrument,
-    file_format = .Object@file_format, chanel = .Object@chanel,
-    energy = .Object@energy, count = .Object@count, rate = .Object@rate,
-    live_time = .Object@live_time, real_time = .Object@real_time,
-    calibration = .Object@calibration, dose_rate = .Object@dose_rate
-  ) {
-
-    if (length(date) == 0)
-      date <- Sys.time()
-    if (length(chanel) != 0)
-      chanel <- as.integer(chanel)
-    if (length(rate) == 0 && length(count) > 0 && length(live_time) == 1)
-      rate <- count / live_time
-
-    methods::callNextMethod(
-      .Object, ..., hash = hash, name = name, date = date,
-      instrument = instrument, file_format = file_format, chanel = chanel,
-      energy = energy, count = count, rate = rate, live_time = live_time,
-      real_time = real_time, calibration = calibration, dose_rate = dose_rate
-    )
-  }
-)
-# ----------------------------------------------------------------- GammaSpectra
-setMethod(
-  f = "initialize",
-  signature = "GammaSpectra",
-  definition = function(.Object, ...) {
-    .Object <- methods::callNextMethod(.Object, ...)
-    # Get spectrum names
-    spc_list <- .Object@.Data
-    spc_ref <- make.unique(vapply(
-      X = spc_list,
-      FUN = "[[",
-      FUN.VALUE = character(1),
-      i = "name"
-    ), sep = "_")
-    names(spc_list) <- spc_ref
-    .Object@.Data <- spc_list
-
-    methods::validObject(.Object)
-    return(.Object)
-  }
-)
-# ----------------------------------------------------------------- PeakPosition
-# /!\ initialize() PeakPosition retains copy construction
-setMethod(
-  f = "initialize",
-  signature = "PeakPosition",
-  definition = function(
-    .Object, ..., hash = .Object@hash, noise_method = .Object@noise_method,
-    noise_threshold = .Object@noise_threshold, window = .Object@window,
-    chanel = .Object@chanel, energy = .Object@energy
-  ) {
-    if (length(chanel) != 0)
-      chanel <- as.integer(chanel)
-
-    methods::callNextMethod(
-      .Object, ..., hash = hash, noise_method = noise_method,
-      noise_threshold = noise_threshold, window = window, chanel = chanel,
-      energy = energy
-    )
-  }
-)
-# ------------------------------------------------------------- CalibrationCurve
-setMethod(
-  f = "initialize",
-  signature = "CalibrationCurve",
-  definition = function(.Object, Ni, NiEi, data, details) {
-
-    info <- if (!missing(details)) details else list()
-    info$date <- Sys.time()
-    .Object@details <- info
-    if (!missing(Ni)) .Object@Ni <- Ni
-    if (!missing(NiEi)) .Object@NiEi <- NiEi
-    if (!missing(data)) .Object@data <- data
-
-    methods::validObject(.Object)
-    return(.Object)
-  }
 )

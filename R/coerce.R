@@ -1,31 +1,86 @@
 # COERCION
-#' @include AllClasses.R
+#' @include AllClasses.R AllGenerics.R
 NULL
 
-# To data.frame ================================================================
+# ================================================================ GammaSpectrum
+#' @method as.matrix GammaSpectrum
+#' @rdname coerce
+#' @export
+as.matrix.GammaSpectrum <- function(x, ...) methods::as(x, "matrix")
+
+#' @method as.data.frame GammaSpectrum
+#' @export
+as.data.frame.GammaSpectrum <- function(x, row.names = NULL, optional = FALSE,
+                                        make.names = TRUE, ...,
+                                        stringsAsFactors = default.stringsAsFactors()) {
+  x <- as.data.frame(x = as.matrix(x), row.names = row.names,
+                     optional = optional, make.names = make.names, ...,
+                     stringsAsFactors = stringsAsFactors)
+  x
+}
+
 setAs(
   from = "GammaSpectrum",
-  to = "data.frame",
+  to = "matrix",
   def = function(from) {
-    data.frame(
+    cbind(
       chanel = if (length(from@chanel) != 0) from@chanel else NA_integer_,
       energy = if (length(from@energy) != 0) from@energy else NA_real_,
       count = if (length(from@count) != 0) from@count else NA_real_,
-      rate = if (length(from@rate) != 0) from@rate else NA_real_,
-      stringsAsFactors = FALSE
+      rate = if (length(from@rate) != 0) from@rate else NA_real_
     )
   }
 )
 setAs(
-  from = "GammaSpectra",
+  from = "GammaSpectrum",
   to = "data.frame",
   def = function(from) {
-    df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
-    df_nrow <- vapply(X = df_list, FUN = nrow, FUN.VALUE = integer(1))
-    df_long <- do.call(rbind, df_list)
-    df_long[["name"]] <- rep(names(df_list), times = df_nrow)
-    rownames(df_long) <- NULL
-    return(df_long)
+    m <- as.matrix(from)
+    m <- as.data.frame(m, stringsAsFactors = FALSE)
+    m
+  }
+)
+
+# ================================================================= GammaSpectra
+as_long <- function(from) {
+  df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
+  df_nrow <- vapply(X = df_list, FUN = nrow, FUN.VALUE = integer(1))
+  df_long <- do.call(rbind, df_list)
+  df_long[["name"]] <- rep(names(df_list), times = df_nrow)
+  rownames(df_long) <- NULL
+  return(df_long)
+}
+
+setAs(
+  from = "GammaSpectrum",
+  to = "GammaSpectra",
+  def = function(from) .GammaSpectra(list(from))
+)
+
+# ================================================================= PeakPosition
+#' @method as.matrix PeakPosition
+#' @export
+as.matrix.PeakPosition <- function(x, ...) methods::as(x, "matrix")
+
+#' @method as.data.frame PeakPosition
+#' @export
+as.data.frame.PeakPosition <- function(x, row.names = NULL, optional = FALSE,
+                                        make.names = TRUE, ...,
+                                        stringsAsFactors = default.stringsAsFactors()) {
+  x <- as.data.frame(x = as.matrix(x), row.names = row.names,
+                     optional = optional, make.names = make.names, ...,
+                     stringsAsFactors = stringsAsFactors)
+  x
+}
+
+setAs(
+  from = "PeakPosition",
+  to = "matrix",
+  def = function(from) {
+    cbind(
+      chanel = if (length(from@chanel) != 0) from@chanel else NA_integer_,
+      energy = if (length(from@energy) != 0) from@energy else NA_real_
+    )
   }
 )
 setAs(
@@ -37,42 +92,5 @@ setAs(
       energy = if (length(from@energy) != 0) from@energy else NA_real_,
       stringsAsFactors = FALSE
     )
-  }
-)
-
-# To list ======================================================================
-setAs(
-  from = "GammaSpectrum",
-  to = "list",
-  def = function(from) {
-    list(
-      chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
-      energy = if (length(from@energy) != 0) from@energy else NA_real_,
-      count = if (length(from@count) != 0) from@count else NA_real_,
-      rate = if (length(from@rate) != 0) from@rate else NA_real_
-    )
-  }
-)
-
-# To GammaSpectra ==============================================================
-setAs(
-  from = "list",
-  to = "GammaSpectra",
-  def = function(from) {
-    spc_ref <- make.unique(vapply(
-      X = from,
-      FUN = "[[",
-      FUN.VALUE = character(1),
-      i = "name"
-    ))
-    names(from) <- spc_ref
-    .GammaSpectra(from)
-  }
-)
-setAs(
-  from = "GammaSpectrum",
-  to = "GammaSpectra",
-  def = function(from) {
-    .GammaSpectra(list(from))
   }
 )

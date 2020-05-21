@@ -7,7 +7,7 @@ setMethod(
   f = "show",
   signature = "GammaSpectrum",
   definition = function(object) {
-    if (get_nchanels(object) != 0) {
+    if (length(object) != 0) {
       meta <- summarise(object)
       meta <- paste(colnames(meta), unlist(meta), sep = ": ")
       cat("Gamma spectrum:", paste("* ", meta), sep = "\n")
@@ -29,9 +29,9 @@ setMethod(
       date = as.character(object@date),
       live_time = object@live_time,
       real_time = object@real_time,
-      chanels = length(object@chanel),
-      energy_min = ifelse(length(object@energy) != 0, min(object@energy), NA),
-      energy_max = ifelse(length(object@energy) != 0, max(object@energy), NA),
+      chanels = length(object),
+      energy_min = range_energy(object)[[1L]],
+      energy_max = range_energy(object)[[2L]],
       stringsAsFactors = FALSE
     )
   }

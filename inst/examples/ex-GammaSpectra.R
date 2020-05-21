@@ -3,19 +3,13 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 (spc <- read(spc_dir))
 
 ## Access
-length(spc)
 get_hash(spc)
 get_names(spc)
 get_time(spc, "live")
 get_time(spc, "real")
-get_nchanels(spc)
-range_energy(spc)
 
-## Coerce
-\donttest{
-## Return a long data frame
-as(spc, "data.frame")
-}
+lengths(spc)
+range_energy(spc)
 
 ## Subset
 spc[] # All spectra

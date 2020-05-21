@@ -18,7 +18,6 @@ setValidity(
     live_time <- object@live_time
     real_time <- object@real_time
     calibration <- object@calibration
-    dose_rate <- object@dose_rate
     message <- c()
 
     length_hash <- length(hash)
@@ -37,7 +36,7 @@ setValidity(
     if (length_name > 1) {
       message <- c(
         message,
-        sprintf("%s must be character vector of length one, not %d.",
+        sprintf("%s must be a character vector of length one, not %d.",
                 sQuote("name"), length_name)
       )
     }
@@ -45,7 +44,7 @@ setValidity(
     if (length_instrument > 1) {
       message <- c(
         message,
-        sprintf("%s must be character vector of length one, not %d.",
+        sprintf("%s must be a character vector of length one, not %d.",
                 sQuote("instrument"), length_instrument)
       )
     }
@@ -53,7 +52,7 @@ setValidity(
     if (length_file_format > 1) {
       message <- c(
         message,
-        sprintf("%s must be character vector of length one, not %d.",
+        sprintf("%s must be a character vector of length one, not %d.",
                 sQuote("file_format"), length_file_format)
       )
     }
@@ -76,7 +75,7 @@ setValidity(
       message <- c(
         message,
         sprintf(
-          "%s must be character vector of length one, not %d.",
+          "%s must be a character vector of length one, not %d.",
           sQuote("real_time"), length_real_time)
       )
       if (!isPositive(real_time, strict = TRUE)) {
@@ -87,23 +86,6 @@ setValidity(
       }
     }
     # TODO: check calibration
-    length_dose_rate <- length(dose_rate)
-    if (length_dose_rate != 0) {
-      if (!isPositive(dose_rate, strict = FALSE)) {
-        message <- c(
-          message,
-          sprintf("%s must be a vector of positive numbers.",
-                  sQuote("dose_rate"))
-        )
-      }
-      if (length_dose_rate != 2) {
-        message <- c(
-          message,
-          sprintf("%s must be a numeric vector of length two, not %d.",
-                  sQuote("dose_rate"), length_dose_rate)
-        )
-      }
-    }
     if (length(chanel) != 0) {
       if (!all(isPositive(chanel, strict = TRUE))) {
         message <- c(

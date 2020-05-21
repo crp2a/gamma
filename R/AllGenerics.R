@@ -2,144 +2,160 @@
 #' @include AllClasses.R
 NULL
 
-# ===================================================================== Mutators
+# Add S4 dispatch to base S3 generic
+setGeneric("length")
+
+# ======================================================================= Coerce
+#' Coerce
+#'
+#' @param x An object to be coerced.
+#' @param row.names \code{NULL} or a \code{\link{character}} vector giving the
+#'  row names for the data frame. Missing values are not allowed.
+#' @param optional A \code{\link{logical}} scalar (see
+#'  \code{\link[base]{as.data.frame}}).
+#' @param make.names A \code{\link{logical}} scalar (see
+#'  \code{\link[base]{as.data.frame}}).
+#' @param stringsAsFactors A \code{\link{logical}} scalar: should the character
+#'  vector be converted to a \code{\link{factor}}?
+#' @param ... Currently not used.
+#' @return A coerced object.
+#' @example inst/examples/ex-coerce.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family class
+#' @name coerce
+#' @rdname coerce
+NULL
+
+# ====================================================================== Extract
 #' Get or Set Parts of an Object
 #'
 #' Getters and setters to extract or replace parts of an object.
-#' @param object An object from which to get or set element(s).
-#' @param value A possible value for the element(s) of \code{object} (see
-#'  below).
+#' @param x An object from which to get or set element(s).
+#' @param value A possible value for the element(s) of \code{x}.
+#' @param na.rm A \code{\link{logical}} scalar: should \code{\link{NA}} be
+#'  omitted?
 #' @param simplify A \code{\link{logical}} scalar: should the result be
 #'  simplified to a matrix? If \code{FALSE} (default), returns a list.
-#' @param type A \code{\link{character}} string specifying the value to be
-#'  returned. It must be one of "\code{live}" (the default) or "\code{real}".
 #' @param threshold A \code{\link{character}} sting specifying the threshold
 #'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
 #'  (see details).
 #' @param ... Currently not used.
 #' @return
-#'  An object of the same sort as \code{object} with the new values assigned.
+#'  An object of the same sort as \code{x} with the new values assigned.
 #' @author N. Frerebeau
 #' @docType methods
 #' @family mutator
-#' @name access
-#' @rdname access
+#' @name mutator
+#' @rdname mutator
 #' @aliases get set
 NULL
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_hash-method
 setGeneric(
   name = "get_hash",
-  def = function(object) standardGeneric("get_hash")
+  def = function(x) standardGeneric("get_hash")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_names-method
 setGeneric(
   name = "get_names",
-  def = function(object) standardGeneric("get_names")
+  def = function(x) standardGeneric("get_names")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases set_names-method
 setGeneric(
   name = "set_names<-",
-  def = function(object, value) standardGeneric("set_names<-")
+  def = function(x, value) standardGeneric("set_names<-")
 )
 
-#' @rdname access
-#' @aliases get_time-method
+#' @rdname mutator
+#' @aliases get_livetime-method
 setGeneric(
-  name = "get_time",
-  def = function(object, ...) standardGeneric("get_time")
+  name = "get_livetime",
+  def = function(x) standardGeneric("get_livetime")
 )
 
-#' @rdname access
-#' @aliases get_nchanels-method
+#' @rdname mutator
+#' @aliases get_realtime-method
 setGeneric(
-  name = "get_nchanels",
-  def = function(object) standardGeneric("get_nchanels")
+  name = "get_realtime",
+  def = function(x) standardGeneric("get_realtime")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_chanels-method
 setGeneric(
   name = "get_chanels",
-  def = function(object, ...) standardGeneric("get_chanels")
+  def = function(x) standardGeneric("get_chanels")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_counts-method
 setGeneric(
   name = "get_counts",
-  def = function(object, ...) standardGeneric("get_counts")
+  def = function(x) standardGeneric("get_counts")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_rates-method
 setGeneric(
   name = "get_rates",
-  def = function(object, ...) standardGeneric("get_rates")
+  def = function(x) standardGeneric("get_rates")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_energy-method
 setGeneric(
   name = "get_energy",
-  def = function(object, ...) standardGeneric("get_energy")
+  def = function(x) standardGeneric("get_energy")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases set_energy-method
 setGeneric(
   name = "set_energy<-",
-  def = function(object, value) standardGeneric("set_energy<-")
+  def = function(x, value) standardGeneric("set_energy<-")
 )
 
-#' @rdname access
-#' @aliases get_dose-method
-setGeneric(
-  name = "get_dose",
-  def = function(object) standardGeneric("get_dose")
-)
-
-#' @rdname access
-#' @aliases set_dose-method
-setGeneric(
-  name = "set_dose<-",
-  def = function(object, value) standardGeneric("set_dose<-")
-)
-
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_model-method
 setGeneric(
   name = "get_model",
-  def = function(object, ...) standardGeneric("get_model")
+  def = function(x, ...) standardGeneric("get_model")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_noise-method
 setGeneric(
   name = "get_noise",
-  def = function(object, ...) standardGeneric("get_noise")
+  def = function(x, ...) standardGeneric("get_noise")
 )
 
-#' @rdname access
+#' @rdname mutator
 #' @aliases get_range-method
 setGeneric(
   name = "get_range",
-  def = function(object, ...) standardGeneric("get_range")
+  def = function(x, ...) standardGeneric("get_range")
 )
 
-#' @rdname access
+#' @rdname mutator
+#' @aliases range_chanels-method
+setGeneric(
+  name = "range_chanels",
+  def = function(x, ...) standardGeneric("range_chanels")
+)
+
+#' @rdname mutator
 #' @aliases range_energy-method
 setGeneric(
   name = "range_energy",
-  def = function(object) standardGeneric("range_energy")
+  def = function(x, ...) standardGeneric("range_energy")
 )
 
-# ------------------------------------------------------------------------------
 #' Extract or Replace Parts of an Object
 #'
 #' Operators acting on objects to extract or replace parts.
@@ -164,7 +180,48 @@ setGeneric(
 #' @rdname subset
 NULL
 
-# ===================================================== Energy scale calibration
+# ==================================================================== Operators
+#' Common Operations on Matrix Objects
+#'
+#' Performs common operations on \code{GammaSpectrum} objects.
+#' @param x,e1,e2 An object (typically a \linkS4class{GammaSpectrum} object).
+#' @param digits A length-one \code{\link{numeric}} vector giving the
+#'  number of digits to be used in \code{\link{round}} or \code{\link{signif}}.
+#' @param na.rm A \code{\link{logical}} scalar: should missing values
+#'  (including \code{NaN}) be omitted from the calculations?
+#' @param ... Further arguments passed to or from methods.
+#' @section Group Generics:
+#'  \linkS4class{GammaSpectrum} objects have support for S4 group generic
+#'  functionality to operate within elements across objects:
+#'  \describe{
+#'   \item{\code{Arith}}{"\code{+}", "\code{-}", "\code{*}", "\code{^}",
+#'   "\code{\%\%}", "\code{\%/\%}", "\code{/}"}
+#'   \item{\code{Compare}}{"\code{==}", "\code{>}", "\code{<}", "\code{!=}",
+#'   "\code{<=}", "\code{>=}"}
+#'   \item{\code{Logic}}{"\code{&}", "\code{|}"}
+#'   \item{\code{Math}}{"\code{abs}", "\code{sign}", "\code{sqrt}",
+#'   "\code{ceiling}", "\code{floor}", "\code{trunc}", "\code{cummax}",
+#'   "\code{cummin}", "\code{cumprod}", "\code{cumsum}", "\code{log}",
+#'   "\code{log10}", "\code{log2}", "\code{log1p}", "\code{acos}",
+#'   "\code{acosh}", "\code{asin}", "\code{asinh}", "\code{atan}",
+#'   "\code{atanh}", "\code{exp}", "\code{expm1}", "\code{cos}",
+#'   "\code{cosh}", "\code{cospi}", "\code{sin}", "\code{sinh}",
+#'   "\code{sinpi}", "\code{tan}", "\code{tanh}", "\code{tanpi}",
+#'   "\code{gamma}", "\code{lgamma}", "\code{digamma}", "\code{trigamma}"}
+#'   \item{\code{Math2}}{"\code{round}", "\code{signif}"}
+#'   \item{\code{Ops}}{"\code{Arith}", "\code{Compare}", "\code{Logic}"}
+#'   \item{\code{Summary}}{"\code{min}", "\code{max}", "\code{range}",
+#'   "\code{prod}", "\code{sum}", "\code{any}", "\code{all}"}
+#'  }
+#' @example inst/examples/ex-operators.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family operator
+#' @name operator
+#' @rdname operator
+NULL
+
+# ================================================================= Energy scale
 #' Energy Scale Calibration
 #'
 #' Calibrates the energy scale of a gamma spectrum.

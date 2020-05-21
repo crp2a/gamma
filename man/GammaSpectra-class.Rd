@@ -17,21 +17,17 @@ This class extends the base \code{\link{list}} and can only contains
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
+ \item{\code{lengths(x)}}{Get the number of chanels in each element of
+  \code{x}.}
  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
   the names of \code{x} according to \code{value}.}
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
- \item{\code{get_chanels(x)}}{Get the number of chanels.}
- \item{\code{get_energy(x)}}{Get the energy ranges.}
- \item{\code{get_dose(x)}}{Get the dose rates.}
-}
-}
-
-\section{Coerce}{
-
-In the code snippets below, \code{x} is a \code{GammaSpectra} object.
-\describe{
- \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a long
- \code{\link[=data.frame]{data frame}}.}
+ \item{\code{get_chanels(x)}}{Get the number of chanels in each element of
+ \code{x}.}
+ \item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
+ \item{\code{get_energy(x)}}{Get the energy range of each element of
+ \code{x}.}
+ \item{\code{get_rates(x)}}{Get the count rates of each element of \code{x}.}
 }
 }
 
@@ -59,19 +55,13 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 (spc <- read(spc_dir))
 
 ## Access
-length(spc)
 get_hash(spc)
 get_names(spc)
 get_time(spc, "live")
 get_time(spc, "real")
-get_nchanels(spc)
-range_energy(spc)
 
-## Coerce
-\donttest{
-## Return a long data frame
-as(spc, "data.frame")
-}
+lengths(spc)
+range_energy(spc)
 
 ## Subset
 spc[] # All spectra
@@ -87,15 +77,11 @@ spc[[1]]
 spc[["BRIQUE"]]
 }
 \seealso{
-\linkS4class{GammaSpectrum}.
-
-Other class: 
+Other spectrum class: 
 \code{\link{BaseLine-class}},
-\code{\link{DoseRateModel-class}},
-\code{\link{GammaSpectrum-class}},
-\code{\link{PeakPosition-class}}
+\code{\link{GammaSpectrum-class}}
 }
 \author{
 N. Frerebeau
 }
-\concept{class}
+\concept{spectrum class}

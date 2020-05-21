@@ -42,7 +42,8 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom methods as new setClass setClassUnion setGeneric setMethod
+#' @importFrom methods as as<- callGeneric new
+#' setClass setClassUnion setGeneric setMethod slot slot<-
 #' @importFrom IsoplotR york
 #' @importFrom graphics plot
 #' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar

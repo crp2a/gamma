@@ -64,7 +64,7 @@ setMethod(
       select <- as.integer(select)
 
     # Subset data and build a long data frame
-    spc <- methods::as(x[select], "data.frame")
+    spc <- as_long(x[select])
     n <- nlevels(as.factor(spc$name))
 
     if (xaxis == "energy" & anyNA(spc$energy)) {

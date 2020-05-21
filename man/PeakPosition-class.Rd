@@ -49,8 +49,8 @@ In the code snippets below, \code{x} is a \code{PeakPosition} object.
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
- \item{\code{as(x, "data.frame")}}{Coerces \code{x} to a
- \code{\link[=data.frame]{data frame}}.}
+ \item{\code{matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+ \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 }
 }
 
@@ -65,13 +65,10 @@ In the code snippets below, \code{x} is a \code{PeakPosition} object.
 }
 
 \seealso{
-Other class: 
-\code{\link{BaseLine-class}},
-\code{\link{DoseRateModel-class}},
-\code{\link{GammaSpectra-class}},
-\code{\link{GammaSpectrum-class}}
+Other calibration class: 
+\code{\link{CalibrationCurve-class}}
 }
 \author{
 N. Frerebeau
 }
-\concept{class}
+\concept{calibration class}
