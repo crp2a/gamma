@@ -43,10 +43,14 @@ In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 }
 
 \seealso{
-Other calibration class: 
-\code{\link{PeakPosition-class}}
+Other class: 
+\code{\link{BaseLine-class}},
+\code{\link{GammaSpectra-class}},
+\code{\link{GammaSpectrum-class}},
+\code{\link{PeakPosition-class}},
+\code{\link{coerce}()}
 }
 \author{
 N. Frerebeau
 }
-\concept{calibration class}
+\concept{class}

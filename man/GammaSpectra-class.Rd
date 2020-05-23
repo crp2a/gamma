@@ -77,11 +77,14 @@ spc[[1]]
 spc[["BRIQUE"]]
 }
 \seealso{
-Other spectrum class: 
+Other class: 
 \code{\link{BaseLine-class}},
-\code{\link{GammaSpectrum-class}}
+\code{\link{CalibrationCurve-class}},
+\code{\link{GammaSpectrum-class}},
+\code{\link{PeakPosition-class}},
+\code{\link{coerce}()}
 }
 \author{
 N. Frerebeau
 }
-\concept{spectrum class}
+\concept{class}

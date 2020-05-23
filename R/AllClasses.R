@@ -57,7 +57,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @note This class retains copy construction.
 #' @example inst/examples/ex-GammaSpectrum.R
 #' @author N. Frerebeau
-#' @family spectrum class
+#' @family class
 #' @docType class
 #' @aliases GammaSpectrum-class
 .GammaSpectrum <- setClass(
@@ -131,7 +131,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' }
 #' @example inst/examples/ex-GammaSpectra.R
 #' @author N. Frerebeau
-#' @family spectrum class
+#' @family class
 #' @docType class
 #' @aliases GammaSpectra-class
 .GammaSpectra <- setClass(
@@ -144,7 +144,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
 #' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
-#' @family spectrum class
+#' @family class
 #' @docType class
 #' @aliases BaseLine-class
 .BaseLine <- setClass(
@@ -176,7 +176,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  subscript \code{i}. \code{i} is a \code{character} vector of length one.}
 #' }
 #' @author N. Frerebeau
-#' @family calibration class
+#' @family class
 #' @docType class
 #' @name CalibrationCurve-class
 #' @rdname CalibrationCurve-class
@@ -249,7 +249,7 @@ NULL
 #' }
 #' @note This class retains copy construction.
 #' @author N. Frerebeau
-#' @family calibration class
+#' @family class
 #' @docType class
 #' @aliases PeakPosition-class
 .PeakPosition <- setClass(

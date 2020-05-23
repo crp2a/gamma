@@ -45,7 +45,7 @@ remotes::install_github("crp2a/gamma")
 
 ## Usage
 
-```{r usage, fig.width=7, fig.height=5, fig.align='center'}
+```{r usage, fig.width=7, fig.height=3.5, fig.align='center'}
 ## A minimal example
 ## You may want to give extra attention to the energy calibration step
 library(gamma)
@@ -66,13 +66,13 @@ peaks <- spectrum %>%
   find_peaks()
 
 ## Set the energy values (in keV)
-(set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615))
+set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 ## Inspect peaks
 plot(spectrum, peaks)
 ```
 
-```{r calib, fig.width=7, fig.height=5, fig.align='center'}
+```{r calib, fig.width=3.5, fig.height=3.5, fig.align='center'}
 ## Calibrate the energy scale
 calib <- calibrate_energy(spectrum, peaks)
 

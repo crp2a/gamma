@@ -454,7 +454,7 @@ setGeneric(
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods
-#' @family IO
+#' @family plot
 #' @name plot
 #' @rdname plot
 #' @aliases plot-method

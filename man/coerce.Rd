@@ -29,6 +29,14 @@ mtx <- as.matrix(spc)
 df <- as.data.frame(spc)
 head(df)
 }
+\seealso{
+Other class: 
+\code{\link{BaseLine-class}},
+\code{\link{CalibrationCurve-class}},
+\code{\link{GammaSpectra-class}},
+\code{\link{GammaSpectrum-class}},
+\code{\link{PeakPosition-class}}
+}
 \author{
 N. Frerebeau
 }

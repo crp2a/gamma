@@ -71,12 +71,7 @@ plot(spc, xaxis = "energy", yaxis = "count", select = "BRIQUE") +
 plot(spc, xaxis = "chanel", yaxis = "rate", select = 1:3, facet = TRUE) +
   ggplot2::theme_bw()
 }
-\seealso{
-Other IO: 
-\code{\link{read}()},
-\code{\link{summarise}()}
-}
 \author{
 N. Frerebeau
 }
-\concept{IO}
+\concept{plot}

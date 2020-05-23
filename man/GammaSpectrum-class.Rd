@@ -103,11 +103,14 @@ spc[["instrument"]]
 spc[["file_format"]]
 }
 \seealso{
-Other spectrum class: 
+Other class: 
 \code{\link{BaseLine-class}},
-\code{\link{GammaSpectra-class}}
+\code{\link{CalibrationCurve-class}},
+\code{\link{GammaSpectra-class}},
+\code{\link{PeakPosition-class}},
+\code{\link{coerce}()}
 }
 \author{
 N. Frerebeau
 }
-\concept{spectrum class}
+\concept{class}

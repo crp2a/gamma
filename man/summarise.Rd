@@ -39,7 +39,6 @@ summarise(spc)
 }
 \seealso{
 Other IO: 
-\code{\link{plot}()},
 \code{\link{read}()}
 }
 \author{

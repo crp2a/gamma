@@ -31,11 +31,14 @@ spc_clean2 <- spc - baseline
 plot(spc_clean1)
 }
 \seealso{
-Other spectrum class: 
+Other class: 
+\code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
-\code{\link{GammaSpectrum-class}}
+\code{\link{GammaSpectrum-class}},
+\code{\link{PeakPosition-class}},
+\code{\link{coerce}()}
 }
 \author{
 N. Frerebeau
 }
-\concept{spectrum class}
+\concept{class}

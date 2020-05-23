@@ -67,8 +67,7 @@ peaks <- spectrum %>%
   find_peaks()
 
 ## Set the energy values (in keV)
-(set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615))
-#> [1]  238   NA   NA   NA 1461   NA   NA 2615
+set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 ## Inspect peaks
 plot(spectrum, peaks)
