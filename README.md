@@ -79,23 +79,19 @@ plot(calib, peaks)
 <img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
 
 ``` r
-
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
 data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
-```
-
-<img src="man/figures/README-calib-1.png" style="display: block; margin: auto;" />
-
-``` r
 
 ## Estimate the gamma dose rate
 (doses <- predict_dose(BDX_LaBr_1, calib))
 #>   names gamma_dose_Ni gamma_error_Ni gamma_dose_NiEi gamma_error_NiEi
 #> 1  LaBr      4171.876       92.54298        3944.501         78.27257
 ```
+
+![](man/figures/README-calib-1.png)<!-- -->
 
 ## Contributing
 
