@@ -59,11 +59,11 @@ fit_york <- function(object, background, doses, range,
   bkg <- integrate_signal(background, range = range, energy = energy)
   signals <- integrate_signal(object, background = bkg, range = range,
                               energy = energy, simplify = TRUE)
-  colnames(signals) <- c("signal_value", "signal_error")
 
   # Prepare data
   data <- merge(signals, doses, by = 0, all = FALSE, sort = FALSE)
-  colnames(data)[1] <- "names"
+  colnames(data) <- c("names", "signal_value", "signal_error",
+                      "gamma_dose", "gamma_error")
 
   # Fit model
   model <- IsoplotR::york(data[, -1], alpha = alpha)

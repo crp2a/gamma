@@ -26,7 +26,15 @@
 
 \S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
 
-\S4method{plot}{CalibrationCurve,missing}(x, threshold = c("Ni", "NiEi"), ...)
+\S4method{plot}{CalibrationCurve,missing}(
+  x,
+  error_ellipse = TRUE,
+  error_bar = FALSE,
+  threshold = c("Ni", "NiEi"),
+  level = 0.95,
+  n = 50,
+  ...
+)
 }
 \arguments{
 \item{x, y}{Objects to be plotted.}
@@ -44,9 +52,21 @@ giving the selection of the spectrum that are drawn.}
 \item{facet}{A \code{\link{logical}} scalar: should a matrix of panels
 defined by spectrum be drawn?}
 
+\item{error_ellipse}{A \code{\link{logical}} scalar: should error ellipses
+be plotted?}
+
+\item{error_bar}{A \code{\link{logical}} scalar: should error bars
+be plotted?}
+
 \item{threshold}{A \code{\link{character}} sting specifying the threshold
 to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
 (see details).}
+
+\item{level}{length-one \code{\link{numeric}} vector giving the the
+probability cutoff for the error ellipses.}
+
+\item{n}{A length-one \code{\link{numeric}} vector giving the resolution of
+the error ellipses.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.
@@ -70,6 +90,9 @@ plot(spc, xaxis = "energy", yaxis = "count", select = "BRIQUE") +
 # Plot the first three spectra
 plot(spc, xaxis = "chanel", yaxis = "rate", select = 1:3, facet = TRUE) +
   ggplot2::theme_bw()
+}
+\seealso{
+\link[IsoplotR]{ellipse}, \link[IsoplotR]{isochron}
 }
 \author{
 N. Frerebeau

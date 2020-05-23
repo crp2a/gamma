@@ -136,7 +136,9 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "CalibrationCurve", y = "missing"),
-  definition = function(x, threshold = c("Ni", "NiEi"), ...) {
+  definition = function(x, error_ellipse = TRUE, error_bar = FALSE,
+                        threshold = c("Ni", "NiEi"),
+                        level = 0.95, n = 50, ...) {
     # Validation
     threshold <- match.arg(threshold, several.ok = FALSE)
 
@@ -150,9 +152,38 @@ setMethod(
     segment <- rbind.data.frame(c(segment_x, segment_y))
     names(segment) <- c("x", "xmin", "y", "ymin")
 
-    # Set error bar width and height
-    # error_width <- sum(signal * c(-1, 1)) / 100
-    # error_height <- sum(range(data$gamma_dose) * c(-1, 1)) / 100
+    # Errors
+    ggellipse <- ggbar <- NULL
+    ndata <- nrow(data)
+    if (error_ellipse) { # Ellipse
+      ell <- vector(mode = "list", length = ndata)
+      for (i in seq_len(ndata)) {
+        mtx <- cor2cov2(data$signal_error[i], data$gamma_error[i], 0)
+        ell[[i]] <- IsoplotR::ellipse(x = data$signal_value[i],
+                                      y = data$gamma_dose[i],
+                                      covmat = mtx, alpha = 1 - level, n = n)
+      }
+      ell <- do.call(rbind.data.frame, ell)
+      ell$group <- rep(seq_len(ndata), each = n)
+      ggellipse <- ggplot2::geom_path(
+        mapping = aes(x = .data$x, y = .data$y, group = .data$group),
+        data = ell, colour = "red", inherit.aes = FALSE
+      )
+    }
+    if (error_bar) { # Crossbar
+      ggbar <- list(
+        geom_errorbar(
+          mapping = aes(ymin = .data$gamma_dose - .data$gamma_error,
+                        ymax = .data$gamma_dose + .data$gamma_error),
+          width = 0,
+          colour = "red"),
+        geom_errorbarh(
+          mapping = aes(xmin = .data$signal_value - .data$signal_error,
+                        xmax = .data$signal_value + .data$signal_error),
+          height = 0,
+          colour = "red")
+      )
+    }
 
     ggplot(data = data) +
       aes(x = .data$signal_value, y = .data$gamma_dose, label = .data$names) +
@@ -160,18 +191,20 @@ setMethod(
         data = segment,
         mapping = aes(x = .data$x, xend = .data$xmin,
                       y = .data$y, yend = .data$ymin),
-        colour = "red",
         inherit.aes = FALSE
       ) +
-      geom_pointrange(
-        mapping = aes(ymin = .data$gamma_dose - .data$gamma_error,
-                      ymax = .data$gamma_dose + .data$gamma_error),
-        colour = "red") +
-      geom_errorbarh(
-        mapping = aes(xmin = .data$signal_value - .data$signal_error,
-                      xmax = .data$signal_value + .data$signal_error),
-        height = 0,
-        colour = "red") +
+      geom_point() +
+      ggellipse + ggbar +
       labs(x = sprintf("Signal [%s]", threshold), y = "Dose rate [\u03BCGy/y]")
   }
 )
+
+# COPY FROM NON EXPORTED ISOPLOTR
+cor2cov2 <- function(sX, sY, rXY){
+  covmat <- matrix(0, 2, 2)
+  covmat[1, 1] <- sX^2
+  covmat[2, 2] <- sY^2
+  covmat[1, 2] <- rXY * sX * sY
+  covmat[2, 1] <- covmat[1, 2]
+  covmat
+}

@@ -341,7 +341,7 @@ setGeneric(
 #'  Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
 #'  DOI: \href{https://doi.org/10.1119/1.1632486}{10.1119/1.1632486}.
 #' @example inst/examples/ex-doserate.R
-#' @author N. Frerebeau
+#' @author N. Frereberrorseau
 #' @docType methods
 #' @family dose rate
 #' @name doserate
@@ -445,12 +445,21 @@ setGeneric(
 #'  giving the selection of the spectrum that are drawn.
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels
 #'  defined by spectrum be drawn?
+#' @param error_ellipse A \code{\link{logical}} scalar: should error ellipses
+#'  be plotted?
+#' @param error_bar A \code{\link{logical}} scalar: should error bars
+#'  be plotted?
+#' @param level length-one \code{\link{numeric}} vector giving the the
+#'  probability cutoff for the error ellipses.
+#' @param n A length-one \code{\link{numeric}} vector giving the resolution of
+#'  the error ellipses.
 #' @param threshold A \code{\link{character}} sting specifying the threshold
 #'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
 #'  (see details).
 #' @param ... Currently not used.
 #' @return
 #'  A \code{\link[ggplot2]{ggplot}} object.
+#' @seealso \link[IsoplotR]{ellipse}, \link[IsoplotR]{isochron}
 #' @example inst/examples/ex-plot.R
 #' @author N. Frerebeau
 #' @docType methods
