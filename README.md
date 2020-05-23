@@ -87,8 +87,8 @@ plot(BDX_LaBr_1)
 
 ## Estimate the gamma dose rate
 (doses <- predict_dose(BDX_LaBr_1, calib))
-#>   names gamma_dose_Ni gamma_error_Ni gamma_dose_NiEi gamma_error_NiEi
-#> 1  LaBr      4171.876       92.54298        3944.501         78.27257
+#>   names  dose_Ni error_Ni dose_NiEi error_NiEi
+#> 1  LaBr 4171.876 92.54298  3944.501   78.27257
 ```
 
 ![](man/figures/README-calib-1.png)<!-- -->

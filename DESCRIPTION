@@ -109,5 +109,6 @@ Collate:
     'show.R'
     'signal.R'
     'subset.R'
+    'summarize.R'
     'utilities.R'
     'validate.R'

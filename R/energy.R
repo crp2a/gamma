@@ -11,7 +11,7 @@ setMethod(
   definition = function(object, lines, ...) {
     # Validation
     if (!all(c("chanel", "energy") %in% names(lines))) {
-      stop("`lines` is a list, ",
+      stop(sprintf("%s is a list, ", sQuote("lines")),
            "but does not have components 'chanel' and 'energy'.",
            call. = FALSE)
     }

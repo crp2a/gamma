@@ -13,24 +13,32 @@ An S4 class to Represent a Dose Rate Calibration Curve
 \section{Slots}{
 
 \describe{
-\item{\code{model}}{A \code{\link[stats:lm]{linear model}} specifying the calibration
-curve.}
-
-\item{\code{background}}{A length-two \code{\link{numeric}} vector giving the
-background noise value and error (see \code{\link{integrate_signal}}).}
-
-\item{\code{range}}{A length-two \code{\link{numeric}} vector giving the energy
-range to integrate within (see \code{\link{integrate_signal}}).}
-
 \item{\code{Ni}}{A \linkS4class{DoseRateModel} object.}
 
 \item{\code{NiEi}}{A \linkS4class{DoseRateModel} object.}
 
-\item{\code{data}}{A \code{\link{data.frame}} giving the data used for
-linear model fitting.}
-
 \item{\code{details}}{A \code{\link{list}} of length-one vector giving the curve
 metadata.}
+
+\item{\code{slope}}{A \code{\link{numeric}} vector.}
+
+\item{\code{intercept}}{A \code{\link{numeric}} vector.}
+
+\item{\code{covariance}}{A \code{\link{numeric}} vector.}
+
+\item{\code{MSWD}}{A \code{\link{numeric}} vector.}
+
+\item{\code{df}}{A \code{\link{numeric}} vector.}
+
+\item{\code{p_value}}{A \code{\link{numeric}} vector.}
+
+\item{\code{residuals}}{A \code{\link{numeric}} vector.}
+
+\item{\code{data}}{A \code{\link{data.frame}}.}
+
+\item{\code{range}}{A \code{\link{numeric}} vector.}
+
+\item{\code{background}}{A \code{\link{numeric}} vector.}
 }}
 
 \section{Subset}{

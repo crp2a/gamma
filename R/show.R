@@ -1,5 +1,5 @@
-# SHOW & SUMMARISE METHODS
-#' @include AllClasses.R
+# SHOW
+#' @include AllClasses.R AllGenerics.R
 NULL
 
 # ================================================================ GammaSpectrum
@@ -14,27 +14,6 @@ setMethod(
     } else {
       cat("An empty gamma spectrum.\n", sep = "")
     }
-  }
-)
-
-#' @rdname summarise
-#' @aliases summarise,GammaSpectrum-method
-#' @export
-setMethod(
-  f = "summarise",
-  signature = "GammaSpectrum",
-  definition = function(object) {
-    energy <- round(range_energy(object), 2)
-    cbind.data.frame(
-      name = object@name,
-      date = as.character(object@date),
-      live_time = object@live_time,
-      real_time = object@real_time,
-      chanels = length(object),
-      energy_min = energy[[1L]],
-      energy_max = energy[[2L]],
-      stringsAsFactors = FALSE
-    )
   }
 )
 
@@ -56,24 +35,12 @@ setMethod(
   }
 )
 
-#' @rdname summarise
-#' @aliases summarise,GammaSpectra-method
-#' @export
-setMethod(
-  f = "summarise",
-  signature = "GammaSpectra",
-  definition = function(object) {
-    sum_up <- lapply(X = object, FUN = summarise)
-    do.call(rbind, sum_up)
-  }
-)
-
 # ================================================================ DoseRateModel
 setMethod(
   f = "show",
   signature = "DoseRateModel",
   definition = function(object) {
-    cat("Dose vs signal linear model:\n", sep = "")
+    cat("<DoseRateModel>\n", sep = "")
   }
 )
 

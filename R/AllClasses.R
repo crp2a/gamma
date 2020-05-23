@@ -157,18 +157,20 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 
 #' An S4 class to Represent a Dose Rate Calibration Curve
 #'
-#' @slot model A \code{\link[stats:lm]{linear model}} specifying the calibration
-#'  curve.
-#' @slot background A length-two \code{\link{numeric}} vector giving the
-#'  background noise value and error (see \code{\link{integrate_signal}}).
-#' @slot range A length-two \code{\link{numeric}} vector giving the energy
-#'  range to integrate within (see \code{\link{integrate_signal}}).
 #' @slot Ni A \linkS4class{DoseRateModel} object.
 #' @slot NiEi A \linkS4class{DoseRateModel} object.
-#' @slot data A \code{\link{data.frame}} giving the data used for
-#'  linear model fitting.
 #' @slot details A \code{\link{list}} of length-one vector giving the curve
 #'  metadata.
+#' @slot slope A \code{\link{numeric}} vector.
+#' @slot intercept A \code{\link{numeric}} vector.
+#' @slot covariance A \code{\link{numeric}} vector.
+#' @slot MSWD A \code{\link{numeric}} vector.
+#' @slot df A \code{\link{numeric}} vector.
+#' @slot p_value A \code{\link{numeric}} vector.
+#' @slot residuals A \code{\link{numeric}} vector.
+#' @slot data A \code{\link{data.frame}}.
+#' @slot range A \code{\link{numeric}} vector.
+#' @slot background A \code{\link{numeric}} vector.
 #' @section Subset:
 #' In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 #' \describe{
@@ -193,6 +195,7 @@ NULL
     MSWD = "numeric",
     df = "numeric",
     p_value = "numeric",
+    residuals = "numeric",
     data = "data.frame",
     range = "numeric",
     background = "numeric"

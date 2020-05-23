@@ -46,7 +46,7 @@ test_that("Initialize an empty BaseLine instance", {
 })
 test_that("Initialize an empty DoseRateModel instance", {
   dose <- new("DoseRateModel")
-  expect_output(show(dose), "Dose vs signal linear model")
+  expect_output(show(dose), "<DoseRateModel>")
 
   expect_identical(dose[["slope"]], numeric(0))
   expect_identical(dose[["intercept"]], numeric(0))

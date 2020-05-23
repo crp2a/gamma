@@ -56,6 +56,15 @@ setAs(
   to = "GammaSpectra",
   def = function(from) .GammaSpectra(list(from))
 )
+setAs(
+  from = "list",
+  to = "GammaSpectra",
+  def = function(from) {
+    k <- lapply(X = from, FUN = get_names)
+    names(from) <- unlist(k)
+    .GammaSpectra(from)
+  }
+)
 
 # ================================================================= PeakPosition
 #' @method as.matrix PeakPosition
