@@ -1,6 +1,6 @@
 ---
-title: "CEREGE Calibration Curve #1"
-subtitle: "Canberra Inspector 1000 - NaI"
+title: "CEREGE Calibration Curve - NaI #1"
+subtitle: "Canberra Inspector 1000"
 author: "CEREGE Luminescence Team"
 date: "`r Sys.Date()`"
 output:
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   message = FALSE,
   fig.width = 7,
-  fig.height = 5,
+  fig.height = 3.5,
   comment = "#>"
 )
 ```
@@ -38,36 +38,32 @@ library(magrittr)
 ```{r import}
 # Import CNF files for calibration
 # Skip the first chanels
-calib_dir <- system.file("extdata/AIX_NaI_1/calibration", package = "gamma")
-(calib_spc <- read(calib_dir))
+spc_dir <- system.file("extdata/AIX_NaI_1/calibration", package = "gamma")
+(spc <- read(spc_dir))
 
-# Import CNF files for background noise measurement
-# Skip the first chanels
-noise_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
-(noise_spc <- read(noise_dir))
+# Import CNF files for background measurement
+bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
+(bkg <- read(bkg_dir))
 ```
 
 ## Energy Scale Calibration
 ### Reference Spectra
-Lines used for energy scale calibration (in keV):
-
-* Pb212: 238 (85)
-* K40: 1461 (495)
-* Tl208: 2615 (870)
+```{r signal}
+bsl <- spc %>%
+  slice_signal(-1:-40) %>%
+  stabilize_signal(sqrt) %>%
+  smooth_signal(method = "savitzky", m = 21) %>%
+  remove_baseline()
+```
 
 #### BRIQUE
 ```{r calibrate-BRIQUE}
 # Spectrum pre-processing and peak detection
-pks <- calib_spc[["BRIQUE"]] %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks()
+pks <- find_peaks(bsl[["BRIQUE"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-BRIQUE <- calibrate_energy(calib_spc[["BRIQUE"]], pks)
+BRIQUE <- calibrate_energy(spc[["BRIQUE"]], pks)
 ```
 
 ```{r plot-BRIQUE, echo=FALSE}
@@ -78,16 +74,11 @@ plot(BRIQUE, pks) +
 #### C341
 ```{r calibrate-C341}
 # Spectrum pre-processing and peak detection
-pks <- calib_spc[["C341"]] %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks()
+pks <- find_peaks(bsl[["C341"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
 # Recalibrate the energy scale
-C341 <- calibrate_energy(calib_spc[["C341"]], pks)
+C341 <- calibrate_energy(spc[["C341"]], pks)
 ```
 
 ```{r plot-C341, echo=FALSE}
@@ -98,16 +89,11 @@ plot(C341, pks) +
 #### C347
 ```{r calibrate-C347}
 # Spectrum pre-processing and peak detection
-pks <- calib_spc[["C347"]] %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks(span = 10)
+pks <- find_peaks(bsl[["C347"]], span = 10)
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, NA, 1461, NA, 2615)
 # Recalibrate the energy scale
-C347 <- calibrate_energy(calib_spc[["C347"]], pks)
+C347 <- calibrate_energy(spc[["C347"]], pks)
 ```
 
 ```{r plot-C347, echo=FALSE}
@@ -118,16 +104,11 @@ plot(C347, pks) +
 #### GOU
 ```{r calibrate-GOU}
 # Spectrum pre-processing and peak detection
-pks <- calib_spc[["GOU"]] %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks()
+pks <- find_peaks(bsl[["GOU"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-GOU <- calibrate_energy(calib_spc[["GOU"]], pks)
+GOU <- calibrate_energy(spc[["GOU"]], pks)
 ```
 
 ```{r plot-GOU, echo=FALSE}
@@ -138,16 +119,11 @@ plot(GOU, pks) +
 #### PEP
 ```{r calibrate-PEP}
 # Spectrum pre-processing and peak detection
-pks <- calib_spc[["PEP"]] %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks()
+pks <- find_peaks(bsl[["PEP"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Recalibrate the energy scale
-PEP <- calibrate_energy(calib_spc[["PEP"]], pks)
+PEP <- calibrate_energy(spc[["PEP"]], pks)
 ```
 
 ```{r plot-PEP, echo=FALSE}
@@ -155,105 +131,210 @@ plot(PEP, pks) +
   ggplot2::theme_bw()
 ```
 
-### Background Noise Spectrum
-```{r calibrate-noise}
+### Background Spectrum
+```{r calibrate-bkg}
 # Pb212, K40, Tl208
-lines <- list(
+lines <- data.frame(
   chanel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
 )
-noise_scaled <- calibrate_energy(noise_spc, lines = lines)
+bkg_scaled <- calibrate_energy(bkg, lines = lines)
 ```
 
-```{r plot-noise, echo=FALSE}
-plot(noise_scaled, xaxis = "energy", yaxis = "rate") +
+```{r plot-bkg, echo=FALSE}
+plot(bkg_scaled, xaxis = "energy", yaxis = "rate") +
   ggplot2::geom_vline(xintercept = c(238, 1461, 2615), linetype = 3) +
   ggplot2::theme_bw()
 ```
 
 ## Signal Integration
-```{r calib-scaled}
-calib_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
-calib_scaled <- methods::as(calib_scaled, "GammaSpectra")
+```{r calibrate-spc}
+spc_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
+spc_scaled <- methods::as(spc_scaled, "GammaSpectra")
 ```
 
 ### Count Threshold
 ```{r integrate-Ni}
 # Integration range (in keV)
-Ni_integration_range <- c(200, 2800)
+Ni_range <- c(200, 2800)
 
-# Integrate background noise
-Ni_background <- integrate_signal(
-  noise_scaled,
-  range = Ni_integration_range,
-  energy = FALSE
-)
+# Integrate background spectrum
+(Ni_bkg <- integrate_signal(bkg_scaled, range = Ni_range, energy = FALSE))
 
 # Integrate reference spectra
-Ni_signal <- integrate_signal(
-  calib_scaled, 
-  range = Ni_integration_range, 
-  background = Ni_background,
-  energy = FALSE,
-  simplify = TRUE
-)
-```
-
-```{r integrate-Ni-results, echo=FALSE}
-knitr::kable(
-  rbind(rbind(Ni_background), Ni_signal),
-  digits = 3,
-  caption = "Spectra integration - Ni"
-)
+(Ni_spc <- integrate_signal(spc_scaled, range = Ni_range, background = Ni_bkg, 
+                            energy = FALSE, simplify = TRUE))
 ```
 
 ### Energy Threshold
 ```{r integrate-NiEi}
 # Integration range (in keV)
-NiEi_integration_range <- c(200, 2800)
+NiEi_range <- c(200, 2800)
 
-# Integrate background noise
-NiEi_background <- integrate_signal(
-  noise_scaled, 
-  range = NiEi_integration_range,
-  energy = TRUE
-)
+# Integrate background spectrum
+(NiEi_bkg <- integrate_signal(bkg_scaled, range = NiEi_range, energy = TRUE))
 
 # Integrate reference spectra
-NiEi_signal <- integrate_signal(
-  calib_scaled, 
-  range = NiEi_integration_range, 
-  background = NiEi_background,
-  energy = TRUE,
-  simplify = TRUE
-)
-```
-
-```{r integrate-NiEi-results, echo=FALSE}
-knitr::kable(
-  rbind(rbind(NiEi_background), NiEi_signal),
-  digits = 3,
-  caption = "Spectra integration - NiEi"
-)
+(NiEi_signal <- integrate_signal(spc_scaled, range = NiEi_range, 
+                                 background = NiEi_bkg, energy = TRUE,
+                                 simplify = TRUE))
 ```
 
 ## Calibration Curve
 ### Summary
-```{r calibration, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-data("AIX_NaI_1")
+```{r calibration, out.width='47%', fig.width=3.5, fig.show='hold'}
+# Get reference dose rates
+data("clermont")
+doses <- clermont[, c("gamma_dose", "gamma_error")]
 
-# Plot calibration curve
-plot(AIX_NaI_1, threshold = "Ni") +
+# Metadata
+info <- list(
+  laboratory = "CEREGE",
+  instrument = "InSpector 1000",
+  detector = "NaI",
+  authors = "CEREGE Luminescence Team"
+)
+
+AIX_NaI <- fit_dose(
+  spc_scaled, background = bkg_scaled, doses = doses,
+  range_Ni = Ni_range, range_NiEi = NiEi_range, alpha = 0.05,
+  details = info
+)
+
+# Summary
+summarise(AIX_NaI)
+
+# Plot curve
+plot(AIX_NaI, threshold = "Ni") +
   ggplot2::theme_bw()
-plot(AIX_NaI_1, threshold = "NiEi") +
+plot(AIX_NaI, threshold = "NiEi") +
   ggplot2::theme_bw()
 ```
 
-```{r calibration-data, echo=FALSE}
-# data("AIX_NaI_data")
+```{r save, eval=FALSE, echo=FALSE}
+# DANGER ZONE
+# AIX_NaI_1 <- AIX_NaI
+# usethis::use_data(AIX_NaI_1, internal = FALSE, overwrite = FALSE)
+```
 
-# Display curve data
-# knitr::kable(AIX_NaI_data, row.names = FALSE)
+### Check Model
+```{r fitted, echo=FALSE}
+# Get fitted values
+AIX_NaI_data <- predict_dose(AIX_NaI)
+```
+
+#### Count Threshold (Ni)
+```{r check-Ni, echo=FALSE, out.width='47%', fig.width=3.5, fig.show='hold'}
+Ni_observed <- AIX_NaI[["Ni"]][["data"]]$gamma_dose
+Ni_fitted <-  AIX_NaI_data$dose_Ni
+Ni_residuals  <- AIX_NaI[["Ni"]][["residuals"]]
+
+Ni_model <- data.frame(
+  name = AIX_NaI[["Ni"]][["data"]]$names,
+  fitted = Ni_fitted,
+  residuals = Ni_residuals,
+  standardized = Ni_residuals / sqrt(Ni_fitted),
+  stringsAsFactors = FALSE
+)
+
+# Residuals vs fitted values
+ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = residuals)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = residuals)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Residuals vs fitted values",
+                x = "Fitted values", y = "Residuals")
+
+# Std. residuals vs fitted values
+ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = standardized)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = standardized)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Std. residuals vs fitted values",
+                x = "Fitted values", y = "Standardized residuals")
+
+# Normal QQ plot of standardized residuals
+ggplot2::ggplot(Ni_model, ggplot2::aes(sample = standardized)) +
+  ggplot2::geom_abline(slope = 1, intercept = 0) +
+  ggplot2::geom_qq_line(colour = "red") +
+  ggplot2::geom_qq() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Normal QQ plot",
+                x = "Theoretical quantiles",
+                y = "Standardize residuals")
+
+# Cook's distance
+# ggplot2::ggplot(Ni_model, ggplot2::aes(x = name, y = cook)) +
+#   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+#   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+#   ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
+#                                      y = 0, yend = cook)) +
+#   ggplot2::geom_point() +
+#   ggplot2::theme_bw() +
+#   ggplot2::labs(title = "Cook's distance",
+#                 x = "Observation", y = "D")
+```
+
+#### Energy Threshold (Ni.Ei)
+```{r check-NiEi, echo=FALSE, out.width='47%', fig.width=3.5, fig.show='hold'}
+NiEi_observed <- AIX_NaI[["NiEi"]][["data"]]$gamma_dose
+NiEi_fitted <-  AIX_NaI_data$dose_NiEi
+NiEi_residuals  <- AIX_NaI[["NiEi"]][["residuals"]]
+
+NiEi_model <- data.frame(
+  name = AIX_NaI[["NiEi"]][["data"]]$names,
+  fitted = NiEi_fitted,
+  residuals = NiEi_residuals,
+  standardized = NiEi_residuals / sqrt(NiEi_fitted),
+  stringsAsFactors = FALSE
+)
+
+# Residuals vs fitted values
+ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = residuals)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = residuals)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Residuals vs fitted values",
+                x = "Fitted values", y = "Residuals")
+
+# Std. residuals vs fitted values
+ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = standardized)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+  ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
+  ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
+                                     y = 0, yend = standardized)) + 
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Std. residuals vs fitted values",
+                x = "Fitted values", y = "Standardized residuals")
+
+# Normal QQ plot of standardized residuals
+ggplot2::ggplot(NiEi_model, ggplot2::aes(sample = standardized)) +
+  ggplot2::geom_abline(slope = 1, intercept = 0) +
+  ggplot2::geom_qq_line(colour = "red") +
+  ggplot2::geom_qq() +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Normal QQ plot",
+                x = "Theoretical quantiles",
+                y = "Standardize residuals")
+
+# Cook's distance
+# ggplot2::ggplot(NiEi_model, ggplot2::aes(x = name, y = cook)) +
+#   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
+#   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+#   ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
+#                                      y = 0, yend = cook)) +
+#   ggplot2::geom_point() +
+#   ggplot2::theme_bw() +
+#   ggplot2::labs(title = "Cook's distance",
+#                 x = "Observation", y = "D")
 ```
 
 ## R session
