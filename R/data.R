@@ -72,7 +72,7 @@
 
 #' CEREGE Calibration Curve (NaI)
 #'
-#' @usage data(AIX_NaI_curve)
+#' @usage data(AIX_NaI_1)
 #' @format
 #' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
@@ -84,32 +84,19 @@
 #' @examples
 #' \donttest{
 #' ## Load the curve
-#' utils::data(AIX_NaI_curve, package = "gamma")
-#' AIX_NaI_curve
-#'
-#' ## View raw data
-#' utils::data(AIX_NaI_data, package = "gamma")
-#' AIX_NaI_data
+#' utils::data(AIX_NaI_1, package = "gamma")
+#' polt(AIX_NaI_1)
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("AIX1#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-#' @seealso \link{AIX_NaI_data}
-"AIX_NaI_curve"
-
-#' CEREGE Calibration Curve Data (NaI)
-#'
-#' @usage data(AIX_NaI_data)
-#' @family datasets
-#' @keywords datasets
-#' @seealso \link{AIX_NaI_curve}
-"AIX_NaI_data"
+"AIX_NaI_1"
 
 #' CRP2A Calibration Curve (LaBr #1)
 #'
-#' @usage data(BDX_LaBr_1_curve)
+#' @usage data(BDX_LaBr_1)
 #' @format
 #' An object of class \linkS4class{CalibrationCurve}.
 #' \tabular{ll}{
@@ -121,25 +108,12 @@
 #' @examples
 #' \dontrun{
 #' ## Load the curve
-#' utils::data(BDX_LaBr_1_curve, package = "gamma")
-#' BDX_LaBr_1_curve
-#'
-#' ## View raw data
-#' utils::data(BDX_LaBr_1_data, package = "gamma")
-#' BDX_LaBr_1_data
+#' utils::data(BDX_LaBr_1, package = "gamma")
+#' plot(BDX_LaBr_1)
 #'
 #' ## See how to replicate the curve
 #' utils::vignette("CRP2A#1", package = "gamma")
 #' }
 #' @family datasets
 #' @keywords datasets
-#' @seealso \link{BDX_LaBr_1_data}
-"BDX_LaBr_1_curve"
-
-#' CRP2A Calibration Curve Data (LaBr #1)
-#'
-#' @usage data(BDX_LaBr_1_data)
-#' @family datasets
-#' @keywords datasets
-#' @seealso \link{BDX_LaBr_1_curve}
-"BDX_LaBr_1_data"
+"BDX_LaBr_1"

@@ -211,8 +211,8 @@ To estimate the gamma dose rate, you can either use one of the calibration curve
 
 ```{r dose-rate-curves, eval=FALSE}
 # Load one of the built-in curves
-data(BDX_LaBr_1_curve) # IRAMAT-CRP2A (Bordeaux)
-data(AIX_NaI_curve) # CEREGE (Aix-en-Provence)
+data(BDX_LaBr_1) # IRAMAT-CRP2A (Bordeaux)
+data(AIX_NaI_1) # CEREGE (Aix-en-Provence)
 ```
 
 The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.

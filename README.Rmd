@@ -68,22 +68,23 @@ peaks <- spectrum %>%
 ## Set the energy values (in keV)
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
+## Calibrate the energy scale
+calib <- calibrate_energy(spectrum, peaks)
+
 ## Inspect peaks
-plot(spectrum, peaks)
+plot(calib, peaks)
 ```
 
 ```{r calib, fig.width=3.5, fig.height=3.5, fig.align='center'}
-## Calibrate the energy scale
-calib <- calibrate_energy(spectrum, peaks)
 
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
-data("BDX_LaBr_1_curve", package = "gamma")
-plot(BDX_LaBr_1_curve)
+data("BDX_LaBr_1", package = "gamma")
+plot(BDX_LaBr_1)
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX_LaBr_1_curve, calib))
+(doses <- predict_dose(BDX_LaBr_1, calib))
 ```
 
 ## Contributing

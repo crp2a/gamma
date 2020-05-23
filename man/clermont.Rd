@@ -23,10 +23,8 @@ Clermont Reference Data
 }
 \seealso{
 Other datasets: 
-\code{\link{AIX_NaI_curve}},
-\code{\link{AIX_NaI_data}},
-\code{\link{BDX_LaBr_1_curve}},
-\code{\link{BDX_LaBr_1_data}}
+\code{\link{AIX_NaI_1}},
+\code{\link{BDX_LaBr_1}}
 }
 \concept{datasets}
 \keyword{datasets}

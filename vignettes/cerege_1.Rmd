@@ -240,20 +240,20 @@ knitr::kable(
 ## Calibration Curve
 ### Summary
 ```{r calibration, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-data("AIX_NaI_curve")
+data("AIX_NaI_1")
 
 # Plot calibration curve
-plot(AIX_NaI_curve, threshold = "Ni") +
+plot(AIX_NaI_1, threshold = "Ni") +
   ggplot2::theme_bw()
-plot(AIX_NaI_curve, threshold = "NiEi") +
+plot(AIX_NaI_1, threshold = "NiEi") +
   ggplot2::theme_bw()
 ```
 
 ```{r calibration-data, echo=FALSE}
-data("AIX_NaI_data")
+# data("AIX_NaI_data")
 
 # Display curve data
-knitr::kable(AIX_NaI_data, row.names = FALSE)
+# knitr::kable(AIX_NaI_data, row.names = FALSE)
 ```
 
 ## R session

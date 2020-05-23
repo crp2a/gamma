@@ -113,28 +113,28 @@ plot(bkg) +
 ## Calibration Curve
 ### Summary
 ```{r calibration, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-data("BDX_LaBr_1_curve")
+data("BDX_LaBr_1")
 
 # Plot calibration curve
-plot(BDX_LaBr_1_curve, threshold = "Ni") +
+plot(BDX_LaBr_1, threshold = "Ni") +
   ggplot2::theme_bw()
-plot(BDX_LaBr_1_curve, threshold = "NiEi") +
+plot(BDX_LaBr_1, threshold = "NiEi") +
   ggplot2::theme_bw()
 ```
 
 ```{r calibration-data, echo=FALSE}
-data("BDX_LaBr_1_data")
+# data("BDX_LaBr_1_data")
 
 # Display curve data
-knitr::kable(BDX_LaBr_1_data[, 1:8], row.names = FALSE)
+# knitr::kable(BDX_LaBr_1_data[, 1:8], row.names = FALSE)
 ```
 
 ### Check Model
 #### Count Threshold (Ni)
 ```{r lm-check-Ni, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-Ni_model <- get_model(BDX_LaBr_1_curve, "Ni")
+Ni_model <- get_model(BDX_LaBr_1, "Ni")
 Ni_residuals <- data.frame(
-  name = BDX_LaBr_1_curve[["data"]]$name,
+  name = BDX_LaBr_1[["data"]]$name,
   fitted = Ni_model$fitted.values,
   residuals = Ni_model$residuals,
   standardized = stats::rstandard(Ni_model),
@@ -187,9 +187,9 @@ ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = name, y = cook)) +
 
 #### Energy Threshold (Ni.Ei)
 ```{r lm-check-NiEi, eval=FALSE, echo=FALSE, out.width='47%', fig.width=3.5, fig.height=3.5, fig.show='hold'}
-NiEi_model <- get_model(BDX_LaBr_1_curve, "Ni")
+NiEi_model <- get_model(BDX_LaBr_1, "Ni")
 NiEi_residuals <- data.frame(
-  name = BDX_LaBr_1_curve[["data"]]$name,
+  name = BDX_LaBr_1[["data"]]$name,
   fitted = NiEi_model$fitted.values,
   residuals = NiEi_model$residuals,
   standardized = stats::rstandard(NiEi_model),
@@ -242,14 +242,14 @@ ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = name, y = cook)) +
 
 ```{r test-old-compare, echo=FALSE, eval=FALSE}
 # The smaller the AIC or BIC, the better the fit
-criterion_aic <- c(stats::AIC(BDX_LaBr_1_curve[["model"]]))
-criterion_bic <- c(stats::BIC(BDX_LaBr_1_curve[["model"]]))
+criterion_aic <- c(stats::AIC(BDX_LaBr_1[["model"]]))
+criterion_bic <- c(stats::BIC(BDX_LaBr_1[["model"]]))
 
 criteria <- data.frame(
   AIC = criterion_aic,
   D_AIC = criterion_aic - min(criterion_aic),
   BIC = criterion_bic,
-  row.names = c("New curve (BDX_LaBr_1_curve)", "Old curve (VBA macro)")
+  row.names = c("New curve (BDX_LaBr_1)", "Old curve (VBA macro)")
 )
 
 knitr::kable(

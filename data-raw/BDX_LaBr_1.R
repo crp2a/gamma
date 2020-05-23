@@ -3,7 +3,7 @@
 BDX_LaBr_1_data <- utils::read.table("./data-raw/BDX_LaBr_1.csv",
                                      header = TRUE, sep = ",", dec = ".",
                                      stringsAsFactors = FALSE)
-usethis::use_data(BDX_LaBr_1_data, internal = FALSE, overwrite = FALSE)
+# usethis::use_data(BDX_LaBr_1_data, internal = FALSE, overwrite = FALSE)
 
 ## Linear regression
 # Build calibration curve
@@ -42,7 +42,7 @@ BDX_LaBr_1_NiEi <- .DoseRateModel(
   background = c(25279.6317064543, 1.66234933224363)
 )
 
-BDX_LaBr_1_curve <- .CalibrationCurve(
+BDX_LaBr_1 <- .CalibrationCurve(
   Ni = BDX_LaBr_1_Ni,
   NiEi = BDX_LaBr_1_NiEi,
   details = list(
@@ -53,13 +53,13 @@ BDX_LaBr_1_curve <- .CalibrationCurve(
     date = Sys.time()
   )
 )
-usethis::use_data(BDX_LaBr_1_curve, internal = FALSE, overwrite = FALSE)
+usethis::use_data(BDX_LaBr_1, internal = FALSE, overwrite = FALSE)
 
 ## Ni
 ## Slope: 0.03378 +/- 0.0015 / Intercept: 0.08 +/- 1.8
 ## MSWD: 0.30 / Probability: 0.91
 # IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
-# IsoplotR::isochron(BDX_LaBr_1_data[, c(7,8,3,4)])
+# IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
 
 ## NiEi
 ## Slope: 31.85 +/- 1.2 / Intercept: 598 +/- 1500
