@@ -27,9 +27,9 @@ reference:
 - title: Data Import
   contents:
   - has_concept("IO")
-- title: Graphical Interface
+- title: Plot
   contents:
-  - has_concept("shiny")
+  - has_concept("plot")
 - title: Signal Processing
   contents:
   - has_concept("signal processing")
