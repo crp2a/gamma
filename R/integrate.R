@@ -13,7 +13,7 @@ setMethod(
     if (!is.numeric(range) || length(range) != 2)
       stop(sprintf("%s must be a numeric vector of length 2, not %d.",
                    sQuote("range"), length(range)), call. = FALSE)
-    if (!is_calibrated(object))
+    if (!has_energy(object))
       stop("You must calibrate the energy scale of your spectrum first.",
            call. = FALSE)
 

@@ -5,24 +5,24 @@
 \alias{energy}
 \alias{calibrate_energy}
 \alias{calibrate_energy-method}
-\alias{is_calibrated}
+\alias{has_energy}
 \alias{calibrate_energy,GammaSpectrum,list-method}
 \alias{calibrate_energy,GammaSpectrum,PeakPosition-method}
-\alias{is_calibrated,GammaSpectrum-method}
-\alias{is_calibrated,GammaSpectra-method}
+\alias{has_energy,GammaSpectrum-method}
+\alias{has_energy,GammaSpectra-method}
 \title{Energy Scale Calibration}
 \usage{
 calibrate_energy(object, lines, ...)
 
-is_calibrated(object)
+has_energy(object)
 
 \S4method{calibrate_energy}{GammaSpectrum,list}(object, lines, ...)
 
 \S4method{calibrate_energy}{GammaSpectrum,PeakPosition}(object, lines, ...)
 
-\S4method{is_calibrated}{GammaSpectrum}(object)
+\S4method{has_energy}{GammaSpectrum}(object)
 
-\S4method{is_calibrated}{GammaSpectra}(object)
+\S4method{has_energy}{GammaSpectra}(object)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or
@@ -38,7 +38,7 @@ corresponding expected "\code{energy}" value (in keV).}
 \value{
 \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
 
- \code{is_calibrated} returns a \code{\link{logical}} vector.
+ \code{has_energy} returns a \code{\link{logical}} vector.
 }
 \description{
 Calibrates the energy scale of a gamma spectrum.

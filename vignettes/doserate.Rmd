@@ -1,5 +1,5 @@
 ---
-title: "Dose Rate vs Signal Calibration Curve"
+title: "Calibration Curve"
 author: "N. Frerebeau, B. Lebrun"
 date: "`r Sys.Date()`"
 output:
@@ -11,7 +11,7 @@ header-includes:
    - \usepackage{amssymb}
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{Dose Rate vs Signal Calibration Curve}
+  %\VignetteIndexEntry{Calibration Curve}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -208,9 +208,9 @@ AIX_NaI <- fit_dose(
 summarise(AIX_NaI)
 
 # Plot curve
-plot(AIX_NaI, threshold = "Ni") +
+plot(AIX_NaI, model = "Ni") +
   ggplot2::theme_bw()
-plot(AIX_NaI, threshold = "NiEi") +
+plot(AIX_NaI, model = "NiEi") +
   ggplot2::theme_bw()
 ```
 

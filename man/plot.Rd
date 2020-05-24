@@ -30,7 +30,7 @@
   x,
   error_ellipse = TRUE,
   error_bar = FALSE,
-  threshold = c("Ni", "NiEi"),
+  energy = FALSE,
   level = 0.95,
   n = 50,
   ...
@@ -58,9 +58,7 @@ be plotted?}
 \item{error_bar}{A \code{\link{logical}} scalar: should error bars
 be plotted?}
 
-\item{threshold}{A \code{\link{character}} sting specifying the threshold
-to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-(see details).}
+\item{energy}{A \code{\link{logical}} scalar: TODO.}
 
 \item{level}{length-one \code{\link{numeric}} vector giving the the
 probability cutoff for the error ellipses.}

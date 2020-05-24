@@ -63,14 +63,14 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
 test_that("the energy scale of a GammaSpectrum is set", {
   cnf_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   cnf_spc <- read(cnf_file)
-  expect_true(is_calibrated(cnf_spc))
+  expect_true(has_energy(cnf_spc))
 
   tka_file <- system.file("extdata/LaBr.TKA", package = "gamma")
   tka_spc <- read(tka_file)
-  expect_false(is_calibrated(tka_spc))
+  expect_false(has_energy(tka_spc))
 
   set_file <- system.file("extdata/", package = "gamma")
   set_spc <- read(set_file)
-  expect_equivalent(is_calibrated(set_spc), c(TRUE, TRUE, FALSE))
+  expect_equivalent(has_energy(set_spc), c(TRUE, TRUE, FALSE))
 })
 

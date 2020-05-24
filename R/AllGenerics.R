@@ -208,7 +208,7 @@ NULL
 #' @return
 #'  \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
 #'
-#'  \code{is_calibrated} returns a \code{\link{logical}} vector.
+#'  \code{has_energy} returns a \code{\link{logical}} vector.
 #' @example inst/examples/ex-energy.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -226,8 +226,8 @@ setGeneric(
 
 #' @rdname energy
 setGeneric(
-  name = "is_calibrated",
-  def = function(object) standardGeneric("is_calibrated")
+  name = "has_energy",
+  def = function(object) standardGeneric("has_energy")
 )
 
 # ===================================================================== Baseline
@@ -462,9 +462,7 @@ setGeneric(
 #'  probability cutoff for the error ellipses.
 #' @param n A length-one \code{\link{numeric}} vector giving the resolution of
 #'  the error ellipses.
-#' @param threshold A \code{\link{character}} sting specifying the threshold
-#'  to be used. It must be one of \code{"Ni"} (default) or \code{"NiEi"}
-#'  (see details).
+#' @param energy A \code{\link{logical}} scalar: TODO.
 #' @param ... Currently not used.
 #' @return
 #'  A \code{\link[ggplot2]{ggplot}} object.

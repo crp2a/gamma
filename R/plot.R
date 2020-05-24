@@ -15,7 +15,7 @@ setMethod(
     yaxis <- match.arg(yaxis, several.ok = FALSE)
 
     # Get data
-    calib <- is_calibrated(x)
+    calib <- has_energy(x)
     spc <- methods::as(x, "data.frame")
     if (xaxis == "energy" && anyNA(spc[["energy"]])) {
       xaxis <- "chanel"
@@ -137,13 +137,12 @@ setMethod(
   f = "plot",
   signature = signature(x = "CalibrationCurve", y = "missing"),
   definition = function(x, error_ellipse = TRUE, error_bar = FALSE,
-                        threshold = c("Ni", "NiEi"),
-                        level = 0.95, n = 50, ...) {
+                        energy = FALSE, level = 0.95, n = 50, ...) {
     # Validation
-    threshold <- match.arg(threshold, several.ok = FALSE)
+    k <- ifelse(energy, "NiEi", "Ni")
 
     # Get data
-    model <- x[[threshold]]
+    model <- x[[k]]
     data <- model[["data"]]
 
     # Curve
@@ -195,7 +194,7 @@ setMethod(
       ) +
       geom_point() +
       ggellipse + ggbar +
-      labs(x = sprintf("Signal [%s]", threshold), y = "Dose rate [\u03BCGy/y]")
+      labs(x = sprintf("Signal [%s]", k), y = "Dose rate [\u03BCGy/y]")
   }
 )
 

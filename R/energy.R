@@ -59,20 +59,20 @@ setMethod(
 # =================================================================== Predicates
 #' @export
 #' @rdname energy
-#' @aliases is_calibrated,GammaSpectrum-method
+#' @aliases has_energy,GammaSpectrum-method
 setMethod(
-  f = "is_calibrated",
+  f = "has_energy",
   signature = "GammaSpectrum",
   definition = function(object) length(object@energy) != 0
 )
 
 #' @export
 #' @rdname energy
-#' @aliases is_calibrated,GammaSpectra-method
+#' @aliases has_energy,GammaSpectra-method
 setMethod(
-  f = "is_calibrated",
+  f = "has_energy",
   signature = "GammaSpectra",
   definition = function(object) {
-    vapply(object, FUN = is_calibrated, FUN.VALUE = logical(1))
+    vapply(object, FUN = has_energy, FUN.VALUE = logical(1))
   }
 )
