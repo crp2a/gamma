@@ -46,7 +46,7 @@ setMethod(
   signature = "DoseRateModel",
   definition = function(object) {
     cat("Residuals:\n")
-    print(object[["residuals"]])
+    print(get_residuals(object)$residuals)
     cat("\nCoefficients:\n")
     print(matrix(data = c(object[["intercept"]], object[["slope"]]),
                  nrow = 2L, ncol = 2L, byrow = TRUE,

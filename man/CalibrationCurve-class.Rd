@@ -32,8 +32,6 @@ metadata.}
 
 \item{\code{p_value}}{A \code{\link{numeric}} vector.}
 
-\item{\code{residuals}}{A \code{\link{numeric}} vector.}
-
 \item{\code{data}}{A \code{\link{data.frame}}.}
 
 \item{\code{range}}{A \code{\link{numeric}} vector.}

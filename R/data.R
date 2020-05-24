@@ -82,14 +82,9 @@
 #'  \strong{Authors} \tab CEREGE Luminescence Team
 #' }
 #' @examples
-#' \donttest{
 #' ## Load the curve
 #' utils::data(AIX_NaI_1, package = "gamma")
 #' plot(AIX_NaI_1)
-#'
-#' ## See how to replicate the curve
-#' utils::vignette("AIX1#1", package = "gamma")
-#' }
 #' @family datasets
 #' @keywords datasets
 "AIX_NaI_1"
@@ -106,14 +101,9 @@
 #'  \strong{Authors} \tab CRP2A Luminescence Team
 #' }
 #' @examples
-#' \dontrun{
 #' ## Load the curve
 #' utils::data(BDX_LaBr_1, package = "gamma")
 #' plot(BDX_LaBr_1)
-#'
-#' ## See how to replicate the curve
-#' utils::vignette("CRP2A#1", package = "gamma")
-#' }
 #' @family datasets
 #' @keywords datasets
 "BDX_LaBr_1"

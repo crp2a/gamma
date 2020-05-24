@@ -167,7 +167,6 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @slot MSWD A \code{\link{numeric}} vector.
 #' @slot df A \code{\link{numeric}} vector.
 #' @slot p_value A \code{\link{numeric}} vector.
-#' @slot residuals A \code{\link{numeric}} vector.
 #' @slot data A \code{\link{data.frame}}.
 #' @slot range A \code{\link{numeric}} vector.
 #' @slot background A \code{\link{numeric}} vector.
@@ -195,7 +194,6 @@ NULL
     MSWD = "numeric",
     df = "numeric",
     p_value = "numeric",
-    residuals = "numeric",
     data = "data.frame",
     range = "numeric",
     background = "numeric"

@@ -1,7 +1,6 @@
 ---
-title: "CEREGE Calibration Curve - NaI #1"
-subtitle: "Canberra Inspector 1000"
-author: "CEREGE Luminescence Team"
+title: "Dose Rate vs Signal Calibration Curve"
+author: "N. Frerebeau, B. Lebrun"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -12,7 +11,7 @@ header-includes:
    - \usepackage{amssymb}
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{CEREGE#1}
+  %\VignetteIndexEntry{Dose Rate vs Signal Calibration Curve}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -34,14 +33,15 @@ library(gamma)
 library(magrittr)
 ```
 
+This vignette shows how to build a calibration curve for gamma dose rate prediction.
+
 ## Import Files
 ```{r import}
 # Import CNF files for calibration
-# Skip the first chanels
 spc_dir <- system.file("extdata/AIX_NaI_1/calibration", package = "gamma")
 (spc <- read(spc_dir))
 
-# Import CNF files for background measurement
+# Import a CNF file of background measurement
 bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
 (bkg <- read(bkg_dir))
 ```
@@ -49,6 +49,8 @@ bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
 ## Energy Scale Calibration
 ### Reference Spectra
 ```{r signal}
+# Spectrum pre-processing
+# Remove baseline for peak detection
 bsl <- spc %>%
   slice_signal(-1:-40) %>%
   stabilize_signal(sqrt) %>%
@@ -58,11 +60,11 @@ bsl <- spc %>%
 
 #### BRIQUE
 ```{r calibrate-BRIQUE}
-# Spectrum pre-processing and peak detection
+# Peak detection
 pks <- find_peaks(bsl[["BRIQUE"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Recalibrate the energy scale
+# Adjust the energy scale
 BRIQUE <- calibrate_energy(spc[["BRIQUE"]], pks)
 ```
 
@@ -77,7 +79,7 @@ plot(BRIQUE, pks) +
 pks <- find_peaks(bsl[["C341"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
-# Recalibrate the energy scale
+# Adjust the energy scale
 C341 <- calibrate_energy(spc[["C341"]], pks)
 ```
 
@@ -92,7 +94,7 @@ plot(C341, pks) +
 pks <- find_peaks(bsl[["C347"]], span = 10)
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, NA, 1461, NA, 2615)
-# Recalibrate the energy scale
+# Adjust the energy scale
 C347 <- calibrate_energy(spc[["C347"]], pks)
 ```
 
@@ -107,7 +109,7 @@ plot(C347, pks) +
 pks <- find_peaks(bsl[["GOU"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Recalibrate the energy scale
+# Adjust the energy scale
 GOU <- calibrate_energy(spc[["GOU"]], pks)
 ```
 
@@ -122,7 +124,7 @@ plot(GOU, pks) +
 pks <- find_peaks(bsl[["PEP"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Recalibrate the energy scale
+# Adjust the energy scale
 PEP <- calibrate_energy(spc[["PEP"]], pks)
 ```
 
@@ -182,7 +184,7 @@ NiEi_range <- c(200, 2800)
 
 ## Calibration Curve
 ### Summary
-```{r calibration, out.width='47%', fig.width=3.5, fig.show='hold'}
+```{r calibration, fig.width=3.5, fig.show='hold'}
 # Get reference dose rates
 data("clermont")
 doses <- clermont[, c("gamma_dose", "gamma_error")]
@@ -195,6 +197,7 @@ info <- list(
   authors = "CEREGE Luminescence Team"
 )
 
+# Build the calibration curve
 AIX_NaI <- fit_dose(
   spc_scaled, background = bkg_scaled, doses = doses,
   range_Ni = Ni_range, range_NiEi = NiEi_range, alpha = 0.05,
@@ -218,27 +221,12 @@ plot(AIX_NaI, threshold = "NiEi") +
 ```
 
 ### Check Model
-```{r fitted, echo=FALSE}
-# Get fitted values
-AIX_NaI_data <- predict_dose(AIX_NaI)
-```
-
 #### Count Threshold (Ni)
-```{r check-Ni, echo=FALSE, out.width='47%', fig.width=3.5, fig.show='hold'}
-Ni_observed <- AIX_NaI[["Ni"]][["data"]]$gamma_dose
-Ni_fitted <-  AIX_NaI_data$dose_Ni
-Ni_residuals  <- AIX_NaI[["Ni"]][["residuals"]]
-
-Ni_model <- data.frame(
-  name = AIX_NaI[["Ni"]][["data"]]$names,
-  fitted = Ni_fitted,
-  residuals = Ni_residuals,
-  standardized = Ni_residuals / sqrt(Ni_fitted),
-  stringsAsFactors = FALSE
-)
+```{r check-Ni, echo=FALSE, fig.width=3.5, fig.show='hold'}
+Ni_residuals  <- get_residuals(AIX_NaI[["Ni"]])
 
 # Residuals vs fitted values
-ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = residuals)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = residuals)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
                                      y = 0, yend = residuals)) + 
@@ -248,7 +236,7 @@ ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = residuals)) +
                 x = "Fitted values", y = "Residuals")
 
 # Std. residuals vs fitted values
-ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = standardized)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = fitted, y = standardized)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
@@ -259,7 +247,7 @@ ggplot2::ggplot(Ni_model, ggplot2::aes(x = fitted, y = standardized)) +
                 x = "Fitted values", y = "Standardized residuals")
 
 # Normal QQ plot of standardized residuals
-ggplot2::ggplot(Ni_model, ggplot2::aes(sample = standardized)) +
+ggplot2::ggplot(Ni_residuals, ggplot2::aes(sample = standardized)) +
   ggplot2::geom_abline(slope = 1, intercept = 0) +
   ggplot2::geom_qq_line(colour = "red") +
   ggplot2::geom_qq() +
@@ -269,7 +257,7 @@ ggplot2::ggplot(Ni_model, ggplot2::aes(sample = standardized)) +
                 y = "Standardize residuals")
 
 # Cook's distance
-# ggplot2::ggplot(Ni_model, ggplot2::aes(x = name, y = cook)) +
+# ggplot2::ggplot(Ni_residuals, ggplot2::aes(x = name, y = cook)) +
 #   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
 #   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
 #   ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
@@ -281,21 +269,11 @@ ggplot2::ggplot(Ni_model, ggplot2::aes(sample = standardized)) +
 ```
 
 #### Energy Threshold (Ni.Ei)
-```{r check-NiEi, echo=FALSE, out.width='47%', fig.width=3.5, fig.show='hold'}
-NiEi_observed <- AIX_NaI[["NiEi"]][["data"]]$gamma_dose
-NiEi_fitted <-  AIX_NaI_data$dose_NiEi
-NiEi_residuals  <- AIX_NaI[["NiEi"]][["residuals"]]
-
-NiEi_model <- data.frame(
-  name = AIX_NaI[["NiEi"]][["data"]]$names,
-  fitted = NiEi_fitted,
-  residuals = NiEi_residuals,
-  standardized = NiEi_residuals / sqrt(NiEi_fitted),
-  stringsAsFactors = FALSE
-)
+```{r check-NiEi, echo=FALSE, fig.width=3.5, fig.show='hold'}
+NiEi_residuals  <- get_residuals(AIX_NaI[["NiEi"]])
 
 # Residuals vs fitted values
-ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = residuals)) +
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = residuals)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
                                      y = 0, yend = residuals)) + 
@@ -305,7 +283,7 @@ ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = residuals)) +
                 x = "Fitted values", y = "Residuals")
 
 # Std. residuals vs fitted values
-ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = standardized)) +
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = fitted, y = standardized)) +
   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
   ggplot2::geom_hline(yintercept = c(-2, 2), linetype = 2) +
   ggplot2::geom_segment(ggplot2::aes(x = fitted, xend = fitted,
@@ -316,7 +294,7 @@ ggplot2::ggplot(NiEi_model, ggplot2::aes(x = fitted, y = standardized)) +
                 x = "Fitted values", y = "Standardized residuals")
 
 # Normal QQ plot of standardized residuals
-ggplot2::ggplot(NiEi_model, ggplot2::aes(sample = standardized)) +
+ggplot2::ggplot(NiEi_residuals, ggplot2::aes(sample = standardized)) +
   ggplot2::geom_abline(slope = 1, intercept = 0) +
   ggplot2::geom_qq_line(colour = "red") +
   ggplot2::geom_qq() +
@@ -326,7 +304,7 @@ ggplot2::ggplot(NiEi_model, ggplot2::aes(sample = standardized)) +
                 y = "Standardize residuals")
 
 # Cook's distance
-# ggplot2::ggplot(NiEi_model, ggplot2::aes(x = name, y = cook)) +
+# ggplot2::ggplot(NiEi_residuals, ggplot2::aes(x = name, y = cook)) +
 #   ggplot2::geom_hline(yintercept = 0, linetype = 3) +
 #   ggplot2::geom_hline(yintercept = 1, linetype = 2) +
 #   ggplot2::geom_segment(ggplot2::aes(x = name, xend = name,
@@ -335,6 +313,21 @@ ggplot2::ggplot(NiEi_model, ggplot2::aes(sample = standardized)) +
 #   ggplot2::theme_bw() +
 #   ggplot2::labs(title = "Cook's distance",
 #                 x = "Observation", y = "D")
+```
+
+## Predict New Dose Rates
+```{r predict}
+# Import CNF files for dose rate prediction
+test_dir <- system.file("extdata/AIX_NaI_1/test", package = "gamma")
+(test <- read(test_dir))
+
+# Inspect spectra
+plot(test, yaxis = "rate") +
+  ggplot2::theme_bw()
+
+# Dose rate prediction
+# (assuming that the energy scale of each spectrum was adjusted first)
+(rates <- predict_dose(AIX_NaI, test, sigma = 2))
 ```
 
 ## R session

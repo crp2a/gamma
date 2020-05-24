@@ -217,29 +217,6 @@ data(AIX_NaI_1) # CEREGE (Aix-en-Provence)
 
 The construction of a calibration curve requires a set of reference spectra for which the gamma dose rate is known and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor.
 
-```{r dose-rate-calib, fig.width=5, fig.height=5, fig.align="center"}
-# Import the reference spectra
-spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
-spc <- read(spc_dir)
-
-# Import the spectra for background noise measurement
-bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
-bkg <- read(bkg_dir)
-
-# Set the known dose rates
-data("clermont")
-(doses <- clermont[, c("gamma_dose", "gamma_error")])
-
-## Build the calibration curve
-calib_curve <- fit_dose(spc, bkg, doses,
-                        range_Ni = c(300, 2800),
-                        range_NiEi = c(165, 2800))
-
-# Plot the calibration curve
-plot(calib_curve) +
-  ggplot2::theme_bw()
-```
-
-New dose rate values can be predicted.
+See `vignette(doserate)` for a reproducible example.
 
 # References

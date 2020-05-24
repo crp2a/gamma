@@ -67,9 +67,9 @@ fit_york <- function(object, background, doses, range,
 
   # Fit model
   model <- IsoplotR::york(data[, -1], alpha = alpha)
-  fitted <- model$a[[1L]] + data$signal_value * model$b[[1L]]
-  residuals <- data$gamma_dose - fitted
-  names(residuals) <- seq_along(residuals)
+  # fitted <- model$a[[1L]] + data$signal_value * model$b[[1L]]
+  # residuals <- data$gamma_dose - fitted
+  # names(residuals) <- seq_along(residuals)
 
   .DoseRateModel(
     slope = as.numeric(model$b),
@@ -78,7 +78,6 @@ fit_york <- function(object, background, doses, range,
     MSWD = model$mswd,
     df = model$df,
     p_value = model$p.value,
-    residuals = residuals,
     data = data,
     range = range,
     background = bkg

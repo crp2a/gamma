@@ -25,6 +25,8 @@
 \alias{get_energy-method}
 \alias{set_energy<-}
 \alias{set_energy-method}
+\alias{get_residuals}
+\alias{get_residuals-method}
 \alias{range_chanels}
 \alias{range_chanels-method}
 \alias{range_energy}
@@ -50,6 +52,7 @@
 \alias{get_energy,GammaSpectra-method}
 \alias{range_energy,GammaSpectra-method}
 \alias{range_chanels,GammaSpectra-method}
+\alias{get_residuals,DoseRateModel-method}
 \alias{get_hash,PeakPosition-method}
 \alias{get_chanels,PeakPosition-method}
 \alias{get_energy,PeakPosition-method}
@@ -80,6 +83,8 @@ get_rates(x)
 get_energy(x)
 
 set_energy(x) <- value
+
+get_residuals(x)
 
 range_chanels(x, ...)
 
@@ -126,6 +131,8 @@ range_energy(x, ...)
 \S4method{range_energy}{GammaSpectra}(x, na.rm = FALSE)
 
 \S4method{range_chanels}{GammaSpectra}(x, na.rm = FALSE)
+
+\S4method{get_residuals}{DoseRateModel}(x)
 
 \S4method{get_hash}{PeakPosition}(x)
 

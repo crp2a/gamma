@@ -99,6 +99,9 @@ introduced by the calibration of the energy scale of the spectrum.}
 }
 \details{
 \code{predict_dose} predicts in-situ gamma dose rate.
+
+
+ See \code{vignette(doserate)} for a reproducible example.
 }
 \examples{
 ## Import CNF files

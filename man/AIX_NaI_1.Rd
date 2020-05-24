@@ -20,14 +20,9 @@ data(AIX_NaI_1)
 CEREGE Calibration Curve (NaI)
 }
 \examples{
-\donttest{
 ## Load the curve
 utils::data(AIX_NaI_1, package = "gamma")
 plot(AIX_NaI_1)
-
-## See how to replicate the curve
-utils::vignette("AIX1#1", package = "gamma")
-}
 }
 \seealso{
 Other datasets: 

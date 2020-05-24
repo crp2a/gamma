@@ -228,6 +228,44 @@ setMethod(
   }
 )
 
+# ---------------------------------------------------------------- DoseRateModel
+#' @export
+#' @rdname mutator
+#' @aliases get_residuals,DoseRateModel-method
+setMethod(
+  f = "get_residuals",
+  signature = "DoseRateModel",
+  definition = function(x) {
+    data <- x[["data"]]
+    f <- gamma_dose ~ signal_value
+    model <- stats::lm(f, data = data)
+
+    n <- nrow(data)
+    slope <- x[["slope"]][[1L]]
+    intercept <- x[["intercept"]][[1L]]
+
+    new_coef <- set_coefficients(f, c(intercept, slope), n)
+    new_model <- stats::update(model, new_coef)
+
+    data.frame(
+      names = data$names,
+      fitted = new_model$fitted.values,
+      residuals = new_model$residuals,
+      standardized = stats::rstandard(new_model),
+      # cook = stats::cooks.distance(new_model),
+      stringsAsFactors = FALSE
+    )
+  }
+)
+
+# https://stackoverflow.com/questions/12323859/how-to-manually-set-coefficients-for-variables-in-linear-model
+set_coefficients <- function(f, coef, n){
+  e1 <- paste0("offset(", coef[2], "*", as.character(f)[3], ")")
+  e2 <- paste0("offset(rep(", coef[1], ",", n, "))")
+  e <- paste(e1, e2, sep = " + ")
+  stats::as.formula(paste(as.character(f)[2], "~", e, " -1"))
+}
+
 # ----------------------------------------------------------------- PeakPosition
 #' @export
 #' @rdname mutator

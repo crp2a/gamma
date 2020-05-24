@@ -109,6 +109,13 @@ setGeneric(
 )
 
 #' @rdname mutator
+#' @aliases get_residuals-method
+setGeneric(
+  name = "get_residuals",
+  def = function(x) standardGeneric("get_residuals")
+)
+
+#' @rdname mutator
 #' @aliases range_chanels-method
 setGeneric(
   name = "range_chanels",
@@ -313,6 +320,8 @@ setGeneric(
 #' @param epsilon A \code{\link{numeric}} value giving an extra error term
 #'  introduced by the calibration of the energy scale of the spectrum.
 #' @param ... Currently not used.
+#' @details
+#'  See \code{vignette(doserate)} for a reproducible example.
 #' @return
 #'  \code{fit_dose} returns a \linkS4class{CalibrationCurve} object.
 #'

@@ -20,14 +20,9 @@ data(BDX_LaBr_1)
 CRP2A Calibration Curve (LaBr #1)
 }
 \examples{
-\dontrun{
 ## Load the curve
 utils::data(BDX_LaBr_1, package = "gamma")
 plot(BDX_LaBr_1)
-
-## See how to replicate the curve
-utils::vignette("CRP2A#1", package = "gamma")
-}
 }
 \seealso{
 Other datasets: 
