@@ -31,7 +31,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
     Y = c(238, 1461, 2614.5)
   )
   expect_error(energy_calibrate(spectrum, lines = lines),
-               "does not have components 'chanel' and 'energy'")
+               "does not have components")
 
   lines <- list(
     chanel = c(76, 816),
