@@ -9,7 +9,7 @@ calib_lines <- list(
 )
 
 ## Adjust the energy scale
-(spc1 <- calibrate_energy(spc, lines = calib_lines))
+(spc1 <- energy_calibrate(spc, lines = calib_lines))
 
 ## Inspect results
 plot(spc1, xaxis = "energy", yaxis = "count") +

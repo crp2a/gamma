@@ -28,7 +28,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @slot rate A \code{\link{numeric}} vector the count rate (in 1/s) for
 #'  each channel.
 #' @slot calibration A \code{\link[stats:lm]{linear model}} used for energy
-#'  scale calibration (see \code{\link{calibrate_energy}}).
+#'  scale calibration (see \code{\link{energy_calibrate}}).
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
@@ -147,12 +147,15 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @family class
 #' @docType class
 #' @aliases BaseLine-class
-.BaseLine <- setClass(
-  Class = "BaseLine",
-  # slots = c(
-  #   method = "character"
-  # ),
-  contains = "GammaSpectrum"
+.Baseline <- setClass(
+  Class = "Baseline",
+  slots = c(
+    method = "character"
+  ),
+  contains = "GammaSpectrum",
+  prototype = list(
+    method = "unknown"
+  )
 )
 
 #' An S4 class to Represent a Dose Rate Calibration Curve

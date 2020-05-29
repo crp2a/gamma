@@ -25,6 +25,10 @@
 \alias{get_energy-method}
 \alias{set_energy<-}
 \alias{set_energy-method}
+\alias{get_method}
+\alias{get_method-method}
+\alias{set_method<-}
+\alias{set_method-method}
 \alias{get_residuals}
 \alias{get_residuals-method}
 \alias{range_chanels}
@@ -42,6 +46,8 @@
 \alias{get_energy,GammaSpectrum-method}
 \alias{range_energy,GammaSpectrum-method}
 \alias{range_chanels,GammaSpectrum-method}
+\alias{get_method,Baseline-method}
+\alias{set_method,Baseline-method}
 \alias{get_hash,GammaSpectra-method}
 \alias{get_names,GammaSpectra-method}
 \alias{get_livetime,GammaSpectra-method}
@@ -58,6 +64,7 @@
 \alias{get_energy,PeakPosition-method}
 \alias{set_names<-,GammaSpectrum-method}
 \alias{set_names,GammaSpectrum-method}
+\alias{set_method<-,Baseline-method}
 \alias{set_names<-,GammaSpectra-method}
 \alias{set_name,GammaSpectra-method}
 \alias{set_energy<-,PeakPosition,numeric-method}
@@ -83,6 +90,10 @@ get_rates(x)
 get_energy(x)
 
 set_energy(x) <- value
+
+get_method(x)
+
+set_method(x) <- value
 
 get_residuals(x)
 
@@ -111,6 +122,8 @@ range_energy(x, ...)
 \S4method{range_energy}{GammaSpectrum}(x, na.rm = FALSE)
 
 \S4method{range_chanels}{GammaSpectrum}(x, na.rm = FALSE)
+
+\S4method{get_method}{Baseline}(x)
 
 \S4method{get_hash}{GammaSpectra}(x)
 
@@ -141,6 +154,8 @@ range_energy(x, ...)
 \S4method{get_energy}{PeakPosition}(x)
 
 \S4method{set_names}{GammaSpectrum}(x) <- value
+
+\S4method{set_method}{Baseline}(x) <- value
 
 \S4method{set_names}{GammaSpectra}(x) <- value
 

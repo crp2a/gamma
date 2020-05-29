@@ -3,15 +3,19 @@ spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 spc <- read(spc_file)
 
 ## Remove the first 35 chanels
-spc <- slice_signal(spc, -c(1:35))
+spc <- signal_slice(spc, -c(1:35))
 
-## Estimate baseline
-baseline <- estimate_baseline(spc)
+## SNIP baseline
+bsl_snip <- baseline_snip(spc, LLS = FALSE, decreasing = FALSE, n = 100)
+plot(spc, bsl_snip)
 
-plot(spc, baseline)
+## Rubberband baseline
+bsl_rubber <- baseline_rubberband(spc)
+plot(spc, bsl_rubber)
 
 ## Remove baseline
-spc_clean1 <- remove_baseline(spc)
-spc_clean2 <- spc - baseline
+spc_clean1 <- signal_correct(spc)
+spc_clean2 <- spc - bsl_snip
+all(spc_clean1 == spc_clean2)
 
 plot(spc_clean1)

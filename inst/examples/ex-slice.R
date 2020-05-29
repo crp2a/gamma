@@ -6,11 +6,11 @@ spc <- read(spc_file)
 plot(spc)
 
 ## Slice
-sliced <- slice_signal(spc)
+sliced <- signal_slice(spc)
 plot(sliced)
 
-sliced <- slice_signal(spc, -c(1:35))
+sliced <- signal_slice(spc, -c(1:35))
 plot(sliced)
 
-sliced <- slice_signal(spc, 450:550)
+sliced <- signal_slice(spc, 450:550)
 plot(sliced)

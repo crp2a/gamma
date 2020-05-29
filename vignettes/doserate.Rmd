@@ -52,20 +52,20 @@ bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
 # Spectrum pre-processing
 # Remove baseline for peak detection
 bsl <- spc %>%
-  slice_signal(-1:-40) %>%
-  stabilize_signal(sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline()
+  signal_slice(-1:-40) %>%
+  signal_stabilize(f = sqrt) %>%
+  signal_smooth(method = "savitzky", m = 21) %>%
+  signal_correct()
 ```
 
 #### BRIQUE
 ```{r calibrate-BRIQUE}
 # Peak detection
-pks <- find_peaks(bsl[["BRIQUE"]])
+pks <- peaks_find(bsl[["BRIQUE"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Adjust the energy scale
-BRIQUE <- calibrate_energy(spc[["BRIQUE"]], pks)
+BRIQUE <- energy_calibrate(spc[["BRIQUE"]], pks)
 ```
 
 ```{r plot-BRIQUE, echo=FALSE}
@@ -76,11 +76,11 @@ plot(BRIQUE, pks) +
 #### C341
 ```{r calibrate-C341}
 # Spectrum pre-processing and peak detection
-pks <- find_peaks(bsl[["C341"]])
+pks <- peaks_find(bsl[["C341"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
 # Adjust the energy scale
-C341 <- calibrate_energy(spc[["C341"]], pks)
+C341 <- energy_calibrate(spc[["C341"]], pks)
 ```
 
 ```{r plot-C341, echo=FALSE}
@@ -91,11 +91,11 @@ plot(C341, pks) +
 #### C347
 ```{r calibrate-C347}
 # Spectrum pre-processing and peak detection
-pks <- find_peaks(bsl[["C347"]], span = 10)
+pks <- peaks_find(bsl[["C347"]], span = 10)
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, NA, 1461, NA, 2615)
 # Adjust the energy scale
-C347 <- calibrate_energy(spc[["C347"]], pks)
+C347 <- energy_calibrate(spc[["C347"]], pks)
 ```
 
 ```{r plot-C347, echo=FALSE}
@@ -106,11 +106,11 @@ plot(C347, pks) +
 #### GOU
 ```{r calibrate-GOU}
 # Spectrum pre-processing and peak detection
-pks <- find_peaks(bsl[["GOU"]])
+pks <- peaks_find(bsl[["GOU"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Adjust the energy scale
-GOU <- calibrate_energy(spc[["GOU"]], pks)
+GOU <- energy_calibrate(spc[["GOU"]], pks)
 ```
 
 ```{r plot-GOU, echo=FALSE}
@@ -121,11 +121,11 @@ plot(GOU, pks) +
 #### PEP
 ```{r calibrate-PEP}
 # Spectrum pre-processing and peak detection
-pks <- find_peaks(bsl[["PEP"]])
+pks <- peaks_find(bsl[["PEP"]])
 # Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 # Adjust the energy scale
-PEP <- calibrate_energy(spc[["PEP"]], pks)
+PEP <- energy_calibrate(spc[["PEP"]], pks)
 ```
 
 ```{r plot-PEP, echo=FALSE}
@@ -140,7 +140,7 @@ lines <- data.frame(
   chanel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
 )
-bkg_scaled <- calibrate_energy(bkg, lines = lines)
+bkg_scaled <- energy_calibrate(bkg, lines = lines)
 ```
 
 ```{r plot-bkg, echo=FALSE}
@@ -161,10 +161,10 @@ spc_scaled <- methods::as(spc_scaled, "GammaSpectra")
 Ni_range <- c(200, 2800)
 
 # Integrate background spectrum
-(Ni_bkg <- integrate_signal(bkg_scaled, range = Ni_range, energy = FALSE))
+(Ni_bkg <- signal_integrate(bkg_scaled, range = Ni_range, energy = FALSE))
 
 # Integrate reference spectra
-(Ni_spc <- integrate_signal(spc_scaled, range = Ni_range, background = Ni_bkg, 
+(Ni_spc <- signal_integrate(spc_scaled, range = Ni_range, background = Ni_bkg, 
                             energy = FALSE, simplify = TRUE))
 ```
 
@@ -174,10 +174,10 @@ Ni_range <- c(200, 2800)
 NiEi_range <- c(200, 2800)
 
 # Integrate background spectrum
-(NiEi_bkg <- integrate_signal(bkg_scaled, range = NiEi_range, energy = TRUE))
+(NiEi_bkg <- signal_integrate(bkg_scaled, range = NiEi_range, energy = TRUE))
 
 # Integrate reference spectra
-(NiEi_signal <- integrate_signal(spc_scaled, range = NiEi_range, 
+(NiEi_signal <- signal_integrate(spc_scaled, range = NiEi_range, 
                                  background = NiEi_bkg, energy = TRUE,
                                  simplify = TRUE))
 ```
@@ -198,7 +198,7 @@ info <- list(
 )
 
 # Build the calibration curve
-AIX_NaI <- fit_dose(
+AIX_NaI <- dose_fit(
   spc_scaled, background = bkg_scaled, doses = doses,
   range_Ni = Ni_range, range_NiEi = NiEi_range, alpha = 0.05,
   details = info
@@ -327,7 +327,7 @@ plot(test, yaxis = "rate") +
 
 # Dose rate prediction
 # (assuming that the energy scale of each spectrum was adjusted first)
-(rates <- predict_dose(AIX_NaI, test, sigma = 2))
+(rates <- dose_predict(AIX_NaI, test, sigma = 2))
 ```
 
 ## R session

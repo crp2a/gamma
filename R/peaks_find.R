@@ -5,9 +5,9 @@ NULL
 # AUTOMATIC PEAK DETECTION =====================================================
 #' @export
 #' @rdname peaks
-#' @aliases find_peaks,GammaSpectrum-method
+#' @aliases peaks_find,GammaSpectrum-method
 setMethod(
-  f = "find_peaks",
+  f = "peaks_find",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("MAD"), SNR = 2, span = NULL, ...) {
     # Validation

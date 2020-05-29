@@ -109,6 +109,20 @@ setGeneric(
 )
 
 #' @rdname mutator
+#' @aliases get_method-method
+setGeneric(
+  name = "get_method",
+  def = function(x) standardGeneric("get_method")
+)
+
+#' @rdname mutator
+#' @aliases set_method-method
+setGeneric(
+  name = "set_method<-",
+  def = function(x, value) standardGeneric("set_method<-")
+)
+
+#' @rdname mutator
 #' @aliases get_residuals-method
 setGeneric(
   name = "get_residuals",
@@ -206,7 +220,7 @@ NULL
 #'  corresponding expected "\code{energy}" value (in keV).
 #' @param ... Currently not used.
 #' @return
-#'  \code{calibrate_energy} returns a \linkS4class{GammaSpectrum} object.
+#'  \code{energy_calibrate} returns a \linkS4class{GammaSpectrum} object.
 #'
 #'  \code{has_energy} returns a \code{\link{logical}} vector.
 #' @example inst/examples/ex-energy.R
@@ -218,10 +232,10 @@ NULL
 NULL
 
 #' @rdname energy
-#' @aliases calibrate_energy-method
+#' @aliases energy_calibrate-method
 setGeneric(
-  name = "calibrate_energy",
-  def = function(object, lines, ...) standardGeneric("calibrate_energy")
+  name = "energy_calibrate",
+  def = function(object, lines, ...) standardGeneric("energy_calibrate")
 )
 
 #' @rdname energy
@@ -236,24 +250,31 @@ setGeneric(
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
 #' @param method A \code{\link{character}} string specifying the method to be
-#'  used for baseline estimation (see details).
+#'  used for baseline estimation (see details). Any unambiguous substring
+#'  can be given.
 #' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
 #'  on \code{x} before employing SNIP algorithm? Only used if
 #'  \code{method} is "\code{SNIP}".
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
 #'  clipping window be used? Only used if \code{method} is "\code{SNIP}".
-#' @param k An \code{\link{integer}} value giving the numerber of iterations.
+#' @param n An \code{\link{integer}} value giving the numerber of iterations.
 #'  Only used if \code{method} is "\code{SNIP}".
-#' @param ... Extra parameters passed to \code{estimate_baseline}.
+#' @param noise A length-one \code{\link{numeric}} vector giving the noise
+#' level. Only used if \code{method} is "\code{rubberband}".
+#' @param spline A \code{\link{logical}} scalar: should spline interpolation
+#' through the support points be used instead of linear interpolation?
+#' Only used if \code{method} is "\code{rubberband}".
+#' @param ... Extra parameters to be passed to further methods.
 #' @details
 #'  The following methods are availble for baseline estimation:
 #'  \describe{
 #'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
+#'   \item{rubberband}{}
 #'  }
 #' @return
-#'  \code{estimate_baseline} returns a \linkS4class{BaseLine} object.
+#'  \code{baseline*} returns a \linkS4class{BaseLine} object.
 #'
-#'  \code{remove_baseline} returns a \linkS4class{GammaSpectrum} or
+#'  \code{signal_correct} returns a corrected \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object (same as \code{object}).
 #' @references
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
@@ -282,25 +303,46 @@ setGeneric(
 NULL
 
 #' @rdname baseline
-#' @aliases estimate_baseline-method
+#' @aliases baseline-method
 setGeneric(
-  name = "estimate_baseline",
-  def = function(object, ...) standardGeneric("estimate_baseline")
+  name = "baseline",
+  def = function(object, ...) standardGeneric("baseline")
 )
 
 #' @rdname baseline
-#' @aliases remove_baseline-method
+#' @aliases baseline_snip-method
 setGeneric(
-  name = "remove_baseline",
-  def = function(object, ...) standardGeneric("remove_baseline")
+  name = "baseline_snip",
+  def = function(object, ...) standardGeneric("baseline_snip")
+)
+
+#' @rdname baseline
+#' @aliases baseline_rubberband-method
+setGeneric(
+  name = "baseline_rubberband",
+  def = function(object, ...) standardGeneric("baseline_rubberband")
+)
+
+# @rdname baseline
+# @aliases baseline_rollingball-method
+# setGeneric(
+#   name = "baseline_rollingball",
+#   def = function(object, ...) standardGeneric("baseline_rollingball")
+# )
+
+#' @rdname baseline
+#' @aliases signal_correct-method
+setGeneric(
+  name = "signal_correct",
+  def = function(object, ...) standardGeneric("signal_correct")
 )
 
 # ========================================================= Dose rate prediction
 #' Dose Rate Estimation
 #'
-#' \code{fit_dose} builds a calibration curve for gamma dose rate estimation.
+#' \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
 #'
-#' \code{predict_dose} predicts in-situ gamma dose rate.
+#' \code{dose_predict} predicts in-situ gamma dose rate.
 #' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 #'  object.
 #' @param background A \linkS4class{GammaSpectrum} object of a length-two
@@ -323,23 +365,23 @@ setGeneric(
 #' @details
 #'  See \code{vignette(doserate)} for a reproducible example.
 #' @return
-#'  \code{fit_dose} returns a \linkS4class{CalibrationCurve} object.
+#'  \code{dose_fit} returns a \linkS4class{CalibrationCurve} object.
 #'
-#'  \code{predict_dose} returns a \code{\link{data.frame}} with the following
+#'  \code{dose_predict} returns a \code{\link{data.frame}} with the following
 #'  columns:
 #'  \describe{
 #'   \item{name}{(\code{\link{character}}) the name of the spectra.}
 #'   \item{*_signal}{(\code{\link{numeric}}) the integrated signal value
 #'   (according to the value of \code{threshold}; see
-#'   \code{\link{integrate_signal}}).}
+#'   \code{\link{signal_integrate}}).}
 #'   \item{*_error}{(\code{\link{numeric}}) the integrated signal error value
 #'   (according to the value of \code{threshold}; see
-#'   \code{\link{integrate_signal}}).}
+#'   \code{\link{signal_integrate}}).}
 #'   \item{gamma_signal}{(\code{\link{numeric}}) the predicted gamma dose rate.}
 #'   \item{gamma_error}{(\code{\link{numeric}}) the predicted gamma dose rate
 #'   error.}
 #'  }
-#' @seealso \link{integrate_signal}
+#' @seealso \link{signal_integrate}
 #' @references
 #'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 #'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
@@ -358,17 +400,17 @@ setGeneric(
 NULL
 
 #' @rdname doserate
-#' @aliases fit_dose-method
+#' @aliases dose_fit-method
 setGeneric(
-  name = "fit_dose",
-  def = function(object, background, doses, ...) standardGeneric("fit_dose")
+  name = "dose_fit",
+  def = function(object, background, doses, ...) standardGeneric("dose_fit")
 )
 
 #' @rdname doserate
-#' @aliases predict_dose-method
+#' @aliases dose_predict-method
 setGeneric(
-  name = "predict_dose",
-  def = function(object, spectrum, ...) standardGeneric("predict_dose")
+  name = "dose_predict",
+  def = function(object, spectrum, ...) standardGeneric("dose_predict")
 )
 
 # ==================================================================== Integrate
@@ -384,7 +426,7 @@ setGeneric(
 #'  simplified to a matrix? The default value, \code{FALSE}, returns a list.
 #' @param ... Currently not used.
 #' @details
-#'  It assumes that each spectrum is calibrated in energy.
+#'  It assumes that each spectrum has an energy scale.
 #' @return
 #'  If \code{simplify} is \code{FALSE} (the default) returns a
 #'  \code{\link{list}} of numeric vectors (the signal value and its error),
@@ -402,10 +444,10 @@ setGeneric(
 #' @docType methods
 #' @family signal processing
 #' @rdname integrate
-#' @aliases integrate_signal-method
+#' @aliases signal_integrate-method
 setGeneric(
-  name = "integrate_signal",
-  def = function(object, background, ...) standardGeneric("integrate_signal")
+  name = "signal_integrate",
+  def = function(object, background, ...) standardGeneric("signal_integrate")
 )
 
 # ======================================================================== Peaks
@@ -436,10 +478,10 @@ setGeneric(
 #' @docType methods
 #' @family signal processing
 #' @rdname peaks
-#' @aliases find_peaks-method
+#' @aliases peaks_find-method
 setGeneric(
-  name = "find_peaks",
-  def = function(object, ...) standardGeneric("find_peaks")
+  name = "peaks_find",
+  def = function(object, ...) standardGeneric("peaks_find")
 )
 
 # ========================================================================= Plot
@@ -533,10 +575,10 @@ setGeneric(
 #' @docType methods
 #' @family signal processing
 #' @rdname slice
-#' @aliases slice_signal-method
+#' @aliases signal_slice-method
 setGeneric(
-  name = "slice_signal",
-  def = function(object, ...) standardGeneric("slice_signal")
+  name = "signal_slice",
+  def = function(object, ...) standardGeneric("signal_slice")
 )
 
 # ==================================================================== Smoothing
@@ -553,14 +595,14 @@ setGeneric(
 #'  points to be used.
 #' @param p An \code{\link{integer}} giving the polynomial degree.
 #'  Only used if \code{method} is "\code{savitzky}".
-#' @param ... Currently not used.
+#' @param ... Extra parameters to be passed to further methods.
 #' @details
 #'  The following smoothing methods are available:
 #'  \describe{
-#'   \item{unweighted}{Unweighted sliding-average or rectangular smooth.
+#'   \item{rectangular}{Unweighted sliding-average or rectangular smooth.
 #'   It replaces each point in the signal with the average of \eqn{m} adjacent
 #'   points.}
-#'   \item{weighted}{Weighted sliding-average or triangular smooth.
+#'   \item{triangular}{Weighted sliding-average or triangular smooth.
 #'   It replaces each point in the signal with the weighted mean of \eqn{m}
 #'   adjacent points.}
 #'   \item{savitzky}{Savitzky-Golay filter. This method is based on the
@@ -589,18 +631,43 @@ setGeneric(
 #' @example inst/examples/ex-smooth.R
 #' @docType methods
 #' @family signal processing
+#' @name smooth
 #' @rdname smooth
-#' @aliases smooth_signal-method
+NULL
+
+#' @rdname smooth
+#' @aliases signal_smooth-method
 setGeneric(
-  name = "smooth_signal",
-  def = function(object, ...) standardGeneric("smooth_signal")
+  name = "signal_smooth",
+  def = function(object, ...) standardGeneric("signal_smooth")
+)
+
+#' @rdname smooth
+#' @aliases smooth_rectangular-method
+setGeneric(
+  name = "smooth_rectangular",
+  def = function(object, ...) standardGeneric("smooth_rectangular")
+)
+
+#' @rdname smooth
+#' @aliases smooth_triangular-method
+setGeneric(
+  name = "smooth_triangular",
+  def = function(object, ...) standardGeneric("smooth_triangular")
+)
+
+#' @rdname smooth
+#' @aliases smooth_savitzky-method
+setGeneric(
+  name = "smooth_savitzky",
+  def = function(object, ...) standardGeneric("smooth_savitzky")
 )
 
 # ==================================================================== Stabilize
 #' Transform Intensities
 #'
 #' @param object A \linkS4class{GammaSpectrum} object.
-#' @param transformation A \code{\link{function}} that takes a numeric vector as
+#' @param f A \code{\link{function}} that takes a numeric vector as
 #'  argument and returns a numeric vector.
 #' @param ... Extra arguments to be passed to \code{transformation}.
 #' @return A new \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -609,10 +676,10 @@ setGeneric(
 #' @docType methods
 #' @family signal processing
 #' @rdname stabilize
-#' @aliases stabilize_signal-method
+#' @aliases signal_stabilize-method
 setGeneric(
-  name = "stabilize_signal",
-  def = function(object, ...) standardGeneric("stabilize_signal")
+  name = "signal_stabilize",
+  def = function(object, ...) standardGeneric("signal_stabilize")
 )
 
 # ==================================================================== Summarize

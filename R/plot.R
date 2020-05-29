@@ -34,12 +34,13 @@ setMethod(
 
 #' @export
 #' @rdname plot
-#' @aliases plot,GammaSpectrum,GammaSpectrum-method
+#' @aliases plot,GammaSpectrum,Baseline-method
 setMethod(
   f = "plot",
-  signature = signature(x = "GammaSpectrum", y = "GammaSpectrum"),
+  signature = signature(x = "GammaSpectrum", y = "Baseline"),
   definition = function(x, y, xaxis = c("chanel", "energy"),
                         yaxis = c("count", "rate"), ...) {
+    set_names(y) <- "Baseline"
     spc <- .GammaSpectra(list(x, y))
     plot(spc, xaxis = xaxis, yaxis = yaxis, select = NULL, facet = FALSE)
   }

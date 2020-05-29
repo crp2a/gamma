@@ -9,7 +9,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
     energy = c(238, 1461, 2614.5)
   )
 
-  calib <- calibrate_energy(spectrum, lines = lines)
+  calib <- energy_calibrate(spectrum, lines = lines)
   expect_s4_class(calib, "GammaSpectrum")
 
   expect_equal(calib[["hash"]], spectrum[["hash"]])
@@ -30,14 +30,14 @@ test_that("Calibrate a GammaSpectrum object with a list", {
     X = c(76, 459, 816),
     Y = c(238, 1461, 2614.5)
   )
-  expect_error(calibrate_energy(spectrum, lines = lines),
+  expect_error(energy_calibrate(spectrum, lines = lines),
                "does not have components 'chanel' and 'energy'")
 
   lines <- list(
     chanel = c(76, 816),
     energy = c(238, 2614.5)
   )
-  expect_error(calibrate_energy(spectrum, lines = lines),
+  expect_error(energy_calibrate(spectrum, lines = lines),
                "You have to provide at least 3 lines for calibration, not 2.")
 })
 test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
@@ -50,11 +50,11 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
     energy = c(NA_real_, NA_real_, NA_real_)
   )
 
-  expect_error(calibrate_energy(spectrum, lines = peaks),
+  expect_error(energy_calibrate(spectrum, lines = peaks),
                "You have to provide at least 3 lines for calibration, not 0.")
 
   set_energy(peaks) <- c(238, 1461, 2614.5)
-  calib <- calibrate_energy(spectrum, lines = peaks)
+  calib <- energy_calibrate(spectrum, lines = peaks)
 
   expect_s4_class(calib, "GammaSpectrum")
   expect_length(spectrum@energy, 0)

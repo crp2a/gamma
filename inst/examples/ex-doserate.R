@@ -12,7 +12,7 @@ data("clermont")
 (doses <- clermont[, c("gamma_dose", "gamma_error")])
 
 ## Build the calibration curve
-calib_curve <- fit_dose(spc, bkg, doses,
+calib_curve <- dose_fit(spc, bkg, doses,
                         range_Ni = c(300, 2800),
                         range_NiEi = c(165, 2800))
 
@@ -20,4 +20,4 @@ calib_curve <- fit_dose(spc, bkg, doses,
 plot(calib_curve, threshold = "Ni")
 
 ## Estimate gamma dose rates
-predict_dose(calib_curve, spc)
+dose_predict(calib_curve, spc)

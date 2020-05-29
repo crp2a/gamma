@@ -31,6 +31,29 @@ setMethod(
   }
 )
 
+setMethod(
+  f = "initialize",
+  signature = "Baseline",
+  definition = function(
+    .Object, ..., hash = .Object@hash, name = .Object@name,
+    date = .Object@date, instrument = .Object@instrument,
+    file_format = .Object@file_format, chanel = .Object@chanel,
+    energy = .Object@energy, count = .Object@count, rate = .Object@rate,
+    live_time = .Object@live_time, real_time = .Object@real_time,
+    calibration = .Object@calibration, method = .Object@method
+  ) {
+
+    .Object <- methods::callNextMethod(
+      .Object, ..., hash = hash, name = name, date = date,
+      instrument = instrument, file_format = file_format, chanel = chanel,
+      energy = energy, count = count, rate = rate, live_time = live_time,
+      real_time = real_time, calibration = calibration
+    )
+    .Object@method <- method
+    .Object
+  }
+)
+
 # ================================================================= GammaSpectra
 setMethod(
   f = "initialize",

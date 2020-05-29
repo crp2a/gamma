@@ -94,19 +94,19 @@ Several channels can be dropped to retain only part of the spectrum. If no speci
 
 ```{r slice}
 # Use a square root transformation
-sliced <- slice_signal(spc_tka)
+sliced <- signal_slice(spc_tka)
 ```
 
 ### Stabilization
 ```{r stabilize}
 # Use a square root transformation
-transformed <- stabilize_signal(sliced, transformation = sqrt)
+transformed <- signal_stabilize(sliced, f = sqrt)
 ```
 
 ### Smoothing
 ```{r smoothing}
 # Use a 21 point Savitzky-Golay-Filter to smooth the spectrum
-smoothed <- smooth_signal(transformed, method = "savitzky", m = 21)
+smoothed <- signal_smooth(transformed, method = "savitzky", m = 21)
 ```
 
 ### Baseline correction
@@ -114,7 +114,7 @@ The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morha
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate the baseline of a single file
-baseline <- estimate_baseline(smoothed, decreasing = TRUE)
+baseline <- baseline(smoothed, method = "SNIP", decreasing = TRUE)
 
 # Plot spectrum + baseline
 plot(smoothed, baseline) +
@@ -137,7 +137,7 @@ plot(corrected) +
 ```{r baseline-remove-multi, eval=FALSE}
 # You can remove the baseline of multiple spectra in one go
 # Note that the same parameters will be used for all spectra
-clean <- remove_baseline(spc)
+clean <- signal_correct(spc)
 ```
 
 ### Peak detection
@@ -145,7 +145,7 @@ Once you have a baseline-corrected spectrum, you can try to automatically find p
 
 ```{r peak-detection}
 # Detect peaks in a single file
-peaks <- find_peaks(corrected)
+peaks <- peaks_find(corrected)
 
 # Plot spectrum + peaks
 plot(corrected, peaks) +
@@ -163,7 +163,7 @@ set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 peaks
 
 # Calibrate the spectrum using the peak positions
-scaled <- calibrate_energy(spc_tka, peaks)
+scaled <- energy_calibrate(spc_tka, peaks)
 
 # Plot the spectrum
 plot(scaled, xaxis = "energy") +
@@ -180,7 +180,7 @@ calib_lines <- list(
 )
 
 # Calibrate the spectrum using these fixed lines
-scaled2 <- calibrate_energy(spc_tka, lines = calib_lines)
+scaled2 <- energy_calibrate(spc_tka, lines = calib_lines)
 ```
 
 ## Use the pipe!
@@ -189,17 +189,17 @@ library(magrittr)
 
 # Spectrum pre-processing and peak detection
 pks <- spc_tka %>%
-  slice_signal() %>%
-  stabilize_signal(transformation = sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline(decreasing = TRUE, k = 100) %>%
-  find_peaks()
+  signal_slice() %>%
+  signal_stabilize(f = sqrt) %>%
+  signal_smooth(method = "savitzky", m = 21) %>%
+  signal_correct(decreasing = TRUE, n = 100) %>%
+  peaks_find()
 
 # Set the energy values (in keV)
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 # Calibrate the energy scale
-cal <- calibrate_energy(spc_tka, pks)
+cal <- energy_calibrate(spc_tka, pks)
 
 # Plot spectrum
 plot(cal, pks) +

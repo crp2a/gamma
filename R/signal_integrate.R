@@ -4,9 +4,9 @@ NULL
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,missing-method
+#' @aliases signal_integrate,GammaSpectrum,missing-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "missing"),
   definition = function(object, range, energy = FALSE) {
     # Validation
@@ -39,23 +39,23 @@ setMethod(
 )
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,GammaSpectrum-method
+#' @aliases signal_integrate,GammaSpectrum,GammaSpectrum-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "GammaSpectrum"),
   definition = function(object, background, range, energy = FALSE) {
     # Normalized signal
-    int_bkg <- integrate_signal(background, range = range, energy = energy)
+    int_bkg <- signal_integrate(background, range = range, energy = energy)
 
-    integrate_signal(object, background = int_bkg, range = range,
+    signal_integrate(object, background = int_bkg, range = range,
                      energy = energy)
   }
 )
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectrum,numeric-method
+#' @aliases signal_integrate,GammaSpectrum,numeric-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "numeric"),
   definition = function(object, background, range, energy = FALSE) {
     # Validation
@@ -64,7 +64,7 @@ setMethod(
                    length(background)), call. = FALSE)
 
     # Normalized signal
-    int_spc <- integrate_signal(object, range = range, energy = energy)
+    int_spc <- signal_integrate(object, range = range, energy = energy)
 
     # Compute net signal (substracted background background)
     net_signal <- int_spc[[1L]] - background[[1L]]
@@ -76,13 +76,13 @@ setMethod(
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,missing-method
+#' @aliases signal_integrate,GammaSpectra,missing-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "missing"),
   definition = function(object, range, energy = FALSE, simplify = TRUE) {
 
-    signals <- lapply(X = object, FUN = integrate_signal,
+    signals <- lapply(X = object, FUN = signal_integrate,
                       range = range, energy = energy)
     if (simplify) do.call(rbind, signals) else signals
   }
@@ -90,14 +90,14 @@ setMethod(
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,GammaSpectrum-method
+#' @aliases signal_integrate,GammaSpectra,GammaSpectrum-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum"),
   definition = function(object, background, range, energy = FALSE,
                         simplify = TRUE) {
 
-    signals <- lapply(X = object, FUN = integrate_signal,
+    signals <- lapply(X = object, FUN = signal_integrate,
                       background = background, range = range, energy = energy)
     if (!simplify) return(signals)
     do.call(rbind, signals)
@@ -106,14 +106,14 @@ setMethod(
 
 #' @export
 #' @rdname integrate
-#' @aliases integrate_signal,GammaSpectra,numeric-method
+#' @aliases signal_integrate,GammaSpectra,numeric-method
 setMethod(
-  f = "integrate_signal",
+  f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "numeric"),
   definition = function(object, background, range, energy = FALSE,
                         simplify = TRUE) {
 
-    signals <- lapply(X = object, FUN = integrate_signal,
+    signals <- lapply(X = object, FUN = signal_integrate,
                       background = background, range = range, energy = energy)
     if (!simplify) return(signals)
     do.call(rbind, signals)

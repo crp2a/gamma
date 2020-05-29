@@ -25,7 +25,7 @@ test_that("plot a GammaSpectrum object", {
 test_that("plot GammaSpectrum and PeakPosition objects", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
-  peaks <- find_peaks(spc_cnf)
+  peaks <- peaks_find(spc_cnf)
 
   gg_peaks <- plot(spc_cnf, peaks)
   vdiffr::expect_doppelganger("spectrum_peaks", gg_peaks)

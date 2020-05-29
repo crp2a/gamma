@@ -26,7 +26,7 @@ test_that("Initialize an empty GammaSpectra instance", {
   expect_output(show(spectra), "An empty set of gamma spectra")
 })
 test_that("Initialize an empty BaseLine instance", {
-  baseline <- new("BaseLine")
+  baseline <- new("Baseline")
   expect_output(show(baseline), "An empty gamma spectrum")
 
   expect_identical(baseline[["hash"]], "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

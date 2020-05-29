@@ -109,6 +109,16 @@ setMethod(
   }
 )
 
+# --------------------------------------------------------------------- Baseline
+#' @export
+#' @rdname mutator
+#' @aliases set_method,Baseline-method
+setMethod(
+  f = "get_method",
+  signature = "Baseline",
+  definition = function(x) x@method
+)
+
 # ----------------------------------------------------------------- GammaSpectra
 #' @export
 #' @rdname mutator
@@ -304,6 +314,20 @@ setMethod(
   signature = "GammaSpectrum",
   definition = function(x, value) {
     x@name <- as.character(value)
+    methods::validObject(x)
+    x
+  }
+)
+
+# --------------------------------------------------------------------- Baseline
+#' @export
+#' @rdname mutator
+#' @aliases set_method,Baseline-method
+setMethod(
+  f = "set_method<-",
+  signature = "Baseline",
+  definition = function(x, value) {
+    x@method <- as.character(value)
     methods::validObject(x)
     x
   }

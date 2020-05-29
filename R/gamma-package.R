@@ -46,9 +46,9 @@
 #' setClass setClassUnion setGeneric setMethod slot slot<- Summary
 #' @importFrom IsoplotR york
 #' @importFrom graphics plot
-#' @importFrom ggplot2 aes coord_cartesian facet_wrap geom_errorbar
+#' @importFrom ggplot2 aes coord_cartesian element_text facet_wrap geom_errorbar
 #' geom_errorbarh geom_path geom_point geom_pointrange geom_segment geom_vline
-#' ggplot ggsave labs scale_x_continuous sec_axis theme_bw vars waiver
+#' ggplot ggsave labs scale_x_continuous sec_axis theme theme_bw vars waiver
 #' @importFrom rlang .data
 #' @importFrom tools file_ext file_path_sans_ext list_files_with_exts md5sum
 NULL

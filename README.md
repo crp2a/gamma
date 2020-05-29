@@ -3,6 +3,8 @@
 
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
+<!-- badges: start -->
+
 [![R build
 status](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
@@ -21,6 +23,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
+<!-- badges: end -->
 
 ## Overview
 
@@ -60,17 +63,17 @@ spectrum <- read(spc_file)
 ## Set the expected chanel/energy peaks for the energy scale calibration
 ## Spectrum pre-processing and peak detection
 peaks <- spectrum %>%
-  slice_signal() %>%
-  stabilize_signal(transformation = sqrt) %>%
-  smooth_signal(method = "savitzky", m = 21) %>%
-  remove_baseline() %>%
-  find_peaks()
+  signal_slice() %>%
+  signal_stabilize(f = sqrt) %>%
+  signal_smooth(method = "savitzky", m = 21) %>%
+  signal_correct(method = "SNIP", n = 100) %>%
+  peaks_find()
 
 ## Set the energy values (in keV)
 set_energy(peaks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
 
 ## Calibrate the energy scale
-calib <- calibrate_energy(spectrum, peaks)
+calib <- energy_calibrate(spectrum, peaks)
 
 ## Inspect peaks
 plot(calib, peaks)
@@ -86,7 +89,7 @@ data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
 
 ## Estimate the gamma dose rate
-(doses <- predict_dose(BDX_LaBr_1, calib))
+(doses <- dose_predict(BDX_LaBr_1, calib))
 #>   names  dose_Ni error_Ni dose_NiEi error_NiEi
 #> 1  LaBr 4171.876 92.54298  3944.501   78.27257
 ```

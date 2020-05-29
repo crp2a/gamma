@@ -10,10 +10,10 @@ cts <- cts * 10^5 + sample(1:10, 1024, TRUE)
 spc <- .GammaSpectrum(chanel = 1:1024, count = cts)
 
 test_that("Find peaks", {
-  peaks <- find_peaks(spc, SNR = 3, span = 50)
+  peaks <- peaks_find(spc, SNR = 3, span = 50)
   expect_length(peaks@chanel, 3)
 
-  peaks <- find_peaks(spc, SNR = 3, span = NULL)
+  peaks <- peaks_find(spc, SNR = 3, span = NULL)
   expect_output(show(peaks), "3 peaks were detected")
 
   expect_equal(peaks@chanel, c(86, 493, 876))

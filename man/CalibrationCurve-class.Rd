@@ -50,7 +50,7 @@ In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 
 \seealso{
 Other class: 
-\code{\link{BaseLine-class}},
+\code{\link{Baseline-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{GammaSpectrum-class}},
 \code{\link{PeakPosition-class}},

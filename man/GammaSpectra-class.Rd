@@ -78,7 +78,7 @@ spc[["BRIQUE"]]
 }
 \seealso{
 Other class: 
-\code{\link{BaseLine-class}},
+\code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectrum-class}},
 \code{\link{PeakPosition-class}},

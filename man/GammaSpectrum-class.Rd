@@ -43,7 +43,7 @@ each channel. Numeric values are coerced to integer as by
 each channel.}
 
 \item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
-scale calibration (see \code{\link{calibrate_energy}}).}
+scale calibration (see \code{\link{energy_calibrate}}).}
 }}
 
 \note{
@@ -104,7 +104,7 @@ spc[["file_format"]]
 }
 \seealso{
 Other class: 
-\code{\link{BaseLine-class}},
+\code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{PeakPosition-class}},

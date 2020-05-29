@@ -31,7 +31,7 @@ head(df)
 }
 \seealso{
 Other class: 
-\code{\link{BaseLine-class}},
+\code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{GammaSpectrum-class}},

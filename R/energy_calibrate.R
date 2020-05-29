@@ -1,20 +1,19 @@
-# CALIBRATE SPECTRUM (ENERGY)
-#' @include AllGenerics.R
+# CALIBRATE ENERGY SCALE
+#' @include AllClasses.R AllGenerics.R
 NULL
 
 #' @export
 #' @rdname energy
-#' @aliases calibrate_energy,GammaSpectrum,list-method
+#' @aliases energy_calibrate,GammaSpectrum,list-method
 setMethod(
-  f = "calibrate_energy",
+  f = "energy_calibrate",
   signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
     # Validation
-    if (!all(c("chanel", "energy") %in% names(lines))) {
-      stop(sprintf("%s is a list, ", sQuote("lines")),
-           "but does not have components 'chanel' and 'energy'.",
+    if (!all(c("chanel", "energy") %in% names(lines)))
+      stop(sprintf("%s is a list, but does not have components %s and %s.",
+                   sQuote("lines"), sQuote("chanel"), sQuote("energy")),
            call. = FALSE)
-    }
 
     # Adjust spectrum for energy shift
     # Get corresponding chanels
@@ -42,9 +41,9 @@ setMethod(
 
 #' @export
 #' @rdname energy
-#' @aliases calibrate_energy,GammaSpectrum,PeakPosition-method
+#' @aliases energy_calibrate,GammaSpectrum,PeakPosition-method
 setMethod(
-  f = "calibrate_energy",
+  f = "energy_calibrate",
   signature = signature(object = "GammaSpectrum", lines = "PeakPosition"),
   definition = function(object, lines, ...) {
     # Get data
@@ -52,7 +51,7 @@ setMethod(
 
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy
-    calibrate_energy(object, peaks)
+    energy_calibrate(object, peaks)
   }
 )
 
