@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "smooth_triangular",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, m = 3) {
+  definition = function(object, m = 3, ...) {
     # Get data
     x <- get_counts(object)
     z <- triangular(x, m = m)
@@ -23,7 +23,7 @@ setMethod(
 setMethod(
   f = "smooth_triangular",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, m = 3) {
+  definition = function(object, m = 3, ...) {
     spc <- lapply(X = object, FUN = smooth_triangular, m = m)
     .GammaSpectra(spc)
   }

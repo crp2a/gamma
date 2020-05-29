@@ -37,13 +37,13 @@ signal_correct(object, ...)
 
 \S4method{signal_correct}{GammaSpectra}(object, method = c("SNIP", "rubberband"), ...)
 
-\S4method{baseline_rubberband}{GammaSpectrum}(object, noise = 0, spline = TRUE)
+\S4method{baseline_rubberband}{GammaSpectrum}(object, noise = 0, spline = TRUE, ...)
 
-\S4method{baseline_rubberband}{GammaSpectra}(object, noise = 0, spline = TRUE)
+\S4method{baseline_rubberband}{GammaSpectra}(object, noise = 0, spline = TRUE, ...)
 
-\S4method{baseline_snip}{GammaSpectrum}(object, LLS = FALSE, decreasing = FALSE, n = 100)
+\S4method{baseline_snip}{GammaSpectrum}(object, LLS = FALSE, decreasing = FALSE, n = 100, ...)
 
-\S4method{baseline_snip}{GammaSpectra}(object, LLS = FALSE, decreasing = FALSE, n = 100)
+\S4method{baseline_snip}{GammaSpectra}(object, LLS = FALSE, decreasing = FALSE, n = 100, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}

@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "baseline_snip",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, LLS = FALSE, decreasing = FALSE, n = 100) {
+  definition = function(object, LLS = FALSE, decreasing = FALSE, n = 100, ...) {
     # Get counts
     x <- get_counts(object)
     # Estimate baseline
@@ -31,7 +31,7 @@ setMethod(
 setMethod(
   f = "baseline_snip",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, LLS = FALSE, decreasing = FALSE, n = 100) {
+  definition = function(object, LLS = FALSE, decreasing = FALSE, n = 100, ...) {
     bsl <- lapply(X = object, FUN = baseline_snip,
                   LLS = LLS, decreasing = decreasing, n = n)
     .GammaSpectra(bsl)

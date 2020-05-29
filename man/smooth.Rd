@@ -34,17 +34,17 @@ smooth_savitzky(object, ...)
 
 \S4method{signal_smooth}{GammaSpectra}(object, method = c("rectangular", "triangular", "savitzky"), ...)
 
-\S4method{smooth_rectangular}{GammaSpectrum}(object, m = 3)
+\S4method{smooth_rectangular}{GammaSpectrum}(object, m = 3, ...)
 
-\S4method{smooth_rectangular}{GammaSpectra}(object, m = 3)
+\S4method{smooth_rectangular}{GammaSpectra}(object, m = 3, ...)
 
-\S4method{smooth_savitzky}{GammaSpectrum}(object, m = 3, p = 2)
+\S4method{smooth_savitzky}{GammaSpectrum}(object, m = 3, p = 2, ...)
 
-\S4method{smooth_savitzky}{GammaSpectra}(object, m = 3, p = 2)
+\S4method{smooth_savitzky}{GammaSpectra}(object, m = 3, p = 2, ...)
 
-\S4method{smooth_triangular}{GammaSpectrum}(object, m = 3)
+\S4method{smooth_triangular}{GammaSpectrum}(object, m = 3, ...)
 
-\S4method{smooth_triangular}{GammaSpectra}(object, m = 3)
+\S4method{smooth_triangular}{GammaSpectra}(object, m = 3, ...)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}

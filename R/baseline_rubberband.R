@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "baseline_rubberband",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, noise = 0, spline = TRUE) {
+  definition = function(object, noise = 0, spline = TRUE, ...) {
     # Get counts
     x <- get_chanels(object)
     y <- get_counts(object)
@@ -33,7 +33,7 @@ setMethod(
 setMethod(
   f = "baseline_rubberband",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, noise = 0, spline = TRUE) {
+  definition = function(object, noise = 0, spline = TRUE, ...) {
     bsl <- lapply(X = object, FUN = baseline_rubberband,
                   noise = noise, spline = spline)
     .GammaSpectra(bsl)

@@ -8,12 +8,12 @@ NULL
 # setMethod(
 #   f = "baseline_rollingball",
 #   signature = signature(object = "GammaSpectrum"),
-#   definition = function(object, noise = 0, spline = TRUE) {
+#   definition = function(object, ...) {
 #     # Get counts
 #     x <- get_chanels(object)
 #     y <- get_counts(object)
 #     # Estimate baseline
-#     bsl <- rollingball(x, y, noise = noise, spline = spline)
+#     bsl <- rollingball(x, y)
 #
 #     # Check baseline
 #     if (anyNA(bsl))

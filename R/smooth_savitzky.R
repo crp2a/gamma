@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "smooth_savitzky",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, m = 3, p = 2) {
+  definition = function(object, m = 3, p = 2, ...) {
     # Get data
     x <- get_counts(object)
     z <- savitzky(x, m = m, p = p)
@@ -23,7 +23,7 @@ setMethod(
 setMethod(
   f = "smooth_savitzky",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, m = 3, p = 2) {
+  definition = function(object, m = 3, p = 2, ...) {
     spc <- lapply(X = object, FUN = smooth_savitzky, m = m, p = p)
     .GammaSpectra(spc)
   }
