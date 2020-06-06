@@ -11,14 +11,10 @@
 #'
 #' \tabular{ll}{
 #'  Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
-#'  Guillaume Guérin \tab \emph{CNRS, France} \cr
-#'  Pierre Guibert \tab \emph{CNRS, France} \cr
 #'  Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
 #'  Brice Lebrun \tab \emph{Aix-Marseille Université, France} \cr
-#'  Norbert Mercier \tab \emph{CNRS, France} \cr
 #'  Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France} \cr
-#'  Magali Rizza \tab \emph{Aix-Marseille Université, France} \cr
-#'  Chantal Tribolo \tab \emph{CNRS, France}
+#'  Magali Rizza \tab \emph{Aix-Marseille Université, France}
 #' }
 #'
 #' \strong{Package maintainer}

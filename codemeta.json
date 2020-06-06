@@ -44,31 +44,17 @@
   "contributor": [
     {
       "@type": "Person",
-      "givenName": "Guillaume",
-      "familyName": "Guérin",
-      "email": "guillaume.guerin@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0001-6298-5579"
+      "givenName": "Magali",
+      "familyName": "Rizza",
+      "email": "rizza@cerege.fr",
+      "@id": "https://orcid.org/0000-0003-2364-5621"
     },
     {
       "@type": "Person",
-      "givenName": "Pierre",
-      "familyName": "Guibert",
-      "email": "pierre.guibert@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0001-8969-8684"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Norbert",
-      "familyName": "Mercier",
-      "email": "norbert.mercier@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0002-6375-9108"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Chantal",
-      "familyName": "Tribolo",
-      "email": "chantal.tribolo@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0003-0506-2430"
+      "givenName": "Christelle",
+      "familyName": "Lahaye",
+      "email": "christelle.lahaye@u-bordeaux-montaigne.fr",
+      "@id": "https://orcid.org/0000-0003-2215-9015"
     }
   ],
   "copyrightHolder": [
@@ -303,5 +289,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "705.359KB"
+  "fileSize": "838.116KB"
 }

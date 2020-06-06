@@ -1,34 +1,8 @@
 {
-  "license": "GPL-3.0+",
-  "description": "<p>Process in-situ gamma-ray spectrometry for luminescence dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files. A &#39;shiny&#39; application provides an exhanced graphical user interface.</p>",
-  "contributors": [
-        {
-            "orcid": "0000-0001-6298-5579",
-            "affiliation": "CNRS",
-            "type": "Other",
-            "name": "Gu\u00e9rin, Guillaume"
-        },
-        {
-            "orcid": "0000-0003-2215-9015",
-            "affiliation": "Universit\u00e9 Bordeaux Montaigne",
-            "type": "Other",
-            "name": "Lahaye, Christelle"
-        }
-  ],
-  "language": "eng",
-  "notes": "This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program Investissements d'avenir (ref. 10-LABX-0052 and 11-IDEX-0001).",
-  "keywords": [
-        "geochronology",
-        "luminescence dating",
-        "r package"
-  ],
-  "upload_type": "software",
-  "communities": [
-        {
-            "identifier": "archaeo"
-        }
-  ],
-  "creators": [
+    "title": "gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry",
+    "description": "<p>Process in-situ gamma-ray spectrometry for luminescence dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files.</p>",
+    "notes": "This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program Investissements d'avenir (ref. 10-LABX-0052 and 11-IDEX-0001).",
+    "creators": [
         {
             "orcid": "0000-0001-5759-4944",
             "affiliation": "Universit\u00e9 Bordeaux Montaigne",
@@ -36,13 +10,41 @@
         },
         {
             "orcid": "0000-0001-7503-8685",
-            "affiliation": "CEREGE",
+            "affiliation": "Universit\u00e9 Bordeaux Montaigne",
             "name": "Lebrun, Brice"
         },
         {
             "affiliation": "Universit\u00e9 Bordeaux Montaigne",
             "name": "Paradol, Guilhem"
         }
-  ],
-  "access_right": "open"
+    ],
+    "contributors": [
+        {
+            "orcid": "0000-0003-2215-9015",
+            "affiliation": "Universit\u00e9 Bordeaux Montaigne",
+            "type": "Other",
+            "name": "Lahaye, Christelle"
+        },
+        {
+            "orcid": "0000-0003-2364-5621",
+            "affiliation": "Aix-Marseille Universit\u00e9",
+            "type": "Other",
+            "name": "Rizza, Magali"
+        }
+    ],
+    "language": "eng",
+    "keywords": [
+        "archaeology",
+        "geochronology",
+        "luminescence dating",
+        "r package"
+    ],
+    "upload_type": "software",
+    "license": "GPL-3.0+",
+    "access_right": "open",
+    "communities": [
+        {
+            "identifier": "archaeo"
+        }
+    ]
 }
