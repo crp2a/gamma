@@ -12,8 +12,6 @@ test_that("Build a calibration curve", {
   calib <- dose_fit(spc, bkg, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
 
-  expect_s3_class(plot(calib), "ggplot")
-
   expect_error(
     dose_fit(spc, bkg, doses, range_Ni = c(300), range_NiEi = c(165, 2800)),
     "must be of length 2"
