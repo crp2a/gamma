@@ -43,3 +43,13 @@ test_that("Estimate dose rates", {
   expect_type(dose_rate3, "list")
   expect_equal(dim(dose_rate3), c(7, 5))
 })
+test_that("Get residuals", {
+  data("BDX_LaBr_1")
+
+  Ni <- get_residuals(BDX_LaBr_1[["Ni"]])
+  expect_equal(dim(Ni), c(7, 4))
+  expect_equal(colnames(Ni), c("names", "fitted", "residuals", "standardized"))
+
+  NiEi <- get_residuals(BDX_LaBr_1[["NiEi"]])
+  expect_equal(dim(NiEi), c(7, 4))
+})

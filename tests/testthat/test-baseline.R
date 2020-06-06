@@ -56,6 +56,7 @@ test_that("Remove baseline from GammaSpectra", {
 test_that("SNIP algorithm", {
   n <- 6
   baseline <- baseline_snip(spectrum, LLS = TRUE, n = n)
+  expect_equal(get_method(baseline), "SNIP")
 
   spc1 <- spectrum - baseline
   spc2 <- signal_correct(spectrum, method = "SNIP", LLS = TRUE, n = n)
@@ -80,6 +81,7 @@ test_that("SNIP algorithm", {
 test_that("Rubberband algorithm", {
   noise <- 0
   baseline <- baseline_rubberband(spectrum, noise = noise, spline = TRUE)
+  expect_equal(get_method(baseline), "rubberband")
 
   spc1 <- spectrum - baseline
   spc2 <- signal_correct(spectrum, method = "rubberband",
