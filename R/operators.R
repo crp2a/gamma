@@ -2,7 +2,7 @@
 #' @include AllGenerics.R AllClasses.R
 NULL
 
-# ======================================================================== Arith
+# Arith ========================================================================
 #' @export
 #' @rdname operator
 #' @aliases Arith,GammaSpectrum,GammaSpectrum-method
@@ -29,7 +29,7 @@ setMethod(
   }
 )
 
-# ====================================================================== Compare
+# Compare ======================================================================
 #' @export
 #' @rdname operator
 #' @aliases Compare,GammaSpectrum,GammaSpectrum-method
@@ -54,7 +54,7 @@ setMethod(
   }
 )
 
-# ======================================================================== Logic
+# Logic ========================================================================
 #' @export
 #' @rdname operator
 #' @aliases Logic,GammaSpectrum,GammaSpectrum-method
@@ -91,7 +91,7 @@ setMethod(
   }
 )
 
-# ========================================================================= Math
+# Math =========================================================================
 #' @export
 #' @rdname operator
 #' @aliases Math,GammaSpectrum-method
@@ -104,7 +104,7 @@ setMethod(
 )
 
 
-# ======================================================================== Math2
+# Math2 ========================================================================
 #' @export
 #' @rdname operator
 #' @aliases Math2,GammaSpectrum-method
@@ -116,7 +116,7 @@ setMethod(
   }
 )
 
-# ====================================================================== Summary
+# Summary ======================================================================
 #' @export
 #' @rdname operator
 #' @aliases Summary,GammaSpectrum-method
