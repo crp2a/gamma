@@ -114,7 +114,7 @@ The baseline estimation is performed using the SNIP algorithm [@ryan1988; @morha
 
 ```{r baseline-estimate, fig.width=7, fig.height=5, fig.align="center"}
 # Estimate the baseline of a single file
-baseline <- baseline(smoothed, method = "SNIP", decreasing = TRUE)
+baseline <- signal_baseline(smoothed, method = "SNIP", decreasing = TRUE)
 
 # Plot spectrum + baseline
 plot(smoothed, baseline) +
@@ -192,7 +192,7 @@ pks <- spc_tka %>%
   signal_slice() %>%
   signal_stabilize(f = sqrt) %>%
   signal_smooth(method = "savitzky", m = 21) %>%
-  signal_correct(decreasing = TRUE, n = 100) %>%
+  signal_correct(method = "SNIP", decreasing = TRUE, n = 100) %>%
   peaks_find()
 
 # Set the energy values (in keV)

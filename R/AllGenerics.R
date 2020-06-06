@@ -305,8 +305,8 @@ NULL
 #' @rdname baseline
 #' @aliases baseline-method
 setGeneric(
-  name = "baseline",
-  def = function(object, ...) standardGeneric("baseline")
+  name = "signal_baseline",
+  def = function(object, ...) standardGeneric("signal_baseline")
 )
 
 #' @rdname baseline

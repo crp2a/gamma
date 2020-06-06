@@ -53,7 +53,7 @@ plot(spc, pks)
 }
 \seealso{
 Other signal processing: 
-\code{\link{baseline}()},
+\code{\link{baseline}},
 \code{\link{signal_integrate}()},
 \code{\link{signal_slice}()},
 \code{\link{signal_stabilize}()},

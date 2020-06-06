@@ -58,7 +58,7 @@ plot(sliced)
 }
 \seealso{
 Other signal processing: 
-\code{\link{baseline}()},
+\code{\link{baseline}},
 \code{\link{peaks_find}()},
 \code{\link{signal_integrate}()},
 \code{\link{signal_stabilize}()},

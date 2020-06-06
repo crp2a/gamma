@@ -127,7 +127,7 @@ Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
 }
 \seealso{
 Other signal processing: 
-\code{\link{baseline}()},
+\code{\link{baseline}},
 \code{\link{peaks_find}()},
 \code{\link{signal_integrate}()},
 \code{\link{signal_slice}()},

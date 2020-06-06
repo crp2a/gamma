@@ -65,7 +65,7 @@ Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 }
 \seealso{
 Other signal processing: 
-\code{\link{baseline}()},
+\code{\link{baseline}},
 \code{\link{peaks_find}()},
 \code{\link{signal_slice}()},
 \code{\link{signal_stabilize}()},

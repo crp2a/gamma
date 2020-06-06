@@ -15,12 +15,9 @@ setMethod(
     calibration = .Object@calibration
   ) {
 
-    if (length(date) == 0)
-      date <- Sys.time()
-    if (length(chanel) != 0)
-      chanel <- as.integer(chanel)
-    if (length(rate) == 0 && length(count) > 0 && length(live_time) == 1)
-      rate <- count / live_time
+    if (length(date) == 0) date <- Sys.time()
+    if (length(chanel) != 0) chanel <- as.integer(chanel)
+    if (length(count) > 0 && length(live_time) == 1) rate <- count / live_time
 
     methods::callNextMethod(
       .Object, ..., hash = hash, name = name, date = date,

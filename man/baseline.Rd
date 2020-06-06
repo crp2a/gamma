@@ -4,6 +4,7 @@
 \docType{methods}
 \name{baseline}
 \alias{baseline}
+\alias{signal_baseline}
 \alias{baseline-method}
 \alias{baseline_snip}
 \alias{baseline_snip-method}
@@ -11,8 +12,8 @@
 \alias{baseline_rubberband-method}
 \alias{signal_correct}
 \alias{signal_correct-method}
-\alias{baseline,GammaSpectrum-method}
-\alias{baseline,GammaSpectra-method}
+\alias{signal_baseline,GammaSpectrum-method}
+\alias{signal_baseline,GammaSpectra-method}
 \alias{signal_correct,GammaSpectrum-method}
 \alias{signal_correct,GammaSpectra-method}
 \alias{baseline_rubberband,GammaSpectrum-method}
@@ -21,7 +22,7 @@
 \alias{baseline_snip,GammaSpectra-method}
 \title{Baseline Estimation and Removal}
 \usage{
-baseline(object, ...)
+signal_baseline(object, ...)
 
 baseline_snip(object, ...)
 
@@ -29,9 +30,9 @@ baseline_rubberband(object, ...)
 
 signal_correct(object, ...)
 
-\S4method{baseline}{GammaSpectrum}(object, method = c("SNIP", "rubberband"), ...)
+\S4method{signal_baseline}{GammaSpectrum}(object, method = c("SNIP", "rubberband"), ...)
 
-\S4method{baseline}{GammaSpectra}(object, method = c("SNIP", "rubberband"), ...)
+\S4method{signal_baseline}{GammaSpectra}(object, method = c("SNIP", "rubberband"), ...)
 
 \S4method{signal_correct}{GammaSpectrum}(object, method = c("SNIP", "rubberband"), ...)
 

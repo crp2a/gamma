@@ -4,9 +4,9 @@ NULL
 
 #' @export
 #' @rdname baseline
-#' @aliases baseline,GammaSpectrum-method
+#' @aliases signal_baseline,GammaSpectrum-method
 setMethod(
-  f = "baseline",
+  f = "signal_baseline",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("SNIP", "rubberband"), ...) {
     # Validation
@@ -24,12 +24,12 @@ setMethod(
 
 #' @export
 #' @rdname baseline
-#' @aliases baseline,GammaSpectra-method
+#' @aliases signal_baseline,GammaSpectra-method
 setMethod(
-  f = "baseline",
+  f = "signal_baseline",
   signature = signature(object = "GammaSpectra"),
   definition = function(object, method = c("SNIP", "rubberband"), ...) {
-    bsl <- lapply(X = object, FUN = baseline, method = method, ...)
+    bsl <- lapply(X = object, FUN = signal_baseline, method = method, ...)
     .GammaSpectra(bsl)
   }
 )
@@ -41,7 +41,7 @@ setMethod(
   f = "signal_correct",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("SNIP", "rubberband"), ...) {
-    bsl <- baseline(object, method = method, ...)
+    bsl <- signal_baseline(object, method = method, ...)
     object - bsl
   }
 )

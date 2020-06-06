@@ -18,8 +18,8 @@ setMethod(
       stop("Failed to estimate the baseline, please check your parameters.",
            call. = FALSE)
 
-    spc <- methods::as(object, "Baseline")
-    spc@count <- bsl
+    spc <- methods::initialize(object, count = bsl)
+    spc <- methods::as(spc, "Baseline")
     set_method(spc) <- "SNIP"
     spc
   }

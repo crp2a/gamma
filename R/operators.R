@@ -11,9 +11,8 @@ setMethod(
   signature(e1 = "GammaSpectrum", e2 = "GammaSpectrum"),
   definition = function(e1, e2) {
     value <- methods::callGeneric(e1 = e1@count, e2 = e2@count)
-    e1@count <- value
-    methods::validObject(e1)
-    return(e1)
+    spc <- methods::initialize(e1, count = value)
+    return(spc)
   }
 )
 
@@ -25,9 +24,8 @@ setMethod(
   signature(e1 = "GammaSpectrum", e2 = "numeric"),
   definition = function(e1, e2) {
     value <- methods::callGeneric(e1 = e1@count, e2 = e2)
-    e1@count <- value
-    methods::validObject(e1)
-    return(e1)
+    spc <- methods::initialize(e1, count = value)
+    return(spc)
   }
 )
 
