@@ -89,3 +89,20 @@ test_that("Plot Baseline from GammaSpectra", {
   gg_correct_rate <- plot(correct, yaxis = "rate")
   vdiffr::expect_doppelganger("baselines_correct_rate", gg_correct_rate)
 })
+# CalibrationCurve =============================================================
+test_that("Plot CalibrationCurve", {
+  data("BDX_LaBr_1")
+
+  for (i in c(TRUE, FALSE)) {
+    gg_calibration <- plot(BDX_LaBr_1, error_ellipse = i)
+    vdiffr::expect_doppelganger(paste0("gg_calib_ellipse-", i), gg_calibration)
+  }
+  for (i in c(TRUE, FALSE)) {
+    gg_calibration <- plot(BDX_LaBr_1, error_bar = i)
+    vdiffr::expect_doppelganger(paste0("gg_calib_bar-", i), gg_calibration)
+  }
+  for (i in c(TRUE, FALSE)) {
+    gg_calibration <- plot(BDX_LaBr_1, energy = i)
+    vdiffr::expect_doppelganger(paste0("gg_calib_energy-", i), gg_calibration)
+  }
+})

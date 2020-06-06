@@ -7,7 +7,7 @@ test_that("Build a calibration curve", {
   bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
   bkg <- read(bkg_dir)
 
-  doses <- clermont[, c("gamma_dose", "gamma_error")]
+  doses <- as.matrix(clermont[, c("gamma_dose", "gamma_error")])
 
   calib <- dose_fit(spc, bkg, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
