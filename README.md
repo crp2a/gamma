@@ -51,7 +51,6 @@ remotes::install_github("crp2a/gamma")
 
 ``` r
 ## A minimal example
-## You may want to give extra attention to the energy calibration step
 library(gamma)
 library(magrittr)
 
@@ -82,6 +81,11 @@ plot(calib, peaks)
 <img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
 
 ``` r
+## Estimate the gamma dose rate of a set of spectra
+## You may want to give extra attention to the energy calibration step
+spc_file <- system.file("extdata/BDX_LaBr_1/test", package = "gamma")
+spectra <- read(spc_file)
+
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
@@ -89,9 +93,16 @@ data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
 
 ## Estimate the gamma dose rate
-(doses <- dose_predict(BDX_LaBr_1, calib))
-#>   names  dose_Ni error_Ni dose_NiEi error_NiEi
-#> 1  LaBr 4171.876 92.54298  3944.501   78.27257
+(doses <- dose_predict(BDX_LaBr_1, spectra))
+#>            names   dose_Ni  error_Ni dose_NiEi error_NiEi
+#> 1 20110523204008  252.2866 12.385847  220.6747   4.393262
+#> 2 20110523210008  257.3316 10.527417  219.1303   4.357479
+#> 3 20110527205316  247.5890  8.296925  203.0288   4.033624
+#> 4 20130809172451  892.1003 22.333994  849.8817  16.868056
+#> 5 20130813181639 1065.0899 26.314061 1024.9325  20.341807
+#> 6 20160717175757  565.6418 19.579056  496.7518   9.869339
+#> 7 20160717181052  480.1928 15.805970  421.8396   8.379351
+#> 8 20160717182601  497.7403 15.232673  436.2712   8.663842
 ```
 
 ![](man/figures/README-calib-1.png)<!-- -->

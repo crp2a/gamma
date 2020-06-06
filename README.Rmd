@@ -50,7 +50,6 @@ remotes::install_github("crp2a/gamma")
 
 ```{r usage, fig.width=7, fig.height=3.5, fig.align='center'}
 ## A minimal example
-## You may want to give extra attention to the energy calibration step
 library(gamma)
 library(magrittr)
 
@@ -79,6 +78,11 @@ plot(calib, peaks)
 ```
 
 ```{r calib, fig.width=3.5, fig.height=3.5, fig.show="hold"}
+## Estimate the gamma dose rate of a set of spectra
+## You may want to give extra attention to the energy calibration step
+spc_file <- system.file("extdata/BDX_LaBr_1/test", package = "gamma")
+spectra <- read(spc_file)
+
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
 ## See help(fit_dose)
@@ -86,7 +90,7 @@ data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
 
 ## Estimate the gamma dose rate
-(doses <- dose_predict(BDX_LaBr_1, calib))
+(doses <- dose_predict(BDX_LaBr_1, spectra))
 ```
 
 ## Contributing
