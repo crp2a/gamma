@@ -11,14 +11,22 @@ spc <- .GammaSpectrum(chanel = 1:1024, count = cts)
 
 test_that("Find peaks", {
   peaks <- peaks_find(spc, SNR = 3, span = 50)
-  expect_length(peaks@chanel, 3)
+  expect_length(get_chanels(peaks), 3)
+  expect_equal(get_chanels(peaks), c(86, 493, 876))
 
   peaks <- peaks_find(spc, SNR = 3, span = NULL)
+  expect_length(get_chanels(peaks), 3)
+  expect_equal(get_chanels(peaks), c(86, 493, 876))
+
   expect_output(show(peaks), "3 peaks were detected")
 
-  expect_equal(peaks@chanel, c(86, 493, 876))
-  expect_s3_class(plot(spc, peaks), "ggplot")
-  expect_s3_class(as(peaks, "data.frame"), "data.frame")
+  mtx <- as.matrix(peaks)
+  expect_type(mtx, "double")
+  expect_equal(dim(mtx), c(3, 2))
+
+  df <- as.data.frame(peaks)
+  expect_type(df, "list")
+  expect_equal(dim(df), c(3, 2))
 })
 test_that("FWHM", {
   df <- methods::as(spc, "data.frame")[, c("chanel", "count")]
