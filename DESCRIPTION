@@ -5,12 +5,12 @@ Version: 0.2.0
 Authors@R: 
     c(person(given = "Nicolas",
              family = "Frerebeau",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "nicolas.frerebeau@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "https://orcid.org/0000-0001-5759-4944")),
       person(given = "Brice",
              family = "Lebrun",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "brice.lebrun@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "https://orcid.org/0000-0001-7503-8685")),
       person(given = "Guilhem",
@@ -35,8 +35,8 @@ Authors@R:
              role = "fnd"),
       person(given = "Idex Aix-Marseille",
              role = "fnd"))
-Maintainer: Nicolas Frerebeau
-    <nicolas.frerebeau@u-bordeaux-montaigne.fr>
+Maintainer: Brice Lebrun
+    <brice.lebrun@u-bordeaux-montaigne.fr>
 Description: Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and
     correct the energy shifts of Gamma-ray spectra. It provides methods

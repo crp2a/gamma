@@ -15,10 +15,9 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "author": [
     {
       "@type": "Person",
@@ -84,10 +83,10 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Nicolas",
-      "familyName": "Frerebeau",
-      "email": "nicolas.frerebeau@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0001-5759-4944"
+      "givenName": "Brice",
+      "familyName": "Lebrun",
+      "email": "brice.lebrun@u-bordeaux-montaigne.fr",
+      "@id": "https://orcid.org/0000-0001-7503-8685"
     }
   ],
   "softwareSuggestions": [
@@ -247,15 +246,8 @@
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "contIntegration": [
-    "https://ci.appveyor.com/project/nfrerebeau/gamma/branch/master",
-    "https://travis-ci.org/crp2a/gamma",
-    "https://codecov.io/gh/crp2a/gamma"
-  ],
-  "developmentStatus": [
-    "https://www.repostatus.org/#wip",
-    "https://www.tidyverse.org/lifecycle/#experimental"
-  ],
+  "contIntegration": "https://codecov.io/gh/crp2a/gamma",
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#maturing"],
   "keywords": [
     "geochronology",
     "luminescence-dating",
@@ -289,5 +281,5 @@
       "description": "R package version 0.2.0"
     }
   ],
-  "fileSize": "838.116KB"
+  "fileSize": "3731.229KB"
 }
