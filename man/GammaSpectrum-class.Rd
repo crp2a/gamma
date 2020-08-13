@@ -28,7 +28,7 @@ imported file.}
 
 \item{\code{real_time}}{A \code{\link{numeric}} value.}
 
-\item{\code{chanel}}{A \code{\link{integer}} vector giving the channel number.
+\item{\code{channel}}{A \code{\link{integer}} vector giving the channel number.
 Numeric values are coerced to integer as by \code{\link{as.integer}}
 (and hence truncated towards zero).}
 
@@ -53,11 +53,11 @@ This class retains copy construction.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{length(x)}}{Get number of chanel in \code{x}.}
+ \item{\code{length(x)}}{Get number of channel in \code{x}.}
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
   the name of \code{x} according to \code{value}.}
- \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
+ \item{\code{get_channels(x)}}{Get the number of channels in \code{x}.}
  \item{\code{get_counts(x)}}{Get the counts of \code{x}.}
  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
  \item{\code{get_rates(x)}}{Get the count rates of \code{x}.}

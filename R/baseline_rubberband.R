@@ -10,7 +10,7 @@ setMethod(
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, noise = 0, spline = TRUE, ...) {
     # Get counts
-    x <- get_chanels(object)
+    x <- get_channels(object)
     y <- get_counts(object)
     # Estimate baseline
     bsl <- rubberband(x, y, noise = noise, spline = spline)
@@ -51,7 +51,7 @@ setMethod(
 #' @param ... further parameters to be passed to
 #' \code{\link[stats]{predict.smooth.spline}}.
 #' @note
-#'  Slightly modified from \code{\link[hyperSpec]{spc.rubberband}}.
+#'  Slightly modified from C. Beleites' \code{\link[hyperSpec]{spc.rubberband}}.
 #' @keywords internal
 #' @noRd
 rubberband <- function(x, y, noise = 0, spline = TRUE, ...) {

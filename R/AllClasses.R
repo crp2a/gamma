@@ -1,9 +1,9 @@
 # CLASSES DEFINITION AND INITIALIZATION
 
-# Class Unions =================================================================
+# Class Union ==================================================================
 setClassUnion("LmOrNull", c("lm", "NULL"))
 
-# DEFINITION ===================================================================
+# GammaSpectrum ================================================================
 #' An S4 Class to Represent a Gamma Sectrum
 #'
 #' Represents a single spectrum of a gamma ray spectrometry measurement.
@@ -17,7 +17,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #'  imported file.
 #' @slot live_time A \code{\link{numeric}} value.
 #' @slot real_time A \code{\link{numeric}} value.
-#' @slot chanel A \code{\link{integer}} vector giving the channel number.
+#' @slot channel A \code{\link{integer}} vector giving the channel number.
 #'  Numeric values are coerced to integer as by \code{\link{as.integer}}
 #'  (and hence truncated towards zero).
 #' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
@@ -32,11 +32,11 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 #' \describe{
-#'  \item{\code{length(x)}}{Get number of chanel in \code{x}.}
+#'  \item{\code{length(x)}}{Get number of channel in \code{x}.}
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
 #'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
 #'   the name of \code{x} according to \code{value}.}
-#'  \item{\code{get_chanels(x)}}{Get the number of chanels in \code{x}.}
+#'  \item{\code{get_channels(x)}}{Get the number of channels in \code{x}.}
 #'  \item{\code{get_counts(x)}}{Get the counts of \code{x}.}
 #'  \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
 #'  \item{\code{get_rates(x)}}{Get the count rates of \code{x}.}
@@ -68,7 +68,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     date = "POSIXct",
     instrument = "character",
     file_format = "character",
-    chanel = "integer",
+    channel = "integer",
     energy = "numeric",
     count = "numeric",
     rate = "numeric",
@@ -82,7 +82,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     date = Sys.time(),
     instrument = character(0),
     file_format = character(0),
-    chanel = integer(0),
+    channel = integer(0),
     energy = numeric(0),
     count = numeric(0),
     rate = numeric(0),
@@ -92,6 +92,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   )
 )
 
+# GammaSpectra =================================================================
 #' An S4 Class to Represent a Collection of Gamma Sectra
 #'
 #' Represents a collection of spectra of gamma ray spectrometry measurements.
@@ -102,12 +103,12 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
 #' In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 #' \describe{
 #'  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
-#'  \item{\code{lengths(x)}}{Get the number of chanels in each element of
+#'  \item{\code{lengths(x)}}{Get the number of channels in each element of
 #'   \code{x}.}
 #'  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
 #'   the names of \code{x} according to \code{value}.}
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
-#'  \item{\code{get_chanels(x)}}{Get the number of chanels in each element of
+#'  \item{\code{get_channels(x)}}{Get the number of channels in each element of
 #'  \code{x}.}
 #'  \item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
 #'  \item{\code{get_energy(x)}}{Get the energy range of each element of
@@ -139,6 +140,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   contains = "list"
 )
 
+# Baseline =====================================================================
 #' An S4 Class to Represent a Spectrum Baseline
 #'
 #' @note This class extends the \linkS4class{GammaSpectrum} class.
@@ -158,6 +160,7 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
   )
 )
 
+# CalibrationCurve =============================================================
 #' An S4 class to Represent a Dose Rate Calibration Curve
 #'
 #' @slot Ni A \linkS4class{DoseRateModel} object.
@@ -214,7 +217,7 @@ NULL
   )
 )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 #' An S4 Class to Represent a Set of Peaks
 #'
 #' @slot hash A \code{\link{character}} string giving the 32-byte MD5 hash of
@@ -225,7 +228,7 @@ NULL
 #'  noise threshold.
 #' @slot window A length one \code{\link{numeric}} vector giving the half-window
 #'  size.
-#' @slot chanel A \code{\link{integer}} vector giving the channel number.
+#' @slot channel A \code{\link{integer}} vector giving the channel number.
 #'  Numeric values are coerced to integer as by \code{\link{as.integer}}
 #'  (and hence truncated towards zero).
 #' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
@@ -234,7 +237,7 @@ NULL
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
 #' \describe{
 #'  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
-#'  \item{\code{get_chanels(x)}}{Get the chanels of \code{x}.}
+#'  \item{\code{get_channels(x)}}{Get the channels of \code{x}.}
 #'  \item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
 #'   the energy scale of \code{x} according to \code{value}.}
 #' }
@@ -263,7 +266,7 @@ NULL
     noise_method = "character",
     noise_threshold = "numeric",
     window = "integer",
-    chanel = "integer",
+    channel = "integer",
     energy = "numeric"
   ),
   prototype = list(
@@ -271,7 +274,7 @@ NULL
     noise_method = character(0),
     noise_threshold = numeric(0),
     window = integer(0),
-    chanel = integer(0),
+    channel = integer(0),
     energy = numeric(0)
   )
 )

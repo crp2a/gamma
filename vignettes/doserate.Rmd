@@ -137,7 +137,7 @@ plot(PEP, pks) +
 ```{r calibrate-bkg}
 # Pb212, K40, Tl208
 lines <- data.frame(
-  chanel = c(86, 496, 870),
+  channel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
 )
 bkg_scaled <- energy_calibrate(bkg, lines = lines)

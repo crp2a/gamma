@@ -1,6 +1,6 @@
 context("Signal process")
 
-test_that("Slice chanels", {
+test_that("Slice channels", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
 

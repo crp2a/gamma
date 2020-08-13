@@ -58,7 +58,7 @@ spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 ## Import the spectrum
 spectrum <- read(spc_file)
 
-## Set the expected chanel/energy peaks for the energy scale calibration
+## Set the expected channel/energy peaks for the energy scale calibration
 ## Spectrum pre-processing and peak detection
 peaks <- spectrum %>%
   signal_slice() %>%
@@ -77,7 +77,7 @@ calib <- energy_calibrate(spectrum, peaks)
 plot(calib, peaks)
 ```
 
-```{r calib, fig.width=3.5, fig.height=3.5, fig.show="hold"}
+```{r calib, fig.width=3.5, fig.height=3.5, fig.align='center'}
 ## Estimate the gamma dose rate of a set of spectra
 ## You may want to give extra attention to the energy calibration step
 spc_file <- system.file("extdata/BDX_LaBr_1/test", package = "gamma")

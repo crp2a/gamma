@@ -16,7 +16,7 @@ setMethod(
       date = as.character(object@date),
       live_time = object@live_time,
       real_time = object@real_time,
-      chanels = length(object),
+      channels = length(object),
       energy_min = energy[[1L]],
       energy_max = energy[[2L]],
       stringsAsFactors = FALSE

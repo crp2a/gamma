@@ -65,9 +65,9 @@ readCanberraCNF <- function(file, ...) {
 
   # Get data
   spc_data <- as.data.frame(spc_xy$dataset[[1]]$data_block)
-  # Add a column to store the chanel number
-  spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
-  colnames(spc_data) <- c("energy", "count", "chanel")
+  # Add a column to store the channel number
+  spc_data[["channel"]] <- as.integer(seq_len(nrow(spc_data)))
+  colnames(spc_data) <- c("energy", "count", "channel")
 
   # Get instrument name (remove the last word)
   instrument_name <- gsub("\\s*\\w*$", "", names(spc_xy$dataset))
@@ -81,7 +81,7 @@ readCanberraCNF <- function(file, ...) {
     date = date,
     instrument = instrument_name,
     file_format = "CNF",
-    chanel = as.integer(spc_data$chanel),
+    channel = as.integer(spc_data$channel),
     energy = spc_data$energy,
     count = as.integer(spc_data$count),
     live_time = live_time,
@@ -111,9 +111,9 @@ readCanberraTKA <- function(file, ...) {
   spc_data <- data.frame(count = as.numeric(spc_xy[, 1]))
   # Remove the first two value (live time and real time)
   spc_data[c(1, 2), 1] <- c(0, 0)
-  # Add a column to store the chanel number
-  spc_data[["chanel"]] <- as.integer(seq_len(nrow(spc_data)))
-  colnames(spc_data) <- c("counts", "chanel")
+  # Add a column to store the channel number
+  spc_data[["channel"]] <- as.integer(seq_len(nrow(spc_data)))
+  colnames(spc_data) <- c("counts", "channel")
 
   # Compute 32-bytes MD5 hash
   hash <- as.character(tools::md5sum(file))
@@ -123,7 +123,7 @@ readCanberraTKA <- function(file, ...) {
     name = tools::file_path_sans_ext(basename(file)),
     instrument = instrument_name,
     file_format = "TKA",
-    chanel = as.integer(spc_data$chanel),
+    channel = as.integer(spc_data$channel),
     count = as.integer(spc_data$count),
     live_time = live_time,
     real_time = real_time

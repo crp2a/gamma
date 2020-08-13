@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "missing"),
-  definition = function(x, xaxis = c("chanel", "energy"),
+  definition = function(x, xaxis = c("channel", "energy"),
                         yaxis = c("count", "rate"), ...) {
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
@@ -18,11 +18,11 @@ setMethod(
     calib <- has_energy(x)
     spc <- methods::as(x, "data.frame")
     if (xaxis == "energy" && anyNA(spc[["energy"]])) {
-      xaxis <- "chanel"
-      warning("The energy scale is missing, displaying chanels instead.",
+      xaxis <- "channel"
+      warning("The energy scale is missing, displaying channels instead.",
               call. = FALSE)
     }
-    xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
+    xlabel <- switch(xaxis, channel = "Channel", energy = "Energy [keV]")
     ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     # Plot
@@ -38,7 +38,7 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "Baseline"),
-  definition = function(x, y, xaxis = c("chanel", "energy"),
+  definition = function(x, y, xaxis = c("channel", "energy"),
                         yaxis = c("count", "rate"), ...) {
     set_names(y) <- "Baseline"
     spc <- .GammaSpectra(list(x, y))
@@ -52,7 +52,7 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectra", y = "missing"),
-  definition = function(x, xaxis = c("chanel", "energy"),
+  definition = function(x, xaxis = c("channel", "energy"),
                         yaxis = c("count", "rate"),
                         select = NULL, facet = FALSE, ...) {
     # Validation
@@ -69,11 +69,11 @@ setMethod(
     n <- nlevels(as.factor(spc$name))
 
     if (xaxis == "energy" & anyNA(spc$energy)) {
-      xaxis <- "chanel"
+      xaxis <- "channel"
       warning("The energy scale is missing for one or more spectra, ",
-              "displaying chanels instead.", call. = FALSE)
+              "displaying channels instead.", call. = FALSE)
     }
-    xlabel <- switch(xaxis, chanel = "Chanel", energy = "Energy [keV]")
+    xlabel <- switch(xaxis, channel = "Channel", energy = "Energy [keV]")
     ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     facet <- if (n == 1) FALSE else facet
@@ -106,7 +106,7 @@ setMethod(
       stop("`x` and `y` do not match.", call. = FALSE)
 
     # Get data
-    peak_chanel <- y[["chanel"]]
+    peak_channel <- y[["channel"]]
     peak_energy <- y[["energy"]]
 
     index_energy <- !is.na(peak_energy)
@@ -114,19 +114,19 @@ setMethod(
       sec_axis <- sec_axis(
         trans = ~.,
         name = "Energy [keV]",
-        breaks = peak_chanel[index_energy],
+        breaks = peak_channel[index_energy],
         labels = round(peak_energy[index_energy], 0)
       )
     } else {
       sec_axis <- waiver()
     }
     peak_legend <- scale_x_continuous(
-      breaks = peak_chanel,
-      labels = peak_chanel,
+      breaks = peak_channel,
+      labels = peak_channel,
       sec.axis = sec_axis
     )
     plot(x) +
-      geom_vline(xintercept = peak_chanel, linetype = 3, colour = "red") +
+      geom_vline(xintercept = peak_channel, linetype = 3, colour = "red") +
       peak_legend
   }
 )

@@ -30,7 +30,7 @@ has_energy(object)
 
 \item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of
 length two. If a \code{list} is provided, each element must be a named
-numeric vector giving the observed peak position ("\code{chanel}") and the
+numeric vector giving the observed peak position ("\code{channel}") and the
 corresponding expected "\code{energy}" value (in keV).}
 
 \item{...}{Currently not used.}
@@ -48,9 +48,9 @@ Calibrates the energy scale of a gamma spectrum.
 spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
 (spc <- read(spc_file))
 
-## Set peak positions (chanel) and expected energy values
+## Set peak positions (channel) and expected energy values
 calib_lines <- list(
-  chanel = c(86, 495, 879),
+  channel = c(86, 495, 879),
   energy = c(238, 1461, 2615)
 )
 

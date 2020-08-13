@@ -5,7 +5,7 @@ NULL
 # Add S4 dispatch to base S3 generic
 setGeneric("length")
 
-# ======================================================================= Coerce
+# Coerce =======================================================================
 #' Coerce
 #'
 #' @param x An object to be coerced.
@@ -19,7 +19,8 @@ setGeneric("length")
 #' @rdname coerce
 NULL
 
-# ====================================================================== Extract
+# Extract ======================================================================
+# Getters ----------------------------------------------------------------------
 #' Get or Set Parts of an Object
 #'
 #' Getters and setters to extract or replace parts of an object.
@@ -74,10 +75,10 @@ setGeneric(
 )
 
 #' @rdname mutator
-#' @aliases get_chanels-method
+#' @aliases get_channels-method
 setGeneric(
-  name = "get_chanels",
-  def = function(x) standardGeneric("get_chanels")
+  name = "get_channels",
+  def = function(x) standardGeneric("get_channels")
 )
 
 #' @rdname mutator
@@ -130,10 +131,10 @@ setGeneric(
 )
 
 #' @rdname mutator
-#' @aliases range_chanels-method
+#' @aliases range_channels-method
 setGeneric(
-  name = "range_chanels",
-  def = function(x, ...) standardGeneric("range_chanels")
+  name = "range_channels",
+  def = function(x, ...) standardGeneric("range_channels")
 )
 
 #' @rdname mutator
@@ -143,6 +144,7 @@ setGeneric(
   def = function(x, ...) standardGeneric("range_energy")
 )
 
+# Subset -----------------------------------------------------------------------
 #' Extract or Replace Parts of an Object
 #'
 #' Operators acting on objects to extract or replace parts.
@@ -167,8 +169,8 @@ setGeneric(
 #' @rdname subset
 NULL
 
-# ==================================================================== Operators
-#' Common Operations on Matrix Objects
+# Operators ====================================================================
+#' Common Operations on GammaSpectrum Objects
 #'
 #' Performs common operations on \code{GammaSpectrum} objects.
 #' @param x,e1,e2 An object (typically a \linkS4class{GammaSpectrum} object).
@@ -208,7 +210,7 @@ NULL
 #' @rdname operator
 NULL
 
-# ================================================================= Energy scale
+# Energy scale =================================================================
 #' Energy Scale Calibration
 #'
 #' Calibrates the energy scale of a gamma spectrum.
@@ -216,7 +218,7 @@ NULL
 #'  \linkS4class{GammaSpectra} object.
 #' @param lines A \linkS4class{PeakPosition} object or a \code{\link{list}} of
 #'  length two. If a \code{list} is provided, each element must be a named
-#'  numeric vector giving the observed peak position ("\code{chanel}") and the
+#'  numeric vector giving the observed peak position ("\code{channel}") and the
 #'  corresponding expected "\code{energy}" value (in keV).
 #' @param ... Currently not used.
 #' @return
@@ -244,7 +246,7 @@ setGeneric(
   def = function(object) standardGeneric("has_energy")
 )
 
-# ===================================================================== Baseline
+# Baseline =====================================================================
 #' Baseline Estimation and Removal
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -271,12 +273,19 @@ setGeneric(
 #'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
 #'   \item{rubberband}{}
 #'  }
+#' @note
+#'  \code{baseline_rubberband} is slightly modified from C. Beleites'
+#'  \code{\link[hyperSpec]{spc.rubberband}}.
 #' @return
 #'  \code{baseline*} returns a \linkS4class{BaseLine} object.
 #'
 #'  \code{signal_correct} returns a corrected \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object (same as \code{object}).
 #' @references
+#'  Liland, K. H. (2015). 4S Peak Filling - baseline estimation by iterative
+#'  mean suppression. \emph{MethodsX}, 2, 135-140.
+#'  DOI: \href{https://doi.org/10.1016/j.mex.2015.02.009}{10.1016/j.mex.2015.02.009}.
+#'
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
@@ -310,6 +319,13 @@ setGeneric(
 )
 
 #' @rdname baseline
+#' @aliases signal_correct-method
+setGeneric(
+  name = "signal_correct",
+  def = function(object, ...) standardGeneric("signal_correct")
+)
+
+#' @rdname baseline
 #' @aliases baseline_snip-method
 setGeneric(
   name = "baseline_snip",
@@ -330,14 +346,14 @@ setGeneric(
 #   def = function(object, ...) standardGeneric("baseline_rollingball")
 # )
 
-#' @rdname baseline
-#' @aliases signal_correct-method
-setGeneric(
-  name = "signal_correct",
-  def = function(object, ...) standardGeneric("signal_correct")
-)
+# @rdname baseline
+# @aliases baseline_peakfilling-method
+# setGeneric(
+#   name = "baseline_peakfilling",
+#   def = function(object, ...) standardGeneric("baseline_peakfilling")
+# )
 
-# ========================================================= Dose rate prediction
+# Dose rate ====================================================================
 #' Dose Rate Estimation
 #'
 #' \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
@@ -413,7 +429,7 @@ setGeneric(
   def = function(object, spectrum, ...) standardGeneric("dose_predict")
 )
 
-# ==================================================================== Integrate
+# Integrate ====================================================================
 #' Signal Integration
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
@@ -450,7 +466,7 @@ setGeneric(
   def = function(object, background, ...) standardGeneric("signal_integrate")
 )
 
-# ======================================================================== Peaks
+# Peaks ========================================================================
 #' Peaks
 #'
 #' Finds local maxima in sequential data.
@@ -461,7 +477,7 @@ setGeneric(
 #' @param SNR An \code{\link{integer}} giving the signal-to-noise-ratio for
 #'  peak detection (see below).
 #' @param span An \code{\link{integer}} giving the half window size (in number
-#'  of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
+#'  of channels). If \code{NULL}, 5\% of the number of channels is used as the
 #'  half window size.
 #' @param ... Extra parameters to be passed to internal methods.
 #' @details
@@ -484,13 +500,13 @@ setGeneric(
   def = function(object, ...) standardGeneric("peaks_find")
 )
 
-# ========================================================================= Plot
+# Plot =========================================================================
 #' Plot
 #'
 #' @param x,y Objects to be plotted.
 #' @param xaxis,yaxis A \code{\link{character}} string specifying the data to
 #'  be plotted along each axis. It must be one of "\code{energy}" or
-#'  "\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
+#'  "\code{channel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
 #'  (\code{y} axis). Any unambiguous substring can be given.
 #' @param select A \code{\link{numeric}} or \code{\link{character}} vector
 #'  giving the selection of the spectrum that are drawn.
@@ -523,7 +539,7 @@ if (!isGeneric("plot")) {
   )
 }
 
-# ============================================================== Read/write data
+# Read/write data ==============================================================
 #' Data Input
 #'
 #' Reads a gamma ray spectrum file.
@@ -550,13 +566,13 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
-# ======================================================================== Slice
-#' Choose Chanels by Position
+# Slice ========================================================================
+#' Choose channels by Position
 #'
-#' Choose chanels by position.
+#' Choose channels by position.
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object.
-#' @param ... \code{\link{integer}} values giving the chanels of the
+#' @param ... \code{\link{integer}} values giving the channels of the
 #'  spectrum to be kept/dropped (see below). Numeric values are coerced to
 #'  integer as by \code{\link{as.integer}} (and hence truncated towards zero).
 #' @details
@@ -581,7 +597,7 @@ setGeneric(
   def = function(object, ...) standardGeneric("signal_slice")
 )
 
-# ==================================================================== Smoothing
+# Smooth =======================================================================
 #' Smooth
 #'
 #' Smoothes intensities.
@@ -663,7 +679,7 @@ setGeneric(
   def = function(object, ...) standardGeneric("smooth_savitzky")
 )
 
-# ==================================================================== Stabilize
+# Stabilize ====================================================================
 #' Transform Intensities
 #'
 #' @param object A \linkS4class{GammaSpectrum} object.
@@ -682,7 +698,7 @@ setGeneric(
   def = function(object, ...) standardGeneric("signal_stabilize")
 )
 
-# ==================================================================== Summarize
+# Summarize ====================================================================
 #' Summarize
 #'
 #' @param object A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}

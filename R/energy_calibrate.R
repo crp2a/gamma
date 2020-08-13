@@ -10,13 +10,13 @@ setMethod(
   signature = signature(object = "GammaSpectrum", lines = "list"),
   definition = function(object, lines, ...) {
     # Validation
-    if (!all(c("chanel", "energy") %in% names(lines)))
+    if (!all(c("channel", "energy") %in% names(lines)))
       stop(sprintf("%s is a list, but does not have components %s and %s.",
-                   sQuote("lines"), sQuote("chanel"), sQuote("energy")),
+                   sQuote("lines"), sQuote("channel"), sQuote("energy")),
            call. = FALSE)
 
     # Adjust spectrum for energy shift
-    # Get corresponding chanels
+    # Get corresponding channels
     lines <- as.data.frame(lines)
     lines <- stats::na.omit(lines)
     n <- nrow(lines)
@@ -29,10 +29,10 @@ setMethod(
 
     # Adjust spectrum for energy shift
     ## Fit second order polynomial
-    fit_poly <- stats::lm(energy ~ stats::poly(chanel, degree = 2, raw = TRUE),
+    fit_poly <- stats::lm(energy ~ stats::poly(channel, degree = 2, raw = TRUE),
                           data = lines)
     ## Predict shifted energy values
-    fit_spc <- stats::predict(fit_poly, spc_data[, "chanel", drop = FALSE])
+    fit_spc <- stats::predict(fit_poly, spc_data[, "channel", drop = FALSE])
 
     # Return a new gamma spectrum with adjusted energy
     methods::initialize(object, energy = fit_spc, calibration = fit_poly)

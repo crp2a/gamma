@@ -13,7 +13,7 @@
 \alias{Math,GammaSpectrum-method}
 \alias{Math2,GammaSpectrum-method}
 \alias{Summary,GammaSpectrum-method}
-\title{Common Operations on Matrix Objects}
+\title{Common Operations on GammaSpectrum Objects}
 \usage{
 \S4method{Arith}{GammaSpectrum,GammaSpectrum}(e1, e2)
 

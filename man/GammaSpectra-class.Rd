@@ -17,12 +17,12 @@ This class extends the base \code{\link{list}} and can only contains
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
  \item{\code{length(x)}}{Get the number of elements in \code{x}.}
- \item{\code{lengths(x)}}{Get the number of chanels in each element of
+ \item{\code{lengths(x)}}{Get the number of channels in each element of
   \code{x}.}
  \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
   the names of \code{x} according to \code{value}.}
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
- \item{\code{get_chanels(x)}}{Get the number of chanels in each element of
+ \item{\code{get_channels(x)}}{Get the number of channels in each element of
  \code{x}.}
  \item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
  \item{\code{get_energy(x)}}{Get the energy range of each element of

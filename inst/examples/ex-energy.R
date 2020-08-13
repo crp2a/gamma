@@ -2,9 +2,9 @@
 spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
 (spc <- read(spc_file))
 
-## Set peak positions (chanel) and expected energy values
+## Set peak positions (channel) and expected energy values
 calib_lines <- list(
-  chanel = c(86, 495, 879),
+  channel = c(86, 495, 879),
   energy = c(238, 1461, 2615)
 )
 

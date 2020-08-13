@@ -2,7 +2,7 @@
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 spc <- read(spc_file)
 
-## Remove the first 35 chanels
+## Remove the first 35 channels
 spc <- signal_slice(spc, -c(1:35))
 
 ## SNIP baseline

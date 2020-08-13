@@ -11,7 +11,7 @@ test_that("Initialize an empty GammaSpectrum instance", {
   expect_identical(spectrum[["file_format"]], character(0))
   expect_identical(spectrum[["live_time"]], numeric(0))
   expect_identical(spectrum[["real_time"]], numeric(0))
-  expect_identical(spectrum[["chanel"]], integer(0))
+  expect_identical(spectrum[["channel"]], integer(0))
   expect_identical(spectrum[["energy"]], numeric(0))
   expect_identical(spectrum[["count"]], numeric(0))
   expect_identical(spectrum[["rate"]], numeric(0))
@@ -36,7 +36,7 @@ test_that("Initialize an empty BaseLine instance", {
   expect_identical(baseline[["file_format"]], character(0))
   expect_identical(baseline[["live_time"]], numeric(0))
   expect_identical(baseline[["real_time"]], numeric(0))
-  expect_identical(baseline[["chanel"]], integer(0))
+  expect_identical(baseline[["channel"]], integer(0))
   expect_identical(baseline[["energy"]], numeric(0))
   expect_identical(baseline[["count"]], numeric(0))
   expect_identical(baseline[["rate"]], numeric(0))
@@ -78,7 +78,7 @@ test_that("Initialize an empty PeakPosition instance", {
   expect_identical(peak[["noise_method"]], character(0))
   expect_identical(peak[["noise_threshold"]],  numeric(0))
   expect_identical(peak[["window"]], integer(0))
-  expect_identical(peak[["chanel"]], integer(0))
+  expect_identical(peak[["channel"]], integer(0))
   expect_identical(peak[["energy"]], numeric(0))
 
   expect_error(peak[["X"]])
@@ -93,8 +93,8 @@ test_that("Initialize an empty PeakPosition instance", {
                "must be an integer vector of length 1, not 26")
   expect_error(.PeakPosition(window = as.integer(-1)),
                "Slot `window` must be a strictly positive integer, not -1.")
-  expect_error(.PeakPosition(chanel = 1:26),
-               "Slots `chanel` and `energy` must have the same length.")
+  expect_error(.PeakPosition(channel = 1:26),
+               "Slots `channel` and `energy` must have the same length.")
   expect_error(.PeakPosition(energy = 1:26),
-               "Slots `chanel` and `energy` must have the same length.")
+               "Slots `channel` and `energy` must have the same length.")
 })

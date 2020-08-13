@@ -6,12 +6,12 @@
 \alias{baseline}
 \alias{signal_baseline}
 \alias{baseline-method}
+\alias{signal_correct}
+\alias{signal_correct-method}
 \alias{baseline_snip}
 \alias{baseline_snip-method}
 \alias{baseline_rubberband}
 \alias{baseline_rubberband-method}
-\alias{signal_correct}
-\alias{signal_correct-method}
 \alias{signal_baseline,GammaSpectrum-method}
 \alias{signal_baseline,GammaSpectra-method}
 \alias{signal_correct,GammaSpectrum-method}
@@ -24,11 +24,11 @@
 \usage{
 signal_baseline(object, ...)
 
+signal_correct(object, ...)
+
 baseline_snip(object, ...)
 
 baseline_rubberband(object, ...)
-
-signal_correct(object, ...)
 
 \S4method{signal_baseline}{GammaSpectrum}(object, method = c("SNIP", "rubberband"), ...)
 
@@ -89,12 +89,16 @@ The following methods are availble for baseline estimation:
   \item{rubberband}{}
  }
 }
+\note{
+\code{baseline_rubberband} is slightly modified from C. Beleites'
+ \code{\link[hyperSpec]{spc.rubberband}}.
+}
 \examples{
 ## Import a CNF file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 spc <- read(spc_file)
 
-## Remove the first 35 chanels
+## Remove the first 35 channels
 spc <- signal_slice(spc, -c(1:35))
 
 ## SNIP baseline
@@ -113,7 +117,11 @@ all(spc_clean1 == spc_clean2)
 plot(spc_clean1)
 }
 \references{
-Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
+Liland, K. H. (2015). 4S Peak Filling - baseline estimation by iterative
+ mean suppression. \emph{MethodsX}, 2, 135-140.
+ DOI: \href{https://doi.org/10.1016/j.mex.2015.02.009}{10.1016/j.mex.2015.02.009}.
+
+ Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
  Background elimination methods for multidimensional gamma-ray spectra.
  \emph{Nuclear Instruments and Methods in Physics Research Section A:
  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),

@@ -6,7 +6,7 @@
 \alias{signal_slice-method}
 \alias{signal_slice,GammaSpectrum-method}
 \alias{signal_slice,GammaSpectra-method}
-\title{Choose Chanels by Position}
+\title{Choose channels by Position}
 \usage{
 signal_slice(object, ...)
 
@@ -18,7 +18,7 @@ signal_slice(object, ...)
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 object.}
 
-\item{...}{\code{\link{integer}} values giving the chanels of the
+\item{...}{\code{\link{integer}} values giving the channels of the
 spectrum to be kept/dropped (see below). Numeric values are coerced to
 integer as by \code{\link{as.integer}} (and hence truncated towards zero).}
 }
@@ -26,7 +26,7 @@ integer as by \code{\link{as.integer}} (and hence truncated towards zero).}
 A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
 }
 \description{
-Choose chanels by position.
+Choose channels by position.
 }
 \details{
 Either positive values to keep, or negative values to drop, should be

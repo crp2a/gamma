@@ -7,15 +7,15 @@ cts <- dnorm(1:1024, mean = 86, sd = 5) +
 # Add some noise
 set.seed(12345)
 cts <- cts * 10^5 + sample(1:10, 1024, TRUE)
-spc <- .GammaSpectrum(chanel = 1:1024, count = cts)
+spc <- .GammaSpectrum(channel = 1:1024, count = cts)
 
 test_that("Find peaks", {
   peaks <- peaks_find(spc, SNR = 3, span = 50)
-  expect_equal(get_chanels(peaks), c(86, 493, 876))
+  expect_equal(get_channels(peaks), c(86, 493, 876))
   expect_equal(get_energy(peaks), c(NA_real_, NA_real_, NA_real_))
 
   peaks <- peaks_find(spc, SNR = 3, span = NULL)
-  expect_equal(get_chanels(peaks), c(86, 493, 876))
+  expect_equal(get_channels(peaks), c(86, 493, 876))
   expect_equal(get_energy(peaks), c(NA_real_, NA_real_, NA_real_))
 
   expect_output(show(peaks), "3 peaks were detected")
@@ -32,7 +32,7 @@ test_that("Find peaks", {
   expect_equal(get_hash(peaks), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 })
 test_that("FWHM", {
-  df <- methods::as(spc, "data.frame")[, c("chanel", "count")]
+  df <- methods::as(spc, "data.frame")[, c("channel", "count")]
   fwhm <- FWHM(df, center = 86)
   expect_true(fwhm == 10)
   expect_equal(fwhm / (2 * sqrt(2 * log(2))), 5, tolerance = 0.2)

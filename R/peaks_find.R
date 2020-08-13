@@ -58,7 +58,7 @@ setMethod(
       noise_method = method,
       noise_threshold = threshold,
       window = span,
-      chanel = pks[["chanel"]],
+      channel = pks[["channel"]],
       energy = pks[["energy"]]
     )
   }

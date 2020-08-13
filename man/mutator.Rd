@@ -15,8 +15,8 @@
 \alias{get_livetime-method}
 \alias{get_realtime}
 \alias{get_realtime-method}
-\alias{get_chanels}
-\alias{get_chanels-method}
+\alias{get_channels}
+\alias{get_channels-method}
 \alias{get_counts}
 \alias{get_counts-method}
 \alias{get_rates}
@@ -31,8 +31,8 @@
 \alias{set_method-method}
 \alias{get_residuals}
 \alias{get_residuals-method}
-\alias{range_chanels}
-\alias{range_chanels-method}
+\alias{range_channels}
+\alias{range_channels-method}
 \alias{range_energy}
 \alias{range_energy-method}
 \alias{length,GammaSpectrum-method}
@@ -40,27 +40,27 @@
 \alias{get_names,GammaSpectrum-method}
 \alias{get_livetime,GammaSpectrum-method}
 \alias{get_realtime,GammaSpectrum-method}
-\alias{get_chanels,GammaSpectrum-method}
+\alias{get_channels,GammaSpectrum-method}
 \alias{get_counts,GammaSpectrum-method}
 \alias{get_rates,GammaSpectrum-method}
 \alias{get_energy,GammaSpectrum-method}
 \alias{range_energy,GammaSpectrum-method}
-\alias{range_chanels,GammaSpectrum-method}
+\alias{range_channels,GammaSpectrum-method}
 \alias{get_method,Baseline-method}
 \alias{set_method,Baseline-method}
 \alias{get_hash,GammaSpectra-method}
 \alias{get_names,GammaSpectra-method}
 \alias{get_livetime,GammaSpectra-method}
 \alias{get_realtime,GammaSpectra-method}
-\alias{get_chanels,GammaSpectra-method}
+\alias{get_channels,GammaSpectra-method}
 \alias{get_counts,GammaSpectra-method}
 \alias{get_rates,GammaSpectra-method}
 \alias{get_energy,GammaSpectra-method}
 \alias{range_energy,GammaSpectra-method}
-\alias{range_chanels,GammaSpectra-method}
+\alias{range_channels,GammaSpectra-method}
 \alias{get_residuals,DoseRateModel-method}
 \alias{get_hash,PeakPosition-method}
-\alias{get_chanels,PeakPosition-method}
+\alias{get_channels,PeakPosition-method}
 \alias{get_energy,PeakPosition-method}
 \alias{set_names<-,GammaSpectrum-method}
 \alias{set_names,GammaSpectrum-method}
@@ -81,7 +81,7 @@ get_livetime(x)
 
 get_realtime(x)
 
-get_chanels(x)
+get_channels(x)
 
 get_counts(x)
 
@@ -97,7 +97,7 @@ set_method(x) <- value
 
 get_residuals(x)
 
-range_chanels(x, ...)
+range_channels(x, ...)
 
 range_energy(x, ...)
 
@@ -111,7 +111,7 @@ range_energy(x, ...)
 
 \S4method{get_realtime}{GammaSpectrum}(x)
 
-\S4method{get_chanels}{GammaSpectrum}(x)
+\S4method{get_channels}{GammaSpectrum}(x)
 
 \S4method{get_counts}{GammaSpectrum}(x)
 
@@ -121,7 +121,7 @@ range_energy(x, ...)
 
 \S4method{range_energy}{GammaSpectrum}(x, na.rm = FALSE)
 
-\S4method{range_chanels}{GammaSpectrum}(x, na.rm = FALSE)
+\S4method{range_channels}{GammaSpectrum}(x, na.rm = FALSE)
 
 \S4method{get_method}{Baseline}(x)
 
@@ -133,7 +133,7 @@ range_energy(x, ...)
 
 \S4method{get_realtime}{GammaSpectra}(x)
 
-\S4method{get_chanels}{GammaSpectra}(x)
+\S4method{get_channels}{GammaSpectra}(x)
 
 \S4method{get_counts}{GammaSpectra}(x)
 
@@ -143,13 +143,13 @@ range_energy(x, ...)
 
 \S4method{range_energy}{GammaSpectra}(x, na.rm = FALSE)
 
-\S4method{range_chanels}{GammaSpectra}(x, na.rm = FALSE)
+\S4method{range_channels}{GammaSpectra}(x, na.rm = FALSE)
 
 \S4method{get_residuals}{DoseRateModel}(x)
 
 \S4method{get_hash}{PeakPosition}(x)
 
-\S4method{get_chanels}{PeakPosition}(x)
+\S4method{get_channels}{PeakPosition}(x)
 
 \S4method{get_energy}{PeakPosition}(x)
 

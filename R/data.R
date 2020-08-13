@@ -89,7 +89,7 @@
 #' @keywords datasets
 "AIX_NaI_1"
 
-#' CRP2A Calibration Curve (LaBr #1)
+#' CRP2A Calibration Curve (LaBr)
 #'
 #' @usage data(BDX_LaBr_1)
 #' @format

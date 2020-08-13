@@ -3,7 +3,7 @@
 \docType{data}
 \name{BDX_LaBr_1}
 \alias{BDX_LaBr_1}
-\title{CRP2A Calibration Curve (LaBr #1)}
+\title{CRP2A Calibration Curve (LaBr)}
 \format{
 An object of class \linkS4class{CalibrationCurve}.
 \tabular{ll}{
@@ -17,7 +17,7 @@ An object of class \linkS4class{CalibrationCurve}.
 data(BDX_LaBr_1)
 }
 \description{
-CRP2A Calibration Curve (LaBr #1)
+CRP2A Calibration Curve (LaBr)
 }
 \examples{
 ## Load the curve

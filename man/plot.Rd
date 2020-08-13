@@ -11,13 +11,13 @@
 \alias{plot,CalibrationCurve,missing-method}
 \title{Plot}
 \usage{
-\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("chanel", "energy"), yaxis = c("count", "rate"), ...)
+\S4method{plot}{GammaSpectrum,missing}(x, xaxis = c("channel", "energy"), yaxis = c("count", "rate"), ...)
 
-\S4method{plot}{GammaSpectrum,Baseline}(x, y, xaxis = c("chanel", "energy"), yaxis = c("count", "rate"), ...)
+\S4method{plot}{GammaSpectrum,Baseline}(x, y, xaxis = c("channel", "energy"), yaxis = c("count", "rate"), ...)
 
 \S4method{plot}{GammaSpectra,missing}(
   x,
-  xaxis = c("chanel", "energy"),
+  xaxis = c("channel", "energy"),
   yaxis = c("count", "rate"),
   select = NULL,
   facet = FALSE,
@@ -41,7 +41,7 @@
 
 \item{xaxis, yaxis}{A \code{\link{character}} string specifying the data to
 be plotted along each axis. It must be one of "\code{energy}" or
-"\code{chanel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
+"\code{channel}" (\code{x} axis) and "\code{counts}" or "\code{rate}"
 (\code{y} axis). Any unambiguous substring can be given.}
 
 \item{...}{Currently not used.}
@@ -86,7 +86,7 @@ plot(spc, xaxis = "energy", yaxis = "count", select = "BRIQUE") +
   ggplot2::theme_bw()
 
 # Plot the first three spectra
-plot(spc, xaxis = "chanel", yaxis = "rate", select = 1:3, facet = TRUE) +
+plot(spc, xaxis = "channel", yaxis = "rate", select = 1:3, facet = TRUE) +
   ggplot2::theme_bw()
 }
 \seealso{

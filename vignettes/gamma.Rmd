@@ -58,7 +58,7 @@ Note that **gamma** uses the *International System of Units*: energy values are 
 Both Canberra CNF and TKA files can be imported.
 
 ```{r import}
-# Automatically skip the first chanels
+# Automatically skip the first channels
 # Import a CNF file
 cnf_test <- system.file("extdata/LaBr.CNF", package = "gamma")
 (spc_cnf <- read(cnf_test))
@@ -154,7 +154,7 @@ plot(corrected, peaks) +
 ```
 
 ### Energy scale calibration
-If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* chanel values, then used to predict the new energy scale of the spectrum.
+If you know the correspondence between several channels and the energy scale, you can use these pairs of values to calibrate the spectrum. A second order polynomial model is fitted on these energy *vs* channel values, then used to predict the new energy scale of the spectrum.
 
 You can use the results of the peak detection and set the expected energy values.
 ```{r calibrate-fit, fig.width=7, fig.height=5, fig.align="center"}
@@ -173,9 +173,9 @@ plot(scaled, xaxis = "energy") +
 
 Alternatively, you can do it by hand.
 ```{r calibrate-fixed}
-# Create a list of chanel-enegy pairs
+# Create a list of channel-enegy pairs
 calib_lines <- list(
-  chanel = c(84, 492, 865),
+  channel = c(84, 492, 865),
   energy = c(238, 1461, 2615)
 )
 

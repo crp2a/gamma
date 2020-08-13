@@ -11,7 +11,7 @@ setValidity(
     date <- object@date
     instrument <- object@instrument
     file_format <- object@file_format
-    chanel <- object@chanel
+    channel <- object@channel
     energy <- object@energy
     count <- object@count
     rate <- object@rate
@@ -86,24 +86,24 @@ setValidity(
       }
     }
     # TODO: check calibration
-    if (length(chanel) != 0) {
-      if (!all(isPositive(chanel, strict = TRUE))) {
+    if (length(channel) != 0) {
+      if (!all(isPositive(channel, strict = TRUE))) {
         message <- c(
           message,
           sprintf("%s must be a vector of strictly positive numbers.",
-                  sQuote("chanel"))
+                  sQuote("channel"))
         )
       }
     }
     # TODO: check counts (baseline may produces negative count)
     # TODO: check rate (baseline may produces negative count)
-    if (length(chanel) != 0) {
-      if (!isEqual(lengths(list(chanel, count)))) {
+    if (length(channel) != 0) {
+      if (!isEqual(lengths(list(channel, count)))) {
         message <- c(
           message,
           sprintf(
             "%s (%d) and %s (%d) must have the same length.",
-            sQuote("chanel"), length(chanel),
+            sQuote("channel"), length(channel),
             sQuote("count"), length(count)
           )
         )
@@ -269,7 +269,7 @@ setValidity(
     noise_method <- object@noise_method
     threshold <- object@noise_threshold
     window <- object@window
-    chanel <- object@chanel
+    channel <- object@channel
     energy <- object@energy
     message <- c()
 
@@ -310,9 +310,9 @@ setValidity(
                 window)
       )
     }
-    if (length(chanel) != length(energy)) {
+    if (length(channel) != length(energy)) {
       message <- c(message,
-                   "Slots `chanel` and `energy` must have the same length.")
+                   "Slots `channel` and `energy` must have the same length.")
     }
 
     if (length(message) != 0) {

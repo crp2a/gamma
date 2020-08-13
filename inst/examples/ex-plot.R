@@ -11,5 +11,5 @@ plot(spc, xaxis = "energy", yaxis = "count", select = "BRIQUE") +
   ggplot2::theme_bw()
 
 # Plot the first three spectra
-plot(spc, xaxis = "chanel", yaxis = "rate", select = 1:3, facet = TRUE) +
+plot(spc, xaxis = "channel", yaxis = "rate", select = 1:3, facet = TRUE) +
   ggplot2::theme_bw()

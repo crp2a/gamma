@@ -23,7 +23,7 @@ noise threshold.}
 \item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
 size.}
 
-\item{\code{chanel}}{A \code{\link{integer}} vector giving the channel number.
+\item{\code{channel}}{A \code{\link{integer}} vector giving the channel number.
 Numeric values are coerced to integer as by \code{\link{as.integer}}
 (and hence truncated towards zero).}
 
@@ -39,7 +39,7 @@ This class retains copy construction.
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
  \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
- \item{\code{get_chanels(x)}}{Get the chanels of \code{x}.}
+ \item{\code{get_channels(x)}}{Get the channels of \code{x}.}
  \item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
   the energy scale of \code{x} according to \code{value}.}
 }

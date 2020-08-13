@@ -5,7 +5,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
   spectrum <- read(spc_file)
 
   lines <- list(
-    chanel = c(76, 459, 816),
+    channel = c(76, 459, 816),
     energy = c(238, 1461, 2614.5)
   )
 
@@ -19,7 +19,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
   expect_equal(calib[["file_format"]], spectrum[["file_format"]])
   expect_equal(calib[["live_time"]], spectrum[["live_time"]])
   expect_equal(calib[["real_time"]], spectrum[["real_time"]])
-  expect_equal(calib[["chanel"]], spectrum[["chanel"]])
+  expect_equal(calib[["channel"]], spectrum[["channel"]])
   expect_length(calib[["energy"]], 1024)
   expect_true(all(calib[["energy"]] != spectrum[["energy"]]))
   expect_equal(calib[["count"]], spectrum[["count"]])
@@ -34,7 +34,7 @@ test_that("Calibrate a GammaSpectrum object with a list", {
                "does not have components")
 
   lines <- list(
-    chanel = c(76, 816),
+    channel = c(76, 816),
     energy = c(238, 2614.5)
   )
   expect_error(energy_calibrate(spectrum, lines = lines),
@@ -46,7 +46,7 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
 
   peaks <- .PeakPosition(
     hash = spectrum@hash,
-    chanel = c(76L, 459L, 816L),
+    channel = c(76L, 459L, 816L),
     energy = c(NA_real_, NA_real_, NA_real_)
   )
 

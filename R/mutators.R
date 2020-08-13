@@ -10,7 +10,7 @@ NULL
 setMethod(
   f = "length",
   signature = "GammaSpectrum",
-  definition = function(x) length(x@chanel)
+  definition = function(x) length(x@channel)
 )
 
 #' @export
@@ -51,11 +51,11 @@ setMethod(
 
 #' @export
 #' @rdname mutator
-#' @aliases get_chanels,GammaSpectrum-method
+#' @aliases get_channels,GammaSpectrum-method
 setMethod(
-  f = "get_chanels",
+  f = "get_channels",
   signature = "GammaSpectrum",
-  definition = function(x) x@chanel
+  definition = function(x) x@channel
 )
 
 #' @export
@@ -99,13 +99,13 @@ setMethod(
 
 #' @export
 #' @rdname mutator
-#' @aliases range_chanels,GammaSpectrum-method
+#' @aliases range_channels,GammaSpectrum-method
 setMethod(
-  f = "range_chanels",
+  f = "range_channels",
   signature = "GammaSpectrum",
   definition = function(x, na.rm = FALSE) {
-    if (length(x@chanel) == 0) return(c(NA, NA))
-    range(x@chanel, na.rm = na.rm)
+    if (length(x@channel) == 0) return(c(NA, NA))
+    range(x@channel, na.rm = na.rm)
   }
 )
 
@@ -166,12 +166,12 @@ setMethod(
 
 #' @export
 #' @rdname mutator
-#' @aliases get_chanels,GammaSpectra-method
+#' @aliases get_channels,GammaSpectra-method
 setMethod(
-  f = "get_chanels",
+  f = "get_channels",
   signature = "GammaSpectra",
   definition = function(x) {
-    lapply(x, FUN = get_chanels)
+    lapply(x, FUN = get_channels)
   }
 )
 
@@ -225,16 +225,16 @@ setMethod(
 
 #' @export
 #' @rdname mutator
-#' @aliases range_chanels,GammaSpectra-method
+#' @aliases range_channels,GammaSpectra-method
 setMethod(
-  f = "range_chanels",
+  f = "range_channels",
   signature = "GammaSpectra",
   definition = function(x, na.rm = FALSE) {
-    chanels <- vapply(x, FUN = range_chanels, FUN.VALUE = numeric(2),
+    channels <- vapply(x, FUN = range_channels, FUN.VALUE = numeric(2),
                       na.rm = na.rm)
-    chanels <- t(chanels)
-    colnames(chanels) <- c("min", "max")
-    chanels
+    channels <- t(channels)
+    colnames(channels) <- c("min", "max")
+    channels
   }
 )
 
@@ -288,11 +288,11 @@ setMethod(
 
 #' @export
 #' @rdname mutator
-#' @aliases get_chanels,PeakPosition-method
+#' @aliases get_channels,PeakPosition-method
 setMethod(
-  f = "get_chanels",
+  f = "get_channels",
   signature = "PeakPosition",
-  definition = function(x) x@chanel
+  definition = function(x) x@channel
 )
 
 #' @export
@@ -360,7 +360,7 @@ setMethod(
     # Keep only complete cases
     k <- if (anyNA(value)) which(!is.na(value)) else seq_along(value)
     x@energy <- value[k]
-    x@chanel <- x@chanel[k]
+    x@channel <- x@channel[k]
     methods::validObject(x)
     x
   }

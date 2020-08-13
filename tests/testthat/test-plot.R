@@ -5,8 +5,8 @@ test_that("Plot GammaSpectrum", {
   spc_file_cnf <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file_cnf)
 
-  gg_spectrum_chanel <- plot(spc_cnf, xaxis = "chanel")
-  vdiffr::expect_doppelganger("spectrum_chanel", gg_spectrum_chanel)
+  gg_spectrum_channel <- plot(spc_cnf, xaxis = "channel")
+  vdiffr::expect_doppelganger("spectrum_channel", gg_spectrum_channel)
 
   gg_spectrum_energy <- plot(spc_cnf, xaxis = "energy")
   vdiffr::expect_doppelganger("spectrum_energy", gg_spectrum_energy)
@@ -21,7 +21,7 @@ test_that("Plot GammaSpectrum", {
   spc_tka <- read(spc_file_tka)
 
   expect_warning(plot(spc_tka, xaxis = "energy"),
-                 "The energy scale is missing, displaying chanels instead.")
+                 "The energy scale is missing, displaying channels instead.")
 })
 test_that("Plot GammaSpectrum and PeakPosition", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")

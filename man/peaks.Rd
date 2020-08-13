@@ -24,7 +24,7 @@ used for background noise estimation (see below).}
 peak detection (see below).}
 
 \item{span}{An \code{\link{integer}} giving the half window size (in number
-of chanels). If \code{NULL}, 5\% of the number of chanels is used as the
+of channels). If \code{NULL}, 5\% of the number of channels is used as the
 half window size.}
 }
 \value{

@@ -15,7 +15,7 @@ setMethod(
     }
 
     if (all(index > 0) || all(index < 0)) {
-      chanel <- object[["chanel"]][index]
+      channel <- object[["channel"]][index]
       energy <- object[["energy"]][index]
       count <- object[["count"]][index]
       rate <- object[["rate"]][index]
@@ -24,7 +24,7 @@ setMethod(
            call. = FALSE)
     }
 
-    methods::initialize(object, chanel = chanel, energy = energy,
+    methods::initialize(object, channel = channel, energy = energy,
                         count = count, rate = rate)
   }
 )

@@ -17,9 +17,9 @@ test_that("GammaSpectrum", {
   # live and real times
   expect_equal(get_livetime(spectrum), 3385.54)
   expect_equal(get_realtime(spectrum), 3403.67)
-  # chanels
-  expect_length(get_chanels(spectrum), 1024)
-  expect_equal(range_chanels(spectrum), c(1, 1024))
+  # channels
+  expect_length(get_channels(spectrum), 1024)
+  expect_equal(range_channels(spectrum), c(1, 1024))
   # counts
   expect_length(get_counts(spectrum), 1024)
   # rates
@@ -62,9 +62,9 @@ test_that("GammaSpectra", {
   # live and real times
   expect_length(get_livetime(spectra), 7)
   expect_length(get_realtime(spectra), 7)
-  # chanels
-  expect_true(all(lengths(get_chanels(spectra)) == 1024))
-  expect_equal(dim(range_chanels(spectra)), c(7, 2))
+  # channels
+  expect_true(all(lengths(get_channels(spectra)) == 1024))
+  expect_equal(dim(range_channels(spectra)), c(7, 2))
   # counts
   expect_true(all(lengths(get_counts(spectra)) == 1024))
   # rate

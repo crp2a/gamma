@@ -24,7 +24,7 @@ setAs(
   to = "matrix",
   def = function(from) {
     cbind(
-      chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
+      channel = if (length(from@channel) != 0) from@channel else NA_real_,
       energy = if (length(from@energy) != 0) from@energy else NA_real_,
       count = if (length(from@count) != 0) from@count else NA_real_,
       rate = if (length(from@rate) != 0) from@rate else NA_real_
@@ -87,7 +87,7 @@ setAs(
   to = "matrix",
   def = function(from) {
     cbind(
-      chanel = if (length(from@chanel) != 0) from@chanel else NA_real_,
+      channel = if (length(from@channel) != 0) from@channel else NA_real_,
       energy = if (length(from@energy) != 0) from@energy else NA_real_
     )
   }

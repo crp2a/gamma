@@ -10,7 +10,7 @@ NULL
 #   signature = signature(object = "GammaSpectrum"),
 #   definition = function(object, ...) {
 #     # Get counts
-#     x <- get_chanels(object)
+#     x <- get_channels(object)
 #     y <- get_counts(object)
 #     # Estimate baseline
 #     bsl <- rollingball(x, y)
@@ -24,7 +24,6 @@ NULL
 #     methods::as(spc, "BaseLine")
 #   }
 # )
-
 
 # rollingball <- function(x, y) {
 #
