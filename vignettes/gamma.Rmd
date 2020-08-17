@@ -98,6 +98,8 @@ sliced <- signal_slice(spc_tka)
 ```
 
 ### Stabilization
+The stabilization step aims at improving the identification of peaks with a low signal-to-noise ratio. This particularly targets higher energy peaks.
+
 ```{r stabilize}
 # Use a square root transformation
 transformed <- signal_stabilize(sliced, f = sqrt)

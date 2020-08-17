@@ -97,8 +97,21 @@ introduced by the calibration of the energy scale of the spectrum.}
 \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
 }
 \details{
-\code{dose_predict} predicts in-situ gamma dose rate.
+\code{dose_predict} predicts in situ gamma dose rate.
 
+
+ To estimate the gamma dose rate, one of the calibration curves distributed
+ with this package can be used (fig. \@ref(fig:curve)). These built-in curves
+ are in use in several luminescence dating laboratories and can be used to
+ replicate published results. As these curves are instrument specific, the
+ user may have to build its own curve.
+
+ The construction of a calibration curve requires a set of reference spectra
+ for which the gamma dose rate is known and a background noise measurement.
+ First, each reference spectrum is integrated over a given interval, then
+ normalized to active time and corrected for background noise. The dose rate
+ is finally modelled by the integrated signal value used as a linear
+ predictor (York *et al.*, 2004).
 
  See \code{vignette(doserate)} for a reproducible example.
 }

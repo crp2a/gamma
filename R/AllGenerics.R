@@ -221,6 +221,23 @@ NULL
 #'  numeric vector giving the observed peak position ("\code{channel}") and the
 #'  corresponding expected "\code{energy}" value (in keV).
 #' @param ... Currently not used.
+#' @details
+#'  The energy calibration of a spectrum is the most tricky part. To do this,
+#'  the user must specify the position of at least three observed peaks and the
+#'  corresponding energy value (in keV). A second order polynomial model is
+#'  fitted on these energy \emph{vs} channel values, then used to predict the
+#'  new energy scale of the spectrum.
+#'
+#'  The package allows to provide the channel-energy pairs to be use. However,
+#'  the spectrum can be noisy so it is difficult to properly determine the peak
+#'  channel. In this case, a better approach may be to pre-process the spectrum
+#'  (variance-stabilization, smoothing and baseline correction) and perform a
+#'  peak detection. Once the identified peaks are satisfactory, you can set the
+#'  corresponding energy values (in keV) and use these lines to calibrate the
+#'  energy scale of the spectrum.
+#'
+#'  Regardless of the approach you choose, it is strongly recommended to check
+#'  the result before proceeding.
 #' @return
 #'  \code{energy_calibrate} returns a \linkS4class{GammaSpectrum} object.
 #'
@@ -259,7 +276,7 @@ setGeneric(
 #'  \code{method} is "\code{SNIP}".
 #' @param decreasing A \code{\link{logical}} scalar: should a decreasing
 #'  clipping window be used? Only used if \code{method} is "\code{SNIP}".
-#' @param n An \code{\link{integer}} value giving the numerber of iterations.
+#' @param n An \code{\link{integer}} value giving the number of iterations.
 #'  Only used if \code{method} is "\code{SNIP}".
 #' @param noise A length-one \code{\link{numeric}} vector giving the noise
 #' level. Only used if \code{method} is "\code{rubberband}".
@@ -268,7 +285,7 @@ setGeneric(
 #' Only used if \code{method} is "\code{rubberband}".
 #' @param ... Extra parameters to be passed to further methods.
 #' @details
-#'  The following methods are availble for baseline estimation:
+#'  The following methods are available for baseline estimation:
 #'  \describe{
 #'   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
 #'   \item{rubberband}{}
@@ -277,7 +294,7 @@ setGeneric(
 #'  \code{baseline_rubberband} is slightly modified from C. Beleites'
 #'  \code{\link[hyperSpec]{spc.rubberband}}.
 #' @return
-#'  \code{baseline*} returns a \linkS4class{BaseLine} object.
+#'  \code{baseline_*} returns a \linkS4class{BaseLine} object.
 #'
 #'  \code{signal_correct} returns a corrected \linkS4class{GammaSpectrum} or
 #'  \linkS4class{GammaSpectra} object (same as \code{object}).
@@ -358,7 +375,7 @@ setGeneric(
 #'
 #' \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
 #'
-#' \code{dose_predict} predicts in-situ gamma dose rate.
+#' \code{dose_predict} predicts in situ gamma dose rate.
 #' @param object A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
 #'  object.
 #' @param background A \linkS4class{GammaSpectrum} object of a length-two
@@ -379,6 +396,19 @@ setGeneric(
 #'  introduced by the calibration of the energy scale of the spectrum.
 #' @param ... Currently not used.
 #' @details
+#'  To estimate the gamma dose rate, one of the calibration curves distributed
+#'  with this package can be used (fig. \@ref(fig:curve)). These built-in curves
+#'  are in use in several luminescence dating laboratories and can be used to
+#'  replicate published results. As these curves are instrument specific, the
+#'  user may have to build its own curve.
+#'
+#'  The construction of a calibration curve requires a set of reference spectra
+#'  for which the gamma dose rate is known and a background noise measurement.
+#'  First, each reference spectrum is integrated over a given interval, then
+#'  normalized to active time and corrected for background noise. The dose rate
+#'  is finally modelled by the integrated signal value used as a linear
+#'  predictor (York *et al.*, 2004).
+#'
 #'  See \code{vignette(doserate)} for a reproducible example.
 #' @return
 #'  \code{dose_fit} returns a \linkS4class{CalibrationCurve} object.
@@ -686,6 +716,9 @@ setGeneric(
 #' @param f A \code{\link{function}} that takes a numeric vector as
 #'  argument and returns a numeric vector.
 #' @param ... Extra arguments to be passed to \code{transformation}.
+#' @details
+#'  The stabilization step aims at improving the identification of peaks with a
+#'  low signal-to-noise ratio. This particularly targets higher energy peaks.
 #' @return A new \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
 #'  object with transformed intensities.
 #' @author N. Frerebeau

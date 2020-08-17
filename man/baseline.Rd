@@ -70,11 +70,11 @@ on \code{x} before employing SNIP algorithm? Only used if
 \item{decreasing}{A \code{\link{logical}} scalar: should a decreasing
 clipping window be used? Only used if \code{method} is "\code{SNIP}".}
 
-\item{n}{An \code{\link{integer}} value giving the numerber of iterations.
+\item{n}{An \code{\link{integer}} value giving the number of iterations.
 Only used if \code{method} is "\code{SNIP}".}
 }
 \value{
-\code{baseline*} returns a \linkS4class{BaseLine} object.
+\code{baseline_*} returns a \linkS4class{BaseLine} object.
 
  \code{signal_correct} returns a corrected \linkS4class{GammaSpectrum} or
  \linkS4class{GammaSpectra} object (same as \code{object}).
@@ -83,7 +83,7 @@ Only used if \code{method} is "\code{SNIP}".}
 Baseline Estimation and Removal
 }
 \details{
-The following methods are availble for baseline estimation:
+The following methods are available for baseline estimation:
  \describe{
   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
   \item{rubberband}{}
