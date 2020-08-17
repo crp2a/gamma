@@ -1,0 +1,177 @@
+---
+title: 'gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements'
+tags:
+  - archaeology
+  - geochronology
+  - luminescence dating
+  - gamma spectrometry
+authors:
+  - name: Brice Lebrun
+    orcid: 0000-0001-7503-8685
+    affiliation: "1"
+  - name: Nicolas Frerebeau
+    orcid: 0000-0001-5759-4944
+    affiliation: "1"
+  - name: Guilhem Paradol
+  - name: Guillaume Guérin
+    affiliation: "1"
+  - name: Norbert Mercier
+    affiliation: "1"
+  - name: Chantal Tribolo
+    affiliation: "1"
+  - name: Christelle Lahaye
+    orcid: 0000-0003-2215-9015
+    affiliation: "1"
+affiliations:
+ - name: IRAMAT-CRP2A (UMR 5060 - CNRS, Université Bordeaux Montaigne)
+   index: 1
+date: 30 June 2020
+bibliography: paper.bib
+output:
+  bookdown::html_document2
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, echo=FALSE}
+library(gamma)
+```
+
+# Abstract { - }
+*In situ* gamma spectrometry is a very useful technique used by the Luminescence and ESR dating community to improve the representativity of dose rate measurements in the context of gamma dose rate heterogeneities around dated material. This paper presents 'gamma', a new R package and its graphical user interface 'gammaShiny', allowing a reliable and reproducible workflow for *in situ* gamma spectrometry data analysis in the context of luminescence and ESR dating.
+
+# Introduction
+*In situ* gamma spectrometry is a powerful tool used in luminescence dating to tackle gamma dose rate heterogeneity [@aitken1998; @kluson2010]. A gamma spectrometer probe records gamma rays emitted within a sphere of radius equal to 30-50 cm [fig. 1 in @guerin2011] whereas a classic BeGe laboratory gamma spectrometer with planar or coaxial geometry only characterizes samples of a few dozen cubic centimeters,thus greatly improving the representativity of the measurement [@gilmore2008].
+
+Different techniques are currently used in luminescence and ESR dating field to determine the gamma dose rate from *in situ* gamma spectrometry measurements:
+
+- The "window technique", that consists in selecting different parts of the spectra to determine the U and Th-series and K radioelements contents in the sediment, around the probe.
+- The "threshold techniques", that allow a direct determination of the gamma dose rate without individual determination of K, U and Th series radioelements. @murray1978 have shown that the gamma dose rate can be estimated using the proportionality existing between the number of counts measured above a certain energy and the gamma dose rate. @mercier2007 developed this approach for a NaI(Tl) probe. They conclude that the measurement time (and consequently the risk of changing temperature during the measurement) is significantly reduced with respect to the "window technique".
+
+There are two techniques based on the "threshold technique": in counts and in energy. In both cases, @guerin2011 have shown that the environmental gamma dose rate determined in this way does not depend on water presence, nor on U-series disequilibrium. They have also shown few dependence on the gamma dose rate with the nature of the sediment.
+
+Because of the *in situ* measurements allowed by this type of equipment, its detector crystals (usually LaBr or NaI) are often used under unstable temperature conditions resulting in peak shift and spectral distortion [@casanovas2012]. As a result, spectrum processing is required before conversion from a spectrum to gamma dose rate.
+
+A typical workflow for energy shifting correction requires manual identification of reference peaks. This is usually performed using proprietary software such as Genie2000 (Canberra division of Mirion technologies, Windows OS only). Once reference peaks are identified, a new channel-energy curve is generated, taking into account the apparent shift between the observed and theoretical energies of these peaks. To this day, there is no turnkey solution for these steps and personal or laboratory-based solutions are implemented, e.g. Visual Basic Advance macros within Microsoft Excel.
+
+There are two challenging issues to these existing approaches. The first one is the lack of transparency: details of spectrum processing are not presented in the publications and researcher's internally developed solutions are not made available to the community, greatly limiting reproducibility and reliability of the measurements [see @kreutzer2017 for a broader discussion in the field of luminescence dating]. Secondly, the use of proprietary software limits their access by the community, complicating their maintenance and evolution.
+
+To address theses differents issues, we present an integrated solution to analyse *in situ* gamma spectrometry data, from raw spectrum processing to gamma dose-rate estimation: the R package 'gamma'.
+
+The R programming language [@rcoreteam2020] has many advantages, starting with its ease of learning and use. R is available on all computer platforms and its community offers efficient support. R is distributed under the GNU General Public License (therefore free of charge), ensuring transparency and modularity. Finally, several R packages dedicated to geochronology already exist [such as the 'Luminescence' package; @kreutzer2012].
+
+# The R package gamma
+The 'gamma' package allows to import, inspect and correct the energy scale of a spectrum (for now only Canberra CNF and TKA files are supported). It provides methods for estimating the gamma dose rate by the use of built-in or custom calibration curves. A graphical user interface (GUI) is also provided through the dedicated R package 'gammaShiny', using the 'shiny' package [@chang2020].
+
+## Workflow overview
+
+This section present a typical workflow within the 'gamma' package (fig. \@ref(fig:workflow)). A walk-through guide is also provided in the package manual. The following examples can be reproduced in any integrated development environment (like RStudio^TM^ Desktop; <http://rstudio.org>) or in the R terminal.
+
+Once the 'gamma' package is loaded (`library(gamma)`), processing a spectrum is achieved in three steps (detailed hereafter): import, energy calibration and dose-rate estimation.
+
+```{r workflow, echo=FALSE, fig.cap="A typical workflow within the 'gamma' package."}
+knitr::include_graphics("./man/figures/PAPER-workflow.jpg")
+```
+
+All theses steps can be performed in a GUI with: 
+
+```{r, eval=FALSE}
+library(gammaShiny)
+launch_app()
+```
+
+Note that we chose to develop a GUI to allow the use of 'gamma' for users who might feel not comfortable with the use of the command line. However, only the full publication of scripts along with the results guarantees the reproducibility of published studies.
+
+### Step 1: import and inspect a gamma spectrum
+The 'gamma' package only supports the most common type of spectrum files: Canberra CAM (.CNF) and Programmers Toolkit files (.TKA). This prevents spending time on data transformation and preserves file metadata. The `read()` function allows to import a CNF-file with the path of the file as a single argument. If the path point to a directory instead of a single file, all spectra will be imported.
+
+```{r import}
+## Get an example file
+cnf <- system.file(
+  "extdata/LaBr.CNF", 
+  package = "gamma"
+)
+## Import data
+spc <- read(cnf)
+spc
+```
+
+Spectra are stored as instances of an S4 class. Many mutator methods and group generic functions are available for basic operations and data wrangling. The `plot(spc)` method allows to graphically inspect the data.
+
+### Step 2: adjust the energy scale
+The energy calibration of a spectrum is a challenging part but must be performed before dose rate estimation as discussed earlier. The solution presented here requires the user to specify the position (channel) of at least three observed peaks and their corresponding theoretical energies (in keV). A second order polynomial model is fitted on these energy *vs* channel values, then used to predict the new energy scale of the spectrum.
+
+The package allows the user to provide the channel-energy pairs to be used. However, the spectrum can be noisy so it is difficult to properly determine the peak channel. In this case, a better approach may be to pre-process the spectrum (variance-stabilization, smoothing and baseline correction) and perform a peak detection (fig. \@ref(fig:plot)). Once the identified peaks are satisfactory, the user can set the corresponding energy values (in keV) and use these lines to calibrate the energy scale of the spectrum. All signal processing methods are prefixed with `signal_`.
+
+Cleaning
+: Several channels can be dropped to retain only part of the spectrum with `signal_slice()`. If no specific value is provided, an attempt is made to define the number of channels to skip at the beginning of the spectrum. This drops all channels before the highest count maximum. This is intended to deal with the artefact produced by the rapid growth of random background noise towards low energies.
+
+Stabilization
+: The stabilization step aims at improving the identification of peaks with a low signal-to-noise ratio. This particularly targets higher energy peaks. To perform this step, a function is applied to all the intensity values of the spectrum with `signal_stabilize()`. The example below uses a square root transformation but any user defined function can be used.
+
+Smoothing
+: Counting artefacts can be removed by smoothing intensities with `signal_smooth()`. Several methods are implemented here: (weighted) sliding-average and Savitzky-Golay filter [@gorry1990; @savitzky1964]. The example below uses the Savitzky-Golay filter as this method usually provides better results, at the expense of a longer computing time.
+
+Baseline correction
+: Spectrum baseline can be estimated and removed with `signal_correct()` using specialized SNIP algorithm [@ryan1988; @morhac1997; @morhac2008].
+
+Peak detection
+: `find_peaks()` allows automatic peak position detection on a baseline-corrected spectrum. For a successful detection, a local maximum has to be the highest one in a given window and has to be higher than $k$ times the noise (estimated as the Median Absolute Deviation) to be recognized as a peak.
+
+Energy calibration
+: The energy scale calibration needs the energy values of detected peaks to be set. Then `calibrate_energy()` fits a second order polynomial model to predict the new spectrum energy scale.
+
+```{r energy, fig.show="hold"}
+library(magrittr)
+## Signal processing
+tmp <- spc %>% 
+  signal_slice() %>%
+  signal_stabilize(f = sqrt) %>%
+  signal_smooth(method = "savitzky", m = 21) %>%
+  signal_correct(method = "SNIP")
+## Peak detection
+pks <- peaks_find(tmp)
+set_energy(pks) <- c(238, NA, NA, NA, 
+                     1461, NA, NA, 2615)
+## Energy scale calibration
+spc2 <- energy_calibrate(spc, pks)
+```
+
+```{r plot, echo=FALSE, fig.width=7.5, fig.height=4, fig.cap="(A) Raw gamma ray spectrum from in situ measurement; (B) Processed spectrum used for peak finding along with the detected peaks."}
+cowplot::plot_grid(
+  plot(spc, pks) + ggplot2::theme_bw(),
+  plot(tmp, pks) + ggplot2::theme_bw(),
+  nrow = 1, labels = "AUTO"
+)
+```
+
+### Step 3: gamma dose-rate estimation
+To estimate the gamma dose rate, one of the calibration curves distributed with this package can be used (fig. \@ref(fig:curve)). These built-in curves are in use in several luminescence dating laboratories and can be used to replicate published results. As these curves are instrument specific, the user may have to build its own curve. The 'gamma' package provides a set of functions to build custom calibration curves.
+
+```{r dose}
+## Load the calibration curve
+data("BDX_LaBr_1", package = "gamma")
+## Estimate the gamma dose rate
+doses <- dose_predict(BDX_LaBr_1, spc2)
+doses
+```
+
+The construction of a calibration curve with `dose_fit()` requires a set of reference spectra for which the gamma dose rate is known [see @miallier2009 for the reference values in use at the CRP2A laboratory] and a background noise measurement. First, each reference spectrum is integrated over a given interval, then normalized to active time and corrected for background noise. The dose rate is finally modelled by the integrated signal value used as a linear predictor [@york2004]. `dose_predict()` returns the predicted dose rate value with both the count and energy threshold approaches.
+
+```{r curve, echo=FALSE, fig.width=3.5, fig.height=3.5, fig.cap="Built-in LaBr calibration curve in used at the CRP2A laboratory (Bordeaux)."}
+plot(BDX_LaBr_1) + 
+  ggplot2::theme_bw()
+```
+
+# Discussion
+The 'gamma' package provides a convenient and reproducible toolkit for *in situ* gamma spectrometry data analysis. Along with the dedicated 'gammaShiny' package (GUI), it offers a useful set of functions for spectra processing, calibration curve building and dose rate estimation.
+
+The 'gamma' package allows batch processing of spectra. However, it is strongly recommended to check the result before proceeding. Manual verification is strongly recommended since automatic detection can sometimes produce unreliable results, especially when the processed spectra display poor signal-to-noise ratios. In the future, improvement of the automatic peak detection process is to be expected.
+
+# Conclusions
+The 'gamma' package is distributed over the Comprehensive R Archive Network (CRAN; <http://cran.r-project.org>). The package is provided under the General Public Licence (GNU GPL3) conditions: the code is open and anyone can review it. Source code and installation instructions are available on GitHub (<https://github.com/crp2a/gamma> and <https://github.com/crp2a/gammaShiny>). Users are invited to contribute, share feedback, request new features or report bugs on GitHub. As for the 'Luminescence' package [@kreutzer2012; @fuchs2015], future improvements to the 'gamma' package are intended to be community driven.
+
+# Acknowledgements { - }
+This work received a state financial support managed by the Agence Nationale de la Recherche (France) through the program *Investissements d'avenir* (ref. 10-LABX-0052 and 11-IDEX-0001). BL thanks Didier Miallier (Laboratoire de Physique de Clermont, UMR 6533) for his help during the calibration of the NaI probe.
+
+# References { - }

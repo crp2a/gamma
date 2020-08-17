@@ -15,5 +15,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
-^paper\.md$
+^paper\.Rmd$
 ^paper\.bib$
