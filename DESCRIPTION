@@ -1,7 +1,7 @@
 Package: gamma
 Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
     Measurements
-Version: 0.2.0
+Version: 1.0.0
 Authors@R: 
     c(person(given = "Nicolas",
              family = "Frerebeau",

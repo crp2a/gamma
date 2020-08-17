@@ -8,14 +8,13 @@ citEntry(entry = "Manual",
   year         = "2019",
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
-  note         = "R package version 0.2.0",
+  note         = "R package version 1.0.0",
   url          = "https://doi.org/10.5281/zenodo.2652393",
 
   textVersion  =
   paste("Frerebeau, Nicolas, Brice Lebrun and Guilhem Paradol (2019).",
         "gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements.",
-        "R package version 0.2.0.",
+        "R package version 1.0.0.",
         "Université Bordeaux Montaigne, Pessac, France.",
-        "DOI 10.5281/zenodo.2652393.",
-        "URL https://cran.r-project.org/package=gamma.")
+        "DOI 10.5281/zenodo.2652393.")
 )

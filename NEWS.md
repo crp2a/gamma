@@ -1,5 +1,6 @@
+## gamma 1.0.0
 
-<!--# gamma 0.2.0 (2019-11-13)-->
+* First CRAN release.
 
 ## gamma 0.2.0 (release date: 2019-11-07)
 
