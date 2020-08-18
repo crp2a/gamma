@@ -5,7 +5,7 @@
 \alias{gamma-package}
 \alias{_PACKAGE}
 \alias{gamma}
-\title{gamma: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
+\title{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry
     Measurements}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
@@ -29,12 +29,12 @@ Process in-situ Gamma-Ray Spectrometry for
 This work received a state financial support managed by the Agence Nationale
 de la Recherche (France) throught the program \emph{Investissements d'avenir}
 (ref. \href{https://lascarbx.labex.u-bordeaux.fr}{ANR-10-LABX-52} and
-\href{https://amidex.univ-amu.fr/}{11-IDEX-0001}).
+\href{https://www.univ-amu.fr/amidex/}{11-IDEX-0001}).
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://crp2a.github.io/gamma}
+  \item \url{https://crp2a.github.io/gamma/}
   \item \url{https://github.com/crp2a/gamma}
   \item Report bugs at \url{https://github.com/crp2a/gamma/issues}
 }

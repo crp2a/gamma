@@ -1,5 +1,5 @@
 Package: gamma
-Title: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry
+Title: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry
     Measurements
 Version: 1.0.0
 Authors@R: 
@@ -43,7 +43,7 @@ Description: Process in-situ Gamma-Ray Spectrometry for
     for estimating the gamma dose rate by the use of a calibration curve.
     The package only supports Canberra CNF and TKA files.
 License: GPL-3
-URL: https://crp2a.github.io/gamma,
+URL: https://crp2a.github.io/gamma/,
     https://github.com/crp2a/gamma
 BugReports: https://github.com/crp2a/gamma/issues
 Depends:

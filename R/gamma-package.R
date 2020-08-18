@@ -31,7 +31,7 @@
 #' This work received a state financial support managed by the Agence Nationale
 #' de la Recherche (France) throught the program \emph{Investissements d'avenir}
 #' (ref. \href{https://lascarbx.labex.u-bordeaux.fr}{ANR-10-LABX-52} and
-#' \href{https://amidex.univ-amu.fr/}{11-IDEX-0001}).
+#' \href{https://www.univ-amu.fr/amidex/}{11-IDEX-0001}).
 #' @name gamma-package
 #' @aliases gamma-package gamma
 #' @docType package
