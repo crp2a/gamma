@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)-->
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 <!-- badges: end -->
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(
 
 **gamma** is intended to process in-situ gamma-ray spectrometry measurements for luminescence dating. This package allows to import, inspect and (automatically) correct the energy scale of the spectrum. It provides methods for estimating the gamma dose rate by the use of a calibration curve. This package only supports Canberra CNF and TKA files.
 
-The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package provides an exhanced graphical user interface for the main applications of **gamma**.
+The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package provides an enhanced graphical user interface for the main applications of **gamma**.
 
 ## Installation
 
@@ -97,4 +97,4 @@ plot(BDX_LaBr_1)
 Please note that the **gamma** project is released with a [Contributor Code of Conduct](https://github.com/crp2a/gamma/blob/master/.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
 ## Acknowledgements
-This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program *Investissements d'avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and [11-IDEX-0001](https://www.univ-amu.fr/amidex)).
+This work received a state financial support managed by the Agence Nationale de la Recherche (France) through the program *Investissements d'avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and [11-IDEX-0001](https://www.univ-amu.fr/amidex)).

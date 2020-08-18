@@ -17,7 +17,7 @@ status](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https:/
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 <!-- badges: end -->
@@ -32,7 +32,7 @@ calibration curve. This package only supports Canberra CNF and TKA
 files.
 
 The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package
-provides an exhanced graphical user interface for the main applications
+provides an enhanced graphical user interface for the main applications
 of **gamma**.
 
 ## Installation
@@ -117,6 +117,6 @@ By contributing to this project, you agree to abide by its terms.
 ## Acknowledgements
 
 This work received a state financial support managed by the Agence
-Nationale de la Recherche (France) throught the program *Investissements
+Nationale de la Recherche (France) through the program *Investissements
 d’avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and
 [11-IDEX-0001](https://www.univ-amu.fr/amidex)).

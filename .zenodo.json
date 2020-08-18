@@ -1,7 +1,7 @@
 {
-    "title": "gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry",
+    "title": "gamma: An R Package for Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry",
     "description": "<p>Process in-situ gamma-ray spectrometry for luminescence dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files.</p>",
-    "notes": "This work received a state financial support managed by the Agence Nationale de la Recherche (France) throught the program Investissements d'avenir (ref. 10-LABX-0052 and 11-IDEX-0001).",
+    "notes": "This work received a state financial support managed by the Agence Nationale de la Recherche (France) through the program Investissements d'avenir (ref. 10-LABX-0052 and 11-IDEX-0001).",
     "creators": [
         {
             "orcid": "0000-0001-5759-4944",
