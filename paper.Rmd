@@ -22,9 +22,14 @@ authors:
   - name: Christelle Lahaye
     orcid: 0000-0003-2215-9015
     affiliation: "1"
+  - name: Magali Rizza
+    orcid: 0000-0003-2364-5621
+    affiliation: "2"
 affiliations:
  - name: IRAMAT-CRP2A (UMR 5060 - CNRS, Université Bordeaux Montaigne)
    index: 1
+ - name: CEREGE (Aix Marseille Univ, CNRS, IRD, INRAE, Coll France)
+   index: 2
 date: 30 June 2020
 bibliography: paper.bib
 output:
