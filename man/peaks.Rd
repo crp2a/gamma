@@ -37,7 +37,7 @@ Finds local maxima in sequential data.
 A local maximum has to be the highest one in the given window and has to be
  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 
- The following methods are availble for noise estimation:
+ The following methods are available for noise estimation:
  \describe{
   \item{MAD}{Median Absolute Deviation.}
  }

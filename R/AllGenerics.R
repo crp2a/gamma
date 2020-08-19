@@ -438,7 +438,7 @@ setGeneric(
 #'  Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
 #'  DOI: \href{https://doi.org/10.1119/1.1632486}{10.1119/1.1632486}.
 #' @example inst/examples/ex-doserate.R
-#' @author N. Frereberrorseau
+#' @author N. Frerebeau
 #' @docType methods
 #' @family dose rate
 #' @name doserate
@@ -514,7 +514,7 @@ setGeneric(
 #'  A local maximum has to be the highest one in the given window and has to be
 #'  higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 #'
-#'  The following methods are availble for noise estimation:
+#'  The following methods are available for noise estimation:
 #'  \describe{
 #'   \item{MAD}{Median Absolute Deviation.}
 #'  }

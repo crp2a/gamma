@@ -154,6 +154,6 @@ Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 \link{signal_integrate}
 }
 \author{
-N. Frereberrorseau
+N. Frerebeau
 }
 \concept{dose rate}
