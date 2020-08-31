@@ -33,3 +33,9 @@ inst/doc
 CRAN-RELEASE
 doc
 Meta
+
+# Hidden file in MacOSX
+.DS_Store
+
+# HTML version of the article
+paper.html
