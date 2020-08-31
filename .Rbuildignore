@@ -16,3 +16,4 @@
 ^\.Rproj\.user$
 ^\.github$
 ^paper\.*
+^man/figures/PAPER-workflow\.jpg$
