@@ -22,7 +22,7 @@
 #'    \item{counts_chain_error}{}
 #'  }
 #' @source
-#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
+#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
 #'  Accessed 2019-06-07.
 #' @rdname decay
 #' @keywords datasets internal
@@ -48,7 +48,7 @@
 #'    \item{gamma_intensity_error}{}
 #'  }
 #' @source
-#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
+#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
 #'  Accessed 2019-06-07.
 #' @rdname decay_La
 #' @keywords datasets internal

@@ -24,7 +24,7 @@ A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
  }
 }
 \source{
-\href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
+\href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
  Accessed 2019-06-07.
 }
 \usage{

@@ -22,7 +22,7 @@ A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
  }
 }
 \source{
-\href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html}.
+\href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
  Accessed 2019-06-07.
 }
 \usage{
