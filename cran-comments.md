@@ -8,4 +8,7 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+This is a resubmission for a new release
+
+* We fixed two invalid URIs in the documentation.
+* There is no reference to add in the Description field about the method: we are in the process of submitting a paper.
