@@ -45,15 +45,16 @@ setMethod(
   f = "summarise",
   signature = "DoseRateModel",
   definition = function(object) {
-    cat("Residuals:\n")
-    print(get_residuals(object)$residuals)
-    cat("\nCoefficients:\n")
-    print(matrix(data = c(object[["intercept"]], object[["slope"]]),
-                 nrow = 2L, ncol = 2L, byrow = TRUE,
-                 dimnames = list(c("Intercept", "Slope"),
-                                 c("Estimate", "Std. Error"))))
-    cat(sprintf("\nMSWD: %g on %d degrees of freedom, p-value: %g\n",
-                object[["MSWD"]], object[["df"]], object[["p_value"]]))
+    list(
+      residuals = get_residuals(object)$residuals,
+      coefficients = matrix(data = c(object[["intercept"]], object[["slope"]]),
+                            nrow = 2L, ncol = 2L, byrow = TRUE,
+                            dimnames = list(c("Intercept", "Slope"),
+                                            c("Estimate", "Std. Error"))),
+      MSWD = object[["MSWD"]],
+      df = object[["df"]],
+      p_value = object[["p_value"]]
+    )
   }
 )
 
@@ -65,11 +66,9 @@ setMethod(
   f = "summarise",
   signature = "CalibrationCurve",
   definition = function(object) {
-    cat(sprintf("--- Ni %s\n", paste0(rep("-", options()$width - 7),
-                                      collapse = "")), sep = "")
-    summarise(object[["Ni"]])
-    cat(sprintf("\n--- NiEi %s\n", paste0(rep("-", options()$width - 9),
-                                          collapse = "")), sep = "")
-    summarise(object[["NiEi"]])
+    list(
+      Ni = summarise(object[["Ni"]]),
+      NiEi = summarise(object[["NiEi"]])
+    )
   }
 )

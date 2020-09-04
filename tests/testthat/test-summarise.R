@@ -21,6 +21,5 @@ test_that("GammaSpectra", {
 # CalibrationCurve =============================================================
 test_that("CalibrationCurve", {
   data("BDX_LaBr_1")
-
-  expect_output(summarise(BDX_LaBr_1))
+  expect_type(summarise(BDX_LaBr_1), "list")
 })

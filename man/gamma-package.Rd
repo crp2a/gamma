@@ -46,8 +46,8 @@ Useful links:
 \tabular{ll}{
  Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
  Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
- Brice Lebrun \tab \emph{Aix-Marseille Université, France} \cr
- Guilhem Paradol \tab \emph{Université Bordeaux Montaigne, France} \cr
+ Brice Lebrun \tab \emph{Université Bordeaux Montaigne, France} \cr
+ Guilhem Paradol \tab \cr
  Magali Rizza \tab \emph{Aix-Marseille Université, France}
 }
 
