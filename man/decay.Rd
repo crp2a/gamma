@@ -24,8 +24,7 @@ A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
  }
 }
 \source{
-\href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
- Accessed 2019-06-07.
+Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
 }
 \usage{
 .decay

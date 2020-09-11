@@ -10,7 +10,6 @@
 
 This is a resubmission for a new release
 
-* Some links in the documentation raise a note: all have been checked and are valid URIs.
 * There is no reference to add in the Description field about the method: we are in the process of submitting a paper.
 * All authors and contributors are listed in Author@R field with appropriate roles (only code writers are listed here).
 

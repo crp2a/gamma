@@ -22,8 +22,7 @@
 #'    \item{counts_chain_error}{}
 #'  }
 #' @source
-#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
-#'  Accessed 2019-06-07.
+#'  Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
 #' @rdname decay
 #' @keywords datasets internal
 ".decay"
@@ -48,8 +47,7 @@
 #'    \item{gamma_intensity_error}{}
 #'  }
 #' @source
-#'  \href{IAEA Live Chart of Nuclides}{https://www-nds.iaea.org}.
-#'  Accessed 2019-06-07.
+#'  Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
 #' @rdname decay_La
 #' @keywords datasets internal
 ".decay_La"
