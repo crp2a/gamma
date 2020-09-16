@@ -55,7 +55,9 @@ Different techniques are currently used in luminescence and ESR dating field to 
 
 There are two methods based on the "threshold technique": in counts and in energy. In both cases, @guerin2011 have shown that the environmental gamma dose rate determined in this way does not depend on water presence, nor on U-series disequilibrium. They have also shown few dependence on the gamma dose rate with the nature of the sediment.
 
-Because of the *in situ* measurements allowed by this type of equipment, its detector crystals (usually LaBr or NaI) are often used under unstable temperature conditions resulting in peak shift and spectral distortion [@casanovas2012]. As a result, spectrum processing is required before conversion from a spectrum to gamma dose rate.
+The majority of *in situ* gamma-ray spectrometers produce spectra subject to energy shift and spectral distortions.
+This could be due to the fact that detector crystals (usually LaBr or NaI) are often used in unstable temperature conditions [@casanovas2012].
+As a result, spectrum processing is required before conversion from a spectrum to gamma dose rate.
 
 A typical workflow for energy shifting correction requires manual identification of reference peaks. This is usually performed using proprietary software such as Genie2000 (Canberra division of Mirion technologies, Windows OS only). Once reference peaks are identified, a new channel-energy curve is generated, taking into account the apparent shift between the observed and theoretical energies of these peaks. To this day, there is no turnkey solution for these steps and personal or laboratory-based solutions are implemented, e.g. Visual Basic Advance macros within Microsoft Excel.
 
@@ -170,7 +172,7 @@ plot(BDX_LaBr_1) +
 # Discussion
 The 'gamma' package provides a convenient and reproducible toolkit for *in situ* gamma spectrometry data analysis. Along with the dedicated 'gammaShiny' package (GUI), it offers a useful set of functions for spectra processing, calibration curve building and dose rate estimation.
 
-The 'gamma' package allows batch processing of spectra. To ensure the reliability of the produced results, manual verification is strongly recommended since automatic detection may sometime produce unreliable results, especially when the processed spectra display poor signal-to-noise ratios. In the future, improvement of the automatic peak detection process is to be expected.
+The 'gamma' package allows batch processing of spectra. To ensure the reliability of the produced results, manual verification is strongly recommended since automatic detection may sometime produce unreliable results, especially when the processed spectra display poor signal-to-noise ratios. In the future, improvement of the automatic peak detection process is to be expected [@paradol2020].
 
 # Conclusions
 The 'gamma' package is distributed over the Comprehensive R Archive Network (CRAN; <http://cran.r-project.org>). The package is provided under the General Public Licence (GNU GPL3) conditions: the code is open and anyone can review it. Source code and installation instructions are available on GitHub (<https://github.com/crp2a/gamma> and <https://github.com/crp2a/gammaShiny>). Users are invited to contribute, share feedback, request new features or report bugs on GitHub. As for the 'Luminescence' package [@kreutzer2012; @fuchs2015], future improvements to the 'gamma' package are intended to be community driven.
