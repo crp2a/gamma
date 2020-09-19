@@ -39,7 +39,13 @@ The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package provides an en
 
 ## Installation
 
-Install the development version from GitHub with:
+You can install the released version of **gamma** from [CRAN](https://CRAN.R-project.org) with:
+
+```{r cran-installation, eval = FALSE}
+install.packages("gamma")
+```
+
+Or install the development version from GitHub with:
 
 ```{r gh-installation, eval=FALSE}
 # install.packages("remotes")

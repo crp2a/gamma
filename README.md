@@ -40,7 +40,14 @@ of **gamma**.
 
 ## Installation
 
-Install the development version from GitHub with:
+You can install the released version of **gamma** from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("gamma")
+```
+
+Or install the development version from GitHub with:
 
 ``` r
 # install.packages("remotes")
