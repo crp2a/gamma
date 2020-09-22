@@ -9,9 +9,12 @@
 status](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 
-<!--[![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
-[![CRAN checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)-->
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
+[![CRAN
+checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html)
+[![CRAN
+Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma)
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -37,7 +40,14 @@ of **gamma**.
 
 ## Installation
 
-Install the development version from GitHub with:
+You can install the released version of **gamma** from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("gamma")
+```
+
+Or install the development version from GitHub with:
 
 ``` r
 # install.packages("remotes")

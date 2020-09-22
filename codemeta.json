@@ -8,10 +8,14 @@
   "description": "Process in-situ Gamma-Ray Spectrometry for\n    Luminescence Dating. This package allows to import, inspect and\n    correct the energy shifts of Gamma-ray spectra. It provides methods\n    for estimating the gamma dose rate by the use of a calibration curve.\n    The package only supports Canberra CNF and TKA files.",
   "name": "gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry\n    Measurements",
   "codeRepository": "https://github.com/crp2a/gamma",
-  "relatedLink": ["https://crp2a.github.io/gamma", "https://crp2a.github.io/gamma/"],
+  "relatedLink": [
+    "https://crp2a.github.io/gamma",
+    "https://crp2a.github.io/gamma/",
+    "https://CRAN.R-project.org/package=gamma"
+  ],
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -244,10 +248,9 @@
       "name": "utils"
     }
   ],
-  "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
   "contIntegration": "https://codecov.io/gh/crp2a/gamma",
-  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#maturing"],
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
   "keywords": [
     "geochronology",
     "luminescence-dating",
@@ -281,5 +284,11 @@
       "description": "R package version 1.0.0"
     }
   ],
-  "fileSize": "4691.667KB"
+  "fileSize": "7891.863KB",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  }
 }
