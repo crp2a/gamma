@@ -37,7 +37,7 @@ output:
 #    latex_engine: lualatex
 #    fontsize: 12pt
 #    toc_depth: 3
-   bookdown::html_document2  
+  bookdown::html_document2  
 
 
     
@@ -171,7 +171,7 @@ The construction of a calibration curve with `dose_fit()` requires a set of refe
 
 ```{r curve, echo=FALSE, fig.width=3.5, fig.height=3.5, fig.cap="Built-in LaBr calibration curve in used at the CRP2A laboratory (Bordeaux).", fig.align = 'center'}
 plot(BDX_LaBr_1) +
-  ggplot2::ylab('Dose rate [μGy/y]')+
+  ggplot2::ylab('Dose rate [µGy/y]')+
   ggplot2::theme_bw()
   
 ```
