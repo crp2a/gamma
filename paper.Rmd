@@ -5,6 +5,8 @@ tags:
   - geochronology
   - luminescence dating
   - gamma spectrometry
+abstract: |
+  *In situ* gamma spectrometry is a useful technique used by the Luminescence and ESR dating community to improve the representativity of dose rate measurements in the context of gamma dose rate heterogeneities around dated material. This paper presents 'gamma', a new R package and its graphical user interface 'gammaShiny', allowing a reliable and reproducible workflow for *in situ* gamma spectrometry data analysis in the context of luminescence and ESR dating.
 authors:
   - name: Brice Lebrun
     orcid: 0000-0001-7503-8685
@@ -33,14 +35,7 @@ affiliations:
 date: 30 June 2020
 bibliography: paper.bib
 output:
-#  bookdown::pdf_document2:
-#    latex_engine: lualatex
-#    fontsize: 12pt
-#    toc_depth: 3
-  bookdown::html_document2  
-
-
-    
+  rmarkdown::html_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -48,9 +43,6 @@ editor_options:
 ```{r, echo=FALSE}
 library(gamma)
 ```
-
-# Abstract { - }
-*In situ* gamma spectrometry is a useful technique used by the Luminescence and ESR dating community to improve the representativity of dose rate measurements in the context of gamma dose rate heterogeneities around dated material. This paper presents 'gamma', a new R package and its graphical user interface 'gammaShiny', allowing a reliable and reproducible workflow for *in situ* gamma spectrometry data analysis in the context of luminescence and ESR dating.
 
 # Introduction
 *In situ* gamma spectrometry is a powerful tool used in luminescence dating to tackle gamma dose rate heterogeneity [@aitken1998; @kluson2010]. A gamma spectrometer probe records gamma rays emitted within a sphere of radius equal to 30-50 cm [fig. 1 in @guerin2011] whereas a classic BeGe laboratory gamma spectrometer with planar or coaxial geometry only characterizes samples of a few dozen cubic centimeters,thus greatly improving the representativity of the measurement [@gilmore2008].
