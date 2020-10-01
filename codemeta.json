@@ -41,7 +41,7 @@
       "@type": "Person",
       "givenName": "Guilhem",
       "familyName": "Paradol",
-      "email": "guilhem.paradol@phelma.grenoble-inp.fr"
+      "email": "guilhem.paradol@cea.fr"
     }
   ],
   "contributor": [
@@ -256,7 +256,8 @@
     "luminescence-dating",
     "archaeology",
     "archaeological-science",
-    "r-package"
+    "r-package",
+    "gamma-spectrometry"
   ],
   "citation": [
     {
@@ -284,7 +285,7 @@
       "description": "R package version 1.0.0"
     }
   ],
-  "fileSize": "7891.863KB",
+  "fileSize": "5098.329KB",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",

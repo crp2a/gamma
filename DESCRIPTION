@@ -16,7 +16,7 @@ Authors@R:
       person(given = "Guilhem",
              family = "Paradol",
              role = "aut",
-             email = "guilhem.paradol@phelma.grenoble-inp.fr"),
+             email = "guilhem.paradol@cea.fr"),
       person(given = "Magali",
              family = "Rizza",
              role = "ctb",
