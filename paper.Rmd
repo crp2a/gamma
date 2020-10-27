@@ -57,7 +57,7 @@ Different techniques are currently used in luminescence and ESR dating field to 
 
 There are two methods based on the 'threshold technique': in counts and in energy. In both cases, @guerin2011 have shown that the environmental gamma dose rate determined in this way does not depend on water presence, nor on U-series disequilibrium. They have also shown few dependence on the gamma dose rate with the nature of the sediment.
 
-The majority of *in situ* gamma-ray spectrometers produce produce energy shifted and spectrally distorted spectra.
+The majority of *in situ* gamma-ray spectrometers produce energy shifted and spectrally distorted spectra.
 This could be due to the fact that detector crystals (usually LaBr or NaI) are often used in unstable temperature conditions [@casanovas2012].
 As a result, spectrum processing is required before conversion from a spectrum to gamma dose rate.
 
@@ -69,7 +69,7 @@ To address theses differents issues, we present an integrated solution to analys
 The R programming language [@rcoreteam2020] has many advantages, starting with its ease of learning and use. R is available on all computer platforms and its community offers efficient support. R is distributed under the GNU General Public License (therefore free of charge), ensuring transparency and modularity. Finally, several R packages dedicated to geochronology already exist [such as the 'Luminescence' package; @kreutzer2012].
 
 # The R package gamma
-The 'gamma' package allows to import, inspect and correct the energy scale of one of multiple spectra. It provides methods for estimating the gamma dose rate by the use of built-in or custom calibration curves. A graphical user interface (GUI) is also provided through the dedicated R package 'gammaShiny', using the 'shiny' package [@chang2020].
+The 'gamma' package allows the user to import, inspect and correct the energy scale of one or multiple spectra. It provides methods for estimating the gamma dose rate by the use of built-in or custom calibration curves. A graphical user interface (GUI) is also provided through the dedicated R package 'gammaShiny', using the 'shiny' package [@chang2020].
 
 ## Workflow overview
 
@@ -81,8 +81,8 @@ Once the 'gamma' package is loaded with `library(gamma)`, processing a spectrum 
 knitr::include_graphics("./man/figures/PAPER-workflow.jpg")
 ```
 
-All of these steps can be performed through the GUI, which can be launched with `launch_app()` after loading the package has been loaded with `library(gammaShiny)`.
-Note that we chose to develop a GUI to allow the use of 'gamma' for users who might feel not comfortable with the use of the command line. However, only the full publication of scripts along with the results guarantees the reproducibility of published studies.
+All of these steps can be performed through the GUI, which can be launched with `launch_app()` after loading the package with `library(gammaShiny)`.
+Note that we chose to develop a GUI to allow the use of 'gamma' for users who might not feel comfortable with the use of the command line. However, only the full publication of scripts along with the results guarantees the reproducibility of published studies.
 
 ### Step 1: import and inspect a gamma spectrum
 The 'gamma' package supports the most common type of spectrum files: Canberra CAM (.CNF) and Programmers Toolkit files (.TKA). This prevents spending time on data transformation and preserves file metadata. The `read()` function allows to import a CNF-file with the path of the file as a single argument. When the path leads to a directory instead of a single file, all spectra included in the directory are imported.
