@@ -2,6 +2,7 @@ context("Plot spectrum")
 
 # GammaSpectrum ================================================================
 test_that("Plot GammaSpectrum", {
+  testthat::skip_if_not_installed("vdiffr")
   spc_file_cnf <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file_cnf)
 
@@ -24,6 +25,7 @@ test_that("Plot GammaSpectrum", {
                  "The energy scale is missing, displaying channels instead.")
 })
 test_that("Plot GammaSpectrum and PeakPosition", {
+  testthat::skip_if_not_installed("vdiffr")
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spc_cnf <- read(spc_file)
   peaks <- peaks_find(spc_cnf)
@@ -36,6 +38,7 @@ test_that("Plot GammaSpectrum and PeakPosition", {
 })
 # GammaSpectra =================================================================
 test_that("Plot GammaSpectra", {
+  testthat::skip_if_not_installed("vdiffr")
   spc_dir <- system.file("extdata/", package = "gamma")
   spectra <- read(spc_dir)[-1]
 
@@ -51,6 +54,7 @@ test_that("Plot GammaSpectra", {
 })
 # Baseline =====================================================================
 test_that("Plot Baseline from GammaSpectrum", {
+  testthat::skip_if_not_installed("vdiffr")
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spectrum <- signal_slice(read(spc_file), -(1:40))
   baseline <- signal_baseline(spectrum)
@@ -72,6 +76,7 @@ test_that("Plot Baseline from GammaSpectrum", {
   vdiffr::expect_doppelganger("baseline_correct_rate", gg_correct_rate)
 })
 test_that("Plot Baseline from GammaSpectra", {
+  testthat::skip_if_not_installed("vdiffr")
   spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
   spectra <- signal_slice(read(spc_dir), -c(1:40))
   baseline <- signal_baseline(spectra)
@@ -91,6 +96,7 @@ test_that("Plot Baseline from GammaSpectra", {
 })
 # CalibrationCurve =============================================================
 test_that("Plot CalibrationCurve", {
+  testthat::skip_if_not_installed("vdiffr")
   data("BDX_LaBr_1")
 
   for (i in c(TRUE, FALSE)) {
