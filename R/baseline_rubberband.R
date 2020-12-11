@@ -50,6 +50,9 @@ setMethod(
 #' through the support points be used instead of linear interpolation?
 #' @param ... further parameters to be passed to
 #' \code{\link[stats]{predict.smooth.spline}}.
+#' @details
+#'  A convex envelope of the spectrum is determined and the baseline is
+#'  estimated as the part of the convex envelope lying below the spectrum.
 #' @note
 #'  Slightly modified from C. Beleites' \code{\link[hyperSpec]{spc.rubberband}}.
 #' @keywords internal

@@ -86,7 +86,10 @@ Baseline Estimation and Removal
 The following methods are available for baseline estimation:
  \describe{
   \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
-  \item{rubberband}{}
+  \item{rubberband}{A convex envelope of the spectrum is determined and the
+  baseline is estimated as the part of the convex envelope lying below the
+  spectrum. Note that the rubber band does not enter the concave regions
+  (if any) of the spectrum.}
  }
 }
 \note{
