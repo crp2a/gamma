@@ -21,7 +21,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
   "author": [
     {
       "@type": "Person",
@@ -41,7 +41,8 @@
       "@type": "Person",
       "givenName": "Guilhem",
       "familyName": "Paradol",
-      "email": "guilhem.paradol@cea.fr"
+      "email": "guilhem.paradol@cea.fr",
+      "@id": "https://orcid.org/0000-0002-8561-4903"
     }
   ],
   "contributor": [
@@ -261,14 +262,9 @@
   ],
   "citation": [
     {
-      "@type": "SoftwareSourceCode",
-      "datePublished": "2019",
+      "@type": "ScholarlyArticle",
+      "datePublished": "2020",
       "author": [
-        {
-          "@type": "Person",
-          "givenName": "Nicolas",
-          "familyName": "Frerebeau"
-        },
         {
           "@type": "Person",
           "givenName": "Brice",
@@ -276,16 +272,55 @@
         },
         {
           "@type": "Person",
+          "givenName": "Nicolas",
+          "familyName": "Frerebeau"
+        },
+        {
+          "@type": "Person",
           "givenName": "Guilhem",
           "familyName": "Paradol"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Guillaume",
+          "familyName": "Guérin"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Norbert",
+          "familyName": "Mercier"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Chantal",
+          "familyName": "Tribolo"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Christelle",
+          "familyName": "Lahaye"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Magali",
+          "familyName": "Rizza"
         }
       ],
-      "name": "{gamma}: Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements",
-      "url": "https://doi.org/10.5281/zenodo.2652393",
-      "description": "R package version 1.0.0"
+      "name": "Gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements",
+      "pagination": "1-5",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "2",
+        "datePublished": "2020",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "38",
+          "name": "Ancient TL"
+        }
+      }
     }
   ],
-  "fileSize": "5098.329KB",
+  "fileSize": "3987.086KB",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",

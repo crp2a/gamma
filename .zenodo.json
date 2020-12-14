@@ -14,7 +14,8 @@
             "name": "Lebrun, Brice"
         },
         {
-            "affiliation": "Universit\u00e9 Bordeaux Montaigne",
+            "orcid": "0000-0002-8561-4903",
+            "affiliation": "CEA",
             "name": "Paradol, Guilhem"
         }
     ],
@@ -32,7 +33,11 @@
             "name": "Rizza, Magali"
         }
     ],
+    "journal_title": "Ancient TL",
     "language": "eng",
+    "journal_pages": "1-5",
+    "journal_volume": "38",
+    "journal_issue": "2",
     "keywords": [
         "archaeology",
         "geochronology",

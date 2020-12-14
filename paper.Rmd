@@ -15,12 +15,16 @@ authors:
     orcid: 0000-0001-5759-4944
     affiliation: "1"
   - name: Guilhem Paradol
+    orcid: 0000-0002-8561-4903
     affiliation: "3"
   - name: Guillaume Guérin
+    orcid: 0000-0001-6298-5579
     affiliation: "1"
   - name: Norbert Mercier
+    orcid: 0000-0002-6375-9108
     affiliation: "1"
   - name: Chantal Tribolo
+    orcid: 0000-0003-0506-2430
     affiliation: "1"
   - name: Christelle Lahaye
     orcid: 0000-0003-2215-9015
