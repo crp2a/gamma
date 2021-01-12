@@ -8,4 +8,7 @@
 
 0 errors | 0 warnings | 0 note
 
+This is a resubmission.
+
 * `vdiffr` (suggested) is now used conditionally.
+* Use `\doi` instead of `\href` in documentation.

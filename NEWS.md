@@ -1,4 +1,12 @@
-## gamma 1.0.0
+## gamma 1.0.1
+
+### Internals
+* Skip test if suggested packages are not installed.
+* Use `\doi` instead of `\href` in documentation.
+
+## gamma 1.0.0 (CRAN release date: 2020-09-18)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4038328.svg)](https://doi.org/10.5281/zenodo.4038328)
 
 * First CRAN release.
 

@@ -117,13 +117,11 @@ plot(spc_savitzky_clean)
 \references{
 Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
  the Convolution (Savitzky-Golay) Method. \emph{Analytical Chemistry}, 62(6),
- p. 570-573.
- DOI: \href{https://doi.org/10.1021/ac00205a007}{10.1021/ac00205a007}.
+ p. 570-573. \doi{10.1021/ac00205a007}.
 
  Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
  Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
- 36(8), p. 1627-1639.
- DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
+ 36(8), p. 1627-1639. \doi{10.1021/ac60214a047}.
 }
 \seealso{
 Other signal processing: 

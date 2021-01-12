@@ -57,7 +57,7 @@ It assumes that each spectrum has an energy scale.
 Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
  \emph{Radiation Measurements}, 46(2), p. 190-195.
- DOI: \href{https://www.doi.org/10.1016/j.radmeas.2010.10.003}{10.1016/j.radmeas.2010.10.003}.
+ \doi{10.1016/j.radmeas.2010.10.003}.
 
  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.

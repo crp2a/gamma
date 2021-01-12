@@ -304,25 +304,25 @@ setGeneric(
 #' @references
 #'  Liland, K. H. (2015). 4S Peak Filling - baseline estimation by iterative
 #'  mean suppression. \emph{MethodsX}, 2, 135-140.
-#'  DOI: \href{https://doi.org/10.1016/j.mex.2015.02.009}{10.1016/j.mex.2015.02.009}.
+#'  \doi{10.1016/j.mex.2015.02.009}.
 #'
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
 #'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
 #'  p. 113-132.
-#'  DOI: \href{https://doi.org/10.1016/S0168-9002(97)01023-1}{10.1016/S0168-9002(97)01023-1}
+#'  \doi{10.1016/S0168-9002(97)01023-1}
 #'
 #'  Morháč, M. & Matoušek, V. (2008). Peak Clipping Algorithms for Background
 #'  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
-#'  DOI: \href{https://doi.org/10.1366/000370208783412762}{10.1366/000370208783412762}
+#'  \doi{10.1366/000370208783412762}
 #'
 #'  Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. & Cousens, D. R.
 #'  (1988). SNIP, a statistics-sensitive background treatment for the
 #'  quantitative analysis of PIXE spectra in geoscience applications.
 #'  \emph{Nuclear Instruments and Methods in Physics Research Section B:
 #'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
-#'  DOI: \href{https://doi.org/10.1016/0168-583X(88)90063-8}{10.1016/0168-583X(88)90063-8}
+#'  \doi{10.1016/0168-583X(88)90063-8}
 #' @example inst/examples/ex-baseline.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -439,7 +439,7 @@ setGeneric(
 #'  York, D., Evensen, N. M., Martínez, M. L. & De Basabe Delgado, J. (2004).
 #'  Unified Equations for the Slope, Intercept, and Standard Errors of the Best
 #'  Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
-#'  DOI: \href{https://doi.org/10.1119/1.1632486}{10.1119/1.1632486}.
+#'  \doi{10.1119/1.1632486}.
 #' @example inst/examples/ex-doserate.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -484,7 +484,7 @@ setGeneric(
 #'  Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
 #'  Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
 #'  \emph{Radiation Measurements}, 46(2), p. 190-195.
-#'  DOI: \href{https://www.doi.org/10.1016/j.radmeas.2010.10.003}{10.1016/j.radmeas.2010.10.003}.
+#'  \doi{10.1016/j.radmeas.2010.10.003}.
 #'
 #'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 #'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
@@ -669,13 +669,11 @@ setGeneric(
 #' @references
 #'  Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
 #'  the Convolution (Savitzky-Golay) Method. \emph{Analytical Chemistry}, 62(6),
-#'  p. 570-573.
-#'  DOI: \href{https://doi.org/10.1021/ac00205a007}{10.1021/ac00205a007}.
+#'  p. 570-573. \doi{10.1021/ac00205a007}.
 #'
 #'  Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
 #'  Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
-#'  36(8), p. 1627-1639.
-#'  DOI: \href{https://doi.org/10.1021/ac60214a047}{10.1021/ac60214a047}.
+#'  36(8), p. 1627-1639. \doi{10.1021/ac60214a047}.
 #' @author N. Frerebeau
 #' @example inst/examples/ex-smooth.R
 #' @docType methods

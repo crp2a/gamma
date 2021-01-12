@@ -148,7 +148,7 @@ Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
  York, D., Evensen, N. M., Martínez, M. L. & De Basabe Delgado, J. (2004).
  Unified Equations for the Slope, Intercept, and Standard Errors of the Best
  Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
- DOI: \href{https://doi.org/10.1119/1.1632486}{10.1119/1.1632486}.
+ \doi{10.1119/1.1632486}.
 }
 \seealso{
 \link{signal_integrate}
