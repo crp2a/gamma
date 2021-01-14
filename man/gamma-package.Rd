@@ -20,7 +20,7 @@ Process in-situ Gamma-Ray Spectrometry for
 \tabular{ll}{
  \strong{Package:} \tab gamma \cr
  \strong{Type:} \tab Package \cr
- \strong{Version:} \tab 1.0.1 \cr
+ \strong{Version:} \tab 1.0.1.9000 \cr
  \strong{License:} \tab GPL-3 \cr
  \strong{DOI:} \tab \doi{10.5281/zenodo.2652393}
 }

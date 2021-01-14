@@ -1,4 +1,6 @@
-## gamma 1.0.1
+## gamma 1.0.1 (CRAN release date: 2021-01-13)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438632.svg)](https://doi.org/10.5281/zenodo.4438632)
 
 ### Internals
 * Skip test if suggested packages are not installed.

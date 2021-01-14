@@ -15,7 +15,7 @@
   ],
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.1",
+  "version": "1.0.1.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -320,7 +320,7 @@
       }
     }
   ],
-  "fileSize": "3987.325KB",
+  "fileSize": "3986.861KB",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
