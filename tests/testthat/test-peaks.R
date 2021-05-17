@@ -1,5 +1,3 @@
-context("Detect peaks")
-
 # Make a fake spectrum with no baseline
 cts <- dnorm(1:1024, mean = 86, sd = 5) +
   dnorm(1:1024, mean = 493, sd = 7) +

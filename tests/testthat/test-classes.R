@@ -1,5 +1,3 @@
-context("Classes")
-
 test_that("Initialize an empty GammaSpectrum instance", {
   spectrum <- new("GammaSpectrum")
   expect_output(show(spectrum), "An empty gamma spectrum")

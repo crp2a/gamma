@@ -251,7 +251,7 @@
   ],
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
   "contIntegration": "https://codecov.io/gh/crp2a/gamma",
-  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
+  "developmentStatus": "https://www.repostatus.org/#active",
   "keywords": [
     "geochronology",
     "luminescence-dating",
@@ -320,7 +320,7 @@
       }
     }
   ],
-  "fileSize": "3986.861KB",
+  "fileSize": "3986.666KB",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",

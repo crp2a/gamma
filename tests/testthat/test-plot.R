@@ -1,5 +1,3 @@
-context("Plot spectrum")
-
 # GammaSpectrum ================================================================
 test_that("Plot GammaSpectrum", {
   testthat::skip_if_not_installed("vdiffr")

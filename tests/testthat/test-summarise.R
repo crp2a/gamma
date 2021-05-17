@@ -1,5 +1,3 @@
-context("Summarise")
-
 # GammaSpectrum ================================================================
 test_that("GammaSpectrum", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")

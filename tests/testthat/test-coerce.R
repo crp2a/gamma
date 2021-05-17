@@ -1,5 +1,3 @@
-context("Coerce")
-
 # GammaSpectrum ================================================================
 test_that("GammaSpectrum to matrix or data.frame", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")

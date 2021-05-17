@@ -1,5 +1,3 @@
-context("Operators")
-
 file <- system.file("extdata/LaBr.CNF", package = "gamma")
 spectrum <- read(file)
 

@@ -1,5 +1,3 @@
-context("Calibrate energy scale")
-
 test_that("Calibrate a GammaSpectrum object with a list", {
   spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   spectrum <- read(spc_file)
@@ -71,6 +69,6 @@ test_that("the energy scale of a GammaSpectrum is set", {
 
   set_file <- system.file("extdata/", package = "gamma")
   set_spc <- read(set_file)
-  expect_equivalent(has_energy(set_spc), c(TRUE, TRUE, FALSE))
+  expect_equal(has_energy(set_spc), c(TRUE, TRUE, FALSE), ignore_attr = TRUE)
 })
 

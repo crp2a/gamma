@@ -1,5 +1,3 @@
-context("Integrate spectrum")
-
 test_that("Integrate GammaSpectrum", {
   spc_cnf <- system.file("extdata/LaBr.CNF", package = "gamma")
   cnf <- read(spc_cnf)
@@ -8,12 +6,13 @@ test_that("Integrate GammaSpectrum", {
   bkg <- read(spc_bkg)
 
   int1 <- signal_integrate(cnf, range = c(200, 2800), energy = TRUE)
-  expect_equivalent(int1, c(1.483392e+05, 9.361146e+00),
-                    tolerance = 1e-06)
+  expect_equal(int1, c(1.483392e+05, 9.361146e+00),
+               tolerance = 1e-06, ignore_attr = TRUE)
   expect_length(int1, 2)
 
   int2 <- signal_integrate(cnf, bkg, range = c(200, 2800), energy = FALSE)
-  expect_equivalent(int2, c(258.6836050, 0.4129534), tolerance = 1e-07)
+  expect_equal(int2, c(258.6836050, 0.4129534), tolerance = 1e-07,
+               ignore_attr = TRUE)
   expect_length(int2, 2)
 
   expect_error(signal_integrate(cnf, range = c(200)),
@@ -40,5 +39,5 @@ test_that("Integrate GammaSpectra", {
   int2 <- signal_integrate(cnf, bkg, range = c(200, 2800), simplify = FALSE)
   expect_type(int2, "list")
   expect_length(int2, length(cnf))
-  expect_equivalent(lengths(int2), rep(2, length(cnf)))
+  expect_equal(lengths(int2), rep(2, length(cnf)), ignore_attr = TRUE)
 })

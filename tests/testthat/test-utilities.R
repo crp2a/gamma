@@ -1,5 +1,3 @@
-context("Utilities")
-
 test_that("Equality within a vector", {
   expect_true(isEqual(c(1, 1, 1)))
   expect_false(isEqual(c(1, 1, 1.1)))

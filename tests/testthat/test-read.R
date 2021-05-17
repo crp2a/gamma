@@ -1,5 +1,3 @@
-context("Import files")
-
 test_that("Read a TKA file", {
   tka_file <- system.file("extdata/LaBr.TKA", package = "gamma")
   tka_spectrum <- read(tka_file)

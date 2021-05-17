@@ -1,5 +1,3 @@
-context("Baseline")
-
 # GammaSpectrum ================================================================
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
 spectrum <- read(spc_file)

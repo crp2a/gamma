@@ -1,5 +1,3 @@
-context("Mutators")
-
 # GammaSpectrum ================================================================
 test_that("GammaSpectrum", {
   file <- system.file("extdata/LaBr.CNF", package = "gamma")

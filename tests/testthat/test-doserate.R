@@ -1,4 +1,3 @@
-context("Dose rate")
 data("clermont")
 
 test_that("Build a calibration curve", {
