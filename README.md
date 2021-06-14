@@ -37,25 +37,25 @@ The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package
 provides an enhanced graphical user interface for the main applications
 of **gamma**.
 
-    #> 
-    #> To cite gamma in publications use:
-    #> 
-    #>   Lebrun, Brice, Nicolas Frerebeau, Guilhem Paradol, Guillaume Guérin,
-    #>   Norbert Mercier, Chantal Tribolo, Christelle Lahaye, and Magalie
-    #>   Rizza. 2020. Gamma: An R Package for Dose Rate Estimation from
-    #>   In-Situ Gamma-Ray Spectrometry Measurements. Ancient TL 38 (2): 1-5.
-    #> 
-    #> A BibTeX entry for LaTeX users is
-    #> 
-    #>   @Article{,
-    #>     title = {Gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements},
-    #>     author = {Brice Lebrun and Nicolas Frerebeau and Guilhem Paradol and Guillaume Guérin and Norbert Mercier and Chantal Tribolo and Christelle Lahaye and Magali Rizza},
-    #>     year = {2020},
-    #>     journal = {Ancient TL},
-    #>     volume = {38},
-    #>     number = {2},
-    #>     pages = {1-5},
-    #>   }
+
+    To cite gamma in publications use:
+
+      Lebrun, Brice, Nicolas Frerebeau, Guilhem Paradol, Guillaume Guérin,
+      Norbert Mercier, Chantal Tribolo, Christelle Lahaye, and Magalie
+      Rizza. 2020. Gamma: An R Package for Dose Rate Estimation from
+      In-Situ Gamma-Ray Spectrometry Measurements. Ancient TL 38 (2): 1-5.
+
+    Une entrée BibTeX pour les utilisateurs LaTeX est
+
+      @Article{,
+        title = {Gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements},
+        author = {Brice Lebrun and Nicolas Frerebeau and Guilhem Paradol and Guillaume Guérin and Norbert Mercier and Chantal Tribolo and Christelle Lahaye and Magali Rizza},
+        year = {2020},
+        journal = {Ancient TL},
+        volume = {38},
+        number = {2},
+        pages = {1-5},
+      }
 
 ## Installation
 
@@ -66,7 +66,8 @@ You can install the released version of **gamma** from
 install.packages("gamma")
 ```
 
-Or install the development version from GitHub with:
+Or install the development version from [GitHub](https://github.com/)
+with:
 
 ``` r
 # install.packages("remotes")
