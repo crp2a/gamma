@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://codecov.io/gh/crp2a/gamma)
 
+[![r-universe](https://crp2a.r-universe.dev/badges/gamma)](https://crp2a.r-universe.dev)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma)
 [![CRAN
@@ -66,12 +67,11 @@ You can install the released version of **gamma** from
 install.packages("gamma")
 ```
 
-Or install the development version from [GitHub](https://github.com/)
-with:
+Or install the development version from
+[R-universe](https://crp2a.r-universe.dev/) with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("crp2a/gamma")
+install.packages("gamma", repos = "https://crp2a.r-universe.dev")
 ```
 
 ## Usage
