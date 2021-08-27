@@ -162,9 +162,9 @@
 
 <span class='fu'>get_rates</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>get_energy</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>get_energy</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>set_energy</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+<span class='fu'>set_energy</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='fu'>get_method</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
@@ -252,7 +252,7 @@
 <span class='fu'>get_channels</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S4 method for PeakPosition</span>
-<span class='fu'>get_energy</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>get_energy</span><span class='op'>(</span><span class='va'>x</span>, expected <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S4 method for GammaSpectrum</span>
 <span class='fu'><a href='https://magrittr.tidyverse.org/reference/aliases.html'>set_names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
@@ -264,7 +264,7 @@
 <span class='fu'><a href='https://magrittr.tidyverse.org/reference/aliases.html'>set_names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S4 method for PeakPosition,numeric</span>
-<span class='fu'>set_energy</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
+<span class='fu'>set_energy</span><span class='op'>(</span><span class='va'>x</span>, expected <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -285,6 +285,10 @@
       <th>na.rm</th>
       <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> scalar: should <code><a href='https://rdrr.io/r/base/NA.html'>NA</a></code> be
 omitted?</p></td>
+    </tr>
+    <tr>
+      <th>expected</th>
+      <td><p>TODO.</p></td>
     </tr>
     </table>
 

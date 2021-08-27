@@ -159,11 +159,11 @@
   yaxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"count"</span>, <span class='st'>"rate"</span><span class='op'>)</span>,
   select <span class='op'>=</span> <span class='cn'>NULL</span>,
   facet <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
+  nrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"auto"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
 <span class='co'># S4 method for GammaSpectrum,PeakPosition</span>
-<span class='fu'>plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, split <span class='op'>=</span> <span class='cn'>FALSE</span>, span <span class='op'>=</span> <span class='fl'>25</span><span class='op'>)</span>
 
 <span class='co'># S4 method for CalibrationCurve,missing</span>
 <span class='fu'>plot</span><span class='op'>(</span>
@@ -203,6 +203,22 @@ giving the selection of the spectrum that are drawn.</p></td>
       <th>facet</th>
       <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> scalar: should a matrix of panels
 defined by spectrum be drawn?</p></td>
+    </tr>
+    <tr>
+      <th>nrow</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> string specifying the number of rows.
+It must be one of "<code>fixed</code>" or "<code>auto</code>".
+Any unambiguous substring can be given.
+Only used if <code>facet</code> is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>split</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> scalar: should.</p></td>
+    </tr>
+    <tr>
+      <th>span</th>
+      <td><p>An <code><a href='https://rdrr.io/r/base/integer.html'>integer</a></code> giving the half window size (in number
+of channels). Only used if <code>split</code> is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>error_ellipse</th>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform Intensities — signal_stabilize • gamma</title>
+<title>Choose channels by Position — signal_slice • gamma</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Transform Intensities — signal_stabilize" />
-<meta property="og:description" content="Transform Intensities" />
+<meta property="og:title" content="Choose channels by Position — signal_slice" />
+<meta property="og:description" content="Choose channels by position." />
 <meta property="og:image" content="https://crp2a.github.io/gamma/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@CRP2A" />
@@ -137,49 +137,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform Intensities</h1>
-    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/signal_stabilize.R'><code>R/signal_stabilize.R</code></a></small>
-    <div class="hidden name"><code>stabilize.Rd</code></div>
+    <h1>Choose channels by Position</h1>
+    <small class="dont-index">Source: <a href='https://github.com/crp2a/gamma/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/crp2a/gamma/blob/master/R/signal_slice.R'><code>R/signal_slice.R</code></a></small>
+    <div class="hidden name"><code>signal_slice.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Transform Intensities</p>
+    <p>Choose channels by position.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>signal_stabilize</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for GammaSpectrum</span>
-<span class='fu'>signal_stabilize</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>f</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for GammaSpectra</span>
-<span class='fu'>signal_stabilize</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>A <a href='GammaSpectrum-class.html'>GammaSpectrum</a> object.</p></td>
+      <td><p>A <a href='GammaSpectrum-class.html'>GammaSpectrum</a> or <a href='GammaSpectra-class.html'>GammaSpectra</a>
+object.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra arguments to be passed to <code>transformation</code>.</p></td>
-    </tr>
-    <tr>
-      <th>f</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/function.html'>function</a></code> that takes a numeric vector as
-argument and returns a numeric vector.</p></td>
+      <td><p><code><a href='https://rdrr.io/r/base/integer.html'>integer</a></code> values giving the channels of the
+spectrum to be kept/dropped (see below). Numeric values are coerced to
+integer as by <code><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></code> (and hence truncated towards zero).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new <a href='GammaSpectrum-class.html'>GammaSpectrum</a> or <a href='GammaSpectra-class.html'>GammaSpectra</a>
- object with transformed intensities.</p>
+    <p>A <a href='GammaSpectrum-class.html'>GammaSpectrum</a> or <a href='GammaSpectra-class.html'>GammaSpectra</a> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The stabilization step aims at improving the identification of peaks with a
- low signal-to-noise ratio. This particularly targets higher energy peaks.</p>
+    <p>Either positive values to keep, or negative values to drop, should be
+ provided. The values provided must be either all positive or all negative.</p>
+<p>If no value is provided, an attempt is made to define the number
+ of channels to skip at the beginning of the spectrum. This drops all
+ channels before the highest count maximum. This is intended to deal with the
+ artefact produced by the rapid growth of random background noise towards low
+ energies.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other signal processing: 
@@ -187,13 +189,36 @@ argument and returns a numeric vector.</p></td>
 <code><a href='peaks_find.html'>peaks_find</a>()</code>,
 <code><a href='peaks_search.html'>peaks_search</a>()</code>,
 <code><a href='signal_integrate.html'>signal_integrate</a>()</code>,
-<code><a href='signal_slice.html'>signal_slice</a>()</code>,
 <code><a href='signal_split.html'>signal_split</a>()</code>,
+<code><a href='signal_stabilize.html'>signal_stabilize</a>()</code>,
 <code><a href='smooth.html'>smooth</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>N. Frerebeau</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## Import CNF files</span>
+<span class='va'>spc_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/LaBr.CNF"</span>, package <span class='op'>=</span> <span class='st'>"gamma"</span><span class='op'>)</span>
+<span class='va'>spc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='read.html'>read</a></span><span class='op'>(</span><span class='va'>spc_file</span><span class='op'>)</span>
+
+<span class='co'>## Plot spectrum</span>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>spc</span><span class='op'>)</span>
+</div><div class='img'><img src='signal_slice-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>## Slice</span>
+<span class='va'>sliced</span> <span class='op'>&lt;-</span> <span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>spc</span><span class='op'>)</span>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sliced</span><span class='op'>)</span>
+</div><div class='img'><img src='signal_slice-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>sliced</span> <span class='op'>&lt;-</span> <span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>spc</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>35</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sliced</span><span class='op'>)</span>
+</div><div class='img'><img src='signal_slice-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>sliced</span> <span class='op'>&lt;-</span> <span class='fu'>signal_slice</span><span class='op'>(</span><span class='va'>spc</span>, <span class='fl'>450</span><span class='op'>:</span><span class='fl'>550</span><span class='op'>)</span>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sliced</span><span class='op'>)</span>
+</div><div class='img'><img src='signal_slice-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>## Split</span>
+<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>250</span>, <span class='fl'>500</span>, <span class='fl'>274</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>splited</span> <span class='op'>&lt;-</span> <span class='fu'><a href='signal_split.html'>signal_split</a></span><span class='op'>(</span><span class='va'>spc</span>, <span class='va'>g</span><span class='op'>)</span>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>splited</span>, facet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='signal_slice-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

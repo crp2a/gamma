@@ -58,7 +58,10 @@
     <loc>https://crp2a.github.io/gamma/reference/operator.html</loc>
   </url>
   <url>
-    <loc>https://crp2a.github.io/gamma/reference/peaks.html</loc>
+    <loc>https://crp2a.github.io/gamma/reference/peaks_find.html</loc>
+  </url>
+  <url>
+    <loc>https://crp2a.github.io/gamma/reference/peaks_search.html</loc>
   </url>
   <url>
     <loc>https://crp2a.github.io/gamma/reference/plot.html</loc>
@@ -67,7 +70,10 @@
     <loc>https://crp2a.github.io/gamma/reference/read.html</loc>
   </url>
   <url>
-    <loc>https://crp2a.github.io/gamma/reference/slice.html</loc>
+    <loc>https://crp2a.github.io/gamma/reference/signal_slice.html</loc>
+  </url>
+  <url>
+    <loc>https://crp2a.github.io/gamma/reference/signal_split.html</loc>
   </url>
   <url>
     <loc>https://crp2a.github.io/gamma/reference/smooth.html</loc>
