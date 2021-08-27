@@ -64,8 +64,8 @@ Suggests:
     knitr,
     magrittr,
     rmarkdown,
-    testthat,
-    vdiffr
+    testthat (>= 3.0.0),
+    vdiffr (>= 1.0.0)
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
@@ -88,11 +88,13 @@ Collate:
     'mutators.R'
     'operators.R'
     'peaks_find.R'
+    'peaks_search.R'
     'plot.R'
     'read.R'
     'show.R'
     'signal_integrate.R'
     'signal_slice.R'
+    'signal_split.R'
     'signal_stabilize.R'
     'smooth.R'
     'smooth_rectangular.R'
