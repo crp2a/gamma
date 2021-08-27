@@ -17,11 +17,15 @@ authors:
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg" height="48" />
 
 template:
+  bootstrap: 4
   opengraph:
     twitter:
       creator: "@CRP2A"
       site: "@CRP2A"
       card: summary_large_image
+
+search:
+  exclude: ['CODE_OF_CONDUCT.html','CONTRIBUTING.html','LICENSE.html','news/index.html']
 
 reference:
 - title: Data Import
