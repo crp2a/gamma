@@ -2,8 +2,8 @@
 #' @include AllClasses.R AllGenerics.R
 NULL
 
-# ====================================================================== Getters
-# ---------------------------------------------------------------- GammaSpectrum
+# Getters ======================================================================
+## GammaSpectrum ---------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases length,GammaSpectrum-method
@@ -109,7 +109,7 @@ setMethod(
   }
 )
 
-# --------------------------------------------------------------------- Baseline
+## Baseline --------------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases set_method,Baseline-method
@@ -119,7 +119,7 @@ setMethod(
   definition = function(x) x@method
 )
 
-# ----------------------------------------------------------------- GammaSpectra
+## GammaSpectra ----------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases get_hash,GammaSpectra-method
@@ -238,7 +238,7 @@ setMethod(
   }
 )
 
-# ---------------------------------------------------------------- DoseRateModel
+## DoseRateModel ---------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases get_residuals,DoseRateModel-method
@@ -276,7 +276,7 @@ set_coefficients <- function(f, coef, n){
   stats::as.formula(paste(as.character(f)[2], "~", e, " -1"))
 }
 
-# ----------------------------------------------------------------- PeakPosition
+## PeakPosition ----------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases get_hash,PeakPosition-method
@@ -301,11 +301,13 @@ setMethod(
 setMethod(
   f = "get_energy",
   signature = "PeakPosition",
-  definition = function(x) x@energy
+  definition = function(x, expected = FALSE) {
+    if (expected) x@energy_expected else x@energy_observed
+  }
 )
 
-# ====================================================================== Setters
-# ---------------------------------------------------------------- GammaSpectrum
+# Setters ======================================================================
+## GammaSpectrum ---------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases set_names,GammaSpectrum-method
@@ -319,7 +321,7 @@ setMethod(
   }
 )
 
-# --------------------------------------------------------------------- Baseline
+## Baseline --------------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases set_method,Baseline-method
@@ -333,7 +335,7 @@ setMethod(
   }
 )
 
-# ----------------------------------------------------------------- GammaSpectra
+## GammaSpectra ----------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases set_name,GammaSpectra-method
@@ -349,17 +351,24 @@ setMethod(
   }
 )
 
-# ----------------------------------------------------------------- PeakPosition
+## PeakPosition ----------------------------------------------------------------
 #' @export
 #' @rdname mutator
 #' @aliases set_energy,PeakPosition,numeric-method
 setMethod(
   f = "set_energy<-",
   signature = c(x = "PeakPosition", value = "numeric"),
-  definition = function(x, value) {
+  definition = function(x, value, expected = TRUE) {
     # Keep only complete cases
     k <- if (anyNA(value)) which(!is.na(value)) else seq_along(value)
-    x@energy <- value[k]
+
+    if (expected) {
+      x@energy_expected <- value[k]
+      x@energy_observed <- x@energy_observed[k]
+    } else {
+      x@energy_observed <- value[k]
+      x@energy_expected <- x@energy_expected[k]
+    }
     x@channel <- x@channel[k]
     methods::validObject(x)
     x

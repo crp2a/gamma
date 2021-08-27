@@ -2,21 +2,20 @@
 #' @include AllGenerics.R
 NULL
 
-# AUTOMATIC PEAK DETECTION =====================================================
 #' @export
-#' @rdname peaks
+#' @rdname peaks_find
 #' @aliases peaks_find,GammaSpectrum-method
 setMethod(
   f = "peaks_find",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, method = c("MAD"), SNR = 2, span = NULL, ...) {
+    # Get count data
+    spc <- as.data.frame(object)
+    count <- spc$count
+
     # Validation
     method <- match.arg(method, several.ok = FALSE)
     SNR <- as.integer(SNR)[[1L]]
-
-    # Get count data
-    spc <- methods::as(object, "data.frame")
-    count <- spc[["count"]]
     if (is.null(span)) span <- round(length(count) * 0.05)
     span <- as.integer(span)[[1L]]
 
@@ -58,8 +57,8 @@ setMethod(
       noise_method = method,
       noise_threshold = threshold,
       window = span,
-      channel = pks[["channel"]],
-      energy = pks[["energy"]]
+      channel = pks$channel,
+      energy_observed = pks$energy
     )
   }
 )

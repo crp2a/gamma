@@ -145,8 +145,10 @@ Liland, K. H. (2015). 4S Peak Filling - baseline estimation by iterative
 \seealso{
 Other signal processing: 
 \code{\link{peaks_find}()},
+\code{\link{peaks_search}()},
 \code{\link{signal_integrate}()},
 \code{\link{signal_slice}()},
+\code{\link{signal_split}()},
 \code{\link{signal_stabilize}()},
 \code{\link{smooth}()}
 }

@@ -77,7 +77,7 @@ calib_lines <- list(
 
 ## Inspect results
 plot(spc1, xaxis = "energy", yaxis = "count") +
-  ggplot2::geom_vline(xintercept = c(238, 1461, 2614.5), linetype = 3)
+  ggplot2::geom_vline(xintercept = c(238, 1461, 2615), linetype = 3)
 }
 \author{
 N. Frerebeau

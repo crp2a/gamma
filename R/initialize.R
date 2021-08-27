@@ -1,7 +1,7 @@
 # INITIALIZE
 #' @include AllClasses.R
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 # /!\ initialize() GammaSpectrum retains copy construction
 setMethod(
   f = "initialize",
@@ -51,7 +51,7 @@ setMethod(
   }
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 setMethod(
   f = "initialize",
   signature = "GammaSpectra",
@@ -70,7 +70,7 @@ setMethod(
   }
 )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 # /!\ initialize() PeakPosition retains copy construction
 setMethod(
   f = "initialize",
@@ -78,15 +78,18 @@ setMethod(
   definition = function(
     .Object, ..., hash = .Object@hash, noise_method = .Object@noise_method,
     noise_threshold = .Object@noise_threshold, window = .Object@window,
-    channel = .Object@channel, energy = .Object@energy
+    channel = .Object@channel, energy_observed = .Object@energy_observed,
+    energy_expected = .Object@energy_expected
   ) {
-    if (length(channel) != 0)
-      channel <- as.integer(channel)
+    n <- length(channel)
+    if (n != 0) channel <- as.integer(channel)
+    if (length(energy_observed) == 0) energy_observed <- rep(NA_real_, n)
+    if (length(energy_expected) == 0) energy_expected <- rep(NA_real_, n)
 
     methods::callNextMethod(
       .Object, ..., hash = hash, noise_method = noise_method,
       noise_threshold = noise_threshold, window = window, channel = channel,
-      energy = energy
+      energy_observed = energy_observed, energy_expected = energy_expected
     )
   }
 )

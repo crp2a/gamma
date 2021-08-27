@@ -21,10 +21,10 @@
   yaxis = c("count", "rate"),
   select = NULL,
   facet = FALSE,
-  ...
+  nrow = c("fixed", "auto")
 )
 
-\S4method{plot}{GammaSpectrum,PeakPosition}(x, y, ...)
+\S4method{plot}{GammaSpectrum,PeakPosition}(x, y, split = FALSE, span = 25)
 
 \S4method{plot}{CalibrationCurve,missing}(
   x,
@@ -51,6 +51,16 @@ giving the selection of the spectrum that are drawn.}
 
 \item{facet}{A \code{\link{logical}} scalar: should a matrix of panels
 defined by spectrum be drawn?}
+
+\item{nrow}{A \code{\link{character}} string specifying the number of rows.
+It must be one of "\code{fixed}" or "\code{auto}".
+Any unambiguous substring can be given.
+Only used if \code{facet} is \code{TRUE}.}
+
+\item{split}{A \code{\link{logical}} scalar: should.}
+
+\item{span}{An \code{\link{integer}} giving the half window size (in number
+of channels). Only used if \code{split} is \code{TRUE}.}
 
 \item{error_ellipse}{A \code{\link{logical}} scalar: should error ellipses
 be plotted?}

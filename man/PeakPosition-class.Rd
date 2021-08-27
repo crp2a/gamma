@@ -27,7 +27,10 @@ size.}
 Numeric values are coerced to integer as by \code{\link{as.integer}}
 (and hence truncated towards zero).}
 
-\item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
+\item{\code{energy_observed}}{A \code{\link{numeric}} vector giving the observed gamma ray's energy
+(in keV).}
+
+\item{\code{energy_expected}}{A \code{\link{numeric}} vector giving the expected gamma ray's energy
 (in keV).}
 }}
 

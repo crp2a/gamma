@@ -2,7 +2,7 @@
 #' @include AllClasses.R AllGenerics.R
 NULL
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 setMethod(
   f = "show",
   signature = "GammaSpectrum",
@@ -17,7 +17,7 @@ setMethod(
   }
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 setMethod(
   f = "show",
   signature = "GammaSpectra",
@@ -35,7 +35,7 @@ setMethod(
   }
 )
 
-# ================================================================ DoseRateModel
+# DoseRateModel ================================================================
 setMethod(
   f = "show",
   signature = "DoseRateModel",
@@ -44,7 +44,7 @@ setMethod(
   }
 )
 
-# ============================================================= CalibrationCurve
+# CalibrationCurve =============================================================
 setMethod(
   f = "show",
   signature = "CalibrationCurve",
@@ -60,7 +60,7 @@ setMethod(
   }
 )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 setMethod(
   f = "show",
   signature = "PeakPosition",
@@ -69,10 +69,9 @@ setMethod(
     n <- nrow(peaks)
     if (!all(is.na(peaks))) {
       pks <- ngettext(n, " peak was ", " peaks were ")
-      cat(n, pks, "detected:\n", sep = "")
-      print(peaks)
+      cat(n, pks, "detected.\n", sep = "")
     } else {
-      cat("No peaks were detected.\n", sep = " ")
+      cat("No peaks were detected.\n", sep = "")
     }
   }
 )

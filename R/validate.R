@@ -2,7 +2,7 @@
 #' @include AllClasses.R
 NULL
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 setValidity(
   Class = "GammaSpectrum",
   method = function(object) {
@@ -142,7 +142,7 @@ setValidity(
   }
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 setValidity(
   Class = "GammaSpectra",
   method = function(object) {
@@ -165,7 +165,7 @@ setValidity(
   }
 )
 
-# ============================================================= CalibrationCurve
+# CalibrationCurve =============================================================
 # setValidity(
 #   Class = "CalibrationCurve",
 #   method = function(object) {
@@ -261,7 +261,7 @@ setValidity(
 #   }
 # )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 setValidity(
   Class = "PeakPosition",
   method = function(object) {
@@ -270,12 +270,13 @@ setValidity(
     threshold <- object@noise_threshold
     window <- object@window
     channel <- object@channel
-    energy <- object@energy
+    energy_observed <- object@energy_observed
+    energy_expected <- object@energy_expected
     message <- c()
 
     length_hash <- length(hash)
     if (length_hash != 1 || (length_hash == 1 && nchar(hash) != 32)) {
-        message <- c(message, "Slot `hash` must be a 32-character string.")
+      message <- c(message, "Slot `hash` must be a 32-character string.")
     }
     length_method <- length(noise_method)
     if (length_method > 1) {
@@ -289,8 +290,10 @@ setValidity(
     if (length_noise > 1) {
       message <- c(
         message,
-        sprintf("Slot `noise_threshold` must be a numeric vector of length 1, not %d.",
-                length_noise)
+        sprintf(
+          "Slot `noise_threshold` must be a numeric vector of length 1, not %d.",
+          length_noise
+        )
       )
     } else if (!is.na(threshold) && !isPositive(threshold, strict = FALSE)) {
       message <- c(message,
@@ -310,9 +313,17 @@ setValidity(
                 window)
       )
     }
-    if (length(channel) != length(energy)) {
-      message <- c(message,
-                   "Slots `channel` and `energy` must have the same length.")
+    if (length(channel) != length(energy_observed)) {
+      message <- c(
+        message,
+        "Slots `channel` and `energy_observed` must have the same length."
+      )
+    }
+    if (length(channel) != length(energy_expected)) {
+      message <- c(
+        message,
+        "Slots `channel` and `energy_expected` must have the same length."
+      )
     }
 
     if (length(message) != 0) {

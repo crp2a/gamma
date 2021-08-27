@@ -37,8 +37,10 @@ The stabilization step aims at improving the identification of peaks with a
 Other signal processing: 
 \code{\link{baseline}},
 \code{\link{peaks_find}()},
+\code{\link{peaks_search}()},
 \code{\link{signal_integrate}()},
 \code{\link{signal_slice}()},
+\code{\link{signal_split}()},
 \code{\link{smooth}()}
 }
 \author{

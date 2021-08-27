@@ -3,7 +3,7 @@
 NULL
 
 #' @export
-#' @rdname slice
+#' @rdname signal_slice
 #' @aliases signal_slice,GammaSpectrum-method
 setMethod(
   f = "signal_slice",
@@ -30,7 +30,7 @@ setMethod(
 )
 
 #' @export
-#' @rdname slice
+#' @rdname signal_slice
 #' @aliases signal_slice,GammaSpectra-method
 setMethod(
   f = "signal_slice",

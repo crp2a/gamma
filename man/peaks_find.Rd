@@ -5,15 +5,14 @@
 \alias{peaks_find}
 \alias{peaks_find-method}
 \alias{peaks_find,GammaSpectrum-method}
-\title{Peaks}
+\title{Find Peaks}
 \usage{
 peaks_find(object, ...)
 
 \S4method{peaks_find}{GammaSpectrum}(object, method = c("MAD"), SNR = 2, span = NULL, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
-object.}
+\item{object}{A \linkS4class{GammaSpectrum} object.}
 
 \item{...}{Extra parameters to be passed to internal methods.}
 
@@ -28,7 +27,7 @@ of channels). If \code{NULL}, 5\% of the number of channels is used as the
 half window size.}
 }
 \value{
-An object of class \linkS4class{PeakPosition}.
+A \linkS4class{PeakPosition} object.
 }
 \description{
 Finds local maxima in sequential data.
@@ -43,19 +42,33 @@ A local maximum has to be the highest one in the given window and has to be
  }
 }
 \examples{
-## Import a Canberra CNF file
-spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
-spc <- read(spc_file)
+## Import a LaBr spectrum
+LaBr_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+LaBr_spc <- read(LaBr_file)
 
-## Find peaks
-(pks <- peaks_find(spc))
-plot(spc, pks)
+## Find peaks by channel
+(LaBr_pks <- peaks_find(LaBr_spc)) # Ugly
+plot(LaBr_spc, LaBr_pks)
+
+## Search peaks by channel
+(LaBr_pks <- peaks_search(LaBr_spc, index = c(86L, 207L, 496L), span = 7))
+plot(LaBr_spc, LaBr_pks, split = TRUE)
+
+## Import a BEGe spectrum
+BEGe_file <- system.file("extdata/BEGe.CNF", package = "gamma")
+BEGe_spc <- read(BEGe_file)
+
+## Search peaks by energy
+(BEGe_pks <- peaks_search(BEGe_spc, index = c(47, 63, 911, 1460)))
+plot(BEGe_spc, BEGe_pks, split = TRUE)
 }
 \seealso{
 Other signal processing: 
 \code{\link{baseline}},
+\code{\link{peaks_search}()},
 \code{\link{signal_integrate}()},
 \code{\link{signal_slice}()},
+\code{\link{signal_split}()},
 \code{\link{signal_stabilize}()},
 \code{\link{smooth}()}
 }

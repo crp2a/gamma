@@ -16,8 +16,8 @@ setMethod(
 
     # Get data
     calib <- has_energy(x)
-    spc <- methods::as(x, "data.frame")
-    if (xaxis == "energy" && anyNA(spc[["energy"]])) {
+    spc <- as.data.frame(x)
+    if (xaxis == "energy" && anyNA(spc$energy)) {
       xaxis <- "channel"
       warning("The energy scale is missing, displaying channels instead.",
               call. = FALSE)
@@ -54,10 +54,12 @@ setMethod(
   signature = signature(x = "GammaSpectra", y = "missing"),
   definition = function(x, xaxis = c("channel", "energy"),
                         yaxis = c("count", "rate"),
-                        select = NULL, facet = FALSE, ...) {
+                        select = NULL, facet = FALSE,
+                        nrow = c("fixed", "auto")) {
     # Validation
     xaxis <- match.arg(xaxis, several.ok = FALSE)
     yaxis <- match.arg(yaxis, several.ok = FALSE)
+    nrow <- match.arg(nrow, several.ok = FALSE)
 
     if (is.null(select))
       select <- seq_len(length(x))
@@ -70,22 +72,30 @@ setMethod(
 
     if (xaxis == "energy" & anyNA(spc$energy)) {
       xaxis <- "channel"
-      warning("The energy scale is missing for one or more spectra, ",
-              "displaying channels instead.", call. = FALSE)
+      warning("The energy scale is missing for one or more spectra.\n",
+              "Displaying channels instead.", call. = FALSE)
     }
     xlabel <- switch(xaxis, channel = "Channel", energy = "Energy [keV]")
     ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     facet <- if (n == 1) FALSE else facet
     if (facet) {
-      facet <- facet_wrap(vars(.data$name), nrow = n, scales = "free_y")
-      aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                      group = .data$name)
+      scales <- switch(nrow, fixed = "free_y", auto = "free")
+      nrow <- switch(nrow, fixed = n, auto = NULL)
+      facet <- facet_wrap(vars(.data$name), nrow = nrow, scales = scales)
+      aes_plot <- aes(
+        x = .data[[xaxis]],
+        y = .data[[yaxis]],
+        group = .data$name
+      )
     } else {
       facet <- NULL
-      aes_plot <- aes(x = .data[[xaxis]], y = .data[[yaxis]],
-                      group = .data$name,
-                      colour = .data$name)
+      aes_plot <- aes(
+        x = .data[[xaxis]],
+        y = .data[[yaxis]],
+        group = .data$name,
+        colour = .data$name
+      )
     }
     ggplot(data = spc, mapping = aes_plot) +
       geom_path() +
@@ -100,14 +110,16 @@ setMethod(
 setMethod(
   f = "plot",
   signature = signature(x = "GammaSpectrum", y = "PeakPosition"),
-  definition = function(x, y, ...) {
+  definition = function(x, y, split = FALSE, span = 25) {
     # Validation
     if (x@hash != y@hash)
       stop("`x` and `y` do not match.", call. = FALSE)
 
     # Get data
-    peak_channel <- y[["channel"]]
-    peak_energy <- y[["energy"]]
+    pks <- as.data.frame(y)
+    pks$name <- paste(get_names(x), pks$channel, sep = "_")
+    peak_channel <- pks$channel
+    peak_energy <- pks$energy_observed
 
     index_energy <- !is.na(peak_energy)
     if (any(index_energy)) {
@@ -125,8 +137,21 @@ setMethod(
       labels = peak_channel,
       sec.axis = sec_axis
     )
-    plot(x) +
-      geom_vline(xintercept = peak_channel, linetype = 3, colour = "red") +
+
+    if (split) {
+      grp <- rep(NA, length(x))
+      spc_channel <- get_channels(x)
+      for (i in seq_along(peak_channel)) {
+        chan <- peak_channel[[i]]
+        j <- spc_channel >= chan - span & spc_channel < chan + span
+        grp[j] <- chan
+      }
+      x <- signal_split(x, groups = grp)
+    }
+
+    plot(x, facet = split, nrow = "auto") +
+      geom_vline(data = pks, aes(xintercept = .data$channel),
+                 linetype = 3, colour = "red") +
       peak_legend
   }
 )

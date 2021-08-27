@@ -77,7 +77,8 @@ test_that("Initialize an empty PeakPosition instance", {
   expect_identical(peak[["noise_threshold"]],  numeric(0))
   expect_identical(peak[["window"]], integer(0))
   expect_identical(peak[["channel"]], integer(0))
-  expect_identical(peak[["energy"]], numeric(0))
+  expect_identical(peak[["energy_observed"]], numeric(0))
+  expect_identical(peak[["energy_expected"]], numeric(0))
 
   expect_error(peak[["X"]])
 
@@ -91,8 +92,8 @@ test_that("Initialize an empty PeakPosition instance", {
                "must be an integer vector of length 1, not 26")
   expect_error(.PeakPosition(window = as.integer(-1)),
                "Slot `window` must be a strictly positive integer, not -1.")
-  expect_error(.PeakPosition(channel = 1:26),
-               "Slots `channel` and `energy` must have the same length.")
-  expect_error(.PeakPosition(energy = 1:26),
-               "Slots `channel` and `energy` must have the same length.")
+  expect_error(.PeakPosition(energy_expected = 1:26),
+               "Slots `channel` and `energy_expected` must have the same length.")
+  expect_error(.PeakPosition(energy_observed = 1:26),
+               "Slots `channel` and `energy_observed` must have the same length.")
 })

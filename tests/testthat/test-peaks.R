@@ -10,21 +10,20 @@ spc <- .GammaSpectrum(channel = 1:1024, count = cts)
 test_that("Find peaks", {
   peaks <- peaks_find(spc, SNR = 3, span = 50)
   expect_equal(get_channels(peaks), c(86, 493, 876))
-  expect_equal(get_energy(peaks), c(NA_real_, NA_real_, NA_real_))
+  expect_equal(get_energy(peaks, expected = FALSE),
+               c(NA_real_, NA_real_, NA_real_))
+  expect_equal(get_energy(peaks, expected = TRUE),
+               c(NA_real_, NA_real_, NA_real_))
 
   peaks <- peaks_find(spc, SNR = 3, span = NULL)
   expect_equal(get_channels(peaks), c(86, 493, 876))
-  expect_equal(get_energy(peaks), c(NA_real_, NA_real_, NA_real_))
 
   expect_output(show(peaks), "3 peaks were detected")
 
   # Coerce
-  mtx <- as.matrix(peaks)
-  expect_type(mtx, "double")
-  expect_equal(dim(mtx), c(3, 2))
   df <- as.data.frame(peaks)
   expect_type(df, "list")
-  expect_equal(dim(df), c(3, 2))
+  expect_equal(dim(df), c(3, 3))
 
   # Getters and setters
   expect_equal(get_hash(peaks), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

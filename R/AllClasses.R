@@ -231,7 +231,9 @@ NULL
 #' @slot channel A \code{\link{integer}} vector giving the channel number.
 #'  Numeric values are coerced to integer as by \code{\link{as.integer}}
 #'  (and hence truncated towards zero).
-#' @slot energy A \code{\link{numeric}} vector giving the gamma ray's energy
+#' @slot energy_observed A \code{\link{numeric}} vector giving the observed gamma ray's energy
+#'  (in keV).
+#' @slot energy_expected A \code{\link{numeric}} vector giving the expected gamma ray's energy
 #'  (in keV).
 #' @section Access:
 #' In the code snippets below, \code{x} is a \code{PeakPosition} object.
@@ -265,9 +267,10 @@ NULL
     hash = "character",
     noise_method = "character",
     noise_threshold = "numeric",
-    window = "integer",
+    window = "numeric",
     channel = "integer",
-    energy = "numeric"
+    energy_observed = "numeric",
+    energy_expected = "numeric"
   ),
   prototype = list(
     hash = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -275,6 +278,7 @@ NULL
     noise_threshold = numeric(0),
     window = integer(0),
     channel = integer(0),
-    energy = numeric(0)
+    energy_observed = numeric(0),
+    energy_expected = numeric(0)
   )
 )

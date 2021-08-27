@@ -55,12 +55,19 @@ plot(sliced)
 
 sliced <- signal_slice(spc, 450:550)
 plot(sliced)
+
+## Split
+g <- rep(c("A", "B", "C"), c(250, 500, 274))
+splited <- signal_split(spc, g)
+plot(splited, facet = TRUE)
 }
 \seealso{
 Other signal processing: 
 \code{\link{baseline}},
 \code{\link{peaks_find}()},
+\code{\link{peaks_search}()},
 \code{\link{signal_integrate}()},
+\code{\link{signal_split}()},
 \code{\link{signal_stabilize}()},
 \code{\link{smooth}()}
 }

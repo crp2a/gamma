@@ -2,7 +2,7 @@
 #' @include AllClasses.R AllGenerics.R
 NULL
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 #' @method as.matrix GammaSpectrum
 #' @rdname coerce
 #' @export
@@ -41,13 +41,17 @@ setAs(
   }
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 as_long <- function(from) {
   df_list <- lapply(X = from, FUN = "as", Class = "data.frame")
   df_nrow <- vapply(X = df_list, FUN = nrow, FUN.VALUE = integer(1))
   df_long <- do.call(rbind, df_list)
-  df_long[["name"]] <- rep(names(df_list), times = df_nrow)
+
+  ## Keep original ordering
+  name <- rep(names(df_list), times = df_nrow)
+  df_long$name <- factor(name, levels = unique(name))
   rownames(df_long) <- NULL
+
   return(df_long)
 }
 
@@ -66,7 +70,7 @@ setAs(
   }
 )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 #' @method as.matrix PeakPosition
 #' @export
 as.matrix.PeakPosition <- function(x, ...) methods::as(x, "matrix")
@@ -88,7 +92,8 @@ setAs(
   def = function(from) {
     cbind(
       channel = if (length(from@channel) != 0) from@channel else NA_real_,
-      energy = if (length(from@energy) != 0) from@energy else NA_real_
+      energy_observed = if (length(from@energy_observed) != 0) from@energy_observed else NA_real_,
+      energy_expected = if (length(from@energy_expected) != 0) from@energy_expected else NA_real_
     )
   }
 )

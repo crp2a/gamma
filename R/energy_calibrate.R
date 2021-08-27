@@ -17,7 +17,10 @@ setMethod(
 
     # Adjust spectrum for energy shift
     # Get corresponding channels
-    lines <- as.data.frame(lines)
+    lines <- data.frame(
+      channel = lines$channel,
+      energy = lines$energy
+    )
     lines <- stats::na.omit(lines)
     n <- nrow(lines)
     if (n < 3) {
@@ -25,12 +28,14 @@ setMethod(
       stop(sprintf(msg, n), call. = FALSE)
     }
     # Get spectrum data
-    spc_data <- methods::as(object, "data.frame")
+    spc_data <- as.data.frame(object)
 
     # Adjust spectrum for energy shift
     ## Fit second order polynomial
-    fit_poly <- stats::lm(energy ~ stats::poly(channel, degree = 2, raw = TRUE),
-                          data = lines)
+    fit_poly <- stats::lm(
+      formula = energy ~ stats::poly(channel, degree = 2, raw = TRUE),
+      data = lines
+    )
     ## Predict shifted energy values
     fit_spc <- stats::predict(fit_poly, spc_data[, "channel", drop = FALSE])
 
@@ -47,7 +52,8 @@ setMethod(
   signature = signature(object = "GammaSpectrum", lines = "PeakPosition"),
   definition = function(object, lines, ...) {
     # Get data
-    peaks <- methods::as(lines, "data.frame")
+    peaks <- as.data.frame(lines)
+    peaks$energy <- peaks$energy_expected
 
     # Adjust spectrum for energy shift
     # Return a new gamma spectrum with adjusted energy

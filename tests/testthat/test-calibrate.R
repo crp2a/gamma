@@ -45,7 +45,7 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
   peaks <- .PeakPosition(
     hash = spectrum@hash,
     channel = c(76L, 459L, 816L),
-    energy = c(NA_real_, NA_real_, NA_real_)
+    energy_expected = c(NA_real_, NA_real_, NA_real_)
   )
 
   expect_error(energy_calibrate(spectrum, lines = peaks),

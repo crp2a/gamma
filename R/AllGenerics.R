@@ -26,6 +26,7 @@ NULL
 #' Getters and setters to extract or replace parts of an object.
 #' @param x An object from which to get or set element(s).
 #' @param value A possible value for the element(s) of \code{x}.
+#' @param expected TODO.
 #' @param na.rm A \code{\link{logical}} scalar: should \code{\link{NA}} be
 #'  omitted?
 #' @param ... Currently not used.
@@ -99,14 +100,14 @@ setGeneric(
 #' @aliases get_energy-method
 setGeneric(
   name = "get_energy",
-  def = function(x) standardGeneric("get_energy")
+  def = function(x, ...) standardGeneric("get_energy")
 )
 
 #' @rdname mutator
 #' @aliases set_energy-method
 setGeneric(
   name = "set_energy<-",
-  def = function(x, value) standardGeneric("set_energy<-")
+  def = function(x, ..., value) standardGeneric("set_energy<-")
 )
 
 #' @rdname mutator
@@ -500,11 +501,10 @@ setGeneric(
 )
 
 # Peaks ========================================================================
-#' Peaks
+#' Find Peaks
 #'
 #' Finds local maxima in sequential data.
-#' @param object A \linkS4class{GammaSpectrum} or \linkS4class{PeakPosition}
-#'  object.
+#' @param object A \linkS4class{GammaSpectrum} object.
 #' @param method A \code{\link{character}} string specifying the method to be
 #'  used for background noise estimation (see below).
 #' @param SNR An \code{\link{integer}} giving the signal-to-noise-ratio for
@@ -521,16 +521,41 @@ setGeneric(
 #'  \describe{
 #'   \item{MAD}{Median Absolute Deviation.}
 #'  }
-#' @return An object of class \linkS4class{PeakPosition}.
+#' @return A \linkS4class{PeakPosition} object.
 #' @example inst/examples/ex-peaks.R
 #' @author N. Frerebeau
 #' @docType methods
 #' @family signal processing
-#' @rdname peaks
+#' @rdname peaks_find
 #' @aliases peaks_find-method
 setGeneric(
   name = "peaks_find",
   def = function(object, ...) standardGeneric("peaks_find")
+)
+
+#' Search Peaks
+#'
+#' Search the maxima in sequential data around a given value.
+#' @param object A \linkS4class{GammaSpectrum} object.
+#' @param index A vector giving the expected peak position.
+#'  If \code{index} is a \code{\link{numeric}} vector, peaks are searched by energy
+#'  (\code{index} is assumed to be expressed in keV).
+#'  If \code{index} is an \code{\link{integer}} vector, peaks are searched by channel.
+#' @param span A \code{\link{numeric}} value giving the half window size for searching.
+#'  If \code{index} is a \code{\link{numeric}} vector, \code{span} is expressed in keV.
+#'  If \code{index} is an \code{\link{integer}} vector, \code{span} is expressed in channel.
+#' @param tolerance A \code{\link{numeric}} value giving the threshold above which a warning/error is raised.
+#' @param ... Currently not used.
+#' @return A \linkS4class{PeakPosition} object.
+#' @example inst/examples/ex-peaks.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family signal processing
+#' @rdname peaks_search
+#' @aliases peaks_search-method
+setGeneric(
+  name = "peaks_search",
+  def = function(object, index, ...) standardGeneric("peaks_search")
 )
 
 # Plot =========================================================================
@@ -545,6 +570,13 @@ setGeneric(
 #'  giving the selection of the spectrum that are drawn.
 #' @param facet A \code{\link{logical}} scalar: should a matrix of panels
 #'  defined by spectrum be drawn?
+#' @param nrow A \code{\link{character}} string specifying the number of rows.
+#'  It must be one of "\code{fixed}" or "\code{auto}".
+#'  Any unambiguous substring can be given.
+#'  Only used if \code{facet} is \code{TRUE}.
+#' @param split A \code{\link{logical}} scalar: should.
+#' @param span An \code{\link{integer}} giving the half window size (in number
+#'  of channels). Only used if \code{split} is \code{TRUE}.
 #' @param error_ellipse A \code{\link{logical}} scalar: should error ellipses
 #'  be plotted?
 #' @param error_bar A \code{\link{logical}} scalar: should error bars
@@ -599,7 +631,8 @@ setGeneric(
   def = function(file, ...) standardGeneric("read")
 )
 
-# Slice ========================================================================
+# Signal processing ============================================================
+## Slice -----------------------------------------------------------------------
 #' Choose channels by Position
 #'
 #' Choose channels by position.
@@ -623,14 +656,34 @@ setGeneric(
 #' @example inst/examples/ex-slice.R
 #' @docType methods
 #' @family signal processing
-#' @rdname slice
+#' @rdname signal_slice
 #' @aliases signal_slice-method
 setGeneric(
   name = "signal_slice",
   def = function(object, ...) standardGeneric("signal_slice")
 )
 
-# Smooth =======================================================================
+## Split -----------------------------------------------------------------------
+#' Split
+#'
+#' @param object A \linkS4class{GammaSpectrum} object.
+#' @param groups A a \code{\link{factor}} in the sense that \code{as.factor(f)}
+#'  defines the grouping (see \code{\link{split}}).
+#' @param ... Currently not used.
+#' @return
+#'  A \linkS4class{GammaSpectra} object.
+#' @author N. Frerebeau
+#' @example inst/examples/ex-slice.R
+#' @docType methods
+#' @family signal processing
+#' @rdname signal_split
+#' @aliases signal_split-method
+setGeneric(
+  name = "signal_split",
+  def = function(object, ...) standardGeneric("signal_split")
+)
+
+## Smooth ----------------------------------------------------------------------
 #' Smooth
 #'
 #' Smoothes intensities.
@@ -710,7 +763,7 @@ setGeneric(
   def = function(object, ...) standardGeneric("smooth_savitzky")
 )
 
-# Stabilize ====================================================================
+## Stabilize -------------------------------------------------------------------
 #' Transform Intensities
 #'
 #' @param object A \linkS4class{GammaSpectrum} object.

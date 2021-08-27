@@ -87,9 +87,9 @@ get_counts(x)
 
 get_rates(x)
 
-get_energy(x)
+get_energy(x, ...)
 
-set_energy(x) <- value
+set_energy(x, ...) <- value
 
 get_method(x)
 
@@ -151,7 +151,7 @@ range_energy(x, ...)
 
 \S4method{get_channels}{PeakPosition}(x)
 
-\S4method{get_energy}{PeakPosition}(x)
+\S4method{get_energy}{PeakPosition}(x, expected = FALSE)
 
 \S4method{set_names}{GammaSpectrum}(x) <- value
 
@@ -159,7 +159,7 @@ range_energy(x, ...)
 
 \S4method{set_names}{GammaSpectra}(x) <- value
 
-\S4method{set_energy}{PeakPosition,numeric}(x) <- value
+\S4method{set_energy}{PeakPosition,numeric}(x, expected = TRUE) <- value
 }
 \arguments{
 \item{x}{An object from which to get or set element(s).}
@@ -170,6 +170,8 @@ range_energy(x, ...)
 
 \item{na.rm}{A \code{\link{logical}} scalar: should \code{\link{NA}} be
 omitted?}
+
+\item{expected}{TODO.}
 }
 \value{
 An object of the same sort as \code{x} with the new values assigned.
