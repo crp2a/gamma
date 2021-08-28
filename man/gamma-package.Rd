@@ -18,11 +18,11 @@ Process in-situ Gamma-Ray Spectrometry for
 }
 \details{
 \tabular{ll}{
- \strong{Package:} \tab gamma \cr
- \strong{Type:} \tab Package \cr
- \strong{Version:} \tab 1.0.1.9000 \cr
- \strong{License:} \tab GPL-3 \cr
- \strong{DOI:} \tab \doi{10.5281/zenodo.2652393}
+\strong{Package:} \tab gamma \cr
+\strong{Type:} \tab Package \cr
+\strong{Version:} \tab 1.0.1.9000 \cr
+\strong{License:} \tab GPL-3 \cr
+\strong{Zenodo:} \tab \doi{10.5281/zenodo.2652393}
 }
 }
 \note{
@@ -44,11 +44,11 @@ Useful links:
 \strong{Full list of authors and contributors} (alphabetic order)
 
 \tabular{ll}{
- Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
- Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
- Brice Lebrun \tab \emph{Université Bordeaux Montaigne, France} \cr
- Guilhem Paradol \tab \emph{Commissariat à l'Énergie Atomique, France} \cr
- Magali Rizza \tab \emph{Aix-Marseille Université, France}
+Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
+Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
+Brice Lebrun \tab \emph{Université Bordeaux Montaigne, France} \cr
+Guilhem Paradol \tab \emph{Commissariat à l'Énergie Atomique, France} \cr
+Magali Rizza \tab \emph{Aix-Marseille Université, France}
 }
 
 \strong{Package maintainer}

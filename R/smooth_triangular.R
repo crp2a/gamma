@@ -32,10 +32,10 @@ setMethod(
 #' Triangular Smooth
 #'
 #' Weighted sliding-average.
-#' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
-#' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
+#' @param x A [`numeric`] vector of observed values to be smoothed.
+#' @param m An odd [`integer`] scalar giving the number of adjacent
 #'  points to use.
-#' @return A \code{\link{numeric}} vector of the same length as \code{x}.
+#' @return A [`numeric`] vector of the same length as `x`.
 #' @keywords internal
 #' @noRd
 triangular <- function(x, m) {

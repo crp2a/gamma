@@ -34,11 +34,11 @@ setMethod(
 #' \code{smooth_savitzky} smoothes the data using the Savitzky-Golay filter.
 #'
 #' \code{coef_savitzky} computes the Savitzky-Golay convolution coefficients.
-#' @param x A \code{\link{numeric}} vector of observed values to be smoothed.
-#' @param m An odd \code{\link{integer}} scalar giving the number of adjacent
+#' @param x A [`numeric`] vector of observed values to be smoothed.
+#' @param m An odd [`integer`] scalar giving the number of adjacent
 #'  points to use.
-#' @param p An \code{\link{integer}} scalar giving the polynomial degree.
-#' @return A \code{\link{numeric}} vector.
+#' @param p An [`integer`] scalar giving the polynomial degree.
+#' @return A [`numeric`] vector.
 #' @name smooth_savitzky
 #' @rdname smooth_savitzky
 #' @keywords internal

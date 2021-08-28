@@ -50,10 +50,10 @@ setMethod(
   }
 )
 
-#' @param model A \linkS4class{DoseRateModel} object.
-#' @param sigma A \code{\link{numeric}}.
-#' @param epsilon A \code{\link{numeric}}.
-#' @return A \code{\link{data.frame}}.
+#' @param model A [DoseRateModel-class] object.
+#' @param sigma A [`numeric`].
+#' @param epsilon A [`numeric`].
+#' @return A [`data.frame`].
 #' @keywords internal
 #' @noRd
 predict_york <- function(model, spectrum, energy = FALSE,

@@ -52,49 +52,48 @@ object.}
 
 \item{...}{Extra parameters to be passed to further methods.}
 
-\item{method}{A \code{\link{character}} string specifying the method to be
-used for baseline estimation (see details). Any unambiguous substring
-can be given.}
+\item{method}{A \code{\link{character}} string specifying the method to be used for
+baseline estimation (see details). Any unambiguous substring can be given.}
 
-\item{noise}{A length-one \code{\link{numeric}} vector giving the noise
-level. Only used if \code{method} is "\code{rubberband}".}
-
-\item{spline}{A \code{\link{logical}} scalar: should spline interpolation
-through the support points be used instead of linear interpolation?
+\item{noise}{A length-one \code{\link{numeric}} vector giving the noise level.
 Only used if \code{method} is "\code{rubberband}".}
 
-\item{LLS}{A \code{\link{logical}} scalar: should the LLS operator be applied
-on \code{x} before employing SNIP algorithm? Only used if
-\code{method} is "\code{SNIP}".}
+\item{spline}{A \code{\link{logical}} scalar: should spline interpolation through the
+support points be used instead of linear interpolation?
+Only used if \code{method} is "\code{rubberband}".}
 
-\item{decreasing}{A \code{\link{logical}} scalar: should a decreasing
-clipping window be used? Only used if \code{method} is "\code{SNIP}".}
+\item{LLS}{A \code{\link{logical}} scalar: should the LLS operator be applied on \code{x}
+before employing SNIP algorithm? Only used if \code{method} is "\code{SNIP}".}
+
+\item{decreasing}{A \code{\link{logical}} scalar: should a decreasing clipping window
+be used? Only used if \code{method} is "\code{SNIP}".}
 
 \item{n}{An \code{\link{integer}} value giving the number of iterations.
 Only used if \code{method} is "\code{SNIP}".}
 }
 \value{
-\code{baseline_*} returns a \linkS4class{BaseLine} object.
-
- \code{signal_correct} returns a corrected \linkS4class{GammaSpectrum} or
- \linkS4class{GammaSpectra} object (same as \code{object}).
+\itemize{
+\item \verb{baseline_*()} returns a \linkS4class{BaseLine} object.
+\item \code{signal_correct()} returns a corrected \linkS4class{GammaSpectrum} or
+\linkS4class{GammaSpectra} object (same as \code{object}).
+}
 }
 \description{
 Baseline Estimation and Removal
 }
 \details{
 The following methods are available for baseline estimation:
- \describe{
-  \item{SNIP}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
-  \item{rubberband}{A convex envelope of the spectrum is determined and the
-  baseline is estimated as the part of the convex envelope lying below the
-  spectrum. Note that the rubber band does not enter the concave regions
-  (if any) of the spectrum.}
- }
+\describe{
+\item{\code{SNIP}}{Sensitive Nonlinear Iterative Peak clipping algorithm.}
+\item{\code{rubberband}}{A convex envelope of the spectrum is determined and the
+baseline is estimated as the part of the convex envelope lying below the
+spectrum. Note that the rubber band does not enter the concave regions
+(if any) of the spectrum.}
+}
 }
 \note{
-\code{baseline_rubberband} is slightly modified from C. Beleites'
- \code{\link[hyperSpec]{spc.rubberband}}.
+\code{baseline_rubberband()} is slightly modified from C. Beleites'
+\code{\link[hyperSpec:spc.rubberband]{hyperSpec::spc.rubberband()}}.
 }
 \examples{
 ## Import a CNF file
@@ -121,26 +120,24 @@ plot(spc_clean1)
 }
 \references{
 Liland, K. H. (2015). 4S Peak Filling - baseline estimation by iterative
- mean suppression. \emph{MethodsX}, 2, 135-140.
- \doi{10.1016/j.mex.2015.02.009}.
+mean suppression. \emph{MethodsX}, 2, 135-140. \doi{10.1016/j.mex.2015.02.009}.
 
- Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
- Background elimination methods for multidimensional gamma-ray spectra.
- \emph{Nuclear Instruments and Methods in Physics Research Section A:
- Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
- p. 113-132.
- \doi{10.1016/S0168-9002(97)01023-1}
+Morháč, M., Kliman, J., Matoušek, V., Veselský, M. & Turzo, I. (1997).
+Background elimination methods for multidimensional gamma-ray spectra.
+\emph{Nuclear Instruments and Methods in Physics Research Section A:
+Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1),
+p. 113-132. \doi{10.1016/S0168-9002(97)01023-1}
 
- Morháč, M. & Matoušek, V. (2008). Peak Clipping Algorithms for Background
- Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
- \doi{10.1366/000370208783412762}
+Morháč, M. & Matoušek, V. (2008). Peak Clipping Algorithms for Background
+Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
+\doi{10.1366/000370208783412762}
 
- Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. & Cousens, D. R.
- (1988). SNIP, a statistics-sensitive background treatment for the
- quantitative analysis of PIXE spectra in geoscience applications.
- \emph{Nuclear Instruments and Methods in Physics Research Section B:
- Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
- \doi{10.1016/0168-583X(88)90063-8}
+Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. & Cousens, D. R.
+(1988). SNIP, a statistics-sensitive background treatment for the
+quantitative analysis of PIXE spectra in geoscience applications.
+\emph{Nuclear Instruments and Methods in Physics Research Section B:
+Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
+\doi{10.1016/0168-583X(88)90063-8}
 }
 \seealso{
 Other signal processing: 

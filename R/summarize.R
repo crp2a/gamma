@@ -2,7 +2,7 @@
 #' @include AllClasses.R AllGenerics.R
 NULL
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 #' @rdname summarise
 #' @aliases summarise,GammaSpectrum-method
 #' @export
@@ -24,7 +24,7 @@ setMethod(
   }
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 #' @rdname summarise
 #' @aliases summarise,GammaSpectra-method
 #' @export
@@ -37,7 +37,7 @@ setMethod(
   }
 )
 
-# ================================================================ DoseRateModel
+# DoseRateModel ================================================================
 #' @rdname summarise
 #' @aliases summarise,DoseRateModel-method
 #' @export
@@ -58,7 +58,7 @@ setMethod(
   }
 )
 
-# ============================================================= CalibrationCurve
+# CalibrationCurve =============================================================
 #' @rdname summarise
 #' @aliases summarise,CalibrationCurve-method
 #' @export

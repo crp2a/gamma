@@ -168,8 +168,7 @@ range_energy(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{na.rm}{A \code{\link{logical}} scalar: should \code{\link{NA}} be
-omitted?}
+\item{na.rm}{A \code{\link{logical}} scalar: should \code{\link{NA}} be omitted?}
 
 \item{expected}{TODO.}
 }

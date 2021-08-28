@@ -11,27 +11,26 @@ An S4 Class to Represent a Set of Peaks
 \section{Slots}{
 
 \describe{
-\item{\code{hash}}{A \code{\link{character}} string giving the 32-byte MD5 hash of
-the imported spectrum file.}
+\item{\code{hash}}{A \code{\link{character}} string giving the 32-byte MD5 hash of the imported
+spectrum file.}
 
-\item{\code{noise_method}}{A \code{\link{character}} string specifying the method
-used for peak detection.}
+\item{\code{noise_method}}{A \code{\link{character}} string specifying the method used for peak
+detection.}
 
-\item{\code{noise_threshold}}{A length one \code{\link{numeric}} vector giving the
-noise threshold.}
+\item{\code{noise_threshold}}{A length one \code{\link{numeric}} vector giving the noise
+threshold.}
 
-\item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window
-size.}
+\item{\code{window}}{A length one \code{\link{numeric}} vector giving the half-window size.}
 
-\item{\code{channel}}{A \code{\link{integer}} vector giving the channel number.
-Numeric values are coerced to integer as by \code{\link{as.integer}}
-(and hence truncated towards zero).}
+\item{\code{channel}}{A \code{\link{integer}} vector giving the channel number. Numeric values
+are coerced to integer as by \code{\link[=as.integer]{as.integer()}} (and hence truncated towards
+zero).}
 
-\item{\code{energy_observed}}{A \code{\link{numeric}} vector giving the observed gamma ray's energy
-(in keV).}
+\item{\code{energy_observed}}{A \code{\link{numeric}} vector giving the observed gamma ray
+energy (in keV).}
 
-\item{\code{energy_expected}}{A \code{\link{numeric}} vector giving the expected gamma ray's energy
-(in keV).}
+\item{\code{energy_expected}}{A \code{\link{numeric}} vector giving the expected gamma ray
+energy (in keV).}
 }}
 
 \note{
@@ -41,10 +40,10 @@ This class retains copy construction.
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
- \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
- \item{\code{get_channels(x)}}{Get the channels of \code{x}.}
- \item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
-  the energy scale of \code{x} according to \code{value}.}
+\item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+\item{\code{get_channels(x)}}{Get the channels of \code{x}.}
+\item{\code{get_energy(x)}, \code{set_energy(x) <- value}}{Retrieves or sets
+the energy scale of \code{x} according to \code{value}.}
 }
 }
 
@@ -52,8 +51,8 @@ In the code snippets below, \code{x} is a \code{PeakPosition} object.
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
- \item{\code{matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
- \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
+\item{\code{as.matrix(x)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+\item{\code{as.data.frame(x)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 }
 }
 
@@ -61,9 +60,9 @@ In the code snippets below, \code{x} is a \code{PeakPosition} object.
 
 In the code snippets below, \code{x} is a \code{PeakPosition} object.
 \describe{
- \item{\code{x[[i]]}}{Extracts informations from a slot selected by
- subscript \code{i}. \code{i} is a \code{character} vector
- of length one and will be matched to the name of the slots.}
+\item{\code{x[[i]]}}{Extracts information from a slot selected by subscript \code{i}.
+\code{i} is a \code{character} vector of length one and will be matched to the name of
+the slots.}
 }
 }
 

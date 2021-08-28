@@ -61,7 +61,7 @@ setMethod(
   }
 )
 
-# =================================================================== Predicates
+# Predicates ===================================================================
 #' @export
 #' @rdname energy
 #' @aliases has_energy,GammaSpectrum-method

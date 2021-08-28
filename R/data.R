@@ -4,8 +4,7 @@
 #' An internal dataset containing the decay data for the following isotopes:
 #' 232-Th, 235-U, 238-U and 40-K.
 #' @format
-#'  A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
-#'  with the following columns (absolute errors):
+#'  A [`data.frame`] with the following columns (absolute errors):
 #'  \describe{
 #'    \item{decay_chain}{}
 #'    \item{isotope}{}
@@ -22,7 +21,7 @@
 #'    \item{counts_chain_error}{}
 #'  }
 #' @source
-#'  Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
+#'  Nuclides And Isotopes : Chart of the Nuclides.
 #' @rdname decay
 #' @keywords datasets internal
 ".decay"
@@ -31,8 +30,7 @@
 #'
 #' An internal dataset containing the decay data for the Lanthanum isotopes.
 #' @format
-#'  A \eqn{2094 \times 11}{2094 x 11} \code{\link[=data.frame]{data frame}}
-#'  with the following columns (absolute errors):
+#'  A [`data.frame`] with the following columns (absolute errors):
 #'  \describe{
 #'    \item{decay_chain}{}
 #'    \item{isotope}{}
@@ -47,7 +45,7 @@
 #'    \item{gamma_intensity_error}{}
 #'  }
 #' @source
-#'  Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
+#'  Nuclides And Isotopes : Chart of the Nuclides.
 #' @rdname decay_La
 #' @keywords datasets internal
 ".decay_La"
@@ -59,11 +57,11 @@
 #' @format TODO
 #' @source
 #'  Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
-#'  Update. \emph{Ancient TL}, 29(1), p. 5-8.
+#'  Update. *Ancient TL*, 29(1), p. 5-8.
 #'
 #'  Miallier, D., Guérin, G., Mercier, N., Pilleyre, T. & Sanzelle, S.
 #'  (2009). The Clermont Radiometric Reference Rocks: A Convenient Tool
-#'  for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.
+#'  for Dosimetric Purposes. *Ancient TL*, 27(2), p. 37-44.
 #' @family datasets
 #' @keywords datasets
 "clermont"
@@ -72,7 +70,7 @@
 #'
 #' @usage data(AIX_NaI_1)
 #' @format
-#' An object of class \linkS4class{CalibrationCurve}.
+#' An object of class [CalibrationCurve-class].
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab CEREGE \cr
 #'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
@@ -91,7 +89,7 @@
 #'
 #' @usage data(BDX_LaBr_1)
 #' @format
-#' An object of class \linkS4class{CalibrationCurve}.
+#' An object of class [CalibrationCurve-class].
 #' \tabular{ll}{
 #'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
 #'  \strong{Instrument} \tab Canberra Inspector 1000 \cr

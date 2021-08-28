@@ -18,9 +18,9 @@ peaks_search(object, index, ...)
 \item{object}{A \linkS4class{GammaSpectrum} object.}
 
 \item{index}{A vector giving the expected peak position.
-If \code{index} is a \code{\link{numeric}} vector, peaks are searched by energy
-(\code{index} is assumed to be expressed in keV).
-If \code{index} is an \code{\link{integer}} vector, peaks are searched by channel.}
+If \code{index} is a \code{\link{numeric}} vector, peaks are searched by energy (\code{index} is
+assumed to be expressed in keV). If \code{index} is an \code{\link{integer}} vector, peaks
+are searched by channel.}
 
 \item{...}{Currently not used.}
 
@@ -28,7 +28,8 @@ If \code{index} is an \code{\link{integer}} vector, peaks are searched by channe
 If \code{index} is a \code{\link{numeric}} vector, \code{span} is expressed in keV.
 If \code{index} is an \code{\link{integer}} vector, \code{span} is expressed in channel.}
 
-\item{tolerance}{A \code{\link{numeric}} value giving the threshold above which a warning/error is raised.}
+\item{tolerance}{A \code{\link{numeric}} value giving the threshold above which a
+warning/error is raised.}
 }
 \value{
 A \linkS4class{PeakPosition} object.

@@ -17,8 +17,7 @@ An S4 class to Represent a Dose Rate Calibration Curve
 
 \item{\code{NiEi}}{A \linkS4class{DoseRateModel} object.}
 
-\item{\code{details}}{A \code{\link{list}} of length-one vector giving the curve
-metadata.}
+\item{\code{details}}{A \code{\link{list}} of length-one vector giving the curve metadata.}
 
 \item{\code{slope}}{A \code{\link{numeric}} vector.}
 
@@ -43,8 +42,8 @@ metadata.}
 
 In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 \describe{
- \item{\code{x[[i]]}}{Extracts informations from a slot selected by
- subscript \code{i}. \code{i} is a \code{character} vector of length one.}
+\item{\code{x[[i]]}}{Extracts information from a slot selected by subscript \code{i}.
+\code{i} is a \code{character} vector of length one.}
 }
 }
 

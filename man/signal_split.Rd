@@ -16,8 +16,8 @@ signal_split(object, ...)
 
 \item{...}{Currently not used.}
 
-\item{groups}{A a \code{\link{factor}} in the sense that \code{as.factor(f)}
-defines the grouping (see \code{\link{split}}).}
+\item{groups}{A a \code{\link{factor}} in the sense that \code{as.factor(groups)} defines
+the grouping (see \code{\link{split}}).}
 }
 \value{
 A \linkS4class{GammaSpectra} object.

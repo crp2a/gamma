@@ -46,29 +46,28 @@ dose_predict(object, spectrum, ...)
 \S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 0)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve}
-object.}
+\item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
 
-\item{background}{A \linkS4class{GammaSpectrum} object of a length-two
-\code{\link{numeric}} vector giving the background noise integration value
-and error, respectively.}
+\item{background}{A \linkS4class{GammaSpectrum} object of a length-two \code{\link{numeric}}
+vector giving the background noise integration value and error,
+respectively.}
 
 \item{doses}{A \code{\link{matrix}} or \code{\link{data.frame}} TODO.}
 
 \item{...}{Currently not used.}
 
-\item{spectrum}{An optional \linkS4class{GammaSpectrum} or
-\linkS4class{GammaSpectra} object in which to look for variables with which
-to predict. If omitted, the fitted values are used.}
+\item{spectrum}{An optional \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+object in which to look for variables with which to predict. If omitted,
+the fitted values are used.}
 
-\item{range_Ni, range_NiEi}{A length-two \code{\link{numeric}} vector giving
-the energy range to integrate within (in keV).}
+\item{range_Ni, range_NiEi}{A length-two \code{\link{numeric}} vector giving the energy
+range to integrate within (in keV).}
 
-\item{alpha}{A \code{\link{numeric}} value giving the cutoff value for
-confidence intervals (see \code{\link[IsoplotR]{york}}).}
+\item{alpha}{A \code{\link{numeric}} value giving the cutoff value for confidence
+intervals (see \code{\link[IsoplotR:york]{IsoplotR::york()}}).}
 
-\item{details}{A \code{\link{list}} of length-one vector specifying
-additional informations about the instrument for which the curve is built.}
+\item{details}{A \code{\link{list}} of length-one vector specifying additional
+informations about the instrument for which the curve is built.}
 
 \item{sigma}{A \code{\link{numeric}} value giving TODO.}
 
@@ -76,22 +75,19 @@ additional informations about the instrument for which the curve is built.}
 introduced by the calibration of the energy scale of the spectrum.}
 }
 \value{
-\code{dose_fit} returns a \linkS4class{CalibrationCurve} object.
-
- \code{dose_predict} returns a \code{\link{data.frame}} with the following
- columns:
- \describe{
-  \item{name}{(\code{\link{character}}) the name of the spectra.}
-  \item{*_signal}{(\code{\link{numeric}}) the integrated signal value
-  (according to the value of \code{threshold}; see
-  \code{\link{signal_integrate}}).}
-  \item{*_error}{(\code{\link{numeric}}) the integrated signal error value
-  (according to the value of \code{threshold}; see
-  \code{\link{signal_integrate}}).}
-  \item{gamma_signal}{(\code{\link{numeric}}) the predicted gamma dose rate.}
-  \item{gamma_error}{(\code{\link{numeric}}) the predicted gamma dose rate
-  error.}
- }
+\itemize{
+\item \code{dose_fit()} returns a \linkS4class{CalibrationCurve} object.
+\item \code{dose_predict()} returns a \code{\link{data.frame}} with the following columns:
+\describe{
+\item{\code{name}}{(\code{\link{character}}) the name of the spectra.}
+\item{\verb{*_signal}}{(\code{\link{numeric}}) the integrated signal value (according to
+the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}).}
+\item{\verb{*_error}}{(\code{\link{numeric}}) the integrated signal error value
+(according to the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}).}
+\item{\code{gamma_signal}}{(\code{\link{numeric}}) the predicted gamma dose rate.}
+\item{\code{gamma_error}}{(\code{\link{numeric}}) the predicted gamma dose rate error.}
+}
+}
 }
 \description{
 \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
@@ -99,21 +95,20 @@ introduced by the calibration of the energy scale of the spectrum.}
 \details{
 \code{dose_predict} predicts in situ gamma dose rate.
 
+To estimate the gamma dose rate, one of the calibration curves distributed
+with this package can be used. These built-in curves are in use in several
+luminescence dating laboratories and can be used to replicate published
+results. As these curves are instrument specific, the user may have to build
+its own curve.
 
- To estimate the gamma dose rate, one of the calibration curves distributed
- with this package can be used (fig. \@ref(fig:curve)). These built-in curves
- are in use in several luminescence dating laboratories and can be used to
- replicate published results. As these curves are instrument specific, the
- user may have to build its own curve.
+The construction of a calibration curve requires a set of reference spectra
+for which the gamma dose rate is known and a background noise measurement.
+First, each reference spectrum is integrated over a given interval, then
+normalized to active time and corrected for background noise. The dose rate
+is finally modelled by the integrated signal value used as a linear
+predictor (York \emph{et al.}, 2004).
 
- The construction of a calibration curve requires a set of reference spectra
- for which the gamma dose rate is known and a background noise measurement.
- First, each reference spectrum is integrated over a given interval, then
- normalized to active time and corrected for background noise. The dose rate
- is finally modelled by the integrated signal value used as a linear
- predictor (York *et al.*, 2004).
-
- See \code{vignette(doserate)} for a reproducible example.
+See \code{vignette(doserate)} for a reproducible example.
 }
 \examples{
 ## Import CNF files
@@ -142,16 +137,16 @@ dose_predict(calib_curve, spc)
 }
 \references{
 Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
- a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
- \emph{Ancient TL}, 25(1), p. 1-4.
+a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+\emph{Ancient TL}, 25(1), p. 1-4.
 
- York, D., Evensen, N. M., Martínez, M. L. & De Basabe Delgado, J. (2004).
- Unified Equations for the Slope, Intercept, and Standard Errors of the Best
- Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
- \doi{10.1119/1.1632486}.
+York, D., Evensen, N. M., Martínez, M. L. & De Basabe Delgado, J. (2004).
+Unified Equations for the Slope, Intercept, and Standard Errors of the Best
+Straight Line. \emph{American Journal of Physics}, 72(3), p. 367-75.
+\doi{10.1119/1.1632486}.
 }
 \seealso{
-\link{signal_integrate}
+\code{\link[=signal_integrate]{signal_integrate()}}
 }
 \author{
 N. Frerebeau

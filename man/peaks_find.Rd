@@ -16,15 +16,15 @@ peaks_find(object, ...)
 
 \item{...}{Extra parameters to be passed to internal methods.}
 
-\item{method}{A \code{\link{character}} string specifying the method to be
-used for background noise estimation (see below).}
+\item{method}{A \code{\link{character}} string specifying the method to be used for
+background noise estimation (see below).}
 
-\item{SNR}{An \code{\link{integer}} giving the signal-to-noise-ratio for
-peak detection (see below).}
+\item{SNR}{An \code{\link{integer}} giving the signal-to-noise-ratio for peak detection
+(see below).}
 
-\item{span}{An \code{\link{integer}} giving the half window size (in number
-of channels). If \code{NULL}, 5\% of the number of channels is used as the
-half window size.}
+\item{span}{An \code{\link{integer}} giving the half window size (in number of
+channels). If \code{NULL}, 5\\% of the number of channels is used as the half
+window size.}
 }
 \value{
 A \linkS4class{PeakPosition} object.
@@ -34,12 +34,12 @@ Finds local maxima in sequential data.
 }
 \details{
 A local maximum has to be the highest one in the given window and has to be
- higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
+higher than \eqn{SNR \times noise}{SNR * noise} to be recognized as peak.
 
- The following methods are available for noise estimation:
- \describe{
-  \item{MAD}{Median Absolute Deviation.}
- }
+The following methods are available for noise estimation:
+\describe{
+\item{\code{MAD}}{Median Absolute Deviation.}
+}
 }
 \examples{
 ## Import a LaBr spectrum

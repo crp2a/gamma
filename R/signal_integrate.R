@@ -8,17 +8,24 @@ NULL
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "missing"),
-  definition = function(object, range, energy = FALSE) {
+  definition = function(object, range = NULL, energy = FALSE) {
+    # Get data
+    spc_data <- as.data.frame(object)
+
     # Validation
-    if (!is.numeric(range) || length(range) != 2)
-      stop(sprintf("%s must be a numeric vector of length 2, not %d.",
-                   sQuote("range"), length(range)), call. = FALSE)
-    if (!has_energy(object))
+    if (!has_energy(object)) {
       stop("You must calibrate the energy scale of your spectrum first.",
            call. = FALSE)
-
-    # Get data
-    spc_data <- methods::as(object, "data.frame")
+    }
+    if (is.null(range)) {
+      range <- range(spc_data$energy)
+    } else if (!is.numeric(range)) {
+      stop(sprintf("%s must be a numeric vector, not %d.",
+                   sQuote("range"), typeof(range)), call. = FALSE)
+    } else if (length(range) != 2) {
+      stop(sprintf("%s must be a numeric vector of length 2, not %d.",
+                   sQuote("range"), length(range)), call. = FALSE)
+    }
 
     # Integrate signal between boundaries
     spc_index <- which(spc_data$energy >= range[[1L]] &
@@ -43,7 +50,7 @@ setMethod(
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "GammaSpectrum"),
-  definition = function(object, background, range, energy = FALSE) {
+  definition = function(object, background, range = NULL, energy = FALSE) {
     # Normalized signal
     int_bkg <- signal_integrate(background, range = range, energy = energy)
 
@@ -57,12 +64,7 @@ setMethod(
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectrum", background = "numeric"),
-  definition = function(object, background, range, energy = FALSE) {
-    # Validation
-    if (length(background) != 2)
-      stop(sprintf("%s must be of length 2; not %d", sQuote("background"),
-                   length(background)), call. = FALSE)
-
+  definition = function(object, background, range = NULL, energy = FALSE) {
     # Normalized signal
     int_spc <- signal_integrate(object, range = range, energy = energy)
 
@@ -80,7 +82,7 @@ setMethod(
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "missing"),
-  definition = function(object, range, energy = FALSE, simplify = TRUE) {
+  definition = function(object, range = NULL, energy = FALSE, simplify = TRUE) {
 
     signals <- lapply(X = object, FUN = signal_integrate,
                       range = range, energy = energy)
@@ -94,7 +96,7 @@ setMethod(
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum"),
-  definition = function(object, background, range, energy = FALSE,
+  definition = function(object, background, range = NULL, energy = FALSE,
                         simplify = TRUE) {
 
     signals <- lapply(X = object, FUN = signal_integrate,
@@ -110,7 +112,7 @@ setMethod(
 setMethod(
   f = "signal_integrate",
   signature = signature(object = "GammaSpectra", background = "numeric"),
-  definition = function(object, background, range, energy = FALSE,
+  definition = function(object, background, range = NULL, energy = FALSE,
                         simplify = TRUE) {
 
     signals <- lapply(X = object, FUN = signal_integrate,

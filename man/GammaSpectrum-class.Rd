@@ -16,8 +16,7 @@ the imported file.}
 
 \item{\code{name}}{A \code{\link{character}} string the measurement reference.}
 
-\item{\code{date}}{A \code{\link{POSIXct}} element giving the measurement date and
-time.}
+\item{\code{date}}{A \code{\link{POSIXct}} element giving the measurement date and time.}
 
 \item{\code{instrument}}{A \code{\link{character}} string giving the instrument name.}
 
@@ -29,21 +28,19 @@ imported file.}
 \item{\code{real_time}}{A \code{\link{numeric}} value.}
 
 \item{\code{channel}}{A \code{\link{integer}} vector giving the channel number.
-Numeric values are coerced to integer as by \code{\link{as.integer}}
+Numeric values are coerced to integer as by \code{\link[=as.integer]{as.integer()}}
 (and hence truncated towards zero).}
 
-\item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy
-(in keV).}
+\item{\code{energy}}{A \code{\link{numeric}} vector giving the gamma ray's energy (in keV).}
 
-\item{\code{count}}{A \code{\link{numeric}} vector giving the counts number for
-each channel. Numeric values are coerced to integer as by
-\code{\link{as.integer}} (and hence truncated towards zero).}
+\item{\code{count}}{A \code{\link{numeric}} vector giving the counts number for each channel.
+Numeric values are coerced to integer as by \code{\link[=as.integer]{as.integer()}} (and hence
+truncated towards zero).}
 
-\item{\code{rate}}{A \code{\link{numeric}} vector the count rate (in 1/s) for
-each channel.}
+\item{\code{rate}}{A \code{\link{numeric}} vector the count rate (\eqn{1/s}) for each channel.}
 
-\item{\code{calibration}}{A \code{\link[stats:lm]{linear model}} used for energy
-scale calibration (see \code{\link{energy_calibrate}}).}
+\item{\code{calibration}}{A \link[stats:lm]{linear model} used for energy scale
+calibration (see \code{\link[=energy_calibrate]{energy_calibrate()}}).}
 }}
 
 \note{
@@ -53,14 +50,14 @@ This class retains copy construction.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{length(x)}}{Get number of channel in \code{x}.}
- \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
- \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
-  the name of \code{x} according to \code{value}.}
- \item{\code{get_channels(x)}}{Get the number of channels in \code{x}.}
- \item{\code{get_counts(x)}}{Get the counts of \code{x}.}
- \item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
- \item{\code{get_rates(x)}}{Get the count rates of \code{x}.}
+\item{\code{length(x)}}{Get number of channel in \code{x}.}
+\item{\code{get_hash(x)}}{Get the MD5 hash of the raw data file.}
+\item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+the name of \code{x} according to \code{value}.}
+\item{\code{get_channels(x)}}{Get the number of channels in \code{x}.}
+\item{\code{get_counts(x)}}{Get the counts of \code{x}.}
+\item{\code{get_energy(x)}}{Get the energy range of \code{x}.}
+\item{\code{get_rates(x)}}{Get the count rates of \code{x}.}
 }
 }
 
@@ -68,8 +65,8 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{as.matrix)}}{Coerces \code{x} to a \code{\link{matrix}}.}
- \item{\code{as.data.frame)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
+\item{\code{as.matrix(x)}}{Coerces \code{x} to a \code{\link{matrix}}.}
+\item{\code{as.data.frame(x)}}{Coerces \code{x} to a \code{\link{data.frame}}.}
 }
 }
 
@@ -77,9 +74,9 @@ In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 
 In the code snippets below, \code{x} is a \code{GammaSpectrum} object.
 \describe{
- \item{\code{x[[i]]}}{Extracts informations from a slot selected by
- subscript \code{i}. \code{i} is a \code{character} vector
- of length one and will be matched to the name of the slots.}
+\item{\code{x[[i]]}}{Extracts information from a slot selected by subscript \code{i}.
+\code{i} is a \code{character} vector of length one and will be matched to the name of
+the slots.}
 }
 }
 

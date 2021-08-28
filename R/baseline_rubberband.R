@@ -42,19 +42,18 @@ setMethod(
 
 #' Rubberband Algorithm
 #'
-#' @param x A \code{\link{numeric}} vector.
-#' @param y A \code{\link{numeric}} vector.
-#' @param noise A length-one \code{\link{numeric}} vector giving the noise
-#' level.
-#' @param spline A \code{\link{logical}} scalar: should spline interpolation
-#' through the support points be used instead of linear interpolation?
+#' @param x A [`numeric`] vector.
+#' @param y A [`numeric`] vector.
+#' @param noise A length-one [`numeric`] vector giving the noise level.
+#' @param spline A [`logical`] scalar: should spline interpolation
+#'  through the support points be used instead of linear interpolation?
 #' @param ... further parameters to be passed to
-#' \code{\link[stats]{predict.smooth.spline}}.
+#'  [stats::predict.smooth.spline()].
 #' @details
 #'  A convex envelope of the spectrum is determined and the baseline is
 #'  estimated as the part of the convex envelope lying below the spectrum.
 #' @note
-#'  Slightly modified from C. Beleites' \code{\link[hyperSpec]{spc.rubberband}}.
+#'  Slightly modified from C. Beleites' [hyperSpec::spc.rubberband()].
 #' @keywords internal
 #' @noRd
 rubberband <- function(x, y, noise = 0, spline = TRUE, ...) {
@@ -91,4 +90,3 @@ rubberband <- function(x, y, noise = 0, spline = TRUE, ...) {
 
   return(tmp)
 }
-

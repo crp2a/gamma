@@ -25,41 +25,41 @@ has_energy(object)
 \S4method{has_energy}{GammaSpectra}(object)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or
-\linkS4class{GammaSpectra} object.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
 
-\item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of
-length two. If a \code{list} is provided, each element must be a named
-numeric vector giving the observed peak position ("\code{channel}") and the
-corresponding expected "\code{energy}" value (in keV).}
+\item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of length two. If a
+\code{list} is provided, each element must be a named numeric vector giving the
+observed peak position ("\code{channel}") and the corresponding expected
+"\code{energy}" value (in keV).}
 
 \item{...}{Currently not used.}
 }
 \value{
-\code{energy_calibrate} returns a \linkS4class{GammaSpectrum} object.
-
- \code{has_energy} returns a \code{\link{logical}} vector.
+\itemize{
+\item \code{energy_calibrate()} returns a \linkS4class{GammaSpectrum} object.
+\item \code{has_energy()} returns a \code{\link{logical}} vector.
+}
 }
 \description{
 Calibrates the energy scale of a gamma spectrum.
 }
 \details{
 The energy calibration of a spectrum is the most tricky part. To do this,
- the user must specify the position of at least three observed peaks and the
- corresponding energy value (in keV). A second order polynomial model is
- fitted on these energy \emph{vs} channel values, then used to predict the
- new energy scale of the spectrum.
+the user must specify the position of at least three observed peaks and the
+corresponding energy value (in keV). A second order polynomial model is
+fitted on these energy \emph{vs} channel values, then used to predict the
+new energy scale of the spectrum.
 
- The package allows to provide the channel-energy pairs to be use. However,
- the spectrum can be noisy so it is difficult to properly determine the peak
- channel. In this case, a better approach may be to pre-process the spectrum
- (variance-stabilization, smoothing and baseline correction) and perform a
- peak detection. Once the identified peaks are satisfactory, you can set the
- corresponding energy values (in keV) and use these lines to calibrate the
- energy scale of the spectrum.
+The package allows to provide the channel-energy pairs to be use. However,
+the spectrum can be noisy so it is difficult to properly determine the peak
+channel. In this case, a better approach may be to pre-process the spectrum
+(variance-stabilization, smoothing and baseline correction) and perform a
+peak detection. Once the identified peaks are satisfactory, you can set the
+corresponding energy values (in keV) and use these lines to calibrate the
+energy scale of the spectrum.
 
- Regardless of the approach you choose, it is strongly recommended to check
- the result before proceeding.
+Regardless of the approach you choose, it is strongly recommended to check
+the result before proceeding.
 }
 \examples{
 ## Import a CNF file

@@ -7,10 +7,10 @@
 \format{
 An object of class \linkS4class{CalibrationCurve}.
 \tabular{ll}{
- \strong{Laboratory} \tab CEREGE \cr
- \strong{Instrument} \tab Canberra Inspector 1000 \cr
- \strong{Detector} \tab NaI \cr
- \strong{Authors} \tab CEREGE Luminescence Team
+\strong{Laboratory} \tab CEREGE \cr
+\strong{Instrument} \tab Canberra Inspector 1000 \cr
+\strong{Detector} \tab NaI \cr
+\strong{Authors} \tab CEREGE Luminescence Team
 }
 }
 \usage{

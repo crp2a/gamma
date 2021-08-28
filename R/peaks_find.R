@@ -66,10 +66,10 @@ setMethod(
 #' MAD
 #'
 #' Calculates the Median Absolute Deviation (MAD).
-#' @param x A \code{\link{numeric}} vector.
-#' @param k A \code{\link{numeric}} value.
-#' @param na.rm A \code{\link{logical}} scalar.
-#' @return A \code{numeric} value.
+#' @param x A [`numeric`] vector.
+#' @param k A [`numeric`] value.
+#' @param na.rm A [`logical`] scalar.
+#' @return A `numeric` value.
 #' @author N. Frerebeau
 #' @keywords internal
 #' @noRd
@@ -80,12 +80,10 @@ MAD <- function(x, k = 1.4826, na.rm = FALSE) {
 #' FWHM
 #'
 #' Estimates the Half-Width at Half-Maximum (FWHM) for a given peak.
-#' @param x,y A \code{\link{numeric}} vector giving the \eqn{x} and \eqn{y}
-#'  coordinates of a set of points. Alternatively, a single argument \eqn{x}
-#'  can be provided.
-#' @param center A \code{\link{numeric}} value giving the peak position in
-#'  \code{x} units.
-#' @return A \code{\link{numeric}} value.
+#' @param x,y A [`numeric`] vector giving the `x` and `y` coordinates of a set
+#'  of points. Alternatively, a single argument `x` can be provided.
+#' @param center A [`numeric`] value giving the peak position in `x` units.
+#' @return A [`numeric`] value.
 #' @details
 #'  It tries to get the smallest possible estimate.
 #' @author N. Frerebeau

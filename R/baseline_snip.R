@@ -40,31 +40,30 @@ setMethod(
 
 #' SNIP Algorithm
 #'
-#' @param x A \code{\link{numeric}} vector.
-#' @param LLS A \code{\link{logical}} scalar: should the LLS operator be applied
-#'  on \code{x} before employing SNIP algorithm?
-#' @param decreasing A \code{\link{logical}} scalar: should a decreasing
-#'  clipping window be used?
-#' @param n An \code{\link{integer}} value giving the numerber of
-#'  iterations.
-#' @return A \code{numeric} vector.
+#' @param x A [`numeric`] vector.
+#' @param LLS A [`logical`] scalar: should the LLS operator be applied
+#'  on `x` before employing SNIP algorithm?
+#' @param decreasing A [`logical`] scalar: should a decreasing clipping window
+#'  be used?
+#' @param n An [`integer`] value giving the number of iterations.
+#' @return A `numeric` vector.
 #' @author N. Frerebeau
 #' @references
 #'  Morháč, M., Kliman, J., Matoušek, V., Veselský, M. and Turzo, I. (1997).
 #'  Background elimination methods for multidimensional gamma-ray spectra.
-#'  \emph{Nuclear Instruments and Methods in Physics Research Section A:
-#'  Accelerators, Spectrometers, Detectors and Associated Equipment}, 401(1), p. 113-132.
-#'  \doi{10.1016/S0168-9002(97)01023-1}
+#'  *Nuclear Instruments and Methods in Physics Research Section A:
+#'  Accelerators, Spectrometers, Detectors and Associated Equipment*,
+#'  401(1), p. 113-132. \doi{10.1016/S0168-9002(97)01023-1}
 #'
 #'  Morháč, M. and Matoušek, V. (2008). Peak Clipping Algorithms for Background
-#'  Estimation in Spectroscopic Data. \emph{Applied Spectroscopy}, 62(1), p. 91-106.
+#'  Estimation in Spectroscopic Data. *Applied Spectroscopy*, 62(1), p. 91-106.
 #'  \doi{10.1366/000370208783412762}
 #'
 #'  Ryan, C. G., Clayton, E., Griffin, W. L., Sie, S. H. and Cousens, D. R.
 #'  (1988). SNIP, a statistics-sensitive background treatment for the
 #'  quantitative analysis of PIXE spectra in geoscience applications.
-#'  \emph{Nuclear Instruments and Methods in Physics Research Section B:
-#'  Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
+#'  *Nuclear Instruments and Methods in Physics Research Section B:
+#'  Beam Interactions with Materials and Atoms*, 34(3), p. 396-402.
 #'  \doi{10.1016/0168-583X(88)90063-8}
 #' @keywords internal
 #' @noRd

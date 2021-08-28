@@ -52,16 +52,14 @@ object.}
 
 \item{...}{Extra parameters to be passed to further methods.}
 
-\item{method}{A \code{\link{character}} string specifying the smoothing
-method to be used. It must be one of "\code{unweighted}" (default),
-"\code{weighted}" or "\code{savitzky}" (see details).
-Any unambiguous substring can be given.}
+\item{method}{A \code{\link{character}} string specifying the smoothing method to be
+used. It must be one of "\code{unweighted}" (default), "\code{weighted}" or
+"\code{savitzky}" (see details). Any unambiguous substring can be given.}
 
-\item{m}{An odd \code{\link{integer}} giving the number of adjacent
-points to be used.}
+\item{m}{An odd \code{\link{integer}} giving the number of adjacent points to be used.}
 
-\item{p}{An \code{\link{integer}} giving the polynomial degree.
-Only used if \code{method} is "\code{savitzky}".}
+\item{p}{An \code{\link{integer}} giving the polynomial degree. Only used if \code{method}
+is "\code{savitzky}".}
 }
 \value{
 A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
@@ -71,23 +69,23 @@ Smoothes intensities.
 }
 \details{
 The following smoothing methods are available:
- \describe{
-  \item{rectangular}{Unweighted sliding-average or rectangular smooth.
-  It replaces each point in the signal with the average of \eqn{m} adjacent
-  points.}
-  \item{triangular}{Weighted sliding-average or triangular smooth.
-  It replaces each point in the signal with the weighted mean of \eqn{m}
-  adjacent points.}
-  \item{savitzky}{Savitzky-Golay filter. This method is based on the
-  least-squares fitting of polynomials to segments of \eqn{m} adjacent
-  points.}
- }
- There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
- of the spectrum for which a complete \eqn{m}-width smooth cannot be
- calculated. To prevent data loss, progressively smaller smooths are used at
- the ends of the spectrum if \code{method} is \code{unweighted} or
- \code{weighted}. If the Savitzky-Golay filter is used, the original
- \eqn{(m - 1) / 2} points at the ends of the spectrum are preserved.
+\describe{
+\item{\code{rectangular}}{Unweighted sliding-average or rectangular smooth.
+It replaces each point in the signal with the average of \eqn{m} adjacent
+points.}
+\item{\code{triangular}}{Weighted sliding-average or triangular smooth.
+It replaces each point in the signal with the weighted mean of \eqn{m}
+adjacent points.}
+\item{\code{savitzky}}{Savitzky-Golay filter. This method is based on the
+least-squares fitting of polynomials to segments of \eqn{m} adjacent
+points.}
+}
+There will be \eqn{(m - 1) / 2} points both at the beginning and at the end
+of the spectrum for which a complete \eqn{m}-width smooth cannot be
+calculated. To prevent data loss, progressively smaller smooths are used at
+the ends of the spectrum if \code{method} is \code{unweighted} or \code{weighted}. If the
+Savitzky-Golay filter is used, the original \eqn{(m - 1) / 2} points at the
+ends of the spectrum are preserved.
 }
 \examples{
 # Import CNF files
@@ -116,12 +114,12 @@ plot(spc_savitzky_clean)
 }
 \references{
 Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
- the Convolution (Savitzky-Golay) Method. \emph{Analytical Chemistry}, 62(6),
- p. 570-573. \doi{10.1021/ac00205a007}.
+the Convolution (Savitzky-Golay) Method. \emph{Analytical Chemistry}, 62(6),
+p. 570-573. \doi{10.1021/ac00205a007}.
 
- Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
- Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
- 36(8), p. 1627-1639. \doi{10.1021/ac60214a047}.
+Savitzky, A. & Golay, M. J. E. (1964). Smoothing and Differentiation of
+Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
+36(8), p. 1627-1639. \doi{10.1021/ac60214a047}.
 }
 \seealso{
 Other signal processing: 

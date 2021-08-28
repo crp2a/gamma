@@ -10,24 +10,21 @@ Represents a collection of spectra of gamma ray spectrometry measurements.
 }
 \details{
 This class extends the base \code{\link{list}} and can only contains
- \linkS4class{GammaSpectrum} objects.
+\linkS4class{GammaSpectrum} objects.
 }
 \section{Access}{
 
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
- \item{\code{length(x)}}{Get the number of elements in \code{x}.}
- \item{\code{lengths(x)}}{Get the number of channels in each element of
-  \code{x}.}
- \item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
-  the names of \code{x} according to \code{value}.}
- \item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
- \item{\code{get_channels(x)}}{Get the number of channels in each element of
- \code{x}.}
- \item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
- \item{\code{get_energy(x)}}{Get the energy range of each element of
- \code{x}.}
- \item{\code{get_rates(x)}}{Get the count rates of each element of \code{x}.}
+\item{\code{length(x)}}{Get the number of elements in \code{x}.}
+\item{\code{lengths(x)}}{Get the number of channels in each element of \code{x}.}
+\item{\code{get_names(x)}, \code{set_names(x) <- value}}{Retrieves or sets
+the names of \code{x} according to \code{value}.}
+\item{\code{get_hash(x)}}{Get the MD5 hash of the raw data files.}
+\item{\code{get_channels(x)}}{Get the number of channels in each element of \code{x}.}
+\item{\code{get_counts(x)}}{Get the counts of each element of \code{x}.}
+\item{\code{get_energy(x)}}{Get the energy range of each element of \code{x}.}
+\item{\code{get_rates(x)}}{Get the count rates of each element of \code{x}.}
 }
 }
 
@@ -35,17 +32,14 @@ In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 
 In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 \describe{
- \item{\code{x[i]}}{Extracts the elements selected by subscript \code{i}.
-  \code{i} can be \code{missing} or \code{NULL}, \code{numeric} or
-  \code{character} vector or a \code{factor}.
-  Returns a new \code{GammaSpectra} object.}
- \item{\code{x[i, j]}}{Like the above but allows to select a slot thru
-  \code{j} (see examples). \code{j} is a \code{character} vector of
-  length one. Returns a \code{list}.}
- \item{\code{x[[i]]}}{Extracts the elements selected by subscript \code{i}.
-  \code{i} can be a \code{numeric} or \code{character} vector
-  of length one. Returns the corresponding \linkS4class{GammaSpectrum}
-  object.}
+\item{\code{x[i]}}{Extracts the elements selected by subscript \code{i}.
+\code{i} can be \code{missing} or \code{NULL}, \code{numeric} or \code{character} vector or a
+\code{factor}. Returns a new \code{GammaSpectra} object.}
+\item{\code{x[i, j]}}{Like the above but allows to select a slot thru \code{j} (see
+examples). \code{j} is a \code{character} vector of length one. Returns a \code{list}.}
+\item{\code{x[[i]]}}{Extracts the elements selected by subscript \code{i}.
+\code{i} can be a \code{numeric} or \code{character} vector of length one. Returns the
+corresponding \linkS4class{GammaSpectrum} object.}
 }
 }
 

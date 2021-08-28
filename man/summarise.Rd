@@ -21,8 +21,7 @@ summarise(object, ...)
 \S4method{summarise}{CalibrationCurve}(object)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
-object.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
 
 \item{...}{Currently not used.}
 }

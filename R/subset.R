@@ -10,7 +10,7 @@ extract_slot <- function(x, i) {
   data
 }
 
-# ================================================================ GammaSpectrum
+# GammaSpectrum ================================================================
 #' @export
 #' @rdname subset
 #' @aliases [[,GammaSpectrum-method
@@ -20,7 +20,7 @@ setMethod(
   definition = extract_slot
 )
 
-# ================================================================= GammaSpectra
+# GammaSpectra =================================================================
 #' @export
 #' @rdname subset
 #' @aliases [,GammaSpectra-method
@@ -54,7 +54,7 @@ setMethod(
   }
 )
 
-# ================================================================ DoseRateModel
+# DoseRateModel ================================================================
 #' @export
 #' @rdname subset
 #' @aliases [[,DoseRateModel-method
@@ -64,17 +64,7 @@ setMethod(
   definition = extract_slot
 )
 
-# ================================================================ DoseRateModel
-#' @export
-#' @rdname subset
-#' @aliases [[,DoseRateModel-method
-setMethod(
-  f = "[[",
-  signature = "DoseRateModel",
-  definition = extract_slot
-)
-
-# ============================================================= CalibrationCurve
+# CalibrationCurve =============================================================
 #' @export
 #' @rdname subset
 #' @aliases [[,CalibrationCurve-method
@@ -84,7 +74,7 @@ setMethod(
   definition = extract_slot
 )
 
-# ================================================================= PeakPosition
+# PeakPosition =================================================================
 #' @export
 #' @rdname subset
 #' @aliases [[,PeakPosition-method

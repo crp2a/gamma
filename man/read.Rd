@@ -12,24 +12,22 @@ read(file, ...)
 \S4method{read}{character}(file, extensions = c("cnf", "tka"), ...)
 }
 \arguments{
-\item{file}{A \code{\link{character}} string giving the path of files to be
-imported.}
+\item{file}{A \code{\link{character}} string giving the path of files to be imported.}
 
-\item{...}{Extra parameters to be passed to
-\code{\link[rxylib]{read_xyData}}.}
+\item{...}{Extra parameters to be passed to \code{\link[rxylib:read_xyData]{rxylib::read_xyData()}}.}
 
 \item{extensions}{A \code{\link{character}} vector specifying the possible
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
 }
 \value{
 A \linkS4class{GammaSpectra} object if more than one spectrum are imported
- at once, else a \linkS4class{GammaSpectrum} object.
+at once, else a \linkS4class{GammaSpectrum} object.
 }
 \description{
 Reads a gamma ray spectrum file.
 }
 \note{
-\emph{Only supports Canberra CNF and TKA files.}
+Only supports Canberra CNF and TKA files.
 }
 \examples{
 ## Import a Canberra CNF file
@@ -45,7 +43,7 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 (spc <- read(spc_dir))
 }
 \seealso{
-\link[rxylib]{read_xyData}
+\code{\link[rxylib:read_xyData]{rxylib::read_xyData()}}
 
 Other IO: 
 \code{\link{summarise}()}

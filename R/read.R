@@ -44,11 +44,10 @@ setMethod(
 
 #' Read Canberra CNF file
 #'
-#' @param file A \code{\link{character}} string giving the path and file to be
-#'  imported.
-#' @param ... Extra parameters passed to \code{\link[rxylib]{read_xyData}}.
+#' @param file A [`character`] string giving the path and file to be imported.
+#' @param ... Extra parameters passed to [rxylib::read_xyData()].
 #' @return
-#'  An object of class \linkS4class{GammaSpectrum}.
+#'  An object of class [GammaSpectrum-class].
 #' @keywords internal
 #' @noRd
 readCanberraCNF <- function(file, ...) {
@@ -91,11 +90,10 @@ readCanberraCNF <- function(file, ...) {
 
 #' Read Canberra TKA file
 #'
-#' @param file A \code{\link{character}} string giving the path and file to be
-#'  imported.
+#' @param file A [`character`] string giving the path and file to be imported.
 #' @param ... Currently not used.
 #' @return
-#'  An object of class \linkS4class{GammaSpectrum}.
+#'  An object of class [GammaSpectrum-class].
 #' @keywords internal
 #' @noRd
 readCanberraTKA <- function(file, ...) {

@@ -14,38 +14,48 @@
 \usage{
 signal_integrate(object, background, ...)
 
-\S4method{signal_integrate}{GammaSpectrum,missing}(object, range, energy = FALSE)
+\S4method{signal_integrate}{GammaSpectrum,missing}(object, range = NULL, energy = FALSE)
 
-\S4method{signal_integrate}{GammaSpectrum,GammaSpectrum}(object, background, range, energy = FALSE)
+\S4method{signal_integrate}{GammaSpectrum,GammaSpectrum}(object, background, range = NULL, energy = FALSE)
 
-\S4method{signal_integrate}{GammaSpectrum,numeric}(object, background, range, energy = FALSE)
+\S4method{signal_integrate}{GammaSpectrum,numeric}(object, background, range = NULL, energy = FALSE)
 
-\S4method{signal_integrate}{GammaSpectra,missing}(object, range, energy = FALSE, simplify = TRUE)
+\S4method{signal_integrate}{GammaSpectra,missing}(object, range = NULL, energy = FALSE, simplify = TRUE)
 
-\S4method{signal_integrate}{GammaSpectra,GammaSpectrum}(object, background, range, energy = FALSE, simplify = TRUE)
+\S4method{signal_integrate}{GammaSpectra,GammaSpectrum}(
+  object,
+  background,
+  range = NULL,
+  energy = FALSE,
+  simplify = TRUE
+)
 
-\S4method{signal_integrate}{GammaSpectra,numeric}(object, background, range, energy = FALSE, simplify = TRUE)
+\S4method{signal_integrate}{GammaSpectra,numeric}(
+  object,
+  background,
+  range = NULL,
+  energy = FALSE,
+  simplify = TRUE
+)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
-object.}
+\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
 
 \item{background}{A \linkS4class{GammaSpectrum} object.}
 
 \item{...}{Currently not used.}
 
-\item{range}{A length-two \code{\link{numeric}} vector giving the energy
-range to integrate within (in keV).}
+\item{range}{A length-two \code{\link{numeric}} vector giving the energy range to
+integrate within (in keV).}
 
 \item{energy}{A \code{\link{logical}} scalar: TODO?}
 
-\item{simplify}{A \code{\link{logical}} scalar: should the result be
-simplified to a matrix? The default value, \code{FALSE}, returns a list.}
+\item{simplify}{A \code{\link{logical}} scalar: should the result be simplified to a
+\code{\link{matrix}}? The default value, \code{FALSE}, returns a \code{\link{list}}.}
 }
 \value{
-If \code{simplify} is \code{FALSE} (the default) returns a
- \code{\link{list}} of numeric vectors (the signal value and its error),
- else returns a \code{\link{matrix}}.
+If \code{simplify} is \code{FALSE} (the default) returns a \code{\link{list}} of numeric vectors
+(the signal value and its error), else returns a \code{\link{matrix}}.
 }
 \description{
 Signal Integration
@@ -55,13 +65,13 @@ It assumes that each spectrum has an energy scale.
 }
 \references{
 Guérin, G. & Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
- Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
- \emph{Radiation Measurements}, 46(2), p. 190-195.
- \doi{10.1016/j.radmeas.2010.10.003}.
+Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
+\emph{Radiation Measurements}, 46(2), p. 190-195.
+\doi{10.1016/j.radmeas.2010.10.003}.
 
- Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
- a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
- \emph{Ancient TL}, 25(1), p. 1-4.
+Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+\emph{Ancient TL}, 25(1), p. 1-4.
 }
 \seealso{
 Other signal processing: 

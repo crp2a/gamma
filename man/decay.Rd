@@ -5,26 +5,25 @@
 \alias{.decay}
 \title{Nuclear Decay Data}
 \format{
-A \eqn{193 \times 13}{193 x 13} \code{\link[=data.frame]{data frame}}
- with the following columns (absolute errors):
- \describe{
-   \item{decay_chain}{}
-   \item{isotope}{}
-   \item{occurrence}{}
-   \item{occurrence_error}{}
-   \item{post_radon}{}
-   \item{half_life}{}
-   \item{half_life_error}{}
-   \item{energy}{Energy in keV.}
-   \item{energy_error}{}
-   \item{gamma_intensity}{}
-   \item{gamma_intensity_error}{}
-   \item{counts_chain}{}
-   \item{counts_chain_error}{}
- }
+A \code{\link{data.frame}} with the following columns (absolute errors):
+\describe{
+\item{decay_chain}{}
+\item{isotope}{}
+\item{occurrence}{}
+\item{occurrence_error}{}
+\item{post_radon}{}
+\item{half_life}{}
+\item{half_life_error}{}
+\item{energy}{Energy in keV.}
+\item{energy_error}{}
+\item{gamma_intensity}{}
+\item{gamma_intensity_error}{}
+\item{counts_chain}{}
+\item{counts_chain_error}{}
+}
 }
 \source{
-Nuclides And Isotopes : Chart of the Nuclides. Schenectady, NY :KAPL : Bechtel, 2010.
+Nuclides And Isotopes : Chart of the Nuclides.
 }
 \usage{
 .decay
