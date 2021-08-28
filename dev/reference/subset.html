@@ -58,11 +58,8 @@
     <pre><code># S4 method for GammaSpectrum
 [[(x, i)
 
-# S4 method for GammaSpectra
+# S4 method for GammaSpectra,ANY,ANY,ANY
 [(x, i, j)
-
-# S4 method for DoseRateModel
-[[(x, i)
 
 # S4 method for DoseRateModel
 [[(x, i)
@@ -80,11 +77,10 @@
 replace element(s).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-i, j">i, j</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>Indices specifying elements to extract or replace. Indices are
-<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>, <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> or <code><a href="https://rdrr.io/r/base/character.html">character</a></code>
-vectors or empty (missing) or <code>NULL</code>. Numeric values are coerced to
-<code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer</a></code> (and hence truncated
-towards zero). Character vectors will be matched to the name of the
-elements. An empty index (a comma separated blank) indicates that all
+<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>, <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> or <code><a href="https://rdrr.io/r/base/character.html">character</a></code> vectors or empty (missing) or
+<code>NULL</code>. Numeric values are coerced to <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> (and
+hence truncated towards zero). Character vectors will be matched to the name
+of the elements. An empty index (a comma separated blank) indicates that all
 entries in that dimension are selected.</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>

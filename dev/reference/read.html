@@ -63,11 +63,9 @@
 
     <h2>Arguments</h2>
     <dl class="row" id="ref-arguments"><dt class="col-sm-3 section level2" id="pkg-arg-file">file</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string giving the path of files to be
-imported.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string giving the path of files to be imported.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>Extra parameters to be passed to
-<code><a href="https://rdrr.io/pkg/rxylib/man/read_xyData.html">read_xyData</a></code>.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>Extra parameters to be passed to <code><a href="https://rdrr.io/pkg/rxylib/man/read_xyData.html">rxylib::read_xyData()</a></code>.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-extensions">extensions</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> vector specifying the possible
 file extensions. It must be one or more of "<code>cnf</code>", "<code>tka</code>".</p></dd>
@@ -75,17 +73,17 @@ file extensions. It must be one or more of "<code>cnf</code>", "<code>tka</code>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
     <p>A <a href="GammaSpectra-class.html">GammaSpectra</a> object if more than one spectrum are imported
- at once, else a <a href="GammaSpectrum-class.html">GammaSpectrum</a> object.</p>
+at once, else a <a href="GammaSpectrum-class.html">GammaSpectrum</a> object.</p>
     </div>
     <div class="ref-section section level2" id="section-note">
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note" aria-hidden="true"></a>Note</h2>
 
-    <p><em>Only supports Canberra CNF and TKA files.</em></p>
+    <p>Only supports Canberra CNF and TKA files.</p>
     </div>
     <div class="ref-section section level2" id="section-see-also">
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also" aria-hidden="true"></a>See also</h2>
 
-    <div class="dont-index"><p><a href="https://rdrr.io/pkg/rxylib/man/read_xyData.html">read_xyData</a></p>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/rxylib/man/read_xyData.html">rxylib::read_xyData()</a></code></p>
 <p>Other IO: 
 <code><a href="summarise.html">summarise</a>()</code></p></div>
     </div>
@@ -113,7 +111,7 @@ file extensions. It must be one or more of "<code>cnf</code>", "<code>tka</code>
 <span class="r-in"><span class="op">(</span><span class="va">tka_spc</span> <span class="op">&lt;-</span> <span class="fu">read</span><span class="op">(</span><span class="va">tka_file</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma spectrum:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  name: LaBr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2021-08-27 13:22:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2021-08-28 12:27:27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  live_time: 3385.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  real_time: 3403.67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  channels: 1024</span>

@@ -61,27 +61,26 @@
 
     
 
-<dl><dt><code>hash</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string giving the 32-byte MD5 hash of
-the imported spectrum file.</p></dd>
+<dl><dt><code>hash</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string giving the 32-byte MD5 hash of the imported
+spectrum file.</p></dd>
 
-<dt><code>noise_method</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the method
-used for peak detection.</p></dd>
+<dt><code>noise_method</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the method used for peak
+detection.</p></dd>
 
-<dt><code>noise_threshold</code></dt><dd><p>A length one <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the
-noise threshold.</p></dd>
+<dt><code>noise_threshold</code></dt><dd><p>A length one <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the noise
+threshold.</p></dd>
 
-<dt><code>window</code></dt><dd><p>A length one <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the half-window
-size.</p></dd>
+<dt><code>window</code></dt><dd><p>A length one <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the half-window size.</p></dd>
 
-<dt><code>channel</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> vector giving the channel number.
-Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer</a></code>
-(and hence truncated towards zero).</p></dd>
+<dt><code>channel</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> vector giving the channel number. Numeric values
+are coerced to integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> (and hence truncated towards
+zero).</p></dd>
 
-<dt><code>energy_observed</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the observed gamma ray's energy
-(in keV).</p></dd>
+<dt><code>energy_observed</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the observed gamma ray
+energy (in keV).</p></dd>
 
-<dt><code>energy_expected</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the expected gamma ray's energy
-(in keV).</p></dd>
+<dt><code>energy_expected</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the expected gamma ray
+energy (in keV).</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-note">
@@ -95,9 +94,9 @@ Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/bas
     
 
 <p>In the code snippets below, <code>x</code> is a <code>PeakPosition</code> object.</p><dl><dt><code>get_hash(x)</code></dt><dd><p>Get the MD5 hash of the raw data file.</p></dd>
- <dt><code>get_channels(x)</code></dt><dd><p>Get the channels of <code>x</code>.</p></dd>
- <dt><code>get_energy(x)</code>, <code>set_energy(x) &lt;- value</code></dt><dd><p>Retrieves or sets
-  the energy scale of <code>x</code> according to <code>value</code>.</p></dd>
+<dt><code>get_channels(x)</code></dt><dd><p>Get the channels of <code>x</code>.</p></dd>
+<dt><code>get_energy(x)</code>, <code>set_energy(x) &lt;- value</code></dt><dd><p>Retrieves or sets
+the energy scale of <code>x</code> according to <code>value</code>.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-coerce">
@@ -105,8 +104,8 @@ Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/bas
 
     
 
-<p>In the code snippets below, <code>x</code> is a <code>PeakPosition</code> object.</p><dl><dt><code>matrix)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p></dd>
- <dt><code>as.data.frame)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code>.</p></dd>
+<p>In the code snippets below, <code>x</code> is a <code>PeakPosition</code> object.</p><dl><dt><code>as.matrix(x)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p></dd>
+<dt><code>as.data.frame(x)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code>.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-subset">
@@ -114,9 +113,9 @@ Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/bas
 
     
 
-<p>In the code snippets below, <code>x</code> is a <code>PeakPosition</code> object.</p><dl><dt><code>x[[i]]</code></dt><dd><p>Extracts informations from a slot selected by
- subscript <code>i</code>. <code>i</code> is a <code>character</code> vector
- of length one and will be matched to the name of the slots.</p></dd>
+<p>In the code snippets below, <code>x</code> is a <code>PeakPosition</code> object.</p><dl><dt><code>x[[i]]</code></dt><dd><p>Extracts information from a slot selected by subscript <code>i</code>.
+<code>i</code> is a <code>character</code> vector of length one and will be matched to the name of
+the slots.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-see-also">

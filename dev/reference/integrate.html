@@ -58,46 +58,56 @@
     <pre class="sourceCode r"><code><span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectrum,missing</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, range <span class="op">=</span> <span class="cn">NULL</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectrum,GammaSpectrum</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, range <span class="op">=</span> <span class="cn">NULL</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectrum,numeric</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, range <span class="op">=</span> <span class="cn">NULL</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectra,missing</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, range <span class="op">=</span> <span class="cn">NULL</span>, energy <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectra,GammaSpectrum</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">signal_integrate</span><span class="op">(</span>
+  <span class="va">object</span>,
+  <span class="va">background</span>,
+  range <span class="op">=</span> <span class="cn">NULL</span>,
+  energy <span class="op">=</span> <span class="cn">FALSE</span>,
+  simplify <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 
 <span class="co"># S4 method for GammaSpectra,numeric</span>
-<span class="fu">signal_integrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">background</span>, <span class="va">range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre>
+<span class="fu">signal_integrate</span><span class="op">(</span>
+  <span class="va">object</span>,
+  <span class="va">background</span>,
+  range <span class="op">=</span> <span class="cn">NULL</span>,
+  energy <span class="op">=</span> <span class="cn">FALSE</span>,
+  simplify <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre>
     </div>
 
     <h2>Arguments</h2>
     <dl class="row" id="ref-arguments"><dt class="col-sm-3 section level2" id="pkg-arg-object">object</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> or <a href="GammaSpectra-class.html">GammaSpectra</a>
-object.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> or <a href="GammaSpectra-class.html">GammaSpectra</a> object.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-background">background</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> object.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>Currently not used.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-range">range</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A length-two <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the energy
-range to integrate within (in keV).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A length-two <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the energy range to
+integrate within (in keV).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-energy">energy</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/logical.html">logical</a></code> scalar: TODO?</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-simplify">simplify</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/logical.html">logical</a></code> scalar: should the result be
-simplified to a matrix? The default value, <code>FALSE</code>, returns a list.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/logical.html">logical</a></code> scalar: should the result be simplified to a
+<code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>? The default value, <code>FALSE</code>, returns a <code><a href="https://rdrr.io/r/base/list.html">list</a></code>.</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
-    <p>If <code>simplify</code> is <code>FALSE</code> (the default) returns a
- <code><a href="https://rdrr.io/r/base/list.html">list</a></code> of numeric vectors (the signal value and its error),
- else returns a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p>
+    <p>If <code>simplify</code> is <code>FALSE</code> (the default) returns a <code><a href="https://rdrr.io/r/base/list.html">list</a></code> of numeric vectors
+(the signal value and its error), else returns a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p>
     </div>
     <div class="ref-section section level2" id="section-details">
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
@@ -108,13 +118,13 @@ simplified to a matrix? The default value, <code>FALSE</code>, returns a list.</
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references" aria-hidden="true"></a>References</h2>
 
     <p>Guérin, G. &amp; Mercier, M. (2011). Determining Gamma Dose Rates by Field Gamma
- Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
- <em>Radiation Measurements</em>, 46(2), p. 190-195.
- doi: <a href="https://doi.org/10.1016/j.radmeas.2010.10.003">10.1016/j.radmeas.2010.10.003</a>
+Spectroscopy in Sedimentary Media: Results of Monte Carlo Simulations.
+<em>Radiation Measurements</em>, 46(2), p. 190-195.
+doi: <a href="https://doi.org/10.1016/j.radmeas.2010.10.003">10.1016/j.radmeas.2010.10.003</a>
 .</p>
 <p>Mercier, N. &amp; Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
- a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
- <em>Ancient TL</em>, 25(1), p. 1-4.</p>
+a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+<em>Ancient TL</em>, 25(1), p. 1-4.</p>
     </div>
     <div class="ref-section section level2" id="section-see-also">
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also" aria-hidden="true"></a>See also</h2>

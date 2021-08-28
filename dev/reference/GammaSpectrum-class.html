@@ -66,8 +66,7 @@ the imported file.</p></dd>
 
 <dt><code>name</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string the measurement reference.</p></dd>
 
-<dt><code>date</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/DateTimeClasses.html">POSIXct</a></code> element giving the measurement date and
-time.</p></dd>
+<dt><code>date</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/DateTimeClasses.html">POSIXct</a></code> element giving the measurement date and time.</p></dd>
 
 <dt><code>instrument</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string giving the instrument name.</p></dd>
 
@@ -79,21 +78,19 @@ imported file.</p></dd>
 <dt><code>real_time</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> value.</p></dd>
 
 <dt><code>channel</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> vector giving the channel number.
-Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer</a></code>
+Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code>
 (and hence truncated towards zero).</p></dd>
 
-<dt><code>energy</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the gamma ray's energy
-(in keV).</p></dd>
+<dt><code>energy</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the gamma ray's energy (in keV).</p></dd>
 
-<dt><code>count</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the counts number for
-each channel. Numeric values are coerced to integer as by
-<code><a href="https://rdrr.io/r/base/integer.html">as.integer</a></code> (and hence truncated towards zero).</p></dd>
+<dt><code>count</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the counts number for each channel.
+Numeric values are coerced to integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> (and hence
+truncated towards zero).</p></dd>
 
-<dt><code>rate</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector the count rate (in 1/s) for
-each channel.</p></dd>
+<dt><code>rate</code></dt><dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector the count rate (\(1/s\)) for each channel.</p></dd>
 
-<dt><code>calibration</code></dt><dd><p>A <code><a href="https://rdrr.io/r/stats/lm.html">linear model</a></code> used for energy
-scale calibration (see <code><a href="energy.html">energy_calibrate</a></code>).</p></dd>
+<dt><code>calibration</code></dt><dd><p>A <a href="https://rdrr.io/r/stats/lm.html">linear model</a> used for energy scale
+calibration (see <code><a href="energy.html">energy_calibrate()</a></code>).</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-note">
@@ -107,13 +104,13 @@ scale calibration (see <code><a href="energy.html">energy_calibrate</a></code>).
     
 
 <p>In the code snippets below, <code>x</code> is a <code>GammaSpectrum</code> object.</p><dl><dt><code>length(x)</code></dt><dd><p>Get number of channel in <code>x</code>.</p></dd>
- <dt><code>get_hash(x)</code></dt><dd><p>Get the MD5 hash of the raw data file.</p></dd>
- <dt><code>get_names(x)</code>, <code>set_names(x) &lt;- value</code></dt><dd><p>Retrieves or sets
-  the name of <code>x</code> according to <code>value</code>.</p></dd>
- <dt><code>get_channels(x)</code></dt><dd><p>Get the number of channels in <code>x</code>.</p></dd>
- <dt><code>get_counts(x)</code></dt><dd><p>Get the counts of <code>x</code>.</p></dd>
- <dt><code>get_energy(x)</code></dt><dd><p>Get the energy range of <code>x</code>.</p></dd>
- <dt><code>get_rates(x)</code></dt><dd><p>Get the count rates of <code>x</code>.</p></dd>
+<dt><code>get_hash(x)</code></dt><dd><p>Get the MD5 hash of the raw data file.</p></dd>
+<dt><code>get_names(x)</code>, <code>set_names(x) &lt;- value</code></dt><dd><p>Retrieves or sets
+the name of <code>x</code> according to <code>value</code>.</p></dd>
+<dt><code>get_channels(x)</code></dt><dd><p>Get the number of channels in <code>x</code>.</p></dd>
+<dt><code>get_counts(x)</code></dt><dd><p>Get the counts of <code>x</code>.</p></dd>
+<dt><code>get_energy(x)</code></dt><dd><p>Get the energy range of <code>x</code>.</p></dd>
+<dt><code>get_rates(x)</code></dt><dd><p>Get the count rates of <code>x</code>.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-coerce">
@@ -121,8 +118,8 @@ scale calibration (see <code><a href="energy.html">energy_calibrate</a></code>).
 
     
 
-<p>In the code snippets below, <code>x</code> is a <code>GammaSpectrum</code> object.</p><dl><dt><code>as.matrix)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p></dd>
- <dt><code>as.data.frame)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code>.</p></dd>
+<p>In the code snippets below, <code>x</code> is a <code>GammaSpectrum</code> object.</p><dl><dt><code>as.matrix(x)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code>.</p></dd>
+<dt><code>as.data.frame(x)</code></dt><dd><p>Coerces <code>x</code> to a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code>.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-subset">
@@ -130,9 +127,9 @@ scale calibration (see <code><a href="energy.html">energy_calibrate</a></code>).
 
     
 
-<p>In the code snippets below, <code>x</code> is a <code>GammaSpectrum</code> object.</p><dl><dt><code>x[[i]]</code></dt><dd><p>Extracts informations from a slot selected by
- subscript <code>i</code>. <code>i</code> is a <code>character</code> vector
- of length one and will be matched to the name of the slots.</p></dd>
+<p>In the code snippets below, <code>x</code> is a <code>GammaSpectrum</code> object.</p><dl><dt><code>x[[i]]</code></dt><dd><p>Extracts information from a slot selected by subscript <code>i</code>.
+<code>i</code> is a <code>character</code> vector of length one and will be matched to the name of
+the slots.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-see-also">

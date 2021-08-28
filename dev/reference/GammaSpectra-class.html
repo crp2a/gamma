@@ -60,7 +60,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
 
     <p>This class extends the base <code><a href="https://rdrr.io/r/base/list.html">list</a></code> and can only contains
- <a href="GammaSpectrum-class.html">GammaSpectrum</a> objects.</p>
+<a href="GammaSpectrum-class.html">GammaSpectrum</a> objects.</p>
     </div>
     <div class="ref-section section level2" id="section-access">
     <h2 class="hasAnchor" id="access"><a class="anchor" href="#access" aria-hidden="true"></a>Access</h2>
@@ -68,17 +68,14 @@
     
 
 <p>In the code snippets below, <code>x</code> is a <code>GammaSpectra</code> object.</p><dl><dt><code>length(x)</code></dt><dd><p>Get the number of elements in <code>x</code>.</p></dd>
- <dt><code>lengths(x)</code></dt><dd><p>Get the number of channels in each element of
-  <code>x</code>.</p></dd>
- <dt><code>get_names(x)</code>, <code>set_names(x) &lt;- value</code></dt><dd><p>Retrieves or sets
-  the names of <code>x</code> according to <code>value</code>.</p></dd>
- <dt><code>get_hash(x)</code></dt><dd><p>Get the MD5 hash of the raw data files.</p></dd>
- <dt><code>get_channels(x)</code></dt><dd><p>Get the number of channels in each element of
- <code>x</code>.</p></dd>
- <dt><code>get_counts(x)</code></dt><dd><p>Get the counts of each element of <code>x</code>.</p></dd>
- <dt><code>get_energy(x)</code></dt><dd><p>Get the energy range of each element of
- <code>x</code>.</p></dd>
- <dt><code>get_rates(x)</code></dt><dd><p>Get the count rates of each element of <code>x</code>.</p></dd>
+<dt><code>lengths(x)</code></dt><dd><p>Get the number of channels in each element of <code>x</code>.</p></dd>
+<dt><code>get_names(x)</code>, <code>set_names(x) &lt;- value</code></dt><dd><p>Retrieves or sets
+the names of <code>x</code> according to <code>value</code>.</p></dd>
+<dt><code>get_hash(x)</code></dt><dd><p>Get the MD5 hash of the raw data files.</p></dd>
+<dt><code>get_channels(x)</code></dt><dd><p>Get the number of channels in each element of <code>x</code>.</p></dd>
+<dt><code>get_counts(x)</code></dt><dd><p>Get the counts of each element of <code>x</code>.</p></dd>
+<dt><code>get_energy(x)</code></dt><dd><p>Get the energy range of each element of <code>x</code>.</p></dd>
+<dt><code>get_rates(x)</code></dt><dd><p>Get the count rates of each element of <code>x</code>.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-subset">
@@ -87,16 +84,13 @@
     
 
 <p>In the code snippets below, <code>x</code> is a <code>GammaSpectra</code> object.</p><dl><dt><code>x[i]</code></dt><dd><p>Extracts the elements selected by subscript <code>i</code>.
-  <code>i</code> can be <code>missing</code> or <code>NULL</code>, <code>numeric</code> or
-  <code>character</code> vector or a <code>factor</code>.
-  Returns a new <code>GammaSpectra</code> object.</p></dd>
- <dt><code>x[i, j]</code></dt><dd><p>Like the above but allows to select a slot thru
-  <code>j</code> (see examples). <code>j</code> is a <code>character</code> vector of
-  length one. Returns a <code>list</code>.</p></dd>
- <dt><code>x[[i]]</code></dt><dd><p>Extracts the elements selected by subscript <code>i</code>.
-  <code>i</code> can be a <code>numeric</code> or <code>character</code> vector
-  of length one. Returns the corresponding <a href="GammaSpectrum-class.html">GammaSpectrum</a>
-  object.</p></dd>
+<code>i</code> can be <code>missing</code> or <code>NULL</code>, <code>numeric</code> or <code>character</code> vector or a
+<code>factor</code>. Returns a new <code>GammaSpectra</code> object.</p></dd>
+<dt><code>x[i, j]</code></dt><dd><p>Like the above but allows to select a slot thru <code>j</code> (see
+examples). <code>j</code> is a <code>character</code> vector of length one. Returns a <code>list</code>.</p></dd>
+<dt><code>x[[i]]</code></dt><dd><p>Extracts the elements selected by subscript <code>i</code>.
+<code>i</code> can be a <code>numeric</code> or <code>character</code> vector of length one. Returns the
+corresponding <a href="GammaSpectrum-class.html">GammaSpectrum</a> object.</p></dd>
 
 </dl></div>
     <div class="ref-section section level2" id="section-see-also">

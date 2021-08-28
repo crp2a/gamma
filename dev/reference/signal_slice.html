@@ -69,9 +69,9 @@
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> or <a href="GammaSpectra-class.html">GammaSpectra</a>
 object.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p><code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> values giving the channels of the
-spectrum to be kept/dropped (see below). Numeric values are coerced to
-integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer</a></code> (and hence truncated towards zero).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p><code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> values giving the channels of the spectrum to be
+kept/dropped (see below). Numeric values are coerced to integer as by
+<code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> (and hence truncated towards zero).</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
@@ -81,12 +81,12 @@ integer as by <code><a href="https://rdrr.io/r/base/integer.html">as.integer</a>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
 
     <p>Either positive values to keep, or negative values to drop, should be
- provided. The values provided must be either all positive or all negative.</p>
+provided. The values provided must be either all positive or all negative.</p>
 <p>If no value is provided, an attempt is made to define the number
- of channels to skip at the beginning of the spectrum. This drops all
- channels before the highest count maximum. This is intended to deal with the
- artefact produced by the rapid growth of random background noise towards low
- energies.</p>
+of channels to skip at the beginning of the spectrum. This drops all
+channels before the highest count maximum. This is intended to deal with the
+artefact produced by the rapid growth of random background noise towards low
+energies.</p>
     </div>
     <div class="ref-section section level2" id="section-see-also">
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also" aria-hidden="true"></a>See also</h2>

@@ -95,16 +95,14 @@ object.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>Extra parameters to be passed to further methods.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-method">method</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the smoothing
-method to be used. It must be one of "<code>unweighted</code>" (default),
-"<code>weighted</code>" or "<code>savitzky</code>" (see details).
-Any unambiguous substring can be given.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the smoothing method to be
+used. It must be one of "<code>unweighted</code>" (default), "<code>weighted</code>" or
+"<code>savitzky</code>" (see details). Any unambiguous substring can be given.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-m">m</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>An odd <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the number of adjacent
-points to be used.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>An odd <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the number of adjacent points to be used.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-p">p</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the polynomial degree.
-Only used if <code>method</code> is "<code>savitzky</code>".</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the polynomial degree. Only used if <code>method</code>
+is "<code>savitzky</code>".</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
@@ -113,33 +111,33 @@ Only used if <code>method</code> is "<code>savitzky</code>".</p></dd>
     <div class="ref-section section level2" id="section-details">
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
 
-    <p>The following smoothing methods are available:</p><dl><dt>rectangular</dt><dd><p>Unweighted sliding-average or rectangular smooth.
-  It replaces each point in the signal with the average of \(m\) adjacent
-  points.</p></dd>
-  <dt>triangular</dt><dd><p>Weighted sliding-average or triangular smooth.
-  It replaces each point in the signal with the weighted mean of \(m\)
-  adjacent points.</p></dd>
-  <dt>savitzky</dt><dd><p>Savitzky-Golay filter. This method is based on the
-  least-squares fitting of polynomials to segments of \(m\) adjacent
-  points.</p></dd>
- 
+    <p>The following smoothing methods are available:</p><dl><dt><code>rectangular</code></dt><dd><p>Unweighted sliding-average or rectangular smooth.
+It replaces each point in the signal with the average of \(m\) adjacent
+points.</p></dd>
+<dt><code>triangular</code></dt><dd><p>Weighted sliding-average or triangular smooth.
+It replaces each point in the signal with the weighted mean of \(m\)
+adjacent points.</p></dd>
+<dt><code>savitzky</code></dt><dd><p>Savitzky-Golay filter. This method is based on the
+least-squares fitting of polynomials to segments of \(m\) adjacent
+points.</p></dd>
+
 </dl><p>There will be \((m - 1) / 2\) points both at the beginning and at the end
- of the spectrum for which a complete \(m\)-width smooth cannot be
- calculated. To prevent data loss, progressively smaller smooths are used at
- the ends of the spectrum if <code>method</code> is <code>unweighted</code> or
- <code>weighted</code>. If the Savitzky-Golay filter is used, the original
- \((m - 1) / 2\) points at the ends of the spectrum are preserved.</p>
+of the spectrum for which a complete \(m\)-width smooth cannot be
+calculated. To prevent data loss, progressively smaller smooths are used at
+the ends of the spectrum if <code>method</code> is <code>unweighted</code> or <code>weighted</code>. If the
+Savitzky-Golay filter is used, the original \((m - 1) / 2\) points at the
+ends of the spectrum are preserved.</p>
     </div>
     <div class="ref-section section level2" id="section-references">
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references" aria-hidden="true"></a>References</h2>
 
     <p>Gorry, P. A. (1990). General Least-Squares Smoothing and Differentiation by
- the Convolution (Savitzky-Golay) Method. <em>Analytical Chemistry</em>, 62(6),
- p. 570-573. doi: <a href="https://doi.org/10.1021/ac00205a007">10.1021/ac00205a007</a>
+the Convolution (Savitzky-Golay) Method. <em>Analytical Chemistry</em>, 62(6),
+p. 570-573. doi: <a href="https://doi.org/10.1021/ac00205a007">10.1021/ac00205a007</a>
 .</p>
 <p>Savitzky, A. &amp; Golay, M. J. E. (1964). Smoothing and Differentiation of
- Data by Simplified Least Squares Procedures. <em>Analytical Chemistry</em>,
- 36(8), p. 1627-1639. doi: <a href="https://doi.org/10.1021/ac60214a047">10.1021/ac60214a047</a>
+Data by Simplified Least Squares Procedures. <em>Analytical Chemistry</em>,
+36(8), p. 1627-1639. doi: <a href="https://doi.org/10.1021/ac60214a047">10.1021/ac60214a047</a>
 .</p>
     </div>
     <div class="ref-section section level2" id="section-see-also">

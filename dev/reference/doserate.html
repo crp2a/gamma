@@ -93,29 +93,28 @@
 
     <h2>Arguments</h2>
     <dl class="row" id="ref-arguments"><dt class="col-sm-3 section level2" id="pkg-arg-object">object</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectra-class.html">GammaSpectra</a> or <a href="CalibrationCurve-class.html">CalibrationCurve</a>
-object.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectra-class.html">GammaSpectra</a> or <a href="CalibrationCurve-class.html">CalibrationCurve</a> object.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-background">background</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> object of a length-two
-<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the background noise integration value
-and error, respectively.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> object of a length-two <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>
+vector giving the background noise integration value and error,
+respectively.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-doses">doses</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/matrix.html">matrix</a></code> or <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code> TODO.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>Currently not used.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-spectrum">spectrum</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>An optional <a href="GammaSpectrum-class.html">GammaSpectrum</a> or
-<a href="GammaSpectra-class.html">GammaSpectra</a> object in which to look for variables with which
-to predict. If omitted, the fitted values are used.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>An optional <a href="GammaSpectrum-class.html">GammaSpectrum</a> or <a href="GammaSpectra-class.html">GammaSpectra</a>
+object in which to look for variables with which to predict. If omitted,
+the fitted values are used.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-range_Ni, range_NiEi">range_Ni, range_NiEi</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A length-two <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving
-the energy range to integrate within (in keV).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A length-two <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> vector giving the energy
+range to integrate within (in keV).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-alpha">alpha</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> value giving the cutoff value for
-confidence intervals (see <code><a href="https://rdrr.io/pkg/IsoplotR/man/york.html">york</a></code>).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> value giving the cutoff value for confidence
+intervals (see <code><a href="https://rdrr.io/pkg/IsoplotR/man/york.html">IsoplotR::york()</a></code>).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-details">details</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/list.html">list</a></code> of length-one vector specifying
-additional informations about the instrument for which the curve is built.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/list.html">list</a></code> of length-one vector specifying additional
+informations about the instrument for which the curve is built.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-sigma">sigma</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code> value giving TODO.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-epsilon">epsilon</dt>
@@ -124,54 +123,51 @@ introduced by the calibration of the energy scale of the spectrum.</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
-    <p><code>dose_fit</code> returns a <a href="CalibrationCurve-class.html">CalibrationCurve</a> object.</p>
-<p><code>dose_predict</code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code> with the following
- columns:</p><dl><dt>name</dt><dd><p>(<code><a href="https://rdrr.io/r/base/character.html">character</a></code>) the name of the spectra.</p></dd>
-  <dt>*_signal</dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the integrated signal value
-  (according to the value of <code>threshold</code>; see
-  <code><a href="integrate.html">signal_integrate</a></code>).</p></dd>
-  <dt>*_error</dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the integrated signal error value
-  (according to the value of <code>threshold</code>; see
-  <code><a href="integrate.html">signal_integrate</a></code>).</p></dd>
-  <dt>gamma_signal</dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the predicted gamma dose rate.</p></dd>
-  <dt>gamma_error</dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the predicted gamma dose rate
-  error.</p></dd>
- 
-</dl></div>
+    
+<ul><li><p><code>dose_fit()</code> returns a <a href="CalibrationCurve-class.html">CalibrationCurve</a> object.</p></li>
+<li><p><code>dose_predict()</code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></code> with the following columns:</p><dl><dt><code>name</code></dt><dd><p>(<code><a href="https://rdrr.io/r/base/character.html">character</a></code>) the name of the spectra.</p></dd>
+<dt><code>*_signal</code></dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the integrated signal value (according to
+the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>).</p></dd>
+<dt><code>*_error</code></dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the integrated signal error value
+(according to the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>).</p></dd>
+<dt><code>gamma_signal</code></dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the predicted gamma dose rate.</p></dd>
+<dt><code>gamma_error</code></dt><dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html">numeric</a></code>) the predicted gamma dose rate error.</p></dd>
+
+</dl></li>
+</ul></div>
     <div class="ref-section section level2" id="section-details">
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
 
     <p><code>dose_predict</code> predicts in situ gamma dose rate.</p>
-
 <p>To estimate the gamma dose rate, one of the calibration curves distributed
- with this package can be used (fig. \@ref(fig:curve)). These built-in curves
- are in use in several luminescence dating laboratories and can be used to
- replicate published results. As these curves are instrument specific, the
- user may have to build its own curve.</p>
+with this package can be used. These built-in curves are in use in several
+luminescence dating laboratories and can be used to replicate published
+results. As these curves are instrument specific, the user may have to build
+its own curve.</p>
 <p>The construction of a calibration curve requires a set of reference spectra
- for which the gamma dose rate is known and a background noise measurement.
- First, each reference spectrum is integrated over a given interval, then
- normalized to active time and corrected for background noise. The dose rate
- is finally modelled by the integrated signal value used as a linear
- predictor (York *et al.*, 2004).</p>
+for which the gamma dose rate is known and a background noise measurement.
+First, each reference spectrum is integrated over a given interval, then
+normalized to active time and corrected for background noise. The dose rate
+is finally modelled by the integrated signal value used as a linear
+predictor (York <em>et al.</em>, 2004).</p>
 <p>See <code>vignette(doserate)</code> for a reproducible example.</p>
     </div>
     <div class="ref-section section level2" id="section-references">
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references" aria-hidden="true"></a>References</h2>
 
     <p>Mercier, N. &amp; Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
- a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
- <em>Ancient TL</em>, 25(1), p. 1-4.</p>
+a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
+<em>Ancient TL</em>, 25(1), p. 1-4.</p>
 <p>York, D., Evensen, N. M., Martínez, M. L. &amp; De Basabe Delgado, J. (2004).
- Unified Equations for the Slope, Intercept, and Standard Errors of the Best
- Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
- doi: <a href="https://doi.org/10.1119/1.1632486">10.1119/1.1632486</a>
+Unified Equations for the Slope, Intercept, and Standard Errors of the Best
+Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
+doi: <a href="https://doi.org/10.1119/1.1632486">10.1119/1.1632486</a>
 .</p>
     </div>
     <div class="ref-section section level2" id="section-see-also">
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also" aria-hidden="true"></a>See also</h2>
 
-    <div class="dont-index"><p><a href="integrate.html">signal_integrate</a></p></div>
+    <div class="dont-index"><p><code><a href="integrate.html">signal_integrate()</a></code></p></div>
     </div>
     <div class="ref-section section level2" id="section-author">
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author" aria-hidden="true"></a>Author</h2>

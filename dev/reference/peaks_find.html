@@ -67,15 +67,15 @@
     <dt class="col-sm-3 section level2" id="pkg-arg-...">...</dt>
       <dd class="col-sm-9" id="ref-arguments desc"><p>Extra parameters to be passed to internal methods.</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-method">method</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the method to be
-used for background noise estimation (see below).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>A <code><a href="https://rdrr.io/r/base/character.html">character</a></code> string specifying the method to be used for
+background noise estimation (see below).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-SNR">SNR</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the signal-to-noise-ratio for
-peak detection (see below).</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the signal-to-noise-ratio for peak detection
+(see below).</p></dd>
     <dt class="col-sm-3 section level2" id="pkg-arg-span">span</dt>
-      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the half window size (in number
-of channels). If <code>NULL</code>, 5% of the number of channels is used as the
-half window size.</p></dd>
+      <dd class="col-sm-9" id="ref-arguments desc"><p>An <code><a href="https://rdrr.io/r/base/integer.html">integer</a></code> giving the half window size (in number of
+channels). If <code>NULL</code>, 5\<!-- % of the number of channels is used as the half -->
+window size.</p></dd>
     </dl><div class="ref-section section level2" id="section-value">
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value" aria-hidden="true"></a>Value</h2>
 
@@ -85,9 +85,9 @@ half window size.</p></dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details" aria-hidden="true"></a>Details</h2>
 
     <p>A local maximum has to be the highest one in the given window and has to be
- higher than \(SNR \times noise\) to be recognized as peak.</p>
-<p>The following methods are available for noise estimation:</p><dl><dt>MAD</dt><dd><p>Median Absolute Deviation.</p></dd>
- 
+higher than \(SNR \times noise\) to be recognized as peak.</p>
+<p>The following methods are available for noise estimation:</p><dl><dt><code>MAD</code></dt><dd><p>Median Absolute Deviation.</p></dd>
+
 </dl></div>
     <div class="ref-section section level2" id="section-see-also">
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also" aria-hidden="true"></a>See also</h2>
