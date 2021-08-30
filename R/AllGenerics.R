@@ -273,6 +273,12 @@ setGeneric(
 #' @param spline A [`logical`] scalar: should spline interpolation through the
 #'  support points be used instead of linear interpolation?
 #'  Only used if `method` is "`rubberband`".
+#' @param from An [`integer`] giving the first channel to be used for linear
+#'  interpolation. If `NULL` (the default), channel \eqn{1} is used.
+#'  Only used if `method` is "`linear`".
+#' @param to An [`integer`] giving the last channel to be used for linear
+#'  interpolation. If `NULL` (the default), channel \eqn{max} is used.
+#'  Only used if `method` is "`linear`".
 #' @param ... Extra parameters to be passed to further methods.
 #' @details
 #'  The following methods are available for baseline estimation:
@@ -282,6 +288,7 @@ setGeneric(
 #'   baseline is estimated as the part of the convex envelope lying below the
 #'   spectrum. Note that the rubber band does not enter the concave regions
 #'   (if any) of the spectrum.}
+#'   \item{`linear`}{Linear baseline estimation.}
 #'  }
 #' @note
 #'  `baseline_rubberband()` is slightly modified from C. Beleites'
@@ -344,6 +351,13 @@ setGeneric(
 setGeneric(
   name = "baseline_rubberband",
   def = function(object, ...) standardGeneric("baseline_rubberband")
+)
+
+#' @rdname baseline
+#' @aliases baseline_linear-method
+setGeneric(
+  name = "baseline_linear",
+  def = function(object, ...) standardGeneric("baseline_linear")
 )
 
 # @rdname baseline

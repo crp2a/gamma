@@ -20,6 +20,10 @@ spc <- read(spc_file)
 ## Remove the first 35 channels
 spc <- signal_slice(spc, -c(1:35))
 
+## Linear baseline
+bsl_linear <- baseline_linear(spc, from = 250, to = 750)
+plot(spc, bsl_linear)
+
 ## SNIP baseline
 bsl_snip <- baseline_snip(spc, LLS = FALSE, decreasing = FALSE, n = 100)
 plot(spc, bsl_snip)

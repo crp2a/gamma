@@ -8,7 +8,8 @@ NULL
 setMethod(
   f = "signal_baseline",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, method = c("SNIP", "rubberband"), ...) {
+  definition = function(object,
+                        method = c("SNIP", "rubberband", "linear"), ...) {
     # Validation
     method <- match.arg(method, several.ok = FALSE)
 
@@ -16,6 +17,7 @@ setMethod(
       method,
       SNIP = baseline_snip,
       rubberband = baseline_rubberband,
+      linear = baseline_linear,
       stop("There is no such method: ", method, call. = FALSE)
     )
     fun(object, ...)
@@ -28,7 +30,8 @@ setMethod(
 setMethod(
   f = "signal_baseline",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, method = c("SNIP", "rubberband"), ...) {
+  definition = function(object,
+                        method = c("SNIP", "rubberband", "linear"), ...) {
     bsl <- lapply(X = object, FUN = signal_baseline, method = method, ...)
     .GammaSpectra(bsl)
   }
@@ -40,7 +43,8 @@ setMethod(
 setMethod(
   f = "signal_correct",
   signature = signature(object = "GammaSpectrum"),
-  definition = function(object, method = c("SNIP", "rubberband"), ...) {
+  definition = function(object,
+                        method = c("SNIP", "rubberband", "linear"), ...) {
     bsl <- signal_baseline(object, method = method, ...)
     object - bsl
   }
@@ -52,7 +56,8 @@ setMethod(
 setMethod(
   f = "signal_correct",
   signature = signature(object = "GammaSpectra"),
-  definition = function(object, method = c("SNIP", "rubberband"), ...) {
+  definition = function(object,
+                        method = c("SNIP", "rubberband", "linear"), ...) {
     bsl <- lapply(X = object, FUN = signal_correct, method = method, ...)
     .GammaSpectra(bsl)
   }
