@@ -12,7 +12,7 @@ plot(sliced)
 sliced <- signal_slice(spc, -c(1:35))
 plot(sliced)
 
-sliced <- signal_slice(spc, 450:550)
+sliced <- signal_slice(sliced, 450:550)
 plot(sliced)
 
 ## Split

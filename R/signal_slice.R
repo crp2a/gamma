@@ -9,23 +9,25 @@ setMethod(
   f = "signal_slice",
   signature = signature(object = "GammaSpectrum"),
   definition = function(object, ...) {
-    index <- as.integer(c(...))
-    if (length(index) == 0) {
-      index <- -seq_len(which.max(object[["count"]]))
+    i <- as.integer(c(...))
+    if (length(i) == 0) {
+      i <- -seq_len(which.max(object[["count"]]))
     }
 
-    if (all(index > 0) || all(index < 0)) {
-      channel <- object[["channel"]][index]
-      energy <- object[["energy"]][index]
-      count <- object[["count"]][index]
-      rate <- object[["rate"]][index]
-    } else {
-      stop("A vector of strictly positive of negative integers is expected.",
+    if (!all(i > 0) & !all(i < 0)) {
+      stop("A vector of strictly positive or negative integers is expected.",
            call. = FALSE)
     }
 
+    idx <- which(object[["channel"]] %in% abs(i)) * sign(i)
+    if (length(idx) == 0) return(object)
+
+    channel <- object[["channel"]][idx]
+    energy <- object[["energy"]][idx]
+    count <- object[["count"]][idx]
+
     methods::initialize(object, channel = channel, energy = energy,
-                        count = count, rate = rate)
+                        count = count)
   }
 )
 
