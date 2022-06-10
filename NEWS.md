@@ -2,6 +2,7 @@
 
 ## Internals
 * Use **testthat** 3rd edition (#20).
+* The package was removed from CRAN due to an internal call to a defunct function `default.stringsAsFactors()`; fixed (#23, @RLumSK)
 
 # gamma 1.0.1
 
