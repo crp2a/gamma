@@ -1,18 +1,11 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "gamma",
-  "description": "Process in-situ Gamma-Ray Spectrometry for\n    Luminescence Dating. This package allows to import, inspect and\n    correct the energy shifts of Gamma-ray spectra. It provides methods\n    for estimating the gamma dose rate by the use of a calibration curve.\n    The package only supports Canberra CNF and TKA files.",
+  "description": "Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve. The package only supports Canberra CNF and TKA files.",
   "name": "gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry\n    Measurements",
+  "relatedLink": "https://crp2a.github.io/gamma/",
   "codeRepository": "https://github.com/crp2a/gamma",
-  "relatedLink": [
-    "https://crp2a.github.io/gamma",
-    "https://crp2a.github.io/gamma/",
-    "https://CRAN.R-project.org/package=gamma"
-  ],
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "1.0.1.9000",
@@ -21,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "author": [
     {
       "@type": "Person",
@@ -170,14 +163,14 @@
       "sameAs": "https://CRAN.R-project.org/package=vdiffr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -189,12 +182,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "graphics",
       "name": "graphics"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "IsoplotR",
       "name": "IsoplotR",
@@ -206,12 +199,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=IsoplotR"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -223,7 +216,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "rxylib",
       "name": "rxylib",
@@ -235,32 +228,24 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rxylib"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "tools",
       "name": "tools"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
-    }
-  ],
-  "contIntegration": "https://codecov.io/gh/crp2a/gamma",
-  "developmentStatus": "https://www.repostatus.org/#active",
-  "keywords": [
-    "geochronology",
-    "luminescence-dating",
-    "archaeology",
-    "archaeological-science",
-    "r-package",
-    "gamma-spectrometry"
-  ],
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "4290.74KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -321,13 +306,9 @@
       }
     }
   ],
-  "fileSize": "4285.449KB",
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  },
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
-  "readme": "https://github.com/crp2a/gamma/blob/master/README.md"
+  "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
+  "contIntegration": ["https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/crp2a/gamma"],
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "keywords": ["luminescence-dating", "geochronology", "archaeology", "r-package", "gamma-spectrometry"]
 }

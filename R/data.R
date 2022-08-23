@@ -22,9 +22,11 @@
 #'  }
 #' @source
 #'  Nuclides And Isotopes : Chart of the Nuclides.
+#' @name decay
 #' @rdname decay
 #' @keywords datasets internal
-".decay"
+# ".decay"
+NULL
 
 #' Lanthanum Decay Data
 #'
@@ -46,9 +48,11 @@
 #'  }
 #' @source
 #'  Nuclides And Isotopes : Chart of the Nuclides.
+#' @name decay_La
 #' @rdname decay_La
 #' @keywords datasets internal
-".decay_La"
+# ".decay_La"
+NULL
 
 # ==============================================================================
 #' Clermont Reference Data
