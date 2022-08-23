@@ -36,8 +36,8 @@ Authors@R:
              role = "fnd"),
       person(given = "Idex Aix-Marseille",
              role = "fnd"))
-Maintainer: Brice Lebrun
-    <brice.lebrun@u-bordeaux-montaigne.fr>
+Maintainer: Nicolas Frerebeau
+    <services-archeosciences@u-bordeaux-montaigne.fr>
 Description: Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and
     correct the energy shifts of Gamma-ray spectra. It provides methods
