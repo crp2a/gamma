@@ -1,10 +1,10 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1.9001
-pkgdown_sha: 705ff7c650bb1c7d46d35e72f27ad093689e2f29
+pandoc: 2.14.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
 articles:
   doserate: doserate.html
   gamma: gamma.html
-last_built: 2021-09-10T23:58Z
+last_built: 2022-08-23T11:55Z
 urls:
   reference: https://crp2a.github.io/gamma/reference
   article: https://crp2a.github.io/gamma/articles
