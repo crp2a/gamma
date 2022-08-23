@@ -12,7 +12,7 @@ as.matrix.GammaSpectrum <- function(x, ...) methods::as(x, "matrix")
 #' @export
 as.data.frame.GammaSpectrum <- function(x, row.names = NULL, optional = FALSE,
                                         make.names = TRUE, ...,
-                                        stringsAsFactors = default.stringsAsFactors()) {
+                                        stringsAsFactors = FALSE) {
   x <- as.data.frame(x = as.matrix(x), row.names = row.names,
                      optional = optional, make.names = make.names, ...,
                      stringsAsFactors = stringsAsFactors)
@@ -79,7 +79,7 @@ as.matrix.PeakPosition <- function(x, ...) methods::as(x, "matrix")
 #' @export
 as.data.frame.PeakPosition <- function(x, row.names = NULL, optional = FALSE,
                                         make.names = TRUE, ...,
-                                        stringsAsFactors = default.stringsAsFactors()) {
+                                        stringsAsFactors = FALSE) {
   x <- as.data.frame(x = as.matrix(x), row.names = row.names,
                      optional = optional, make.names = make.names, ...,
                      stringsAsFactors = stringsAsFactors)
