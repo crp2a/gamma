@@ -106,3 +106,4 @@ Collate:
     'summarize.R'
     'utilities.R'
     'validate.R'
+    'zzz.R'
