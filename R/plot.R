@@ -144,7 +144,7 @@ setMethod(
       for (i in seq_along(peak_channel)) {
         chan <- peak_channel[[i]]
         j <- spc_channel >= chan - span & spc_channel < chan + span
-        grp[j] <- chan
+        grp[j] <- as.character(chan)
       }
       x <- signal_split(x, groups = grp)
     }

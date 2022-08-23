@@ -33,7 +33,7 @@ setMethod(
   definition = function(object,
                         method = c("SNIP", "rubberband", "linear"), ...) {
     bsl <- lapply(X = object, FUN = signal_baseline, method = method, ...)
-    .GammaSpectra(bsl)
+    methods::initialize(object, bsl)
   }
 )
 
@@ -59,6 +59,6 @@ setMethod(
   definition = function(object,
                         method = c("SNIP", "rubberband", "linear"), ...) {
     bsl <- lapply(X = object, FUN = signal_correct, method = method, ...)
-    .GammaSpectra(bsl)
+    methods::initialize(object, bsl)
   }
 )

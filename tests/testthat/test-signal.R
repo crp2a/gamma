@@ -10,8 +10,7 @@ test_that("Slice channels", {
   expect_equal(length(spc2), 1014)
   expect_equal(get_hash(spc_cnf), get_hash(spc2))
 
-  expect_error(signal_slice(spc_cnf, 1, -2),
-               "strictly positive of negative integers")
+  expect_error(signal_slice(spc_cnf, 1, -2))
 
   spc_files <- system.file("extdata/", package = "gamma")
   spc_set <- read(spc_files)
