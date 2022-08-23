@@ -10,7 +10,7 @@ Authors@R:
              comment = c(ORCID = "0000-0001-5759-4944")),
       person(given = "Brice",
              family = "Lebrun",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "brice.lebrun@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "0000-0001-7503-8685")),
       person(given = "Guilhem",
@@ -28,6 +28,9 @@ Authors@R:
              role = "ctb",
              email = "christelle.lahaye@u-bordeaux-montaigne.fr",
              comment = c(ORCID = "0000-0003-2215-9015")),
+      person(given = "Archéosciences Bordeaux",
+             role = c("cre"),
+             email = "services-archeosciences@u-bordeaux-montaigne.fr"),
       person(given = "Université Bordeaux Montaigne",
              role = c("cph", "fnd")),
       person(given = "CNRS",
@@ -36,8 +39,6 @@ Authors@R:
              role = "fnd"),
       person(given = "Idex Aix-Marseille",
              role = "fnd"))
-Maintainer: Nicolas Frerebeau
-    <services-archeosciences@u-bordeaux-montaigne.fr>
 Description: Process in-situ Gamma-Ray Spectrometry for
     Luminescence Dating. This package allows to import, inspect and
     correct the energy shifts of Gamma-ray spectra. It provides methods

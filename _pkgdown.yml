@@ -3,6 +3,9 @@ development:
   mode: auto
 
 authors:
+  Archéosciences Bordeaux:
+    href: https://www.archeosciences-bordeaux.fr.fr
+    html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_archeosciences.jpg" height="64" />
   Université Bordeaux Montaigne:
     href: https://www.u-bordeaux-montaigne.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_ubm.jpg" height="64" />

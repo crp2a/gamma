@@ -80,11 +80,9 @@
   ],
   "maintainer": [
     {
-      "@type": "Person",
-      "givenName": "Brice",
-      "familyName": "Lebrun",
-      "email": "brice.lebrun@u-bordeaux-montaigne.fr",
-      "@id": "https://orcid.org/0000-0001-7503-8685"
+      "@type": "Organization",
+      "name": "Archéosciences Bordeaux",
+      "email": "services-archeosciences@u-bordeaux-montaigne.fr"
     }
   ],
   "softwareSuggestions": [
@@ -245,7 +243,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4290.74KB",
+  "fileSize": "4311.768KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
