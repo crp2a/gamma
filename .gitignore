@@ -30,7 +30,7 @@ rsconnect/
 inst/doc
 
 # Temporary files created by devtools
-CRAN-RELEASE
+CRAN-SUBMISSION
 doc
 Meta
 d

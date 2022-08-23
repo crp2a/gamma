@@ -23,8 +23,8 @@ template:
   bootstrap: 5
   opengraph:
     twitter:
-      creator: "@CRP2A"
-      site: "@CRP2A"
+      creator: "@archeosciences"
+      site: "@archeosciences"
       card: summary_large_image
 
 search:
