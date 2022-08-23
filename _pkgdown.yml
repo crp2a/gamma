@@ -17,7 +17,7 @@ authors:
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg" height="48" />
 
 template:
-  bootstrap: 4
+  bootstrap: 5
   opengraph:
     twitter:
       creator: "@CRP2A"
