@@ -81,3 +81,23 @@ setMethod(
     vapply(object, FUN = has_energy, FUN.VALUE = logical(1))
   }
 )
+
+#' @export
+#' @rdname energy
+#' @aliases has_calibration,GammaSpectrum-method
+setMethod(
+  f = "has_calibration",
+  signature = "GammaSpectrum",
+  definition = function(object) !is.null(object@calibration)
+)
+
+#' @export
+#' @rdname energy
+#' @aliases has_calibration,GammaSpectra-method
+setMethod(
+  f = "has_calibration",
+  signature = "GammaSpectra",
+  definition = function(object) {
+    vapply(object, FUN = has_calibration, FUN.VALUE = logical(1))
+  }
+)

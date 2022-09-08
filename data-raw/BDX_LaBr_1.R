@@ -24,6 +24,12 @@ BDX_LaBr_1_Ni <- .DoseRateModel(
   background = c(22.607509838216, 0.049712234699046)
 )
 
+## Ni
+## Slope: 0.03378 +/- 0.0015 / Intercept: 0.08 +/- 1.8
+## MSWD: 0.30 / Probability: 0.91
+# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
+# IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
+
 
 NiEi_data <- BDX_LaBr_1_data[, c(1, 5, 6, 7, 8)]
 colnames(NiEi_data) <- c("names", "signal_value", "signal_error",
@@ -54,12 +60,6 @@ BDX_LaBr_1 <- .CalibrationCurve(
   )
 )
 usethis::use_data(BDX_LaBr_1, internal = FALSE, overwrite = FALSE)
-
-## Ni
-## Slope: 0.03378 +/- 0.0015 / Intercept: 0.08 +/- 1.8
-## MSWD: 0.30 / Probability: 0.91
-# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
-# IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
 
 ## NiEi
 ## Slope: 31.85 +/- 1.2 / Intercept: 598 +/- 1500
