@@ -2,7 +2,7 @@
 #' \tabular{ll}{
 #'  **Package:** \tab gamma \cr
 #'  **Type:** \tab Package \cr
-#'  **Version:** \tab 1.0.2 \cr
+#'  **Version:** \tab 1.0.3 \cr
 #'  **License:** \tab GPL-3 \cr
 #'  **Zenodo:** \tab \doi{10.5281/zenodo.2652393}
 #' }
@@ -19,10 +19,10 @@
 #'
 #' **Package maintainer**
 #'
-#' Brice Lebrun\cr
-#' \email{brice.lebrun@@u-bordeaux-montaigne.fr}
+#' Nicolas Frerebeau\cr
+#' \email{services-archeosciences@@u-bordeaux-montaigne.fr}
 #'
-#' IRAMAT-CRP2A (UMR 5060)\cr
+#' Archéosciences Bordeaux (UMR 6034)\cr
 #' Maison de l'Archéologie\cr
 #' Université Bordeaux Montaigne\cr
 #' F-33607 Pessac cedex\cr
