@@ -10,12 +10,11 @@ setMethod(
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum",
                         doses = "matrix"),
   definition = function(object, background, doses, range_Ni, range_NiEi,
-                        alpha = 0.05,
                         details = list(authors = "", date = Sys.time())) {
     doses <- as.data.frame(doses)
     dose_fit(object, background, doses,
              range_Ni = range_Ni, range_NiEi = range_NiEi,
-             alpha = alpha, details = details)
+             details = details)
   }
 )
 
@@ -27,7 +26,6 @@ setMethod(
   signature = signature(object = "GammaSpectra", background = "GammaSpectrum",
                         doses = "data.frame"),
   definition = function(object, background, doses, range_Ni, range_NiEi,
-                        alpha = 0.05,
                         details = list(authors = "", date = Sys.time())) {
     # Validation
     if (length(range_Ni) != 2 | length(range_NiEi) != 2)
@@ -43,9 +41,9 @@ setMethod(
 
     # Fit linear regression (York)
     Ni <- fit_york(object, background, doses, range = range_Ni,
-                   energy = FALSE, alpha = alpha)
+                   energy = FALSE)
     NiEi <- fit_york(object, background, doses, range = range_NiEi,
-                     energy = TRUE, alpha = alpha)
+                     energy = TRUE)
 
     .CalibrationCurve(
       Ni = Ni,
@@ -55,8 +53,7 @@ setMethod(
   }
 )
 
-fit_york <- function(object, background, doses, range,
-                     energy = FALSE, alpha = 0.05) {
+fit_york <- function(object, background, doses, range, energy = FALSE) {
   # Signal integration
   bkg <- signal_integrate(background, range = range, energy = energy)
   signals <- signal_integrate(object, background = bkg, range = range,
@@ -68,7 +65,7 @@ fit_york <- function(object, background, doses, range,
                       "gamma_dose", "gamma_error")
 
   # Fit model
-  model <- IsoplotR::york(data[, -1], alpha = alpha)
+  model <- IsoplotR::york(data[, -1])
   # fitted <- model$a[[1L]] + data$signal_value * model$b[[1L]]
   # residuals <- data$gamma_dose - fitted
   # names(residuals) <- seq_along(residuals)

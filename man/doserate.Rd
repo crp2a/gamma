@@ -25,7 +25,6 @@ dose_predict(object, spectrum, ...)
   doses,
   range_Ni,
   range_NiEi,
-  alpha = 0.05,
   details = list(authors = "", date = Sys.time())
 )
 
@@ -35,7 +34,6 @@ dose_predict(object, spectrum, ...)
   doses,
   range_Ni,
   range_NiEi,
-  alpha = 0.05,
   details = list(authors = "", date = Sys.time())
 )
 
@@ -62,9 +60,6 @@ the fitted values are used.}
 
 \item{range_Ni, range_NiEi}{A length-two \code{\link{numeric}} vector giving the energy
 range to integrate within (in keV).}
-
-\item{alpha}{A \code{\link{numeric}} value giving the cutoff value for confidence
-intervals (see \code{\link[IsoplotR:york]{IsoplotR::york()}}).}
 
 \item{details}{A \code{\link{list}} of length-one vector specifying additional
 informations about the instrument for which the curve is built.}

@@ -1,4 +1,9 @@
+setwd('/home/pvermees/Documents/Programming/gamma')
+
 library(testthat)
-library(gamma)
+
+install.packages('.',type='source',repo=NULL,dependencies=TRUE)
+
+library('gamma')
 
 test_check("gamma")
