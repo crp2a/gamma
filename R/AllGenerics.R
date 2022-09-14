@@ -393,8 +393,6 @@ setGeneric(
 #' @param doses A [`matrix`] or [`data.frame`] TODO.
 #' @param range_Ni,range_NiEi A length-two [`numeric`] vector giving the energy
 #'  range to integrate within (in keV).
-#' @param alpha A [`numeric`] value giving the cutoff value for confidence
-#'  intervals (see [IsoplotR::york()]).
 #' @param details A [`list`] of length-one vector specifying additional
 #'  informations about the instrument for which the curve is built.
 #' @param spectrum An optional [GammaSpectrum-class] or [GammaSpectra-class]

@@ -200,7 +200,7 @@ info <- list(
 # Build the calibration curve
 AIX_NaI <- dose_fit(
   spc_scaled, background = bkg_scaled, doses = doses,
-  range_Ni = Ni_range, range_NiEi = NiEi_range, alpha = 0.05,
+  range_Ni = Ni_range, range_NiEi = NiEi_range,
   details = info
 )
 
