@@ -21,8 +21,8 @@
 <meta property="og:description" content="gamma">
 <meta property="og:image" content="https://crp2a.github.io/gamma/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:creator" content="@CRP2A">
-<meta name="twitter:site" content="@CRP2A">
+<meta name="twitter:creator" content="@archeosciences">
+<meta name="twitter:site" content="@archeosciences">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gamma</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Calibration Curve</h1>
                         <h4 data-toc-skip class="author">N. Frerebeau, B. Lebrun</h4>
             
-            <h4 data-toc-skip class="date">2022-08-23</h4>
+            <h4 data-toc-skip class="date">2022-09-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/HEAD/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -282,7 +282,7 @@
 <span><span class="co"># Build the calibration curve</span></span>
 <span><span class="va">AIX_NaI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_fit</a></span><span class="op">(</span></span>
 <span>  <span class="va">spc_scaled</span>, background <span class="op">=</span> <span class="va">bkg_scaled</span>, doses <span class="op">=</span> <span class="va">doses</span>,</span>
-<span>  range_Ni <span class="op">=</span> <span class="va">Ni_range</span>, range_NiEi <span class="op">=</span> <span class="va">NiEi_range</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  range_Ni <span class="op">=</span> <span class="va">Ni_range</span>, range_NiEi <span class="op">=</span> <span class="va">NiEi_range</span>,</span>
 <span>  details <span class="op">=</span> <span class="va">info</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -377,7 +377,7 @@
 </h2>
 <pre><code><span><span class="co">#&gt; R version 4.2.1 (2022-06-23)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 20.04.4 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0</span></span>
@@ -393,20 +393,20 @@
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] magrittr_2.0.3 gamma_1.0.2   </span></span>
+<span><span class="co">#&gt; [1] magrittr_2.0.3 gamma_1.0.3   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] Rcpp_1.0.9        highr_0.9         bslib_0.4.0       compiler_4.2.1   </span></span>
-<span><span class="co">#&gt;  [5] pillar_1.8.0      jquerylib_0.1.4   tools_4.2.1       digest_0.6.29    </span></span>
-<span><span class="co">#&gt;  [9] jsonlite_1.8.0    evaluate_0.16     memoise_2.0.1     lifecycle_1.0.1  </span></span>
-<span><span class="co">#&gt; [13] tibble_3.1.8      gtable_0.3.0      pkgconfig_2.0.3   rlang_1.0.4      </span></span>
-<span><span class="co">#&gt; [17] cli_3.3.0         yaml_2.3.5        pkgdown_2.0.6     xfun_0.32        </span></span>
-<span><span class="co">#&gt; [21] fastmap_1.1.0     rxylib_0.2.8      stringr_1.4.1     knitr_1.39       </span></span>
-<span><span class="co">#&gt; [25] vctrs_0.4.1       desc_1.4.1        fs_1.5.2          sass_0.4.2       </span></span>
+<span><span class="co">#&gt;  [5] pillar_1.8.1      jquerylib_0.1.4   tools_4.2.1       digest_0.6.29    </span></span>
+<span><span class="co">#&gt;  [9] jsonlite_1.8.0    evaluate_0.16     memoise_2.0.1     lifecycle_1.0.2  </span></span>
+<span><span class="co">#&gt; [13] tibble_3.1.8      gtable_0.3.1      pkgconfig_2.0.3   rlang_1.0.5      </span></span>
+<span><span class="co">#&gt; [17] cli_3.4.0         yaml_2.3.5        pkgdown_2.0.6     xfun_0.33        </span></span>
+<span><span class="co">#&gt; [21] fastmap_1.1.0     rxylib_0.2.8      stringr_1.4.1     knitr_1.40       </span></span>
+<span><span class="co">#&gt; [25] vctrs_0.4.1       desc_1.4.2        fs_1.5.2          sass_0.4.2       </span></span>
 <span><span class="co">#&gt; [29] systemfonts_1.0.4 rprojroot_2.0.3   grid_4.2.1        glue_1.6.2       </span></span>
-<span><span class="co">#&gt; [33] R6_2.5.1          textshaping_0.3.6 fansi_1.0.3       rmarkdown_2.15   </span></span>
+<span><span class="co">#&gt; [33] R6_2.5.1          textshaping_0.3.6 fansi_1.0.3       rmarkdown_2.16   </span></span>
 <span><span class="co">#&gt; [37] farver_2.1.1      purrr_0.3.4       ggplot2_3.3.6     IsoplotR_4.4     </span></span>
-<span><span class="co">#&gt; [41] scales_1.2.0      htmltools_0.5.3   colorspace_2.0-3  labeling_0.4.2   </span></span>
+<span><span class="co">#&gt; [41] scales_1.2.1      htmltools_0.5.3   colorspace_2.0-3  labeling_0.4.2   </span></span>
 <span><span class="co">#&gt; [45] ragg_1.2.2        utf8_1.2.2        stringi_1.7.8     munsell_0.5.0    </span></span>
 <span><span class="co">#&gt; [49] cachem_1.0.6</span></span></code></pre>
 </div>
