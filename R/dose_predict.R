@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "missing"),
-  definition = function(object, sigma = 1, epsilon = 0) {
+  definition = function(object, sigma = 1, epsilon = 1.5) {
 
     Ni <- predict_york(object[["Ni"]],
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
@@ -26,7 +26,7 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectrum"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 0) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 1.5) {
     spectrum <- methods::as(spectrum, "GammaSpectra")
     dose_predict(object, spectrum, sigma = sigma, epsilon = epsilon)
   }
@@ -38,7 +38,7 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 0) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 1.5) {
 
     Ni <- predict_york(object[["Ni"]], spectrum,
                        energy = FALSE, sigma = sigma, epsilon = epsilon)

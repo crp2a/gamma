@@ -10,7 +10,7 @@ BDX_LaBr_1_data <- utils::read.table("./data-raw/BDX_LaBr_1.csv",
 Ni_data <- BDX_LaBr_1_data[, c(1, 3, 4, 7, 8)]
 colnames(Ni_data) <- c("names", "signal_value", "signal_error",
                        "gamma_dose", "gamma_error")
-Ni_model <- IsoplotR::york(Ni_data[, -1], alpha = 0.05)
+Ni_model <- IsoplotR::york(Ni_data[, -1])
 
 BDX_LaBr_1_Ni <- .DoseRateModel(
   slope = as.numeric(Ni_model$b),
@@ -30,11 +30,10 @@ BDX_LaBr_1_Ni <- .DoseRateModel(
 # IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
 # IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
 
-
 NiEi_data <- BDX_LaBr_1_data[, c(1, 5, 6, 7, 8)]
 colnames(NiEi_data) <- c("names", "signal_value", "signal_error",
                        "gamma_dose", "gamma_error")
-NiEi_model <- IsoplotR::york(NiEi_data[, -1], alpha = 0.05)
+NiEi_model <- IsoplotR::york(NiEi_data[, -1])
 
 BDX_LaBr_1_NiEi <- .DoseRateModel(
   slope = as.numeric(NiEi_model$b),

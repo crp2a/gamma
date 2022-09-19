@@ -37,11 +37,11 @@ dose_predict(object, spectrum, ...)
   details = list(authors = "", date = Sys.time())
 )
 
-\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 0)
+\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 1.5)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 0)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 1.5)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 0)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 1.5)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
