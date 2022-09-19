@@ -58,9 +58,14 @@ readCanberraCNF <- function(file, ...) {
 
   # Get metadata
   spc_meta <- spc_xy$dataset[[1]]$metadata_block
-  date <- as.POSIXct(spc_meta[1, 2], format = c("%a, %Y-%m-%d %H:%M:%S"))
-  live_time <- as.numeric(spc_meta[5, 2])
-  real_time <- as.numeric(spc_meta[6, 2])
+  i_datetime <- grep("date and time", spc_meta$key, value = FALSE)
+  i_livetime <- grep("live time", spc_meta$key, value = FALSE)
+  i_realtime <- grep("real time", spc_meta$key, value = FALSE)
+  i_description <- grep("description", spc_meta$key, value = FALSE)
+
+  date <- as.POSIXct(spc_meta$value[[i_datetime]], format = c("%a, %Y-%m-%d %H:%M:%S"))
+  live_time <- as.numeric(spc_meta$value[[i_livetime]])
+  real_time <- as.numeric(spc_meta$value[[i_realtime]])
 
   # Get data
   spc_data <- as.data.frame(spc_xy$dataset[[1]]$data_block)
