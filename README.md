@@ -16,7 +16,7 @@ src="http://www.r-pkg.org/badges/version/gamma"
 alt="CRAN Version" /></a>
 <a href="https://cran.r-project.org/web/checks/check_results_gamma.html"
 class="pkgdown-release"><img
-src="https://cranchecks.info/badges/worst/gamma"
+src="https://badges.cranchecks.info/worst/gamma.svg"
 alt="CRAN checks" /></a>
 <a href="https://cran.r-project.org/package=gamma"
 class="pkgdown-release"><img
@@ -85,11 +85,11 @@ spectrum <- read(spc_file)
 
 ## Set the expected channel/energy peaks for the energy scale calibration
 ## Spectrum pre-processing and peak detection
-peaks <- spectrum %>%
-  signal_slice() %>%
-  signal_stabilize(f = sqrt) %>%
-  signal_smooth(method = "savitzky", m = 21) %>%
-  signal_correct(method = "SNIP", n = 100) %>%
+peaks <- spectrum |>
+  signal_slice() |>
+  signal_stabilize(f = sqrt) |>
+  signal_smooth(method = "savitzky", m = 21) |>
+  signal_correct(method = "SNIP", n = 100) |>
   peaks_find()
 
 ## Set the energy values (in keV)

@@ -30,7 +30,6 @@ knitr::opts_chunk$set(
 
 ```{r packages}
 library(gamma)
-library(magrittr)
 ```
 
 This vignette shows how to build a calibration curve for gamma dose rate prediction.
@@ -51,10 +50,10 @@ bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
 ```{r signal}
 # Spectrum pre-processing
 # Remove baseline for peak detection
-bsl <- spc %>%
-  signal_slice(-1:-40) %>%
-  signal_stabilize(f = sqrt) %>%
-  signal_smooth(method = "savitzky", m = 21) %>%
+bsl <- spc |>
+  signal_slice(-1:-40) |>
+  signal_stabilize(f = sqrt) |>
+  signal_smooth(method = "savitzky", m = 21) |>
   signal_correct()
 ```
 

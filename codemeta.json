@@ -118,18 +118,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "magrittr",
-      "name": "magrittr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=magrittr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -249,7 +237,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3983.904KB",
+  "fileSize": "3983.42KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",

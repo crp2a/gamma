@@ -1,7 +1,5 @@
 ---
 output: github_document
-editor_options: 
-  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -23,7 +21,7 @@ knitr::opts_chunk$set(
 
 [![r-universe](https://crp2a.r-universe.dev/badges/gamma)](https://crp2a.r-universe.dev){.pkgdown-devel}
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma){.pkgdown-release}
-[![CRAN checks](https://cranchecks.info/badges/worst/gamma)](https://cran.r-project.org/web/checks/check_results_gamma.html){.pkgdown-release}
+[![CRAN checks](https://badges.cranchecks.info/worst/gamma.svg)](https://cran.r-project.org/web/checks/check_results_gamma.html){.pkgdown-release}
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma){.pkgdown-release}
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -63,7 +61,6 @@ remotes::install_github("crp2a/gamma")
 ```{r usage, fig.width=7, fig.height=3.5, fig.align='center'}
 ## A minimal example
 library(gamma)
-library(magrittr)
 
 ## Find the full path to the spectrum file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")
@@ -72,11 +69,11 @@ spectrum <- read(spc_file)
 
 ## Set the expected channel/energy peaks for the energy scale calibration
 ## Spectrum pre-processing and peak detection
-peaks <- spectrum %>%
-  signal_slice() %>%
-  signal_stabilize(f = sqrt) %>%
-  signal_smooth(method = "savitzky", m = 21) %>%
-  signal_correct(method = "SNIP", n = 100) %>%
+peaks <- spectrum |>
+  signal_slice() |>
+  signal_stabilize(f = sqrt) |>
+  signal_smooth(method = "savitzky", m = 21) |>
+  signal_correct(method = "SNIP", n = 100) |>
   peaks_find()
 
 ## Set the energy values (in keV)
