@@ -155,7 +155,7 @@ Units</em>: energy values are assumed to be in keV and dose rates in
 <span><span class="op">(</span><span class="va">spc_tka</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">tka_test</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Gamma spectrum:</span></span>
 <span><span class="co">#&gt; *  name: LaBr</span></span>
-<span><span class="co">#&gt; *  date: 2023-05-24 17:08:03.931869</span></span>
+<span><span class="co">#&gt; *  date: 2023-05-24 17:12:45.993535</span></span>
 <span><span class="co">#&gt; *  live_time: 3385.54</span></span>
 <span><span class="co">#&gt; *  real_time: 3403.67</span></span>
 <span><span class="co">#&gt; *  channels: 1024</span></span>
@@ -319,11 +319,11 @@ energy values.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Spectrum pre-processing and peak detection</span></span>
-<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="va">spc_tka</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/signal_slice.html">signal_slice</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/stabilize.html">signal_stabilize</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/smooth.html">signal_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"savitzky"</span>, m <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/baseline.html">signal_correct</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"SNIP"</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="va">spc_tka</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/signal_slice.html">signal_slice</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/stabilize.html">signal_stabilize</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/smooth.html">signal_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"savitzky"</span>, m <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/baseline.html">signal_correct</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"SNIP"</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/peaks_find.html">peaks_find</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Set the energy values (in keV)</span></span>
