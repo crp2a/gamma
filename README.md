@@ -43,25 +43,17 @@ The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package
 provides an enhanced graphical user interface for the main applications
 of **gamma**.
 
-
     To cite gamma in publications use:
 
-      Lebrun, Brice, Nicolas Frerebeau, Guilhem Paradol, Guillaume Guérin,
-      Norbert Mercier, Chantal Tribolo, Christelle Lahaye, and Magalie
-      Rizza. 2020. Gamma: An R Package for Dose Rate Estimation from
-      In-Situ Gamma-Ray Spectrometry Measurements. Ancient TL 38 (2): 1-5.
+      Lebrun B, Frerebeau N, Paradol G, Guérin G, Mercier N, Tribolo C,
+      Lahaye C, Rizza M (2020). "gamma: An R Package for Dose Rate
+      Estimation from In-Situ Gamma-Ray Spectrometry Measurements."
+      _Ancient TL_, *38*(2), 1-5.
 
-    Une entrée BibTeX pour les utilisateurs LaTeX est
-
-      @Article{,
-        title = {Gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements},
-        author = {Brice Lebrun and Nicolas Frerebeau and Guilhem Paradol and Guillaume Guérin and Norbert Mercier and Chantal Tribolo and Christelle Lahaye and Magali Rizza},
-        year = {2020},
-        journal = {Ancient TL},
-        volume = {38},
-        number = {2},
-        pages = {1-5},
-      }
+      Frerebeau N, Lebrun B, Paradol G (2022). _gamma: Dose Rate Estimation
+      from in-Situ Gamma-Ray Spectrometry_. Université Bordeaux Montaigne,
+      Pessac, France. doi:10.5281/zenodo.2652393
+      <https://doi.org/10.5281/zenodo.2652393>, R package version 1.0.3.
 
 ## Installation
 
@@ -72,11 +64,11 @@ You can install the released version of **gamma** from
 install.packages("gamma")
 ```
 
-Or install the development version from
-[R-universe](https://crp2a.r-universe.dev/) with:
+And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-install.packages("gamma", repos = "https://crp2a.r-universe.dev")
+# install.packages("remotes")
+remotes::install_github("crp2a/gamma")
 ```
 
 ## Usage
@@ -132,14 +124,14 @@ plot(BDX_LaBr_1)
 ## Estimate the gamma dose rate
 (doses <- dose_predict(BDX_LaBr_1, spectra))
 #>            names   dose_Ni  error_Ni dose_NiEi error_NiEi
-#> 1 20110523204008  252.2866 12.385847  220.6747   4.393262
-#> 2 20110523210008  257.3316 10.527417  219.1303   4.357479
-#> 3 20110527205316  247.5890  8.296925  203.0288   4.033624
-#> 4 20130809172451  892.1003 22.333994  849.8817  16.868056
-#> 5 20130813181639 1065.0899 26.314061 1024.9325  20.341807
-#> 6 20160717175757  565.6418 19.579056  496.7518   9.869339
-#> 7 20160717181052  480.1928 15.805970  421.8396   8.379351
-#> 8 20160717182601  497.7403 15.232673  436.2712   8.663842
+#> 1 20110523204008  252.2866  378.6325  220.6747   331.0412
+#> 2 20110523210008  257.3316  386.1409  219.1303   328.7243
+#> 3 20110527205316  247.5890  371.4762  203.0288   304.5699
+#> 4 20130809172451  892.1003 1338.3368  849.8817  1274.9341
+#> 5 20130813181639 1065.0899 1597.8515 1024.9325  1537.5334
+#> 6 20160717175757  565.6418  848.6886  496.7518   745.1931
+#> 7 20160717181052  480.1928  720.4625  421.8396   632.8149
+#> 8 20160717182601  497.7403  746.7658  436.2712   654.4642
 ```
 
 ## Contributing

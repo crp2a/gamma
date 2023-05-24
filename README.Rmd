@@ -38,8 +38,9 @@ knitr::opts_chunk$set(
 
 The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package provides an enhanced graphical user interface for the main applications of **gamma**.
 
-```{r citation, echo=FALSE, comment=""}
-utils::citation("gamma")
+```{r citation, echo=FALSE, comment=''}
+cite <- utils::citation("gamma")
+print(cite, bibtex = FALSE)
 ```
 
 ## Installation
@@ -50,10 +51,11 @@ You can install the released version of **gamma** from [CRAN](https://CRAN.R-pro
 install.packages("gamma")
 ```
 
-Or install the development version from [R-universe](https://crp2a.r-universe.dev/) with:
+And the development version from [GitHub](https://github.com/) with:
 
 ```{r gh-installation, eval=FALSE}
-install.packages("gamma", repos = "https://crp2a.r-universe.dev")
+# install.packages("remotes")
+remotes::install_github("crp2a/gamma")
 ```
 
 ## Usage

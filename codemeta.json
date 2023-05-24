@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -249,7 +249,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3983.516KB",
+  "fileSize": "3983.904KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -296,7 +296,7 @@
           "familyName": "Rizza"
         }
       ],
-      "name": "Gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements",
+      "name": "{gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements}",
       "pagination": "1-5",
       "isPartOf": {
         "@type": "PublicationIssue",
@@ -308,6 +308,32 @@
           "name": "Ancient TL"
         }
       }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2022",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Nicolas",
+          "familyName": "Frerebeau"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Brice",
+          "familyName": "Lebrun"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Guilhem",
+          "familyName": "Paradol"
+        }
+      ],
+      "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
+      "identifier": "10.5281/zenodo.2652393",
+      "description": "R package version 1.0.3",
+      "@id": "https://doi.org/10.5281/zenodo.2652393",
+      "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
