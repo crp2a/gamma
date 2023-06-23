@@ -1,3 +1,5 @@
+# gamma 1.0.4.9000
+
 # gamma 1.0.4
 ## Bugfixes & changes
 * Fix the metadata when reading a CNF file: do not use a fixed index to isolate particular metadata (the number of metadata may vary depending on the user's acquisition).

@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/crp2a/gamma",
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.4",
+  "version": "1.0.4.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -237,7 +237,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3983.446KB",
+  "fileSize": "3983.471KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -319,7 +319,7 @@
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
       "identifier": "10.5281/zenodo.2652393",
-      "description": "R package version 1.0.4",
+      "description": "R package version 1.0.4.9000",
       "@id": "https://doi.org/10.5281/zenodo.2652393",
       "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
