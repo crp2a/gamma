@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/crp2a/gamma",
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.3.9000",
+  "version": "1.0.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -237,7 +237,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3983.42KB",
+  "fileSize": "3983.446KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -299,7 +299,7 @@
     },
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2022",
+      "datePublished": "2023",
       "author": [
         {
           "@type": "Person",
@@ -319,14 +319,13 @@
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
       "identifier": "10.5281/zenodo.2652393",
-      "description": "R package version 1.0.3",
+      "description": "R package version 1.0.4",
       "@id": "https://doi.org/10.5281/zenodo.2652393",
       "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
   ],
-  "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "contIntegration": ["https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/crp2a/gamma"],
+  "contIntegration": ["https://github.com/crp2a/gamma/actions", "https://app.codecov.io/gh/crp2a/gamma"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "keywords": ["luminescence-dating", "geochronology", "archaeology", "r-package", "gamma-spectrometry"]
 }

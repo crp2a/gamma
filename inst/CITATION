@@ -22,9 +22,9 @@ bibentry(
                    person("Brice", "Lebrun", role = "aut"),
                    person("Guilhem", "Paradol", role = "aut")),
   title        = "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
-  year         = "2022",
+  year         = "2023",
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
-  note         = "R package version 1.0.3",
+  note         = sprintf("R package version %s", meta$Version),
   doi          = "10.5281/zenodo.2652393"
 )

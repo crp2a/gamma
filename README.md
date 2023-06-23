@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://app.codecov.io/gh/crp2a/gamma)
 
 <a href="https://crp2a.r-universe.dev" class="pkgdown-devel"><img
@@ -50,10 +50,10 @@ of **gamma**.
       Estimation from In-Situ Gamma-Ray Spectrometry Measurements."
       _Ancient TL_, *38*(2), 1-5.
 
-      Frerebeau N, Lebrun B, Paradol G (2022). _gamma: Dose Rate Estimation
+      Frerebeau N, Lebrun B, Paradol G (2023). _gamma: Dose Rate Estimation
       from in-Situ Gamma-Ray Spectrometry_. Université Bordeaux Montaigne,
       Pessac, France. doi:10.5281/zenodo.2652393
-      <https://doi.org/10.5281/zenodo.2652393>, R package version 1.0.3.
+      <https://doi.org/10.5281/zenodo.2652393>, R package version 1.0.4.
 
 ## Installation
 
@@ -76,7 +76,6 @@ remotes::install_github("crp2a/gamma")
 ``` r
 ## A minimal example
 library(gamma)
-library(magrittr)
 
 ## Find the full path to the spectrum file
 spc_file <- system.file("extdata/LaBr.CNF", package = "gamma")

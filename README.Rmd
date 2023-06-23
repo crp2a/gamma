@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # gamma <img width=120px src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/crp2a/gamma/workflows/R-CMD-check/badge.svg)](https://github.com/crp2a/gamma/actions)
 [![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://app.codecov.io/gh/crp2a/gamma)
 
 [![r-universe](https://crp2a.r-universe.dev/badges/gamma)](https://crp2a.r-universe.dev){.pkgdown-devel}
