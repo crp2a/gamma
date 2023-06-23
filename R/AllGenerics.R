@@ -26,7 +26,8 @@ NULL
 #' Getters and setters to extract or replace parts of an object.
 #' @param x An object from which to get or set element(s).
 #' @param value A possible value for the element(s) of `x`.
-#' @param expected TODO.
+#' @param expected A [`logical`] scalar: should the expected values be returned
+#'  instead of observed values?
 #' @param na.rm A [`logical`] scalar: should [`NA`] be omitted?
 #' @param ... Currently not used.
 #' @return
@@ -106,7 +107,7 @@ setGeneric(
 #' @aliases set_energy-method
 setGeneric(
   name = "set_energy<-",
-  def = function(x, ..., value) standardGeneric("set_energy<-")
+  def = function(x, value) standardGeneric("set_energy<-")
 )
 
 #' @rdname mutator

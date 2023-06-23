@@ -231,7 +231,7 @@ setMethod(
   signature = "GammaSpectra",
   definition = function(x, na.rm = FALSE) {
     channels <- vapply(x, FUN = range_channels, FUN.VALUE = numeric(2),
-                      na.rm = na.rm)
+                       na.rm = na.rm)
     channels <- t(channels)
     colnames(channels) <- c("min", "max")
     channels
@@ -358,17 +358,12 @@ setMethod(
 setMethod(
   f = "set_energy<-",
   signature = c(x = "PeakPosition", value = "numeric"),
-  definition = function(x, value, expected = TRUE) {
+  definition = function(x, value) {
     # Keep only complete cases
     k <- if (anyNA(value)) which(!is.na(value)) else seq_along(value)
 
-    if (expected) {
-      x@energy_expected <- value[k]
-      x@energy_observed <- x@energy_observed[k]
-    } else {
-      x@energy_observed <- value[k]
-      x@energy_expected <- x@energy_expected[k]
-    }
+    x@energy_observed <- x@energy_observed[k]
+    x@energy_expected <- value[k]
     x@channel <- x@channel[k]
     methods::validObject(x)
     x
