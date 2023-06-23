@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gamma</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.3.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
 <span></span>
 <span><span class="fu">get_names</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html" class="external-link">set_names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span><span class="fu">set_names</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
 <span><span class="fu">get_livetime</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -78,7 +78,7 @@
 <span></span>
 <span><span class="fu">get_energy</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">set_energy</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span><span class="fu">set_energy</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
 <span><span class="fu">get_method</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -169,16 +169,16 @@
 <span><span class="fu">get_energy</span><span class="op">(</span><span class="va">x</span>, expected <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for GammaSpectrum</span></span>
-<span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html" class="external-link">set_names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span><span class="fu">set_names</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
 <span><span class="co"># S4 method for Baseline</span></span>
 <span><span class="fu">set_method</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
 <span><span class="co"># S4 method for GammaSpectra</span></span>
-<span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html" class="external-link">set_names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span><span class="fu">set_names</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
 <span><span class="co"># S4 method for PeakPosition,numeric</span></span>
-<span><span class="fu">set_energy</span><span class="op">(</span><span class="va">x</span>, expected <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
+<span><span class="fu">set_energy</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -200,7 +200,8 @@
 
 
 <dt>expected</dt>
-<dd><p>TODO.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></code> scalar: should the expected values be returned
+instead of observed values?</p></dd>
 
 </dl></div>
     <div class="section level2">
