@@ -124,7 +124,7 @@ setMethod(
     index_energy <- !is.na(peak_energy)
     if (any(index_energy)) {
       sec_axis <- sec_axis(
-        trans = ~.,
+        transform = ~.,
         name = "Energy [keV]",
         breaks = peak_channel[index_energy],
         labels = round(peak_energy[index_energy], 0)
@@ -220,7 +220,7 @@ setMethod(
       ) +
       geom_point() +
       ggellipse + ggbar +
-      labs(x = sprintf("Signal [%s]", k), y = "Dose rate [\u03BCGy/y]")
+      labs(x = sprintf("Signal [%s]", k), y = expression("Dose rate ["*mu*"Gy/y]"))
   }
 )
 
