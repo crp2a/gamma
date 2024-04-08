@@ -1,4 +1,6 @@
-# gamma 1.0.4.9000
+# gamma 1.0.5
+## Internals
+* Fix unicode character in plot axis labels.
 
 # gamma 1.0.4
 ## Bugfixes & changes

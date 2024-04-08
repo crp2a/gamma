@@ -3,7 +3,6 @@
 \docType{package}
 \name{gamma-package}
 \alias{gamma-package}
-\alias{_PACKAGE}
 \alias{gamma}
 \title{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry Measurements}
 \description{
@@ -15,7 +14,7 @@ Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package all
 \tabular{ll}{
 \strong{Package:} \tab gamma \cr
 \strong{Type:} \tab Package \cr
-\strong{Version:} \tab 1.0.4 \cr
+\strong{Version:} \tab 1.0.5 \cr
 \strong{License:} \tab GPL-3 \cr
 \strong{Zenodo:} \tab \doi{10.5281/zenodo.2652393}
 }

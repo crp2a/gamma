@@ -4,23 +4,17 @@
   "identifier": "gamma",
   "description": "Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA files.",
   "name": "gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry\n    Measurements",
-  "relatedLink": ["https://crp2a.github.io/gamma/", "https://CRAN.R-project.org/package=gamma"],
+  "relatedLink": "https://crp2a.github.io/gamma/",
   "codeRepository": "https://github.com/crp2a/gamma",
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.4.9000",
+  "version": "1.0.5",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  },
+  "runtimePlatform": "R version 4.3.3 (2024-02-29)",
   "author": [
     {
       "@type": "Person",
@@ -237,7 +231,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3983.471KB",
+  "fileSize": "4055.625KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -299,7 +293,7 @@
     },
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2023",
+      "datePublished": "2024",
       "author": [
         {
           "@type": "Person",
@@ -319,13 +313,14 @@
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
       "identifier": "10.5281/zenodo.2652393",
-      "description": "R package version 1.0.4.9000",
+      "description": "R package version 1.0.5",
       "@id": "https://doi.org/10.5281/zenodo.2652393",
       "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
   ],
+  "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
-  "contIntegration": ["https://github.com/crp2a/gamma/actions", "https://app.codecov.io/gh/crp2a/gamma"],
+  "contIntegration": ["https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/crp2a/gamma"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "keywords": ["luminescence-dating", "geochronology", "archaeology", "r-package", "gamma-spectrometry"]
 }
