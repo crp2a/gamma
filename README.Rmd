@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 
 [![r-universe](https://crp2a.r-universe.dev/badges/gamma)](https://crp2a.r-universe.dev){.pkgdown-devel}
 [![CRAN Version](http://www.r-pkg.org/badges/version/gamma)](https://cran.r-project.org/package=gamma){.pkgdown-release}
+[![CRAN checks](https://badges.cranchecks.info/worst/gamma.svg)](https://cran.r-project.org/web/checks/check_results_gamma.html){.pkgdown-release}
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/gamma)](https://cran.r-project.org/package=gamma){.pkgdown-release}
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)

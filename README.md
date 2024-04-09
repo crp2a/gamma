@@ -14,6 +14,10 @@ src="https://crp2a.r-universe.dev/badges/gamma" alt="r-universe" /></a>
 class="pkgdown-release"><img
 src="http://www.r-pkg.org/badges/version/gamma"
 alt="CRAN Version" /></a>
+<a href="https://cran.r-project.org/web/checks/check_results_gamma.html"
+class="pkgdown-release"><img
+src="https://badges.cranchecks.info/worst/gamma.svg"
+alt="CRAN checks" /></a>
 <a href="https://cran.r-project.org/package=gamma"
 class="pkgdown-release"><img
 src="http://cranlogs.r-pkg.org/badges/gamma" alt="CRAN Downloads" /></a>

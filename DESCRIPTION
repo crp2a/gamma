@@ -1,7 +1,7 @@
 Package: gamma
 Title: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry
     Measurements
-Version: 1.0.5
+Version: 1.0.5.9000
 Authors@R: c(
     person("Nicolas", "Frerebeau", , "nicolas.frerebeau@u-bordeaux-montaigne.fr", role = "aut",
            comment = c(ORCID = "0000-0001-5759-4944")),
