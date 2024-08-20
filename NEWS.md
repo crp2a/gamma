@@ -2,7 +2,7 @@
 
 # gamma 1.0.5
 ## Bugfixes & changes
-* Add support for Kromek SPE files to `read()`
+* Add support for Kromek SPE files to `read()`(#28 by @RLumSK)
 
 ## Internals
 * Fix unicode character in plot axis labels.
