@@ -69,6 +69,6 @@ test_that("the energy scale of a GammaSpectrum is set", {
 
   set_file <- system.file("extdata/", package = "gamma")
   set_spc <- read(set_file)
-  expect_equal(has_energy(set_spc), c(TRUE, TRUE, FALSE), ignore_attr = TRUE)
+  expect_equal(has_energy(set_spc), c(TRUE, TRUE, TRUE, FALSE), ignore_attr = TRUE)
 })
 

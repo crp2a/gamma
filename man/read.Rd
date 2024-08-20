@@ -9,7 +9,7 @@
 \usage{
 read(file, ...)
 
-\S4method{read}{character}(file, extensions = c("cnf", "tka"), ...)
+\S4method{read}{character}(file, extensions = c("cnf", "tka", "spe"), ...)
 }
 \arguments{
 \item{file}{A \code{\link{character}} string giving the path of files to be imported.}

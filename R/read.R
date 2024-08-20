@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "read",
   signature = signature(file = "character"),
-  definition = function(file, extensions = c("cnf", "tka"), ...) {
+  definition = function(file, extensions = c("cnf", "tka", "spe"), ...) {
     # Validation
     extensions <- match.arg(extensions, several.ok = TRUE)
     extensions <- c(extensions, toupper(extensions))
@@ -28,7 +28,8 @@ setMethod(
       switch(
         extension,
         cnf = readCanberraCNF(file = x, ...),
-        tka = readCanberraTKA(file = x, ...)
+        tka = readCanberraTKA(file = x, ...),
+        spe = readKromekSPE(file = x, ...)
       )
     }, ...)
 
@@ -132,3 +133,81 @@ readCanberraTKA <- function(file, ...) {
     real_time = real_time
   )
 }
+
+#' Read Kromek SPE file
+#'
+#' @param file A [`character`] string giving the path and file to be imported.
+#' @param ... currently not used
+#' @return
+#'  An object of class [GammaSpectrum-class].
+#' @keywords internal
+#' @noRd
+readKromekSPE <- function(file, ...) {
+  ## import entire file
+  tmp <- readLines(con = file)
+
+  ## search for KROMEK_INFO
+  if (length(grep(pattern = "$KROMEK_INFO", x = tmp, fixed = TRUE)) == 0)
+    stop("Kromek SPE does not follow implemented definition!", call. = FALSE)
+
+  ## get elements and their position
+  el_id <- which(grepl(pattern = "\\$[a-zA-Z].+[^:]", x = tmp))
+
+  ## now read all information into a list
+  el_l <- lapply(seq_along(el_id), function(x) {
+    ## if limit is reached or the element length is 0 nothing was stored
+    if (length(tmp) == x && (el_id[x] + 1) == (el_id[x + 1] - 1))
+      return(NA)
+
+    tmp[(el_id[x] + 1):(min(length(tmp), el_id[x + 1] - 1, na.rm = TRUE))]
+
+  })
+
+  ## assign element names but remove the dollar and the :
+  names(el_l) <- gsub(pattern = "[$:]", replacement = "", x = tmp[el_id])
+
+  ## extract data
+  ## $DATA
+  m <- matrix(c(1:length(el_l[["DATA"]][-1]), as.numeric(el_l[["DATA"]][-1])), ncol = 2)
+  colnames(m) <- c("CHN", "CNTS")
+  el_l[["DATA"]] <- m
+
+  ## $KROMEK_INFO
+  l <- el_l[["KROMEK_INFO"]][seq(2, length(el_l[["KROMEK_INFO"]]), 2)]
+  names(l) <- gsub(pattern = ":", replacement = "", x = el_l[["KROMEK_INFO"]][seq(1, length(el_l[["KROMEK_INFO"]]), 2)], fixed = TRUE)
+  el_l[["KROMEK_INFO"]] <- as.list(l)
+
+  ## get metadata (here we follow the template from before)
+  date <- as.POSIXct(el_l[["DATE_MEA"]], format = c("%m/%d/%Y %H:%M:%S"))
+  tmp_time <- as.numeric(strsplit(el_l[["MEAS_TIM"]], " ")[[1]])
+    live_time <- tmp_time[1]
+    real_time <- tmp_time[2]
+
+  ## get data
+  spc_data <- as.data.frame(el_l[["DATA"]])
+
+  ## add a column to store the channel number
+  spc_data[["channel"]] <- as.integer(seq_len(nrow(spc_data)))
+  colnames(spc_data) <- c("energy", "count", "channel")
+
+  # Get instrument name (remove the last word)
+  instrument_name <-  paste("Kromek", el_l[["KROMEK_INFO"]][["DETECTOR_TYPE"]])
+
+  # Compute 32-bytes MD5 hash
+  hash <- as.character(tools::md5sum(file))
+
+  .GammaSpectrum(
+    hash = hash,
+    name = tools::file_path_sans_ext(basename(file)),
+    date = date,
+    instrument = instrument_name,
+    file_format = "SPE",
+    channel = as.integer(spc_data$channel),
+    energy = spc_data$energy,
+    count = as.integer(spc_data$count),
+    live_time = live_time,
+    real_time = real_time
+  )
+}
+
+
