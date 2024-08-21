@@ -13,6 +13,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-2364-5621")),
     person("Christelle", "Lahaye", , "christelle.lahaye@u-bordeaux-montaigne.fr", role = "ctb",
            comment = c(ORCID = "0000-0003-2215-9015")),
+    person("Sebastian", "Kreutzer", , "sebastian.kreutzer@uni-heidelberg.de", role = "aut",
+           comment = c(ORCID = "0000-0002-0734-2199")),
     person("Archéosciences Bordeaux", , , "services-archeosciences@u-bordeaux-montaigne.fr", role = "cre"),
     person("Université Bordeaux Montaigne", role = c("cph", "fnd")),
     person("CNRS", role = "fnd"),
@@ -52,7 +54,7 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'

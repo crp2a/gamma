@@ -9,7 +9,7 @@
 \usage{
 read(file, ...)
 
-\S4method{read}{character}(file, extensions = c("cnf", "tka"), ...)
+\S4method{read}{character}(file, extensions = c("cnf", "tka", "spe"), ...)
 }
 \arguments{
 \item{file}{A \code{\link{character}} string giving the path of files to be imported.}
@@ -17,7 +17,7 @@ read(file, ...)
 \item{...}{Extra parameters to be passed to \code{\link[rxylib:read_xyData]{rxylib::read_xyData()}}.}
 
 \item{extensions}{A \code{\link{character}} vector specifying the possible
-file extensions. It must be one or more of "\code{cnf}", "\code{tka}".}
+file extensions. It must be one or more of "\code{cnf}", "\code{tka}", "\code{spe}".}
 }
 \value{
 A \linkS4class{GammaSpectra} object if more than one spectrum are imported
@@ -27,7 +27,7 @@ at once, else a \linkS4class{GammaSpectrum} object.
 Reads a gamma ray spectrum file.
 }
 \note{
-Only supports Canberra CNF and TKA files.
+Supports Canberra CNF and TKA and Kromek SPE files.
 }
 \examples{
 ## Import a Canberra CNF file

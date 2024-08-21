@@ -604,10 +604,10 @@ if (!isGeneric("plot")) {
 #' Reads a gamma ray spectrum file.
 #' @param file A [`character`] string giving the path of files to be imported.
 #' @param extensions A [`character`] vector specifying the possible
-#'  file extensions. It must be one or more of "`cnf`", "`tka`".
+#'  file extensions. It must be one or more of "`cnf`", "`tka`", "`spe`".
 #' @param ... Extra parameters to be passed to [rxylib::read_xyData()].
 #' @note
-#'  Only supports Canberra CNF and TKA files.
+#'  Supports Canberra CNF and TKA and Kromek SPE files.
 #' @return
 #'  A [GammaSpectra-class] object if more than one spectrum are imported
 #'  at once, else a [GammaSpectrum-class] object.
