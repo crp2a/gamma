@@ -310,9 +310,9 @@ summarise(AIX_NaI)
 
 ```{r calibration, fig.width=3.5, fig.show='hold'}
 # plot calibration curves
-plot(AIX_NaI, model = "Ni") +
+plot(AIX_NaI, energy = FALSE) +
   ggplot2::theme_bw()
-plot(AIX_NaI, model = "NiEi") +
+plot(AIX_NaI, energy = TRUE) +
   ggplot2::theme_bw()
 ```
 
