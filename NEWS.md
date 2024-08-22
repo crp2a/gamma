@@ -4,7 +4,7 @@
 ## Bugfixes & changes
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK)
 * Update vignette about the dose rate calibration curve determination to make it more 
-intelligible. 
+intelligible (#30 by @RLumSK). 
 
 ## Internals
 * Fix unicode character in plot axis labels.
