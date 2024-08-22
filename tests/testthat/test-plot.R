@@ -28,8 +28,15 @@ test_that("Plot GammaSpectrum and PeakPosition", {
   spc_cnf <- read(spc_file)
   peaks <- peaks_find(spc_cnf)
 
+  ## plot the expected values we have from peaks
+  peaks@energy_expected <- c(113,1461)
   gg_peaks <- plot(spc_cnf, peaks)
-  vdiffr::expect_doppelganger("spectrum_peaks", gg_peaks)
+  vdiffr::expect_doppelganger("spectrum_peaks_expected", gg_peaks)
+
+  ## remove expected values and plot the alternative
+  peaks@energy_expected <- c(NA_integer_,NA_integer_)
+  gg_peaks <- plot(spc_cnf, peaks)
+  vdiffr::expect_doppelganger("spectrum_peaks_observed", gg_peaks)
 
   peaks@hash <- paste0(rep("x", 32), collapse = "")
   expect_error(plot(spc_cnf, peaks), "`x` and `y` do not match.")

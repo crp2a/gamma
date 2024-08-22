@@ -4,6 +4,9 @@
 ## Bugfixes & changes
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK)
 * Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22, PR #31 by @RLumSK)
+* Fix a graphical issue where the peaks were peaks were set with `set_energy()` but did not show correctly
+when plotted using the standard plot method, e.g., `plot(cal, pks)` would show only observed but not expected 
+energy lines in the secondary x-axis. Now the expected energy lines (if set) are show. (#29 by @RLumSK)
 * Update vignette about the dose rate calibration curve determination to make it more 
 intelligible (#30 by @RLumSK). 
 
