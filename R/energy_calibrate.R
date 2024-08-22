@@ -61,6 +61,28 @@ setMethod(
   }
 )
 
+#' @export
+#' @rdname energy
+#' @aliases energy_calibrate,GammaSpectra,PeakPosition-method
+setMethod(
+  f = "energy_calibrate",
+  signature = signature(object = "GammaSpectra", lines = "PeakPosition"),
+  definition = function(object, lines, ...) {
+    # Get data
+    peaks <- as.data.frame(lines)
+    peaks$energy <- peaks$energy_expected
+
+    # Adjust spectrum for energy shift using the same set of peask for
+    # the entire set of gamma spectra
+    # Return a new gamma spectrum with adjusted energy
+    spc <- lapply(unlist(object), energy_calibrate, peaks)
+
+    ## make create GammaSpectra class
+    methods::as(spc, "GammaSpectra")
+
+  }
+)
+
 # Predicates ===================================================================
 #' @export
 #' @rdname energy

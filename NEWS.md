@@ -3,6 +3,7 @@
 # gamma 1.0.5
 ## Bugfixes & changes
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK)
+* Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22)
 
 ## Internals
 * Fix unicode character in plot axis labels.
