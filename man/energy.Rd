@@ -9,6 +9,7 @@
 \alias{has_calibration}
 \alias{energy_calibrate,GammaSpectrum,list-method}
 \alias{energy_calibrate,GammaSpectrum,PeakPosition-method}
+\alias{energy_calibrate,GammaSpectra,PeakPosition-method}
 \alias{has_energy,GammaSpectrum-method}
 \alias{has_energy,GammaSpectra-method}
 \alias{has_calibration,GammaSpectrum-method}
@@ -24,6 +25,8 @@ has_calibration(object)
 \S4method{energy_calibrate}{GammaSpectrum,list}(object, lines, ...)
 
 \S4method{energy_calibrate}{GammaSpectrum,PeakPosition}(object, lines, ...)
+
+\S4method{energy_calibrate}{GammaSpectra,PeakPosition}(object, lines, ...)
 
 \S4method{has_energy}{GammaSpectrum}(object)
 

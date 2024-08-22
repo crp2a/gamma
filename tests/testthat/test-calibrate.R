@@ -58,6 +58,24 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
   expect_length(spectrum@energy, 0)
   expect_length(calib@energy, 1024)
 })
+test_that("Calibrate a GammaSpectra object with a PeakPosition object", {
+  spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+  spectrum_1 <- spectrum_2 <- read(spc_file)
+  spectra <- methods::as(list(spectrum_1, spectrum_2), "GammaSpectra")
+
+  peaks <- .PeakPosition(
+    hash = spectrum_1@hash,
+    channel = c(76L, 459L, 816L),
+    energy_expected = c(NA_real_, NA_real_, NA_real_)
+  )
+
+  set_energy(peaks) <- c(238, 1461, 2614.5)
+  calib <- energy_calibrate(spectra, lines = peaks)
+
+  expect_s4_class(calib, "GammaSpectra")
+
+})
+
 test_that("the energy scale of a GammaSpectrum is set", {
   cnf_file <- system.file("extdata/LaBr.CNF", package = "gamma")
   cnf_spc <- read(cnf_file)
