@@ -63,7 +63,7 @@ setMethod(
 
 #' @export
 #' @rdname energy
-#' @aliases energy_calibrate,GammaSpectra,PeakPosition-method
+#' @aliases energy_calibrate,GammaSpectra,list-method
 setMethod(
   f = "energy_calibrate",
   signature = signature(object = "GammaSpectra", lines = "list"),
