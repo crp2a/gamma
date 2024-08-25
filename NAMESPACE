@@ -2,6 +2,7 @@
 
 S3method(as.data.frame,GammaSpectrum)
 S3method(as.data.frame,PeakPosition)
+S3method(as.list,PeakPosition)
 S3method(as.matrix,GammaSpectrum)
 S3method(as.matrix,PeakPosition)
 exportMethods("[")

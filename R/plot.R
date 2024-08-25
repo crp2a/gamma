@@ -112,7 +112,7 @@ setMethod(
   signature = signature(x = "GammaSpectrum", y = "PeakPosition"),
   definition = function(x, y, split = FALSE, span = 25) {
     # Validation
-    if (x@hash != y@hash)
+    if (y@hash != "<man_coercion_list2PeakPosition>" && x@hash != y@hash)
       stop("`x` and `y` do not match.", call. = FALSE)
 
     # Get data

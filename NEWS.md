@@ -2,6 +2,7 @@
 ## Bugfixes & changes
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK)
 * Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22, PR #31 by @RLumSK)
+* Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` ( by @RLumSK).
 * Update vignette about the dose rate calibration curve determination to make it more 
 intelligible (#30 by @RLumSK). 
 
