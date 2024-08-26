@@ -119,7 +119,7 @@ setMethod(
     pks <- as.data.frame(y)
     pks$name <- paste(get_names(x), pks$channel, sep = "_")
     peak_channel <- pks$channel
-    peak_energy <- pks$energy_observed
+    peak_energy <- if (all(is.na(pks$energy_expected))) pks$energy_observed else pks$energy_expected
 
     index_energy <- !is.na(peak_energy)
     if (any(index_energy)) {
