@@ -58,6 +58,22 @@ test_that("Calibrate a GammaSpectrum object with a PeakPosition object", {
   expect_length(spectrum@energy, 0)
   expect_length(calib@energy, 1024)
 })
+test_that("Calibrate a GammaSpectra object with a list object", {
+  spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+  spectrum_1 <- spectrum_2 <- read(spc_file)
+  spectra <- methods::as(list(spectrum_1, spectrum_2), "GammaSpectra")
+
+  lines <- list(
+    channel = c(76, 459, 816),
+    energy = c(238, 1461, 2614.5)
+  )
+
+  calib <- energy_calibrate(spectra, lines = lines)
+
+  expect_s4_class(calib, "GammaSpectra")
+
+})
+
 test_that("Calibrate a GammaSpectra object with a PeakPosition object", {
   spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
   spectrum_1 <- spectrum_2 <- read(spc_file)

@@ -63,6 +63,23 @@ setMethod(
 
 #' @export
 #' @rdname energy
+#' @aliases energy_calibrate,GammaSpectra,list-method
+setMethod(
+  f = "energy_calibrate",
+  signature = signature(object = "GammaSpectra", lines = "list"),
+  definition = function(object, lines, ...) {
+
+    ## just call the regular function
+    spc <- lapply(unlist(object), energy_calibrate, lines)
+
+    ## make create GammaSpectra class
+    methods::as(spc, "GammaSpectra")
+
+  }
+)
+
+#' @export
+#' @rdname energy
 #' @aliases energy_calibrate,GammaSpectra,PeakPosition-method
 setMethod(
   f = "energy_calibrate",

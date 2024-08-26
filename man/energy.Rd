@@ -9,6 +9,7 @@
 \alias{has_calibration}
 \alias{energy_calibrate,GammaSpectrum,list-method}
 \alias{energy_calibrate,GammaSpectrum,PeakPosition-method}
+\alias{energy_calibrate,GammaSpectra,list-method}
 \alias{energy_calibrate,GammaSpectra,PeakPosition-method}
 \alias{has_energy,GammaSpectrum-method}
 \alias{has_energy,GammaSpectra-method}
@@ -25,6 +26,8 @@ has_calibration(object)
 \S4method{energy_calibrate}{GammaSpectrum,list}(object, lines, ...)
 
 \S4method{energy_calibrate}{GammaSpectrum,PeakPosition}(object, lines, ...)
+
+\S4method{energy_calibrate}{GammaSpectra,list}(object, lines, ...)
 
 \S4method{energy_calibrate}{GammaSpectra,PeakPosition}(object, lines, ...)
 
@@ -48,7 +51,8 @@ observed peak position ("\code{channel}") and the corresponding expected
 }
 \value{
 \itemize{
-\item \code{energy_calibrate()} returns a \linkS4class{GammaSpectrum} object.
+\item \code{energy_calibrate()} returns either a \linkS4class{GammaSpectrum} or a \linkS4class{GammaSpectra}
+object depending on the input#
 \item \code{has_energy()} and \code{has_calibration()} return a \code{\link{logical}} vector.
 }
 }

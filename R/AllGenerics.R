@@ -233,7 +233,8 @@ NULL
 #'  Regardless of the approach you choose, it is strongly recommended to check
 #'  the result before proceeding.
 #' @return
-#'  * `energy_calibrate()` returns a [GammaSpectrum-class] object.
+#'  * `energy_calibrate()` returns either a [GammaSpectrum-class] or a [GammaSpectra-class]
+#'  object depending on the input#
 #'  * `has_energy()` and `has_calibration()` return a [`logical`] vector.
 #' @example inst/examples/ex-energy.R
 #' @author N. Frerebeau
