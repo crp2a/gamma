@@ -55,6 +55,9 @@
 <span><span class="co"># S4 method for class 'GammaSpectrum,PeakPosition'</span></span>
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S4 method for class 'GammaSpectra,list'</span></span>
+<span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S4 method for class 'GammaSpectra,PeakPosition'</span></span>
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -93,7 +96,8 @@ observed peak position ("<code>channel</code>") and the corresponding expected
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p><code>energy_calibrate()</code> returns a <a href="GammaSpectrum-class.html">GammaSpectrum</a> object.</p></li>
+<ul><li><p><code>energy_calibrate()</code> returns either a <a href="GammaSpectrum-class.html">GammaSpectrum</a> or a <a href="GammaSpectra-class.html">GammaSpectra</a>
+object depending on the input#</p></li>
 <li><p><code>has_energy()</code> and <code>has_calibration()</code> return a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></code> vector.</p></li>
 </ul></div>
     <div class="section level2">
@@ -125,7 +129,7 @@ the result before proceeding.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="read.html">read</a></span><span class="op">(</span><span class="va">spc_file</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma spectrum:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  name: LaBr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-08-26 12:16:28.293354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-08-26 12:18:57.122764</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  live_time: 3385.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  real_time: 3403.67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  channels: 1024</span>
@@ -142,7 +146,7 @@ the result before proceeding.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">spc1</span> <span class="op">&lt;-</span> <span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">spc</span>, lines <span class="op">=</span> <span class="va">calib_lines</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma spectrum:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  name: LaBr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-08-26 12:16:28.293354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-08-26 12:18:57.122764</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  live_time: 3385.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  real_time: 3403.67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  channels: 1024</span>
