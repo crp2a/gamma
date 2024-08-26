@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   doserate: doserate.html
   gamma: gamma.html
-last_built: 2024-08-26T12:19Z
+last_built: 2024-08-26T12:22Z
 urls:
   reference: https://crp2a.github.io/gamma/reference
   article: https://crp2a.github.io/gamma/articles
