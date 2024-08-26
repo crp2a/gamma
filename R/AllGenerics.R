@@ -389,9 +389,9 @@ setGeneric(
 #'
 #' \code{dose_predict} predicts in situ gamma dose rate.
 #' @param object A [GammaSpectra-class] or [CalibrationCurve-class] object.
-#' @param background A [GammaSpectrum-class] object of a length-two [`numeric`]
+#' @param background A [GammaSpectrum-class] object or a length-two [`numeric`]
 #'  vector giving the background noise integration value and error,
-#'  respectively.
+#'  respectively. If no background subtraction is wanted, you can set `background = c(0,0,)`
 #' @param doses A [`matrix`] or [`data.frame`] object with gamma dose values and uncertainties.
 #' The row names must match the names of the spectrum.
 #' @param range_Ni,range_NiEi A length-two [`numeric`] vector giving the energy

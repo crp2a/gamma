@@ -1,10 +1,10 @@
 # CLASSES DEFINITION AND INITIALIZATION
 
-# Class Union ==================================================================
+# Class Union  (LmOrNull) ======================================================
 setClassUnion("LmOrNull", c("lm", "NULL"))
 
 # GammaSpectrum ================================================================
-#' An S4 Class to Represent a Gamma Sectrum
+#' An S4 Class to Represent a Gamma Spectrum
 #'
 #' Represents a single spectrum of a gamma ray spectrometry measurement.
 #' @slot hash A [`character`] string giving the 32-byte MD5 hash of
@@ -88,6 +88,9 @@ setClassUnion("LmOrNull", c("lm", "NULL"))
     calibration = NULL
   )
 )
+
+# Class Union  (GammaSpectrumOrNumeric) ========================================
+setClassUnion("GammaSpectrumOrNumeric", c("GammaSpectrum", "numeric"))
 
 # GammaSpectra =================================================================
 #' An S4 Class to Represent a Collection of Gamma Sectra
