@@ -21,14 +21,14 @@ alt="CRAN checks" /></a>
 <a href="https://cran.r-project.org/package=gamma"
 class="pkgdown-release"><img
 src="http://cranlogs.r-pkg.org/badges/gamma" alt="CRAN Downloads" /></a>
-
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
+[![CRAN DOI](https://img.shields.io/badge/DOI-10.32614/CRAN.package.gamma-1f57b6?style=flat&link=https://doi.org/10.32614/CRAN.package.gamma)](https://doi.org/10.32614/CRAN.package.gamma)
 [![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9/)](https://archive.softwareheritage.org/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9;origin=https://github.com/crp2a/gamma;visit=swh:1:snp:10e6be6e5cbe735b58c45abbcbabf20b93019e9c;anchor=swh:1:rev:1b3baf8821267ed656d780ae154d347769141d0c/)
-
+[![CRAN
+status](https://www.r-pkg.org/badges/version/gamma)](https://CRAN.R-project.org/package=gamma)
 <!-- badges: end -->
 
 ## Overview
@@ -54,7 +54,8 @@ of **gamma**.
       Frerebeau N, Lebrun B, Paradol G (2024). _gamma: Dose Rate Estimation
       from in-Situ Gamma-Ray Spectrometry_. Université Bordeaux Montaigne,
       Pessac, France. doi:10.5281/zenodo.2652393
-      <https://doi.org/10.5281/zenodo.2652393>, R package version 1.0.5.
+      <https://doi.org/10.5281/zenodo.2652393>, R package version
+      1.0.5.
 
 ## Installation
 
