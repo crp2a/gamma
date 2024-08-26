@@ -64,7 +64,8 @@ channels). Only used if \code{split} is \code{TRUE}.}
 
 \item{error_bar}{A \code{\link{logical}} scalar: should error bars be plotted?}
 
-\item{energy}{A \code{\link{logical}} scalar: TODO.}
+\item{energy}{A \code{\link{logical}} scalar plotting the count threshold value or the
+energy threshold value}
 
 \item{level}{length-one \code{\link{numeric}} vector giving the the probability cutoff
 for the error ellipses.}

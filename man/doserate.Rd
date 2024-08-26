@@ -50,7 +50,8 @@ dose_predict(object, spectrum, ...)
 vector giving the background noise integration value and error,
 respectively.}
 
-\item{doses}{A \code{\link{matrix}} or \code{\link{data.frame}} TODO.}
+\item{doses}{A \code{\link{matrix}} or \code{\link{data.frame}} object with gamma dose values and uncertainties.
+The row names must match the names of the spectrum.}
 
 \item{...}{Currently not used.}
 

@@ -233,7 +233,8 @@ NULL
 #'  Regardless of the approach you choose, it is strongly recommended to check
 #'  the result before proceeding.
 #' @return
-#'  * `energy_calibrate()` returns a [GammaSpectrum-class] object.
+#'  * `energy_calibrate()` returns either a [GammaSpectrum-class] or a [GammaSpectra-class]
+#'  object depending on the input#
 #'  * `has_energy()` and `has_calibration()` return a [`logical`] vector.
 #' @example inst/examples/ex-energy.R
 #' @author N. Frerebeau
@@ -391,7 +392,8 @@ setGeneric(
 #' @param background A [GammaSpectrum-class] object of a length-two [`numeric`]
 #'  vector giving the background noise integration value and error,
 #'  respectively.
-#' @param doses A [`matrix`] or [`data.frame`] TODO.
+#' @param doses A [`matrix`] or [`data.frame`] object with gamma dose values and uncertainties.
+#' The row names must match the names of the spectrum.
 #' @param range_Ni,range_NiEi A length-two [`numeric`] vector giving the energy
 #'  range to integrate within (in keV).
 #' @param details A [`list`] of length-one vector specifying additional
@@ -579,7 +581,8 @@ setGeneric(
 #'  for the error ellipses.
 #' @param n A length-one [`numeric`] vector giving the resolution of the error
 #'  ellipses.
-#' @param energy A [`logical`] scalar: TODO.
+#' @param energy A [`logical`] scalar plotting the count threshold value or the
+#' energy threshold value
 #' @param ... Currently not used.
 #' @return
 #'  A [ggplot2::ggplot] object.

@@ -86,6 +86,21 @@ as.data.frame.PeakPosition <- function(x, row.names = NULL, optional = FALSE,
   x
 }
 
+#' @method as.list PeakPosition
+#' @export
+as.list.PeakPosition <- function(x, ...) {
+  x <- as.matrix(x)
+
+  ## we opt for the observed energy as to be taken,
+  ## the others are just provided
+  list(
+    channel = x[,"channel"],
+    energy = x[,"energy_observed"],
+    energy_observed = x[,"energy_observed"],
+    energy_expected = x[,"energy_expected"]
+  )
+}
+
 setAs(
   from = "PeakPosition",
   to = "matrix",
@@ -104,5 +119,32 @@ setAs(
     m <- as.matrix(from)
     m <- as.data.frame(m, stringsAsFactors = FALSE)
     m
+  }
+)
+setAs(
+  from = "PeakPosition",
+  to = "list",
+  def = function(from) {
+    as.list(from)
+  }
+)
+setAs(
+  from = "list",
+  to = "PeakPosition",
+  def = function(from) {
+
+    ## check list entry names; the must match our expectations
+    from <- from[1:2]
+    names(from) <-  tolower(names(from))
+    if (!all(names(from) %in% c("channel", "energy")))
+      stop("Coercion failed because of list-element name mismatch. Allowed are 'channel' and 'energy'!", call. = FALSE)
+
+    ## create peak position object
+    .PeakPosition(
+      hash = "<man_coercion_list2PeakPosition>",
+      channel = from$channel,
+      energy_observed = from$energy,
+      energy_expected = from$energy
+    )
   }
 )
