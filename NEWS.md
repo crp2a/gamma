@@ -5,6 +5,7 @@
 * Fix a graphical issue where the peaks were peaks were set with `set_energy()` but did not show correctly when plotted using the standard plot method, e.g., `plot(cal, pks)` would show only observed but not expected energy lines in the secondary x-axis. Now the expected energy lines (if set) are show. (#29, PR #32 by @RLumSK).
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).
 * Update vignette about the dose rate calibration curve determination to make it more intelligible (#30 by @RLumSK). 
+* Add conversion factor reference to `clermont` dataset for better transparency.
 
 # gamma 1.0.5
 
