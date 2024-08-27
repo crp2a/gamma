@@ -6,7 +6,7 @@
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).
 * Update vignette about the dose rate calibration curve determination to make it more intelligible (#30 by @RLumSK). 
 * Add conversion factor reference to `clermont` dataset for better transparency.
-* Add new dataset called `clermont_2024` based on the original `clermont` dataset but with dose rate conversion factors and gamma dose rate calculated for different conversion factor datasets (by @RLumSK)
+* Add new dataset called `clermont_2024` based on the original `clermont` dataset but with dose rate conversion factors and gamma dose rate calculated for different conversion factor datasets (PR #40 by @RLumSK)
 
 # gamma 1.0.5
 
