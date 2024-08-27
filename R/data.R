@@ -58,7 +58,7 @@ NULL
 #' Clermont Reference Data
 #'
 #' @usage data("clermont")
-#' @format TODO
+#' @format [`data.frame`] with tabulated data and conversion factor reference
 #' @source
 #'  Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
 #'  Update. *Ancient TL*, 29(1), p. 5-8.

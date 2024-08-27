@@ -5,7 +5,7 @@
 \alias{clermont}
 \title{Clermont Reference Data}
 \format{
-TODO
+\code{\link{data.frame}} with tabulated data and conversion factor reference
 }
 \source{
 Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
