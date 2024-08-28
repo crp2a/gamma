@@ -7,8 +7,9 @@
 \alias{dose_fit-method}
 \alias{dose_predict}
 \alias{dose_predict-method}
+\alias{dose_fit,GammaSpectra,GammaSpectrumOrNumeric,matrix-method}
 \alias{dose_fit,GammaSpectra,GammaSpectrum,matrix-method}
-\alias{dose_fit,GammaSpectra,GammaSpectrum,data.frame-method}
+\alias{dose_fit,GammaSpectra,GammaSpectrumOrNumeric,data.frame-method}
 \alias{dose_fit,GammaSpectra,data.frame-method}
 \alias{dose_predict,CalibrationCurve,missing-method}
 \alias{dose_predict,CalibrationCurve,GammaSpectrum-method}
@@ -19,7 +20,7 @@ dose_fit(object, background, doses, ...)
 
 dose_predict(object, spectrum, ...)
 
-\S4method{dose_fit}{GammaSpectra,GammaSpectrum,matrix}(
+\S4method{dose_fit}{GammaSpectra,GammaSpectrumOrNumeric,matrix}(
   object,
   background,
   doses,
@@ -28,7 +29,7 @@ dose_predict(object, spectrum, ...)
   details = list(authors = "", date = Sys.time())
 )
 
-\S4method{dose_fit}{GammaSpectra,GammaSpectrum,data.frame}(
+\S4method{dose_fit}{GammaSpectra,GammaSpectrumOrNumeric,data.frame}(
   object,
   background,
   doses,
@@ -46,9 +47,9 @@ dose_predict(object, spectrum, ...)
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
 
-\item{background}{A \linkS4class{GammaSpectrum} object of a length-two \code{\link{numeric}}
+\item{background}{A \linkS4class{GammaSpectrum} object or a length-two \code{\link{numeric}}
 vector giving the background noise integration value and error,
-respectively.}
+respectively. If no background subtraction is wanted, you can set \code{background = c(0,0,)}}
 
 \item{doses}{A \code{\link{matrix}} or \code{\link{data.frame}} object with gamma dose values and uncertainties.
 The row names must match the names of the spectrum.}

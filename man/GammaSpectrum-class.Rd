@@ -4,7 +4,7 @@
 \name{GammaSpectrum-class}
 \alias{GammaSpectrum-class}
 \alias{.GammaSpectrum}
-\title{An S4 Class to Represent a Gamma Sectrum}
+\title{An S4 Class to Represent a Gamma Spectrum}
 \description{
 Represents a single spectrum of a gamma ray spectrometry measurement.
 }

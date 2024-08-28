@@ -5,26 +5,40 @@ test_that("Build a calibration curve", {
   spc <- read(spc_dir)
   bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
   bkg <- read(bkg_dir)
+  bkg_numeric <- c(0,0)
 
   doses <- as.matrix(clermont[, c("gamma_dose", "gamma_error")])
 
   calib <- dose_fit(spc, bkg, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
+  calib_zero <- dose_fit(spc, bkg_numeric, doses,  range_Ni = c(300, 2800),
+                    range_NiEi = c(165, 2800))
 
+  ## check the results for background zero; the background
+  ## should be numeric of length 2 each and sum to zero
+  expect_equal(
+    object = sum(c(calib_zero@Ni@background, calib_zero@NiEi@background)),
+    expected = 0)
+
+  ## check for controlled stop
   expect_error(
     dose_fit(spc, bkg, doses, range_Ni = c(300), range_NiEi = c(165, 2800)),
     "must be of length 2"
   )
+
 })
 test_that("Estimate dose rates", {
   spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
   spc <- read(spc_dir)
   bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
   bkg <- read(bkg_dir)
+  bkg_numeric <- c(0,0)
 
   doses <- clermont[, c("gamma_dose", "gamma_error")]
 
   calib <- dose_fit(spc, bkg, doses,  range_Ni = c(300, 2800),
+                    range_NiEi = c(165, 2800))
+  calib_zeroBG <- dose_fit(spc, background = bkg_numeric, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
 
   # Missing
@@ -39,6 +53,10 @@ test_that("Estimate dose rates", {
   dose_rate3 <- dose_predict(calib, spc)
   expect_type(dose_rate3, "list")
   expect_equal(dim(dose_rate3), c(7, 5))
+  # Background is numeric
+  dose_rate4 <- dose_predict(calib_zeroBG, spc)
+  expect_type(dose_rate4, "list")
+
 })
 test_that("Get residuals", {
   data("BDX_LaBr_1")

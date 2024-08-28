@@ -7,7 +7,7 @@ NULL
 #' @aliases dose_fit,GammaSpectra,GammaSpectrum,matrix-method
 setMethod(
   f = "dose_fit",
-  signature = signature(object = "GammaSpectra", background = "GammaSpectrum",
+  signature = signature(object = "GammaSpectra", background = "GammaSpectrumOrNumeric",
                         doses = "matrix"),
   definition = function(object, background, doses, range_Ni, range_NiEi,
                         details = list(authors = "", date = Sys.time())) {
@@ -22,7 +22,7 @@ setMethod(
 #' @aliases dose_fit,GammaSpectra,data.frame-method
 setMethod(
   f = "dose_fit",
-  signature = signature(object = "GammaSpectra", background = "GammaSpectrum",
+  signature = signature(object = "GammaSpectra", background = "GammaSpectrumOrNumeric",
                         doses = "data.frame"),
   definition = function(object, background, doses, range_Ni, range_NiEi,
                         details = list(authors = "", date = Sys.time())) {
@@ -51,8 +51,12 @@ setMethod(
 )
 
 fit_york <- function(object, background, doses, range, energy = FALSE) {
-  # Signal integration
-  bkg <- signal_integrate(background, range = range, energy = energy)
+  # Signal integration if we have a GammaSpectrum-class for the background
+  if (inherits(background, "GammaSpectrum"))
+    bkg <- signal_integrate(background, range = range, energy = energy)
+  else
+    bkg <- background
+
   signals <- signal_integrate(object, background = bkg, range = range,
                               energy = energy, simplify = TRUE)
 
