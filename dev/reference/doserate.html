@@ -47,7 +47,7 @@
 <span></span>
 <span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for class 'GammaSpectra,GammaSpectrum,matrix'</span></span>
+<span><span class="co"># S4 method for class 'GammaSpectra,GammaSpectrumOrNumeric,matrix'</span></span>
 <span><span class="fu">dose_fit</span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
 <span>  <span class="va">background</span>,</span>
@@ -57,7 +57,7 @@
 <span>  details <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>authors <span class="op">=</span> <span class="st">""</span>, date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for class 'GammaSpectra,GammaSpectrum,data.frame'</span></span>
+<span><span class="co"># S4 method for class 'GammaSpectra,GammaSpectrumOrNumeric,data.frame'</span></span>
 <span><span class="fu">dose_fit</span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
 <span>  <span class="va">background</span>,</span>
@@ -86,9 +86,9 @@
 
 
 <dt id="arg-background">background<a class="anchor" aria-label="anchor" href="#arg-background"></a></dt>
-<dd><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> object of a length-two <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>
+<dd><p>A <a href="GammaSpectrum-class.html">GammaSpectrum</a> object or a length-two <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>
 vector giving the background noise integration value and error,
-respectively.</p></dd>
+respectively. If no background subtraction is wanted, you can set <code>background = c(0,0,)</code></p></dd>
 
 
 <dt id="arg-doses">doses<a class="anchor" aria-label="anchor" href="#arg-doses"></a></dt>
