@@ -27,7 +27,8 @@ plot(BDX_LaBr_1)
 \seealso{
 Other datasets: 
 \code{\link{AIX_NaI_1}},
-\code{\link{clermont}}
+\code{\link{clermont}},
+\code{\link{clermont_2024}}
 }
 \concept{datasets}
 \keyword{datasets}
