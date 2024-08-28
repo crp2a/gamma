@@ -178,8 +178,8 @@ readKromekSPE <- function(file, ...) {
   el_l[["KROMEK_INFO"]] <- as.list(l)
 
   ## get metadata (here we follow the template from before)
-  date <- as.POSIXct(el_l[["DATE_MEA"]], format = c("%m/%d/%Y %H:%M:%S"))
-  tmp_time <- as.numeric(strsplit(el_l[["MEAS_TIM"]], " ")[[1]])
+  date <- as.POSIXct(el_l[["DATE_MEA"]][1], format = c("%m/%d/%Y %H:%M:%S"))
+  tmp_time <- as.numeric(strsplit(el_l[["MEAS_TIM"]][1], " ")[[1]])
     live_time <- tmp_time[1]
     real_time <- tmp_time[2]
 
@@ -209,5 +209,3 @@ readKromekSPE <- function(file, ...) {
     real_time = real_time
   )
 }
-
-
