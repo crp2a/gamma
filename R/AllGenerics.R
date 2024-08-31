@@ -401,9 +401,11 @@ setGeneric(
 #' @param spectrum An optional [GammaSpectrum-class] or [GammaSpectra-class]
 #'  object in which to look for variables with which to predict. If omitted,
 #'  the fitted values are used.
-#' @param sigma A [`numeric`] value giving TODO.
-#' @param epsilon A [`numeric`] value giving an extra error term
-#'  introduced by the calibration of the energy scale of the spectrum.
+#' @param sigma A [`numeric`] value giving the confidence level of which the error from the
+#' slope is considered in the final uncertainty calculation
+#' @param epsilon A [`numeric`] value giving an extra relative error term,
+#'  introduced by the calibration of the energy scale of the spectrum,
+#'  e.g., `0.015` for an additional 1.5% error
 #' @param ... Currently not used.
 #' @details
 #'  To estimate the gamma dose rate, one of the calibration curves distributed
@@ -418,6 +420,20 @@ setGeneric(
 #'  normalized to active time and corrected for background noise. The dose rate
 #'  is finally modelled by the integrated signal value used as a linear
 #'  predictor (York *et al.*, 2004).
+#'
+#'  **Uncertainty calculation of the gamma-dose rate**
+#'
+#'  The analytical uncertainties of the final gamma-dose rate (\eqn{SE(\dot{D}_{\gamma})}) are calculated as
+#'  follows:
+#'
+#'  \deqn{
+#'  SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+#'  }
+#'
+#'  with \eqn{m} and \eqn{m_{\delta}} being the slope of the fit an its uncertainty,
+#'  \eqn{\sigma} the error scaler for the slope uncertainty, \eqn{s} and \eqn{s_{\delta}}
+#'  the integrated signal and its uncertainty, and \eqn{\epsilon} an additional relative uncertainty
+#'  term that can be set by the user using the argument `epsilon`.
 #'
 #'  See `vignette(doserate)` for a reproducible example.
 #' @return

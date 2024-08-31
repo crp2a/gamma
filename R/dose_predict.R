@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "missing"),
-  definition = function(object, sigma = 1, epsilon = 1.5) {
+  definition = function(object, sigma = 1, epsilon = 0.015) {
 
     Ni <- predict_york(object[["Ni"]],
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
@@ -26,7 +26,7 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectrum"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 1.5) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 0.015) {
     spectrum <- methods::as(spectrum, "GammaSpectra")
     dose_predict(object, spectrum, sigma = sigma, epsilon = epsilon)
   }
@@ -38,7 +38,7 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 1.5) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 0.015) {
 
     Ni <- predict_york(object[["Ni"]], spectrum,
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
@@ -81,9 +81,10 @@ predict_york <- function(model, spectrum, energy = FALSE,
   gamma_dose <- slope[[1L]] * signals$value + intercept[[1L]]
 
   gamma_error <- gamma_dose *
-    sqrt((slope[[2L]] * sigma / slope[[1L]])^2 +
-           (signals$error / signals$value)^2 +
-           epsilon^2)
+    sqrt(
+      ((slope[[2L]] * sigma) / slope[[1L]])^2 +
+      (signals$error / signals$value)^2 +
+      epsilon^2)
 
   results <- data.frame(
     names = signals$names,

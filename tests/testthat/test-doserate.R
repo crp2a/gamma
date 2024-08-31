@@ -57,6 +57,9 @@ test_that("Estimate dose rates", {
   dose_rate4 <- dose_predict(calib_zeroBG, spc)
   expect_type(dose_rate4, "list")
 
+  ## regression test
+  expect_equal(sum(dose_rate2[,-1]), expected = 4005, tolerance = 1)
+
 })
 test_that("Get residuals", {
   data("BDX_LaBr_1")

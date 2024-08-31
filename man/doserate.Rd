@@ -38,11 +38,11 @@ dose_predict(object, spectrum, ...)
   details = list(authors = "", date = Sys.time())
 )
 
-\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 1.5)
+\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 0.015)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 1.5)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 0.015)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 1.5)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 0.015)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
@@ -66,10 +66,12 @@ range to integrate within (in keV).}
 \item{details}{A \code{\link{list}} of length-one vector specifying additional
 informations about the instrument for which the curve is built.}
 
-\item{sigma}{A \code{\link{numeric}} value giving TODO.}
+\item{sigma}{A \code{\link{numeric}} value giving the confidence level of which the error from the
+slope is considered in the final uncertainty calculation}
 
-\item{epsilon}{A \code{\link{numeric}} value giving an extra error term
-introduced by the calibration of the energy scale of the spectrum.}
+\item{epsilon}{A \code{\link{numeric}} value giving an extra relative error term,
+introduced by the calibration of the energy scale of the spectrum,
+e.g., \code{0.015} for an additional 1.5\% error}
 }
 \value{
 \itemize{
@@ -104,6 +106,20 @@ First, each reference spectrum is integrated over a given interval, then
 normalized to active time and corrected for background noise. The dose rate
 is finally modelled by the integrated signal value used as a linear
 predictor (York \emph{et al.}, 2004).
+
+\strong{Uncertainty calculation of the gamma-dose rate}
+
+The analytical uncertainties of the final gamma-dose rate (\eqn{SE(\dot{D}_{\gamma})}) are calculated as
+follows:
+
+\deqn{
+ SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+ }
+
+with \eqn{m} and \eqn{m_{\delta}} being the slope of the fit an its uncertainty,
+\eqn{\sigma} the error scaler for the slope uncertainty, \eqn{s} and \eqn{s_{\delta}}
+the integrated signal and its uncertainty, and \eqn{\epsilon} an additional relative uncertainty
+term that can be set by the user using the argument \code{epsilon}.
 
 See \code{vignette(doserate)} for a reproducible example.
 }
