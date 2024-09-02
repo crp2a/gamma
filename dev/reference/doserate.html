@@ -68,13 +68,13 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,missing'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectrum'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectra'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -117,12 +117,14 @@ informations about the instrument for which the curve is built.</p></dd>
 
 
 <dt id="arg-sigma">sigma<a class="anchor" aria-label="anchor" href="#arg-sigma"></a></dt>
-<dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving TODO.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving the confidence level of which the error from the
+slope is considered in the final uncertainty calculation</p></dd>
 
 
 <dt id="arg-epsilon">epsilon<a class="anchor" aria-label="anchor" href="#arg-epsilon"></a></dt>
-<dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving an extra error term
-introduced by the calibration of the energy scale of the spectrum.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving an extra relative error term,
+introduced by the calibration of the energy scale of the spectrum,
+e.g., <code>0.015</code> for an additional 1.5% error</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -163,6 +165,16 @@ First, each reference spectrum is integrated over a given interval, then
 normalized to active time and corrected for background noise. The dose rate
 is finally modelled by the integrated signal value used as a linear
 predictor (York <em>et al.</em>, 2004).</p>
+<p><strong>Uncertainty calculation of the gamma-dose rate</strong></p>
+<p>The analytical uncertainties of the final gamma-dose rate (\(SE(\dot{D}_{\gamma})\)) are calculated as
+follows:</p>
+<p>$$
+ SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+ $$</p>
+<p>with \(m\) and \(m_{\delta}\) being the slope of the fit an its uncertainty,
+\(\sigma\) the error scaler for the slope uncertainty, \(s\) and \(s_{\delta}\)
+the integrated signal and its uncertainty, and \(\epsilon\) an additional relative uncertainty
+term that can be set by the user using the argument <code>epsilon</code>.</p>
 <p>See <code>vignette(doserate)</code> for a reproducible example.</p>
     </div>
     <div class="section level2">
@@ -221,14 +233,14 @@ Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Estimate gamma dose rates</span></span></span>
 <span class="r-in"><span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">calib_curve</span>, <span class="va">spc</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    names   dose_Ni  error_Ni dose_NiEi error_NiEi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE 1955.8683 2934.1305 1946.9606  2920.7064</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  843.9938 1266.1669  843.0632  1264.7097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347 1420.1912 2130.5630 1402.5391  2103.9999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU 1599.0175 2398.8191 1598.6341  2398.1692</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  640.1782  960.4183  639.0612   958.6789</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ 1140.4575 1710.9077 1144.1496  1716.3805</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP 2443.3517 3665.4815 2435.1440  3653.0481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    names   dose_Ni error_Ni dose_NiEi error_NiEi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE 1955.8683 52.77781 1946.9606   49.02495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  843.9938 24.63107  843.0632   21.23087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347 1420.1912 40.38593 1402.5391   35.31881</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU 1599.0175 44.49614 1598.6341   40.25562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  640.1782 19.54897  639.0612   16.09466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ 1140.4575 32.40899 1144.1496   28.81198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP 2443.3517 68.34353 2435.1440   61.32040</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

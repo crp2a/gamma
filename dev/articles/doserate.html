@@ -68,7 +68,7 @@
 B. Lebrun, S. Kreutzer</h4>
             
             <h4 data-toc-skip class="date">Last modified:
-2024-08-28</h4>
+2024-09-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -547,7 +547,7 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2024-08-28 09:12:43.420859</span></span></code></pre></div>
+<span><span class="co">#&gt; * date: 2024-09-02 13:24:22.26711</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
 package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
@@ -651,11 +651,11 @@ consists of only three steps:</p>
 <code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">rates</span></span>
 <span><span class="co">#&gt;        names   dose_Ni error_Ni dose_NiEi error_NiEi</span></span>
-<span><span class="co">#&gt; 1 NAR19-P2-1  925.2131 1388.917  898.0336   1348.102</span></span>
-<span><span class="co">#&gt; 2 NAR19-P3-1 1116.4969 1676.068 1089.8538   1636.056</span></span>
-<span><span class="co">#&gt; 3 NAR19-P4-1  894.0082 1342.074  869.4770   1305.233</span></span>
-<span><span class="co">#&gt; 4 NAR19-P5-1 1391.7762 2089.312 1369.9492   2056.527</span></span>
-<span><span class="co">#&gt; 5 NAR19-P6-1 1171.7514 1759.018 1152.1000   1729.499</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 NAR19-P2-1  925.2131 56.91231  898.0336   54.90534</span></span>
+<span><span class="co">#&gt; 2 NAR19-P3-1 1116.4969 68.63574 1089.8538   66.63305</span></span>
+<span><span class="co">#&gt; 3 NAR19-P4-1  894.0082 55.02411  869.4770   53.15946</span></span>
+<span><span class="co">#&gt; 4 NAR19-P5-1 1391.7762 85.55814 1369.9492   83.75792</span></span>
+<span><span class="co">#&gt; 5 NAR19-P6-1 1171.7514 72.11483 1152.1000   70.43890</span></span></code></pre></div>
 <p><em>Note: We assume here that the energy scale of each spectrum was
 adjusted first.</em></p>
 </div>
@@ -691,7 +691,7 @@ this vignette.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] gtable_0.3.5      jsonlite_1.8.8    highr_0.11        compiler_4.4.1   </span></span>
-<span><span class="co">#&gt;  [5] Rcpp_1.0.13       rxylib_0.2.13     jquerylib_0.1.4   systemfonts_1.1.0</span></span>
+<span><span class="co">#&gt;  [5] Rcpp_1.0.13       rxylib_0.2.14     jquerylib_0.1.4   systemfonts_1.1.0</span></span>
 <span><span class="co">#&gt;  [9] scales_1.3.0      textshaping_0.4.0 yaml_2.3.10       fastmap_1.2.0    </span></span>
 <span><span class="co">#&gt; [13] ggplot2_3.5.1     R6_2.5.1          IsoplotR_6.2      labeling_0.4.3   </span></span>
 <span><span class="co">#&gt; [17] knitr_1.48        tibble_3.2.1      desc_1.4.3        munsell_0.5.1    </span></span>
