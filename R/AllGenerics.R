@@ -441,12 +441,20 @@ setGeneric(
 #'  * `dose_predict()` returns a [`data.frame`] with the following columns:
 #'  \describe{
 #'   \item{`name`}{([`character`]) the name of the spectra.}
-#'   \item{`*_signal`}{([`numeric`]) the integrated signal value (according to
+#'   \item{`signal_Ni`}{([`numeric`]) the integrated signal value (according to
+#'   the value of `threshold`; see [signal_integrate()]) for `energy = FALSE`}
+#'   \item{`signal_err_Ni`}{([`numeric`]) the integrated signal error value
+#'   (according to the value of `threshold`; see [signal_integrate()]) for `energy = FALSE`.}
+#'   \item{`dose_Ni`}{([`numeric`]) the predicted gamma dose rate for `energy = FALSE`.}
+#'   \item{`dose_err_Ni`}{([`numeric`]) the predicted gamma dose rate error for `energy = FALSE`.}
+#'   \item{`signal_Ni`}{([`numeric`]) the integrated signal value (according to
 #'   the value of `threshold`; see [signal_integrate()]).}
-#'   \item{`*_error`}{([`numeric`]) the integrated signal error value
-#'   (according to the value of `threshold`; see [signal_integrate()]).}
-#'   \item{`gamma_signal`}{([`numeric`]) the predicted gamma dose rate.}
-#'   \item{`gamma_error`}{([`numeric`]) the predicted gamma dose rate error.}
+#'   \item{`signal_err_NiEi`}{([`numeric`]) the integrated signal error value
+#'   (according to the value of `threshold`; see [signal_integrate()]) for `energy = TRUE`.}
+#'   \item{`dose_NiEi`}{([`numeric`]) the predicted gamma dose rate for `energy = TRUE`.}
+#'   \item{`dose_err_NiEi`}{([`numeric`]) the predicted gamma dose rate error for `energy = TRUE`.}
+#'   \item{`dose_final`}{([`numeric`]) the predicted final gamma dose rate as the mean of `dose_Ni` and `dose_NiEi`}
+#'   \item{`dose_err_final`}{([`numeric`]) the predicted final gamma dose rate error as the mean of `dose_err_Ni` and `dose_err_NiEi`.}
 #'  }
 #' @seealso [signal_integrate()]
 #' @references
@@ -487,7 +495,7 @@ setGeneric(
 #' @param background A [GammaSpectrum-class] object.
 #' @param range A length-two [`numeric`] vector giving the energy range to
 #'  integrate within (in keV).
-#' @param energy A [`logical`] scalar: TODO?
+#' @param energy A [`logical`] scalar: use the energy or count threshold for the signal integration
 #' @param simplify A [`logical`] scalar: should the result be simplified to a
 #'  [`matrix`]? The default value, `FALSE`, returns a [`list`].
 #' @param ... Currently not used.

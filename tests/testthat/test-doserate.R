@@ -44,21 +44,21 @@ test_that("Estimate dose rates", {
   # Missing
   dose_rate1 <- dose_predict(calib)
   expect_type(dose_rate1, "list")
-  expect_equal(dim(dose_rate1), c(7, 5))
+  expect_equal(dim(dose_rate1), c(7, 11))
   # GammaSpectrum
   dose_rate2 <- dose_predict(calib, spc[[1]])
   expect_type(dose_rate2, "list")
-  expect_equal(dim(dose_rate2), c(1, 5))
+  expect_equal(dim(dose_rate2), c(1, 11))
   # GammaSpectra
   dose_rate3 <- dose_predict(calib, spc)
   expect_type(dose_rate3, "list")
-  expect_equal(dim(dose_rate3), c(7, 5))
+  expect_equal(dim(dose_rate3), c(7, 11))
   # Background is numeric
   dose_rate4 <- dose_predict(calib_zeroBG, spc)
   expect_type(dose_rate4, "list")
 
   ## regression test
-  expect_equal(sum(dose_rate2[,-1]), expected = 4005, tolerance = 1)
+  expect_equal(sum(dose_rate2[,-1]), expected = 70105, tolerance = 1)
 
 })
 test_that("Get residuals", {

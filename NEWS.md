@@ -7,9 +7,11 @@ uncertainty calculation. (PR #42 by @RLumSK)
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK).
 * Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22, PR #31 by @RLumSK).
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).
+* Add additional columns to the output object of `dose_predict()` and calculate a "final" dose based on the mean of the findings from the count and the energy threshold (PR #43 by @RLumSK) 
 * Extend `dose_predict()` to work with a `numeric` input for `background` as claimed in the documentary. This value can also be set to `c(0,0)` if no background
 subtraction is wanted (PR #38 by @RLumSK)
 * Update vignette about the dose rate calibration curve determination to make it more intelligible (#30 by @RLumSK). 
+* Update manual for the output object of `dose_predict()`, which had some loopholes (PR #43 by @RLumSK) 
 * Add conversion factor reference to `clermont` dataset for better transparency.
 * Add new dataset called `clermont_2024` based on the original `clermont` dataset but with dose rate conversion factors and gamma dose rate calculated for different conversion factor datasets (PR #40 by @RLumSK)
 
