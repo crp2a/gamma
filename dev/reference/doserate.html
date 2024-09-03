@@ -166,7 +166,9 @@ the value of <code>threshold</code>; see <code><a href="integrate.html">signal_i
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted final gamma dose rate as the mean of <code>dose_Ni</code> and <code>dose_NiEi</code></p></dd>
 
 <dt><code>dose_err_final</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted final gamma dose rate error as the mean of <code>dose_err_Ni</code> and <code>dose_err_NiEi</code>.</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted final gamma dose rate error as
+\(SE(\dot{D}_{\gamma}) = \sqrt{(\frac{SE(\dot{D}_{\gamma\mathrm{Ni}})}{\dot{D}_{\gamma\mathrm{Ni}}})^2 +
+   (\frac{SE(\dot{D}_{\gamma\mathrm{NiEi}})}{\dot{D}_{\gamma\mathrm{NiEi}}})^2}\)</p></dd>
 
 
 </dl></li>
@@ -262,13 +264,13 @@ Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ  39.23547     0.3608703 1140.4575    32.40899    37607.71</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP  84.50625     0.6514533 2443.3517    68.34353    80089.25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4.883996 1946.9606      49.02495  1951.4145       50.90138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       10.554185  843.0632      21.23087   843.5285       22.93097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       14.342109 1402.5391      35.31881  1411.3651       37.85237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       12.537674 1598.6341      40.25562  1598.8258       42.37588</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10.233603  639.0612      16.09466   639.6197       17.82182</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       11.534979 1144.1496      28.81198  1142.3036       30.61048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       20.457178 2435.1440      61.32040  2439.2479       64.83197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4.883996 1946.9606      49.02495  1951.4145       72.02277</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       10.554185  843.0632      21.23087   843.5285       32.51567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       14.342109 1402.5391      35.31881  1411.3651       53.60953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       12.537674 1598.6341      40.25562  1598.8258       60.00280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10.233603  639.0612      16.09466   639.6197       25.31772</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       11.534979 1144.1496      28.81198  1142.3036       43.37279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       20.457178 2435.1440      61.32040  2439.2479       91.80434</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
