@@ -495,7 +495,7 @@ setGeneric(
 #' @param background A [GammaSpectrum-class] object.
 #' @param range A length-two [`numeric`] vector giving the energy range to
 #'  integrate within (in keV).
-#' @param energy A [`logical`] scalar: user the energy or count threshold?
+#' @param energy A [`logical`] scalar: use the energy or count threshold for the signal integration
 #' @param simplify A [`logical`] scalar: should the result be simplified to a
 #'  [`matrix`]? The default value, `FALSE`, returns a [`list`].
 #' @param ... Currently not used.
