@@ -79,12 +79,20 @@ e.g., \code{0.015} for an additional 1.5\% error}
 \item \code{dose_predict()} returns a \code{\link{data.frame}} with the following columns:
 \describe{
 \item{\code{name}}{(\code{\link{character}}) the name of the spectra.}
-\item{\verb{*_signal}}{(\code{\link{numeric}}) the integrated signal value (according to
+\item{\code{signal_Ni}}{(\code{\link{numeric}}) the integrated signal value (according to
+the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}) for \code{energy = FALSE}}
+\item{\code{signal_err_Ni}}{(\code{\link{numeric}}) the integrated signal error value
+(according to the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}) for \code{energy = FALSE}.}
+\item{\code{dose_Ni}}{(\code{\link{numeric}}) the predicted gamma dose rate for \code{energy = FALSE}.}
+\item{\code{dose_err_Ni}}{(\code{\link{numeric}}) the predicted gamma dose rate error for \code{energy = FALSE}.}
+\item{\code{signal_Ni}}{(\code{\link{numeric}}) the integrated signal value (according to
 the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}).}
-\item{\verb{*_error}}{(\code{\link{numeric}}) the integrated signal error value
-(according to the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}).}
-\item{\code{gamma_signal}}{(\code{\link{numeric}}) the predicted gamma dose rate.}
-\item{\code{gamma_error}}{(\code{\link{numeric}}) the predicted gamma dose rate error.}
+\item{\code{signal_err_NiEi}}{(\code{\link{numeric}}) the integrated signal error value
+(according to the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integrate()}}) for \code{energy = TRUE}.}
+\item{\code{dose_NiEi}}{(\code{\link{numeric}}) the predicted gamma dose rate for \code{energy = TRUE}.}
+\item{\code{dose_err_NiEi}}{(\code{\link{numeric}}) the predicted gamma dose rate error for \code{energy = TRUE}.}
+\item{\code{dose_final}}{(\code{\link{numeric}}) the predicted final gamma dose rate as the mean of \code{dose_Ni} and \code{dose_NiEi}}
+\item{\code{dose_err_final}}{(\code{\link{numeric}}) the predicted final gamma dose rate error as the mean of \code{dose_err_Ni} and \code{dose_err_NiEi}.}
 }
 }
 }

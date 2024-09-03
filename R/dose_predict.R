@@ -10,13 +10,21 @@ setMethod(
   signature = signature(object = "CalibrationCurve", spectrum = "missing"),
   definition = function(object, sigma = 1, epsilon = 0.015) {
 
+    ## calculate for count threshold
     Ni <- predict_york(object[["Ni"]],
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
 
+    ## calculate for energy threshold
     NiEi <- predict_york(object[["NiEi"]],
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
-    merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    ## calculate the mean of both values
+    FINAL <- data.frame(
+      dose_final = rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2)),
+      dose_err_final = rowMeans(matrix(c(Ni$dose_err, NiEi$dose_err), ncol = 2)))
+
+    Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    cbind(Ni_NiEi, FINAL)
   }
 )
 
@@ -40,13 +48,22 @@ setMethod(
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
   definition = function(object, spectrum, sigma = 1, epsilon = 0.015) {
 
+    ## calculate for count threshold
     Ni <- predict_york(object[["Ni"]], spectrum,
                        energy = FALSE, sigma = sigma, epsilon = epsilon)
 
+    ## calculate for energy threshold
     NiEi <- predict_york(object[["NiEi"]], spectrum,
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
-    merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    ## calculate the mean of both values
+    FINAL <- data.frame(
+      dose_final = rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2)),
+      dose_err_final = rowMeans(matrix(c(Ni$dose_err, NiEi$dose_err), ncol = 2)))
+
+    Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    cbind(Ni_NiEi, FINAL)
+
   }
 )
 
@@ -88,8 +105,10 @@ predict_york <- function(model, spectrum, energy = FALSE,
 
   results <- data.frame(
     names = signals$names,
+    signal = signals$value,
+    signal_err = signals$error,
     dose = gamma_dose,
-    error = gamma_error,
+    dose_err = gamma_error,
     stringsAsFactors = FALSE
   )
   return(results)

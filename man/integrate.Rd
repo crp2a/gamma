@@ -48,7 +48,7 @@ signal_integrate(object, background, ...)
 \item{range}{A length-two \code{\link{numeric}} vector giving the energy range to
 integrate within (in keV).}
 
-\item{energy}{A \code{\link{logical}} scalar: TODO?}
+\item{energy}{A \code{\link{logical}} scalar: user the energy or count threshold?}
 
 \item{simplify}{A \code{\link{logical}} scalar: should the result be simplified to a
 \code{\link{matrix}}? The default value, \code{FALSE}, returns a \code{\link{list}}.}
