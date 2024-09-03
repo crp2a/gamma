@@ -134,19 +134,39 @@ e.g., <code>0.015</code> for an additional 1.5% error</p></dd>
 <li><p><code>dose_predict()</code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code> with the following columns:</p><dl><dt><code>name</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></code>) the name of the spectra.</p></dd>
 
-<dt><code>*_signal</code></dt>
+<dt><code>signal_Ni</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the integrated signal value (according to
+the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>) for <code>energy = FALSE</code></p></dd>
+
+<dt><code>signal_err_Ni</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the integrated signal error value
+(according to the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>) for <code>energy = FALSE</code>.</p></dd>
+
+<dt><code>dose_Ni</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate for <code>energy = FALSE</code>.</p></dd>
+
+<dt><code>dose_err_Ni</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate error for <code>energy = FALSE</code>.</p></dd>
+
+<dt><code>signal_Ni</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the integrated signal value (according to
 the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>).</p></dd>
 
-<dt><code>*_error</code></dt>
+<dt><code>signal_err_NiEi</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the integrated signal error value
-(according to the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>).</p></dd>
+(according to the value of <code>threshold</code>; see <code><a href="integrate.html">signal_integrate()</a></code>) for <code>energy = TRUE</code>.</p></dd>
 
-<dt><code>gamma_signal</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate.</p></dd>
+<dt><code>dose_NiEi</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate for <code>energy = TRUE</code>.</p></dd>
 
-<dt><code>gamma_error</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate error.</p></dd>
+<dt><code>dose_err_NiEi</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted gamma dose rate error for <code>energy = TRUE</code>.</p></dd>
+
+<dt><code>dose_final</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted final gamma dose rate as the mean of <code>dose_Ni</code> and <code>dose_NiEi</code></p></dd>
+
+<dt><code>dose_err_final</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code>) the predicted final gamma dose rate error as the mean of <code>dose_err_Ni</code> and <code>dose_err_NiEi</code>.</p></dd>
 
 
 </dl></li>
@@ -233,14 +253,22 @@ Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Estimate gamma dose rates</span></span></span>
 <span class="r-in"><span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">calib_curve</span>, <span class="va">spc</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    names   dose_Ni error_Ni dose_NiEi error_NiEi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE 1955.8683 52.77781 1946.9606   49.02495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  843.9938 24.63107  843.0632   21.23087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347 1420.1912 40.38593 1402.5391   35.31881</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU 1599.0175 44.49614 1598.6341   40.25562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  640.1782 19.54897  639.0612   16.09466</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ 1140.4575 32.40899 1144.1496   28.81198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP 2443.3517 68.34353 2435.1440   61.32040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    names signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE  67.56799     0.1539729 1955.8683    52.77781    64025.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  28.93445     0.3283027  843.9938    24.63107    27700.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347  48.95519     0.4531988 1420.1912    40.38593    46110.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU  55.16875     0.3954882 1599.0175    44.49614    52563.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  21.85261     0.3163219  640.1782    19.54897    20987.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ  39.23547     0.3608703 1140.4575    32.40899    37607.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP  84.50625     0.6514533 2443.3517    68.34353    80089.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4.883996 1946.9606      49.02495  1951.4145       50.90138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       10.554185  843.0632      21.23087   843.5285       22.93097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       14.342109 1402.5391      35.31881  1411.3651       37.85237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       12.537674 1598.6341      40.25562  1598.8258       42.37588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10.233603  639.0612      16.09466   639.6197       17.82182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       11.534979 1144.1496      28.81198  1142.3036       30.61048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       20.457178 2435.1440      61.32040  2439.2479       64.83197</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

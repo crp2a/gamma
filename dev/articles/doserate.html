@@ -68,7 +68,7 @@
 B. Lebrun, S. Kreutzer</h4>
             
             <h4 data-toc-skip class="date">Last modified:
-2024-09-02</h4>
+2024-09-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -547,7 +547,7 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2024-09-02 13:24:22.26711</span></span></code></pre></div>
+<span><span class="co">#&gt; * date: 2024-09-03 09:50:50.679841</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
 package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
@@ -650,12 +650,18 @@ consists of only three steps:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">rates</span></span>
-<span><span class="co">#&gt;        names   dose_Ni error_Ni dose_NiEi error_NiEi</span></span>
-<span><span class="co">#&gt; 1 NAR19-P2-1  925.2131 56.91231  898.0336   54.90534</span></span>
-<span><span class="co">#&gt; 2 NAR19-P3-1 1116.4969 68.63574 1089.8538   66.63305</span></span>
-<span><span class="co">#&gt; 3 NAR19-P4-1  894.0082 55.02411  869.4770   53.15946</span></span>
-<span><span class="co">#&gt; 4 NAR19-P5-1 1391.7762 85.55814 1369.9492   83.75792</span></span>
-<span><span class="co">#&gt; 5 NAR19-P6-1 1171.7514 72.11483 1152.1000   70.43890</span></span></code></pre></div>
+<span><span class="co">#&gt;        names signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
+<span><span class="co">#&gt; 1 NAR19-P2-1  96.84460     0.3623222  925.2131    56.91231    50148.73</span></span>
+<span><span class="co">#&gt; 2 NAR19-P3-1 117.77185     0.3585096 1116.4969    68.63574    61203.78</span></span>
+<span><span class="co">#&gt; 3 NAR19-P4-1  93.43065     0.3997429  894.0082    55.02411    48502.94</span></span>
+<span><span class="co">#&gt; 4 NAR19-P5-1 147.88856     0.4498253 1391.7762    85.55814    77346.35</span></span>
+<span><span class="co">#&gt; 5 NAR19-P6-1 123.81692     0.5240536 1171.7514    72.11483    64791.18</span></span>
+<span><span class="co">#&gt;   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span></span>
+<span><span class="co">#&gt; 1        8.281816  898.0336      54.90534   911.6234       55.90882</span></span>
+<span><span class="co">#&gt; 2        8.203765 1089.8538      66.63305  1103.1754       67.63439</span></span>
+<span><span class="co">#&gt; 3        9.148442  869.4770      53.15946   881.7426       54.09179</span></span>
+<span><span class="co">#&gt; 4       10.316578 1369.9492      83.75792  1380.8627       84.65803</span></span>
+<span><span class="co">#&gt; 5       12.026192 1152.1000      70.43890  1161.9257       71.27686</span></span></code></pre></div>
 <p><em>Note: We assume here that the energy scale of each spectrum was
 adjusted first.</em></p>
 </div>
