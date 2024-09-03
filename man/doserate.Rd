@@ -92,7 +92,9 @@ the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integra
 \item{\code{dose_NiEi}}{(\code{\link{numeric}}) the predicted gamma dose rate for \code{energy = TRUE}.}
 \item{\code{dose_err_NiEi}}{(\code{\link{numeric}}) the predicted gamma dose rate error for \code{energy = TRUE}.}
 \item{\code{dose_final}}{(\code{\link{numeric}}) the predicted final gamma dose rate as the mean of \code{dose_Ni} and \code{dose_NiEi}}
-\item{\code{dose_err_final}}{(\code{\link{numeric}}) the predicted final gamma dose rate error as the mean of \code{dose_err_Ni} and \code{dose_err_NiEi}.}
+\item{\code{dose_err_final}}{(\code{\link{numeric}}) the predicted final gamma dose rate error as
+\eqn{SE(\dot{D}_{\gamma}) = \sqrt{(\frac{SE(\dot{D}_{\gamma\mathrm{Ni}})}{\dot{D}_{\gamma\mathrm{Ni}}})^2 +
+   (\frac{SE(\dot{D}_{\gamma\mathrm{NiEi}})}{\dot{D}_{\gamma\mathrm{NiEi}}})^2}}}
 }
 }
 }
