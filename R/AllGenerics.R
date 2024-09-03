@@ -454,7 +454,9 @@ setGeneric(
 #'   \item{`dose_NiEi`}{([`numeric`]) the predicted gamma dose rate for `energy = TRUE`.}
 #'   \item{`dose_err_NiEi`}{([`numeric`]) the predicted gamma dose rate error for `energy = TRUE`.}
 #'   \item{`dose_final`}{([`numeric`]) the predicted final gamma dose rate as the mean of `dose_Ni` and `dose_NiEi`}
-#'   \item{`dose_err_final`}{([`numeric`]) the predicted final gamma dose rate error as the mean of `dose_err_Ni` and `dose_err_NiEi`.}
+#'   \item{`dose_err_final`}{([`numeric`]) the predicted final gamma dose rate error as
+#'    \eqn{SE(\dot{D}_{\gamma}) = \sqrt{(\frac{SE(\dot{D}_{\gamma\mathrm{Ni}})}{\dot{D}_{\gamma\mathrm{Ni}}})^2 +
+#'    (\frac{SE(\dot{D}_{\gamma\mathrm{NiEi}})}{\dot{D}_{\gamma\mathrm{NiEi}}})^2}}}
 #'  }
 #' @seealso [signal_integrate()]
 #' @references

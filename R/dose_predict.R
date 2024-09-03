@@ -18,10 +18,11 @@ setMethod(
     NiEi <- predict_york(object[["NiEi"]],
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
-    ## calculate the mean of both values
-    FINAL <- data.frame(
-      dose_final = rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2)),
-      dose_err_final = rowMeans(matrix(c(Ni$dose_err, NiEi$dose_err), ncol = 2)))
+    ## calculate the mean and error of both values
+    dose_final <- rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2))
+    dose_err_final <- dose_final *
+      sqrt((Ni$dose_err/Ni$dose)^2 + (NiEi$dose_err/NiEi$dose)^2)
+    FINAL <- data.frame(dose_final, dose_err_final)
 
     Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
@@ -56,10 +57,11 @@ setMethod(
     NiEi <- predict_york(object[["NiEi"]], spectrum,
                          energy = TRUE, sigma = sigma, epsilon = epsilon)
 
-    ## calculate the mean of both values
-    FINAL <- data.frame(
-      dose_final = rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2)),
-      dose_err_final = rowMeans(matrix(c(Ni$dose_err, NiEi$dose_err), ncol = 2)))
+    ## calculate the mean and error of both values
+    dose_final <- rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2))
+    dose_err_final <- dose_final *
+      sqrt((Ni$dose_err/Ni$dose)^2 + (NiEi$dose_err/NiEi$dose)^2)
+    FINAL <- data.frame(dose_final, dose_err_final)
 
     Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
