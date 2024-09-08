@@ -22,11 +22,12 @@ bibentry(
   key          = "R-gamma",
   author       = c(person("Nicolas", "Frerebeau", role = "aut"),
                    person("Brice", "Lebrun", role = "aut"),
-                   person("Guilhem", "Paradol", role = "aut")),
+                   person("Guilhem", "Paradol", role = "aut"),
+                   person("Sebastian", "Kreutzer", rol = "aut")),
   title        = "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
   year         = "2024",
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
   note         = sprintf("R package version %s", meta$Version),
-  doi          = "10.5281/zenodo.2652393"
+  doi          = "10.32614/CRAN.package.gamma"
 )
