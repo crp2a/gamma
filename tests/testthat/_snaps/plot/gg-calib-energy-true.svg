@@ -63,7 +63,7 @@
 <text x='269.63' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='24.47px' lengthAdjust='spacingAndGlyphs'>40000</text>
 <text x='475.98' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='24.47px' lengthAdjust='spacingAndGlyphs'>60000</text>
 <text x='682.33' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='24.47px' lengthAdjust='spacingAndGlyphs'>80000</text>
-<text x='379.89' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='59.91px' lengthAdjust='spacingAndGlyphs'>Signal [NiEi]</text>
+<text x='379.89' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='110.68px' lengthAdjust='spacingAndGlyphs'>Integrated signal [NiEi]</text>
 <text transform='translate(13.45,326.70) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='53.81px' lengthAdjust='spacingAndGlyphs'>Dose rate [</text>
 <text transform='translate(13.45,272.89) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='6.01px' lengthAdjust='spacingAndGlyphs'>μ</text>
 <text transform='translate(13.45,266.88) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='25.68px' lengthAdjust='spacingAndGlyphs'>Gy/y]</text>
