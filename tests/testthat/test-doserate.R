@@ -11,6 +11,11 @@ test_that("Build a calibration curve", {
 
   calib <- dose_fit(spc, bkg, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
+
+  ## regression test dose fit
+  expect_equal(object = sum(calib@Ni@slope), 29, tolerance = 0.1)
+  expect_equal(object = sum(calib@NiEi@slope), 0.030, tolerance = 0.1)
+
   calib_zero <- dose_fit(spc, bkg_numeric, doses,  range_Ni = c(300, 2800),
                     range_NiEi = c(165, 2800))
 
