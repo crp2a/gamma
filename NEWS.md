@@ -4,12 +4,12 @@
 much sense due to an internal calculation error. Along with the fix, the manual was updated to detail the 
 uncertainty calculation. (PR #42 by @RLumSK)
 * Fix a graphical issue where the peaks were peaks were set with `set_energy()` but did not show correctly when plotted using the standard plot method, e.g., `plot(cal, pks)` would show only observed but not expected energy lines in the secondary x-axis. Now the expected energy lines (if set) are show. (#29, PR #32 by @RLumSK).
-* Fix the uncertainty calculation for the integrated signal. The formula had an factor of 2 in `var(2 * x)` where `x` is the integrated signal. Now the formula considers plain Poisson statistics. Along with this change, the calculation is now detailed in the manual (PR #XX by @RLumSK).
+* Fix the uncertainty calculation for the integrated signal. The formula had an factor of 2 in `var(2 * x)` where `x` is the integrated signal. Now the formula considers plain Poisson statistics. Along with this change, the calculation is now detailed in the manual (PR #46 by @RLumSK).
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK).
 * Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22, PR #31 by @RLumSK).
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).
 * Add additional columns to the output object of `dose_predict()` and calculate a "final" dose based on the mean of the findings from the count and the energy threshold (PR #43 by @RLumSK) 
-* Add new argument `use_MC` to `dose_predic()` method. The default is `FALSE` to maintain compatibility with old code and output exceptions. If set to `TRUE` the uncertainty on the gamma dose rate uses a Monte Carlo simulation approach for a more realistic error estimation (PR # by RLumSK)
+* Add new argument `use_MC` to `dose_predic()` method. The default is `FALSE` to maintain compatibility with old code and output exceptions. If set to `TRUE` the uncertainty on the gamma dose rate uses a Monte Carlo simulation approach for a more realistic error estimation (PR #46 by RLumSK)
 * Extend `dose_predict()` to work with a `numeric` input for `background` as claimed in the documentary. This value can also be set to `c(0,0)` if no background
 subtraction is wanted (PR #38 by @RLumSK)
 * Update vignette about the dose rate calibration curve determination to make it more intelligible (#30 by @RLumSK). 
