@@ -4,6 +4,7 @@
 much sense due to an internal calculation error. Along with the fix, the manual was updated to detail the 
 uncertainty calculation. (PR #42 by @RLumSK)
 * Fix a graphical issue where the peaks were peaks were set with `set_energy()` but did not show correctly when plotted using the standard plot method, e.g., `plot(cal, pks)` would show only observed but not expected energy lines in the secondary x-axis. Now the expected energy lines (if set) are show. (#29, PR #32 by @RLumSK).
+* Fix the uncertainty calculation for the integrated signal. The formula had an factor of 2 in `var(2 * x)` where `x` is the integrated signal. Now the formula considers plain Poisson statistics. Along with this change, the calculation is now detailed in the manual (PR #XX by @RLumSK).
 * Add support for Kromek SPE files to `read()`(#28 by @RLumSK).
 * Add support for `GammaSpectra-class` objects for `energy_calibrate()`(issue: #22, PR #31 by @RLumSK).
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).

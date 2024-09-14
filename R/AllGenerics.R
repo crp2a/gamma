@@ -493,6 +493,9 @@ setGeneric(
 # Integrate ====================================================================
 #' Signal Integration
 #'
+#' @description
+#' Integration of the spectrum including uncertainty calculation.
+#'
 #' @param object A [GammaSpectrum-class] or [GammaSpectra-class] object.
 #' @param background A [GammaSpectrum-class] object.
 #' @param range A length-two [`numeric`] vector giving the energy range to
@@ -501,8 +504,38 @@ setGeneric(
 #' @param simplify A [`logical`] scalar: should the result be simplified to a
 #'  [`matrix`]? The default value, `FALSE`, returns a [`list`].
 #' @param ... Currently not used.
+#' @note The integration assumes that each spectrum has an energy scale.
 #' @details
-#'  It assumes that each spectrum has an energy scale.
+#'
+#'  **Integration methods**
+#'
+#'  The function supports two integration techniques (see Guérin & Mercier (2011)), the (1) count threshold
+#'  integration and the (2) energy integration method:
+#'
+#'  The count integration technique (`energy = FALSE`) integrates
+#'  all counts in given `range`:
+#'
+#'  \deqn{
+#'    A = \frac{\Sigma_{i}^{N}S_i}{t_{live}}
+#'  }
+#'
+#'  Contrary, the energy integration techniques is the integrated cross-product
+#'  of counts and corresponding energy per channel:
+#'
+#'  \deqn{
+#'   A = \frac{\Sigma_{i}^{N}S_i \times E_i}{t_{live}}
+#'  }
+#'
+#'  \eqn{A} is the area, \eqn{S_i} is the signal in the \eqn{i^{th}} channel, \eqn{N} the number of channels, \eqn{E_i} the energy
+#'  of the corresponding channel in keV. \eqn{t_{live}} is the live time of the measurement in *s*.
+#'
+#'  For calculating the uncertainties, Poisson statistics are assumed and hence the
+#'  errors is calculated as:
+#'
+#'  \deqn{
+#'  \sigma_A = \frac{\sqrt{A}}{t_{live}}
+#'  }
+#'
 #' @return
 #'  If `simplify` is `FALSE` (the default) returns a [`list`] of numeric vectors
 #'  (the signal value and its error), else returns a [`matrix`].
