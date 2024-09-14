@@ -63,8 +63,8 @@ Integration of the spectrum including uncertainty calculation.
 \details{
 \strong{Integration methods}
 
-The function supports two integration techniques, the count threshold
-integration method and the energy integration method:
+The function supports two integration techniques (see Guérin & Mercier (2011)), the (1) count threshold
+integration and the (2) energy integration method:
 
 The count integration technique (\code{energy = FALSE}) integrates
 all counts in given \code{range}:
@@ -104,7 +104,7 @@ a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 \emph{Ancient TL}, 25(1), p. 1-4.
 }
 \seealso{
-Other signal processing:
+Other signal processing: 
 \code{\link{baseline}},
 \code{\link{peaks_find}()},
 \code{\link{peaks_search}()},

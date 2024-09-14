@@ -38,11 +38,11 @@ dose_predict(object, spectrum, ...)
   details = list(authors = "", date = Sys.time())
 )
 
-\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 0.015)
+\S4method{dose_predict}{CalibrationCurve,missing}(object, sigma = 1, epsilon = 0.015, use_MC = FALSE)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 0.015)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectrum}(object, spectrum, sigma = 1, epsilon = 0.015, use_MC = FALSE)
 
-\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 0.015)
+\S4method{dose_predict}{CalibrationCurve,GammaSpectra}(object, spectrum, sigma = 1, epsilon = 0.015, use_MC = FALSE)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
@@ -72,6 +72,9 @@ slope is considered in the final uncertainty calculation}
 \item{epsilon}{A \code{\link{numeric}} value giving an extra relative error term,
 introduced by the calibration of the energy scale of the spectrum,
 e.g., \code{0.015} for an additional 1.5\% error}
+
+\item{use_MC}{A \code{\link{logical}} parameter, enabling/disabling Monte Carlo simulations for estimating
+the dose rate uncertainty}
 }
 \value{
 \itemize{
@@ -123,13 +126,27 @@ The analytical uncertainties of the final gamma-dose rate (\eqn{SE(\dot{D}_{\gam
 follows:
 
 \deqn{
- SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+ \sigma_{\dot{D_\gamma}} = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
  }
 
 with \eqn{m} and \eqn{m_{\delta}} being the slope of the fit an its uncertainty,
 \eqn{\sigma} the error scaler for the slope uncertainty, \eqn{s} and \eqn{s_{\delta}}
 the integrated signal and its uncertainty, and \eqn{\epsilon} an additional relative uncertainty
 term that can be set by the user using the argument \code{epsilon}.
+
+If the parameter \code{use_MC} is set to \code{TRUE}, the a Monte Carlo sampling approach
+is chosen to approximate the uncertainties on the dose rate:
+
+\deqn{
+   \sigma_{\dot{D_\gamma}} :=
+   \sqrt((\frac{SD(\mathcal{N}(\mu_{slope}, \sigma_{slope}) \times \mathcal{N}(\mu_{signal}, \sigma_{signal}) +
+   \mathcal{N}(\mu_{intercept}, \sigma_{intercept})) * \rho}{\dot{D_\gamma}})^2 +
+   \epsilon^2) * \dot{D_\gamma}
+ }
+
+\eqn{\ rho} is the parameter \code{sigma} provided with the function call, \eqn{SD} equals the
+the call to \code{sd()}, i.e. the calculation of the standard deviation. To achieve a good
+gaussian normal approximation with sample 1+e06 times (the values is fixed).
 
 See \code{vignette(doserate)} for a reproducible example.
 }

@@ -406,6 +406,8 @@ setGeneric(
 #' @param epsilon A [`numeric`] value giving an extra relative error term,
 #'  introduced by the calibration of the energy scale of the spectrum,
 #'  e.g., `0.015` for an additional 1.5% error
+#' @param use_MC A [`logical`] parameter, enabling/disabling Monte Carlo simulations for estimating
+#' the dose rate uncertainty
 #' @param ... Currently not used.
 #' @details
 #'  To estimate the gamma dose rate, one of the calibration curves distributed
@@ -427,13 +429,27 @@ setGeneric(
 #'  follows:
 #'
 #'  \deqn{
-#'  SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+#'  \sigma_{\dot{D_\gamma}} = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
 #'  }
 #'
 #'  with \eqn{m} and \eqn{m_{\delta}} being the slope of the fit an its uncertainty,
 #'  \eqn{\sigma} the error scaler for the slope uncertainty, \eqn{s} and \eqn{s_{\delta}}
 #'  the integrated signal and its uncertainty, and \eqn{\epsilon} an additional relative uncertainty
 #'  term that can be set by the user using the argument `epsilon`.
+#'
+#'  If the parameter `use_MC` is set to `TRUE`, the a Monte Carlo sampling approach
+#'  is chosen to approximate the uncertainties on the dose rate:
+#'
+#'  \deqn{
+#'    \sigma_{\dot{D_\gamma}} :=
+#'    \sqrt((\frac{SD(\mathcal{N}(\mu_{slope}, \sigma_{slope}) \times \mathcal{N}(\mu_{signal}, \sigma_{signal}) +
+#'    \mathcal{N}(\mu_{intercept}, \sigma_{intercept})) * \rho}{\dot{D_\gamma}})^2 +
+#'    \epsilon^2) * \dot{D_\gamma}
+#'  }
+#'
+#'  \eqn{\ rho} is the parameter `sigma` provided with the function call, \eqn{SD} equals the
+#'  the call to `sd()`, i.e. the calculation of the standard deviation. To achieve a good
+#'  gaussian normal approximation with sample 1+e06 times (the values is fixed).
 #'
 #'  See `vignette(doserate)` for a reproducible example.
 #' @return
