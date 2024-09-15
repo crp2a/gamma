@@ -68,7 +68,7 @@
 B. Lebrun, S. Kreutzer</h4>
             
             <h4 data-toc-skip class="date">Last modified:
-2024-09-09</h4>
+2024-09-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -547,7 +547,7 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2024-09-09 08:35:52.394927</span></span></code></pre></div>
+<span><span class="co">#&gt; * date: 2024-09-15 08:19:37.439618</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
 package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
@@ -556,40 +556,40 @@ package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
 <span><span class="fu"><a href="../reference/summarise.html">summarise</a></span><span class="op">(</span><span class="va">AIX_NaI</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $Ni</span></span>
 <span><span class="co">#&gt; $Ni$residuals</span></span>
-<span><span class="co">#&gt; [1]  33.402986   7.968894   6.460507 -18.670747  78.089036</span></span>
+<span><span class="co">#&gt; [1]  33.573851   7.952809   6.541241 -18.560316  78.345223</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$coefficients</span></span>
 <span><span class="co">#&gt;            Estimate Std. Error</span></span>
-<span><span class="co">#&gt; Intercept 40.013121 41.8531813</span></span>
-<span><span class="co">#&gt; Slope      9.140417  0.2721024</span></span>
+<span><span class="co">#&gt; Intercept 40.164150 41.7624590</span></span>
+<span><span class="co">#&gt; Slope      9.138879  0.2714404</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$MSWD</span></span>
-<span><span class="co">#&gt; [1] 0.8938093</span></span>
+<span><span class="co">#&gt; [1] 0.8995128</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$df</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$p_value</span></span>
-<span><span class="co">#&gt; [1] 0.4433926</span></span>
+<span><span class="co">#&gt; [1] 0.4404757</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi</span></span>
 <span><span class="co">#&gt; $NiEi$residuals</span></span>
-<span><span class="co">#&gt; [1]  33.906630  12.519006 -21.932843  -8.121213  86.160947</span></span>
+<span><span class="co">#&gt; [1]  33.906847  12.518973 -21.932740  -8.121079  86.161275</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$coefficients</span></span>
 <span><span class="co">#&gt;              Estimate   Std. Error</span></span>
-<span><span class="co">#&gt; Intercept 27.88537142 4.202826e+01</span></span>
-<span><span class="co">#&gt; Slope      0.01735135 5.142132e-04</span></span>
+<span><span class="co">#&gt; Intercept 27.88558657 4.202809e+01</span></span>
+<span><span class="co">#&gt; Slope      0.01735135 5.142108e-04</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$MSWD</span></span>
-<span><span class="co">#&gt; [1] 0.9375068</span></span>
+<span><span class="co">#&gt; [1] 0.9375135</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$df</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$p_value</span></span>
-<span><span class="co">#&gt; [1] 0.421443</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.4214397</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot calibration curves</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
@@ -651,17 +651,17 @@ consists of only three steps:</p>
 <code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">rates</span></span>
 <span><span class="co">#&gt;        names signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
-<span><span class="co">#&gt; 1 NAR19-P2-1  96.84460     0.3623222  925.2131    56.91231    50148.73</span></span>
-<span><span class="co">#&gt; 2 NAR19-P3-1 117.77185     0.3585096 1116.4969    68.63574    61203.78</span></span>
-<span><span class="co">#&gt; 3 NAR19-P4-1  93.43065     0.3997429  894.0082    55.02411    48502.94</span></span>
-<span><span class="co">#&gt; 4 NAR19-P5-1 147.88856     0.4498253 1391.7762    85.55814    77346.35</span></span>
-<span><span class="co">#&gt; 5 NAR19-P6-1 123.81692     0.5240536 1171.7514    72.11483    64791.18</span></span>
+<span><span class="co">#&gt; 1 NAR19-P2-1  96.84460     0.2562005  925.2152    56.73890    50148.73</span></span>
+<span><span class="co">#&gt; 2 NAR19-P3-1 117.77185     0.2535046 1116.4668    68.44589    61203.78</span></span>
+<span><span class="co">#&gt; 3 NAR19-P4-1  93.43065     0.2826609  894.0156    54.84128    48502.94</span></span>
+<span><span class="co">#&gt; 4 NAR19-P5-1 147.88856     0.3180745 1391.6998    85.31918    77346.35</span></span>
+<span><span class="co">#&gt; 5 NAR19-P6-1 123.81692     0.3705618 1171.7120    71.87404    64791.18</span></span>
 <span><span class="co">#&gt;   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span></span>
-<span><span class="co">#&gt; 1        8.281816  898.0336      54.90534   911.6234       79.06380</span></span>
-<span><span class="co">#&gt; 2        8.203765 1089.8538      66.63305  1103.1754       95.64668</span></span>
-<span><span class="co">#&gt; 3        9.148442  869.4770      53.15946   881.7426       76.49422</span></span>
-<span><span class="co">#&gt; 4       10.316578 1369.9492      83.75792  1380.8627      119.72240</span></span>
-<span><span class="co">#&gt; 5       12.026192 1152.1000      70.43890  1161.9257      100.79844</span></span></code></pre></div>
+<span><span class="co">#&gt; 1        5.856128  898.0337      54.90501   911.6244       78.94247</span></span>
+<span><span class="co">#&gt; 2        5.800938 1089.8538      66.63269  1103.1603       95.51350</span></span>
+<span><span class="co">#&gt; 3        6.468925  869.4771      53.15912   881.7463       76.36615</span></span>
+<span><span class="co">#&gt; 4        7.294923 1369.9491      83.75747  1380.8244      119.55407</span></span>
+<span><span class="co">#&gt; 5        8.503802 1152.1000      70.43845  1161.9060      100.62886</span></span></code></pre></div>
 <p><em>Note: We assume here that the energy scale of each spectrum was
 adjusted first.</em></p>
 </div>
@@ -705,7 +705,7 @@ this vignette.</p>
 <span><span class="co">#&gt; [25] cachem_1.1.0      xfun_0.47         fs_1.6.4          sass_0.4.9       </span></span>
 <span><span class="co">#&gt; [29] cli_3.6.3         pkgdown_2.1.0     withr_3.0.1       magrittr_2.0.3   </span></span>
 <span><span class="co">#&gt; [33] digest_0.6.37     grid_4.4.1        lifecycle_1.0.4   vctrs_0.6.5      </span></span>
-<span><span class="co">#&gt; [37] evaluate_0.24.0   glue_1.7.0        farver_2.1.2      ragg_1.3.2       </span></span>
+<span><span class="co">#&gt; [37] evaluate_0.24.0   glue_1.7.0        farver_2.1.2      ragg_1.3.3       </span></span>
 <span><span class="co">#&gt; [41] fansi_1.0.6       colorspace_2.1-1  rmarkdown_2.28    tools_4.4.1      </span></span>
 <span><span class="co">#&gt; [45] pkgconfig_2.0.3   htmltools_0.5.8.1</span></span></code></pre>
 </div>

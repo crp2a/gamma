@@ -68,13 +68,13 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,missing'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectrum'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectra'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -125,6 +125,11 @@ slope is considered in the final uncertainty calculation</p></dd>
 <dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving an extra relative error term,
 introduced by the calibration of the energy scale of the spectrum,
 e.g., <code>0.015</code> for an additional 1.5% error</p></dd>
+
+
+<dt id="arg-use-mc">use_MC<a class="anchor" aria-label="anchor" href="#arg-use-mc"></a></dt>
+<dd><p>A <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></code> parameter, enabling/disabling Monte Carlo simulations for estimating
+the dose rate uncertainty</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -191,12 +196,23 @@ predictor (York <em>et al.</em>, 2004).</p>
 <p>The analytical uncertainties of the final gamma-dose rate (\(SE(\dot{D}_{\gamma})\)) are calculated as
 follows:</p>
 <p>$$
- SE(\dot{D_\gamma}) = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
+ \sigma_{\dot{D_\gamma}} = \sqrt((\frac{m_{\delta}s}{m})^2 + (\frac{s_{\delta}}{s})^2 + \epsilon^2)
  $$</p>
 <p>with \(m\) and \(m_{\delta}\) being the slope of the fit an its uncertainty,
 \(\sigma\) the error scaler for the slope uncertainty, \(s\) and \(s_{\delta}\)
 the integrated signal and its uncertainty, and \(\epsilon\) an additional relative uncertainty
 term that can be set by the user using the argument <code>epsilon</code>.</p>
+<p>If the parameter <code>use_MC</code> is set to <code>TRUE</code>, the a Monte Carlo sampling approach
+is chosen to approximate the uncertainties on the dose rate:</p>
+<p>$$
+   \sigma_{\dot{D_\gamma}} :=
+   \sqrt((\frac{SD(\mathcal{N}(\mu_{slope}, \sigma_{slope}) \times \mathcal{N}(\mu_{signal}, \sigma_{signal}) +
+   \mathcal{N}(\mu_{intercept}, \sigma_{intercept})) * \rho}{\dot{D_\gamma}})^2 +
+   \epsilon^2) * \dot{D_\gamma}
+ $$</p>
+<p>\(\ rho\) is the parameter <code>sigma</code> provided with the function call, \(SD\) equals the
+the call to <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code>, i.e. the calculation of the standard deviation. To achieve a good
+gaussian normal approximation with sample 1+e06 times (the values is fixed).</p>
 <p>See <code>vignette(doserate)</code> for a reproducible example.</p>
     </div>
     <div class="section level2">
@@ -256,21 +272,21 @@ Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
 <span class="r-in"><span><span class="co">## Estimate gamma dose rates</span></span></span>
 <span class="r-in"><span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">calib_curve</span>, <span class="va">spc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    names signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE  67.56799     0.1539729 1955.8683    52.77781    64025.06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  28.93445     0.3283027  843.9938    24.63107    27700.15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347  48.95519     0.4531988 1420.1912    40.38593    46110.29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU  55.16875     0.3954882 1599.0175    44.49614    52563.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  21.85261     0.3163219  640.1782    19.54897    20987.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ  39.23547     0.3608703 1140.4575    32.40899    37607.71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP  84.50625     0.6514533 2443.3517    68.34353    80089.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BRIQUE  67.56799     0.1088753 1953.8126    51.04781    64025.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   C341  28.93445     0.2321450  844.2413    23.03416    27700.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C347  48.95519     0.3204599 1419.2451    38.15865    46110.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    GOU  55.16875     0.2796524 1597.7011    42.44396    52563.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    LMP  21.85261     0.2236734  640.8480    17.95295    20987.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    MAZ  39.23547     0.2551738 1140.0909    30.64143    37607.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    PEP  84.50625     0.4606470 2440.2863    65.01209    80089.25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4.883996 1946.9606      49.02495  1951.4145       72.02277</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       10.554185  843.0632      21.23087   843.5285       32.51567</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       14.342109 1402.5391      35.31881  1411.3651       53.60953</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       12.537674 1598.6341      40.25562  1598.8258       60.00280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10.233603  639.0612      16.09466   639.6197       25.31772</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       11.534979 1144.1496      28.81198  1142.3036       43.37279</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       20.457178 2435.1440      61.32040  2439.2479       91.80434</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        3.453506 1946.9570      49.02259  1950.3848       70.77024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        7.462936  843.0632      21.22872   843.6523       31.32285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       10.141403 1402.5373      35.31587  1410.8912       51.97214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        8.865474 1598.6316      40.25289  1598.1664       58.49693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        7.236250  639.0619      16.09246   639.9549       24.10606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        8.156462 1144.1487      28.80962  1142.1198       42.06299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       14.465409 2435.1387      61.31599  2437.7125       89.36030</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
