@@ -6,12 +6,12 @@ test_that("Integrate GammaSpectrum", {
   bkg <- read(spc_bkg)
 
   int1 <- signal_integrate(cnf, range = c(200, 2800), energy = TRUE)
-  expect_equal(int1, c(1.483392e+05, 9.361146e+00),
+  expect_equal(int1, c(1.483392e+05, 6.62),
                tolerance = 1e-06, ignore_attr = TRUE)
   expect_length(int1, 2)
 
   int2 <- signal_integrate(cnf, bkg, range = c(200, 2800), energy = FALSE)
-  expect_equal(int2, c(258.6836050, 0.4129534), tolerance = 1e-07,
+  expect_equal(int2, c(258.6836050, 0.2920021), tolerance = 1e-07,
                ignore_attr = TRUE)
   expect_length(int2, 2)
 

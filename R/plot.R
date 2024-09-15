@@ -220,7 +220,7 @@ setMethod(
       ) +
       geom_point() +
       ggellipse + ggbar +
-      labs(x = sprintf("Signal [%s]", k), y = expression("Dose rate ["*mu*"Gy/y]"))
+      labs(x = sprintf("Integrated signal [%s]", k), y = expression("Dose rate ["*mu*"Gy/y]"))
   }
 )
 

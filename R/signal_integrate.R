@@ -39,8 +39,9 @@ setMethod(
     # Normalize integrated signal to time
     live_time <- get_livetime(object)
     norm_signal <- int_spc / live_time
-    norm_error <- sqrt(2 * int_spc) / live_time
+    norm_error <- sqrt(int_spc) / live_time
 
+    ## return values
     c(value = norm_signal, error = norm_error)
   }
 )
@@ -123,6 +124,8 @@ setMethod(
 )
 
 integrate <- function(count, energy, index) {
-  if (missing(energy)) sum(count[index])
-  else crossprod(energy[index], count[index])
+  if (missing(energy))
+    sum(count[index])
+  else
+    crossprod(energy[index], count[index])
 }
