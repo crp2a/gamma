@@ -18,7 +18,7 @@ setMethod(
     if (!all(utils::file_test("-f", file))) {
       file_list <- tools::list_files_with_exts(file, exts = extensions)
       if (length(file_list) == 0)
-        stop("No spectrum files were fund.", call. = FALSE)
+        stop("No spectrum files were found.", call. = FALSE)
       file <- as.list(file_list)
     }
 
