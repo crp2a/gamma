@@ -22,6 +22,21 @@ test_that("Integrate GammaSpectrum", {
   tka <- read(spc_tka)
   expect_error(signal_integrate(tka, range = c(200, 2800)),
                "You must calibrate the energy scale of your spectrum first.")
+
+  ## check the simplify argument
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), simplify = TRUE),
+              type = "double")
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), simplify = FALSE),
+              type = "list")
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), background = cnf, simplify = TRUE),
+              type = "double")
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), background = cnf, simplify = FALSE),
+              type = "list")
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), background = c(0,0), simplify = TRUE),
+              type = "double")
+  expect_type(signal_integrate(object = as(list(cnf, cnf), "GammaSpectra"), background = c(0,0), simplify = FALSE),
+              type = "list")
+
 })
 
 test_that("Integrate GammaSpectra", {
