@@ -8,7 +8,7 @@ NULL
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "missing"),
-  definition = function(object, sigma = 1, epsilon = 0.015, use_MC = FALSE) {
+  definition = function(object, sigma = 1, epsilon = 0.015, water_content = NULL, use_MC = FALSE) {
 
     ## calculate for count threshold
     Ni <- predict_york(
@@ -32,6 +32,21 @@ setMethod(
       sqrt((Ni$dose_err/Ni$dose)^2 + (NiEi$dose_err/NiEi$dose)^2)
     FINAL <- data.frame(dose_final, dose_err_final)
 
+    ## correct for water content if given
+    if (!is.null(water_content)) {
+      if (!is.null(nrow(water_content)) && nrow(FINAL) != nrow(water_content))
+        warning("Number of rows in matrix 'water_content' unequal to number of spectra. Values recycled!", call. = FALSE)
+
+      ## make sure that water content is matrix; the silent recycling is wanted
+      water_content <- suppressWarnings(matrix(water_content, ncol = 2, nrow  = nrow(FINAL), byrow = TRUE))
+
+      rel_error <-  sqrt((FINAL$dose_err_final/FINAL$dose_final)^2 + (water_content[,2]/water_content[,1])^2)
+      FINAL$dose_final <- FINAL$dose_final * (1 + (1.14 * water_content[,1]))
+      FINAL$dose_err_final <- FINAL$dose_final *  rel_error
+
+    }
+
+    ## merge data
     Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
   }
@@ -43,9 +58,15 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectrum"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 0.015, use_MC = FALSE) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 0.015, water_content = NULL, use_MC = FALSE) {
     spectrum <- methods::as(spectrum, "GammaSpectra")
-    dose_predict(object, spectrum, sigma = sigma, epsilon = epsilon, use_MC = use_MC)
+    dose_predict(
+      object = object,
+      spectrum = spectrum,
+      sigma = sigma,
+      epsilon = epsilon,
+      water_content = water_content,
+      use_MC = use_MC)
   }
 )
 
@@ -55,7 +76,7 @@ setMethod(
 setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
-  definition = function(object, spectrum, sigma = 1, epsilon = 0.015, use_MC = FALSE) {
+  definition = function(object, spectrum, sigma = 1, epsilon = 0.015, water_content = NULL, use_MC = FALSE) {
 
     ## calculate for count threshold
     Ni <- predict_york(
@@ -80,6 +101,20 @@ setMethod(
     dose_err_final <- dose_final *
       sqrt((Ni$dose_err/Ni$dose)^2 + (NiEi$dose_err/NiEi$dose)^2)
     FINAL <- data.frame(dose_final, dose_err_final)
+
+    ## correct for water content if given
+    if (!is.null(water_content)) {
+      if (!is.null(nrow(water_content)) && nrow(FINAL) != nrow(water_content))
+        warning("Number of rows in matrix 'water_content' unequal to number of spectra. Values recycled!", call. = FALSE)
+
+      ## make sure that water content is matrix; the silent recycling is wanted
+      water_content <- suppressWarnings(matrix(water_content, ncol = 2, nrow  = nrow(FINAL), byrow = TRUE))
+
+      rel_error <-  sqrt((FINAL$dose_err_final/FINAL$dose_final)^2 + (water_content[,2]/water_content[,1])^2)
+      FINAL$dose_final <- FINAL$dose_final * (1 + (1.14 * water_content[,1]))
+      FINAL$dose_err_final <- FINAL$dose_final *  rel_error
+
+    }
 
     Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
@@ -132,7 +167,6 @@ predict_york <- function(model, spectrum, energy = FALSE,
     slope_MC <- stats::rnorm(n_MC, mean = slope[[1L]], sd = slope[[2L]])
     intercept_MC <- stats::rnorm(n_MC, mean = intercept[[1L]], sd = intercept[[2L]])
     signals_MC <- mapply(stats::rnorm, n = n_MC, mean = signals$value, sd = signals$error)
-
 
     ## calculate for all runs
     gamma_MC <- vapply(1:ncol(signals_MC), function(x) slope_MC * signals_MC[,x] + intercept_MC, numeric(n_MC))

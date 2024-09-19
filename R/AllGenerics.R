@@ -406,6 +406,10 @@ setGeneric(
 #' @param epsilon A [`numeric`] value giving an extra relative error term,
 #'  introduced by the calibration of the energy scale of the spectrum,
 #'  e.g., `0.015` for an additional 1.5% error
+#' @param water_content [`numeric`] or [`matrix`] gravimetric field water content to correct
+#' the gamma-dose rate to using the correction factor by Aitken (1985) to obtain the dry gamma-dose
+#' rate. Example: `c(0.05,0.0001)` for water content of 5% +/- 0.01 %. The default is `NULL` (nothing is corrected).
+#' The correction only works on the final dose rate. For more information see details.
 #' @param use_MC A [`logical`] parameter, enabling/disabling Monte Carlo simulations for estimating
 #' the dose rate uncertainty
 #' @param ... Currently not used.
@@ -449,9 +453,24 @@ setGeneric(
 #'
 #'  \eqn{\ rho} is the parameter `sigma` provided with the function call, \eqn{SD} equals the
 #'  the call to `sd()`, i.e. the calculation of the standard deviation. To achieve a good
-#'  gaussian normal approximation with sample 1+e06 times (the values is fixed).
+#'  Gaussian normal approximation with sample 1+e06 times (the values is fixed).
 #'
-#'  See `vignette(doserate)` for a reproducible example.
+#'  **Water content correction**
+#'
+#' If gamma-dose rates are measured in the field, they are measured at  "as-is" conditions.
+#' In dating studies, however, using the dry dose rate is often more desirable to model the
+#' long-term effect of different assumptions for the water content. If the parameter `water_content`,
+#' either as [numeric] vector or as [matrix] with the number of rows equal to the
+#' number of processed spectra,  if different values are desired, the **final** gamma-dose rate is
+#' corrected for the water content provided. Final uncertainties are obtained using the square
+#' root of the summed squared relative uncertainties of the dose rate and the water content.
+#'
+#' A word of caution: When estimating the water content in the laboratory, the water
+#' analytical uncertainty is usually minimal, and it does not make sense to
+#' correct with a relative water content of, e.g., c(0.02,0.02) (2% +/- 2%) because
+#' this massively inflates the final dose rate error.
+#'
+#' See `vignette(doserate)` for a reproducible example.
 #' @return
 #'  * `dose_fit()` returns a [CalibrationCurve-class] object.
 #'  * `dose_predict()` returns a [`data.frame`] with the following columns:
@@ -476,6 +495,10 @@ setGeneric(
 #'  }
 #' @seealso [signal_integrate()]
 #' @references
+#'
+#'  Aitken, M.J. (1985). Thermoluminescence dating, Studies in archaeological science.
+#'  Academic Press, London.
+#'
 #'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 #'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 #'  *Ancient TL*, 25(1), p. 1-4.
