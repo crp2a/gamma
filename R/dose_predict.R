@@ -16,7 +16,8 @@ setMethod(
       energy = FALSE,
       sigma = sigma,
       epsilon = epsilon,
-      use_MC = use_MC)
+      use_MC = use_MC
+    )
 
     ## calculate for energy threshold
     NiEi <- predict_york(
@@ -24,7 +25,8 @@ setMethod(
       energy = TRUE,
       sigma = sigma,
       epsilon = epsilon,
-      use_MC = use_MC)
+      use_MC = use_MC
+    )
 
     ## calculate the mean and error of both values
     dose_final <- rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2))
@@ -47,7 +49,7 @@ setMethod(
     }
 
     ## merge data
-    Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    Ni_NiEi <- merge(Ni, NiEi, by = "name", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
   }
 )
@@ -66,7 +68,8 @@ setMethod(
       sigma = sigma,
       epsilon = epsilon,
       water_content = water_content,
-      use_MC = use_MC)
+      use_MC = use_MC
+    )
   }
 )
 
@@ -94,7 +97,8 @@ setMethod(
       energy = TRUE,
       sigma = sigma,
       epsilon = epsilon,
-      use_MC = use_MC)
+      use_MC = use_MC
+    )
 
     ## calculate the mean and error of both values
     dose_final <- rowMeans(matrix(c(Ni$dose, NiEi$dose), ncol = 2))
@@ -116,7 +120,7 @@ setMethod(
 
     }
 
-    Ni_NiEi <- merge(Ni, NiEi, by = "names", sort = FALSE, suffixes = c("_Ni","_NiEi"))
+    Ni_NiEi <- merge(Ni, NiEi, by = "name", sort = FALSE, suffixes = c("_Ni","_NiEi"))
     cbind(Ni_NiEi, FINAL)
 
   }
@@ -144,7 +148,7 @@ predict_york <- function(model, spectrum, energy = FALSE,
     signals <- signal_integrate(spectrum, background, range = range,
                                 energy = energy, simplify = TRUE)
     signals <- as.data.frame(signals)
-    signals$names <- rownames(signals)
+    signals$name <- rownames(signals)
   }
 
   # Get linear regression results
@@ -175,7 +179,7 @@ predict_york <- function(model, spectrum, energy = FALSE,
   }
 
   results <- data.frame(
-    names = signals$names,
+    name = signals$name,
     signal = signals$value,
     signal_err = signals$error,
     dose = gamma_dose,

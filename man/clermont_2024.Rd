@@ -5,7 +5,7 @@
 \alias{clermont_2024}
 \title{Clermont Reference Data 2024}
 \format{
-\code{\link{data.frame}} with tabulated data and conversion factor reference
+A \code{\link{data.frame}} with tabulated data and conversion factor reference.
 }
 \source{
 Adamiec, G. & Aitken, M.J. (1998).

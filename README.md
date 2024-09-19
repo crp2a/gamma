@@ -128,7 +128,7 @@ plot(BDX_LaBr_1)
 (doses <- dose_predict(BDX_LaBr_1, spectra))
 ```
 
-| names          | signal_Ni | signal_err_Ni |   dose_Ni | dose_err_Ni | signal_NiEi | signal_err_NiEi | dose_NiEi | dose_err_NiEi | dose_final | dose_err_final |
+| name           | signal_Ni | signal_err_Ni |   dose_Ni | dose_err_Ni | signal_NiEi | signal_err_NiEi | dose_NiEi | dose_err_NiEi | dose_final | dose_err_final |
 |:---------------|----------:|--------------:|----------:|------------:|------------:|----------------:|----------:|--------------:|-----------:|---------------:|
 | 20110523204008 |  8.604666 |     0.2691316 |  252.2866 |   10.372500 |    7626.493 |        8.747617 |  220.6747 |      5.495079 |   236.4806 |      11.366900 |
 | 20110523210008 |  8.775092 |     0.2166075 |  257.3316 |    9.354274 |    7577.302 |        7.021326 |  219.1303 |      5.454610 |   238.2309 |      10.495729 |

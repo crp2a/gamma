@@ -258,7 +258,7 @@ setMethod(
     new_model <- stats::update(model, new_coef)
 
     data.frame(
-      names = data$names,
+      names = data$name,
       fitted = new_model$fitted.values,
       residuals = new_model$residuals,
       standardized = stats::rstandard(new_model),

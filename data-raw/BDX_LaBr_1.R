@@ -8,7 +8,7 @@ BDX_LaBr_1_data <- utils::read.table("./data-raw/BDX_LaBr_1.csv",
 ## Linear regression
 # Build calibration curve
 Ni_data <- BDX_LaBr_1_data[, c(1, 3, 4, 7, 8)]
-colnames(Ni_data) <- c("names", "signal_value", "signal_error",
+colnames(Ni_data) <- c("name", "signal_value", "signal_error",
                        "gamma_dose", "gamma_error")
 Ni_model <- IsoplotR::york(Ni_data[, -1])
 
@@ -31,7 +31,7 @@ BDX_LaBr_1_Ni <- .DoseRateModel(
 # IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
 
 NiEi_data <- BDX_LaBr_1_data[, c(1, 5, 6, 7, 8)]
-colnames(NiEi_data) <- c("names", "signal_value", "signal_error",
+colnames(NiEi_data) <- c("name", "signal_value", "signal_error",
                        "gamma_dose", "gamma_error")
 NiEi_model <- IsoplotR::york(NiEi_data[, -1])
 

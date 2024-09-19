@@ -21,7 +21,7 @@ CRP2A Calibration Curve (LaBr)
 }
 \examples{
 ## Load the curve
-utils::data(BDX_LaBr_1, package = "gamma")
+data(BDX_LaBr_1, package = "gamma")
 plot(BDX_LaBr_1)
 }
 \seealso{
