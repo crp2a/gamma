@@ -13,6 +13,8 @@ uncertainty calculation. (PR #42 by @RLumSK)
 * Add additional columns to the output object of `dose_predict()` and calculate a "final" dose based on the mean of the findings from the count and the energy threshold (PR #43 by @RLumSK) 
 * Add new argument `use_MC` to `dose_predic()` method. The default is `FALSE` to maintain compatibility with old code and output exceptions. If set to `TRUE` the uncertainty on the gamma dose rate uses a Monte Carlo simulation approach for a more realistic error estimation (PR #46 by RLumSK)
 * Add new methods for signatures `lm` and `GammaSpectrum-class` to`energy_calibrate()` for `GammaSpectrum-class` and `GammaSpectra-class()` objects for the argument `lines`. In simple words, instead of providing data for an energy/channel calibration such calibration can be copied over from another already calibrated spectrum (PR #XX by @RLumSK).  
+* Add support for the energy calibration model to `dose_fit()` and `dose_predict()`. What does it mean? (1) If an energy calibration was performed on the spectra used for the dose rate model fitting, the model information is forwarded to the info slot of the model. (2) The function `dose_fit()` can read this information and double-check whether the user tries to predict the dose with calibrated or uncalibrated data. If the calibration has data but the spectrum does not, the function tries to use the available calibration. Given that the energy calibration often does not change considerably, this should dramatically simplify the 
+workflow once the equipment was calibrated. 
 * Extend `dose_predict()` to work with a `numeric` input for `background` as claimed in the documentary. This value can also be set to `c(0,0)` if no background
 subtraction is wanted (PR #38 by @RLumSK)
 
