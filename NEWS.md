@@ -12,6 +12,7 @@ uncertainty calculation. (PR #42 by @RLumSK)
 * Add coercion method for `PeakPosition-class` to `list` (exported as `as.list()`) and from `list` to `PeakPosition-class`. This enables better plotting functionality if the peak positions for where provided manually as `list` and not via, e.g., `peak_find()` (PR #37 by @RLumSK).
 * Add additional columns to the output object of `dose_predict()` and calculate a "final" dose based on the mean of the findings from the count and the energy threshold (PR #43 by @RLumSK) 
 * Add new argument `use_MC` to `dose_predic()` method. The default is `FALSE` to maintain compatibility with old code and output exceptions. If set to `TRUE` the uncertainty on the gamma dose rate uses a Monte Carlo simulation approach for a more realistic error estimation (PR #46 by RLumSK)
+* Add new function parameter `water_content` to `dose_predict()` to allow for an estimate of the dry gamma dose rate using the correction factor by Aitken (1985). The default is `NULL`, in this case nothing is corrected (PR #XX by @RLumSK)
 * Extend `dose_predict()` to work with a `numeric` input for `background` as claimed in the documentary. This value can also be set to `c(0,0)` if no background
 subtraction is wanted (PR #38 by @RLumSK)
 

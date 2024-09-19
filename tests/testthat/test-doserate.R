@@ -1,6 +1,5 @@
-data("clermont")
-
 test_that("Build a calibration curve", {
+  data("clermont")
   spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
   spc <- read(spc_dir)
   bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
@@ -34,7 +33,10 @@ test_that("Build a calibration curve", {
 })
 test_that("Estimate dose rates", {
   testthat::skip_on_cran()
+
+  data("clermont")
   set.seed(1234)
+
   spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
   spc <- read(spc_dir)
   bkg_dir <- system.file("extdata/BDX_LaBr_1/background", package = "gamma")
@@ -68,6 +70,14 @@ test_that("Estimate dose rates", {
   dose_rate4 <- expect_silent(dose_predict(calib_zeroBG, spc))
   dose_rate4_MC <- expect_silent(dose_predict(calib_zeroBG, spc, use_MC = TRUE))
   expect_type(dose_rate4, "list")
+
+  ## check water content attribute
+  expect_type(dose_predict(calib, water_content = c(0.02,0.0001), use_MC = FALSE), "list")
+  water_content <- matrix(c(0.05,0.20,0,0), ncol = 2)
+  expect_warning(dose_predict(calib, water_content = water_content, use_MC = FALSE),
+                 regexp = "Number of rows in matrix 'water_content' unequal to number of spectra. Values recycled!")
+  water_content <- matrix(c(0.05,0.05,0.05,0.05,0.05,0.05,0.05,0,0,0,0,0,0,0), ncol = 2)
+  expect_type(dose_predict(calib, water_content = water_content, use_MC = FALSE), "list")
 
   ## regression test
   expect_equal(sum(dose_rate2[,-1]), expected = 70105, tolerance = 1)
