@@ -39,6 +39,7 @@ Useful links:
 
 \tabular{ll}{
 Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
+Sebastian Kreutzer \tab \emph{Universität Heidelberg, Germany} \cr
 Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
 Brice Lebrun \tab \emph{Université Bordeaux Montaigne, France} \cr
 Guilhem Paradol \tab \emph{Commissariat à l'Énergie Atomique, France} \cr

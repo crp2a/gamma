@@ -127,11 +127,12 @@ the value of \code{threshold}; see \code{\link[=signal_integrate]{signal_integra
 }
 }
 \description{
-\code{dose_fit} builds a calibration curve for gamma dose rate estimation.
+\itemize{
+\item \code{dose_fit()} builds a calibration curve for gamma dose rate estimation.
+\item \code{dose_predict()} predicts in situ gamma dose rate.
+}
 }
 \details{
-\code{dose_predict} predicts in situ gamma dose rate.
-
 To estimate the gamma dose rate, one of the calibration curves distributed
 with this package can be used. These built-in curves are in use in several
 luminescence dating laboratories and can be used to replicate published
@@ -144,8 +145,11 @@ First, each reference spectrum is integrated over a given interval, then
 normalized to active time and corrected for background noise. The dose rate
 is finally modelled by the integrated signal value used as a linear
 predictor (York \emph{et al.}, 2004).
-
-\strong{Uncertainty calculation of the gamma-dose rate}
+}
+\note{
+See \code{vignette(doserate)} for a reproducible example.
+}
+\section{Uncertainty calculation of the gamma-dose rate}{
 
 The analytical uncertainties of the final gamma-dose rate (\eqn{SE(\dot{D}_{\gamma})}) are calculated as
 follows:
@@ -172,24 +176,26 @@ is chosen to approximate the uncertainties on the dose rate:
 \eqn{\ rho} is the parameter \code{sigma} provided with the function call, \eqn{SD} equals the
 the call to \code{sd()}, i.e. the calculation of the standard deviation. To achieve a good
 Gaussian normal approximation with sample 1+e06 times (the values is fixed).
-
-\strong{Water content correction}
-
-If gamma-dose rates are measured in the field, they are measured at  "as-is" conditions.
-In dating studies, however, using the dry dose rate is often more desirable to model the
-long-term effect of different assumptions for the water content. If the parameter \code{water_content},
-either as \link{numeric} vector or as \link{matrix} with the number of rows equal to the
-number of processed spectra,  if different values are desired, the \strong{final} gamma-dose rate is
-corrected for the water content provided. Final uncertainties are obtained using the square
-root of the summed squared relative uncertainties of the dose rate and the water content.
-
-A word of caution: When estimating the water content in the laboratory, the water
-analytical uncertainty is usually minimal, and it does not make sense to
-correct with a relative water content of, e.g., c(0.02,0.02) (2\% +/- 2\%) because
-this massively inflates the final dose rate error.
-
-See \code{vignette(doserate)} for a reproducible example.
 }
+
+\section{Water content correction}{
+
+If gamma-dose rates are measured in the field, they are measured at  "as-is"
+conditions. In dating studies, however, using the dry dose rate is often
+more desirable to model the long-term effect of different assumptions for
+the water content. If the parameter \code{water_content}, either as \link{numeric}
+vector or as \link{matrix} with the number of rows equal to the number of
+processed spectra,  if different values are desired, the \strong{final}
+gamma-dose rate is corrected for the water content provided. Final
+uncertainties are obtained using the square root of the summed squared
+relative uncertainties of the dose rate and the water content.
+
+A word of caution: When estimating the water content in the laboratory,
+the water analytical uncertainty is usually minimal, and it does not make
+sense to correct with a relative water content of, e.g., c(0.02,0.02)
+(2\% +/- 2\%) because this massively inflates the final dose rate error.
+}
+
 \examples{
 ## Import CNF files
 ## Spectra
@@ -216,8 +222,7 @@ plot(calib_curve, threshold = "Ni")
 dose_predict(calib_curve, spc)
 }
 \references{
-Aitken, M.J. (1985). Thermoluminescence dating, Studies in archaeological science.
-Academic Press, London.
+Aitken, M.J. (1985). \emph{Thermoluminescence dating}. London: Academic Press.
 
 Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.

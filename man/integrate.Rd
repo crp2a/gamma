@@ -61,10 +61,8 @@ If \code{simplify} is \code{FALSE} (the default) returns a \code{\link{list}} of
 Integration of the spectrum including uncertainty calculation.
 }
 \details{
-\strong{Integration methods}
-
-The function supports two integration techniques (see Guérin & Mercier (2011)), the (1) count threshold
-integration and the (2) energy integration method:
+The function supports two integration techniques (see Guérin & Mercier 2011),
+the (1) count threshold integration and the (2) energy integration method:
 
 The count integration technique (\code{energy = FALSE}) integrates
 all counts in given \code{range}:
@@ -80,11 +78,12 @@ of counts and corresponding energy per channel:
   A = \frac{\Sigma_{i}^{N}S_i \times E_i}{t_{live}}
  }
 
-\eqn{A} is the area, \eqn{S_i} is the signal in the \eqn{i^{th}} channel, \eqn{N} the number of channels, \eqn{E_i} the energy
-of the corresponding channel in keV. \eqn{t_{live}} is the live time of the measurement in \emph{s}.
+\eqn{A} is the area, \eqn{S_i} is the signal in the \eqn{i^{th}} channel,
+\eqn{N} the number of channels, \eqn{E_i} the energy of the corresponding
+channel in keV. \eqn{t_{live}} is the live time of the measurement in \emph{s}.
 
-For calculating the uncertainties, Poisson statistics are assumed and hence the
-errors is calculated as:
+For calculating the uncertainties, Poisson statistics are assumed and hence
+the errors is calculated as:
 
 \deqn{
  \sigma_A = \frac{\sqrt{A}}{t_{live}}
