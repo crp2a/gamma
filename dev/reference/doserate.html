@@ -68,13 +68,33 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,missing'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  epsilon <span class="op">=</span> <span class="fl">0.015</span>,</span>
+<span>  water_content <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_MC <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectrum'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">dose_predict</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">spectrum</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  epsilon <span class="op">=</span> <span class="fl">0.015</span>,</span>
+<span>  water_content <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_MC <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'CalibrationCurve,GammaSpectra'</span></span>
-<span><span class="fu">dose_predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">spectrum</span>, sigma <span class="op">=</span> <span class="fl">1</span>, epsilon <span class="op">=</span> <span class="fl">0.015</span>, use_MC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dose_predict</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">spectrum</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  epsilon <span class="op">=</span> <span class="fl">0.015</span>,</span>
+<span>  water_content <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_MC <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -125,6 +145,13 @@ slope is considered in the final uncertainty calculation</p></dd>
 <dd><p>A <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> value giving an extra relative error term,
 introduced by the calibration of the energy scale of the spectrum,
 e.g., <code>0.015</code> for an additional 1.5% error</p></dd>
+
+
+<dt id="arg-water-content">water_content<a class="anchor" aria-label="anchor" href="#arg-water-content"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></code> or <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> gravimetric field water content to correct
+the gamma-dose rate to using the correction factor by Aitken (1985) to obtain the dry gamma-dose
+rate. Example: <code>c(0.05,0.0001)</code> for water content of 5% +/- 0.01 %. The default is <code>NULL</code> (nothing is corrected).
+The correction only works on the final dose rate. For more information see details.</p></dd>
 
 
 <dt id="arg-use-mc">use_MC<a class="anchor" aria-label="anchor" href="#arg-use-mc"></a></dt>
@@ -212,12 +239,26 @@ is chosen to approximate the uncertainties on the dose rate:</p>
  $$</p>
 <p>\(\ rho\) is the parameter <code>sigma</code> provided with the function call, \(SD\) equals the
 the call to <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code>, i.e. the calculation of the standard deviation. To achieve a good
-gaussian normal approximation with sample 1+e06 times (the values is fixed).</p>
+Gaussian normal approximation with sample 1+e06 times (the values is fixed).</p>
+<p><strong>Water content correction</strong></p>
+<p>If gamma-dose rates are measured in the field, they are measured at  "as-is" conditions.
+In dating studies, however, using the dry dose rate is often more desirable to model the
+long-term effect of different assumptions for the water content. If the parameter <code>water_content</code>,
+either as <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector or as <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> with the number of rows equal to the
+number of processed spectra,  if different values are desired, the <strong>final</strong> gamma-dose rate is
+corrected for the water content provided. Final uncertainties are obtained using the square
+root of the summed squared relative uncertainties of the dose rate and the water content.</p>
+<p>A word of caution: When estimating the water content in the laboratory, the water
+analytical uncertainty is usually minimal, and it does not make sense to
+correct with a relative water content of, e.g., c(0.02,0.02) (2% +/- 2%) because
+this massively inflates the final dose rate error.</p>
 <p>See <code>vignette(doserate)</code> for a reproducible example.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Mercier, N. &amp; Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
+    <p>Aitken, M.J. (1985). Thermoluminescence dating, Studies in archaeological science.
+Academic Press, London.</p>
+<p>Mercier, N. &amp; Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 <em>Ancient TL</em>, 25(1), p. 1-4.</p>
 <p>York, D., Evensen, N. M., Martínez, M. L. &amp; De Basabe Delgado, J. (2004).
@@ -298,7 +339,7 @@ Straight Line. <em>American Journal of Physics</em>, 72(3), p. 367-75.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
