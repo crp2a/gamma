@@ -548,7 +548,7 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2024-09-19 18:21:40.796423</span></span></code></pre></div>
+<span><span class="co">#&gt; * date: 2024-09-19 20:41:37.818826</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
 package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
@@ -651,7 +651,7 @@ consists of only three steps:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">rates</span></span>
-<span><span class="co">#&gt;        names signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
+<span><span class="co">#&gt;         name signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
 <span><span class="co">#&gt; 1 NAR19-P2-1  96.84460     0.2562005  925.2152    56.73890    50148.73</span></span>
 <span><span class="co">#&gt; 2 NAR19-P3-1 117.77185     0.2535046 1116.4668    68.44589    61203.78</span></span>
 <span><span class="co">#&gt; 3 NAR19-P4-1  93.43065     0.2826609  894.0156    54.84128    48502.94</span></span>
