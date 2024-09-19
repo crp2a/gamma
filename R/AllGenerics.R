@@ -213,7 +213,10 @@ NULL
 #' @param lines A [PeakPosition-class] object or a [`list`] of length two. If a
 #'  `list` is provided, each element must be a named numeric vector giving the
 #'  observed peak position ("`channel`") and the corresponding expected
-#'  "`energy`" value (in keV).
+#'  "`energy`" value (in keV). Alternatively, the function accepts the [stats::lm]
+#'  object from a another calibration or a [GammaSpectrum-class] object from which such
+#'  calibration is copied. With this, energy calibrations can be transferred from one object
+#'  to another.
 #' @param ... Currently not used.
 #' @details
 #'  The energy calibration of a spectrum is the most tricky part. To do this,

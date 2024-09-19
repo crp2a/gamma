@@ -106,3 +106,49 @@ test_that("the energy scale of a GammaSpectrum is set", {
   expect_equal(has_energy(set_spc), c(TRUE, TRUE, TRUE, FALSE), ignore_attr = TRUE)
 })
 
+
+test_that("Calibrate a GammaSpectrum and GammaSpectra object with a lm object", {
+  spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
+  spectrum_1 <- spectrum_2 <- spectrum_3 <- spectrum_4 <- read(spc_file)
+  spectra <- as(list(spectrum_1, spectrum_2), "GammaSpectra")
+  spectra_2 <- as(list(spectrum_1, spectrum_2), "GammaSpectra")
+
+  ## assign first manually
+  peaks <- gamma:::.PeakPosition(
+    hash = spectrum_1@hash,
+    channel = c(76L, 459L, 816L),
+    energy_expected = c(NA_real_, NA_real_, NA_real_)
+  )
+
+  set_energy(peaks) <- c(238, 1461, 2614.5)
+  calib <- energy_calibrate(spectrum_1, lines = peaks)
+
+  ## assign the calibration to spectrum_2
+  spectrum_2 <- energy_calibrate(spectrum_2, lines = calib@calibration)
+
+  ##check results
+  expect_true(!is.null(spectrum_2@calibration))
+  expect_s3_class(spectrum_2@calibration, "lm")
+  expect_equal(object = sum(calib@energy), expected = sum(spectrum_2@energy))
+
+  ## now the same test on spectra
+  spectra <- energy_calibrate(spectra, lines = calib@calibration)
+  expect_true(all(vapply(spectra, function(x) inherits(x@calibration, "lm"), logical(1))))
+  expect_equal(object = sum(calib@energy), expected = sum(spectra[[1]]@energy))
+
+  ## new provide just another spectrum
+  spectrum_3 <- energy_calibrate(spectrum_3, lines = calib)
+  expect_s3_class(spectrum_3@calibration, "lm")
+  expect_equal(object = sum(calib@energy), expected = sum(spectrum_3@energy))
+
+  ## new provide just another spectrum to spectra
+  spectra_2 <- energy_calibrate(spectra_2, lines = calib)
+  expect_true(all(vapply(spectra_2, function(x) inherits(x@calibration, "lm"), logical(1))))
+  expect_equal(object = sum(calib@energy), expected = sum(spectra_2[[1]]@energy))
+
+  ## call stop
+  calib@calibration <- NULL
+  expect_error(spectrum_4 <- energy_calibrate(spectrum_4, lines = calib),
+               regexp = "The spectrum provided via 'lines' does not have any calibration!")
+
+})
