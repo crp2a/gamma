@@ -135,7 +135,6 @@ test_that("Estimate dose rates", {
   ## check energy calibration issues
   calib_no_energy <- calib
   calib_no_energy@details$energy_calibration <- list(NA)
-
   lines <- data.frame(
     channel = c(95, 496, 870),
     energy = c(238, 1461, 2615)
@@ -158,7 +157,7 @@ test_that("Estimate dose rates", {
 
   expect_error(
     dose_predict(calib, spc_no_calib),
-    regexp = "No energy calibration found 'spectrum' and 'object' has more than one calibration!")
+    regexp = "No energy calibration found for 'spectrum' and 'object' has more than one calibration!")
 
   ## now try an assignment of the energy calibration from the calibration dataset
   calib@details$energy_calibration[[2]] <- NULL
