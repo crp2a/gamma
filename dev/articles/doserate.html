@@ -68,7 +68,7 @@
 B. Lebrun, S. Kreutzer</h4>
             
             <h4 data-toc-skip class="date">Last modified:
-2024-09-19</h4>
+2024-09-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -210,7 +210,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">496</span>, <span class="fl">870</span><span class="op">)</span>,</span>
 <span>  energy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">238</span>, <span class="fl">1461</span>, <span class="fl">2615</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="op">)</span> </span>
 <span><span class="va">bkg_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">bkg</span>, lines <span class="op">=</span> <span class="va">lines</span><span class="op">)</span></span></code></pre></div>
 <p><img src="doserate_files/figure-html/plot-bkg-1.png" width="672"></p>
 </div>
@@ -548,7 +548,8 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2024-09-19 21:01:30.584742</span></span></code></pre></div>
+<span><span class="co">#&gt; * date: 2024-09-20 10:46:32.437647</span></span>
+<span><span class="co">#&gt; * energy_calibration: &lt;5 available&gt;</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
 package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
@@ -646,23 +647,48 @@ consists of only three steps:</p>
 <p><img src="doserate_files/figure-html/predict-1.png" width="672"></p>
 </div>
 <div class="section level4">
-<h4 id="predict-the-dose-rates">Predict the dose rates<a class="anchor" aria-label="anchor" href="#predict-the-dose-rates"></a>
+<h4 id="energy-calibrate-the-spectra">Energy calibrate the spectra<a class="anchor" aria-label="anchor" href="#energy-calibrate-the-spectra"></a>
 </h4>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Pb212, K40, Tl208</span></span>
+<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">490</span>, <span class="fl">870</span><span class="op">)</span>,</span>
+<span>  energy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">238</span>, <span class="fl">1461</span>, <span class="fl">2615</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">as</span><span class="op">(</span><span class="st">"PeakPosition"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## energy calibrate</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">test</span>, <span class="va">pks</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## check the calibration for one curve</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">## show all energy calibrated spectra </span></span>
+<span><span class="co"># Inspect spectra</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span>, xaxis <span class="op">=</span> <span class="st">"energy"</span>, yaxis <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-2.png" width="672"></p>
+</div>
+<div class="section level4">
+<h4 id="predict-the-dose-rates">Predict the dose rates<a class="anchor" aria-label="anchor" href="#predict-the-dose-rates"></a>
+</h4>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">1.96</span><span class="op">)</span></span>
 <span><span class="va">rates</span></span>
 <span><span class="co">#&gt;         name signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
-<span><span class="co">#&gt; 1 NAR19-P2-1  96.84460     0.2562005  925.2152    56.73890    50148.73</span></span>
-<span><span class="co">#&gt; 2 NAR19-P3-1 117.77185     0.2535046 1116.4668    68.44589    61203.78</span></span>
-<span><span class="co">#&gt; 3 NAR19-P4-1  93.43065     0.2826609  894.0156    54.84128    48502.94</span></span>
-<span><span class="co">#&gt; 4 NAR19-P5-1 147.88856     0.3180745 1391.6998    85.31918    77346.35</span></span>
-<span><span class="co">#&gt; 5 NAR19-P6-1 123.81692     0.3705618 1171.7120    71.87404    64791.18</span></span>
+<span><span class="co">#&gt; 1 NAR19-P2-1  90.60172     0.2479502  868.1623    52.24518    47953.18</span></span>
+<span><span class="co">#&gt; 2 NAR19-P3-1 110.13766     0.2452741 1046.6989    62.96733    58543.44</span></span>
+<span><span class="co">#&gt; 3 NAR19-P4-1  87.45143     0.2736257  839.3722    50.52866    46393.01</span></span>
+<span><span class="co">#&gt; 4 NAR19-P5-1 138.48561     0.3079133 1305.7674    78.55221    74020.40</span></span>
+<span><span class="co">#&gt; 5 NAR19-P6-1 115.97222     0.3587824 1100.0202    66.21719    62016.48</span></span>
 <span><span class="co">#&gt;   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span></span>
-<span><span class="co">#&gt; 1        5.856128  898.0337      54.90501   911.6244       78.94247</span></span>
-<span><span class="co">#&gt; 2        5.800938 1089.8538      66.63269  1103.1603       95.51350</span></span>
-<span><span class="co">#&gt; 3        6.468925  869.4771      53.15912   881.7463       76.36615</span></span>
-<span><span class="co">#&gt; 4        7.294923 1369.9491      83.75747  1380.8244      119.55407</span></span>
-<span><span class="co">#&gt; 5        8.503802 1152.1000      70.43845  1161.9060      100.62886</span></span></code></pre></div>
+<span><span class="co">#&gt; 1        5.729871  859.9379      51.58826   864.0501       73.42087</span></span>
+<span><span class="co">#&gt; 2        5.676295 1043.6933      62.61183  1045.1961       88.79779</span></span>
+<span><span class="co">#&gt; 3        6.330354  832.8669      49.96429   836.1196       71.05887</span></span>
+<span><span class="co">#&gt; 4        7.139047 1312.2395      78.72209  1309.0034      111.21021</span></span>
+<span><span class="co">#&gt; 5        8.323213 1103.9552      66.22706  1101.9877       93.65265</span></span></code></pre></div>
 <p><em>Note: We assume here that the energy scale of each spectrum was
 adjusted first.</em></p>
 </div>
