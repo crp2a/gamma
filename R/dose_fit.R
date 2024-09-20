@@ -55,12 +55,14 @@ setMethod(
     if (is.null(info$energy_calibration)) {
       info$energy_calibration <- NA
 
-      ## more complicated, we have calibrations, but they do not match in such case
-      ## we set NA again
+      ## more complicated, we have calibrations, but they do not match in such ca
+      ## get the values from the first calibration
       cal_1st <- object[[1]]@calibration
 
+      ## compare whether they are identical if yes, we set a single calibration
       if (all(vapply(object, has_calibration, logical(1))) &&
-        all(vapply(object, function(x) identical(cal_1st, x@calibration), logical(1)))) {
+        all(vapply(object, function(x) identical(cal_1st[1], x@calibration[1]), logical(1)))) {
+
         info$energy_calibration <- list(cal_1st)
 
       } else if (all(vapply(object, has_calibration, logical(1)))){
@@ -124,4 +126,3 @@ fit_york <- function(object, background, doses, range, energy = FALSE) {
     background = bkg
   )
 }
-

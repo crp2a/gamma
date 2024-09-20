@@ -96,7 +96,7 @@ setMethod(
 
     if (has_energy_cal & !has_energy_spc) {
       if (length(object@details$energy_calibration) > 1)
-        stop("No energy calibration found 'spectrum' and 'object' has more than one calibration!",
+        stop("No energy calibration found for 'spectrum' and 'object' has more than one calibration!",
              call. = FALSE)
 
       spectrum <- energy_calibrate(spectrum, object@details$energy_calibration[[1]])
