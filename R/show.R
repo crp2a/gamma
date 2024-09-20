@@ -52,7 +52,12 @@ setMethod(
     details <- object[["details"]]
     info <- vapply(
       X = details,
-      FUN = function(x) paste0(x, collapse = ", "),
+      FUN = function(x) {
+        if(inherits(x[[1]], "lm"))
+          paste0("<", length(x), " available>")
+        else
+          paste0(x, collapse = ", ")
+      },
       FUN.VALUE = character(1)
     )
     info <- paste0("* ", names(details), ": ", info, "\n")

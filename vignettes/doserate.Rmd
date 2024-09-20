@@ -166,7 +166,7 @@ plot(PEP, pks) +
 lines <- data.frame(
   channel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
-)
+) 
 bkg_scaled <- energy_calibrate(bkg, lines = lines)
 ```
 
@@ -454,10 +454,32 @@ plot(test, yaxis = "rate") +
   ggplot2::theme_bw()
 ```
 
+### Energy calibrate the spectra
+
+```{r}
+# Pb212, K40, Tl208
+pks <- data.frame(
+  channel = c(86, 490, 870),
+  energy = c(238, 1461, 2615)
+) |> as("PeakPosition")
+
+## energy calibrate
+test <- energy_calibrate(test, pks)
+
+## check the calibration for one curve
+plot(test[[1]], pks) +
+  ggplot2::theme_bw()
+
+## show all energy calibrated spectra 
+# Inspect spectra
+plot(test, xaxis = "energy", yaxis = "rate") +
+  ggplot2::theme_bw()
+```
+
 ### Predict the dose rates
 
 ```{r}
-rates <- dose_predict(AIX_NaI, test, sigma = 2)
+rates <- dose_predict(AIX_NaI, test, sigma = 1.96)
 rates
 ```
 
@@ -466,7 +488,6 @@ rates
 # Outro: our R session {-}
 
 Finally, for transparency, the R session setting used for rendering this vignette. 
-
 ```{r session-info, echo=FALSE}
 sessionInfo()
 ```

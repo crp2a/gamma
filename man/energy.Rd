@@ -7,10 +7,14 @@
 \alias{energy_calibrate-method}
 \alias{has_energy}
 \alias{has_calibration}
+\alias{energy_calibrate,GammaSpectrum,lm-method}
+\alias{energy_calibrate,GammaSpectrum,GammaSpectrum-method}
 \alias{energy_calibrate,GammaSpectrum,list-method}
 \alias{energy_calibrate,GammaSpectrum,PeakPosition-method}
 \alias{energy_calibrate,GammaSpectra,list-method}
 \alias{energy_calibrate,GammaSpectra,PeakPosition-method}
+\alias{energy_calibrate,GammaSpectra,lm-method}
+\alias{energy_calibrate,GammaSpectra,GammaSpectrum-method}
 \alias{has_energy,GammaSpectrum-method}
 \alias{has_energy,GammaSpectra-method}
 \alias{has_calibration,GammaSpectrum-method}
@@ -23,6 +27,10 @@ has_energy(object)
 
 has_calibration(object)
 
+\S4method{energy_calibrate}{GammaSpectrum,lm}(object, lines, ...)
+
+\S4method{energy_calibrate}{GammaSpectrum,GammaSpectrum}(object, lines, ...)
+
 \S4method{energy_calibrate}{GammaSpectrum,list}(object, lines, ...)
 
 \S4method{energy_calibrate}{GammaSpectrum,PeakPosition}(object, lines, ...)
@@ -30,6 +38,10 @@ has_calibration(object)
 \S4method{energy_calibrate}{GammaSpectra,list}(object, lines, ...)
 
 \S4method{energy_calibrate}{GammaSpectra,PeakPosition}(object, lines, ...)
+
+\S4method{energy_calibrate}{GammaSpectra,lm}(object, lines, ...)
+
+\S4method{energy_calibrate}{GammaSpectra,GammaSpectrum}(object, lines, ...)
 
 \S4method{has_energy}{GammaSpectrum}(object)
 
@@ -45,7 +57,10 @@ has_calibration(object)
 \item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of length two. If a
 \code{list} is provided, each element must be a named numeric vector giving the
 observed peak position ("\code{channel}") and the corresponding expected
-"\code{energy}" value (in keV).}
+"\code{energy}" value (in keV). Alternatively, the function accepts the \link[stats:lm]{stats::lm}
+object from a another calibration or a \linkS4class{GammaSpectrum} object from which such
+calibration is copied. With this, energy calibrations can be transferred from one object
+to another.}
 
 \item{...}{Currently not used.}
 }
