@@ -472,7 +472,7 @@ plot(test[[1]], pks) +
 
 ## show all energy calibrated spectra 
 # Inspect spectra
-plot(test, yaxis = "rate") +
+plot(test, xaxis = "energy", yaxis = "rate") +
   ggplot2::theme_bw()
 ```
 
