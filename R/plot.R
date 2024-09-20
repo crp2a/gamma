@@ -23,7 +23,7 @@ setMethod(
               call. = FALSE)
     }
     xlabel <- switch(xaxis, channel = "Channel", energy = "Energy [keV]")
-    ylabel <- switch(yaxis, count = "Counts", rate = expression(paste("Count rate [", s^{-1}, "]")))
+    ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     # Plot
     ggplot(spc, aes(x = .data[[xaxis]], y = .data[[yaxis]])) +
@@ -76,7 +76,7 @@ setMethod(
               "Displaying channels instead.", call. = FALSE)
     }
     xlabel <- switch(xaxis, channel = "Channel", energy = "Energy [keV]")
-    ylabel <- switch(yaxis, count = "Counts", rate = expression(paste("Count rate [", s^{-1}, "]")))
+    ylabel <- switch(yaxis, count = "Counts", rate = "Count rate [1/s]")
 
     facet <- if (n == 1) FALSE else facet
     if (facet) {
@@ -220,7 +220,7 @@ setMethod(
       ) +
       geom_point() +
       ggellipse + ggbar +
-      labs(x = sprintf("Integrated signal [%s]", k), y = expression(paste("Dose rate [",mu*Gy ~ a^{-1},"]")))
+      labs(x = sprintf("Integrated signal [%s]", k), y = expression("Dose rate ["*mu*"Gy/y]"))
   }
 )
 
