@@ -41,6 +41,30 @@ setMethod(
 
 #' @export
 #' @rdname energy
+#' @aliases energy_calibrate,GammaSpectrum,CalibrationCurve-method
+setMethod(
+  f = "energy_calibrate",
+  signature = signature(object = "GammaSpectrum", lines = "CalibrationCurve"),
+  definition = function(object, lines, ...) {
+    if (is.null(lines@details$energy_calibration) || any(is.na(lines@details$energy_calibration)))
+      stop("The CalibrationCurve-class object provided via 'lines' does not have any energy calibration!",
+           call. = FALSE)
+
+    ## check for multiple calibrations
+    if (length(lines@details$energy_calibration) > 1)
+      stop("Found more than one energy calibration in the CalibrationCurve-class object! Could not decide which one to take!",
+           call. = FALSE)
+
+    ## get calibration
+    lines <- lines@details$energy_calibration[[1]]
+
+    ## call the regular function
+    energy_calibrate(object, lines)
+
+})
+
+#' @export
+#' @rdname energy
 #' @aliases energy_calibrate,GammaSpectrum,list-method
 setMethod(
   f = "energy_calibrate",
@@ -160,6 +184,21 @@ setMethod(
 setMethod(
   f = "energy_calibrate",
   signature = signature(object = "GammaSpectra", lines = "GammaSpectrum"),
+  definition = function(object, lines, ...) {
+    spc <- lapply(unlist(object), energy_calibrate, lines)
+
+    ## make create GammaSpectra class
+    methods::as(spc, "GammaSpectra")
+
+  }
+)
+
+#' @export
+#' @rdname energy
+#' @aliases energy_calibrate,GammaSpectra,CalibrationCurve-method
+setMethod(
+  f = "energy_calibrate",
+  signature = signature(object = "GammaSpectra", lines = "CalibrationCurve"),
   definition = function(object, lines, ...) {
     spc <- lapply(unlist(object), energy_calibrate, lines)
 
