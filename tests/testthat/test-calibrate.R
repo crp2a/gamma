@@ -152,3 +152,55 @@ test_that("Calibrate a GammaSpectrum and GammaSpectra object with a lm object", 
                regexp = "The spectrum provided via 'lines' does not have any calibration!")
 
 })
+
+test_that("Calibrate a GammaSpectrum/GammaSpectra object with a CalibrationCurve object", {
+  ##load calibration dataset
+  data("BDX_LaBr_1")
+
+  ## load spectrum
+  cnf_file <- system.file("extdata/LaBr.CNF", package = "gamma")
+  cnf_spc <- read(cnf_file)
+  cnf_spectra <- as(list(cnf_spc, cnf_spc), "GammaSpectra")
+
+  ## make an energy calibration
+  lines <- list(
+    channel = c(76, 459, 816),
+    energy = c(238, 1461, 2614.5)
+  )
+  calib <- energy_calibrate(cnf_spc, lines = lines)
+
+  ## manually add energy calibration
+  BDX_LaBr_1@details[["energy_calibration"]] <- list(calib@calibration)
+
+  ## assign energy calibration
+  t <- expect_s4_class(energy_calibrate(cnf_spectra, BDX_LaBr_1), "GammaSpectra")
+  expect_true(all(has_calibration(t)))
+  t <- expect_s4_class(energy_calibrate(cnf_spc, BDX_LaBr_1), "GammaSpectrum")
+  expect_true(has_calibration(t))
+
+  ## make sure we get an error for no calibration
+  BDX_LaBr_1@details[["energy_calibration"]] <- NULL
+  expect_error(
+    object = energy_calibrate(cnf_spc, BDX_LaBr_1),
+    regexp = "The CalibrationCurve-class object provided via 'lines' does not have any energy calibration!")
+
+  BDX_LaBr_1@details[["energy_calibration"]] <- NULL
+  expect_error(
+    object = energy_calibrate(cnf_spectra, BDX_LaBr_1),
+    regexp = "The CalibrationCurve-class object provided via 'lines' does not have any energy calibration!")
+
+  ## for NA
+  BDX_LaBr_1@details[["energy_calibration"]] <- NA
+  expect_error(
+    object = energy_calibrate(cnf_spc, BDX_LaBr_1),
+    regexp = "The CalibrationCurve-class object provided via 'lines' does not have any energy calibration!")
+
+  ## for NA
+  BDX_LaBr_1@details[["energy_calibration"]] <- list(t@calibration, t@calibration)
+  expect_error(
+    object = energy_calibrate(cnf_spc, BDX_LaBr_1),
+    regexp = "Found more than one energy calibration in the CalibrationCurve-class object! Could not decide which one to take!")
+
+
+})
+
