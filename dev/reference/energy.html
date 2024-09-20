@@ -55,6 +55,9 @@
 <span><span class="co"># S4 method for class 'GammaSpectrum,GammaSpectrum'</span></span>
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S4 method for class 'GammaSpectrum,CalibrationCurve'</span></span>
+<span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S4 method for class 'GammaSpectrum,list'</span></span>
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -71,6 +74,9 @@
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'GammaSpectra,GammaSpectrum'</span></span>
+<span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'GammaSpectra,CalibrationCurve'</span></span>
 <span><span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">object</span>, <span class="va">lines</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'GammaSpectrum'</span></span>
@@ -144,7 +150,7 @@ the result before proceeding.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="read.html">read</a></span><span class="op">(</span><span class="va">spc_file</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma spectrum:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  name: LaBr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-09-20 13:25:16.394185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-09-20 14:35:09.287461</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  live_time: 3385.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  real_time: 3403.67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  channels: 1024</span>
@@ -161,7 +167,7 @@ the result before proceeding.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">spc1</span> <span class="op">&lt;-</span> <span class="fu">energy_calibrate</span><span class="op">(</span><span class="va">spc</span>, lines <span class="op">=</span> <span class="va">calib_lines</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma spectrum:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  name: LaBr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-09-20 13:25:16.394185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *  date: 2024-09-20 14:35:09.287461</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  live_time: 3385.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  real_time: 3403.67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *  channels: 1024</span>
