@@ -21,7 +21,7 @@ CEREGE Calibration Curve (NaI)
 }
 \examples{
 ## Load the curve
-utils::data(AIX_NaI_1, package = "gamma")
+data(AIX_NaI_1, package = "gamma")
 plot(AIX_NaI_1)
 }
 \seealso{

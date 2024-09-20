@@ -30,6 +30,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
 [![CRAN
 DOI](https://img.shields.io/badge/DOI-10.32614/CRAN.package.gamma-1f57b6?style=flat&link=https://doi.org/10.32614/CRAN.package.gamma)](https://doi.org/10.32614/CRAN.package.gamma)
+
 [![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9/)](https://archive.softwareheritage.org/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9;origin=https://github.com/crp2a/gamma;visit=swh:1:snp:10e6be6e5cbe735b58c45abbcbabf20b93019e9c;anchor=swh:1:rev:1b3baf8821267ed656d780ae154d347769141d0c/)
 <!-- badges: end -->
 
@@ -53,10 +54,10 @@ of **gamma**.
       Estimation from In-Situ Gamma-Ray Spectrometry Measurements."
       _Ancient TL_, *38*(2), 1-5.
 
-      Frerebeau N, Lebrun B, Paradol G (2024). _gamma: Dose Rate Estimation
-      from in-Situ Gamma-Ray Spectrometry_. Université Bordeaux Montaigne,
-      Pessac, France. doi:10.5281/zenodo.2652393
-      <https://doi.org/10.5281/zenodo.2652393>, R package version
+      Frerebeau N, Lebrun B, Paradol G, Kreutzer S (2024). _gamma: Dose
+      Rate Estimation from in-Situ Gamma-Ray Spectrometry_. Université
+      Bordeaux Montaigne, Pessac, France. doi:10.32614/CRAN.package.gamma
+      <https://doi.org/10.32614/CRAN.package.gamma>, R package version
       1.0.5.9000.
 
 ## Installation
@@ -123,19 +124,20 @@ plot(BDX_LaBr_1)
 <img src="man/figures/README-calib-1.png" style="display: block; margin: auto;" />
 
 ``` r
-
 ## Estimate the gamma dose rate
 (doses <- dose_predict(BDX_LaBr_1, spectra))
-#>            names   dose_Ni  error_Ni dose_NiEi error_NiEi
-#> 1 20110523204008  252.2866  378.6325  220.6747   331.0412
-#> 2 20110523210008  257.3316  386.1409  219.1303   328.7243
-#> 3 20110527205316  247.5890  371.4762  203.0288   304.5699
-#> 4 20130809172451  892.1003 1338.3368  849.8817  1274.9341
-#> 5 20130813181639 1065.0899 1597.8515 1024.9325  1537.5334
-#> 6 20160717175757  565.6418  848.6886  496.7518   745.1931
-#> 7 20160717181052  480.1928  720.4625  421.8396   632.8149
-#> 8 20160717182601  497.7403  746.7658  436.2712   654.4642
 ```
+
+| name           | signal_Ni | signal_err_Ni |   dose_Ni | dose_err_Ni | signal_NiEi | signal_err_NiEi | dose_NiEi | dose_err_NiEi | dose_final | dose_err_final |
+|:---------------|----------:|--------------:|----------:|------------:|------------:|----------------:|----------:|--------------:|-----------:|---------------:|
+| 20110523204008 |  8.604666 |     0.2691316 |  252.2866 |   10.372500 |    7626.493 |        8.747617 |  220.6747 |      5.495079 |   236.4806 |      11.366900 |
+| 20110523210008 |  8.775092 |     0.2166075 |  257.3316 |    9.354274 |    7577.302 |        7.021326 |  219.1303 |      5.454610 |   238.2309 |      10.495729 |
+| 20110527205316 |  8.445976 |     0.1546491 |  247.5890 |    8.012680 |    7064.449 |        5.009961 |  203.0288 |      5.052359 |   225.3089 |       9.198048 |
+| 20130809172451 | 30.218479 |     0.2549754 |  892.1003 |   24.967288 |   27667.473 |        8.089989 |  849.8817 |     21.142124 |   870.9910 |      32.614162 |
+| 20130813181639 | 36.062314 |     0.2853286 | 1065.0899 |   29.644785 |   33243.050 |        9.028097 | 1024.9325 |     25.496544 |  1045.0112 |      39.010062 |
+| 20160717175757 | 19.190250 |     0.3635398 |  565.6418 |   18.510895 |   16419.873 |       11.495584 |  496.7518 |     12.361511 |   531.1968 |      21.838611 |
+| 20160717181052 | 16.303659 |     0.2837191 |  480.1928 |   15.297869 |   14033.831 |        9.033011 |  421.8396 |     10.496701 |   451.0162 |      18.231817 |
+| 20160717182601 | 16.896441 |     0.2557337 |  497.7403 |   15.269850 |   14493.495 |        8.131459 |  436.2712 |     10.854933 |   467.0058 |      18.446627 |
 
 ## Contributing
 

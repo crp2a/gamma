@@ -21,11 +21,6 @@ authors:
 
 template:
   bootstrap: 5
-  opengraph:
-    twitter:
-      creator: "@archeosciences"
-      site: "@archeosciences"
-      card: summary_large_image
 
 search:
   exclude: ['CODE_OF_CONDUCT.html','CONTRIBUTING.html','LICENSE.html','news/index.html']

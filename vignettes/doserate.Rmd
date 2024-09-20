@@ -15,8 +15,6 @@ vignette: >
   %\VignetteIndexEntry{Obtain Dose Rata Calibration Curve}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -39,13 +37,13 @@ your field data.
 
 # Load library and import files
 
-First things first, let's load the `'gamma'` package.
+First things first, let's load the **gamma** package.
 
 ```{r packages}
 library(gamma)
 ```
 
-Now, we will use already measured spectra shipped with `'gamma'` for this example.
+Now, we will use already measured spectra shipped with **gamma** for this example.
 If you determine your calibration curve, you will need to use
 your own data. All data used here were measured with a NaI probe. 
 
@@ -61,8 +59,9 @@ bkg <- read(bkg_dir)
 bkg
 ```
 
-The object `spc` is a set of spectra measured in settings around Clermont-Ferrand [@miallier2009] and Bordeaux [@Richter_etal_2010_RPDa]
-with a known gamma dose rate, where `bgk` is a background curve measured in a lead castle. 
+The object `spc` is a set of spectra measured in settings around Clermont-Ferrand 
+[@miallier2009] and Bordeaux [@richter2010] with a known gamma dose rate, 
+where `bgk` is a background curve measured in a lead castle. 
 
 # Energy scale calibration
 
@@ -184,13 +183,13 @@ method and the 'threshold' method. The 'window' method compares counts under nuc
 reference spectra where the nuclide concentration is known. In this case, only 
 a small part of the spectrum is used. The 'threshold' method uses the circumstance
 that above a certain threshold, the number of counts for a given dose rate changes
-only slightly with the emitters (e.g., U, Th, K) [cf. @guerin2011; @mercier2007;@Lvborg_Kirkegaard_1974_NIMa]. 
+only slightly with the emitters [e.g., U, Th, K -- cf. @guerin2011; @mercier2007; @lvborg1974]. 
 
 The exact position of this threshold depends on the used probe and needs to be determined 
 either by modelling or measurements of different sites with known but different radionuclides
 concentrations. 
 
-For this example (and in the package `'gamma'` in general), we will focus solely on the 'threshold' method, a crucial tool 
+For this example (and in the package **gamma** in general), we will focus solely on the 'threshold' method, a crucial tool 
 used to derive a calibration curve and derive gamma dose rates. This method's practical application in deriving a calibration curve 
 is a key aspect of our exploration.  Our first step is to combine the energy-calibrated spectra into a unified set, 
 laying the foundation for the subsequent calculations. 
@@ -231,6 +230,7 @@ Ni_spc <- signal_integrate(
 ```
 
 ### Using the energy threshold
+
 ```{r integrate-NiEi}
 # Integration range (in keV)
 NiEi_range <- c(200, 2800)
@@ -259,7 +259,7 @@ that such gamma dose can be derived from unknown spectra with the the same detec
 
 To model the calibration curve we will need have measured sites with known radionuclide concentrations.
 `'gamma'` ships a table with values from know sites in the dataset `clermont`. If you, as we have, measured
-with your probe in that locations you do not have to manually add values from @miallier2009 or @Richter_etal_2010_RPDa.
+with your probe in that locations you do not have to manually add values from @miallier2009 or @richter2010.
 
 ```{r}
 # Get reference dose rates
@@ -336,6 +336,7 @@ Although the calibration curve appears reasonable, we can use a few additional
 R plots to further inspect the performed calibration. 
 
 #### Count threshold (`Ni`)
+
 ```{r check-Ni, echo=FALSE, fig.width=3.5, fig.show='hold'}
 Ni_residuals  <- get_residuals(AIX_NaI[["Ni"]])
 
@@ -383,6 +384,7 @@ ggplot2::ggplot(Ni_residuals, ggplot2::aes(sample = standardized)) +
 ```
 
 #### Energy threshold (`Ni.Ei`)
+
 ```{r check-NiEi, echo=FALSE, fig.width=3.5, fig.show='hold'}
 NiEi_residuals  <- get_residuals(AIX_NaI[["NiEi"]])
 
@@ -445,6 +447,7 @@ test <- read(test_dir)
 ```
 
 ### Inspect the spectra 
+
 ```{r predict}
 # Inspect spectra
 plot(test, yaxis = "rate") +

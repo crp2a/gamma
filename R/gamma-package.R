@@ -11,6 +11,7 @@
 #'
 #' \tabular{ll}{
 #'  Nicolas Frerebeau \tab *Université Bordeaux Montaigne, France* \cr
+#'  Sebastian Kreutzer \tab *Universität Heidelberg, Germany* \cr
 #'  Christelle Lahaye \tab *Université Bordeaux Montaigne, France* \cr
 #'  Brice Lebrun \tab *Université Bordeaux Montaigne, France* \cr
 #'  Guilhem Paradol \tab *Commissariat à l'Énergie Atomique, France* \cr

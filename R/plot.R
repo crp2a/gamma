@@ -211,7 +211,7 @@ setMethod(
     }
 
     ggplot(data = data) +
-      aes(x = .data$signal_value, y = .data$gamma_dose, label = .data$names) +
+      aes(x = .data$signal_value, y = .data$gamma_dose, label = .data$name) +
       geom_segment(
         data = segment,
         mapping = aes(x = .data$x, xend = .data$xmin,

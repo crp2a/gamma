@@ -3,6 +3,7 @@ test_that("Equality within a vector", {
   expect_false(isEqual(c(1, 1, 1.1)))
 
   expect_error(isEqual(LETTERS), "A numeric vector is expected.")
+
 })
 test_that("Positive numbers", {
   expect_true(isPositive(c(1, 1, 1), strict = FALSE, na.rm = TRUE))
@@ -12,4 +13,9 @@ test_that("Positive numbers", {
   expect_true(is.na(isPositive(c(NA, 1, 1), strict = FALSE, na.rm = FALSE)))
 
   expect_error(isPositive(LETTERS), "A numeric vector is expected.")
+})
+test_that("Test reverse cumsum", {
+  t <- expect_silent(reverse_cumsum(1:100))
+  expect_equal(sum(t[1:2]), expected =  10099)
+
 })

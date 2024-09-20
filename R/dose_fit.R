@@ -103,7 +103,7 @@ fit_york <- function(object, background, doses, range, energy = FALSE) {
 
   # Prepare data
   data <- merge(signals, doses, by = 0, all = FALSE, sort = FALSE)
-  colnames(data) <- c("names", "signal_value", "signal_error",
+  colnames(data) <- c("name", "signal_value", "signal_error",
                       "gamma_dose", "gamma_error")
 
   # Fit model

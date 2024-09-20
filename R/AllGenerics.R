@@ -388,9 +388,9 @@ setGeneric(
 # Dose rate ====================================================================
 #' Dose Rate Estimation
 #'
-#' \code{dose_fit} builds a calibration curve for gamma dose rate estimation.
-#'
-#' \code{dose_predict} predicts in situ gamma dose rate.
+#' @description
+#' * `dose_fit()` builds a calibration curve for gamma dose rate estimation.
+#' * `dose_predict()` predicts in situ gamma dose rate.
 #' @param object A [GammaSpectra-class] or [CalibrationCurve-class] object.
 #' @param background A [GammaSpectrum-class] object or a length-two [`numeric`]
 #'  vector giving the background noise integration value and error,
@@ -409,6 +409,10 @@ setGeneric(
 #' @param epsilon A [`numeric`] value giving an extra relative error term,
 #'  introduced by the calibration of the energy scale of the spectrum,
 #'  e.g., `0.015` for an additional 1.5% error
+#' @param water_content [`numeric`] or [`matrix`] gravimetric field water content to correct
+#' the gamma-dose rate to using the correction factor by Aitken (1985) to obtain the dry gamma-dose
+#' rate. Example: `c(0.05,0.0001)` for water content of 5% +/- 0.01 %. The default is `NULL` (nothing is corrected).
+#' The correction only works on the final dose rate. For more information see details.
 #' @param use_MC A [`logical`] parameter, enabling/disabling Monte Carlo simulations for estimating
 #' the dose rate uncertainty
 #' @param ... Currently not used.
@@ -426,8 +430,7 @@ setGeneric(
 #'  is finally modelled by the integrated signal value used as a linear
 #'  predictor (York *et al.*, 2004).
 #'
-#'  **Uncertainty calculation of the gamma-dose rate**
-#'
+#' @section Uncertainty calculation of the gamma-dose rate:
 #'  The analytical uncertainties of the final gamma-dose rate (\eqn{SE(\dot{D}_{\gamma})}) are calculated as
 #'  follows:
 #'
@@ -452,8 +455,24 @@ setGeneric(
 #'
 #'  \eqn{\ rho} is the parameter `sigma` provided with the function call, \eqn{SD} equals the
 #'  the call to `sd()`, i.e. the calculation of the standard deviation. To achieve a good
-#'  gaussian normal approximation with sample 1+e06 times (the values is fixed).
+#'  Gaussian normal approximation with sample 1+e06 times (the values is fixed).
 #'
+#' @section Water content correction:
+#'  If gamma-dose rates are measured in the field, they are measured at  "as-is"
+#'  conditions. In dating studies, however, using the dry dose rate is often
+#'  more desirable to model the long-term effect of different assumptions for
+#'  the water content. If the parameter `water_content`, either as [numeric]
+#'  vector or as [matrix] with the number of rows equal to the number of
+#'  processed spectra,  if different values are desired, the **final**
+#'  gamma-dose rate is corrected for the water content provided. Final
+#'  uncertainties are obtained using the square root of the summed squared
+#'  relative uncertainties of the dose rate and the water content.
+#'
+#'  A word of caution: When estimating the water content in the laboratory,
+#'  the water analytical uncertainty is usually minimal, and it does not make
+#'  sense to correct with a relative water content of, e.g., c(0.02,0.02)
+#'  (2% +/- 2%) because this massively inflates the final dose rate error.
+#' @note
 #'  See `vignette(doserate)` for a reproducible example.
 #' @return
 #'  * `dose_fit()` returns a [CalibrationCurve-class] object.
@@ -479,6 +498,8 @@ setGeneric(
 #'  }
 #' @seealso [signal_integrate()]
 #' @references
+#'  Aitken, M.J. (1985). *Thermoluminescence dating*. London: Academic Press.
+#'
 #'  Mercier, N. & Falguères, C. (2007). Field Gamma Dose-Rate Measurement with
 #'  a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 #'  *Ancient TL*, 25(1), p. 1-4.
@@ -512,9 +533,7 @@ setGeneric(
 # Integrate ====================================================================
 #' Signal Integration
 #'
-#' @description
 #' Integration of the spectrum including uncertainty calculation.
-#'
 #' @param object A [GammaSpectrum-class] or [GammaSpectra-class] object.
 #' @param background A [GammaSpectrum-class] object.
 #' @param range A length-two [`numeric`] vector giving the energy range to
@@ -523,13 +542,9 @@ setGeneric(
 #' @param simplify A [`logical`] scalar: should the result be simplified to a
 #'  [`matrix`]? The default value, `FALSE`, returns a [`list`].
 #' @param ... Currently not used.
-#' @note The integration assumes that each spectrum has an energy scale.
 #' @details
-#'
-#'  **Integration methods**
-#'
-#'  The function supports two integration techniques (see Guérin & Mercier (2011)), the (1) count threshold
-#'  integration and the (2) energy integration method:
+#'  The function supports two integration techniques (see Guérin & Mercier 2011),
+#'  the (1) count threshold integration and the (2) energy integration method:
 #'
 #'  The count integration technique (`energy = FALSE`) integrates
 #'  all counts in given `range`:
@@ -545,16 +560,18 @@ setGeneric(
 #'   A = \frac{\Sigma_{i}^{N}S_i \times E_i}{t_{live}}
 #'  }
 #'
-#'  \eqn{A} is the area, \eqn{S_i} is the signal in the \eqn{i^{th}} channel, \eqn{N} the number of channels, \eqn{E_i} the energy
-#'  of the corresponding channel in keV. \eqn{t_{live}} is the live time of the measurement in *s*.
+#'  \eqn{A} is the area, \eqn{S_i} is the signal in the \eqn{i^{th}} channel,
+#'  \eqn{N} the number of channels, \eqn{E_i} the energy of the corresponding
+#'  channel in keV. \eqn{t_{live}} is the live time of the measurement in *s*.
 #'
-#'  For calculating the uncertainties, Poisson statistics are assumed and hence the
-#'  errors is calculated as:
+#'  For calculating the uncertainties, Poisson statistics are assumed and hence
+#'  the errors is calculated as:
 #'
 #'  \deqn{
 #'  \sigma_A = \frac{\sqrt{A}}{t_{live}}
 #'  }
 #'
+#' @note The integration assumes that each spectrum has an energy scale.
 #' @return
 #'  If `simplify` is `FALSE` (the default) returns a [`list`] of numeric vectors
 #'  (the signal value and its error), else returns a [`matrix`].

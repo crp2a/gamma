@@ -58,7 +58,7 @@ NULL
 #' Clermont Reference Data
 #'
 #' @usage data("clermont")
-#' @format [`data.frame`] with tabulated data and conversion factor reference
+#' @format A [`data.frame`] with tabulated data and conversion factor reference.
 #' @source
 #'  Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
 #'  Update. *Ancient TL*, 29(1), p. 5-8.
@@ -81,7 +81,7 @@ NULL
 #' errors.
 #'
 #' @usage data("clermont_2024")
-#' @format [`data.frame`] with tabulated data and conversion factor reference
+#' @format A [`data.frame`] with tabulated data and conversion factor reference.
 #' @source
 #'  Adamiec, G. & Aitken, M.J. (1998).
 #'  Dose-rate conversion factors: update. *Ancient TL*, 16, p. 37–50.
@@ -110,14 +110,14 @@ NULL
 #' @format
 #' An object of class [CalibrationCurve-class].
 #' \tabular{ll}{
-#'  \strong{Laboratory} \tab CEREGE \cr
-#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector} \tab NaI \cr
-#'  \strong{Authors} \tab CEREGE Luminescence Team
+#'  **Laboratory** \tab CEREGE \cr
+#'  **Instrument** \tab Canberra Inspector 1000 \cr
+#'  **Detector** \tab NaI \cr
+#'  **Authors** \tab CEREGE Luminescence Team
 #' }
 #' @examples
 #' ## Load the curve
-#' utils::data(AIX_NaI_1, package = "gamma")
+#' data(AIX_NaI_1, package = "gamma")
 #' plot(AIX_NaI_1)
 #' @family datasets
 #' @keywords datasets
@@ -129,14 +129,14 @@ NULL
 #' @format
 #' An object of class [CalibrationCurve-class].
 #' \tabular{ll}{
-#'  \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
-#'  \strong{Instrument} \tab Canberra Inspector 1000 \cr
-#'  \strong{Detector} \tab LaBr \cr
-#'  \strong{Authors} \tab CRP2A Luminescence Team
+#'  **Laboratory** \tab IRAMAT-CRP2A (UMR 5060) \cr
+#'  **Instrument** \tab Canberra Inspector 1000 \cr
+#'  **Detector** \tab LaBr \cr
+#'  **Authors** \tab CRP2A Luminescence Team
 #' }
 #' @examples
 #' ## Load the curve
-#' utils::data(BDX_LaBr_1, package = "gamma")
+#' data(BDX_LaBr_1, package = "gamma")
 #' plot(BDX_LaBr_1)
 #' @family datasets
 #' @keywords datasets
