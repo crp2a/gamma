@@ -11,6 +11,10 @@
 \alias{get_names-method}
 \alias{set_names<-}
 \alias{set_names-method}
+\alias{get_energy_calibration}
+\alias{get_energy_calibration-method}
+\alias{set_energy_calibration<-}
+\alias{set_energy_calibration-method}
 \alias{get_livetime}
 \alias{get_livetime-method}
 \alias{get_realtime}
@@ -64,9 +68,15 @@
 \alias{get_energy,PeakPosition-method}
 \alias{set_names<-,GammaSpectrum-method}
 \alias{set_names,GammaSpectrum-method}
+\alias{set_energy_calibration<-,GammaSpectrum-method}
+\alias{set_energy_calibration,GammaSpectrum-method}
+\alias{get_energy_calibration,GammaSpectrum-method}
 \alias{set_method<-,Baseline-method}
 \alias{set_names<-,GammaSpectra-method}
 \alias{set_name,GammaSpectra-method}
+\alias{set_energy_calibration<-,GammaSpectra-method}
+\alias{set_energy_calibration,GammaSpectra-method}
+\alias{get_energy_calibration,GammaSpectra-method}
 \alias{set_energy<-,PeakPosition,numeric-method}
 \alias{set_energy,PeakPosition,numeric-method}
 \title{Get or Set Parts of an Object}
@@ -76,6 +86,10 @@ get_hash(x)
 get_names(x)
 
 set_names(x) <- value
+
+get_energy_calibration(x)
+
+set_energy_calibration(x) <- value
 
 get_livetime(x)
 
@@ -155,9 +169,17 @@ range_energy(x, ...)
 
 \S4method{set_names}{GammaSpectrum}(x) <- value
 
+\S4method{set_energy_calibration}{GammaSpectrum}(x) <- value
+
+\S4method{get_energy_calibration}{GammaSpectrum}(x)
+
 \S4method{set_method}{Baseline}(x) <- value
 
 \S4method{set_names}{GammaSpectra}(x) <- value
+
+\S4method{set_energy_calibration}{GammaSpectra}(x) <- value
+
+\S4method{get_energy_calibration}{GammaSpectra}(x)
 
 \S4method{set_energy}{PeakPosition,numeric}(x) <- value
 }

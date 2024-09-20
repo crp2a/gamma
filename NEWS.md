@@ -16,6 +16,8 @@ uncertainty calculation. (PR #42 by @RLumSK)
 workflow once the equipment was calibrated (PR #49 by @RLumSK).
 * Add new argument `use_MC` to `dose_predict()` method. The default is `FALSE` to maintain compatibility with old code and output exceptions. If set to `TRUE` the uncertainty on the gamma dose rate uses a Monte Carlo simulation approach for a more realistic error estimation (PR #46 by RLumSK)
 * Add new function parameter `water_content` to `dose_predict()` to allow for an estimate of the dry gamma dose rate using the correction factor by Aitken (1985). The default is `NULL`, in this case nothing is corrected (PR #48 by @RLumSK)
+* Add two more generics: `set_energy_calibration()` and `get_energy_calibration()` and corresponding methods for `GammaSpectrum` and `GammaSpectra` objects. They build on `energy_calibrate()` but enable a more comprehensible scripting
+(PR XX by RLumSK).
 * Extend `dose_predict()` to work with a `numeric` input for `background` as claimed in the documentary. This value can also be set to `c(0,0)` if no background
 subtraction is wanted (PR #38 by @RLumSK)
 
