@@ -62,6 +62,20 @@ setGeneric(
 )
 
 #' @rdname mutator
+#' @aliases get_energy_calibration-method
+setGeneric(
+  name = "get_energy_calibration",
+  def = function(x) standardGeneric("get_energy_calibration")
+)
+
+#' @rdname mutator
+#' @aliases set_energy_calibration-method
+setGeneric(
+  name = "set_energy_calibration<-",
+  def = function(x, value) standardGeneric("set_energy_calibration<-")
+)
+
+#' @rdname mutator
 #' @aliases get_livetime-method
 setGeneric(
   name = "get_livetime",

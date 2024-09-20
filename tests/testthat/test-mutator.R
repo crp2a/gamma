@@ -25,6 +25,24 @@ test_that("GammaSpectrum", {
   # energy
   expect_length(get_energy(spectrum), 1024)
   expect_equal(range_energy(spectrum), c(-7.004032, 3124.914528))
+  ## set energy calibration method
+  lines <- data.frame(
+    channel = c(115, 496, 870),
+    energy = c(238, 1461, 2615)
+  )
+  set_energy_calibration(spectrum) <- lines
+  expect_s4_class(spectrum, class = "GammaSpectrum")
+  expect_true(has_calibration(spectrum))
+
+  spectra <- as(list(spectrum, spectrum), "GammaSpectra")
+  set_energy_calibration(spectra) <- lines
+  expect_s4_class(spectra, class = "GammaSpectra")
+  expect_true(all(has_calibration(spectra)))
+
+  ## check the get method
+  expect_s3_class(get_energy_calibration(spectrum), "lm")
+  expect_s3_class(get_energy_calibration(spectra)[[2]], "lm")
+
 })
 # GammaSpectra =================================================================
 test_that("GammaSpectra", {
