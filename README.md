@@ -40,8 +40,8 @@ DOI](https://img.shields.io/badge/DOI-10.32614/CRAN.package.gamma-1f57b6?style=f
 measurements for luminescence dating. This package allows to import,
 inspect and (automatically) correct the energy scale of the spectrum. It
 provides methods for estimating the gamma dose rate by the use of a
-calibration curve. This package only supports Canberra CNF and TKA
-files.
+calibration curve. This package only supports Canberra CNF and TKA and
+Kromek SPE files.
 
 The [**gammaShiny**](https://github.com/crp2a/gammaShiny) package
 provides an enhanced graphical user interface for the main applications
@@ -58,7 +58,7 @@ of **gamma**.
       Rate Estimation from in-Situ Gamma-Ray Spectrometry_. Université
       Bordeaux Montaigne, Pessac, France. doi:10.32614/CRAN.package.gamma
       <https://doi.org/10.32614/CRAN.package.gamma>, R package version
-      1.0.5.9000.
+      1.1.0.
 
 ## Installation
 

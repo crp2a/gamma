@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/crp2a/gamma",
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.5.9000",
+  "version": "1.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.3 (2024-02-29)",
+  "runtimePlatform": "R version 4.4.1 (2024-06-14)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -42,6 +42,13 @@
       "familyName": "Paradol",
       "email": "guilhem.paradol@cea.fr",
       "@id": "https://orcid.org/0000-0002-8561-4903"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Sebastian",
+      "familyName": "Kreutzer",
+      "email": "sebastian.kreutzer@uni-heidelberg.de",
+      "@id": "https://orcid.org/0000-0002-0734-2199"
     }
   ],
   "contributor": [
@@ -237,7 +244,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4055.83KB",
+  "fileSize": "4261.751KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -315,13 +322,18 @@
           "@type": "Person",
           "givenName": "Guilhem",
           "familyName": "Paradol"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sebastian",
+          "familyName": "Kreutzer"
         }
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
-      "identifier": "10.5281/zenodo.2652393",
-      "description": "R package version 1.0.5.9000",
-      "@id": "https://doi.org/10.5281/zenodo.2652393",
-      "sameAs": "https://doi.org/10.5281/zenodo.2652393"
+      "identifier": "10.32614/CRAN.package.gamma",
+      "description": "R package version 1.1.0",
+      "@id": "https://doi.org/10.32614/CRAN.package.gamma",
+      "sameAs": "https://doi.org/10.32614/CRAN.package.gamma"
     }
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
