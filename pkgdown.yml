@@ -1,11 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   doserate: doserate.html
   gamma: gamma.html
-last_built: 2024-04-09T09:33Z
+last_built: 2024-09-21T13:10Z
 urls:
   reference: https://crp2a.github.io/gamma/reference
   article: https://crp2a.github.io/gamma/articles
-

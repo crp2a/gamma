@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://crp2a.github.io/gamma/404.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/articles/doserate.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/articles/gamma.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/index.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/pull_request_template.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/AIX_NaI_1.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/BDX_LaBr_1.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/Baseline-class.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/CalibrationCurve-class.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/GammaSpectra-class.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/GammaSpectrum-class.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/PeakPosition-class.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/baseline.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/clermont.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/coerce.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/decay.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/decay_La.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/doserate.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/energy.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/gamma-package.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/integrate.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/mutator.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/operator.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/peaks_find.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/peaks_search.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/plot.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/read.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/signal_slice.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/signal_split.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/smooth.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/stabilize.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/subset.html</loc>
-  </url>
-  <url>
-    <loc>https://crp2a.github.io/gamma/reference/summarise.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://crp2a.github.io/gamma/404.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/CONTRIBUTING.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/LICENSE.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/articles/doserate.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/articles/gamma.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/articles/index.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/authors.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/index.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/news/index.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/AIX_NaI_1.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/BDX_LaBr_1.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/Baseline-class.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/CalibrationCurve-class.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/GammaSpectra-class.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/GammaSpectrum-class.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/PeakPosition-class.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/baseline.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/clermont.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/clermont_2024.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/coerce.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/decay.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/decay_La.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/doserate.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/energy.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/gamma-package.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/index.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/integrate.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/mutator.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/operator.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/peaks_find.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/peaks_search.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/plot.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/read.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/signal_slice.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/signal_split.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/smooth.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/stabilize.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/subset.html</loc></url>
+<url><loc>https://crp2a.github.io/gamma/reference/summarise.html</loc></url>
 </urlset>
+

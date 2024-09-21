@@ -5,8 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="gamma">
-<title>Calibration Curve • gamma</title>
+<title>Obtaining a Dose Rate Calibration Curve • gamma</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,67 +14,46 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Calibration Curve">
-<meta property="og:description" content="gamma">
-<meta property="og:image" content="https://crp2a.github.io/gamma/logo.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:creator" content="@archeosciences">
-<meta name="twitter:site" content="@archeosciences">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Obtaining a Dose Rate Calibration Curve">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">gamma</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/gamma.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/gamma.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/doserate.html">Calibration Curve</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/doserate.html">Obtaining a Dose Rate Calibration Curve</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/crp2a/gamma/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/crp2a/gamma/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -84,34 +62,50 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Calibration Curve</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Obtaining a Dose Rate Calibration Curve</h1>
                         <h4 data-toc-skip class="author">N. Frerebeau,
-B. Lebrun</h4>
+B. Lebrun, S. Kreutzer</h4>
             
-            <h4 data-toc-skip class="date">2024-04-09</h4>
+            <h4 data-toc-skip class="date">Last modified:
+2024-09-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/HEAD/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
     </div>
 
     
     
+<div class="section level2">
+<h2 id="scope">Scope<a class="anchor" aria-label="anchor" href="#scope"></a>
+</h2>
+<p>This vignette walks you through the steps to obtain a calibration
+curve for the gamma dose rate prediction. You will need the calibration
+curve to calculate the gamma dose rate from spectra measured in the
+field where the true gamma dose is yet to be determined. In other words,
+you will need this curve to analyse your field data.</p>
+</div>
+<div class="section level2">
+<h2 id="load-library-and-import-files">Load library and import files<a class="anchor" aria-label="anchor" href="#load-library-and-import-files"></a>
+</h2>
+<p>First things first, let’s load the <strong>gamma</strong>
+package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://crp2a.github.io/gamma/">gamma</a></span><span class="op">)</span></span></code></pre></div>
-<p>This vignette shows how to build a calibration curve for gamma dose
-rate prediction.</p>
-<div class="section level2">
-<h2 id="import-files">Import Files<a class="anchor" aria-label="anchor" href="#import-files"></a>
-</h2>
+<p>Now, we will use already measured spectra shipped with
+<strong>gamma</strong> for this example. If you determine your
+calibration curve, you will need to use your own data. All data used
+here were measured with a NaI probe.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Import CNF files for calibration</span></span>
 <span><span class="va">spc_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/AIX_NaI_1/calibration"</span>, package <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">spc_dir</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">spc_dir</span><span class="op">)</span></span>
+<span><span class="va">spc</span></span>
 <span><span class="co">#&gt; A collection of 5 gamma spectra: BRIQUE, C341, C347, GOU, PEP</span></span>
 <span></span>
 <span><span class="co"># Import a CNF file of background measurement</span></span>
 <span><span class="va">bkg_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/AIX_NaI_1/background"</span>, package <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">bkg_dir</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">bkg_dir</span><span class="op">)</span></span>
+<span><span class="va">bkg</span></span>
 <span><span class="co">#&gt; Gamma spectrum:</span></span>
 <span><span class="co">#&gt; *  name: PB</span></span>
 <span><span class="co">#&gt; *  date: 2019-03-27 12:06:02</span></span>
@@ -120,13 +114,25 @@ rate prediction.</p>
 <span><span class="co">#&gt; *  channels: 1024</span></span>
 <span><span class="co">#&gt; *  energy_min: -7</span></span>
 <span><span class="co">#&gt; *  energy_max: 3124.91</span></span></code></pre></div>
+<p>The object <code>spc</code> is a set of spectra measured in settings
+around Clermont-Ferrand <span class="citation">(Miallier et al.
+2009)</span> and Bordeaux <span class="citation">(Richter et al.
+2010)</span> with a known gamma dose rate, where <code>bgk</code> is a
+background curve measured in a lead castle.</p>
 </div>
 <div class="section level2">
-<h2 id="energy-scale-calibration">Energy Scale Calibration<a class="anchor" aria-label="anchor" href="#energy-scale-calibration"></a>
+<h2 id="energy-scale-calibration">Energy scale calibration<a class="anchor" aria-label="anchor" href="#energy-scale-calibration"></a>
 </h2>
+<p>Before we can further work with the spectra, we have to perform an
+energy calibration, this is assigning values in terms of energy to the
+channel numbers.</p>
 <div class="section level3">
 <h3 id="reference-spectra">Reference Spectra<a class="anchor" aria-label="anchor" href="#reference-spectra"></a>
 </h3>
+<p>First, we remove the baseline from the set of spectra for easier peak
+detection. , in the following subsections, we perform and apply the
+energy calibration to each spectrum, including the background spectrum.
+One subsection for each spectrum with the corresponding R code.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Spectrum pre-processing</span></span>
 <span><span class="co"># Remove baseline for peak detection</span></span>
@@ -195,190 +201,506 @@ rate prediction.</p>
 <span><span class="va">PEP</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"PEP"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
 <p><img src="doserate_files/figure-html/plot-PEP-1.png" width="672"></p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="background-spectrum">Background Spectrum<a class="anchor" aria-label="anchor" href="#background-spectrum"></a>
-</h3>
+<div class="section level4">
+<h4 id="background-spectrum">Background Spectrum<a class="anchor" aria-label="anchor" href="#background-spectrum"></a>
+</h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pb212, K40, Tl208</span></span>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">496</span>, <span class="fl">870</span><span class="op">)</span>,</span>
 <span>  energy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">238</span>, <span class="fl">1461</span>, <span class="fl">2615</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="op">)</span> </span>
 <span><span class="va">bkg_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">bkg</span>, lines <span class="op">=</span> <span class="va">lines</span><span class="op">)</span></span></code></pre></div>
 <p><img src="doserate_files/figure-html/plot-bkg-1.png" width="672"></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="signal-integration">Signal Integration<a class="anchor" aria-label="anchor" href="#signal-integration"></a>
-</h2>
+<div class="section level3">
+<h3 id="signal-integration">Signal integration<a class="anchor" aria-label="anchor" href="#signal-integration"></a>
+</h3>
+<p>Two methods can be used to calculate a gamma dose rate from the
+measured counts: the ‘window’ method and the ‘threshold’ method. The
+‘window’ method compares counts under nuclide-specific gamma-ray peaks
+to<br>
+reference spectra where the nuclide concentration is known. In this
+case, only a small part of the spectrum is used. The ‘threshold’ method
+uses the circumstance that above a certain threshold, the number of
+counts for a given dose rate changes only slightly with the emitters
+<span class="citation">(e.g., U, Th, K – cf. Guérin, Mercier, and
+Adamiec 2011; Mercier and Falguères 2007; Løvborg and Kirkegaard
+1974)</span>.</p>
+<p>The exact position of this threshold depends on the used probe and
+needs to be determined either by modelling or measurements of different
+sites with known but different radionuclides concentrations.</p>
+<p>For this example (and in the package <strong>gamma</strong> in
+general), we will focus solely on the ‘threshold’ method, a crucial tool
+used to derive a calibration curve and derive gamma dose rates. This
+method’s practical application in deriving a calibration curve is a key
+aspect of our exploration. Our first step is to combine the
+energy-calibrated spectra into a unified set, laying the foundation for
+the subsequent calculations.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spc_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">BRIQUE</span>, <span class="va">C341</span>, <span class="va">C347</span>, <span class="va">GOU</span>, <span class="va">PEP</span><span class="op">)</span></span>
-<span><span class="va">spc_scaled</span> <span class="op">&lt;-</span> <span class="fu">methods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">spc_scaled</span>, <span class="st">"GammaSpectra"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="count-threshold">Count Threshold<a class="anchor" aria-label="anchor" href="#count-threshold"></a>
-</h3>
+<span><span class="va">spc_scaled</span> <span class="op">&lt;-</span> <span class="fu">methods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">spc_scaled</span>, <span class="st">"GammaSpectra"</span><span class="op">)</span></span>
+<span><span class="va">spc_scaled</span></span>
+<span><span class="co">#&gt; A collection of 5 gamma spectra: BRIQUE, C341, C347, GOU, PEP</span></span></code></pre></div>
+<p>Now we can integrate the spectra using either the cumulative count
+spectra or the energy corresponding to a certain energy <span class="citation">(cf. Guérin, Mercier, and Adamiec 2011 for
+details)</span>.</p>
+<p>The following two subsections show how to derive the integrated
+spectrometer response with each technique. In both cases, however, we
+assume that the <strong>threshold itself is already known</strong>! The
+examples are for educational reasons only and the here used function
+<code><a href="../reference/integrate.html">signal_integrate()</a></code> is used in the back by the function
+<code><a href="../reference/doserate.html">dose_fit()</a></code> we will use later to derive the calibration
+curve.</p>
+<div class="section level4">
+<h4 id="using-the-count-threshold">Using the count threshold<a class="anchor" aria-label="anchor" href="#using-the-count-threshold"></a>
+</h4>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Integration range (in keV)</span></span>
 <span><span class="va">Ni_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">2800</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Integrate background spectrum</span></span>
-<span><span class="op">(</span><span class="va">Ni_bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span><span class="va">bkg_scaled</span>, range <span class="op">=</span> <span class="va">Ni_range</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      value      error </span></span>
-<span><span class="co">#&gt; 1.40046864 0.01906326</span></span>
+<span><span class="va">Ni_bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span></span>
+<span>  object <span class="op">=</span> <span class="va">bkg_scaled</span>, </span>
+<span>  range <span class="op">=</span> <span class="va">Ni_range</span>, </span>
+<span>  energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Integrate reference spectra</span></span>
-<span><span class="op">(</span><span class="va">Ni_spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span><span class="va">spc_scaled</span>, range <span class="op">=</span> <span class="va">Ni_range</span>, background <span class="op">=</span> <span class="va">Ni_bkg</span>, </span>
-<span>                            energy <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           value     error</span></span>
-<span><span class="co">#&gt; BRIQUE 209.2953 0.2135497</span></span>
-<span><span class="co">#&gt; C341    87.7405 0.2249214</span></span>
-<span><span class="co">#&gt; C347   150.6917 0.2929845</span></span>
-<span><span class="co">#&gt; GOU    170.0013 0.3105710</span></span>
-<span><span class="co">#&gt; PEP    264.7712 0.3969934</span></span></code></pre></div>
+<span><span class="va">Ni_spc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span></span>
+<span>  object <span class="op">=</span> <span class="va">spc_scaled</span>, </span>
+<span>  range <span class="op">=</span> <span class="va">Ni_range</span>, </span>
+<span>  background <span class="op">=</span> <span class="va">Ni_bkg</span>, </span>
+<span>  energy <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="energy-threshold">Energy Threshold<a class="anchor" aria-label="anchor" href="#energy-threshold"></a>
-</h3>
+<div class="section level4">
+<h4 id="using-the-energy-threshold">Using the energy threshold<a class="anchor" aria-label="anchor" href="#using-the-energy-threshold"></a>
+</h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Integration range (in keV)</span></span>
 <span><span class="va">NiEi_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">2800</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Integrate background spectrum</span></span>
-<span><span class="op">(</span><span class="va">NiEi_bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span><span class="va">bkg_scaled</span>, range <span class="op">=</span> <span class="va">NiEi_range</span>, energy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        value        error </span></span>
-<span><span class="co">#&gt; 1108.0565661    0.5362181</span></span>
+<span><span class="va">NiEi_bkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span></span>
+<span>  object <span class="op">=</span> <span class="va">bkg_scaled</span>, </span>
+<span>  range <span class="op">=</span> <span class="va">NiEi_range</span>, </span>
+<span>  energy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Integrate reference spectra</span></span>
-<span><span class="op">(</span><span class="va">NiEi_signal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span><span class="va">spc_scaled</span>, range <span class="op">=</span> <span class="va">NiEi_range</span>, </span>
-<span>                                 background <span class="op">=</span> <span class="va">NiEi_bkg</span>, energy <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                 simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            value    error</span></span>
-<span><span class="co">#&gt; BRIQUE 110923.34 4.933826</span></span>
-<span><span class="co">#&gt; C341    46657.02 5.215421</span></span>
-<span><span class="co">#&gt; C347    81717.33 6.843667</span></span>
-<span><span class="co">#&gt; GOU     89644.92 7.152993</span></span>
-<span><span class="co">#&gt; PEP    139711.03 9.136525</span></span></code></pre></div>
+<span><span class="va">NiEi_signal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/integrate.html">signal_integrate</a></span><span class="op">(</span></span>
+<span>  object <span class="op">=</span> <span class="va">spc_scaled</span>, </span>
+<span>  range <span class="op">=</span> <span class="va">NiEi_range</span>, </span>
+<span>  background <span class="op">=</span> <span class="va">NiEi_bkg</span>, </span>
+<span>  energy <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="calibration-curve">Calibration Curve<a class="anchor" aria-label="anchor" href="#calibration-curve"></a>
-</h2>
 <div class="section level3">
-<h3 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+<h3 id="get-dose-rate-calibration-curve">Get dose rate calibration curve<a class="anchor" aria-label="anchor" href="#get-dose-rate-calibration-curve"></a>
 </h3>
+<p>The dose rate calibration curve models detector specific counts
+against a know gamma-dose so that such gamma dose can be derived from
+unknown spectra with the the same detector.</p>
+<div class="section level4">
+<h4 id="model-calibration-curve">Model calibration curve<a class="anchor" aria-label="anchor" href="#model-calibration-curve"></a>
+</h4>
+<p>To model the calibration curve we will need have measured sites with
+known radionuclide concentrations. <code>'gamma'</code> ships a table
+with values from know sites in the dataset <code>clermont</code>. If
+you, as we have, measured with your probe in that locations you do not
+have to manually add values from <span class="citation">Miallier et al.
+(2009)</span> or <span class="citation">Richter et al.
+(2010)</span>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get reference dose rates</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"clermont"</span><span class="op">)</span></span>
-<span><span class="va">doses</span> <span class="op">&lt;-</span> <span class="va">clermont</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma_dose"</span>, <span class="st">"gamma_error"</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co"># Metadata</span></span>
+<span><span class="va">doses</span> <span class="op">&lt;-</span> <span class="va">clermont</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma_dose"</span>, <span class="st">"gamma_error"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="4%">
+<col width="4%">
+<col width="10%">
+<col width="9%">
+<col width="3%">
+<col width="5%">
+<col width="3%">
+<col width="5%">
+<col width="3%">
+<col width="6%">
+<col width="5%">
+<col width="5%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="8%">
+</colgroup>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="left">name</th>
+<th align="left">laboratory</th>
+<th align="left">nature</th>
+<th align="right">U</th>
+<th align="right">U_error</th>
+<th align="right">Th</th>
+<th align="right">Th_error</th>
+<th align="right">K2O</th>
+<th align="right">K2O_error</th>
+<th align="right">K</th>
+<th align="right">K_error</th>
+<th align="right">gamma_dose</th>
+<th align="right">gamma_error</th>
+<th align="right">cosmic_dose</th>
+<th align="right">cosmic_error</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">BRIQUE</td>
+<td align="left">BRIQUE</td>
+<td align="left">Bordeaux</td>
+<td align="left">ceramic</td>
+<td align="right">4.10</td>
+<td align="right">0.15</td>
+<td align="right">13.70</td>
+<td align="right">0.40</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">3.500000</td>
+<td align="right">0.100000</td>
+<td align="right">1986.4620</td>
+<td align="right">35.619679</td>
+<td align="right">152</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">C341</td>
+<td align="left">C341</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">trachybasalt</td>
+<td align="right">1.80</td>
+<td align="right">0.05</td>
+<td align="right">6.42</td>
+<td align="right">0.40</td>
+<td align="right">1.65</td>
+<td align="right">0.03</td>
+<td align="right">1.369665</td>
+<td align="right">0.024903</td>
+<td align="right">849.9668</td>
+<td align="right">21.317615</td>
+<td align="right">170</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">C347</td>
+<td align="left">C347</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">granite</td>
+<td align="right">2.84</td>
+<td align="right">0.12</td>
+<td align="right">4.67</td>
+<td align="right">0.10</td>
+<td align="right">4.27</td>
+<td align="right">0.10</td>
+<td align="right">3.544527</td>
+<td align="right">0.083010</td>
+<td align="right">1423.8589</td>
+<td align="right">25.249756</td>
+<td align="right">170</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">GOU</td>
+<td align="left">GOU</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">trachyandesite</td>
+<td align="right">3.18</td>
+<td align="right">0.12</td>
+<td align="right">11.95</td>
+<td align="right">0.06</td>
+<td align="right">3.13</td>
+<td align="right">0.04</td>
+<td align="right">2.598213</td>
+<td align="right">0.033204</td>
+<td align="right">1575.2249</td>
+<td align="right">17.433789</td>
+<td align="right">110</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">LAS</td>
+<td align="left">LAS</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">basalt</td>
+<td align="right">2.14</td>
+<td align="right">0.04</td>
+<td align="right">7.57</td>
+<td align="right">0.15</td>
+<td align="right">2.33</td>
+<td align="right">0.02</td>
+<td align="right">1.934133</td>
+<td align="right">0.016602</td>
+<td align="right">1083.6737</td>
+<td align="right">9.570593</td>
+<td align="right">120</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">LMP</td>
+<td align="left">LMP</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">basalt</td>
+<td align="right">1.60</td>
+<td align="right">0.14</td>
+<td align="right">5.91</td>
+<td align="right">0.09</td>
+<td align="right">0.87</td>
+<td align="right">0.03</td>
+<td align="right">0.722187</td>
+<td align="right">0.024903</td>
+<td align="right">641.9004</td>
+<td align="right">17.560649</td>
+<td align="right">120</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">MAZ</td>
+<td align="left">MAZ</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">trachyandesite</td>
+<td align="right">2.39</td>
+<td align="right">0.08</td>
+<td align="right">8.58</td>
+<td align="right">0.04</td>
+<td align="right">2.24</td>
+<td align="right">0.03</td>
+<td align="right">1.859424</td>
+<td align="right">0.024903</td>
+<td align="right">1141.4033</td>
+<td align="right">11.665045</td>
+<td align="right">200</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">MPX</td>
+<td align="left">MPX</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">sandstone</td>
+<td align="right">1.38</td>
+<td align="right">0.03</td>
+<td align="right">3.61</td>
+<td align="right">0.20</td>
+<td align="right">3.08</td>
+<td align="right">0.04</td>
+<td align="right">2.556708</td>
+<td align="right">0.033204</td>
+<td align="right">964.0196</td>
+<td align="right">13.274167</td>
+<td align="right">110</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">PEP</td>
+<td align="left">PEP</td>
+<td align="left">Clermont-Ferrand</td>
+<td align="left">granite</td>
+<td align="right">6.00</td>
+<td align="right">0.20</td>
+<td align="right">19.00</td>
+<td align="right">2.00</td>
+<td align="right">4.63</td>
+<td align="right">0.24</td>
+<td align="right">3.843363</td>
+<td align="right">0.199224</td>
+<td align="right">2538.2217</td>
+<td align="right">112.169131</td>
+<td align="right">140</td>
+<td align="right">20</td>
+</tr>
+</tbody>
+</table>
+<p>In the next step we create a list with additional information about
+the used equipment to be passed onto the calibration R object. You have
+to modify those values for your own detector.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Metadata</span></span>
 <span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  laboratory <span class="op">=</span> <span class="st">"CEREGE"</span>,</span>
 <span>  instrument <span class="op">=</span> <span class="st">"InSpector 1000"</span>,</span>
 <span>  detector <span class="op">=</span> <span class="st">"NaI"</span>,</span>
 <span>  authors <span class="op">=</span> <span class="st">"CEREGE Luminescence Team"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Build the calibration curve</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>In the last step we construct the calibration curve and inspect the
+results.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Build the calibration curve</span></span>
 <span><span class="va">AIX_NaI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_fit</a></span><span class="op">(</span></span>
-<span>  <span class="va">spc_scaled</span>, background <span class="op">=</span> <span class="va">bkg_scaled</span>, doses <span class="op">=</span> <span class="va">doses</span>,</span>
-<span>  range_Ni <span class="op">=</span> <span class="va">Ni_range</span>, range_NiEi <span class="op">=</span> <span class="va">NiEi_range</span>,</span>
+<span>  object <span class="op">=</span> <span class="va">spc_scaled</span>, </span>
+<span>  background <span class="op">=</span> <span class="va">bkg_scaled</span>, </span>
+<span>  doses <span class="op">=</span> <span class="va">doses</span>,</span>
+<span>  range_Ni <span class="op">=</span> <span class="va">Ni_range</span>, </span>
+<span>  range_NiEi <span class="op">=</span> <span class="va">NiEi_range</span>,</span>
 <span>  details <span class="op">=</span> <span class="va">info</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Summary</span></span>
+<span><span class="va">AIX_NaI</span> </span>
+<span><span class="co">#&gt; Calibration curve:</span></span>
+<span><span class="co">#&gt; * laboratory: CEREGE</span></span>
+<span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
+<span><span class="co">#&gt; * detector: NaI</span></span>
+<span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
+<span><span class="co">#&gt; * date: 2024-09-21 13:10:53.412251</span></span>
+<span><span class="co">#&gt; * energy_calibration: &lt;5 available&gt;</span></span></code></pre></div>
+<p>If this information seems too opaque , we can further inspect the
+output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
+package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># show summary</span></span>
 <span><span class="fu"><a href="../reference/summarise.html">summarise</a></span><span class="op">(</span><span class="va">AIX_NaI</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $Ni</span></span>
 <span><span class="co">#&gt; $Ni$residuals</span></span>
-<span><span class="co">#&gt; [1]  33.402986   7.968894   6.460507 -18.670747  78.089036</span></span>
+<span><span class="co">#&gt; [1]  33.573851   7.952809   6.541241 -18.560316  78.345223</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$coefficients</span></span>
 <span><span class="co">#&gt;            Estimate Std. Error</span></span>
-<span><span class="co">#&gt; Intercept 40.013121 41.8531813</span></span>
-<span><span class="co">#&gt; Slope      9.140417  0.2721024</span></span>
+<span><span class="co">#&gt; Intercept 40.164150 41.7624590</span></span>
+<span><span class="co">#&gt; Slope      9.138879  0.2714404</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$MSWD</span></span>
-<span><span class="co">#&gt; [1] 0.8938093</span></span>
+<span><span class="co">#&gt; [1] 0.8995128</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$df</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Ni$p_value</span></span>
-<span><span class="co">#&gt; [1] 0.4433926</span></span>
+<span><span class="co">#&gt; [1] 0.4404757</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi</span></span>
 <span><span class="co">#&gt; $NiEi$residuals</span></span>
-<span><span class="co">#&gt; [1]  33.906630  12.519006 -21.932843  -8.121213  86.160947</span></span>
+<span><span class="co">#&gt; [1]  33.906847  12.518973 -21.932740  -8.121079  86.161275</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$coefficients</span></span>
 <span><span class="co">#&gt;              Estimate   Std. Error</span></span>
-<span><span class="co">#&gt; Intercept 27.88537142 4.202826e+01</span></span>
-<span><span class="co">#&gt; Slope      0.01735135 5.142132e-04</span></span>
+<span><span class="co">#&gt; Intercept 27.88558657 4.202809e+01</span></span>
+<span><span class="co">#&gt; Slope      0.01735135 5.142108e-04</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$MSWD</span></span>
-<span><span class="co">#&gt; [1] 0.9375068</span></span>
+<span><span class="co">#&gt; [1] 0.9375135</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$df</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $NiEi$p_value</span></span>
-<span><span class="co">#&gt; [1] 0.421443</span></span>
-<span></span>
-<span><span class="co"># Plot curve</span></span>
-<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, model <span class="op">=</span> <span class="st">"Ni"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="co">#&gt; [1] 0.4214397</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot calibration curves</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, energy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, model <span class="op">=</span> <span class="st">"NiEi"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, energy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="doserate_files/figure-html/calibration-1.png" width="336"><img src="doserate_files/figure-html/calibration-2.png" width="336"></p>
+<p>Well, this looks all good and should make a good calibration curve.
+To use this calibration curve in the future, you can save the object
+using the base R function <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, file <span class="op">=</span> <span class="st">"&lt;you_path&gt;/&lt;date&gt;_NaI_DoseRate_Calibration.rda"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="check-model">Check Model<a class="anchor" aria-label="anchor" href="#check-model"></a>
-</h3>
 <div class="section level4">
-<h4 id="count-threshold-ni">Count Threshold (Ni)<a class="anchor" aria-label="anchor" href="#count-threshold-ni"></a>
+<h4 id="check-the-model">Check the model<a class="anchor" aria-label="anchor" href="#check-the-model"></a>
 </h4>
+<p>Although the calibration curve appears reasonable, we can use a few
+additional R plots to further inspect the performed calibration.</p>
+<div class="section level5">
+<h5 id="count-threshold-ni">Count threshold (<code>Ni</code>)<a class="anchor" aria-label="anchor" href="#count-threshold-ni"></a>
+</h5>
 <p><img src="doserate_files/figure-html/check-Ni-1.png" width="336"><img src="doserate_files/figure-html/check-Ni-2.png" width="336"><img src="doserate_files/figure-html/check-Ni-3.png" width="336"></p>
 </div>
-<div class="section level4">
-<h4 id="energy-threshold-ni-ei">Energy Threshold (Ni.Ei)<a class="anchor" aria-label="anchor" href="#energy-threshold-ni-ei"></a>
-</h4>
+<div class="section level5">
+<h5 id="energy-threshold-ni-ei">Energy threshold (<code>Ni.Ei</code>)<a class="anchor" aria-label="anchor" href="#energy-threshold-ni-ei"></a>
+</h5>
 <p><img src="doserate_files/figure-html/check-NiEi-1.png" width="336"><img src="doserate_files/figure-html/check-NiEi-2.png" width="336"><img src="doserate_files/figure-html/check-NiEi-3.png" width="336"></p>
 </div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="predict-new-dose-rates">Predict New Dose Rates<a class="anchor" aria-label="anchor" href="#predict-new-dose-rates"></a>
-</h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="section level3">
+<h3 id="application-example-opredict-new-dose-rates">Application example: opredict new dose rates<a class="anchor" aria-label="anchor" href="#application-example-opredict-new-dose-rates"></a>
+</h3>
+<p>After calibrating our detector, it is time to derive gamma dose rates
+from sites with unknown radionuclide concentrations. As mentioned above,
+we will use data we ship with <code>'gamma'</code>. Our routine analysis
+consists of only three steps:</p>
+<div class="section level4">
+<h4 id="import-measured-data">Import measured data<a class="anchor" aria-label="anchor" href="#import-measured-data"></a>
+</h4>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Import CNF files for dose rate prediction</span></span>
 <span><span class="va">test_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/AIX_NaI_1/test"</span>, package <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">test_dir</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A collection of 5 gamma spectra: NAR19-P2-1, NAR19-P3-1, NAR19-P4-1, NAR19-P5-1, NAR19-P6-1</span></span>
-<span></span>
-<span><span class="co"># Inspect spectra</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.html">read</a></span><span class="op">(</span><span class="va">test_dir</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="inspect-the-spectra">Inspect the spectra<a class="anchor" aria-label="anchor" href="#inspect-the-spectra"></a>
+</h4>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Inspect spectra</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span>, yaxis <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="doserate_files/figure-html/predict-1.png" width="672"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+</div>
+<div class="section level4">
+<h4 id="energy-calibrate-the-spectra">Energy calibrate the spectra<a class="anchor" aria-label="anchor" href="#energy-calibrate-the-spectra"></a>
+</h4>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pb212, K40, Tl208</span></span>
+<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">490</span>, <span class="fl">870</span><span class="op">)</span>,</span>
+<span>  energy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">238</span>, <span class="fl">1461</span>, <span class="fl">2615</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">as</span><span class="op">(</span><span class="st">"PeakPosition"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## energy calibrate</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">test</span>, <span class="va">pks</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## check the calibration for one curve</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Dose rate prediction</span></span>
-<span><span class="co"># (assuming that the energy scale of each spectrum was adjusted first)</span></span>
-<span><span class="op">(</span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        names   dose_Ni error_Ni dose_NiEi error_NiEi</span></span>
-<span><span class="co">#&gt; 1 NAR19-P2-1  925.2131 1388.917  898.0336   1348.102</span></span>
-<span><span class="co">#&gt; 2 NAR19-P3-1 1116.4969 1676.068 1089.8538   1636.056</span></span>
-<span><span class="co">#&gt; 3 NAR19-P4-1  894.0082 1342.074  869.4770   1305.233</span></span>
-<span><span class="co">#&gt; 4 NAR19-P5-1 1391.7762 2089.312 1369.9492   2056.527</span></span>
-<span><span class="co">#&gt; 5 NAR19-P6-1 1171.7514 1759.018 1152.1000   1729.499</span></span></code></pre></div>
+<span><span class="co">## show all energy calibrated spectra </span></span>
+<span><span class="co"># Inspect spectra</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span>, xaxis <span class="op">=</span> <span class="st">"energy"</span>, yaxis <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-2.png" width="672"></p>
+</div>
+<div class="section level4">
+<h4 id="predict-the-dose-rates">Predict the dose rates<a class="anchor" aria-label="anchor" href="#predict-the-dose-rates"></a>
+</h4>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, <span class="va">test</span>, sigma <span class="op">=</span> <span class="fl">1.96</span><span class="op">)</span></span>
+<span><span class="va">rates</span></span>
+<span><span class="co">#&gt;         name signal_Ni signal_err_Ni   dose_Ni dose_err_Ni signal_NiEi</span></span>
+<span><span class="co">#&gt; 1 NAR19-P2-1  90.60172     0.2479502  868.1623    52.24518    47953.18</span></span>
+<span><span class="co">#&gt; 2 NAR19-P3-1 110.13766     0.2452741 1046.6989    62.96733    58543.44</span></span>
+<span><span class="co">#&gt; 3 NAR19-P4-1  87.45143     0.2736257  839.3722    50.52866    46393.01</span></span>
+<span><span class="co">#&gt; 4 NAR19-P5-1 138.48561     0.3079133 1305.7674    78.55221    74020.40</span></span>
+<span><span class="co">#&gt; 5 NAR19-P6-1 115.97222     0.3587824 1100.0202    66.21719    62016.48</span></span>
+<span><span class="co">#&gt;   signal_err_NiEi dose_NiEi dose_err_NiEi dose_final dose_err_final</span></span>
+<span><span class="co">#&gt; 1        5.729871  859.9379      51.58826   864.0501       73.42087</span></span>
+<span><span class="co">#&gt; 2        5.676295 1043.6933      62.61183  1045.1961       88.79779</span></span>
+<span><span class="co">#&gt; 3        6.330354  832.8669      49.96429   836.1196       71.05887</span></span>
+<span><span class="co">#&gt; 4        7.139047 1312.2395      78.72209  1309.0034      111.21021</span></span>
+<span><span class="co">#&gt; 5        8.323213 1103.9552      66.22706  1101.9877       93.65265</span></span></code></pre></div>
+<p><em>Note: We assume here that the energy scale of each spectrum was
+adjusted first.</em></p>
+</div>
+</div>
 </div>
 <div class="section level2">
-<h2 id="r-session">R session<a class="anchor" aria-label="anchor" href="#r-session"></a>
+<h2 class="unnumbered" id="outro-our-r-session">Outro: our R session<a class="anchor" aria-label="anchor" href="#outro-our-r-session"></a>
 </h2>
-<pre><code><span><span class="co">#&gt; R version 4.3.3 (2024-02-29)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 22.04.4 LTS</span></span>
+<p>Finally, for transparency, the R session setting used for rendering
+this vignette.</p>
+<pre><code><span><span class="co">#&gt; R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 22.04.5 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -397,44 +719,82 @@ rate prediction.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] gamma_1.0.5</span></span>
+<span><span class="co">#&gt; [1] gamma_1.1.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] gtable_0.3.4      jsonlite_1.8.8    highr_0.10        compiler_4.3.3   </span></span>
-<span><span class="co">#&gt;  [5] Rcpp_1.0.12       rxylib_0.2.12     jquerylib_0.1.4   systemfonts_1.0.6</span></span>
-<span><span class="co">#&gt;  [9] scales_1.3.0      textshaping_0.3.7 yaml_2.3.8        fastmap_1.1.1    </span></span>
-<span><span class="co">#&gt; [13] ggplot2_3.5.0     R6_2.5.1          IsoplotR_6.1      labeling_0.4.3   </span></span>
-<span><span class="co">#&gt; [17] knitr_1.46        tibble_3.2.1      desc_1.4.3        munsell_0.5.1    </span></span>
-<span><span class="co">#&gt; [21] bslib_0.7.0       pillar_1.9.0      rlang_1.1.3       utf8_1.2.4       </span></span>
-<span><span class="co">#&gt; [25] cachem_1.0.8      xfun_0.43         fs_1.6.3          sass_0.4.9       </span></span>
-<span><span class="co">#&gt; [29] memoise_2.0.1     cli_3.6.2         withr_3.0.0       pkgdown_2.0.7    </span></span>
-<span><span class="co">#&gt; [33] magrittr_2.0.3    digest_0.6.35     grid_4.3.3        lifecycle_1.0.4  </span></span>
-<span><span class="co">#&gt; [37] vctrs_0.6.5       evaluate_0.23     glue_1.7.0        farver_2.1.1     </span></span>
-<span><span class="co">#&gt; [41] ragg_1.3.0        fansi_1.0.6       colorspace_2.1-0  rmarkdown_2.26   </span></span>
-<span><span class="co">#&gt; [45] purrr_1.0.2       tools_4.3.3       pkgconfig_2.0.3   htmltools_0.5.8.1</span></span></code></pre>
+<span><span class="co">#&gt;  [1] gtable_0.3.5      jsonlite_1.8.9    highr_0.11        compiler_4.4.1   </span></span>
+<span><span class="co">#&gt;  [5] Rcpp_1.0.13       rxylib_0.2.14     jquerylib_0.1.4   systemfonts_1.1.0</span></span>
+<span><span class="co">#&gt;  [9] scales_1.3.0      textshaping_0.4.0 yaml_2.3.10       fastmap_1.2.0    </span></span>
+<span><span class="co">#&gt; [13] ggplot2_3.5.1     R6_2.5.1          IsoplotR_6.3      labeling_0.4.3   </span></span>
+<span><span class="co">#&gt; [17] knitr_1.48        tibble_3.2.1      desc_1.4.3        munsell_0.5.1    </span></span>
+<span><span class="co">#&gt; [21] bslib_0.8.0       pillar_1.9.0      rlang_1.1.4       utf8_1.2.4       </span></span>
+<span><span class="co">#&gt; [25] cachem_1.1.0      xfun_0.47         fs_1.6.4          sass_0.4.9       </span></span>
+<span><span class="co">#&gt; [29] cli_3.6.3         pkgdown_2.1.1     withr_3.0.1       magrittr_2.0.3   </span></span>
+<span><span class="co">#&gt; [33] digest_0.6.37     grid_4.4.1        lifecycle_1.0.4   vctrs_0.6.5      </span></span>
+<span><span class="co">#&gt; [37] evaluate_1.0.0    glue_1.7.0        farver_2.1.2      ragg_1.3.3       </span></span>
+<span><span class="co">#&gt; [41] fansi_1.0.6       colorspace_2.1-1  rmarkdown_2.28    tools_4.4.1      </span></span>
+<span><span class="co">#&gt; [45] pkgconfig_2.0.3   htmltools_0.5.8.1</span></span></code></pre>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-guerin2011" class="csl-entry">
+Guérin, G., N. Mercier, and G. Adamiec. 2011. <span>“Dose-<span>Rate
+Conversion Factors</span>: <span>Update</span>.”</span> <em>Ancient
+TL</em> 29 (1): 5–8.
+</div>
+<div id="ref-lvborg1974" class="csl-entry">
+Løvborg, Leif, and Peter Kirkegaard. 1974. <span>“Response of
+3<span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>″</mi><annotation encoding="application/x-tex">{''}</annotation></semantics></math></span>
+<span></span>
+3<span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>″</mi><annotation encoding="application/x-tex">{''}</annotation></semantics></math></span>
+<span>NaI</span>(<span>Tl</span>) Detectors to Terrestrial Gamma
+Radiation.”</span> <em>Nuclear Instruments and Methods</em> 121 (2):
+239–51. <a href="https://doi.org/10.1016/0029-554x(74)90072-x" class="external-link">https://doi.org/10.1016/0029-554x(74)90072-x</a>.
+</div>
+<div id="ref-mercier2007" class="csl-entry">
+Mercier, N., and C. Falguères. 2007. <span>“Field <span>Gamma
+Dose</span>-<span>Rate Measurement</span> with a
+<span>NaI</span>(<span>Tl</span>) <span>Detector</span>:
+<span>Re</span>-<span>Evaluation</span> of the "<span>Threshold</span>"
+<span>Technique</span>.”</span> <em>Ancient TL</em> 25 (1): 1–4.
+</div>
+<div id="ref-miallier2009" class="csl-entry">
+Miallier, D., G. Guérin, N. Mercier, T. Pilleyre, and S. Sanzelle. 2009.
+<span>“The <span>Clermont Radiometric Reference Rocks</span>: <span>A
+Convenient Tool</span> for <span>Dosimetric Purposes</span>.”</span>
+<em>Ancient TL</em> 27 (2): 37–44.
+</div>
+<div id="ref-richter2010" class="csl-entry">
+Richter, Daniel, H Dombrowski, S Neumaier, P Guibert, and A C Zink.
+2010. <span>“Environmental Gamma Dosimetry with <span>OSL</span> of
+-<span>Al2O3</span>:<span>C</span> for in Situ Sediment
+Measurements.”</span> <em>Radiation Protection Dosimetry</em> 141 (1):
+27–35. <a href="https://doi.org/10.1093/rpd/ncq146" class="external-link">https://doi.org/10.1093/rpd/ncq146</a>.
+</div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Nicolas Frerebeau, Brice Lebrun, Guilhem Paradol, <a href="https://www.archeosciences-bordeaux.fr.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_archeosciences.jpg"></a>, <a href="https://www.u-bordeaux-montaigne.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_ubm.jpg"></a>, <a href="https://www.cnrs.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_cnrs.jpg"></a>, <a href="https://lascarbx.labex.u-bordeaux.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_idex.png"></a>, <a href="https://amidex.univ-amu.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg"></a>.</p>
+  <p>Developed by Nicolas Frerebeau, Brice Lebrun, Guilhem Paradol, Sebastian Kreutzer, <a href="https://www.archeosciences-bordeaux.fr.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_archeosciences.jpg"></a>, <a href="https://www.u-bordeaux-montaigne.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_ubm.jpg"></a>, <a href="https://www.cnrs.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_cnrs.jpg"></a>, <a href="https://lascarbx.labex.u-bordeaux.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_idex.png"></a>, <a href="https://amidex.univ-amu.fr" class="external-link"><img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
