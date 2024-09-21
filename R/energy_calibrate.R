@@ -248,3 +248,15 @@ setMethod(
     vapply(object, FUN = has_calibration, FUN.VALUE = logical(1))
   }
 )
+
+#' @export
+#' @rdname energy
+#' @aliases has_calibration,CalibrationCurve-method
+setMethod(
+  f = "has_calibration",
+  signature = "CalibrationCurve",
+  definition = function(object) {
+    !is.null(object@details$energy_calibration) &
+      !any(is.na(object@details$energy_calibration))
+  }
+)

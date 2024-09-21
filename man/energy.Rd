@@ -21,6 +21,7 @@
 \alias{has_energy,GammaSpectra-method}
 \alias{has_calibration,GammaSpectrum-method}
 \alias{has_calibration,GammaSpectra-method}
+\alias{has_calibration,CalibrationCurve-method}
 \title{Energy Scale Calibration}
 \usage{
 energy_calibrate(object, lines, ...)
@@ -56,6 +57,8 @@ has_calibration(object)
 \S4method{has_calibration}{GammaSpectrum}(object)
 
 \S4method{has_calibration}{GammaSpectra}(object)
+
+\S4method{has_calibration}{CalibrationCurve}(object)
 }
 \arguments{
 \item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}

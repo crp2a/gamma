@@ -80,28 +80,29 @@ setMethod(
   f = "dose_predict",
   signature = signature(object = "CalibrationCurve", spectrum = "GammaSpectra"),
   definition = function(object, spectrum, sigma = 1, epsilon = 0.015, water_content = NULL, use_MC = FALSE) {
-    ## we ensure that the calibration curve and the GammaSpectra have all
-    ## energy calibrations. We have the following possible scenarios
+    ## We ensure that the calibration curve and the GammaSpectra have all
+    ## energy calibrations. We have the following possible scenarios:
     ## (1) energy calibrations are entirely missing or all available -> proceed
     ## (2) energy calibrations are missing and not missing -> hard stop
     ## (3) calibration has but spectrum not -> apply the calibration with message
 
-    ## determine the energy calibration status
-    has_energy_cal <- !any(is.na(object@details$energy_calibration))
-    has_energy_spc <- all(vapply(spectrum, has_calibration, logical(1)))
+    ## Determine the energy calibration status
+    has_energy_cal <- has_calibration(object)
+    has_energy_spc <- all(has_calibration(spectrum))
 
-    if (!has_energy_cal & has_energy_spc)
+    if (!has_energy_cal & has_energy_spc) {
       stop("Your dose-rate calibration does not have an energy calibration, while your spectra have!",
            call. = FALSE)
+    }
 
     if (has_energy_cal & !has_energy_spc) {
-      if (length(object@details$energy_calibration) > 1)
+      if (length(object@details$energy_calibration) > 1) {
         stop("No energy calibration found for 'spectrum' and 'object' has more than one calibration!",
              call. = FALSE)
+      }
 
       spectrum <- energy_calibrate(spectrum, object@details$energy_calibration[[1]])
       message("No energy calibration found for 'spectrum', apply calibration from dose-rate calibration model!")
-
     }
 
     ## calculate for count threshold
