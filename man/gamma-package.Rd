@@ -22,8 +22,7 @@ Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package all
 \note{
 This work received a state financial support managed by the Agence Nationale
 de la Recherche (France) through the program \emph{Investissements d'avenir}
-(ref. \href{https://lascarbx.labex.u-bordeaux.fr}{ANR-10-LABX-52} and
-\href{https://www.univ-amu.fr/amidex/}{11-IDEX-0001}).
+(ref. ANR-10-LABX-52 and 11-IDEX-0001).
 }
 \seealso{
 Useful links:

@@ -31,9 +31,9 @@ inst/doc
 
 # Temporary files created by devtools
 CRAN-SUBMISSION
-doc
+docs
 Meta
-d
+
 # Hidden file in MacOSX
 .DS_Store
 

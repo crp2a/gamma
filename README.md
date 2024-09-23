@@ -116,7 +116,6 @@ spectra <- read(spc_file)
 
 ## Load the calibration curve for the dose rate estimation
 ## As this curve is instrument specific, you will have to build your own
-## See help(fit_dose)
 data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
 ```
@@ -150,5 +149,4 @@ By contributing to this project, you agree to abide by its terms.
 
 This work received a state financial support managed by the Agence
 Nationale de la Recherche (France) through the program *Investissements
-d’avenir* (ref. [10-LABX-0052](https://lascarbx.labex.u-bordeaux.fr) and
-[11-IDEX-0001](https://www.univ-amu.fr/amidex)).
+d’avenir* (ref. 10-LABX-0052 and 11-IDEX-0001).

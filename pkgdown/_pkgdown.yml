@@ -13,10 +13,8 @@ authors:
     href: https://www.cnrs.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_cnrs.jpg" />
   LabEx Sciences archéologiques de Bordeaux:
-    href: https://lascarbx.labex.u-bordeaux.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_idex.png" />
   Idex Aix-Marseille:
-    href: https://amidex.univ-amu.fr
     html: <img src="https://crp2a.github.io/gamma/reference/figures/logo_amidex.jpg" />
 
 template:
