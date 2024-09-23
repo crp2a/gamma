@@ -37,15 +37,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.5.9000" id="gamma-1059000">gamma 1.0.5.9000<a class="anchor" aria-label="anchor" href="#gamma-1059000"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="gamma-110">gamma 1.1.0<a class="anchor" aria-label="anchor" href="#gamma-110"></a></h2>
 <div class="section level3">
-<h3 id="bugfixes-1-0-5-9000">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-1-0-5-9000"></a></h3>
+<h3 id="bugfixes-1-1-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-1-1-0"></a></h3>
 <ul><li>Fix an error in the uncertainty calculation of <code><a href="../reference/doserate.html">dose_predict()</a></code>. The returned error was too large and did not make much sense due to an internal calculation error. Along with the fix, the manual was updated to detail the uncertainty calculation. (PR <a href="https://github.com/crp2a/gamma/issues/42" class="external-link">#42</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>)</li>
 <li>Fix a graphical issue where the peaks were peaks were set with <code>set_energy()</code> but did not show correctly when plotted using the standard plot method, e.g., <code>plot(cal, pks)</code> would show only observed but not expected energy lines in the secondary x-axis. Now the expected energy lines (if set) are show. (<a href="https://github.com/crp2a/gamma/issues/29" class="external-link">#29</a>, PR <a href="https://github.com/crp2a/gamma/issues/32" class="external-link">#32</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
 <li>Fix the uncertainty calculation for the integrated signal. The formula had an factor of 2 in <code>var(2 * x)</code> where <code>x</code> is the integrated signal. Now the formula considers plain Poisson statistics. Along with this change, the calculation is now detailed in the manual (PR <a href="https://github.com/crp2a/gamma/issues/46" class="external-link">#46</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="additions-1-0-5-9000">Additions<a class="anchor" aria-label="anchor" href="#additions-1-0-5-9000"></a></h3>
+<h3 id="additions-1-1-0">Additions<a class="anchor" aria-label="anchor" href="#additions-1-1-0"></a></h3>
 <ul><li>Add support for Kromek SPE files to <code><a href="../reference/read.html">read()</a></code>(<a href="https://github.com/crp2a/gamma/issues/28" class="external-link">#28</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
 <li>Add support for <code>GammaSpectra-class</code> objects for <code><a href="../reference/energy.html">energy_calibrate()</a></code>(issue: <a href="https://github.com/crp2a/gamma/issues/22" class="external-link">#22</a>, PR <a href="https://github.com/crp2a/gamma/issues/31" class="external-link">#31</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
 <li>Add coercion method for <code>PeakPosition-class</code> to <code>list</code> (exported as <code><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list()</a></code>) and from <code>list</code> to <code>PeakPosition-class</code>. This enables better plotting functionality if the peak positions for where provided manually as <code>list</code> and not via, e.g., <code>peak_find()</code> (PR <a href="https://github.com/crp2a/gamma/issues/37" class="external-link">#37</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
@@ -58,12 +58,12 @@
 <li>Extend <code><a href="../reference/doserate.html">dose_predict()</a></code> to work with a <code>numeric</code> input for <code>background</code> as claimed in the documentary. This value can also be set to <code>c(0,0)</code> if no background subtraction is wanted (PR <a href="https://github.com/crp2a/gamma/issues/38" class="external-link">#38</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-1-0-5-9000">Changes<a class="anchor" aria-label="anchor" href="#changes-1-0-5-9000"></a></h3>
+<h3 id="changes-1-1-0">Changes<a class="anchor" aria-label="anchor" href="#changes-1-1-0"></a></h3>
 <ul><li>Update vignette about the dose rate calibration curve determination to make it more intelligible (<a href="https://github.com/crp2a/gamma/issues/30" class="external-link">#30</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>).</li>
 <li>Update manual for the output object of <code><a href="../reference/doserate.html">dose_predict()</a></code>, which had some loopholes (PR <a href="https://github.com/crp2a/gamma/issues/43" class="external-link">#43</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="datasets-1-0-5-9000">Datasets<a class="anchor" aria-label="anchor" href="#datasets-1-0-5-9000"></a></h3>
+<h3 id="datasets-1-1-0">Datasets<a class="anchor" aria-label="anchor" href="#datasets-1-1-0"></a></h3>
 <ul><li>Add conversion factor reference to <code>clermont</code> dataset for better transparency.</li>
 <li>Add new dataset called <code>clermont_2024</code> based on the original <code>clermont</code> dataset but with dose rate conversion factors and gamma dose rate calculated for different conversion factor datasets (PR <a href="https://github.com/crp2a/gamma/issues/40" class="external-link">#40</a> by <a href="https://github.com/RLumSK" class="external-link">@RLumSK</a>)</li>
 </ul></div>
