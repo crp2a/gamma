@@ -1,4 +1,4 @@
-# gamma 1.0.5.9000
+# gamma 1.1.0
 ## Bugfixes
 * Fix an error in the uncertainty calculation of `dose_predict()`. The returned error was too large and did not make 
 much sense due to an internal calculation error. Along with the fix, the manual was updated to detail the 

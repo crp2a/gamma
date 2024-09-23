@@ -29,5 +29,5 @@ bibentry(
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
   note         = sprintf("R package version %s", meta$Version),
-  doi          = "10.32614/CRAN.package.gamma"
+  doi          = "10.5281/zenodo.2652393"
 )
