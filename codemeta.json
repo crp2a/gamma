@@ -2,7 +2,7 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "gamma",
-  "description": "Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA files.",
+  "description": "Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA and Kromek SPE files.",
   "name": "gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry\n    Measurements",
   "relatedLink": ["https://crp2a.github.io/gamma/", "https://CRAN.R-project.org/package=gamma"],
   "codeRepository": "https://github.com/crp2a/gamma",
@@ -244,7 +244,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4261.751KB",
+  "fileSize": "4261.603KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -330,10 +330,10 @@
         }
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
-      "identifier": "10.32614/CRAN.package.gamma",
+      "identifier": "10.5281/zenodo.2652393",
       "description": "R package version 1.1.0",
-      "@id": "https://doi.org/10.32614/CRAN.package.gamma",
-      "sameAs": "https://doi.org/10.32614/CRAN.package.gamma"
+      "@id": "https://doi.org/10.5281/zenodo.2652393",
+      "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
   ],
   "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",

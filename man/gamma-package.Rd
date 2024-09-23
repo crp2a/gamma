@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of Gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA and Kromek SPE files.
+Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA and Kromek SPE files.
 }
 \details{
 \tabular{ll}{
