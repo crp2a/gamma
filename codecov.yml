@@ -1,5 +1,9 @@
 comment: false
 
+ignore:
+  - "R/gamma-deprecated.R"
+  - "R/zzz.R"
+
 coverage:
   status:
     project:

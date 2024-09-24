@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) { # nocov start
+.onLoad <- function(libname, pkgname) {
   op <- options()
   op.gamma <- list(
     gamma.debug = TRUE,
@@ -8,4 +8,4 @@
   if(any(toset)) options(op.gamma[toset])
 
   invisible()
-} # nocov end
+}
