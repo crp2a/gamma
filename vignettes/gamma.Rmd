@@ -1,5 +1,5 @@
 ---
-title: "Manual"
+title: "Introduction to gamma"
 author: "N. Frerebeau"
 date: "`r Sys.Date()`"
 output:
@@ -12,7 +12,7 @@ header-includes:
    - \usepackage{amssymb}
 bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{Manual}
+  %\VignetteIndexEntry{Introduction to gamma}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---

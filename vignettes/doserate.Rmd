@@ -48,12 +48,12 @@ If you determine your calibration curve, you will need to use
 your own data. All data used here were measured with a NaI probe. 
 
 ```{r import}
-# Import CNF files for calibration
+## Import CNF files for calibration
 spc_dir <- system.file("extdata/AIX_NaI_1/calibration", package = "gamma")
 spc <- read(spc_dir)
 spc
 
-# Import a CNF file of background measurement
+## Import a CNF file of background measurement
 bkg_dir <- system.file("extdata/AIX_NaI_1/background", package = "gamma")
 bkg <- read(bkg_dir)
 bkg
@@ -76,8 +76,8 @@ to each spectrum, including the background spectrum. One subsection for each
 spectrum with the corresponding R code.
 
 ```{r signal}
-# Spectrum pre-processing
-# Remove baseline for peak detection
+## Spectrum pre-processing
+## Remove baseline for peak detection
 bsl <- spc |>
   signal_slice(-1:-40) |>
   signal_stabilize(f = sqrt) |>
@@ -87,11 +87,13 @@ bsl <- spc |>
 
 ### BRIQUE
 ```{r calibrate-BRIQUE}
-# Peak detection
+## Peak detection
 pks <- peaks_find(bsl[["BRIQUE"]])
-# Set energy values
+
+## Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Adjust the energy scale
+
+## Adjust the energy scale
 BRIQUE <- energy_calibrate(spc[["BRIQUE"]], pks)
 ```
 
@@ -102,11 +104,13 @@ plot(BRIQUE, pks) +
 
 ### C341
 ```{r calibrate-C341}
-# Spectrum pre-processing and peak detection
+## Spectrum pre-processing and peak detection
 pks <- peaks_find(bsl[["C341"]])
-# Set energy values
+
+## Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, 2615)
-# Adjust the energy scale
+
+## Adjust the energy scale
 C341 <- energy_calibrate(spc[["C341"]], pks)
 ```
 
@@ -117,11 +121,13 @@ plot(C341, pks) +
 
 ### C347
 ```{r calibrate-C347}
-# Spectrum pre-processing and peak detection
+## Spectrum pre-processing and peak detection
 pks <- peaks_find(bsl[["C347"]], span = 10)
-# Set energy values
+
+## Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, NA, 1461, NA, 2615)
-# Adjust the energy scale
+
+## Adjust the energy scale
 C347 <- energy_calibrate(spc[["C347"]], pks)
 ```
 
@@ -132,11 +138,13 @@ plot(C347, pks) +
 
 ### GOU
 ```{r calibrate-GOU}
-# Spectrum pre-processing and peak detection
+## Spectrum pre-processing and peak detection
 pks <- peaks_find(bsl[["GOU"]])
-# Set energy values
+
+## Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Adjust the energy scale
+
+## Adjust the energy scale
 GOU <- energy_calibrate(spc[["GOU"]], pks)
 ```
 
@@ -147,11 +155,13 @@ plot(GOU, pks) +
 
 ### PEP
 ```{r calibrate-PEP}
-# Spectrum pre-processing and peak detection
+## Spectrum pre-processing and peak detection
 pks <- peaks_find(bsl[["PEP"]])
-# Set energy values
+
+## Set energy values
 set_energy(pks) <- c(238, NA, NA, NA, 1461, NA, NA, 2615)
-# Adjust the energy scale
+
+## Adjust the energy scale
 PEP <- energy_calibrate(spc[["PEP"]], pks)
 ```
 
@@ -211,16 +221,16 @@ function `dose_fit()` we will use later to derive the calibration curve.
 
 ### Using the count threshold
 ```{r integrate-Ni}
-# Integration range (in keV)
+## Integration range (in keV)
 Ni_range <- c(200, 2800)
 
-# Integrate background spectrum
+## Integrate background spectrum
 Ni_bkg <- signal_integrate(
   object = bkg_scaled, 
   range = Ni_range, 
   energy = FALSE)
 
-# Integrate reference spectra
+## Integrate reference spectra
 Ni_spc <- signal_integrate(
   object = spc_scaled, 
   range = Ni_range, 
@@ -232,16 +242,16 @@ Ni_spc <- signal_integrate(
 ### Using the energy threshold
 
 ```{r integrate-NiEi}
-# Integration range (in keV)
+## Integration range (in keV)
 NiEi_range <- c(200, 2800)
 
-# Integrate background spectrum
+## Integrate background spectrum
 NiEi_bkg <- signal_integrate(
   object = bkg_scaled, 
   range = NiEi_range, 
   energy = TRUE)
 
-# Integrate reference spectra
+## Integrate reference spectra
 NiEi_signal <- signal_integrate(
   object = spc_scaled, 
   range = NiEi_range, 
@@ -262,7 +272,7 @@ To model the calibration curve we will need have measured sites with known radio
 with your probe in that locations you do not have to manually add values from @miallier2009 or @richter2010.
 
 ```{r}
-# Get reference dose rates
+## Get reference dose rates
 data("clermont")
 doses <- clermont[, c("gamma_dose", "gamma_error")]
 ```
@@ -276,7 +286,7 @@ to be passed onto the calibration R object. You have to modify those values for 
 detector.
 
 ```{r}
-# Metadata
+## Metadata
 info <- list(
   laboratory = "CEREGE",
   instrument = "InSpector 1000",
@@ -288,7 +298,7 @@ info <- list(
 In the last step we construct the calibration curve and inspect the results. 
 
 ```{r}
-# Build the calibration curve
+## Build the calibration curve
 AIX_NaI <- dose_fit(
   object = spc_scaled, 
   background = bkg_scaled, 
@@ -304,12 +314,12 @@ If this information seems too opaque , we can further inspect the output numeric
 (`summary()`) and graphically using the package `plot()` methods.
 
 ```{r}
-# show summary
+## Show summary
 summarise(AIX_NaI)
 ```
 
 ```{r calibration, fig.width=3.5, fig.show='hold'}
-# plot calibration curves
+## Plot calibration curves
 plot(AIX_NaI, energy = FALSE) +
   ggplot2::theme_bw()
 plot(AIX_NaI, energy = TRUE) +
@@ -431,7 +441,7 @@ ggplot2::ggplot(NiEi_residuals, ggplot2::aes(sample = standardized)) +
 #                 x = "Observation", y = "D")
 ```
 
-## Application example: opredict new dose rates
+## Application example: predict new dose rates
 
 After calibrating our detector, it is time to derive gamma dose rates from 
 sites with unknown radionuclide concentrations. As mentioned above, we will use 
@@ -441,7 +451,7 @@ only three steps:
 ### Import measured data
 
 ```{r}
-# Import CNF files for dose rate prediction
+## Import CNF files for dose rate prediction
 test_dir <- system.file("extdata/AIX_NaI_1/test", package = "gamma")
 test <- read(test_dir)
 ```
@@ -449,7 +459,7 @@ test <- read(test_dir)
 ### Inspect the spectra 
 
 ```{r predict}
-# Inspect spectra
+## Inspect spectra
 plot(test, yaxis = "rate") +
   ggplot2::theme_bw()
 ```
@@ -487,7 +497,8 @@ rates
 
 # Outro: our R session {-}
 
-Finally, for transparency, the R session setting used for rendering this vignette. 
+Finally, for transparency, the R session setting used for rendering this vignette:
+
 ```{r session-info, echo=FALSE}
 sessionInfo()
 ```
