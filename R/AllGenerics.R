@@ -9,6 +9,7 @@ setGeneric("length")
 #' Coerce
 #'
 #' @param x An object to be coerced.
+#' @param row.names,optional Currently not used.
 #' @param ... Currently not used.
 #' @return A coerced object.
 #' @example inst/examples/ex-coerce.R
@@ -18,6 +19,20 @@ setGeneric("length")
 #' @name coerce
 #' @rdname coerce
 NULL
+
+#' @rdname coerce
+#' @aliases as_spectra-method
+setGeneric(
+  name = "as_spectra",
+  def = function(x) standardGeneric("as_spectra")
+)
+
+#' @rdname coerce
+#' @aliases as_peaks-method
+setGeneric(
+  name = "as_peaks",
+  def = function(x) standardGeneric("as_peaks")
+)
 
 # Extract ======================================================================
 # Getters ----------------------------------------------------------------------

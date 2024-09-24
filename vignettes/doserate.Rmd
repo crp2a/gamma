@@ -457,21 +457,21 @@ plot(test, yaxis = "rate") +
 ### Energy calibrate the spectra
 
 ```{r}
-# Pb212, K40, Tl208
+## Pb212, K40, Tl208
 pks <- data.frame(
   channel = c(86, 490, 870),
   energy = c(238, 1461, 2615)
-) |> as("PeakPosition")
+)
+pks <- as_peaks(pks)
 
-## energy calibrate
+## Energy calibrate
 test <- energy_calibrate(test, pks)
 
-## check the calibration for one curve
+## Check the calibration for one curve
 plot(test[[1]], pks) +
   ggplot2::theme_bw()
 
-## show all energy calibrated spectra 
-# Inspect spectra
+## Show all energy calibrated spectra 
 plot(test, xaxis = "energy", yaxis = "rate") +
   ggplot2::theme_bw()
 ```

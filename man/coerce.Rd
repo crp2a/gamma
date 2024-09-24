@@ -3,15 +3,46 @@
 \docType{methods}
 \name{coerce}
 \alias{coerce}
-\alias{as.matrix.GammaSpectrum}
+\alias{as_spectra}
+\alias{as_spectra-method}
+\alias{as_peaks}
+\alias{as_peaks-method}
+\alias{as.matrix,GammaSpectrum-method}
+\alias{as.matrix,PeakPosition-method}
+\alias{as.data.frame,GammaSpectrum-method}
+\alias{as.data.frame,PeakPosition-method}
+\alias{as.list,PeakPosition-method}
+\alias{as_spectra,GammaSpectrum-method}
+\alias{as_spectra,list-method}
+\alias{as_peaks,list-method}
 \title{Coerce}
 \usage{
-\method{as.matrix}{GammaSpectrum}(x, ...)
+as_spectra(x)
+
+as_peaks(x)
+
+\S4method{as.matrix}{GammaSpectrum}(x, ...)
+
+\S4method{as.matrix}{PeakPosition}(x, ...)
+
+\S4method{as.data.frame}{GammaSpectrum}(x, row.names = NULL, optional = FALSE, ...)
+
+\S4method{as.data.frame}{PeakPosition}(x, row.names = NULL, optional = FALSE, ...)
+
+\S4method{as.list}{PeakPosition}(x, ...)
+
+\S4method{as_spectra}{GammaSpectrum}(x)
+
+\S4method{as_spectra}{list}(x)
+
+\S4method{as_peaks}{list}(x)
 }
 \arguments{
 \item{x}{An object to be coerced.}
 
 \item{...}{Currently not used.}
+
+\item{row.names, optional}{Currently not used.}
 }
 \value{
 A coerced object.
