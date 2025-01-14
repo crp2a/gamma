@@ -28,8 +28,6 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2652393.svg)](https://doi.org/10.5281/zenodo.2652393)
-[![CRAN
-DOI](https://img.shields.io/badge/DOI-10.32614/CRAN.package.gamma-1f57b6?style=flat&link=https://doi.org/10.32614/CRAN.package.gamma)](https://doi.org/10.32614/CRAN.package.gamma)
 
 [![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9/)](https://archive.softwareheritage.org/swh:1:dir:459ecf47c4c0bb768732bd56c5c245ddab0d33f9;origin=https://github.com/crp2a/gamma;visit=swh:1:snp:10e6be6e5cbe735b58c45abbcbabf20b93019e9c;anchor=swh:1:rev:1b3baf8821267ed656d780ae154d347769141d0c/)
 <!-- badges: end -->
@@ -52,7 +50,8 @@ of **gamma**.
       Lebrun B, Frerebeau N, Paradol G, Guérin G, Mercier N, Tribolo C,
       Lahaye C, Rizza M (2020). "gamma: An R Package for Dose Rate
       Estimation from In-Situ Gamma-Ray Spectrometry Measurements."
-      _Ancient TL_, *38*(2), 1-5.
+      _Ancient TL_, *38*(2), 1-5. doi:10.26034/la.atl.2020.544
+      <https://doi.org/10.26034/la.atl.2020.544>.
 
       Frerebeau N, Lebrun B, Paradol G, Kreutzer S (2024). _gamma: Dose
       Rate Estimation from in-Situ Gamma-Ray Spectrometry_. Université
