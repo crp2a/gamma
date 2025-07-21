@@ -10,10 +10,12 @@ A \code{\link{data.frame}} with tabulated data and conversion factor reference.
 \source{
 Guérin, G., Mercier, N. & Adamiec, G. (2011). Dose-Rate Conversion Factors:
 Update. \emph{Ancient TL}, 29(1), p. 5-8.
+\doi{10.26034/la.atl.2011.443}
 
 Miallier, D., Guérin, G., Mercier, N., Pilleyre, T. & Sanzelle, S.
 (2009). The Clermont Radiometric Reference Rocks: A Convenient Tool
 for Dosimetric Purposes. \emph{Ancient TL}, 27(2), p. 37-44.
+\doi{10.26034/la.atl.2009.428}
 }
 \usage{
 data("clermont")
@@ -25,7 +27,9 @@ Clermont Reference Data
 Other datasets: 
 \code{\link{AIX_NaI_1}},
 \code{\link{BDX_LaBr_1}},
-\code{\link{clermont_2024}}
+\code{\link{HD_CZT_1}},
+\code{\link{clermont_2024}},
+\code{\link{heidelberg_2024}}
 }
 \concept{datasets}
 \keyword{datasets}

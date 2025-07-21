@@ -17,6 +17,11 @@ clermont <- utils::read.table("./data-raw/clermont.csv",
 rownames(clermont) <- clermont[["name"]]
 usethis::use_data(clermont, internal = FALSE, overwrite = FALSE)
 
+# Milieux Heidelberg ===========================================================
+heidelberg_2024 <- utils::read.table("./data-raw/heidelberg_2024.csv",
+                              header = TRUE, sep = ",", dec = ".")
+usethis::use_data(heidelberg_2024, internal = FALSE, overwrite = FALSE)
+
 # Decay data ===================================================================
 .decay <- utils::read.table("./data-raw/decay.csv",
                             header = TRUE, sep = ";", dec = ",") |>

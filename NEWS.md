@@ -2,6 +2,10 @@
 ## Additions
 * Add user friendly coercion methods: `as_peaks()` and `as_spectra()`.
 
+## Datasets
+* Add reference datasets for calibration sites around Heidelberg and the CZT detector calibration 
+files as detailed in Kreutzer et al. (2025, Geochronology) (PR #54 by @RLumSK)
+
 # gamma 1.1.0
 ## Bugfixes
 * Fix an error in the uncertainty calculation of `dose_predict()`. The returned error was too large and did not make much sense due to an internal calculation error. Along with the fix, the manual was updated to detail the uncertainty calculation (PR #42 by @RLumSK).

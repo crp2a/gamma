@@ -1,0 +1,9 @@
+name,laboratory,nature,U,U_error,Th,Th_error,K2O,K2O_error,K,K_error,gamma_dose,gamma_error,cosmic_dose,cosmic_error,ref_conversion_factors,conv_U,conv_U_error,conv_Th,conv_Th_error,conv_K,conv_K_error
+FLOSSI,"Max-Planck-Institute for Nuclear Physics, Heidelberg, DE",granite,19.02,0.74,13.25,0.50,,,4.11,0.095,3778.690,92.096,203,20,Adamiec & Aitken (1998),0.113000000,0.000202147,0.047600000,0.000197921,0.243000000,0.004669335
+WH2024,"Weisse Hohl (natural site), DE",loess,3.09,0.02,9.44,0.53,,,1.20,0.01,1090.114,26.129,141,14,Adamiec & Aitken (1998),0.113000000,0.000202147,0.047600000,0.000197921,0.243000000,0.004669335
+FLOSSI,"Max-Planck-Institute for Nuclear Physics, Heidelberg, DE",granite,19.02,0.74,13.25,0.50,,,4.11,0.095,3781.108,91.445,203,20,Guérin et al. (2011),0.111600000,0.000199642,0.047900000,0.000199168,0.249100000,0.004786549
+WH2024,"Weisse Hohl (natural site), DE",loess,3.09,0.02,9.44,0.53,,,1.20,0.01,1095.940,26.435,141,14,Guérin et al. (2011),0.111600000,0.000199642,0.047900000,0.000199168,0.249100000,0.004786549
+FLOSSI,"Max-Planck-Institute for Nuclear Physics, Heidelberg, DE",granite,19.02,0.74,13.25,0.50,,,4.11,0.095,3790.439,91.634,203,20,Liritzis et al. (2013),0.111800000,0.000200000,0.048100000,0.000200000,0.249800000,0.004800000
+WH2024,"Weisse Hohl (natural site), DE",loess,3.09,0.02,9.44,0.53,,,1.20,0.01,1099.286,26.543,141,14,Liritzis et al. (2013),0.111800000,0.000200000,0.048100000,0.000200000,0.249800000,0.004800000
+FLOSSI,"Max-Planck-Institute for Nuclear Physics, Heidelberg, DE",granite,19.02,0.74,13.25,0.50,,,4.11,0.095,3797.445,92.475,203,20,Cresswell et al. (2018),0.112000000,0.001000000,0.048900000,0.000300000,0.248000000,0.003000000
+WH2024,"Weisse Hohl (natural site), DE",loess,3.09,0.02,9.44,0.53,,,1.20,0.01,1105.296,26.826,141,14,Cresswell et al. (2018),0.112000000,0.001000000,0.048900000,0.000300000,0.248000000,0.003000000
