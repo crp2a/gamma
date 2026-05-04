@@ -12,7 +12,7 @@ signal_split(object, ...)
 \S4method{signal_split}{GammaSpectrum}(object, groups)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 
 \item{...}{Currently not used.}
 
@@ -20,7 +20,7 @@ signal_split(object, ...)
 the grouping (see \code{\link{split}}).}
 }
 \value{
-A \linkS4class{GammaSpectra} object.
+A \link[=GammaSpectra-class]{GammaSpectra} object.
 }
 \description{
 Split
@@ -49,14 +49,14 @@ splited <- signal_split(spc, g)
 plot(splited, facet = TRUE)
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

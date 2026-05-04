@@ -21,7 +21,7 @@ summarise(object, ...)
 \S4method{summarise}{CalibrationCurve}(object)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object.}
 
 \item{...}{Currently not used.}
 }
@@ -43,8 +43,8 @@ spc <- read(spc_dir)
 summarise(spc)
 }
 \seealso{
-Other IO: 
-\code{\link{read}()}
+Other IO:
+\code{\link[=read]{read()}}
 }
 \author{
 N. Frerebeau

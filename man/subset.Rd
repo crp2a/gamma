@@ -38,7 +38,7 @@ A subsetted object.
 Operators acting on objects to extract or replace parts.
 }
 \seealso{
-Other mutator: 
+Other mutator:
 \code{\link{mutator}}
 }
 \author{

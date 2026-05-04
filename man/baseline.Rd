@@ -57,7 +57,7 @@ baseline_linear(object, ...)
 \S4method{baseline_snip}{GammaSpectra}(object, LLS = FALSE, decreasing = FALSE, n = 100, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra}
 object.}
 
 \item{...}{Extra parameters to be passed to further methods.}
@@ -91,9 +91,9 @@ Only used if \code{method} is "\code{SNIP}".}
 }
 \value{
 \itemize{
-\item \verb{baseline_*()} returns a \linkS4class{BaseLine} object.
-\item \code{signal_correct()} returns a corrected \linkS4class{GammaSpectrum} or
-\linkS4class{GammaSpectra} object (same as \code{object}).
+\item \verb{baseline_*()} returns a \link[=BaseLine-class]{BaseLine} object.
+\item \code{signal_correct()} returns a corrected \link[=GammaSpectrum-class]{GammaSpectrum} or
+\link[=GammaSpectra-class]{GammaSpectra} object (same as \code{object}).
 }
 }
 \description{
@@ -112,7 +112,7 @@ spectrum. Note that the rubber band does not enter the concave regions
 }
 \note{
 \code{baseline_rubberband()} is slightly modified from C. Beleites'
-\code{\link[hyperSpec:spc-rubberband]{hyperSpec::spc.rubberband()}}.
+\code{\link[hyperSpec:spc.rubberband]{hyperSpec::spc.rubberband()}}.
 }
 \examples{
 ## Import a CNF file
@@ -163,14 +163,14 @@ Beam Interactions with Materials and Atoms}, 34(3), p. 396-402.
 \doi{10.1016/0168-583X(88)90063-8}
 }
 \seealso{
-Other signal processing: 
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+Other signal processing:
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

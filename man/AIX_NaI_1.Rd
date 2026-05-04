@@ -5,7 +5,7 @@
 \alias{AIX_NaI_1}
 \title{CEREGE Calibration Curve (NaI)}
 \format{
-An object of class \linkS4class{CalibrationCurve}.
+An object of class \link[=CalibrationCurve-class]{CalibrationCurve}.
 \tabular{ll}{
 \strong{Laboratory} \tab CEREGE \cr
 \strong{Instrument} \tab Canberra Inspector 1000 \cr
@@ -25,7 +25,7 @@ data(AIX_NaI_1, package = "gamma")
 plot(AIX_NaI_1)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{BDX_LaBr_1}},
 \code{\link{HD_CZT_1}},
 \code{\link{clermont}},

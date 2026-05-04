@@ -36,7 +36,7 @@
 \S4method{Summary}{GammaSpectrum}(x, ..., na.rm = FALSE)
 }
 \arguments{
-\item{x, e1, e2}{An object (typically a \linkS4class{GammaSpectrum} object).}
+\item{x, e1, e2}{An object (typically a \link[=GammaSpectrum-class]{GammaSpectrum} object).}
 
 \item{digits}{A length-one \code{\link{numeric}} vector giving the number of digits to
 be used in \code{\link[=round]{round()}} or \code{\link[=signif]{signif()}}.}
@@ -51,7 +51,7 @@ Performs common operations on \code{GammaSpectrum} objects.
 }
 \section{Group Generics}{
 
-\linkS4class{GammaSpectrum} objects have support for S4 group generic
+\link[=GammaSpectrum-class]{GammaSpectrum} objects have support for S4 group generic
 functionality to operate within elements across objects:
 \describe{
 \item{\code{Arith}}{"\code{+}", "\code{-}", "\code{*}", "\code{^}", "\verb{\\\%\\\%}", "\verb{\\\%/\\\%}", "\code{/}"}

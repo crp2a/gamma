@@ -5,7 +5,7 @@
 \alias{BDX_LaBr_1}
 \title{CRP2A Calibration Curve (LaBr)}
 \format{
-An object of class \linkS4class{CalibrationCurve}.
+An object of class \link[=CalibrationCurve-class]{CalibrationCurve}.
 \tabular{ll}{
 \strong{Laboratory} \tab IRAMAT-CRP2A (UMR 5060) \cr
 \strong{Instrument} \tab Canberra Inspector 1000 \cr
@@ -25,7 +25,7 @@ data(BDX_LaBr_1, package = "gamma")
 plot(BDX_LaBr_1)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{AIX_NaI_1}},
 \code{\link{HD_CZT_1}},
 \code{\link{clermont}},

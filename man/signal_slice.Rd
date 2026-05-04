@@ -15,7 +15,7 @@ signal_slice(object, ...)
 \S4method{signal_slice}{GammaSpectra}(object, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra}
 object.}
 
 \item{...}{\code{\link{integer}} values giving the channels of the spectrum to be
@@ -23,7 +23,7 @@ kept/dropped (see below). Numeric values are coerced to integer as by
 \code{\link[=as.integer]{as.integer()}} (and hence truncated towards zero).}
 }
 \value{
-A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
+A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object.
 }
 \description{
 Choose channels by position.
@@ -62,14 +62,14 @@ splited <- signal_split(spc, g)
 plot(splited, facet = TRUE)
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

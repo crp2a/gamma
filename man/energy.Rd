@@ -61,13 +61,13 @@ has_calibration(object)
 \S4method{has_calibration}{CalibrationCurve}(object)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object.}
 
-\item{lines}{A \linkS4class{PeakPosition} object or a \code{\link{list}} of length two. If a
+\item{lines}{A \link[=PeakPosition-class]{PeakPosition} object or a \code{\link{list}} of length two. If a
 \code{list} is provided, each element must be a named numeric vector giving the
 observed peak position ("\code{channel}") and the corresponding expected
 "\code{energy}" value (in keV). Alternatively, the function accepts the \link[stats:lm]{stats::lm}
-object from a another calibration or a \linkS4class{GammaSpectrum} object from which such
+object from a another calibration or a \link[=GammaSpectrum-class]{GammaSpectrum} object from which such
 calibration is copied. With this, energy calibrations can be transferred from one object
 to another.}
 
@@ -75,7 +75,7 @@ to another.}
 }
 \value{
 \itemize{
-\item \code{energy_calibrate()} returns either a \linkS4class{GammaSpectrum} or a \linkS4class{GammaSpectra}
+\item \code{energy_calibrate()} returns either a \link[=GammaSpectrum-class]{GammaSpectrum} or a \link[=GammaSpectra-class]{GammaSpectra}
 object depending on the input#
 \item \code{has_energy()} and \code{has_calibration()} return a \code{\link{logical}} vector.
 }

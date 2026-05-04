@@ -42,7 +42,7 @@ Dataset: Environmental Gamma Dose Rate Measurements using CZT Detectors (1.0.0).
 \emph{Zenodo}. \doi{10.5281/zenodo.13731839}
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{AIX_NaI_1}},
 \code{\link{BDX_LaBr_1}},
 \code{\link{HD_CZT_1}},

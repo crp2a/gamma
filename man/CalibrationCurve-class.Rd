@@ -13,9 +13,9 @@ An S4 class to Represent a Dose Rate Calibration Curve
 \section{Slots}{
 
 \describe{
-\item{\code{Ni}}{A \linkS4class{DoseRateModel} object.}
+\item{\code{Ni}}{A \link[=DoseRateModel-class]{DoseRateModel} object.}
 
-\item{\code{NiEi}}{A \linkS4class{DoseRateModel} object.}
+\item{\code{NiEi}}{A \link[=DoseRateModel-class]{DoseRateModel} object.}
 
 \item{\code{details}}{A \code{\link{list}} of length-one vector giving the curve metadata.}
 
@@ -48,12 +48,12 @@ In the code snippets below, \code{x} is a \code{CalibrationCurve} object.
 }
 
 \seealso{
-Other class: 
+Other class:
 \code{\link{Baseline-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{GammaSpectrum-class}},
 \code{\link{PeakPosition-class}},
-\code{\link{coerce}()}
+\code{\link{coerce}}
 }
 \author{
 N. Frerebeau

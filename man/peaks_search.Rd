@@ -15,7 +15,7 @@ peaks_search(object, index, ...)
 \S4method{peaks_search}{GammaSpectrum,numeric}(object, index, span = 10, tolerance = 0.025)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 
 \item{index}{A vector giving the expected peak position.
 If \code{index} is a \code{\link{numeric}} vector, peaks are searched by energy (\code{index} is
@@ -32,7 +32,7 @@ If \code{index} is an \code{\link{integer}} vector, \code{span} is expressed in 
 warning/error is raised.}
 }
 \value{
-A \linkS4class{PeakPosition} object.
+A \link[=PeakPosition-class]{PeakPosition} object.
 }
 \description{
 Search the maxima in sequential data around a given value.
@@ -59,14 +59,14 @@ BEGe_spc <- read(BEGe_file)
 plot(BEGe_spc, BEGe_pks, split = TRUE)
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

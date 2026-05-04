@@ -15,7 +15,7 @@ signal_stabilize(object, ...)
 \S4method{signal_stabilize}{GammaSpectra}(object, f, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 
 \item{...}{Extra arguments to be passed to \code{f}.}
 
@@ -23,7 +23,7 @@ signal_stabilize(object, ...)
 argument and returns a numeric vector.}
 }
 \value{
-A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object with
+A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object with
 transformed intensities.
 }
 \description{
@@ -34,14 +34,14 @@ The stabilization step aims at improving the identification of peaks with a
 low signal-to-noise ratio. This particularly targets higher energy peaks.
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

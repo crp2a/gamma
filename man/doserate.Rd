@@ -65,9 +65,9 @@ dose_predict(object, spectrum, ...)
 )
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectra} or \linkS4class{CalibrationCurve} object.}
+\item{object}{A \link[=GammaSpectra-class]{GammaSpectra} or \link[=CalibrationCurve-class]{CalibrationCurve} object.}
 
-\item{background}{A \linkS4class{GammaSpectrum} object or a length-two \code{\link{numeric}}
+\item{background}{A \link[=GammaSpectrum-class]{GammaSpectrum} object or a length-two \code{\link{numeric}}
 vector giving the background noise integration value and error,
 respectively. If no background subtraction is wanted, you can set \code{background = c(0,0,)}}
 
@@ -76,7 +76,7 @@ The row names must match the names of the spectrum.}
 
 \item{...}{Currently not used.}
 
-\item{spectrum}{An optional \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+\item{spectrum}{An optional \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra}
 object in which to look for variables with which to predict. If omitted,
 the fitted values are used.}
 
@@ -103,7 +103,7 @@ the dose rate uncertainty}
 }
 \value{
 \itemize{
-\item \code{dose_fit()} returns a \linkS4class{CalibrationCurve} object.
+\item \code{dose_fit()} returns a \link[=CalibrationCurve-class]{CalibrationCurve} object.
 \item \code{dose_predict()} returns a \code{\link{data.frame}} with the following columns:
 \describe{
 \item{\code{name}}{(\code{\link{character}}) the name of the spectra.}

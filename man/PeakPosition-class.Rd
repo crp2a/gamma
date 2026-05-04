@@ -67,12 +67,12 @@ the slots.}
 }
 
 \seealso{
-Other class: 
+Other class:
 \code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{GammaSpectrum-class}},
-\code{\link{coerce}()}
+\code{\link{coerce}}
 }
 \author{
 N. Frerebeau

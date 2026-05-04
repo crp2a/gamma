@@ -39,9 +39,9 @@ signal_integrate(object, background, ...)
 )
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object.}
 
-\item{background}{A \linkS4class{GammaSpectrum} object.}
+\item{background}{A \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 
 \item{...}{Currently not used.}
 
@@ -103,14 +103,14 @@ a NaI(Tl) Detector: Re-Evaluation of the "Threshold" Technique.
 \emph{Ancient TL}, 25(1), p. 1-4.
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

@@ -12,7 +12,7 @@ peaks_find(object, ...)
 \S4method{peaks_find}{GammaSpectrum}(object, method = c("MAD"), SNR = 2, span = NULL, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} object.}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 
 \item{...}{Extra parameters to be passed to internal methods.}
 
@@ -27,7 +27,7 @@ channels). If \code{NULL}, 5\\% of the number of channels is used as the half
 window size.}
 }
 \value{
-A \linkS4class{PeakPosition} object.
+A \link[=PeakPosition-class]{PeakPosition} object.
 }
 \description{
 Finds local maxima in sequential data.
@@ -63,14 +63,14 @@ BEGe_spc <- read(BEGe_file)
 plot(BEGe_spc, BEGe_pks, split = TRUE)
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()},
-\code{\link{smooth}()}
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}},
+\code{\link{smooth}}
 }
 \author{
 N. Frerebeau

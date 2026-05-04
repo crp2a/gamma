@@ -10,7 +10,7 @@
 An S4 Class to Represent a Spectrum Baseline
 }
 \note{
-This class extends the \linkS4class{GammaSpectrum} class.
+This class extends the \link[=GammaSpectrum-class]{GammaSpectrum} class.
 }
 \examples{
 ## Import a CNF file
@@ -40,12 +40,12 @@ all(spc_clean1 == spc_clean2)
 plot(spc_clean1)
 }
 \seealso{
-Other class: 
+Other class:
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{GammaSpectrum-class}},
 \code{\link{PeakPosition-class}},
-\code{\link{coerce}()}
+\code{\link{coerce}}
 }
 \author{
 N. Frerebeau

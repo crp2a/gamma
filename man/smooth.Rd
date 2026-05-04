@@ -47,7 +47,7 @@ smooth_savitzky(object, ...)
 \S4method{smooth_triangular}{GammaSpectra}(object, m = 3, ...)
 }
 \arguments{
-\item{object}{A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra}
+\item{object}{A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra}
 object.}
 
 \item{...}{Extra parameters to be passed to further methods.}
@@ -62,7 +62,7 @@ used. It must be one of "\code{unweighted}" (default), "\code{weighted}" or
 is "\code{savitzky}".}
 }
 \value{
-A \linkS4class{GammaSpectrum} or \linkS4class{GammaSpectra} object.
+A \link[=GammaSpectrum-class]{GammaSpectrum} or \link[=GammaSpectra-class]{GammaSpectra} object.
 }
 \description{
 Smoothes intensities.
@@ -122,14 +122,14 @@ Data by Simplified Least Squares Procedures. \emph{Analytical Chemistry},
 36(8), p. 1627-1639. \doi{10.1021/ac60214a047}.
 }
 \seealso{
-Other signal processing: 
+Other signal processing:
 \code{\link{baseline}},
-\code{\link{peaks_find}()},
-\code{\link{peaks_search}()},
-\code{\link{signal_integrate}()},
-\code{\link{signal_slice}()},
-\code{\link{signal_split}()},
-\code{\link{signal_stabilize}()}
+\code{\link[=peaks_find]{peaks_find()}},
+\code{\link[=peaks_search]{peaks_search()}},
+\code{\link[=signal_integrate]{signal_integrate()}},
+\code{\link[=signal_slice]{signal_slice()}},
+\code{\link[=signal_split]{signal_split()}},
+\code{\link[=signal_stabilize]{signal_stabilize()}}
 }
 \author{
 N. Frerebeau

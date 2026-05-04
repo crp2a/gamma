@@ -10,7 +10,7 @@ Represents a collection of spectra of gamma ray spectrometry measurements.
 }
 \details{
 This class extends the base \code{\link{list}} and can only contains
-\linkS4class{GammaSpectrum} objects.
+\link[=GammaSpectrum-class]{GammaSpectrum} objects.
 }
 \section{Access}{
 
@@ -39,7 +39,7 @@ In the code snippets below, \code{x} is a \code{GammaSpectra} object.
 examples). \code{j} is a \code{character} vector of length one. Returns a \code{list}.}
 \item{\code{x[[i]]}}{Extracts the elements selected by subscript \code{i}.
 \code{i} can be a \code{numeric} or \code{character} vector of length one. Returns the
-corresponding \linkS4class{GammaSpectrum} object.}
+corresponding \link[=GammaSpectrum-class]{GammaSpectrum} object.}
 }
 }
 
@@ -71,12 +71,12 @@ spc[[1]]
 spc[["BRIQUE"]]
 }
 \seealso{
-Other class: 
+Other class:
 \code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectrum-class}},
 \code{\link{PeakPosition-class}},
-\code{\link{coerce}()}
+\code{\link{coerce}}
 }
 \author{
 N. Frerebeau

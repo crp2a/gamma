@@ -5,7 +5,7 @@
 \alias{HD_CZT_1}
 \title{heiLUM Calibration Curve (CZT)}
 \format{
-Objects of class \linkS4class{CalibrationCurve}.
+Objects of class \link[=CalibrationCurve-class]{CalibrationCurve}.
 \tabular{ll}{
 \strong{Laboratory} \tab heiLUM, Heidelberg University, DE \cr
 \strong{Instrument} \tab Kromek GR1 & Kromek RayMon10 (SN: 5261)\cr
@@ -48,7 +48,7 @@ Dataset: Environmental Gamma Dose Rate Measurements using CZT Detectors (1.0.0).
 \emph{Zenodo}. \doi{10.5281/zenodo.13731839}
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{AIX_NaI_1}},
 \code{\link{BDX_LaBr_1}},
 \code{\link{clermont}},

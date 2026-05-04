@@ -16,8 +16,10 @@ Authors@R: c(
     person("Sebastian", "Kreutzer", , "sebastian.kreutzer@uni-heidelberg.de", role = "aut",
            comment = c(ORCID = "0000-0002-0734-2199")),
     person("Archéosciences Bordeaux", , , "services-archeosciences@u-bordeaux-montaigne.fr", role = "cre"),
-    person("Université Bordeaux Montaigne", role = c("cph", "fnd")),
-    person("CNRS", role = "fnd"),
+    person("Université Bordeaux Montaigne", role = "fnd",
+           comment = c(ROR = "03pbgwk21")),
+    person("CNRS", role = "fnd",
+           comment = c(ROR = "02feahw73")),
     person("LabEx Sciences archéologiques de Bordeaux", role = "fnd"),
     person("Idex Aix-Marseille", role = "fnd")
   )
@@ -35,7 +37,6 @@ Depends:
     R (>= 3.5)
 Imports: 
     ggplot2,
-    graphics,
     IsoplotR,
     methods,
     rlang,
@@ -55,7 +56,6 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'
@@ -90,3 +90,4 @@ Collate:
     'utilities.R'
     'validate.R'
     'zzz.R'
+Config/roxygen2/version: 8.0.0

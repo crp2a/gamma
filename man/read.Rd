@@ -20,8 +20,8 @@ read(file, ...)
 file extensions. It must be one or more of "\code{cnf}", "\code{tka}", "\code{spe}".}
 }
 \value{
-A \linkS4class{GammaSpectra} object if more than one spectrum are imported
-at once, else a \linkS4class{GammaSpectrum} object.
+A \link[=GammaSpectra-class]{GammaSpectra} object if more than one spectrum are imported
+at once, else a \link[=GammaSpectrum-class]{GammaSpectrum} object.
 }
 \description{
 Reads a gamma ray spectrum file.
@@ -45,8 +45,8 @@ spc_dir <- system.file("extdata/BDX_LaBr_1/calibration", package = "gamma")
 \seealso{
 \code{\link[rxylib:read_xyData]{rxylib::read_xyData()}}
 
-Other IO: 
-\code{\link{summarise}()}
+Other IO:
+\code{\link[=summarise]{summarise()}}
 }
 \author{
 N. Frerebeau

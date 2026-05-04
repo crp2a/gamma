@@ -100,12 +100,12 @@ spc[["instrument"]]
 spc[["file_format"]]
 }
 \seealso{
-Other class: 
+Other class:
 \code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},
 \code{\link{PeakPosition-class}},
-\code{\link{coerce}()}
+\code{\link{coerce}}
 }
 \author{
 N. Frerebeau

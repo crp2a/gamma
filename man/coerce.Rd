@@ -61,7 +61,7 @@ df <- as.data.frame(spc)
 head(df)
 }
 \seealso{
-Other class: 
+Other class:
 \code{\link{Baseline-class}},
 \code{\link{CalibrationCurve-class}},
 \code{\link{GammaSpectra-class}},

@@ -6,7 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/crp2a/gamma/branch/master/graph/badge.svg)](https://app.codecov.io/gh/crp2a/gamma)
+[![Codecov test
+coverage](https://codecov.io/gh/crp2a/gamma/graph/badge.svg)](https://app.codecov.io/gh/crp2a/gamma)
 
 <a href="https://crp2a.r-universe.dev" class="pkgdown-devel"><img
 src="https://crp2a.r-universe.dev/badges/gamma" alt="r-universe" /></a>
@@ -56,7 +57,7 @@ of **gamma**.
       Frerebeau N, Lebrun B, Paradol G, Kreutzer S (2024). _gamma: Dose
       Rate Estimation from in-Situ Gamma-Ray Spectrometry_. Université
       Bordeaux Montaigne, Pessac, France. doi:10.5281/zenodo.2652393
-      <https://doi.org/10.5281/zenodo.2652393>, R package version 1.1.0.
+      <https://doi.org/10.5281/zenodo.2652393>. R package version 1.1.0.
 
 ## Installation
 
@@ -104,7 +105,7 @@ calib <- energy_calibrate(spectrum, peaks)
 plot(calib, peaks)
 ```
 
-<img src="man/figures/README-usage-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-usage-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 ## Estimate the gamma dose rate of a set of spectra
@@ -118,23 +119,23 @@ data("BDX_LaBr_1", package = "gamma")
 plot(BDX_LaBr_1)
 ```
 
-<img src="man/figures/README-calib-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-calib-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 ## Estimate the gamma dose rate
 (doses <- dose_predict(BDX_LaBr_1, spectra))
 ```
 
-| name           | signal_Ni | signal_err_Ni |   dose_Ni | dose_err_Ni | signal_NiEi | signal_err_NiEi | dose_NiEi | dose_err_NiEi | dose_final | dose_err_final |
-|:---------------|----------:|--------------:|----------:|------------:|------------:|----------------:|----------:|--------------:|-----------:|---------------:|
-| 20110523204008 |  8.604666 |     0.2691316 |  252.2866 |   10.372500 |    7626.493 |        8.747617 |  220.6747 |      5.495079 |   236.4806 |      11.366900 |
-| 20110523210008 |  8.775092 |     0.2166075 |  257.3316 |    9.354274 |    7577.302 |        7.021326 |  219.1303 |      5.454610 |   238.2309 |      10.495729 |
-| 20110527205316 |  8.445976 |     0.1546491 |  247.5890 |    8.012680 |    7064.449 |        5.009961 |  203.0288 |      5.052359 |   225.3089 |       9.198048 |
-| 20130809172451 | 30.218479 |     0.2549754 |  892.1003 |   24.967288 |   27667.473 |        8.089989 |  849.8817 |     21.142124 |   870.9910 |      32.614162 |
-| 20130813181639 | 36.062314 |     0.2853286 | 1065.0899 |   29.644785 |   33243.050 |        9.028097 | 1024.9325 |     25.496544 |  1045.0112 |      39.010062 |
-| 20160717175757 | 19.190250 |     0.3635398 |  565.6418 |   18.510895 |   16419.873 |       11.495584 |  496.7518 |     12.361511 |   531.1968 |      21.838611 |
-| 20160717181052 | 16.303659 |     0.2837191 |  480.1928 |   15.297869 |   14033.831 |        9.033011 |  421.8396 |     10.496701 |   451.0162 |      18.231817 |
-| 20160717182601 | 16.896441 |     0.2557337 |  497.7403 |   15.269850 |   14493.495 |        8.131459 |  436.2712 |     10.854933 |   467.0058 |      18.446627 |
+| name | signal_Ni | signal_err_Ni | dose_Ni | dose_err_Ni | signal_NiEi | signal_err_NiEi | dose_NiEi | dose_err_NiEi | dose_final | dose_err_final |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 20110523204008 | 8.604666 | 0.2691316 | 252.2866 | 10.372500 | 7626.493 | 8.747617 | 220.6747 | 5.495079 | 236.4806 | 11.366900 |
+| 20110523210008 | 8.775092 | 0.2166075 | 257.3316 | 9.354274 | 7577.302 | 7.021326 | 219.1303 | 5.454610 | 238.2309 | 10.495729 |
+| 20110527205316 | 8.445976 | 0.1546491 | 247.5890 | 8.012680 | 7064.449 | 5.009961 | 203.0288 | 5.052359 | 225.3089 | 9.198048 |
+| 20130809172451 | 30.218479 | 0.2549754 | 892.1003 | 24.967288 | 27667.473 | 8.089989 | 849.8817 | 21.142124 | 870.9910 | 32.614162 |
+| 20130813181639 | 36.062314 | 0.2853286 | 1065.0899 | 29.644785 | 33243.050 | 9.028097 | 1024.9325 | 25.496544 | 1045.0112 | 39.010062 |
+| 20160717175757 | 19.190250 | 0.3635398 | 565.6418 | 18.510895 | 16419.873 | 11.495584 | 496.7518 | 12.361511 | 531.1968 | 21.838611 |
+| 20160717181052 | 16.303659 | 0.2837191 | 480.1928 | 15.297869 | 14033.831 | 9.033011 | 421.8396 | 10.496701 | 451.0162 | 18.231817 |
+| 20160717182601 | 16.896441 | 0.2557337 | 497.7403 | 15.269850 | 14493.495 | 8.131459 | 436.2712 | 10.854933 | 467.0058 | 18.446627 |
 
 ## Contributing
 

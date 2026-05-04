@@ -12,12 +12,17 @@ Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package all
 }
 \details{
 \tabular{ll}{
-\strong{Package:} \tab gamma \cr
-\strong{Type:} \tab Package \cr
-\strong{Version:} \tab 1.1.0 \cr
-\strong{License:} \tab GPL-3 \cr
-\strong{Zenodo:} \tab \doi{10.5281/zenodo.2652393}
+\strong{Version} \tab 1.1.0 \cr
+\strong{License} \tab GPL-3 \cr
+\strong{CRAN DOI} \tab \doi{10.32614/CRAN.package.gamma} \cr
+\strong{Zenodo DOI} \tab \doi{10.5281/zenodo.2652393}
 }
+
+Archéosciences Bordeaux (UMR 6034)\cr
+Maison de l'Archéologie\cr
+Université Bordeaux Montaigne\cr
+F-33607 Pessac cedex\cr
+France
 }
 \note{
 This work received a state financial support managed by the Agence Nationale
@@ -34,26 +39,25 @@ Useful links:
 
 }
 \author{
-\strong{Full list of authors and contributors} (alphabetic order)
+\strong{Maintainer}: Archéosciences Bordeaux \email{services-archeosciences@u-bordeaux-montaigne.fr}
 
-\tabular{ll}{
-Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
-Sebastian Kreutzer \tab \emph{Universität Heidelberg, Germany} \cr
-Christelle Lahaye \tab \emph{Université Bordeaux Montaigne, France} \cr
-Brice Lebrun \tab \emph{Université Bordeaux Montaigne, France} \cr
-Guilhem Paradol \tab \emph{Commissariat à l'Énergie Atomique, France} \cr
-Magali Rizza \tab \emph{Aix-Marseille Université, France}
+Authors:
+\itemize{
+  \item Nicolas Frerebeau \email{nicolas.frerebeau@u-bordeaux-montaigne.fr} (\href{https://orcid.org/0000-0001-5759-4944}{ORCID})
+  \item Brice Lebrun \email{brice.lebrun@u-bordeaux-montaigne.fr} (\href{https://orcid.org/0000-0001-7503-8685}{ORCID})
+  \item Guilhem Paradol \email{guilhem.paradol@cea.fr} (\href{https://orcid.org/0000-0002-8561-4903}{ORCID})
+  \item Sebastian Kreutzer \email{sebastian.kreutzer@uni-heidelberg.de} (\href{https://orcid.org/0000-0002-0734-2199}{ORCID})
 }
 
-\strong{Package maintainer}
+Other contributors:
+\itemize{
+  \item Magali Rizza \email{rizza@cerege.fr} (\href{https://orcid.org/0000-0003-2364-5621}{ORCID}) [contributor]
+  \item Christelle Lahaye \email{christelle.lahaye@u-bordeaux-montaigne.fr} (\href{https://orcid.org/0000-0003-2215-9015}{ORCID}) [contributor]
+  \item Université Bordeaux Montaigne (\href{https://ror.org/03pbgwk21}{ROR}) [funder]
+  \item CNRS (\href{https://ror.org/02feahw73}{ROR}) [funder]
+  \item LabEx Sciences archéologiques de Bordeaux [funder]
+  \item Idex Aix-Marseille [funder]
+}
 
-Nicolas Frerebeau\cr
-\email{services-archeosciences@u-bordeaux-montaigne.fr}
-
-Archéosciences Bordeaux (UMR 6034)\cr
-Maison de l'Archéologie\cr
-Université Bordeaux Montaigne\cr
-F-33607 Pessac cedex\cr
-France
 }
 \keyword{internal}
