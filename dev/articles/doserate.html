@@ -67,7 +67,7 @@
 B. Lebrun, S. Kreutzer</h4>
             
             <h4 data-toc-skip class="date">Last modified:
-2025-07-21</h4>
+2026-05-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/crp2a/gamma/blob/master/vignettes/doserate.Rmd" class="external-link"><code>vignettes/doserate.Rmd</code></a></small>
       <div class="d-none name"><code>doserate.Rmd</code></div>
@@ -153,7 +153,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span></span>
 <span><span class="co">## Adjust the energy scale</span></span>
 <span><span class="va">BRIQUE</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"BRIQUE"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-BRIQUE-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-BRIQUE-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="c341">C341<a class="anchor" aria-label="anchor" href="#c341"></a>
@@ -167,7 +167,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span></span>
 <span><span class="co">## Adjust the energy scale</span></span>
 <span><span class="va">C341</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"C341"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-C341-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-C341-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="c347">C347<a class="anchor" aria-label="anchor" href="#c347"></a>
@@ -181,7 +181,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span></span>
 <span><span class="co">## Adjust the energy scale</span></span>
 <span><span class="va">C347</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"C347"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-C347-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-C347-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="gou">GOU<a class="anchor" aria-label="anchor" href="#gou"></a>
@@ -195,7 +195,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span></span>
 <span><span class="co">## Adjust the energy scale</span></span>
 <span><span class="va">GOU</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"GOU"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-GOU-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-GOU-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="pep">PEP<a class="anchor" aria-label="anchor" href="#pep"></a>
@@ -209,7 +209,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span></span>
 <span><span class="co">## Adjust the energy scale</span></span>
 <span><span class="va">PEP</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">spc</span><span class="op">[[</span><span class="st">"PEP"</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-PEP-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-PEP-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="background-spectrum">Background Spectrum<a class="anchor" aria-label="anchor" href="#background-spectrum"></a>
@@ -221,7 +221,7 @@ One subsection for each spectrum with the corresponding R code.</p>
 <span>  energy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">238</span>, <span class="fl">1461</span>, <span class="fl">2615</span><span class="op">)</span></span>
 <span><span class="op">)</span> </span>
 <span><span class="va">bkg_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/energy.html">energy_calibrate</a></span><span class="op">(</span><span class="va">bkg</span>, lines <span class="op">=</span> <span class="va">lines</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/plot-bkg-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/plot-bkg-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level3">
@@ -235,9 +235,8 @@ reference spectra where the nuclide concentration is known. In this
 case, only a small part of the spectrum is used. The ‘threshold’ method
 uses the circumstance that above a certain threshold, the number of
 counts for a given dose rate changes only slightly with the emitters
-<span class="citation">(e.g., U, Th, K – cf. Guérin, Mercier, and
-Adamiec 2011; Mercier and Falguères 2007; Løvborg and Kirkegaard
-1974)</span>.</p>
+<span class="citation">(e.g., U, Th, K – cf. Guérin et al. 2011; Mercier
+and Falguères 2007; Løvborg and Kirkegaard 1974)</span>.</p>
 <p>The exact position of this threshold depends on the used probe and
 needs to be determined either by modelling or measurements of different
 sites with known but different radionuclides concentrations.</p>
@@ -254,8 +253,7 @@ the subsequent calculations.</p>
 <span><span class="va">spc_scaled</span></span>
 <span><span class="co">#&gt; A collection of 5 gamma spectra: BRIQUE, C341, C347, GOU, PEP</span></span></code></pre></div>
 <p>Now we can integrate the spectra using either the cumulative count
-spectra or the energy corresponding to a certain energy <span class="citation">(cf. Guérin, Mercier, and Adamiec 2011 for
-details)</span>.</p>
+spectra or the energy corresponding to a certain energy <span class="citation">(cf. Guérin et al. 2011 for details)</span>.</p>
 <p>The following two subsections show how to derive the integrated
 spectrometer response with each technique. In both cases, however, we
 assume that the <strong>threshold itself is already known</strong>! The
@@ -557,7 +555,7 @@ results.</p>
 <span><span class="co">#&gt; * instrument: InSpector 1000</span></span>
 <span><span class="co">#&gt; * detector: NaI</span></span>
 <span><span class="co">#&gt; * authors: CEREGE Luminescence Team</span></span>
-<span><span class="co">#&gt; * date: 2025-07-21 11:49:47.003685</span></span>
+<span><span class="co">#&gt; * date: 2026-05-04 13:45:57.126514</span></span>
 <span><span class="co">#&gt; * energy_calibration: &lt;5 available&gt;</span></span></code></pre></div>
 <p>If this information seems too opaque , we can further inspect the
 output numerically (<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>) and graphically using the
@@ -607,7 +605,7 @@ package <code><a href="../reference/plot.html">plot()</a></code> methods.</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">AIX_NaI</span>, energy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/calibration-1.png" width="336"><img src="doserate_files/figure-html/calibration-2.png" width="336"></p>
+<p><img src="doserate_files/figure-html/calibration-1.png" class="r-plt" alt="" width="336"><img src="doserate_files/figure-html/calibration-2.png" class="r-plt" alt="" width="336"></p>
 <p>Well, this looks all good and should make a good calibration curve.
 To use this calibration curve in the future, you can save the object
 using the base R function <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code>.</p>
@@ -622,12 +620,12 @@ additional R plots to further inspect the performed calibration.</p>
 <div class="section level5">
 <h5 id="count-threshold-ni">Count threshold (<code>Ni</code>)<a class="anchor" aria-label="anchor" href="#count-threshold-ni"></a>
 </h5>
-<p><img src="doserate_files/figure-html/check-Ni-1.png" width="336"><img src="doserate_files/figure-html/check-Ni-2.png" width="336"><img src="doserate_files/figure-html/check-Ni-3.png" width="336"></p>
+<p><img src="doserate_files/figure-html/check-Ni-1.png" class="r-plt" alt="" width="336"><img src="doserate_files/figure-html/check-Ni-2.png" class="r-plt" alt="" width="336"><img src="doserate_files/figure-html/check-Ni-3.png" class="r-plt" alt="" width="336"></p>
 </div>
 <div class="section level5">
 <h5 id="energy-threshold-ni-ei">Energy threshold (<code>Ni.Ei</code>)<a class="anchor" aria-label="anchor" href="#energy-threshold-ni-ei"></a>
 </h5>
-<p><img src="doserate_files/figure-html/check-NiEi-1.png" width="336"><img src="doserate_files/figure-html/check-NiEi-2.png" width="336"><img src="doserate_files/figure-html/check-NiEi-3.png" width="336"></p>
+<p><img src="doserate_files/figure-html/check-NiEi-1.png" class="r-plt" alt="" width="336"><img src="doserate_files/figure-html/check-NiEi-2.png" class="r-plt" alt="" width="336"><img src="doserate_files/figure-html/check-NiEi-3.png" class="r-plt" alt="" width="336"></p>
 </div>
 </div>
 </div>
@@ -653,7 +651,7 @@ consists of only three steps:</p>
 <code class="sourceCode R"><span><span class="co">## Inspect spectra</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span>, yaxis <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/predict-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/predict-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="energy-calibrate-the-spectra">Energy calibrate the spectra<a class="anchor" aria-label="anchor" href="#energy-calibrate-the-spectra"></a>
@@ -672,13 +670,13 @@ consists of only three steps:</p>
 <span><span class="co">## Check the calibration for one curve</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">pks</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">## Show all energy calibrated spectra </span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">test</span>, xaxis <span class="op">=</span> <span class="st">"energy"</span>, yaxis <span class="op">=</span> <span class="st">"rate"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="doserate_files/figure-html/unnamed-chunk-8-2.png" width="672"></p>
+<p><img src="doserate_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="predict-the-dose-rates">Predict the dose rates<a class="anchor" aria-label="anchor" href="#predict-the-dose-rates"></a>
@@ -708,9 +706,9 @@ adjusted first.</em></p>
 </h2>
 <p>Finally, for transparency, the R session setting used for rendering
 this vignette:</p>
-<pre><code><span><span class="co">#&gt; R version 4.5.1 (2025-06-13)</span></span>
+<pre><code><span><span class="co">#&gt; R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 24.04.2 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -732,22 +730,21 @@ this vignette:</p>
 <span><span class="co">#&gt; [1] gamma_1.1.0.9000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] vctrs_0.6.5        cli_3.6.5          knitr_1.50         rlang_1.1.6       </span></span>
-<span><span class="co">#&gt;  [5] xfun_0.52          rxylib_0.2.14      textshaping_1.0.1  jsonlite_2.0.0    </span></span>
-<span><span class="co">#&gt;  [9] labeling_0.4.3     glue_1.8.0         htmltools_0.5.8.1  ragg_1.4.0        </span></span>
-<span><span class="co">#&gt; [13] sass_0.4.10        scales_1.4.0       rmarkdown_2.29     grid_4.5.1        </span></span>
-<span><span class="co">#&gt; [17] tibble_3.3.0       evaluate_1.0.4     jquerylib_0.1.4    fastmap_1.2.0     </span></span>
-<span><span class="co">#&gt; [21] yaml_2.3.10        lifecycle_1.0.4    compiler_4.5.1     RColorBrewer_1.1-3</span></span>
-<span><span class="co">#&gt; [25] fs_1.6.6           Rcpp_1.1.0         pkgconfig_2.0.3    farver_2.1.2      </span></span>
-<span><span class="co">#&gt; [29] systemfonts_1.2.3  IsoplotR_6.6       digest_0.6.37      R6_2.6.1          </span></span>
-<span><span class="co">#&gt; [33] pillar_1.11.0      magrittr_2.0.3     bslib_0.9.0        withr_3.0.2       </span></span>
-<span><span class="co">#&gt; [37] tools_4.5.1        gtable_0.3.6       pkgdown_2.1.3      ggplot2_3.5.2     </span></span>
-<span><span class="co">#&gt; [41] cachem_1.1.0       desc_1.4.3</span></span></code></pre>
+<span><span class="co">#&gt;  [1] vctrs_0.7.3        cli_3.6.6          knitr_1.51         rlang_1.2.0       </span></span>
+<span><span class="co">#&gt;  [5] xfun_0.57          rxylib_0.2.14      S7_0.2.2           textshaping_1.0.5 </span></span>
+<span><span class="co">#&gt;  [9] jsonlite_2.0.0     labeling_0.4.3     glue_1.8.1         htmltools_0.5.9   </span></span>
+<span><span class="co">#&gt; [13] ragg_1.5.2         sass_0.4.10        scales_1.4.0       rmarkdown_2.31    </span></span>
+<span><span class="co">#&gt; [17] grid_4.6.0         evaluate_1.0.5     jquerylib_0.1.4    fastmap_1.2.0     </span></span>
+<span><span class="co">#&gt; [21] yaml_2.3.12        lifecycle_1.0.5    compiler_4.6.0     RColorBrewer_1.1-3</span></span>
+<span><span class="co">#&gt; [25] fs_2.1.0           Rcpp_1.1.1-1.1     IsoplotR_6.8       farver_2.1.2      </span></span>
+<span><span class="co">#&gt; [29] systemfonts_1.3.2  digest_0.6.39      R6_2.6.1           bslib_0.10.0      </span></span>
+<span><span class="co">#&gt; [33] withr_3.0.2        tools_4.6.0        gtable_0.3.6       pkgdown_2.2.0     </span></span>
+<span><span class="co">#&gt; [37] ggplot2_4.0.3      cachem_1.1.0       desc_1.4.3</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-guerin2011" class="csl-entry">
 Guérin, G., N. Mercier, and G. Adamiec. 2011. <span>“Dose-<span>Rate
 Conversion Factors</span>: <span>Update</span>.”</span> <em>Ancient
@@ -795,7 +792,7 @@ Measurements.”</span> <em>Radiation Protection Dosimetry</em> 141 (1):
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
