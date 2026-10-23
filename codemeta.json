@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/crp2a/gamma",
   "issueTracker": "https://github.com/crp2a/gamma/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.1 (2024-06-14)",
+  "runtimePlatform": "R version 4.6.1 (2026-06-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -65,12 +65,6 @@
       "familyName": "Lahaye",
       "email": "christelle.lahaye@u-bordeaux-montaigne.fr",
       "@id": "https://orcid.org/0000-0003-2215-9015"
-    }
-  ],
-  "copyrightHolder": [
-    {
-      "@type": "Organization",
-      "name": "Université Bordeaux Montaigne"
     }
   ],
   "funder": [
@@ -183,11 +177,6 @@
     },
     "3": {
       "@type": "SoftwareApplication",
-      "identifier": "graphics",
-      "name": "graphics"
-    },
-    "4": {
-      "@type": "SoftwareApplication",
       "identifier": "IsoplotR",
       "name": "IsoplotR",
       "provider": {
@@ -198,12 +187,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=IsoplotR"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -215,7 +204,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "rxylib",
       "name": "rxylib",
@@ -227,24 +216,24 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rxylib"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "tools",
       "name": "tools"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "4261.603KB",
+  "fileSize": "4749.164KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -292,7 +281,10 @@
         }
       ],
       "name": "{gamma: An R Package for Dose Rate Estimation from In-Situ Gamma-Ray Spectrometry Measurements}",
+      "identifier": "10.26034/la.atl.2020.544",
       "pagination": "1-5",
+      "@id": "https://doi.org/10.26034/la.atl.2020.544",
+      "sameAs": "https://doi.org/10.26034/la.atl.2020.544",
       "isPartOf": {
         "@type": "PublicationIssue",
         "issueNumber": "2",
@@ -306,7 +298,7 @@
     },
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2024",
+      "datePublished": "2026",
       "author": [
         {
           "@type": "Person",
@@ -331,14 +323,14 @@
       ],
       "name": "{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}",
       "identifier": "10.5281/zenodo.2652393",
-      "description": "R package version 1.1.0",
+      "description": "R package version 1.2.0",
       "@id": "https://doi.org/10.5281/zenodo.2652393",
       "sameAs": "https://doi.org/10.5281/zenodo.2652393"
     }
   ],
-  "releaseNotes": "https://github.com/crp2a/gamma/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/crp2a/gamma/blob/main/NEWS.md",
   "readme": "https://github.com/crp2a/gamma/blob/master/README.md",
   "contIntegration": ["https://github.com/crp2a/gamma/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/crp2a/gamma"],
   "developmentStatus": "https://www.repostatus.org/#active",
-  "keywords": ["luminescence-dating", "geochronology", "archaeology", "r-package", "gamma-spectrometry"]
+  "keywords": ["luminescence-dating", "geochronology", "r-package", "gamma-spectrometry", "archaeometry"]
 }

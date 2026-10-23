@@ -12,7 +12,7 @@ Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package all
 }
 \details{
 \tabular{ll}{
-\strong{Version} \tab 1.1.0 \cr
+\strong{Version} \tab 1.2.0 \cr
 \strong{License} \tab GPL-3 \cr
 \strong{CRAN DOI} \tab \doi{10.32614/CRAN.package.gamma} \cr
 \strong{Zenodo DOI} \tab \doi{10.5281/zenodo.2652393}
