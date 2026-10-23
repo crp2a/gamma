@@ -29,11 +29,7 @@ knitr::opts_chunk$set(
 
 # Scope
 
-This vignette walks you through the steps to obtain a calibration curve for the
-gamma dose rate prediction. You will need the calibration curve to calculate 
-the gamma dose rate from spectra measured in the field where the true gamma dose
-is yet to be determined. In other words, you will need this curve to analyse
-your field data. 
+This vignette walks you through the steps to obtain a calibration curve for the gamma dose rate prediction. You will need the calibration curve to calculate the gamma dose rate from spectra measured in the field where the true gamma dose is yet to be determined. In other words, you will need this curve to analyse your field data. 
 
 # Load library and import files
 
@@ -43,9 +39,7 @@ First things first, let's load the **gamma** package.
 library(gamma)
 ```
 
-Now, we will use already measured spectra shipped with **gamma** for this example.
-If you determine your calibration curve, you will need to use
-your own data. All data used here were measured with a NaI probe. 
+Now, we will use already measured spectra shipped with **gamma** for this example. If you determine your calibration curve, you will need to use your own data. All data used here were measured with a NaI probe. 
 
 ```{r import}
 ## Import CNF files for calibration
@@ -59,21 +53,15 @@ bkg <- read(bkg_dir)
 bkg
 ```
 
-The object `spc` is a set of spectra measured in settings around Clermont-Ferrand 
-[@miallier2009] and Bordeaux [@richter2010] with a known gamma dose rate, 
-where `bgk` is a background curve measured in a lead castle. 
+The object `spc` is a set of spectra measured in settings around Clermont-Ferrand [@miallier2009] and Bordeaux [@richter2010] with a known gamma dose rate, where `bgk` is a background curve measured in a lead castle. 
 
 # Energy scale calibration
 
-Before we can further work with the spectra, we have to perform an energy calibration, 
-this is assigning values in terms of energy to the channel numbers. 
+Before we can further work with the spectra, we have to perform an energy calibration, this is assigning values in terms of energy to the channel numbers. 
 
 ## Reference Spectra
 
-First, we remove the baseline from the set of spectra for easier peak detection. 
-, in the following subsections, we perform and apply the energy calibration 
-to each spectrum, including the background spectrum. One subsection for each
-spectrum with the corresponding R code.
+First, we remove the baseline from the set of spectra for easier peak detection. In the following subsections, we perform and apply the energy calibration to each spectrum, including the background spectrum. One subsection for each spectrum with the corresponding R code.
 
 ```{r signal}
 ## Spectrum pre-processing
@@ -172,11 +160,11 @@ plot(PEP, pks) +
 
 ### Background Spectrum
 ```{r calibrate-bkg}
-# Pb212, K40, Tl208
+## Pb212, K40, Tl208
 lines <- data.frame(
   channel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
-) 
+)
 bkg_scaled <- energy_calibrate(bkg, lines = lines)
 ```
 
@@ -188,38 +176,23 @@ plot(bkg_scaled, xaxis = "energy", yaxis = "rate") +
 
 ## Signal integration
 
-Two methods can be used to calculate a gamma dose rate from the measured counts: the 'window' 
-method and the 'threshold' method. The 'window' method compares counts under nuclide-specific gamma-ray peaks to  
-reference spectra where the nuclide concentration is known. In this case, only 
-a small part of the spectrum is used. The 'threshold' method uses the circumstance
-that above a certain threshold, the number of counts for a given dose rate changes
-only slightly with the emitters [e.g., U, Th, K -- cf. @guerin2011; @mercier2007; @lvborg1974]. 
+Two methods can be used to calculate a gamma dose rate from the measured counts: the 'window' method and the 'threshold' method. The 'window' method compares counts under nuclide-specific gamma-ray peaks to reference spectra where the nuclide concentration is known. In this case, only a small part of the spectrum is used. The 'threshold' method uses the circumstance that above a certain threshold, the number of counts for a given dose rate changes only slightly with the emitters [e.g., U, Th, K -- cf. @guerin2011; @mercier2007; @lvborg1974]. 
 
-The exact position of this threshold depends on the used probe and needs to be determined 
-either by modelling or measurements of different sites with known but different radionuclides
-concentrations. 
+The exact position of this threshold depends on the used probe and needs to be determined either by modelling or measurements of different sites with known but different radionuclides concentrations. 
 
-For this example (and in the package **gamma** in general), we will focus solely on the 'threshold' method, a crucial tool 
-used to derive a calibration curve and derive gamma dose rates. This method's practical application in deriving a calibration curve 
-is a key aspect of our exploration.  Our first step is to combine the energy-calibrated spectra into a unified set, 
-laying the foundation for the subsequent calculations. 
+For this example (and in the package **gamma** in general), we will focus solely on the 'threshold' method, a crucial tool used to derive a calibration curve and derive gamma dose rates. This method's practical application in deriving a calibration curve is a key aspect of our exploration.  Our first step is to combine the energy-calibrated spectra into a unified set, laying the foundation for the subsequent calculations. 
 
 ```{r calibrate-spc}
-spc_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
-spc_scaled <- methods::as(spc_scaled, "GammaSpectra")
+spc_scaled <- as_spectra(list(BRIQUE, C341, C347, GOU, PEP))
 spc_scaled
 ```
 
-Now we can integrate the spectra using either the cumulative count spectra or
-the energy corresponding to a certain energy [cf. @guerin2011 for details]. 
+Now we can integrate the spectra using either the cumulative count spectra or the energy corresponding to a certain energy [cf. @guerin2011 for details]. 
 
-The following two subsections show how to derive the integrated spectrometer
-response with each technique. In both cases, however, we assume that the
-**threshold itself is already known**! The examples are for educational reasons
-only and the here used function `signal_integrate()` is used in the back by the
-function `dose_fit()` we will use later to derive the calibration curve. 
+The following two subsections show how to derive the integrated spectrometer response with each technique. In both cases, however, we assume that the **threshold itself is already known**! The examples are for educational reasons only and the here used function `signal_integrate()` is used in the back by the function `dose_fit()` we will use later to derive the calibration curve. 
 
 ### Using the count threshold
+
 ```{r integrate-Ni}
 ## Integration range (in keV)
 Ni_range <- c(200, 2800)
@@ -262,14 +235,11 @@ NiEi_signal <- signal_integrate(
 
 ## Get dose rate calibration curve
 
-The dose rate calibration curve models detector specific counts against a know gamma-dose so
-that such gamma dose can be derived from unknown spectra with the the same detector.
+The dose rate calibration curve models detector specific counts against a know gamma-dose so that such gamma dose can be derived from unknown spectra with the the same detector.
 
 ### Model calibration curve
 
-To model the calibration curve we will need have measured sites with known radionuclide concentrations.
-`'gamma'` ships a table with values from know sites in the dataset `clermont`. If you, as we have, measured
-with your probe in that locations you do not have to manually add values from @miallier2009 or @richter2010.
+To model the calibration curve we will need have measured sites with known radionuclide concentrations. **gamma** ships a table with values from know sites in the dataset `clermont`. If you, as we have, measured with your probe in that locations you do not have to manually add values from @miallier2009 or @richter2010.
 
 ```{r}
 ## Get reference dose rates
@@ -281,9 +251,7 @@ doses <- clermont[, c("gamma_dose", "gamma_error")]
 knitr::kable(clermont)
 ```
 
-In the next step we create a list with additional information about the used equipment
-to be passed onto the calibration R object. You have to modify those values for your own 
-detector.
+In the next step we create a list with additional information about the used equipment to be passed onto the calibration R object. You have to modify those values for your own detector.
 
 ```{r}
 ## Metadata
@@ -291,7 +259,7 @@ info <- list(
   laboratory = "CEREGE",
   instrument = "InSpector 1000",
   detector = "NaI",
-  authors = "CEREGE Luminescence Team"
+  authors = "Luminescence Team"
 )
 ```
 
@@ -310,8 +278,7 @@ AIX_NaI <- dose_fit(
 AIX_NaI 
 ```
 
-If this information seems too opaque , we can further inspect the output numerically 
-(`summary()`) and graphically using the package `plot()` methods.
+If this information seems too opaque , we can further inspect the output numerically (`summary()`) and graphically using the package `plot()` methods.
 
 ```{r}
 ## Show summary
@@ -326,9 +293,7 @@ plot(AIX_NaI, energy = TRUE) +
   ggplot2::theme_bw()
 ```
 
-Well, this looks all good and should make a good calibration curve. 
-To use this calibration curve in the future, you can save the object using the 
-base R function `save()`. 
+Well, this looks all good and should make a good calibration curve. To use this calibration curve in the future, you can save the object using the base R function `save()`. 
 
 ```{r, eval=FALSE}
 save(AIX_NaI, file = "<you_path>/<date>_NaI_DoseRate_Calibration.rda")
@@ -342,8 +307,7 @@ save(AIX_NaI, file = "<you_path>/<date>_NaI_DoseRate_Calibration.rda")
 
 ### Check the model
 
-Although the calibration curve appears reasonable, we can use a few additional 
-R plots to further inspect the performed calibration. 
+Although the calibration curve appears reasonable, we can use a few additional R plots to further inspect the performed calibration. 
 
 #### Count threshold (`Ni`)
 
@@ -443,10 +407,7 @@ ggplot2::ggplot(NiEi_residuals, ggplot2::aes(sample = standardized)) +
 
 ## Application example: predict new dose rates
 
-After calibrating our detector, it is time to derive gamma dose rates from 
-sites with unknown radionuclide concentrations. As mentioned above, we will use 
-data we ship with `'gamma'`. Our routine analysis consists of 
-only three steps: 
+After calibrating our detector, it is time to derive gamma dose rates from sites with unknown radionuclide concentrations. As mentioned above, we will use data we ship with `'gamma'`. Our routine analysis consists of only three steps: 
 
 ### Import measured data
 

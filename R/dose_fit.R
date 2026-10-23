@@ -55,8 +55,8 @@ setMethod(
     if (is.null(info$energy_calibration)) {
       info$energy_calibration <- NA
 
-      ## more complicated, we have calibrations, but they do not match in such ca
-      ## get the values from the first calibration
+      ## more complicated, we have calibrations, but they do not match
+      ## in such case get the values from the first calibration
       cal_1st <- object[[1]]@calibration
 
       ## compare whether they are identical if yes, we set a single calibration

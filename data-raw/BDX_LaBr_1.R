@@ -3,10 +3,58 @@
 BDX_LaBr_1_data <- utils::read.table("./data-raw/BDX_LaBr_1.csv",
                                      header = TRUE, sep = ",", dec = ".",
                                      stringsAsFactors = FALSE)
-# usethis::use_data(BDX_LaBr_1_data, internal = FALSE, overwrite = FALSE)
+
+## Energy calibration
+## TODO: check these values!!
+lines <- list(
+  BRIQUE = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  C347 = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  C341 = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  PEP = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  LMP = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  MAZ = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  ),
+  GOU = data.frame(
+    channel = c(76, 465, 828),
+    energy = c(238, 1461, 2615)
+  )
+)
+calib <- lapply(
+  X = lines,
+  FUN = function(x) {
+    stats::lm(
+      formula = energy ~ stats::poly(channel, degree = 2, raw = TRUE),
+      data = x
+    )
+  }
+)
 
 ## Linear regression
 # Build calibration curve
+
+## Ni
+## Slope: 0.03378 +/- 0.0015 / Intercept: 0.08 +/- 1.8
+## MSWD: 0.30 / Probability: 0.91
+# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
+# IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
+
 Ni_data <- BDX_LaBr_1_data[, c(1, 3, 4, 7, 8)]
 colnames(Ni_data) <- c("name", "signal_value", "signal_error",
                        "gamma_dose", "gamma_error")
@@ -24,15 +72,15 @@ BDX_LaBr_1_Ni <- .DoseRateModel(
   background = c(22.607509838216, 0.049712234699046)
 )
 
-## Ni
-## Slope: 0.03378 +/- 0.0015 / Intercept: 0.08 +/- 1.8
-## MSWD: 0.30 / Probability: 0.91
-# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,3,4)])
-# IsoplotR::isochron(BDX_LaBr_1_data[, c(3,4,7,8)])
+## NiEi
+## Slope: 31.85 +/- 1.2 / Intercept: 598 +/- 1500
+## MSWD: 0.080 / Probability: 0.995
+# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,5,6)])
+# IsoplotR::isochron(BDX_LaBr_1_data[, c(7,8,5,6)])
 
 NiEi_data <- BDX_LaBr_1_data[, c(1, 5, 6, 7, 8)]
 colnames(NiEi_data) <- c("name", "signal_value", "signal_error",
-                       "gamma_dose", "gamma_error")
+                         "gamma_dose", "gamma_error")
 NiEi_model <- IsoplotR::york(NiEi_data[, -1])
 
 BDX_LaBr_1_NiEi <- .DoseRateModel(
@@ -55,13 +103,10 @@ BDX_LaBr_1 <- .CalibrationCurve(
     instrument = "InSpector 1000",
     detector = "LaBr #1",
     authors = "CRP2A Luminescence Team",
-    date = Sys.time()
+    date = Sys.time(),
+    energy_calibration = calib
   )
 )
-usethis::use_data(BDX_LaBr_1, internal = FALSE, overwrite = FALSE)
 
-## NiEi
-## Slope: 31.85 +/- 1.2 / Intercept: 598 +/- 1500
-## MSWD: 0.080 / Probability: 0.995
-# IsoplotR::york(BDX_LaBr_1_data[, c(7,8,5,6)])
-# IsoplotR::isochron(BDX_LaBr_1_data[, c(7,8,5,6)])
+## Save
+usethis::use_data(BDX_LaBr_1, internal = FALSE, overwrite = FALSE)

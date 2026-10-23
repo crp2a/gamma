@@ -167,7 +167,7 @@ NULL
 #' @keywords datasets
 "AIX_NaI_1"
 
-#' CRP2A Calibration Curve (LaBr)
+#' CRP2A Calibration Curve (LaBr, probe 1)
 #'
 #' @usage data(BDX_LaBr_1)
 #' @format

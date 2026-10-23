@@ -3,8 +3,8 @@
 * Add user friendly coercion methods: `as_peaks()` and `as_spectra()`.
 
 ## Datasets
-* Add reference datasets for calibration sites around Heidelberg and the CZT detector calibration 
-files as detailed in Kreutzer et al. (2025, Geochronology) (PR #54 by @RLumSK)
+* Add reference datasets for calibration sites around Heidelberg and the CZT detector calibration files as detailed in Kreutzer et al. (2025, Geochronology) (PR #54 by @RLumSK).
+* Update calibration curves `BDX_LaBr_1` and `AIX_NaI_1` (energy calibrations were missing).
 
 # gamma 1.1.0
 ## Bugfixes
@@ -33,7 +33,6 @@ files as detailed in Kreutzer et al. (2025, Geochronology) (PR #54 by @RLumSK)
 * Add new dataset called `clermont_2024` based on the original `clermont` dataset but with dose rate conversion factors and gamma dose rate calculated for different conversion factor datasets (PR #40 by @RLumSK).
 
 # gamma 1.0.5
-
 ## Internals
 * Fix unicode character in plot axis labels.
 
