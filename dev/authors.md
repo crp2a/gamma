@@ -57,18 +57,18 @@ In-Situ Gamma-Ray Spectrometry Measurements.” *Ancient TL*, **38**(2),
       doi = {10.26034/la.atl.2020.544},
     }
 
-Frerebeau N, Lebrun B, Paradol G, Kreutzer S (2024). *gamma: Dose Rate
+Frerebeau N, Lebrun B, Paradol G, Kreutzer S (2026). *gamma: Dose Rate
 Estimation from in-Situ Gamma-Ray Spectrometry*. Université Bordeaux
 Montaigne, Pessac, France.
 [doi:10.5281/zenodo.2652393](https://doi.org/10.5281/zenodo.2652393). R
-package version 1.1.0.9000.
+package version 1.2.0.9000.
 
     @Manual{R-gamma,
       author = {Nicolas Frerebeau and Brice Lebrun and Guilhem Paradol and Sebastian Kreutzer},
       title = {{gamma: Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry}},
-      year = {2024},
+      year = {2026},
       organization = {Université Bordeaux Montaigne},
       address = {Pessac, France},
-      note = {R package version 1.1.0.9000},
+      note = {R package version 1.2.0.9000},
       doi = {10.5281/zenodo.2652393},
     }

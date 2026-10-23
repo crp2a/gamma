@@ -57,9 +57,9 @@ channel numbers.
 ### Reference Spectra
 
 First, we remove the baseline from the set of spectra for easier peak
-detection. , in the following subsections, we perform and apply the
-energy calibration to each spectrum, including the background spectrum.
-One subsection for each spectrum with the corresponding R code.
+detection. In the following subsections, we perform and apply the energy
+calibration to each spectrum, including the background spectrum. One
+subsection for each spectrum with the corresponding R code.
 
 ``` r
 
@@ -156,11 +156,11 @@ PEP <- energy_calibrate(spc[["PEP"]], pks)
 
 ``` r
 
-# Pb212, K40, Tl208
+## Pb212, K40, Tl208
 lines <- data.frame(
   channel = c(86, 496, 870),
   energy = c(238, 1461, 2615)
-) 
+)
 bkg_scaled <- energy_calibrate(bkg, lines = lines)
 ```
 
@@ -170,7 +170,7 @@ bkg_scaled <- energy_calibrate(bkg, lines = lines)
 
 Two methods can be used to calculate a gamma dose rate from the measured
 counts: the ‘window’ method and the ‘threshold’ method. The ‘window’
-method compares counts under nuclide-specific gamma-ray peaks to  
+method compares counts under nuclide-specific gamma-ray peaks to
 reference spectra where the nuclide concentration is known. In this
 case, only a small part of the spectrum is used. The ‘threshold’ method
 uses the circumstance that above a certain threshold, the number of
@@ -192,8 +192,7 @@ calculations.
 
 ``` r
 
-spc_scaled <- list(BRIQUE, C341, C347, GOU, PEP)
-spc_scaled <- methods::as(spc_scaled, "GammaSpectra")
+spc_scaled <- as_spectra(list(BRIQUE, C341, C347, GOU, PEP))
 spc_scaled
 #> A collection of 5 gamma spectra: BRIQUE, C341, C347, GOU, PEP
 ```
@@ -264,7 +263,7 @@ spectra with the the same detector.
 #### Model calibration curve
 
 To model the calibration curve we will need have measured sites with
-known radionuclide concentrations. `'gamma'` ships a table with values
+known radionuclide concentrations. **gamma** ships a table with values
 from know sites in the dataset `clermont`. If you, as we have, measured
 with your probe in that locations you do not have to manually add values
 from Miallier et al. (2009) or Richter et al. (2010).
@@ -299,7 +298,7 @@ info <- list(
   laboratory = "CEREGE",
   instrument = "InSpector 1000",
   detector = "NaI",
-  authors = "CEREGE Luminescence Team"
+  authors = "Luminescence Team"
 )
 ```
 
@@ -322,8 +321,8 @@ AIX_NaI
 #> * laboratory: CEREGE
 #> * instrument: InSpector 1000
 #> * detector: NaI
-#> * authors: CEREGE Luminescence Team
-#> * date: 2026-05-04 13:45:57.126514
+#> * authors: Luminescence Team
+#> * date: 2026-10-23 13:26:54.155226
 #> * energy_calibration: <5 available>
 ```
 
@@ -493,9 +492,9 @@ adjusted first.*
 Finally, for transparency, the R session setting used for rendering this
 vignette:
 
-    #> R version 4.6.0 (2026-04-24)
+    #> R version 4.6.1 (2026-06-24)
     #> Platform: x86_64-pc-linux-gnu
-    #> Running under: Ubuntu 24.04.4 LTS
+    #> Running under: Ubuntu 24.04.5 LTS
     #> 
     #> Matrix products: default
     #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -514,19 +513,19 @@ vignette:
     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #> [1] gamma_1.1.0.9000
+    #> [1] gamma_1.2.0.9000
     #> 
     #> loaded via a namespace (and not attached):
-    #>  [1] vctrs_0.7.3        cli_3.6.6          knitr_1.51         rlang_1.2.0       
-    #>  [5] xfun_0.57          rxylib_0.2.14      S7_0.2.2           textshaping_1.0.5 
-    #>  [9] jsonlite_2.0.0     labeling_0.4.3     glue_1.8.1         htmltools_0.5.9   
-    #> [13] ragg_1.5.2         sass_0.4.10        scales_1.4.0       rmarkdown_2.31    
-    #> [17] grid_4.6.0         evaluate_1.0.5     jquerylib_0.1.4    fastmap_1.2.0     
-    #> [21] yaml_2.3.12        lifecycle_1.0.5    compiler_4.6.0     RColorBrewer_1.1-3
-    #> [25] fs_2.1.0           Rcpp_1.1.1-1.1     IsoplotR_6.8       farver_2.1.2      
-    #> [29] systemfonts_1.3.2  digest_0.6.39      R6_2.6.1           bslib_0.10.0      
-    #> [33] withr_3.0.2        tools_4.6.0        gtable_0.3.6       pkgdown_2.2.0     
-    #> [37] ggplot2_4.0.3      cachem_1.1.0       desc_1.4.3
+    #>  [1] vctrs_0.7.3        cli_3.6.6          knitr_1.52         rlang_1.3.0       
+    #>  [5] xfun_0.62          otel_0.2.0         rxylib_0.2.14      S7_0.2.2          
+    #>  [9] textshaping_1.0.5  jsonlite_2.0.0     labeling_0.4.3     glue_1.8.1        
+    #> [13] htmltools_0.5.9    ragg_1.5.2         sass_0.4.10        scales_1.4.0      
+    #> [17] rmarkdown_2.32     grid_4.6.1         evaluate_1.0.5     jquerylib_0.1.4   
+    #> [21] fastmap_1.2.0      yaml_2.3.12        lifecycle_1.0.5    compiler_4.6.1    
+    #> [25] RColorBrewer_1.1-3 fs_2.1.0           Rcpp_1.1.2         IsoplotR_7.1      
+    #> [29] farver_2.1.2       systemfonts_1.3.2  digest_0.6.39      R6_2.6.1          
+    #> [33] bslib_0.12.0       withr_3.0.3        tools_4.6.1        gtable_0.3.6      
+    #> [37] pkgdown_2.2.1      ggplot2_4.0.3      cachem_1.1.0       desc_1.4.3
 
 ## References
 

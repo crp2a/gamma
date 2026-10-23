@@ -127,7 +127,7 @@ spc_file <- system.file("extdata/LaBr.TKA", package = "gamma")
 (spc <- read(spc_file))
 #> Gamma spectrum:
 #> *  name: LaBr
-#> *  date: 2026-05-04 13:44:56.663894
+#> *  date: 2026-10-23 13:26:20.598214
 #> *  live_time: 3385.54
 #> *  real_time: 3403.67
 #> *  channels: 1024
@@ -144,7 +144,7 @@ calib_lines <- list(
 (spc1 <- energy_calibrate(spc, lines = calib_lines))
 #> Gamma spectrum:
 #> *  name: LaBr
-#> *  date: 2026-05-04 13:44:56.663894
+#> *  date: 2026-10-23 13:26:20.598214
 #> *  live_time: 3385.54
 #> *  real_time: 3403.67
 #> *  channels: 1024

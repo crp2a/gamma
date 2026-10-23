@@ -11,7 +11,7 @@ Kromek SPE files.
 
 |  |  |
 |----|----|
-| **Version** | 1.1.0 |
+| **Version** | 1.2.0 |
 | **License** | GPL-3 |
 | **CRAN DOI** | [doi:10.32614/CRAN.package.gamma](https://doi.org/10.32614/CRAN.package.gamma) |
 | **Zenodo DOI** | [doi:10.5281/zenodo.2652393](https://doi.org/10.5281/zenodo.2652393) |

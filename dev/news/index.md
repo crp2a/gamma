@@ -1,6 +1,8 @@
 # Changelog
 
-## gamma 1.1.0.9000
+## gamma 1.2.0.9000
+
+## gamma 1.2.0
 
 ### Additions
 
@@ -14,7 +16,9 @@
 - Add reference datasets for calibration sites around Heidelberg and the
   CZT detector calibration files as detailed in Kreutzer et al. (2025,
   Geochronology) (PR [\#54](https://github.com/crp2a/gamma/issues/54) by
-  [@RLumSK](https://github.com/RLumSK))
+  [@RLumSK](https://github.com/RLumSK)).
+- Update calibration curves `BDX_LaBr_1` and `AIX_NaI_1` (energy
+  calibrations were missing).
 
 ## gamma 1.1.0
 

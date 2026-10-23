@@ -131,7 +131,7 @@
 - [`AIX_NaI_1`](https://crp2a.github.io/gamma/dev/reference/AIX_NaI_1.md)
   : CEREGE Calibration Curve (NaI)
 - [`BDX_LaBr_1`](https://crp2a.github.io/gamma/dev/reference/BDX_LaBr_1.md)
-  : CRP2A Calibration Curve (LaBr)
+  : CRP2A Calibration Curve (LaBr, probe 1)
 - [`HD_CZT_1`](https://crp2a.github.io/gamma/dev/reference/HD_CZT_1.md)
   : heiLUM Calibration Curve (CZT)
 - [`clermont`](https://crp2a.github.io/gamma/dev/reference/clermont.md)

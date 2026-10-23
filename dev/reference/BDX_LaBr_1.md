@@ -1,6 +1,6 @@
-# CRP2A Calibration Curve (LaBr)
+# CRP2A Calibration Curve (LaBr, probe 1)
 
-CRP2A Calibration Curve (LaBr)
+CRP2A Calibration Curve (LaBr, probe 1)
 
 ## Usage
 

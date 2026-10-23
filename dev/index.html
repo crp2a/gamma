@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Dose Rate Estimation from in-Situ Gamma-Ray Spectrometry Measurements">
 <meta name="description" content="Process in-situ Gamma-Ray Spectrometry for Luminescence Dating. This package allows to import, inspect and correct the energy shifts of gamma-ray spectra. It provides methods for estimating the gamma dose rate by the use of a calibration curve as described in Mercier and Falguères (2007). The package only supports Canberra CNF and TKA and Kromek SPE files.">
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gamma</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,10 +84,10 @@
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  _Ancient TL_, <span class="sc">*</span><span class="dv">38</span><span class="sc">*</span>(<span class="dv">2</span>), <span class="dv">1</span><span class="fl">-5.</span> doi<span class="sc">:</span><span class="fl">10.26034</span><span class="sc">/</span>la.atl.<span class="fl">2020.544</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.26034</span><span class="sc">/</span>la.atl.<span class="fl">2020.544</span><span class="sc">&gt;</span>.</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  Frerebeau N, Lebrun B, Paradol G, Kreutzer <span class="fu">S</span> (<span class="dv">2024</span>). _gamma<span class="sc">:</span> Dose</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  Frerebeau N, Lebrun B, Paradol G, Kreutzer <span class="fu">S</span> (<span class="dv">2026</span>). _gamma<span class="sc">:</span> Dose</span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  Rate Estimation from <span class="cf">in</span><span class="sc">-</span>Situ Gamma<span class="sc">-</span>Ray Spectrometry_. Université</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  Bordeaux Montaigne, Pessac, France. doi<span class="sc">:</span><span class="fl">10.5281</span><span class="sc">/</span>zenodo<span class="fl">.2652393</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.5281</span><span class="sc">/</span>zenodo<span class="fl">.2652393</span><span class="sc">&gt;</span>. R package version <span class="dv">1</span>.<span class="dv">1</span>.<span class="fl">0.</span></span></code></pre></div>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.5281</span><span class="sc">/</span>zenodo<span class="fl">.2652393</span><span class="sc">&gt;</span>. R package version <span class="dv">1</span>.<span class="dv">2</span>.<span class="fl">0.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -131,19 +131,14 @@
 <span><span class="fu"><a href="reference/plot.html">plot</a></span><span class="op">(</span><span class="va">calib</span>, <span class="va">peaks</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-usage-1.png" alt="" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Estimate the gamma dose rate of a set of spectra</span></span>
-<span><span class="co">## You may want to give extra attention to the energy calibration step</span></span>
-<span><span class="va">spc_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/BDX_LaBr_1/test"</span>, package <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
-<span><span class="va">spectra</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read.html">read</a></span><span class="op">(</span><span class="va">spc_file</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Load the calibration curve for the dose rate estimation</span></span>
+<code class="sourceCode R"><span><span class="co">## Load the calibration curve for the dose rate estimation</span></span>
 <span><span class="co">## As this curve is instrument specific, you will have to build your own</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"BDX_LaBr_1"</span>, package <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot.html">plot</a></span><span class="op">(</span><span class="va">BDX_LaBr_1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-calib-1.png" alt="" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Estimate the gamma dose rate</span></span>
-<span><span class="op">(</span><span class="va">doses</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">BDX_LaBr_1</span>, <span class="va">spectra</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">(</span><span class="va">doses</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/doserate.html">dose_predict</a></span><span class="op">(</span><span class="va">BDX_LaBr_1</span>, <span class="va">calib</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -171,112 +166,19 @@
 <th align="right">dose_final</th>
 <th align="right">dose_err_final</th>
 </tr></thead>
-<tbody>
-<tr>
-<td align="left">20110523204008</td>
-<td align="right">8.604666</td>
-<td align="right">0.2691316</td>
-<td align="right">252.2866</td>
-<td align="right">10.372500</td>
-<td align="right">7626.493</td>
-<td align="right">8.747617</td>
-<td align="right">220.6747</td>
-<td align="right">5.495079</td>
-<td align="right">236.4806</td>
-<td align="right">11.366900</td>
-</tr>
-<tr>
-<td align="left">20110523210008</td>
-<td align="right">8.775092</td>
-<td align="right">0.2166075</td>
-<td align="right">257.3316</td>
-<td align="right">9.354274</td>
-<td align="right">7577.302</td>
-<td align="right">7.021326</td>
-<td align="right">219.1303</td>
-<td align="right">5.454610</td>
-<td align="right">238.2309</td>
-<td align="right">10.495729</td>
-</tr>
-<tr>
-<td align="left">20110527205316</td>
-<td align="right">8.445976</td>
-<td align="right">0.1546491</td>
-<td align="right">247.5890</td>
-<td align="right">8.012680</td>
-<td align="right">7064.449</td>
-<td align="right">5.009961</td>
-<td align="right">203.0288</td>
-<td align="right">5.052359</td>
-<td align="right">225.3089</td>
-<td align="right">9.198048</td>
-</tr>
-<tr>
-<td align="left">20130809172451</td>
-<td align="right">30.218479</td>
-<td align="right">0.2549754</td>
-<td align="right">892.1003</td>
-<td align="right">24.967288</td>
-<td align="right">27667.473</td>
-<td align="right">8.089989</td>
-<td align="right">849.8817</td>
-<td align="right">21.142124</td>
-<td align="right">870.9910</td>
-<td align="right">32.614162</td>
-</tr>
-<tr>
-<td align="left">20130813181639</td>
-<td align="right">36.062314</td>
-<td align="right">0.2853286</td>
-<td align="right">1065.0899</td>
-<td align="right">29.644785</td>
-<td align="right">33243.050</td>
-<td align="right">9.028097</td>
-<td align="right">1024.9325</td>
-<td align="right">25.496544</td>
-<td align="right">1045.0112</td>
-<td align="right">39.010062</td>
-</tr>
-<tr>
-<td align="left">20160717175757</td>
-<td align="right">19.190250</td>
-<td align="right">0.3635398</td>
-<td align="right">565.6418</td>
-<td align="right">18.510895</td>
-<td align="right">16419.873</td>
-<td align="right">11.495584</td>
-<td align="right">496.7518</td>
-<td align="right">12.361511</td>
-<td align="right">531.1968</td>
-<td align="right">21.838611</td>
-</tr>
-<tr>
-<td align="left">20160717181052</td>
-<td align="right">16.303659</td>
-<td align="right">0.2837191</td>
-<td align="right">480.1928</td>
-<td align="right">15.297869</td>
-<td align="right">14033.831</td>
-<td align="right">9.033011</td>
-<td align="right">421.8396</td>
-<td align="right">10.496701</td>
-<td align="right">451.0162</td>
-<td align="right">18.231817</td>
-</tr>
-<tr>
-<td align="left">20160717182601</td>
-<td align="right">16.896441</td>
-<td align="right">0.2557337</td>
-<td align="right">497.7403</td>
-<td align="right">15.269850</td>
-<td align="right">14493.495</td>
-<td align="right">8.131459</td>
-<td align="right">436.2712</td>
-<td align="right">10.854933</td>
-<td align="right">467.0058</td>
-<td align="right">18.446627</td>
-</tr>
-</tbody>
+<tbody><tr>
+<td align="left">LaBr</td>
+<td align="right">141.014</td>
+<td align="right">0.2253903</td>
+<td align="right">4171.876</td>
+<td align="right">111.5254</td>
+<td align="right">126234.7</td>
+<td align="right">6.893242</td>
+<td align="right">3944.501</td>
+<td align="right">98.11905</td>
+<td align="right">4058.189</td>
+<td align="right">148.1876</td>
+</tr></tbody>
 </table>
 </div>
 <div class="section level2">
@@ -360,7 +262,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
