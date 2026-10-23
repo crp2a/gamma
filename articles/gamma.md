@@ -61,7 +61,7 @@ tka_test <- system.file("extdata/LaBr.TKA", package = "gamma")
 (spc_tka <- read(tka_test))
 #> Gamma spectrum:
 #> *  name: LaBr
-#> *  date: 2026-10-23 11:09:31.401018
+#> *  date: 2026-10-23 12:41:15.727884
 #> *  live_time: 3385.54
 #> *  real_time: 3403.67
 #> *  channels: 1024

@@ -322,7 +322,7 @@ AIX_NaI
 #> * instrument: InSpector 1000
 #> * detector: NaI
 #> * authors: Luminescence Team
-#> * date: 2026-10-23 11:10:15.320503
+#> * date: 2026-10-23 12:41:42.754555
 #> * energy_calibration: <5 available>
 ```
 

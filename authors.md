@@ -38,7 +38,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/crp2a/gamma/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/crp2a/gamma/blob/v1.2.0/inst/CITATION)
 
 Lebrun B, Frerebeau N, Paradol G, Guérin G, Mercier N, Tribolo C, Lahaye
 C, Rizza M (2020). “gamma: An R Package for Dose Rate Estimation from
