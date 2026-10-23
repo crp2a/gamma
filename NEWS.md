@@ -1,3 +1,5 @@
+# gamma 1.2.0.9000
+
 # gamma 1.2.0
 ## Additions
 * Add user friendly coercion methods: `as_peaks()` and `as_spectra()`.
